@@ -30,7 +30,7 @@
 
 ### 前置条件
 
-- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本；兼容 Python 3 的 6.0 / 7.0 版本同样支持。
+- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本。旧版本仅在其内嵌 Python 为 3.6+ 时可用：PFC 6.0 / 7.0 满足条件；FLAC 需 7.0 及以上（FLAC 6.x 内嵌 Python 2.7，无法运行 bridge）。
 - 已安装 **[uv](https://docs.astral.sh/uv/getting-started/installation/)**（用于 `uvx`）
 
 ### 智能体自动配置（推荐）
