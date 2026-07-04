@@ -9,111 +9,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone attach",
-      "syntax": "zone attach keyword",
-      "description": "Create attached gridpoints. Gridpoints on one zone may be rigidly attached (or slaved) to master gridpoints, edges, or faces of other zones. This allows grids that do not exactly topologically match to behave as a single grid. Each gridpoint so attached results in the creation of an internal data structure (an Attach Point) that is accessible by command and by FISH.",
-      "keywords": [
-        {
-          "name": "delete",
-          "syntax": "delete <range>",
-          "description": "Removes attach conditions on all slaved gridpoints within the given range. All attach conditions are removed if no range is present."
-        },
-        {
-          "name": "by-face",
-          "syntax": "by-face keyword... <range>",
-          "description": "Searches the mesh for all surface faces in the range. For this purpose a surface face is defined to be a face that is not perfectly topologically connected to a zone on the other side. For faces that are coplanar and touching (within a tolerance), attach conditions are automatically generated between gridpoints on one side and faces on the other. The side with the smaller faces will be selected to be attached (the slave)."
-        },
-        {
-          "name": "by-face-snap",
-          "syntax": "snap b",
-          "description": "If snap is set to on (the default), then turns slave gridpoint locations are moved to correspond to the locations they are slaved to on the master, both immediately and during cycling. If snap is set to off, slave gridpoints will move along with the master relatively, but their positions might be different."
-        },
-        {
-          "name": "by-face-tolerance-absolute",
-          "syntax": "tolerance-absolute f",
-          "description": "If specified, f is the maximum absolute distance between the slave gridpoint and the target face for an attach condition to be created. The default value is 0.0, meaning a relative tolerance scheme is used instead."
-        },
-        {
-          "name": "by-face-tolerance-angle",
-          "syntax": "tolerance-angle f",
-          "description": "Faces are attached only if the angle between them is less than f in degrees. By default this value is 5 degrees. It is sometimes necessary to increase this tolerance for complex surfaces that create non-planar faces."
-        },
-        {
-          "name": "by-face-tolerance-relative",
-          "syntax": "tolerance-relative f",
-          "description": "Gridpoints are attached to faces only if the distance is within a distance of f times the absolute value of the position of the face centroid. The default value is 1x10-5. It may be necessary to increase this value if there was additional error in grid creation. [CS: check this out; usage here is fuzzy (past tense? when “was” the error]"
-        },
-        {
-          "name": "gridpointid",
-          "syntax": "gridpointid ids keyword",
-          "description": "Attaches a single gridpoint with ID number ids to: another gridpoint, an edge between two gridpoints, or a zone face. One of the following keywords is required to indicate the target of the attach condition."
-        },
-        {
-          "name": "gridpointid-to-gridpointid",
-          "syntax": "to-gridpointid idm <snap b >",
-          "description": "Attaches the gridpoint to the gridpoint with ID idm. By default snap is on and will cause gridpoint ids to move to the same location as gridpoint idm, both immediately and during cycling."
-        },
-        {
-          "name": "gridpointid-to-edgeids",
-          "syntax": "to-edgeids id1 id2 keyword...",
-          "description": "The gridpoint with ID number ids is attached to the edge defined as the line between gridpoints i1 and i2."
-        },
-        {
-          "name": "gridpointid-to-edgeids-weight",
-          "syntax": "weight f",
-          "description": "The optional keyword weight can be given to define the location of gridpoint ids between gridpoints i1 and i2. If weight = 0.0, then ids is located at i1; if weight = 1.0, then ids is located at i2. If not specified, this weighting is calculated automatically based on the position of gridpoint ids."
-        },
-        {
-          "name": "gridpointid-to-edgeids-snap",
-          "syntax": "snap b",
-          "description": "By default snap is on and will cause gridpoint ids to move to the location given by the weighting between i1 and i2 automatically, both immediately and during cycling."
-        },
-        {
-          "name": "gridpointid-to-faceid",
-          "syntax": "to-faceid idz iside keyword...",
-          "description": "The gridpoint with ID number ids is attached to the face identified as side iside of zone with ID idz. URGENT: CS: section referred to here appears to be absent (Refer to:flag2:-Command Reference Section 1.1.4 Orientation of Nodes and Faces within a Zone-).]"
-        },
-        {
-          "name": "gridpointid-to-faceid-weight",
-          "syntax": "weight f1 f2 f3 f4",
-          "description": "The optional keyword weight can be given to define the location of gridpoint ids on face idz, iside1 with respect to the face vertices. Each of the four value given must be between 0.0 and 1.0, and the sum should add to 1.0 (assuming the slave location is on the face). For example, the location of the first vertex would correspond to 1.0, 0.0, 0.0, 0.0, and the center of the face would correspond to 0.25, 0.25, 0.25, 0.25."
-        },
-        {
-          "name": "gridpointid-to-faceid-snap",
-          "syntax": "snap b",
-          "description": "By default snap is on and will cause gridpoint ids to move to the location given by the weighting on zone face idz, iside1 automatically, both immediately and during cycling."
-        },
-        {
-          "name": "group",
-          "syntax": "group s keyword... <range>"
-        },
-        {
-          "name": "group-slot",
-          "syntax": "slot s",
-          "description": "Assign the group to slot s."
-        },
-        {
-          "name": "group-remove",
-          "syntax": "remove",
-          "description": "Remove the group s from all attach conditions in the range. If slot is not specified, it will be removed from all slots it is found in."
-        },
-        {
-          "name": "list",
-          "syntax": "list <range>",
-          "description": "List information on all attach conditions in the range. This information includes the slave gridpoints, the master targets, and the weighting factors if appropriate."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.attach.html#zone.attach"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "zone attach",
       "syntax": "zone attach keyword",
@@ -147,7 +42,7 @@
         {
           "name": "by-face-tolerance-relative",
           "syntax": "tolerance-relative f",
-          "description": "Gridpoints are attached to faces only if the distance is within a distance of f times the absolute value of the position of the face centroid. The default value is 1x10-5. It may be necessary to increase this value if there was additional error in grid creation. [CS: check this out; usage here is fuzzy (past tense? when “was” the error]"
+          "description": "Gridpoints are attached to faces only if the distance is within a distance of f times the absolute value of the position of the face centroid. The default value is 1x10-5. It may be necessary to increase this value if there was additional error in grid creation. [CS: check this out; usage here is fuzzy (past tense? when \u201cwas\u201d the error]"
         },
         {
           "name": "gridpointid",

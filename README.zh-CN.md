@@ -30,7 +30,7 @@
 
 ### 前置条件
 
-- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本；兼容 Python 3 的 6.0 / 7.0 版本同样支持。
+- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本。旧版本仅在其内嵌 Python 为 3.6+ 时可用：PFC 6.0 / 7.0 满足条件；FLAC 需 7.0 及以上（FLAC 6.x 内嵌 Python 2.7，无法运行 bridge）。
 - 已安装 **[uv](https://docs.astral.sh/uv/getting-started/installation/)**（用于 `uvx`）
 
 ### 智能体自动配置（推荐）
@@ -99,7 +99,7 @@ itasca_mcp_bridge.start()
 ## 功能亮点
 
 - **多引擎语料** — 覆盖 PFC、FLAC、3DEC、MPoint、MassFlow 的命令、Python API 与参考文档，通过必填的 `software` 参数选择
-- **多版本支持** — 通过 `version` 参数查阅各引擎不同版本（如 6.0、7.0、9.0）的命令文档
+- **多版本支持** — 通过 `version` 参数查阅各引擎不同版本（PFC：6.0/7.0/9.0，FLAC：7.0/9.0）的命令文档
 - **层级式文档浏览** — 智能体沿着引擎命令树自主发现能力与边界，减少幻觉命令
 - **增强的 plot 文档** — 在官方文档基础上补充了 plot items 参考文档
 - **交互式 REPL** — 正式编写脚本前快速试错，智能体可以快速迭代验证

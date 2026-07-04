@@ -10,67 +10,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "structure pile create",
-      "syntax": "structure pile create keyword",
-      "description": "Create a pile represented by one or more elements.",
-      "keywords": [
-        {
-          "name": "by-line",
-          "syntax": "by-line v1 v2 [pilecreateoptions]",
-          "description": "Create one element that lies along a straight line between the locations v1 and v2. New nodes associated with the element will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 to v2 corresponds with the direction from the begin point to the end point. If there are zones in these locations, the element will be attached to the zones at its nodes such that the translational degrees-of-freedom are rigidly connected to the zones and the rotational degrees-of-freedom are free. If no attachment to zones is desired, then the links may be deleted with the command structure link delete after creating and positioning the element."
-        },
-        {
-          "name": "by-nodeids",
-          "syntax": "by-nodeids i1 i2 [pilecreateoptions]",
-          "description": "Specify the ID numbers (i1, i2) of two nodes that will define the element. These nodes must already exist—nodes can be created with the structure node create command. Ordering of the nodes defines the pile element coordinate system as follows. The positive x-direction lies along the line from i1 to i2, and the y-direction is found by projecting the global y- or x-directions onto the element cross-section. The y-direction can also be modified with the property direction-y."
-        },
-        {
-          "name": "by-ray",
-          "syntax": "by-ray v1 v2 f [pilecreateoptions]",
-          "description": "Create one element that lies along a straight line starting at v1, proceeding in the direction specified by v2 for a distance given by f. New nodes associated with the element will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 corresponds with the direction from the begin point to the end point. If there are zones in these locations, the element will be attached to the zones at its nodes such that the translational degrees-of-freedom are rigidly connected to the zones and the rotational degrees-of-freedom are free. If no attachment to zones is desired, then the links may be deleted with the command structure link delete after creating and positioning the element."
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
-        },
-        {
-          "name": "group",
-          "syntax": "group s <slot s >",
-          "description": "Assign all newly created elements to the group s. The optional keyword slot can be used to specify the group slot; if not specified, the group is assigned to the slot Default. Use of the group logic is described in Group."
-        },
-        {
-          "name": "id",
-          "syntax": "id i",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the two element end-nodes to an existing element as follows. At each end-node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found near the potential new node location; and 3) the found node is part of a pile with ID equal to i."
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length f",
-          "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments i",
-          "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created."
-        },
-        {
-          "name": "snap",
-          "syntax": "snap <b >",
-          "description": "Indicate that the first and last positions of the element(s) created will attempt to “snap” to the location of the nearest structural node (attached to any element type) within a radius of 1/2 the element length. If only one end is snapped in this manner, then the entire line created will be offset by the difference between the original and the snapped position."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.create.html#structure.pile.create"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "structure pile create",
       "syntax": "structure pile create keyword",
@@ -84,7 +23,7 @@
         {
           "name": "by-nodeids",
           "syntax": "by-nodeids i1 i2 [pilecreateblock]",
-          "description": "Specify the ID numbers (i1, i2) of two nodes that will define the element. These nodes must already exist—nodes can be created with the structure node create command. Ordering of the nodes defines the pile element coordinate system as follows. The positive \\(x\\)-direction lies along the line from i1 to i2, and the \\(y\\)-direction is found by projecting the global \\(y\\)- or \\(x\\)-directions onto the element cross-section. The \\(y\\)-direction can also be modified with the property direction-y."
+          "description": "Specify the ID numbers (i1, i2) of two nodes that will define the element. These nodes must already exist\u2014nodes can be created with the structure node create command. Ordering of the nodes defines the pile element coordinate system as follows. The positive \\(x\\)-direction lies along the line from i1 to i2, and the \\(y\\)-direction is found by projecting the global \\(y\\)- or \\(x\\)-directions onto the element cross-section. The \\(y\\)-direction can also be modified with the property direction-y."
         },
         {
           "name": "by-ray",
@@ -129,7 +68,7 @@
         {
           "name": "snap",
           "syntax": "snap <b >",
-          "description": "Indicate that the first and last positions of the element(s) created will attempt to “snap” to the location of the nearest structural node (attached to any element type) within a radius of 1/2 the element length. If only one end is snapped in this manner, then the entire line created will be offset by the difference between the original and the snapped position."
+          "description": "Indicate that the first and last positions of the element(s) created will attempt to \u201csnap\u201d to the location of the nearest structural node (attached to any element type) within a radius of 1/2 the element length. If only one end is snapped in this manner, then the entire line created will be offset by the difference between the original and the snapped position."
         }
       ],
       "legacy_documentation": {
@@ -154,7 +93,7 @@
         {
           "name": "by-nodeids",
           "syntax": "by-nodeids <i1><i2>[pilecreateblock]",
-          "description": "specify the ID numbers ( i1 , i2 ) of two nodes that will define the element. These nodes must already exist—nodes can be created with the structure node create command. Ordering of the nodes defines the beam element coordinate system as follows. The positive \\(x\\) -direction lies along the line from i1 to i2 , and the \\(y\\) -direction is found by projecting the global \\(y\\) - or \\(x\\) -directions onto the element cross-section. The \\(y\\) -direction can also be modified with the property direction-y . The new element will not be attached to any objects (zones in FLAC3D and 3DEC, and particles in PFC3D); if you wish to attach it to objects, then after creating it, position its nodes with the structure node initialize position command (which will create links and set appropriate attachment conditions for all nodes that are moved into an object."
+          "description": "specify the ID numbers ( i1 , i2 ) of two nodes that will define the element. These nodes must already exist\u2014nodes can be created with the structure node create command. Ordering of the nodes defines the beam element coordinate system as follows. The positive \\(x\\) -direction lies along the line from i1 to i2 , and the \\(y\\) -direction is found by projecting the global \\(y\\) - or \\(x\\) -directions onto the element cross-section. The \\(y\\) -direction can also be modified with the property direction-y . The new element will not be attached to any objects (zones in FLAC3D and 3DEC, and particles in PFC3D); if you wish to attach it to objects, then after creating it, position its nodes with the structure node initialize position command (which will create links and set appropriate attachment conditions for all nodes that are moved into an object."
         },
         {
           "name": "by-ray",
@@ -214,7 +153,7 @@
         {
           "name": "snap",
           "syntax": "snap [<b>]",
-          "description": "Indicate that the first and last positions of the element(s) created will attempt to “snap” to the location of the nearest structural node (attached to any element type) within a radius of 1/2 the element length. If only one end is snapped in this manner, then the entire line or ray created will be offset by the difference between the original and snapped positions. Note that a new node is created and snapped to the location of the nearest existing node - the element being created does not use an existing node as one of its end nodes. Use struct node join if you want to join the newly created node to the existing node."
+          "description": "Indicate that the first and last positions of the element(s) created will attempt to \u201csnap\u201d to the location of the nearest structural node (attached to any element type) within a radius of 1/2 the element length. If only one end is snapped in this manner, then the entire line or ray created will be offset by the difference between the original and snapped positions. Note that a new node is created and snapped to the location of the nearest existing node - the element being created does not use an existing node as one of its end nodes. Use struct node join if you want to join the newly created node to the existing node."
         }
       ]
     }

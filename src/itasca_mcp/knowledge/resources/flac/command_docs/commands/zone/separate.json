@@ -9,46 +9,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone separate",
-      "syntax": "zone separate keyword <range>",
-      "description": "separates internal faces specified by the range. The gridpoints of the face are duplicated, and a new surface face is created. New faces and gridpoints get copies of all group and extra variable assignments belonging to the original face and gridpoint.",
-      "keywords": [
-        {
-          "name": "by-face",
-          "syntax": "by-face",
-          "description": "Attempts to separate all internal faces in the range."
-        },
-        {
-          "name": "by-face-clear-attach",
-          "syntax": "clear-attach",
-          "description": "By default, an error occurs if any gridpoint that has an attach condition associated with it is found among those to be separated. However, if the clear-attach keyword is supplied, then the separation of gridpoints will occur regardless. In addition, FLAC3D will remove any attach conditions connected to gridpoints affected."
-        },
-        {
-          "name": "by-face-new-side",
-          "syntax": "new-side keyword"
-        },
-        {
-          "name": "by-face-new-side-origin",
-          "syntax": "origin v",
-          "description": "Specify a location in space used to determine which side is assigned to the new group. If the vector from the origin to the face centroid is in the opposite direction then the group name is assigned. This check is made to the first valid face encountered, and the side is kept consistent from then on. By default, the origin is (0,0,0)."
-        },
-        {
-          "name": "by-face-new-side-group",
-          "syntax": "group s <slot s >",
-          "description": "Newly created faces will be assigned the group name name in the specified slot. The default slot, which is used if slot s is not supplied, is named Default. FLAC3D determines which face will be new and which one will be old by using the origin keyword. Use of the group logic is described in Group."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.separate.html#zone.separate"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "zone separate",
       "syntax": "zone separate keyword",
@@ -126,7 +86,7 @@
         {
           "name": "by-zone-range-2",
           "syntax": "range-2 [keyword ...]",
-          "description": "Separate zone regions. All grid points connected to zones in range-1 that are also connected to zones in range-2 will be assigned new grid points that are only connected to the zones in range-1 . This can be used to cleanly and completely separate two regions of zones. Note that if this is used to create an internal fault, then the boundaries of the fault will be separated (unlike the by-face keyword above) and the surface will have effectively one face more of separation around the boundary. While both range-1 and range-2 are optional, if range-1 is not specified then no separation will occur, since there will be no zones to separate from. If range-2 is not specified then all zones in range-1 will be separated from all other zones in the model—along the entire boundary of the set of zones in range-1 . By default, an error occurs if any gridpoint that has an attach condition associated with it is found among those to be separated. However, if the clear-attach keyword is supplied, then the separation of gridpoints will occur regardless. In addition, FLAC will remove any attach conditions connected to gridpoints affected. Specify the range used to select zones that will be separated. Any grid points connected to zones in this range that are also connected to zones in range-2 will be separated. Specify the zones that will trigger a separation. If left as the default value (all zones included) then the entire boundary of the set of zones in range-1 will be separated."
+          "description": "Separate zone regions. All grid points connected to zones in range-1 that are also connected to zones in range-2 will be assigned new grid points that are only connected to the zones in range-1 . This can be used to cleanly and completely separate two regions of zones. Note that if this is used to create an internal fault, then the boundaries of the fault will be separated (unlike the by-face keyword above) and the surface will have effectively one face more of separation around the boundary. While both range-1 and range-2 are optional, if range-1 is not specified then no separation will occur, since there will be no zones to separate from. If range-2 is not specified then all zones in range-1 will be separated from all other zones in the model\u2014along the entire boundary of the set of zones in range-1 . By default, an error occurs if any gridpoint that has an attach condition associated with it is found among those to be separated. However, if the clear-attach keyword is supplied, then the separation of gridpoints will occur regardless. In addition, FLAC will remove any attach conditions connected to gridpoints affected. Specify the range used to select zones that will be separated. Any grid points connected to zones in this range that are also connected to zones in range-2 will be separated. Specify the zones that will trigger a separation. If left as the default value (all zones included) then the entire boundary of the set of zones in range-1 will be separated."
         }
       ]
     }

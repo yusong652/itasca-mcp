@@ -9,196 +9,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone create",
-      "syntax": "zone create keyword",
-      "description": "The zone.create command fills primitive shapes (brick, cylinder, etc.) with a predefined grid pattern.",
-      "keywords": [
-        {
-          "name": "brick",
-          "syntax": "brick [zonecreateoptions]"
-        },
-        {
-          "name": "cylindrical-shell",
-          "syntax": "cylindrical-shell [zonecreateoptions]"
-        },
-        {
-          "name": "cylinder",
-          "syntax": "cylinder [zonecreateoptions]"
-        },
-        {
-          "name": "cylindrical-intersection",
-          "syntax": "cylindrical-intersection [zonecreateoptions]"
-        },
-        {
-          "name": "degenerate-brick",
-          "syntax": "degenerate-brick [zonecreateoptions]"
-        },
-        {
-          "name": "pyramid",
-          "syntax": "pyramid [zonecreateoptions]"
-        },
-        {
-          "name": "radial-brick",
-          "syntax": "radial-brick [zonecreateoptions]"
-        },
-        {
-          "name": "radial-cylinder",
-          "syntax": "radial-cylinder [zonecreateoptions]"
-        },
-        {
-          "name": "radial-tunnel",
-          "syntax": "radial-tunnel [zonecreateoptions]"
-        },
-        {
-          "name": "tetrahedron",
-          "syntax": "tetrahedron [zonecreateoptions]"
-        },
-        {
-          "name": "tunnel-intersection",
-          "syntax": "tunnel-intersection [zonecreateoptions]"
-        },
-        {
-          "name": "uniform-wedge",
-          "syntax": "uniform-wedge [zonecreateoptions]"
-        },
-        {
-          "name": "wedge",
-          "syntax": "wedge [zonecreateoptions]"
-        },
-        {
-          "name": "dimension",
-          "syntax": "dimension f...",
-          "description": "Specify the dimensions of interior regions for some shapes. These are used if the control point is not specifically given. Up to seven dimension entries may be required for a shape (f1, f2, f3, …, f7). Refer to the figures above for entries and dimensions. If dimension is not given the entries are calculated as 20% of the lengths between reference points. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection, cylindrical-shell, radial-brick, radial-cylinder, radial-tunnel, and tunnel-intersection."
-        },
-        {
-          "name": "edge",
-          "syntax": "edge f",
-          "description": "Specify an edge length for the sides of the mesh. If point 1, point 2, and point 3 are not specified, then the magnitude of the distance from point 0 will be defined by edge. By default the edge length is the number of zones specified in that direction."
-        },
-        {
-          "name": "fill",
-          "syntax": "fill <group s1 <slot s2 >>",
-          "description": "If specified, the interior region for some shapes (see Summary of Mesh Shape Properties above) will be filled with zones. If not specified, the interior region will not contain zones. If the optional group keyword is given with a valid name, the name s1 is assigned to the filled zones. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection, radial-brick, radial-cylinder, radial-tunnel, and tunnel-intersection."
-        },
-        {
-          "name": "group",
-          "syntax": "group s1 <slot s2 >",
-          "description": "Assign a group name s1 to this primitive at creation. By default (when the slot keyword is not supplied), the group is assigned to slot Default. Use of the group logic is described in Group."
-        },
-        {
-          "name": "merge",
-          "syntax": "merge b",
-          "description": "Gridpoints on the outer faces of the mesh are merged with existing mesh faces if this keyword is set true. During execution of a zone.create command, a check is made for each boundary gridpoint against the boundary gridpoints of zones that already exist. Internal gridpoints are not checked. If two boundary gridpoints fall within a tolerance of 1 × 10-7 (relative to the magnitude of the gridpoints’ position vector) of each other, they are assumed to be the same point, and the first gridpoint is used instead of creating new ones for all subsequent calculations. If merge is set false, two gridpoints are not merged into one."
-        },
-        {
-          "name": "point",
-          "syntax": "point i keyword",
-          "description": "The keywords point 0, point 1, point 2 … point 16 specify the reference (corner) points of shapes. By default, point 0 is located at (x = 0, y = 0, z = 0). By default, point 1, point 2, and point 3 are set to the orthogonal distances in the x-, y- and z-directions, with a magnitude equal to the number of zones in that direction. When specifying point 1, point 2, and point 3, the vectors point 0 - point 1, point 0 - point 2, and point 0 - point 3 must form a right-handed coordinate system."
-        },
-        {
-          "name": "point-v",
-          "syntax": "v <add>",
-          "description": "The position is given as a vector v. If the optional keyword add is used, the value of v will be added to the position of point 0."
-        },
-        {
-          "name": "point-gridpoint",
-          "syntax": "gridpoint s",
-          "description": "The position of the gridpoint with name s is used. See the zone gridpoint create command. This allows to user to create named reference points in space ahead of time, and refer to them when creating primitives."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio f1 <f2... >",
-          "description": "This specifies a ratio that is used to space zones with an increasing or decreasing geometric ratio. This ratio is defined as creating a zone size distribution such that each zone along the edge is f times the previous. Up to five ratio entries (f5) may be needed for some shapes. For each shape, the entries and their associated zone directions are shown in the reference images (click any thumbnail above). If ratio is not given, all entries default to 1.0."
-        },
-        {
-          "name": "size",
-          "syntax": "size i1 <i2... >",
-          "description": "This specifies the number of zones for each shape. Up to five (i5) may be needed for some shapes. The number required is listed in Summary of Mesh Shape Properties above. The entries and their corresponding directions for each shape are shown in the reference images (click any thumbnail above). If not specified, size values default to 10."
-        },
-        {
-          "name": "sweep-axis",
-          "syntax": "sweep-axis",
-          "description": "When this keyword is given, edge point 0 - point 2 is used as an axis about which edges point 1 - point 4 and point 3 - point 5 are swept. Without this keyword, the grid faces fall on the (point 0,point 1,point 3) and (point 2,point 4,point 5) planes."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.create.html#zone.create"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      },
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "brick.png",
-            "doc_path": "_images/brick.png"
-          },
-          {
-            "name": "cshell.png",
-            "doc_path": "_images/cshell.png"
-          },
-          {
-            "name": "cylinder.png",
-            "doc_path": "_images/cylinder.png"
-          },
-          {
-            "name": "cylint.png",
-            "doc_path": "_images/cylint.png"
-          },
-          {
-            "name": "dbrick.png",
-            "doc_path": "_images/dbrick.png"
-          },
-          {
-            "name": "pyramid.png",
-            "doc_path": "_images/pyramid.png"
-          },
-          {
-            "name": "radbrick.png",
-            "doc_path": "_images/radbrick.png"
-          },
-          {
-            "name": "radcylinder.png",
-            "doc_path": "_images/radcylinder.png"
-          },
-          {
-            "name": "radtunnel.png",
-            "doc_path": "_images/radtunnel.png"
-          },
-          {
-            "name": "tetrahedron.png",
-            "doc_path": "_images/tetrahedron.png"
-          },
-          {
-            "name": "tunint.png",
-            "doc_path": "_images/tunint.png"
-          },
-          {
-            "name": "uwedge.png",
-            "doc_path": "_images/uwedge.png"
-          },
-          {
-            "name": "wedge.png",
-            "doc_path": "_images/wedge.png"
-          },
-          {
-            "name": "wwedge.png",
-            "doc_path": "_images/wwedge.png"
-          }
-        ],
-        "text_incomplete": true,
-        "deferrals": [
-          "Refer to the figures above for entries and dimensions.",
-          "For each shape, the entries and their associated zone directions are shown in the reference images (click any thumbnail above).",
-          "The entries and their corresponding directions for each shape are shown in the reference images (click any thumbnail above)."
-        ],
-        "note": "The text below explicitly defers to figures that are not captured in this corpus, so load-bearing detail (reference-point ordering point 0..N, size -> direction mapping, dimension meaning) is missing here. Do not guess it: read the figure -- Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly. Or confirm empirically: build one primitive and read back gridpoint coordinates via itasca_execute_code to deduce the convention."
-      }
-    },
     "7.0": {
       "command": "zone create",
       "syntax": "zone create keyword",
@@ -272,7 +82,7 @@
         {
           "name": "dimension",
           "syntax": "dimension f...",
-          "description": "Specify the dimensions of interior regions for some shapes. These are used if the control point is not specifically given. Up to seven dimension entries may be required for a shape (f1, f2, f3, …, f7). Refer to the figures above for entries and dimensions. If dimension is not given the entries are calculated as 20% of the lengths between reference points. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection, cylindrical-shell, radial-brick, radial-cylinder, radial-tunnel, and tunnel-intersection."
+          "description": "Specify the dimensions of interior regions for some shapes. These are used if the control point is not specifically given. Up to seven dimension entries may be required for a shape (f1, f2, f3, \u2026, f7). Refer to the figures above for entries and dimensions. If dimension is not given the entries are calculated as 20% of the lengths between reference points. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection, cylindrical-shell, radial-brick, radial-cylinder, radial-tunnel, and tunnel-intersection."
         },
         {
           "name": "edge",
@@ -292,12 +102,12 @@
         {
           "name": "merge",
           "syntax": "merge b",
-          "description": "Gridpoints on the outer faces of the mesh are merged with existing mesh faces if this keyword is set true. During execution of a zone.create command, a check is made for each boundary gridpoint against the boundary gridpoints of zones that already exist. Internal gridpoints are not checked. If two boundary gridpoints fall within a tolerance of 1 × 10-7 (relative to the magnitude of the gridpoints’ position vector) of each other, they are assumed to be the same point, and the first gridpoint is used instead of creating new ones for all subsequent calculations. If merge is set false, two gridpoints are not merged into one."
+          "description": "Gridpoints on the outer faces of the mesh are merged with existing mesh faces if this keyword is set true. During execution of a zone.create command, a check is made for each boundary gridpoint against the boundary gridpoints of zones that already exist. Internal gridpoints are not checked. If two boundary gridpoints fall within a tolerance of 1 \u00d7 10-7 (relative to the magnitude of the gridpoints\u2019 position vector) of each other, they are assumed to be the same point, and the first gridpoint is used instead of creating new ones for all subsequent calculations. If merge is set false, two gridpoints are not merged into one."
         },
         {
           "name": "point",
           "syntax": "point i keyword",
-          "description": "The keywords point 0, point 1, point 2 … point 16 specify the reference (corner) points of shapes. By default, point 0 is located at (x = 0, y = 0, z = 0). By default, point 1, point 2, and point 3 are set to the orthogonal distances in the \\(x\\)-, \\(y\\)- and \\(z\\)-directions, with a magnitude equal to the number of zones in that direction. When specifying point 1, point 2, and point 3, the vectors point 0 - point 1, point 0 - point 2, and point 0 - point 3 must form a right-handed coordinate system."
+          "description": "The keywords point 0, point 1, point 2 \u2026 point 16 specify the reference (corner) points of shapes. By default, point 0 is located at (x = 0, y = 0, z = 0). By default, point 1, point 2, and point 3 are set to the orthogonal distances in the \\(x\\)-, \\(y\\)- and \\(z\\)-directions, with a magnitude equal to the number of zones in that direction. When specifying point 1, point 2, and point 3, the vectors point 0 - point 1, point 0 - point 2, and point 0 - point 3 must form a right-handed coordinate system."
         },
         {
           "name": "point-adummy",
@@ -474,7 +284,7 @@
         {
           "name": "dimension",
           "syntax": "dimension <f>...",
-          "description": "Specify the dimensions of interior regions for some shapes. These are used if the control point is not specifically given. Up to seven dimension entries may be required for a shape ( f1 , f2 , f3 , … , f7 ). Refer to the figures above for entries and dimensions. If dimension is not given the entries are calculated as 20% of the lengths between reference points. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection , cylindrical-shell , radial-brick , radial-cylinder , radial-tunnel , and tunnel-intersection ."
+          "description": "Specify the dimensions of interior regions for some shapes. These are used if the control point is not specifically given. Up to seven dimension entries may be required for a shape ( f1 , f2 , f3 , \u2026 , f7 ). Refer to the figures above for entries and dimensions. If dimension is not given the entries are calculated as 20% of the lengths between reference points. This keyword can only be used with the following keywords of the zone create command: cylindrical-intersection , cylindrical-shell , radial-brick , radial-cylinder , radial-tunnel , and tunnel-intersection ."
         },
         {
           "name": "edge",
@@ -494,12 +304,12 @@
         {
           "name": "merge",
           "syntax": "merge <b>",
-          "description": "Gridpoints from newly created zones are merged with existing gridpoints if this keyword is set true . During execution of a zone.create command, a check is made for each gridpoint on new zones boundaries against the boundary gridpoints of zones that already exist. Internal gridpoints are not checked. If two boundary gridpoints fall within a tolerance of 1.e-7 (relative to the magnitude of the gridpoints’ position vector) of each other, they are assumed to be the same point, and existing gridpoint is used instead of creating new ones for all subsequent calculations. If merge is set false , two gridpoints are not merged into one."
+          "description": "Gridpoints from newly created zones are merged with existing gridpoints if this keyword is set true . During execution of a zone.create command, a check is made for each gridpoint on new zones boundaries against the boundary gridpoints of zones that already exist. Internal gridpoints are not checked. If two boundary gridpoints fall within a tolerance of 1.e-7 (relative to the magnitude of the gridpoints\u2019 position vector) of each other, they are assumed to be the same point, and existing gridpoint is used instead of creating new ones for all subsequent calculations. If merge is set false , two gridpoints are not merged into one."
         },
         {
           "name": "gridpoint",
           "syntax": "gridpoint <s>",
-          "description": "The keywords point 0 , point 1 , point 2 … point 16 specify the reference (corner) points of shapes. By default, point 0 is located at ( x = 0, y = 0, z = 0). By default, point 1 , point 2 , and point 3 are set to the orthogonal distances in the \\(x\\) -, \\(y\\) - and \\(z\\) -directions, with a magnitude equal to the number of zones in that direction. When specifying point 1 , point 2 , and point 3 , the vectors point 0 - point 1 , point 0 - point 2 , and point 0 - point 3 must form a right-handed coordinate system. Up to 16 points may be required for a shape. The number required is shown in Summary of 3D Mesh Shape Properties above. The locations of these points are illustrated in the reference images (click on any thumbnail above to access). The following options are available to define the location of any given point The position is given as a vector v . If the optional keyword add is used, the value of v will be added to the position of point 0 . The position of the gridpoint with name s is used. See the zone gridpoint create command. This allows to user to create named reference points in space ahead of time, and refer to them when creating primitives."
+          "description": "The keywords point 0 , point 1 , point 2 \u2026 point 16 specify the reference (corner) points of shapes. By default, point 0 is located at ( x = 0, y = 0, z = 0). By default, point 1 , point 2 , and point 3 are set to the orthogonal distances in the \\(x\\) -, \\(y\\) - and \\(z\\) -directions, with a magnitude equal to the number of zones in that direction. When specifying point 1 , point 2 , and point 3 , the vectors point 0 - point 1 , point 0 - point 2 , and point 0 - point 3 must form a right-handed coordinate system. Up to 16 points may be required for a shape. The number required is shown in Summary of 3D Mesh Shape Properties above. The locations of these points are illustrated in the reference images (click on any thumbnail above to access). The following options are available to define the location of any given point The position is given as a vector v . If the optional keyword add is used, the value of v will be added to the position of point 0 . The position of the gridpoint with name s is used. See the zone gridpoint create command. This allows to user to create named reference points in space ahead of time, and refer to them when creating primitives."
         },
         {
           "name": "ratio",

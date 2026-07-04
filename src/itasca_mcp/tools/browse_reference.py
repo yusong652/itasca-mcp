@@ -14,6 +14,7 @@ from itasca_mcp.utils import (
     normalize_command_doc_version,
     normalize_input,
     normalize_software_value,
+    supported_doc_versions,
 )
 
 
@@ -39,9 +40,10 @@ def register(mcp: FastMCP) -> None:
         version: CommandDocVersion = Field(
             CommandDocVersion.V7_0,
             description=(
-                "Documentation version (6.0/7.0/9.0). Only gates version-specific items "
-                "(e.g. PFC contact models by availability). range-elements, plot-items, and the "
-                "FLAC/3DEC reference sets are version-agnostic, so the value is ignored for them. "
+                "Documentation version (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0). Only gates "
+                "version-specific items (e.g. PFC contact models by availability). "
+                "range-elements, plot-items, and the FLAC/3DEC reference sets are "
+                "version-agnostic, so the value is ignored for them. "
                 "9.0-only engines (3DEC, MPoint, MassFlow) always resolve at 9.0."
             ),
         ),
@@ -72,6 +74,14 @@ def register(mcp: FastMCP) -> None:
         topic_str = normalize_input(topic, lowercase=True)
         sw = normalize_software_value(software)
         version_value = effective_doc_version(sw, normalize_command_doc_version(version))
+
+        supported = supported_doc_versions(sw)
+        if version_value not in supported:
+            return build_error(
+                code="unsupported_version",
+                message=f"{sw} documentation covers versions: {', '.join(sorted(supported))}.",
+                details={"input": {"software": sw, "version": version_value}},
+            )
 
         if not topic_str:
             return build_ok(_browse_references_root(version_value, sw))

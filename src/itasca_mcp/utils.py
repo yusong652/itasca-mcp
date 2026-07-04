@@ -65,9 +65,22 @@ def normalize_software_value(value: "Software | str") -> str:
 # docs carry a single "9.0" key. The documentation tools' version selector
 # defaults to 7.0 (a PFC-era leftover), which would otherwise make every
 # 9.0-only command resolve as "unavailable", so the effective version is coerced
-# to 9.0 for these engines. PFC (6.0/7.0/9.0) and FLAC (6.0/7.0/9.0) keep their
+# to 9.0 for these engines. PFC (6.0/7.0/9.0) and FLAC (7.0/9.0) keep their
 # multi-version behavior.
 NINE_ZERO_ONLY_SOFTWARE = frozenset({"3dec", "mpoint", "massflow"})
+
+# Doc versions each engine's corpus covers.
+SUPPORTED_DOC_VERSIONS: dict[str, frozenset[str]] = {
+    "pfc": frozenset({"6.0", "7.0", "9.0"}),
+    "flac": frozenset({"7.0", "9.0"}),
+}
+
+_NINE_ZERO_ONLY_VERSIONS = frozenset({"9.0"})
+
+
+def supported_doc_versions(software: str) -> frozenset[str]:
+    """Return the doc versions available for a normalized software value."""
+    return SUPPORTED_DOC_VERSIONS.get(software, _NINE_ZERO_ONLY_VERSIONS)
 
 
 def effective_doc_version(software: str, version: str) -> str:

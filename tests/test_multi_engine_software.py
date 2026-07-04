@@ -630,17 +630,53 @@ async def test_nine_zero_only_reference_summary_reports_9_0() -> None:
 
 
 # --- FLAC: the 9.x series is represented by a single 9.0 key -----------------
-# FLAC is multi-version (6.0/7.0/9.0). The only command that had granular 9.1/9.3
+# FLAC is multi-version (7.0/9.0). The only command that had granular 9.1/9.3
 # keys (model configure) folds the current 9.x content into 9.0.
 
 
 def test_flac_model_configure_single_9x_key() -> None:
     doc = CommandLoader.load_command_doc("model", "configure", "9.0", software="flac")
     assert doc is not None
-    assert set(doc["versions"]) == {"6.0", "7.0", "9.0"}  # 9.1/9.3 folded away
+    assert set(doc["versions"]) == {"7.0", "9.0"}  # 9.1/9.3 folded away
     kw = {k["name"] for k in doc["keywords"]}
     # Current 9.x syntax (fluid-flow) folded into 9.0; the old 'fluid' is gone.
     assert "fluid-flow" in kw and "fluid" not in kw
+
+
+# --- per-engine doc versions: FLAC covers 7.0/9.0, PFC keeps 6.0 --------------
+
+
+@pytest.mark.asyncio
+async def test_flac_6_0_rejected_across_doc_tools() -> None:
+    for tool, extra in (
+        ("itasca_browse_commands", {"command": "zone create"}),
+        ("itasca_query_command", {"query": "zone create"}),
+        ("itasca_browse_reference", {}),
+    ):
+        result = await mcp.call_tool(tool, {"software": "flac", "version": "6.0", **extra})
+        payload = _parse_tool_payload(result)
+        assert payload["ok"] is False, (tool, payload)
+        assert payload["error"]["code"] == "unsupported_version", tool
+
+
+@pytest.mark.asyncio
+async def test_pfc_6_0_docs_still_supported() -> None:
+    result = await mcp.call_tool(
+        "itasca_browse_commands", {"software": "pfc", "command": "ball create", "version": "6.0"}
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is True, payload
+    assert payload["data"]["summary"]["version"] == "6.0"
+
+
+def test_flac_common_doc_versions_exclude_6_0() -> None:
+    # _common docs keep their 6.0 key for PFC; the FLAC view must not advertise it.
+    doc = CommandLoader.load_command_doc("plot", "active", "7.0", software="flac")
+    assert doc is not None
+    assert "6.0" not in doc["versions"]
+    pfc_doc = CommandLoader.load_command_doc("plot", "active", "6.0", software="pfc")
+    assert pfc_doc is not None
+    assert "6.0" in pfc_doc["versions"]
 
 
 # --- 3DEC references (joint constitutive models) ----------------------------

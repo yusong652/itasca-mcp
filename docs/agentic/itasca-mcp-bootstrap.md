@@ -13,8 +13,9 @@ Use this guide when an agent needs to set up `itasca-mcp` execution end-to-end o
 
 - Use bounded, fast path detection for `itasca_path`; avoid full-drive recursive scans by default.
 - Install the package with the engine's embedded interpreter (`itasca_python`). Resolve it by globbing `{itasca_path}/exe64/python*/python.exe` (each install ships exactly one):
-  - 6.0 / 7.0: `exe64/python36/python.exe`
-  - 9.0: `exe64/python310/python.exe`
+  - PFC 6.0 / 7.0 and FLAC 7.0: `exe64/python36/python.exe`
+  - 9.0 (all engines): `exe64/python310/python.exe`
+  - If the glob resolves to `python27` (FLAC 6.x), stop: the bridge requires Python >= 3.6 and cannot run in that engine. Report this to the user and recommend upgrading to 7.0+.
 - If a step fails, report the exact command and output, then apply the next fallback.
 - Respect step ownership labels:
   - `[AGENT]` means the agent should execute the action.
@@ -141,7 +142,7 @@ First resolve `itasca_python`, the engine's embedded interpreter. Detect it dire
 Get-ChildItem -Path "{itasca_path}/exe64/python*/python.exe" -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
 ```
 
-Known mapping if you prefer to resolve it by version: 6.0/7.0 → `exe64/python36/python.exe`, 9.0 → `exe64/python310/python.exe`.
+Known mapping if you prefer to resolve it by version: PFC 6.0/7.0 and FLAC 7.0 → `exe64/python36/python.exe`, 9.0 → `exe64/python310/python.exe`. FLAC 6.x ships `exe64/python27` — Python 2.7 cannot run the bridge; do not attempt the install there.
 
 Check current package:
 
