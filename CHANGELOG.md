@@ -45,6 +45,34 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-07-04
+
+### Removed
+- **FLAC 6.0 documentation.** FLAC 6.x embeds Python 2.7, which cannot run
+  `itasca-mcp-bridge` (Python >= 3.6), so its command docs were removed from
+  the corpus and from the doc tools' version selectors. Requesting
+  `software="flac"` with `version="6.0"` now returns an `unsupported_version`
+  error stating the covered versions (FLAC: 7.0/9.0). PFC 6.0 is unaffected —
+  it ships Python 3.6 and remains fully supported (PFC: 6.0/7.0/9.0). Shared
+  `_common` docs no longer advertise versions outside the requesting engine's
+  coverage.
+
+### Fixed
+- **Bridge (`itasca-mcp-bridge` 0.4.1): client disconnects no longer dump
+  tracebacks into the engine GUI console.** A dropped MCP client socket on
+  Windows (`WinError 10053`, e.g. an SSE stream reconnecting) surfaced as a
+  noisy `ConnectionAbortedError` traceback; the connection now deregisters
+  quietly. Bridges pick this up automatically via self-upgrade on start.
+
+### Documentation
+- README prerequisites and the agentic bootstrap guide now state per-engine
+  minimum versions, with an engine-aware embedded-interpreter mapping; during
+  bootstrap the agent stops early with a clear report when the interpreter
+  resolves to `python27` (FLAC 6.x) instead of failing at the pip step.
+- README and bootstrap guide reframed as multi-engine (PFC → ITASCA), with
+  client-native `mcp add`-style commands for manual setup and an explicit
+  9.0+ engine recommendation.
+
 ## [0.6.0] - 2026-06-27
 
 First release under the `itasca-mcp` name (formerly `pfc-mcp`). The server is

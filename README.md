@@ -30,7 +30,7 @@
 
 ### Prerequisites
 
-- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended. Older builds are supported only if their embedded Python is 3.6+: PFC 6.0 / 7.0 qualify; FLAC requires 7.0+ (FLAC 6.x embeds Python 2.7 and cannot run the bridge).
+- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended; PFC 6.0 / 7.0 and FLAC 7.0 are also supported.
 - **[uv](https://docs.astral.sh/uv/getting-started/installation/)** installed (for `uvx`)
 
 ### Agentic Setup (Recommended)
