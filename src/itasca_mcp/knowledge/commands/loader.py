@@ -15,6 +15,7 @@ from functools import lru_cache
 from typing import Any, cast
 
 from itasca_mcp.knowledge.config import command_index_path, resolve
+from itasca_mcp.utils import supported_doc_versions
 
 
 class CommandLoader:
@@ -70,8 +71,16 @@ class CommandLoader:
             return cast(dict[str, Any], json.load(f))
 
     @staticmethod
-    def _resolve_versioned_doc(doc: dict[str, Any], version: str) -> dict[str, Any]:
-        """Resolve a possibly-versioned command doc to a stable runtime shape."""
+    def _resolve_versioned_doc(
+        doc: dict[str, Any], version: str, allowed_versions: frozenset[str] | None = None
+    ) -> dict[str, Any]:
+        """Resolve a possibly-versioned command doc to a stable runtime shape.
+
+        ``allowed_versions`` restricts the advertised ``versions`` list to what the
+        requesting engine's docs cover — shared ``_common`` docs carry keys for
+        every engine (e.g. 6.0 for PFC) that must not leak into engines whose
+        corpus does not include that version (e.g. FLAC).
+        """
         versions = doc.get("versions")
         if not isinstance(versions, dict):
             if version != CommandLoader.DEFAULT_VERSION:
@@ -85,7 +94,7 @@ class CommandLoader:
             raise KeyError(version)
 
         resolved = {k: v for k, v in doc.items() if k != "versions"}
-        resolved["versions"] = list(versions.keys())
+        resolved["versions"] = [v for v in versions if allowed_versions is None or v in allowed_versions]
 
         version_doc = versions[version]
         if version_doc.get("available") is False:
@@ -160,7 +169,7 @@ class CommandLoader:
         if raw_doc is None:
             return None
 
-        return CommandLoader._resolve_versioned_doc(raw_doc, version)
+        return CommandLoader._resolve_versioned_doc(raw_doc, version, supported_doc_versions(software))
 
     @staticmethod
     def get_all_commands(*, software: str) -> list[dict[str, Any]]:

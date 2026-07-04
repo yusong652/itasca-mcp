@@ -10,37 +10,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "structure liner recover",
-      "syntax": "structure liner recover keyword",
-      "description": "Stress recovery for liner elements. The stress-recovery procedure can be applied to all elements to compute both the stress resultants and the stresses acting at a specified depth. The range keyword identifies the patch of elements to which the command will apply. Note that the recovered quantities will depend upon the range of elements over which these quantities are being recovered, because nodal averaging only occurs for elements within this range.",
-      "keywords": [
-        {
-          "name": "resultants",
-          "syntax": "resultants <range>",
-          "description": "recover the eight stress resultants for all elements in the optional range. The stress resultants are expressed in terms of the surface coordinate system. This command assumes that a consistent surface coordinate system has been established for the group of elements in the range (see the surface keyword). The bending and membrane stress resultants (Mx, My, Mxy, Nx, Ny, and Nxy) vary linearly over each element, whereas the transverse-shear stress resultants (Qx and Qy) are constant over each element. The recovery procedure first computes the average values of bending and membrane stress resultants (by averaging, at the nodes, the contributions from each linerSEL in the range), and then spatially differentiates this average bending field over each element to obtain the transverse-shear stress resultants."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress <depth-factor f >",
-          "description": "recover a stress tensor (expressed in global coordinate system) at a specified depth in all elements in the optional range. The depth equals v times t/2, where t is shell thickness. The depth factor, v, must be in the range [-1, +1]. v equal to +1/-1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system z-direction), and v equal to zero corresponds with the shell mid-surface. If v is not specified, it defaults to +1."
-        },
-        {
-          "name": "surface",
-          "syntax": "surface v",
-          "description": "the vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, x’ y’ z’, has the following properties: 1) z’ is normal to the surface; 2) x’ is the projection of the given vector onto the surface; and 3) y’ is orthogonal to x’ and z’. The z’-direction is found at each node by taking the average normal direction of all elements in the range. If surface v is aligned with z’ at any node, then processing stops and an error message is displayed. To proceed, designate a different v, or restrict the range of elements considered."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.recover.html#structure.liner.recover"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "structure liner recover",
       "syntax": "structure liner recover keyword",
@@ -59,7 +28,7 @@
         {
           "name": "surface",
           "syntax": "surface v",
-          "description": "the vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x\\)‘ \\(y\\)‘ \\(z\\)‘, has the following properties: 1) \\(z\\)‘ is normal to the surface; 2) \\(x\\)‘ is the projection of the given vector onto the surface; and 3) \\(y\\)‘ is orthogonal to \\(x\\)‘ and \\(z\\)‘. The \\(z\\)‘-direction is found at each node by taking the average normal direction of all elements in the range. If surface v is aligned with \\(z\\)‘ at any node, then processing stops and an error message is displayed. To proceed, designate a different v, or restrict the range of elements considered."
+          "description": "the vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x\\)\u2018 \\(y\\)\u2018 \\(z\\)\u2018, has the following properties: 1) \\(z\\)\u2018 is normal to the surface; 2) \\(x\\)\u2018 is the projection of the given vector onto the surface; and 3) \\(y\\)\u2018 is orthogonal to \\(x\\)\u2018 and \\(z\\)\u2018. The \\(z\\)\u2018-direction is found at each node by taking the average normal direction of all elements in the range. If surface v is aligned with \\(z\\)\u2018 at any node, then processing stops and an error message is displayed. To proceed, designate a different v, or restrict the range of elements considered."
         }
       ],
       "legacy_documentation": {
@@ -84,7 +53,7 @@
         {
           "name": "stress",
           "syntax": "stress [depth-factor <f>]",
-          "description": "recover a stress tensor (expressed in the global coordinate system) at a specified depth for all elements with an elastic material model in the optional range. The depth equals \\(z^\\star\\) times \\(t\\) /2, where \\(z^\\star\\) is depth factor and \\(t\\) is shell thickness. The depth factor must be in the range [-1, +1]. \\(z^\\star\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\) -direction), and \\(z^\\star\\) equal to zero corresponds with the shell midsurface. If the depth factor is not specified, then it defaults to +1. Stresses are recovered at the three nodal points and centroid of each element with an elastic material model. If the \\(xy\\) -axes lie on the shell midsurface, then 1) stress components \\(σ_{xx}\\) , \\(σ_{yy}\\) , and \\(σ_{xy}\\) vary linearly over each element, 2) stress components \\(σ_{xz}\\) and \\(σ_{yz}\\) are constant over each element, and 3) \\(σ_{zz}\\) = 0 over each element. The stresses are obtained from the stress resultants by the following relations which hold for a homogeneous, linear elastic and thin-walled shell These stresses are computed in the surface coordinate system in which are expressed the stress resultants, and then transformed into the global coordinate system. If the stress resultants are not valid when this command is executed, then an attempt is made to recover them. If this attempt fails, then an error message is displayed indicating the problem. The usual problem is an inconsistency of the surface system, which must be rectified with the structure liner recover surface command. Stresses and principal stresses for elements with an elastic material model can be queried after recovery with the commands structure liner list stress and structure liner list stress-principal , and with the FISH functions struct.shell.stress and struct.shell.stress.prin . The depth at which these stresses have been recovered can be queried with the command structure liner list depth-factor and the FISH function struct.shell.stress.depth.factor . The validity of the stresses and principal stresses for a particular element can be queried with the FISH function struct.shell.stress.valid ."
+          "description": "recover a stress tensor (expressed in the global coordinate system) at a specified depth for all elements with an elastic material model in the optional range. The depth equals \\(z^\\star\\) times \\(t\\) /2, where \\(z^\\star\\) is depth factor and \\(t\\) is shell thickness. The depth factor must be in the range [-1, +1]. \\(z^\\star\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\) -direction), and \\(z^\\star\\) equal to zero corresponds with the shell midsurface. If the depth factor is not specified, then it defaults to +1. Stresses are recovered at the three nodal points and centroid of each element with an elastic material model. If the \\(xy\\) -axes lie on the shell midsurface, then 1) stress components \\(\u03c3_{xx}\\) , \\(\u03c3_{yy}\\) , and \\(\u03c3_{xy}\\) vary linearly over each element, 2) stress components \\(\u03c3_{xz}\\) and \\(\u03c3_{yz}\\) are constant over each element, and 3) \\(\u03c3_{zz}\\) = 0 over each element. The stresses are obtained from the stress resultants by the following relations which hold for a homogeneous, linear elastic and thin-walled shell These stresses are computed in the surface coordinate system in which are expressed the stress resultants, and then transformed into the global coordinate system. If the stress resultants are not valid when this command is executed, then an attempt is made to recover them. If this attempt fails, then an error message is displayed indicating the problem. The usual problem is an inconsistency of the surface system, which must be rectified with the structure liner recover surface command. Stresses and principal stresses for elements with an elastic material model can be queried after recovery with the commands structure liner list stress and structure liner list stress-principal , and with the FISH functions struct.shell.stress and struct.shell.stress.prin . The depth at which these stresses have been recovered can be queried with the command structure liner list depth-factor and the FISH function struct.shell.stress.depth.factor . The validity of the stresses and principal stresses for a particular element can be queried with the FISH function struct.shell.stress.valid ."
         },
         {
           "name": "surface",

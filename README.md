@@ -99,7 +99,7 @@ itasca_mcp_bridge.start()
 ## Features
 
 - **Multi-engine corpus** - command, Python API, and reference docs for PFC, FLAC, 3DEC, MPoint, and MassFlow, selected via the required `software` parameter
-- **Multi-version support** - command docs across engine versions (e.g. 6.0, 7.0, 9.0) via the `version` parameter
+- **Multi-version support** - command docs across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0) via the `version` parameter
 - **Hierarchical documentation browsing** - agents navigate the engine command tree to discover capabilities and boundaries, reducing hallucinated commands
 - **Enhanced plot documentation** - plot items reference docs supplementing the official documentation
 - **Interactive REPL** - rapid iteration before committing to full scripts; agents can quickly test and refine code

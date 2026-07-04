@@ -5,7 +5,7 @@ from typing import Any
 from fastmcp import FastMCP
 from pydantic import Field
 
-from itasca_mcp.contracts import build_docs_data, build_ok
+from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
 from itasca_mcp.knowledge.query import CommandSearch
 from itasca_mcp.utils import (
@@ -16,6 +16,7 @@ from itasca_mcp.utils import (
     effective_doc_version,
     normalize_command_doc_version,
     normalize_software_value,
+    supported_doc_versions,
 )
 
 
@@ -31,7 +32,8 @@ def register(mcp: FastMCP) -> None:
             CommandDocVersion.V7_0,
             description=(
                 "Documentation version to search. Defaults to 7.0 for multi-version engines "
-                "(PFC, FLAC); 9.0-only engines (3DEC, MPoint, MassFlow) always resolve at 9.0."
+                "(PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0); 9.0-only engines (3DEC, MPoint, MassFlow) "
+                "always resolve at 9.0."
             ),
         ),
     ) -> dict[str, Any]:
@@ -50,6 +52,15 @@ def register(mcp: FastMCP) -> None:
         """
         sw = normalize_software_value(software)
         version_value = effective_doc_version(sw, normalize_command_doc_version(version))
+
+        supported = supported_doc_versions(sw)
+        if version_value not in supported:
+            return build_error(
+                code="unsupported_version",
+                message=f"{sw} documentation covers versions: {', '.join(sorted(supported))}.",
+                details={"input": {"software": sw, "version": version_value}},
+            )
+
         results = CommandSearch.search_commands_only(query, top_k=limit, version=version_value, software=sw)
         matches: list[dict[str, Any]] = []
         for result in results:

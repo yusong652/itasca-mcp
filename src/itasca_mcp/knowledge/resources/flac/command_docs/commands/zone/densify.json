@@ -9,52 +9,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone densify",
-      "syntax": "zone densify keyword <range>",
-      "description": "This command finds all zones in the range and subdivides them into smaller zones filling the same volume. This will create new zones, and in general will create new gridpoints. The new zones will copy the group assignments of the original.",
-      "keywords": [
-        {
-          "name": "global",
-          "syntax": "global",
-          "description": "This specifies that the zone edges to which the segments keyword applies are the ones that most closely correspond to the global x, y and z axes."
-        },
-        {
-          "name": "gradient-limit",
-          "syntax": "gradient-limit",
-          "description": "Zones chosen for densification will be checked to attempt to ensure that adjacent zones differ by, at most, one level of densification. This may mean more zones will be densified than actually fall into the range."
-        },
-        {
-          "name": "local",
-          "syntax": "local",
-          "description": "This is to set the zones to be densified in a local segment order. The local segment order is along the edges of e1, e2 and e3, where e1, e2 and e3 are the edges of the first and second, first and third, and first and fourth gridpoints of this zone. This is the default setting."
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length f1 <f2 <f3 >>",
-          "description": "This specifies the maximum edge lengths to be densified, in order. If f2 and f3 are not specified, they will be set to the same number as f1."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments i1 <i2 <i3 >>",
-          "description": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1."
-        },
-        {
-          "name": "repeat",
-          "syntax": "repeat <i >",
-          "description": "Repeats the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then FLAC3D will repeat until the maximum-length is reached, applying the division specified in segments each time."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.densify.html#zone.densify"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "zone densify",
       "syntax": "zone densify keyword... <range>",
@@ -88,7 +42,7 @@
         {
           "name": "maximum-length",
           "syntax": "maximum-length f1 <f2 <f3 >>",
-          "description": "This specifies the maximum edge lengths to be densified, in order of local or global x, y, or z direction. If f2 and f3 are not specified, they will be set to the same number as f1. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…)."
+          "description": "This specifies the maximum edge lengths to be densified, in order of local or global x, y, or z direction. If f2 and f3 are not specified, they will be set to the same number as f1. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,\u2026)."
         },
         {
           "name": "segments",
@@ -143,12 +97,12 @@
         {
           "name": "maximum-length",
           "syntax": "maximum-length <f1>[<f2>[<f3>]]",
-          "description": "This specifies the maximum edge lengths to be densified, in order of local or global \\(x\\) -, \\(y\\) -, or \\(z\\) - direction. If f2 and f3 are not specified, they will be set to the same number as f1 . The value f3 is used in 3D only. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…). Note that this differs from the behavior of the edge-limit keyword, which will use the divisions specified in the segments keyword. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
+          "description": "This specifies the maximum edge lengths to be densified, in order of local or global \\(x\\) -, \\(y\\) -, or \\(z\\) - direction. If f2 and f3 are not specified, they will be set to the same number as f1 . The value f3 is used in 3D only. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,\u2026). Note that this differs from the behavior of the edge-limit keyword, which will use the divisions specified in the segments keyword. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
         },
         {
           "name": "segments",
           "syntax": "segments <i1>[<i2>[<i3>]]",
-          "description": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1 . The value i3 is used in 3D only. Note that using non-uniform segment values is not recommended on very irregular starting meshes—in particular the kind resulting from mesh generation tools like Griddle . Adjacent zones may have very different local orientations. Use of the global keyword may mitigate these effects but it will not eliminate them. If using non-uniform segment values, choose choose numbers that are multiples of each other. For example 1,2,4 will tend to produce better meshes than 2,3,5."
+          "description": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1 . The value i3 is used in 3D only. Note that using non-uniform segment values is not recommended on very irregular starting meshes\u2014in particular the kind resulting from mesh generation tools like Griddle . Adjacent zones may have very different local orientations. Use of the global keyword may mitigate these effects but it will not eliminate them. If using non-uniform segment values, choose choose numbers that are multiples of each other. For example 1,2,4 will tend to produce better meshes than 2,3,5."
         },
         {
           "name": "repeat",

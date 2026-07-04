@@ -9,175 +9,10 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone apply",
-      "syntax": "zone apply keyword <range>",
-      "description": "Create or modify zone conditions. This command is used to apply conditions to the volume represented by zones — i.e., body forces or fluid/thermal sources. For application of boundary conditions on surfaces represented by zone faces, see the zone face apply command. The user must specify the condition type, the numerical value, optional modifiers, and an optional range over which the condition is to be applied. If no range is specified, then the command applies to the entire model. Removal of zone conditions is done with a separate command — see zone apply-remove.",
-      "keywords": [
-        {
-          "name": "force",
-          "syntax": "force v [zoneapplyoptions]",
-          "description": "All components (x, y, and z) of the body force per unit volume applied to a zone."
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x f [zoneapplyoptions]",
-          "description": "The x-component of the body force per unit volume applied to a zone."
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y f [zoneapplyoptions]",
-          "description": "The y-component of the body force per unit volume applied to a zone."
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z f [zoneapplyoptions]",
-          "description": "The z-component of the body force per unit volume applied to a zone."
-        },
-        {
-          "name": "source",
-          "syntax": "source f [zoneapplyoptions]",
-          "description": "A heat-generating source, f, is applied as a volume source of the specified strength (e.g., in W/m3) in each zone in the specified range. When a new source is applied to a zone with an existing source, the new source strength replaces the existing source strength."
-        },
-        {
-          "name": "well",
-          "syntax": "well f [zoneapplyoptions]",
-          "description": "A volume rate of flow, f (i.e., fluid volume per zone volume per unit time), is specified for each zone in the specified range (f > 0 for inflow)."
-        },
-        {
-          "name": "fish",
-          "syntax": "fish s",
-          "description": "Specify a multiplier that is a FISH function named s. The return value of this FISH function is multiplied by the base value (including gradient) over all zones included in this apply condition. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step."
-        },
-        {
-          "name": "fish-local",
-          "syntax": "fish-local s",
-          "description": "Specify a multiplier that is a FISH function named s, which is applied separately to each individual zone affected by this apply condition. This function must take two arguments, the first of which will be a pointer to the specific zone. The second argument is not used. This allows an apply condition to vary over time as well as space. The returned value of this FISH function is multiplied by the base value (including gradient) on the specific zone supplied. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step for every zone included in the apply condition."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient v <origin v >",
-          "description": "Applies a gradient in space to the scalar-value provided. The position used in this calculation is the zone centroid. Another way of assigning a linear gradient is with the vary modifier."
-        },
-        {
-          "name": "servo",
-          "syntax": "servo keyword...",
-          "description": "Use a servo tied to the mechanical convergence ratio to control the magnitude of the applied condition. This can be used to maintain, gradually ramp up, or gradually reduce apply conditions while maintaining a quasi-static response. By default the multiplier will start at 0.001, and will gradually increase to 1.0 as the convergence ratio falls below 2e-3, and decrease if it rises above 1e-2. The following keywords are available to control the servo response:"
-        },
-        {
-          "name": "servo-latency",
-          "syntax": "latency i",
-          "description": "The minimum number of steps that must pass since the last servo adjustment before the next one occurs. This can keep the servo from overcontrolling in the initial response to an adjustment. The default value is 1."
-        },
-        {
-          "name": "servo-lower-bound",
-          "syntax": "lower-bound f",
-          "description": "Set the lower mechanical convergence ratio value. If the current ratio falls below this value, the current multiplier will be multiplied by the lower-multiplier. The default value is 2e-3."
-        },
-        {
-          "name": "servo-lower-multiplier",
-          "syntax": "lower-multiplier f",
-          "description": "If the current ratio falls below the lower-bound, the value is multiplied by this. The default value is 0.975."
-        },
-        {
-          "name": "servo-maximum",
-          "syntax": "maximum f",
-          "description": "The maximum value the current multiplier is allowed to become. The default value is 1.0."
-        },
-        {
-          "name": "servo-minimum",
-          "syntax": "minimum f",
-          "description": "The minimum value the current multiplier is allowed to become. The default value is 0.001."
-        },
-        {
-          "name": "servo-ramp",
-          "syntax": "ramp",
-          "description": "Sets the servo into ramp mode. This means that the current multiplier is not allowed to go down, the value will only increase. This is useful to gradually increase an applied condition to it’s full value. See also the reduce keyword."
-        },
-        {
-          "name": "servo-ratio",
-          "syntax": "ratio keyword",
-          "description": "Which mechanical convergence ratio is compared against lower-bound and upper-bound. By default this is the current value assigned by the zone ratio command (which is average by default. See the zone ratio command for definitions. The available keywords are:"
-        },
-        {
-          "name": "servo-ratio-average",
-          "syntax": "average",
-          "description": "Use the average mechanical force ratio."
-        },
-        {
-          "name": "servo-ratio-maximum",
-          "syntax": "maximum",
-          "description": "Use the maximum mechanical force ratio."
-        },
-        {
-          "name": "servo-ratio-local",
-          "syntax": "local",
-          "description": "Use the local mechanical force ratio."
-        },
-        {
-          "name": "servo-reduce",
-          "syntax": "reduce",
-          "description": "Sets the servo into reduce mode. In this mode the starting value of the current multiplier is 1.0, and the minimum value is set to 0.0. When the current ratio falls below lower-bound the current multiplier is reduced by the upper-multiplier. The current multiplier is never increased. This is useful to gradually decrease an applied condition to zero."
-        },
-        {
-          "name": "servo-upper-bound",
-          "syntax": "upper-bound f",
-          "description": "Set the upper mechanical convergence ratio value. If the current ratio rises above this value, the current multiplier will be multiplier by the upper-multiplier. The default value is 1e-2."
-        },
-        {
-          "name": "servo-upper-multiplier",
-          "syntax": "upper-multiplier f",
-          "description": "If the current ratio rises above the upper-bound, the value is multiplied by this. The default value is 1.01."
-        },
-        {
-          "name": "table",
-          "syntax": "table s <time keyword>",
-          "description": "Specify a value multiplier that is a table (named s). By default, the x-value of the table is the step number. The returned value of this table is multiplied by the base value (including gradient) over all zones included in this apply condition. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. The table lookup will be performed every step. The time scale for the x-axis can also be selected by giving the time keyword followed by one of the following options:"
-        },
-        {
-          "name": "table-step",
-          "syntax": "step"
-        },
-        {
-          "name": "table-creep",
-          "syntax": "creep"
-        },
-        {
-          "name": "table-dynamic",
-          "syntax": "dynamic"
-        },
-        {
-          "name": "table-fluid",
-          "syntax": "fluid"
-        },
-        {
-          "name": "table-mechanical",
-          "syntax": "mechanical"
-        },
-        {
-          "name": "table-thermal",
-          "syntax": "thermal"
-        },
-        {
-          "name": "vary",
-          "syntax": "vary v",
-          "description": "Apply a linear variation to the scalar-value provided. The position used in this calculation is the zone centroid. Another way of assigning a linear gradient is with the gradient modifier."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.apply.html#zone.apply"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "zone apply",
       "syntax": "zone apply keyword <range>",
-      "description": "Create or modify zone apply conditions. This command is used to apply conditions to the volume represented by zones — i.e., body forces or fluid/thermal sources. For application of boundary conditions on surfaces represented by zone faces, see the zone face apply command. The user must specify the condition type, the numerical value, optional modifiers, and an optional range over which the condition is to be applied. If no range is specified, then the command applies to the entire model. Removal of zone conditions is done with a separate command — see zone apply-remove.",
+      "description": "Create or modify zone apply conditions. This command is used to apply conditions to the volume represented by zones \u2014 i.e., body forces or fluid/thermal sources. For application of boundary conditions on surfaces represented by zone faces, see the zone face apply command. The user must specify the condition type, the numerical value, optional modifiers, and an optional range over which the condition is to be applied. If no range is specified, then the command applies to the entire model. Removal of zone conditions is done with a separate command \u2014 see zone apply-remove.",
       "keywords": [
         {
           "name": "force",
@@ -257,7 +92,7 @@
         {
           "name": "servo-ramp",
           "syntax": "ramp",
-          "description": "Sets the servo into ramp mode. This means that the current multiplier is not allowed to go down, the value will only increase. This is useful to gradually increase an applied condition to it’s full value. See also the reduce keyword."
+          "description": "Sets the servo into ramp mode. This means that the current multiplier is not allowed to go down, the value will only increase. This is useful to gradually increase an applied condition to it\u2019s full value. See also the reduce keyword."
         },
         {
           "name": "servo-ratio",

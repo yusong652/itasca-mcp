@@ -4,127 +4,11 @@
     "generate",
     "zone"
   ],
-  "description": "Generate zones based on an algorithm—generally from some other data structure. The following keywords are available:",
+  "description": "Generate zones based on an algorithm\u2014generally from some other data structure. The following keywords are available:",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "zone generate",
-      "syntax": "zone generate keyword",
-      "description": "This set of commands generates zones based on an algorithm, generally from some other data structure. The following keywords are available:",
-      "keywords": [
-        {
-          "name": "from-building-blocks",
-          "syntax": "from-building-blocks <set s >",
-          "description": "Generate zones from the current building-blocks set. See the Building-Blocks section. If the optional keyword set is used, then will generate zones from the set with name s instead of the current set."
-        },
-        {
-          "name": "from-extruder",
-          "syntax": "from-extruder <keyword>",
-          "description": "Generate zones from the current extruder set."
-        },
-        {
-          "name": "from-extruder-area-check",
-          "syntax": "area-check b",
-          "description": "Specify if areas of underlying sub-elements should be checked when generating zones. Default value is true. An error occurs if Area-Check is true and the area of a triangular sub-element in each overlay \\(\\le\\) 10% of the whole element area (in 2D Extrusion Pane)."
-        },
-        {
-          "name": "from-topography",
-          "syntax": "from-topography <keyword...> <range>",
-          "description": "Generates zones by extruding surface faces in the range until they meet polygons in a geometric set."
-        },
-        {
-          "name": "from-topography-geometry-set",
-          "syntax": "geometry-set s",
-          "description": "Specify the geometry set used to define the surface to which zones are being extruded. By default the current geometric set will be used."
-        },
-        {
-          "name": "from-topography-segments",
-          "syntax": "segments i",
-          "description": "Specify the number of zone layers created between the existing surface zone faces and the geometry set. By default this value is 1."
-        },
-        {
-          "name": "from-topography-direction",
-          "syntax": "direction v",
-          "description": "Specify the extrusion direction that will be used to create zones on surface faces. From a surface gridpoint, a ray will be cast in this direction until it intersects a polygon in the geomtric set. This will define the shape and size of the zones created. By default this value will be (0,0,1). If a face normal is parallel to this direction vector (with a tolerance of about 0.5 degrees) the face will be neglected even it if is in the range."
-        },
-        {
-          "name": "from-topography-ratio",
-          "syntax": "ratio f",
-          "description": "Specify the ratio used to distribute zones from the surface face to the geometric set. A ratio of 1.1 means that each zone edge in that direction will be 1.1 times the length of the previous zone. If not specified, the default ratio is 1.0."
-        },
-        {
-          "name": "from-topography-group",
-          "syntax": "group s1 <slot s2 >",
-          "description": "Assign the group s1 to the created zones, in slot s2. If not specified, the default slot is Default. Use of the group logic is described in Group."
-        },
-        {
-          "name": "from-topography-face-group",
-          "syntax": "face-group s1 <slot s2 >",
-          "description": "Assign the group s1 in slot s2 to the new surface faces created by extruding the original faces selected. By default no group name is assigned. If not specified, the slot used will be Default."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <keyword>...",
-          "description": "Generate zones by identifying closed volumes in a geometric set, and creating tetrahedral zones that fill the volume. The following optional keywords are available."
-        },
-        {
-          "name": "from-geometry-set",
-          "syntax": "set s",
-          "description": "Specify the geometry set used to define the surface to which zones are being extruded. By default the current geometric set will be used."
-        },
-        {
-          "name": "from-geometry-maximum-edge",
-          "syntax": "maximum-edge f",
-          "description": "Specify the maximum edge length for any tetra to be generated. The actual maximum edge length will be close to this, but the result is not guaranteed to be exact."
-        },
-        {
-          "name": "from-geometry-gradation",
-          "syntax": "gradation f",
-          "description": "Rate at which, on the surface of the tetrahedral mesh, neighboring triangle sizes vary as triangles increase or decrease in size due to local size adaptation."
-        },
-        {
-          "name": "from-geometry-offset",
-          "syntax": "offset f",
-          "description": "Offset distance between the input surface and the surface of the resulting tetrahedral mesh measured in thousandths of the length of the bounding box diagonal."
-        },
-        {
-          "name": "from-geometry-cut-angle",
-          "syntax": "cut-angle f",
-          "description": "Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if if there are intersecting surfaces after surface remeshing."
-        },
-        {
-          "name": "from-geometry-verbose",
-          "syntax": "verbose b",
-          "description": "The default value is off. If set to on the tetra generation process emits information and diagnostic information to the console."
-        },
-        {
-          "name": "from-geometry-hexahedron",
-          "syntax": "hexahedron",
-          "description": "If specified, then an attempt will be made to fill the volume with hexahedral blocks."
-        },
-        {
-          "name": "from-geometry-bring-to-building-blocks",
-          "syntax": "bring-to-building-blocks",
-          "description": "If specified, then the result of the volume discretization will also be sent to a building-blocks set."
-        },
-        {
-          "name": "from-geometry-grid-file",
-          "syntax": "grid-file s",
-          "description": "If specified, then the result of the volume discretization will be sent to output file s (no zones generated). Grid-File keyword has no effect if Bring-To-Building-Blocks is present."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.generate.html#zone.generate"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "zone generate",
       "syntax": "zone generate keyword",
@@ -143,7 +27,7 @@
         {
           "name": "from-extruder-area-check",
           "syntax": "area-check b",
-          "description": "Specify if areas of underlying sub-elements should be checked when generating zones. Default values is ‘true’. An error will be generated if ‘Area-Check’ is set to ‘true’ and the area of a triangular sub-element in each overlay \\(\\le\\) 10% of the whole element area (in 2D Extrusion Pane)."
+          "description": "Specify if areas of underlying sub-elements should be checked when generating zones. Default values is \u2018true\u2019. An error will be generated if \u2018Area-Check\u2019 is set to \u2018true\u2019 and the area of a triangular sub-element in each overlay \\(\\le\\) 10% of the whole element area (in 2D Extrusion Pane)."
         },
         {
           "name": "from-topography",
@@ -223,7 +107,7 @@
         {
           "name": "from-geometry-cut-angle",
           "syntax": "cut-angle f",
-          "description": "Specify cut angle for delimiting initial surfaces patches (groups of connected triangles in the initial triangulated mesh) used for surface remeshing. An angle between two adjacent triangles greater than this value will draw a limit between two patches. A small value tends to give numerous small patches and the final mesh will be close to the initial mesh but may be of poor quality. A bigger value tends to give fewer bigger patches which are better for remeshing but the final mesh may be more distant from the initial mesh (increased geometric error). The default value is 20° and a value of 45° should be considered as the maximum."
+          "description": "Specify cut angle for delimiting initial surfaces patches (groups of connected triangles in the initial triangulated mesh) used for surface remeshing. An angle between two adjacent triangles greater than this value will draw a limit between two patches. A small value tends to give numerous small patches and the final mesh will be close to the initial mesh but may be of poor quality. A bigger value tends to give fewer bigger patches which are better for remeshing but the final mesh may be more distant from the initial mesh (increased geometric error). The default value is 20\u00b0 and a value of 45\u00b0 should be considered as the maximum."
         },
         {
           "name": "from-geometry-tetrahedron",

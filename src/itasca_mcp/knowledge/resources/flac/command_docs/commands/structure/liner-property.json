@@ -10,152 +10,6 @@
     "available": false
   },
   "versions": {
-    "6.0": {
-      "command": "structure liner property",
-      "syntax": "structure liner property keyword",
-      "description": "Assigns a property to elements in the range. The element can have isotropic, orthotropic, or anisotropic elastic material properties. Note that if the liner is embedded, then coupling spring properties must be entered separately on side 2. The following properties are available:",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density f",
-          "description": "density (needed if dynamic mode or gravity is active)"
-        },
-        {
-          "name": "thickness",
-          "syntax": "thickness f",
-          "description": "liner thickness"
-        },
-        {
-          "name": "thermal-expansion",
-          "syntax": "thermal-expansion f",
-          "description": "thermal expansion coefficient"
-        },
-        {
-          "name": "anisotropic-membrane",
-          "syntax": "anisotropic-membrane f1 f2 f3 f4 f5 f6",
-          "description": "anisotropic membrane material properties {c’11, c’12, c’13, c’22, c’23, c’33} [F/L2], which define membrane material-stiffness matrices [E’m] and [E’b], respectively, in the material directions x’, y’, z’"
-        },
-        {
-          "name": "anisotropic-bending",
-          "syntax": "anisotropic-bending f1 f2 f3 f4 f5 f6",
-          "description": "anisotropic bending material properties {c’11, c’12, c’13, c’22, c’23, c’33} [F/L2], which define bending material-stiffness matrices [E’m] and [E’b], respectively, in the material directions x’, y’, z’"
-        },
-        {
-          "name": "anisotropic-both",
-          "syntax": "anisotropic-both f1 f2 f3 f4 f5 f6",
-          "description": "anisotropic membrane and bending material properties {c’11, c’12, c’13, c’22, c’23, c’33} [F/L2], which define membrane and bending material-stiffness matrices [E’m] and [E’b], respectively, in the material directions x’, y’, z’"
-        },
-        {
-          "name": "material-x",
-          "syntax": "material-x v",
-          "description": "specify the vector v whose projection onto the geogrid surface defines the xʹ-axis of the material coordinate system. The material directions correspond with the principal directions of orthotropy (for more information, see below)."
-        },
-        {
-          "name": "isotropic",
-          "syntax": "isotropic f1 f2",
-          "description": "isotropic material properties: E and v where E is Young’s modulus [F/L2] and v is Poisson’s ratio"
-        },
-        {
-          "name": "orthotropic-membrane",
-          "syntax": "orthotropic-membrane f1 f2 f3 f4",
-          "description": "orthotropic membrane material properties { c’11, c’12, c’22, c’33 } [F/L2], which define membrane material-stiffness matrices [ E’m ] and [ E’b ], respectively, in the material directions x’, y’, z’."
-        },
-        {
-          "name": "orthotropic-bending",
-          "syntax": "orthotropic-bending f1 f2 f3 f4",
-          "description": "orthotropic bending material properties { c’11, c’12, c’22, c’33 } [F/L2], which define bending material-stiffness matrices [ E’m ] and [ E’b ], respectively, in the material directions x’, y’, z’."
-        },
-        {
-          "name": "orthotropic-both",
-          "syntax": "orthotropic-both f1 f2 f3 f4",
-          "description": "orthotropic membrane and bending material properties { c’11, c’12, c’22, c’33 } [F/L2], which define membrane and bending material-stiffness matrices [ E’m ] and [ E’b ], respectively, in the material directions x’, y’, z’."
-        },
-        {
-          "name": "slide",
-          "syntax": "slide b",
-          "description": "large-strain sliding flag"
-        },
-        {
-          "name": "slide-tolerance",
-          "syntax": "slide-tolerance f",
-          "description": "large-strain sliding tolerance"
-        },
-        {
-          "name": "coupling-yield-normal",
-          "syntax": "coupling-yield-normal f",
-          "description": "normal coupling spring tensile strength (stress units)"
-        },
-        {
-          "name": "coupling-yield-normal-2",
-          "syntax": "coupling-yield-normal-2 f",
-          "description": "normal coupling spring tensile strength on side 2 (stress units)"
-        },
-        {
-          "name": "coupling-stiffness-normal",
-          "syntax": "coupling-stiffness-normal f",
-          "description": "normal coupling spring stiffness per unit area"
-        },
-        {
-          "name": "coupling-stiffness-normal-2",
-          "syntax": "coupling-stiffness-normal-2 f",
-          "description": "normal coupling spring stiffness per unit area on side 2"
-        },
-        {
-          "name": "coupling-stiffness-shear",
-          "syntax": "coupling-stiffness-shear f",
-          "description": "shear coupling spring stiffness per unit area"
-        },
-        {
-          "name": "coupling-stiffness-shear-2",
-          "syntax": "coupling-stiffness-shear-2 f",
-          "description": "shear coupling spring stiffness per unit area on side 2"
-        },
-        {
-          "name": "coupling-cohesion-shear",
-          "syntax": "coupling-cohesion-shear f",
-          "description": "shear coupling spring cohesion (stress unit)"
-        },
-        {
-          "name": "coupling-cohesion-shear-2",
-          "syntax": "coupling-cohesion-shear-2 f",
-          "description": "shear coupling spring cohesion (stress unit) on side 2"
-        },
-        {
-          "name": "coupling-cohesion-shear-residual",
-          "syntax": "coupling-cohesion-shear-residual f",
-          "description": "shear coupling spring residual cohesion"
-        },
-        {
-          "name": "coupling-cohesion-shear-residual-2",
-          "syntax": "coupling-cohesion-shear-residual-2 f",
-          "description": "shear coupling spring residual cohesion on side 2"
-        },
-        {
-          "name": "coupling-friction-shear",
-          "syntax": "coupling-friction-shear f",
-          "description": "shear coupling spring friction angle (degrees)"
-        },
-        {
-          "name": "coupling-friction-shear-2",
-          "syntax": "coupling-friction-shear-2 f",
-          "description": "shear coupling spring friction angle (degrees) on side 2"
-        },
-        {
-          "name": "effective",
-          "syntax": "effective b",
-          "description": "effective stress flag (default to on). If off, then pore-pressures are not removed from the stress normal to the liner when determining shear failure limits."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 6.0 command indexes",
-        "source_urls": [
-          "https://docs.itascacg.com/pfc600/flac3d/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.property.html#structure.liner.property"
-        ],
-        "syntax_basis": "official FLAC3D 6.0 detailed command page",
-        "target_version": "6.0"
-      }
-    },
     "7.0": {
       "command": "structure liner property",
       "syntax": "structure liner property keyword... <range>",
@@ -179,32 +33,32 @@
         {
           "name": "anisotropic-membrane",
           "syntax": "anisotropic-membrane f1 f2 f3 f4 f5 f6",
-          "description": "anisotropic membrane material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{13}, c^{\\prime}_{22}, c^{\\prime}_{23}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define membrane material-stiffness matrices \\([Eʹ_m]\\) and \\([Eʹ_b]\\), respectively, in the material directions \\(x'\\), \\(y'\\), \\(z'\\)"
+          "description": "anisotropic membrane material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{13}, c^{\\prime}_{22}, c^{\\prime}_{23}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define membrane material-stiffness matrices \\([E\u02b9_m]\\) and \\([E\u02b9_b]\\), respectively, in the material directions \\(x'\\), \\(y'\\), \\(z'\\)"
         },
         {
           "name": "anisotropic-bending",
           "syntax": "anisotropic-bending f1 f2 f3 f4 f5 f6",
-          "description": "anisotropic bending material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{13}, c^{\\prime}_{22}, c^{\\prime}_{23}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define bending material-stiffness matrices \\([Eʹ_m]\\) and \\([Eʹ_b]\\), respectively, in the material directions \\(x'\\), \\(y'\\), \\(z'\\)."
+          "description": "anisotropic bending material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{13}, c^{\\prime}_{22}, c^{\\prime}_{23}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define bending material-stiffness matrices \\([E\u02b9_m]\\) and \\([E\u02b9_b]\\), respectively, in the material directions \\(x'\\), \\(y'\\), \\(z'\\)."
         },
         {
           "name": "material-x",
           "syntax": "material-x v",
-          "description": "specify the vector v whose projection onto the geogrid surface defines the \\(xʹ\\)-axis of the material coordinate system. The material directions correspond with the principal directions of orthotropy (for more information, see below)."
+          "description": "specify the vector v whose projection onto the geogrid surface defines the \\(x\u02b9\\)-axis of the material coordinate system. The material directions correspond with the principal directions of orthotropy (for more information, see below)."
         },
         {
           "name": "isotropic",
           "syntax": "isotropic f1 f2",
-          "description": "isotropic material properties: \\(E\\) and \\(v\\) where \\(E\\) is Young’s modulus \\([F/L^2]\\) and \\(v\\) is Poisson’s ratio"
+          "description": "isotropic material properties: \\(E\\) and \\(v\\) where \\(E\\) is Young\u2019s modulus \\([F/L^2]\\) and \\(v\\) is Poisson\u2019s ratio"
         },
         {
           "name": "orthotropic-membrane",
           "syntax": "orthotropic-membrane f1 f2 f3 f4",
-          "description": "orthotropic membrane material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{22}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define membrane material-stiffness matrices \\([Eʹ_m]\\) and \\([Eʹ_b]\\), respectively, in the material directions \\(x\\)‘, \\(y\\)‘, \\(z\\)‘."
+          "description": "orthotropic membrane material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{22}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define membrane material-stiffness matrices \\([E\u02b9_m]\\) and \\([E\u02b9_b]\\), respectively, in the material directions \\(x\\)\u2018, \\(y\\)\u2018, \\(z\\)\u2018."
         },
         {
           "name": "orthotropic-bending",
           "syntax": "orthotropic-bending f1 f2 f3 f4",
-          "description": "orthotropic bending material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{22}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define bending material-stiffness matrices \\([Eʹ_m]\\) and \\([Eʹ_b]\\), respectively, in the material directions \\(x\\)‘, \\(y\\)‘, \\(z\\)‘."
+          "description": "orthotropic bending material properties {\\(c^{\\prime}_{11}, c^{\\prime}_{12}, c^{\\prime}_{22}, c^{\\prime}_{33}\\)} \\([F/L^2]\\), which define bending material-stiffness matrices \\([E\u02b9_m]\\) and \\([E\u02b9_b]\\), respectively, in the material directions \\(x\\)\u2018, \\(y\\)\u2018, \\(z\\)\u2018."
         },
         {
           "name": "slide",
