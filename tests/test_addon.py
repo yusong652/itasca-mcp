@@ -53,13 +53,39 @@ def test_build_install_args_no_trusted_host_when_empty():
     assert "--trusted-host" not in args
 
 
-def test_build_install_args_progress_flags_track_python_version():
-    # The quiet-output flags are gated on the *runner* interpreter; pin that
-    # documented behaviour rather than a fixed expectation.
+def test_build_install_args_carry_no_progress_flags():
+    # The quiet-output flags moved to _run_pip (_progress_flags), gated on
+    # the pip version that will actually parse them -- not on the Python
+    # version, and not baked into the static argument list.
     args = addon._build_install_args("https://example.test/simple/", ())
-    flags_present = "--no-warn-script-location" in args
 
-    assert flags_present is (sys.version_info >= (3, 10))
+    assert "--no-warn-script-location" not in args
+    assert "--progress-bar" not in args
+
+
+# --- _progress_flags -------------------------------------------------------
+
+
+def test_progress_flags_present_on_modern_pip(monkeypatch):
+    modern_pip = types.ModuleType("pip")
+    modern_pip.__version__ = "21.3.1"
+    monkeypatch.setitem(sys.modules, "pip", modern_pip)
+
+    assert addon._progress_flags() == ["--no-warn-script-location", "--progress-bar", "off"]
+
+
+def test_progress_flags_empty_when_pip_unimportable(monkeypatch):
+    monkeypatch.setitem(sys.modules, "pip", None)
+
+    assert addon._progress_flags() == []
+
+
+def test_progress_flags_empty_on_old_pip(monkeypatch):
+    old_pip = types.ModuleType("pip")
+    old_pip.__version__ = "9.0.1"
+    monkeypatch.setitem(sys.modules, "pip", old_pip)
+
+    assert addon._progress_flags() == []
 
 
 # --- _resolve_pip_main ---------------------------------------------------
@@ -101,9 +127,118 @@ def test_run_pip_passes_args_and_returns_code(monkeypatch):
         return 0
 
     monkeypatch.setattr(addon, "_resolve_pip_main", lambda: fake_pip_main)
+    monkeypatch.setattr(addon, "_progress_flags", lambda: [])
 
     assert addon._run_pip(["install", "pkg"]) == 0
     assert received == [["install", "pkg"]]
+
+
+def test_run_pip_appends_progress_flags(monkeypatch):
+    received = []
+
+    def fake_pip_main(args):
+        received.append(args)
+        return 0
+
+    monkeypatch.setattr(addon, "_resolve_pip_main", lambda: fake_pip_main)
+    monkeypatch.setattr(addon, "_progress_flags", lambda: ["--progress-bar", "off"])
+
+    assert addon._run_pip(["install", "pkg"]) == 0
+    assert received == [["install", "pkg", "--progress-bar", "off"]]
+
+
+class _ChannelWithoutIsatty:
+    """Mimics Itasca's RedirectstdChannel: write/flush only, no isatty."""
+
+    def __init__(self):
+        self.written = []
+
+    def write(self, text):
+        self.written.append(text)
+
+    def flush(self):
+        pass
+
+
+def test_stream_proxy_reports_not_a_tty_when_isatty_missing():
+    # The field crash: pip's progress bar calls file.isatty() on a GUI
+    # console channel that doesn't have it.
+    assert addon._StreamProxy(_ChannelWithoutIsatty()).isatty() is False
+
+
+def test_stream_proxy_delegates_existing_isatty():
+    class Tty:
+        def isatty(self):
+            return True
+
+    assert addon._StreamProxy(Tty()).isatty() is True
+
+
+def test_stream_proxy_delegates_write():
+    channel = _ChannelWithoutIsatty()
+    addon._StreamProxy(channel).write("hello")
+    assert channel.written == ["hello"]
+
+
+def test_run_pip_proxies_streams_while_pip_runs_and_restores(monkeypatch):
+    channel = _ChannelWithoutIsatty()
+    monkeypatch.setattr(sys, "stdout", channel)
+    seen = {}
+
+    def fake_resolve():
+        # pip is first imported inside _resolve_pip_main and binds
+        # sys.stdout to its progress-bar classes at import time, so the
+        # proxy must already be installed here.
+        seen["stdout_type"] = type(sys.stdout)
+        seen["isatty"] = sys.stdout.isatty()
+        return lambda args: 0
+
+    monkeypatch.setattr(addon, "_resolve_pip_main", fake_resolve)
+    monkeypatch.setattr(addon, "_progress_flags", lambda: [])
+
+    assert addon._run_pip(["install", "pkg"]) == 0
+    assert seen["stdout_type"] is addon._StreamProxy
+    assert seen["isatty"] is False
+    assert sys.stdout is channel  # restored
+
+
+def test_run_pip_restores_streams_when_pip_raises(monkeypatch):
+    channel = _ChannelWithoutIsatty()
+    monkeypatch.setattr(sys, "stderr", channel)
+
+    def boom(_args):
+        raise RuntimeError("pip blew up")
+
+    monkeypatch.setattr(addon, "_resolve_pip_main", lambda: boom)
+    monkeypatch.setattr(addon, "_progress_flags", lambda: [])
+
+    with pytest.raises(RuntimeError, match="blew up"):
+        addon._run_pip(["install", "pkg"])
+
+    assert sys.stderr is channel
+
+
+# --- _manual_install_hint --------------------------------------------------
+
+
+def test_manual_hint_names_the_engine_interpreter(monkeypatch):
+    monkeypatch.setattr(
+        addon,
+        "_embedded_python",
+        lambda: r"C:\Program Files\Itasca\PFC700\exe64\python36\python.exe",
+    )
+
+    hint = addon._manual_install_hint()
+    assert (
+        '"C:\\Program Files\\Itasca\\PFC700\\exe64\\python36\\python.exe" -m pip install --user -U itasca-mcp-bridge'
+    ) in hint
+
+
+def test_manual_hint_degrades_when_interpreter_unknown(monkeypatch):
+    monkeypatch.setattr(addon, "_embedded_python", lambda: "")
+
+    hint = addon._manual_install_hint()
+    assert "<engine install dir>" in hint
 
 
 def test_run_pip_raises_helpful_error_when_no_pip(monkeypatch):
