@@ -59,10 +59,87 @@ def _build_install_args(index_url, trusted_hosts):
     ]
     for host in trusted_hosts:
         args += ["--trusted-host", host]
-    if sys.version_info >= (3, 10):
-        args += ["--no-warn-script-location", "--progress-bar", "off"]
     args.append(PACKAGE_NAME)
     return args
+
+
+def _embedded_python():
+    """Path to the engine's bundled Python interpreter, or "".
+
+    Inside the GUI `sys.executable` is the engine binary itself
+    (e.g. `pfc2d700_gui.exe`), which cannot run `-m pip`. The real
+    interpreter lives under `sys.exec_prefix` (`.../exe64/python36`).
+    """
+    prefixes = (sys.exec_prefix, getattr(sys, "base_prefix", ""))
+    candidates = ("python.exe", os.path.join("bin", "python3"), os.path.join("bin", "python"))
+    for prefix in prefixes:
+        if not prefix:
+            continue
+        for relative in candidates:
+            candidate = os.path.join(os.path.normpath(prefix), relative)
+            if os.path.isfile(candidate):
+                return candidate
+    return ""
+
+
+def _manual_install_hint():
+    python_path = _embedded_python()
+    if not python_path:
+        python_path = "<engine install dir>/python.exe"
+    return (
+        "You can also install manually and re-run this script -- in a "
+        "terminal, with the engine's own Python (a plain 'python' would "
+        "install into the system interpreter instead):\n"
+        '    "{}" -m pip install --user -U {}'.format(python_path, PACKAGE_NAME)
+    )
+
+
+class _StreamProxy(object):
+    """File-like proxy guaranteeing the attributes pip's progress bar probes.
+
+    Some engine GUI consoles install a stdout/stderr replacement (e.g.
+    Itasca's RedirectstdChannel) that has write/flush but no isatty. pip's
+    download progress bar calls ``file.isatty()`` unconditionally during
+    construction -- the AttributeError aborts the download and therefore
+    the whole install. Affects every pip that vendors ``progress`` (stock
+    pip 9 on PFC 6/7, reproduced up to pip 21). Delegates everything else
+    to the wrapped stream.
+    """
+
+    def __init__(self, stream):
+        self._stream = stream
+
+    def __getattr__(self, name):
+        return getattr(self._stream, name)
+
+    def isatty(self):
+        try:
+            return bool(self._stream.isatty())
+        except Exception:
+            return False
+
+    def flush(self):
+        try:
+            self._stream.flush()
+        except Exception:
+            pass
+
+
+def _progress_flags():
+    """Extra install args to silence pip's progress bar where supported.
+
+    Both flags exist since pip 10. On older pip the isatty=False reported
+    by _StreamProxy already keeps the vendored progress bar silent.
+    """
+    try:
+        import pip
+
+        major = int(str(pip.__version__).split(".")[0])
+    except Exception:
+        return []
+    if major >= 10:
+        return ["--no-warn-script-location", "--progress-bar", "off"]
+    return []
 
 
 def _resolve_pip_main():
@@ -97,22 +174,30 @@ def _resolve_pip_main():
 
 
 def _run_pip(args):
-    pip_main = _resolve_pip_main()
-    if pip_main is None:
-        raise RuntimeError(
-            "Could not locate pip's Python entry point in this engine interpreter. "
-            "Install the bridge manually, then re-run this script:\n"
-            "    python -m pip install --user itasca-mcp-bridge"
-        )
+    # Swap in the isatty-safe proxies BEFORE pip is first imported: pip
+    # binds ``file = sys.stdout`` on its progress-bar classes at import
+    # time, so a later swap would not reach them.
+    previous_streams = (sys.stdout, sys.stderr)
+    if sys.stdout is not None:
+        sys.stdout = _StreamProxy(sys.stdout)
+    if sys.stderr is not None:
+        sys.stderr = _StreamProxy(sys.stderr)
 
     # The engine runs pip inside an IPython host; temporarily suppress logging
     # handler tracebacks that don't reflect actual installation failures.
     previous_raise_exceptions = logging.raiseExceptions
     logging.raiseExceptions = False
     try:
-        return pip_main(list(args))
+        pip_main = _resolve_pip_main()
+        if pip_main is None:
+            raise RuntimeError(
+                "Could not locate pip's Python entry point in this engine "
+                "interpreter. " + _manual_install_hint()
+            )
+        return pip_main(list(args) + _progress_flags())
     finally:
         logging.raiseExceptions = previous_raise_exceptions
+        sys.stdout, sys.stderr = previous_streams
 
 
 def _install_bridge():
@@ -192,9 +277,8 @@ def main():
                 "Bridge installation failed (pip exit code {}). The real pip "
                 "error is in the output above this message -- read that, not "
                 "this line. Common causes: no network route to PyPI, or a "
-                "corporate proxy/firewall blocking the index. You can also "
-                "install manually and re-run this script:\n"
-                "    python -m pip install --user itasca-mcp-bridge".format(code)
+                "corporate proxy/firewall blocking the index. ".format(code)
+                + _manual_install_hint()
             )
 
     itasca_mcp_bridge = _import_bridge()
