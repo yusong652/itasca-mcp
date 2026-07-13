@@ -4,23 +4,6 @@ import os
 from dataclasses import dataclass
 
 
-def _env_bool(name: str, default: bool) -> bool:
-    value = os.getenv(name)
-    if value is None:
-        return default
-    return value.strip().lower() in {"1", "true", "yes", "on"}
-
-
-def _env_int(name: str, default: int) -> int:
-    value = os.getenv(name)
-    if value is None:
-        return default
-    try:
-        return int(value)
-    except ValueError:
-        return default
-
-
 def _env_float(name: str, default: float) -> float:
     value = os.getenv(name)
     if value is None:
@@ -35,9 +18,7 @@ def _env_float(name: str, default: float) -> float:
 class BridgeConfig:
     url: str
     reconnect_interval_s: float
-    max_retries: int
     request_timeout_s: float
-    auto_reconnect: bool
 
 
 def get_bridge_config() -> BridgeConfig:
@@ -45,7 +26,5 @@ def get_bridge_config() -> BridgeConfig:
     return BridgeConfig(
         url=os.getenv("ITASCA_MCP_BRIDGE_URL", "http://localhost:9001"),
         reconnect_interval_s=_env_float("ITASCA_MCP_RECONNECT_INTERVAL_S", 0.5),
-        max_retries=max(0, _env_int("ITASCA_MCP_MAX_RETRIES", 2)),
         request_timeout_s=max(1.0, _env_float("ITASCA_MCP_REQUEST_TIMEOUT_S", 10.0)),
-        auto_reconnect=_env_bool("ITASCA_MCP_AUTO_RECONNECT", True),
     )
