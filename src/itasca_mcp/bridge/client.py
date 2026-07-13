@@ -27,15 +27,11 @@ class ItascaBridgeClient:
         self,
         url: str,
         reconnect_interval_s: float,
-        max_retries: int,
         request_timeout_s: float,
-        auto_reconnect: bool,
     ) -> None:
         self.url = url
         self.reconnect_interval_s = reconnect_interval_s
-        self.max_retries = max_retries
         self.request_timeout_s = request_timeout_s
-        self.auto_reconnect = auto_reconnect
 
         self._client: httpx.AsyncClient | None = None
         self._sse_task: asyncio.Task[Any] | None = None
@@ -141,27 +137,20 @@ class ItascaBridgeClient:
         payload: dict[str, Any] = response.json()
         return payload
 
-    async def _request_with_retry(
+    async def _request(
         self,
         message: dict[str, Any],
         operation_name: str,
         timeout_s: float | None = None,
     ) -> dict[str, Any]:
+        # Single attempt, no transport-level retry: execute requests are not
+        # idempotent (the bridge does not dedupe request_id), and the agent
+        # driving this client can see the error and decide for itself.
         timeout = timeout_s if timeout_s is not None else self.request_timeout_s
-        attempts = self.max_retries + 1
-        last_error: Exception | None = None
-
-        for attempt in range(1, attempts + 1):
-            try:
-                return await self._send_request(message, timeout)
-            except Exception as exc:
-                last_error = exc
-                if not self.auto_reconnect or attempt >= attempts:
-                    break
-                await asyncio.sleep(self.reconnect_interval_s)
-
-        assert last_error is not None
-        raise ConnectionError(f"{operation_name} failed: {last_error}") from last_error
+        try:
+            return await self._send_request(message, timeout)
+        except Exception as exc:
+            raise ConnectionError(f"{operation_name} failed: {exc}") from exc
 
     def listen_for_task(self, task_id: str) -> None:
         """Pre-register an event listener for task completion.
@@ -200,7 +189,7 @@ class ItascaBridgeClient:
         task_id: str,
         source: str = "agent",
     ) -> dict[str, Any]:
-        return await self._request_with_retry(
+        return await self._request(
             {
                 "type": "execute_task",
                 "task_id": task_id,
@@ -227,13 +216,13 @@ class ItascaBridgeClient:
         }
         if filter_text is not None:
             payload["filter_text"] = filter_text
-        return await self._request_with_retry(
+        return await self._request(
             payload,
             operation_name="check_task_status",
         )
 
     async def list_tasks(self, offset: int, limit: int | None) -> dict[str, Any]:
-        return await self._request_with_retry(
+        return await self._request(
             {
                 "type": "list_tasks",
                 "offset": offset,
@@ -243,7 +232,7 @@ class ItascaBridgeClient:
         )
 
     async def interrupt_task(self, task_id: str) -> dict[str, Any]:
-        return await self._request_with_retry(
+        return await self._request(
             {"type": "interrupt_task", "task_id": task_id},
             operation_name="interrupt_task",
             timeout_s=5.0,
@@ -251,7 +240,7 @@ class ItascaBridgeClient:
 
     async def execute_code(self, code: str, timeout_ms: int = 10000) -> dict[str, Any]:
         timeout_s = max(self.request_timeout_s, timeout_ms / 1000.0 + 5.0)
-        return await self._request_with_retry(
+        return await self._request(
             {
                 "type": "execute_code",
                 "code": code,
@@ -275,9 +264,7 @@ async def get_bridge_client() -> ItascaBridgeClient:
             _client = ItascaBridgeClient(
                 url=config.url,
                 reconnect_interval_s=config.reconnect_interval_s,
-                max_retries=config.max_retries,
                 request_timeout_s=config.request_timeout_s,
-                auto_reconnect=config.auto_reconnect,
             )
         await _client.connect()
         return _client
