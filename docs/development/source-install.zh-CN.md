@@ -118,10 +118,7 @@ uv run pytest tests
 - 不依赖在 PFC 控制台里通过 `subprocess` 再起一个解释器
 - 对 editable install 来说最稳定
 
-bridge 包会自动拉取匹配的 `websockets` 版本：
-
-- Python `3.6` -> `websockets==9.1`
-- Python `3.10` -> `websockets==16.0`
+bridge 只依赖标准库（基于 `http.server` 的 HTTP + SSE），没有任何运行时第三方依赖。
 
 ## 5. 在 PFC IPython 中安装
 
@@ -131,10 +128,10 @@ bridge 包会自动拉取匹配的 `websockets` 版本：
 
 ## 6. 验证环境
 
-可以先在内嵌 Python 里检查 bridge 包和 `websockets`：
+可以先在内嵌 Python 里检查 bridge 包：
 
 ```powershell
-& "C:\Program Files\Itasca\ItascaSoftware900\exe64\python310\python.exe" -c "import itasca_mcp_bridge, websockets; print(itasca_mcp_bridge.__version__); print(websockets.__version__)"
+& "C:\Program Files\Itasca\ItascaSoftware900\exe64\python310\python.exe" -c "import itasca_mcp_bridge; print(itasca_mcp_bridge.__version__)"
 ```
 
 然后在 PFC 中启动 bridge，并从 MCP 客户端验证：
