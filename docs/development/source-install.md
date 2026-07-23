@@ -67,13 +67,13 @@ If you want your MCP client to use local source instead of the published PyPI pa
   "mcpServers": {
     "itasca-mcp": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/itasca-mcp", "itasca-mcp", "--bridge-url", "ws://localhost:9001"]
+      "args": ["run", "--directory", "/path/to/itasca-mcp", "itasca-mcp", "--bridge-url", "http://localhost:9001"]
     }
   }
 }
 ```
 
-The `--bridge-url` argument is optional (defaults to `ws://localhost:9001`). To
+The `--bridge-url` argument is optional (defaults to `http://localhost:9001`). To
 connect to a bridge on a non-default port, pass `--bridge-port` instead of
 spelling out the whole URL — e.g. `"args": [..., "itasca-mcp", "--bridge-port", "9002"]`
 when the bridge was started with `itasca_mcp_bridge.start(port=9002)`.

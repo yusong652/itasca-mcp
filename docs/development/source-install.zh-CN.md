@@ -67,13 +67,13 @@ uv run pytest tests
   "mcpServers": {
     "itasca-mcp": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/itasca-mcp", "itasca-mcp", "--bridge-url", "ws://localhost:9001"]
+      "args": ["run", "--directory", "/path/to/itasca-mcp", "itasca-mcp", "--bridge-url", "http://localhost:9001"]
     }
   }
 }
 ```
 
-`--bridge-url` 参数是可选的（默认 `ws://localhost:9001`）。若 bridge 跑在非默认端口上，
+`--bridge-url` 参数是可选的（默认 `http://localhost:9001`）。若 bridge 跑在非默认端口上，
 直接用 `--bridge-port` 即可，无需写出整条 URL——例如 bridge 以
 `itasca_mcp_bridge.start(port=9002)` 启动时，配置写
 `"args": [..., "itasca-mcp", "--bridge-port", "9002"]`。
