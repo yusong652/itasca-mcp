@@ -118,10 +118,7 @@ Why use the embedded interpreter from a terminal:
 - It avoids relying on `subprocess` calls from inside the PFC console.
 - It is the most reliable workflow for editable installs.
 
-The bridge package will pull a matching `websockets` version automatically:
-
-- Python `3.6` -> `websockets==9.1`
-- Python `3.10` -> `websockets==16.0`
+The bridge is stdlib-only (HTTP + SSE via `http.server`), so it has no runtime dependencies to pull in.
 
 ## 5. Install from Inside PFC IPython
 
@@ -134,7 +131,7 @@ For source installs, prefer the terminal-based embedded-interpreter workflow fro
 Verify the bridge package inside embedded Python:
 
 ```powershell
-& "C:\Program Files\Itasca\ItascaSoftware900\exe64\python310\python.exe" -c "import itasca_mcp_bridge, websockets; print(itasca_mcp_bridge.__version__); print(websockets.__version__)"
+& "C:\Program Files\Itasca\ItascaSoftware900\exe64\python310\python.exe" -c "import itasca_mcp_bridge; print(itasca_mcp_bridge.__version__)"
 ```
 
 Then start the bridge in PFC and verify from your MCP client:
