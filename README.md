@@ -32,6 +32,7 @@
 
 - **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended; PFC 6.0 / 7.0 and FLAC 7.0 are also supported.
 - **[uv](https://docs.astral.sh/uv/getting-started/installation/)** installed (for `uvx`)
+- **An AI agent** — Claude Code, Codex CLI, Gemini CLI, or any MCP-capable client
 
 ### Agentic Setup (Recommended)
 
@@ -83,7 +84,7 @@ Download [`addon.py`](addon.py), then use either of these two flows inside the e
 
 ### Verify
 
-Restart your AI agent (Claude Code, Codex CLI, Gemini CLI, etc.) and ask it to call `itasca_execute_code` to verify the connection.
+Restart your AI agent and ask it to call `itasca_execute_code` to verify the connection.
 
 ## Daily Startup
 
