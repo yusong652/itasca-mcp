@@ -14,7 +14,7 @@
 
 `itasca>model new ;now, with LLM.`
 
-**itasca-mcp** connects AI agents to [ITASCA](https://www.itascacg.com/)'s numerical modeling software — PFC, FLAC, 3DEC, MPoint, and MassFlow — through the [Model Context Protocol](https://modelcontextprotocol.io/). Browse documentation, run simulations, and execute code, all through natural conversation. Pick the engine with the `software` parameter.
+**itasca-mcp** connects AI agents to [ITASCA](https://www.itascacg.com/)'s numerical modeling software — PFC, FLAC, 3DEC, MPoint, and MassFlow — through the [Model Context Protocol](https://modelcontextprotocol.io/). Browse documentation, run simulations, and execute code, all through natural conversation.
 
 `itasca>model solve ;LLM solves.`
 
@@ -22,7 +22,7 @@
 
 ## Tools (10)
 
-**5 documentation tools** — browse and search the selected engine's commands, Python API, and reference docs (`software` parameter). No bridge required.
+**5 documentation tools** — browse and search the selected engine's commands, Python API, and reference docs. No bridge required.
 
 **5 execution tools** — interactive REPL, task submission, progress monitoring, interruption, and history. Requires bridge.
 

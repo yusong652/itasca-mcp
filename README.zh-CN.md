@@ -14,7 +14,7 @@
 
 `itasca>model new ;now, with LLM.`
 
-**itasca-mcp** 通过 [Model Context Protocol](https://modelcontextprotocol.io/) 将 AI 智能体连接到 [ITASCA](https://www.itascacg.com/) 的数值模拟软件 —— PFC、FLAC、3DEC、MPoint、MassFlow。通过自然语言对话即可浏览文档、运行仿真和执行代码，用 `software` 参数选择引擎。
+**itasca-mcp** 通过 [Model Context Protocol](https://modelcontextprotocol.io/) 将 AI 智能体连接到 [ITASCA](https://www.itascacg.com/) 的数值模拟软件 —— PFC、FLAC、3DEC、MPoint、MassFlow。通过自然语言对话即可浏览文档、运行仿真和执行代码。
 
 `itasca>model solve ;LLM solves.`
 
@@ -22,7 +22,7 @@
 
 ## 工具（10）
 
-**5 个文档工具** — 浏览和搜索所选引擎的命令、Python API 及参考文档（`software` 参数）。无需 bridge。
+**5 个文档工具** — 浏览和搜索所选引擎的命令、Python API 及参考文档。无需 bridge。
 
 **5 个执行工具** — 交互式 REPL、任务提交、进度监控、中断和历史浏览。需要 bridge。
 
