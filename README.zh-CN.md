@@ -32,6 +32,7 @@
 
 - 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本；也支持 PFC 6.0 / 7.0 与 FLAC 7.0。
 - 已安装 **[uv](https://docs.astral.sh/uv/getting-started/installation/)**（用于 `uvx`）
+- 一个 **AI 智能体** —— Claude Code、Codex CLI、Gemini CLI 或其他任意 MCP 客户端
 
 ### 智能体自动配置（推荐）
 
@@ -83,7 +84,7 @@ gemini mcp add itasca-mcp uvx itasca-mcp
 
 ### 验证
 
-重启你的 AI 智能体（Claude Code、Codex CLI、Gemini CLI 等），让它调用 `itasca_execute_code` 来验证连接是否正常。
+重启你的 AI 智能体，让它调用 `itasca_execute_code` 来验证连接是否正常。
 
 ## 日常启动
 
