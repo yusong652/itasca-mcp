@@ -103,7 +103,7 @@ itasca_mcp_bridge.start()
 - **Multi-version support** - command docs across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0) via the `version` parameter
 - **Hierarchical documentation browsing** - agents navigate the engine command tree to discover capabilities and boundaries, reducing hallucinated commands
 - **Enhanced plot documentation** - plot items reference docs supplementing the official documentation
-- **Interactive REPL** - rapid iteration before committing to full scripts; agents can quickly test and refine code
+- **Live REPL alongside running tasks** - execute code while a simulation is running: check model state and intermediate results without stopping the task; also useful for quick iteration before writing a full script
 - **Task lifecycle management** - submit long-running simulations, monitor progress, interrupt running tasks, and browse task history
 - **Multi-client compatible** - works with Claude Code, Codex CLI, Gemini CLI, GitHub Copilot CLI, OpenCode, toyoura-nagisa, and other MCP clients
 
