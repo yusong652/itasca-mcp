@@ -39,6 +39,17 @@ def register(mcp: FastMCP) -> None:
         and interleaved with Python prints in the task log, visible
         through itasca_check_task_status.
 
+        Multi-line itasca.command(\"\"\"...\"\"\") batches are normalized to
+        one engine call per command, which keeps the bridge reachable
+        and the task interruptible while the batch runs — including
+        after a `model new`/`model restore`, which reset the engine's
+        cycle-callback registry mid-batch. The normalization applies
+        when itasca.command is reached through its import name
+        (`import itasca` / `import itasca as x` / `from itasca import
+        command`); rebinding through intermediate variables
+        (`_it = itasca`) bypasses it, and the task log then carries a
+        bridge warning.
+
         Having the script invoke `program call '<file>.p3dat'` (or
         .p2dat / .dat) is engine-version-gated. On 6/7 the
         command-script interpreter blocks the bridge for the
