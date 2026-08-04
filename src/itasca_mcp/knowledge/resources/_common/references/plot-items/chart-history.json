@@ -2,10 +2,19 @@
   "name": "chart-history",
   "item_type": "chart-history",
   "search_keywords": ["chart", "history", "plot history", "time series", "trace", "vs step", "cross-plot", "empty chart"],
-  "description": "Configuration keywords for 'plot item create chart-history'. Draws a line chart of one or more recorded histories. Unlike geometry items, a chart-history has no automatic data: you must bind each trace with the 'history <name>' keyword, or the chart renders empty.",
+  "description": "Configuration keywords for 'plot item create chart-history'. Draws a line chart of one or more recorded histories. Engine-agnostic core-kernel item shared by PFC, FLAC, 3DEC, MPoint, and MassFlow. Unlike geometry items, a chart-history has no automatic data: you must bind each trace with the 'history <name>' keyword, or the chart renders empty.",
   "base_syntax": "plot item create chart-history history '<name>' [history '<name>' ...] [vs '<name>']",
 
   "critical_note": "The 'history <name>' argument is the history NAME (the Name column shown by 'history list'), NOT its numeric ID. A chart-history created with no 'history' keyword, or with an ID / a name that no history has, produces an empty chart (axes only, garbage auto-scale) and raises NO error. This is the most common cause of 'plot history draws nothing'.",
+
+  "history_sources_per_engine": {
+    "description": "chart-history plots any history the engine can record. Create the history first, name it, then bind that name. Per-engine history commands:",
+    "pfc": "model / ball / clump / wall / contact / measure / rblock / fish history ...",
+    "flac": "model / zone / gridpoint / structure / fish history ...",
+    "3dec": "model / block / block contact / structure / fish history ...",
+    "mpoint": "model / fish history ... (material-point quantities)",
+    "massflow": "model / fish history ... (drawpoint / flow quantities)"
+  },
 
   "basic_keywords": [
     {
@@ -87,8 +96,8 @@
   ],
 
   "notes": [
-    "chart-history is engine-agnostic: the same keywords apply in FLAC and 3DEC.",
-    "These keywords are not officially documented by Itasca; they were verified empirically and via 'plot export datafile'.",
+    "chart-history is engine-agnostic: the same keywords apply in PFC, FLAC, 3DEC, MPoint, and MassFlow.",
+    "These keywords are not officially documented by Itasca; they were verified empirically on all five engines — PFC3D 7.0, FLAC2D 9.7, MPoint3D 9.7, 3DEC 9.0, and MassFlow 9.7 — with identical behavior, including the name-vs-id empty-chart trap, plus 'plot export datafile'. chart-history is a shared core-kernel command.",
     "Use 'plot <name> export datafile filename <f>' to dump the exact keyword state of an existing chart built in the GUI."
   ]
 }
