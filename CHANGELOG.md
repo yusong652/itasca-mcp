@@ -45,6 +45,42 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-08-04
+
+### Fixed
+- **Bridge client no longer retries requests at the transport level.** The
+  leftover WebSocket-era retry loop degraded into a blind resend over HTTP
+  that also fired on timeouts; because execute requests are not idempotent
+  and the bridge does not dedupe by request id, a slow snippet could run
+  twice. Requests now make a single attempt and surface the error
+  immediately, letting the calling agent decide whether to retry. The SSE
+  doorbell stream keeps its reconnect loop, where auto-recovery is
+  load-bearing. The undocumented `ITASCA_MCP_AUTO_RECONNECT` and
+  `ITASCA_MCP_MAX_RETRIES` environment variables are removed.
+- **`pip` self-upgrade no longer crashes on a non-tty console.** Ported the
+  isatty / interpreter-hint fixes from `itasca-mcp-bridge` 0.4.3 into
+  `addon.py`, the manual-install recovery channel: an isatty-safe stdout
+  proxy installed before `pip` is imported, `pip >= 10` flag gating, and
+  manual-upgrade hints that print the engine interpreter's full path instead
+  of a bare `python`. End users self-upgrade to bridge 0.4.3, which carries
+  the same fix.
+
+### Documentation
+- **`plot item create chart-history` binding is now documented for every
+  engine.** A history chart renders empty unless a trace is bound with
+  `history <name>` — the Name column from `history list`, not the numeric
+  id; passing an id, an unknown name, or omitting the keyword silently
+  produced an empty chart with no error. Added working single-trace /
+  multi-trace / cross-plot (`vs`) examples and the name-vs-id trap to the
+  `plot item` command doc, plus a new shared `chart-history` plot-items
+  reference. Verified empirically on PFC3D 7.0, FLAC2D 9.7, MPoint3D 9.7,
+  3DEC 9.0, and MassFlow 9.7.
+- **Source-install guides corrected for the HTTP + SSE bridge.** Fixed the
+  `--bridge-url` scheme (`ws://` → `http://`) and dropped the stale
+  `websockets` dependency notes now that the transport is stdlib HTTP + SSE.
+- **README setup guidance.** Listed an AI agent as a setup prerequisite and
+  reframed the REPL feature around coexisting with a running task.
+
 ## [0.6.1] - 2026-07-04
 
 ### Removed
