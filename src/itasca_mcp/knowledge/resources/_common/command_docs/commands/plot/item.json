@@ -27,7 +27,7 @@
     {
       "keyword": "chart-history",
       "label": "History Chart",
-      "description": "Chart of history trace contents"
+      "description": "Line chart of one or more history traces. Requires a data source: append 'history <name>' to bind a history by its Name (the Name column from 'history list', NOT its numeric ID). Repeat 'history <name>' for multiple traces; add 'vs <name>' to cross-plot against another history instead of vs step. A chart-history created without a valid 'history <name>' draws an empty chart with no error."
     },
     {
       "keyword": "chart-table",
@@ -197,6 +197,7 @@
   ],
   "notes": [
     "Plot item configuration keywords (color-by, cut, transparency, legend) are documented in references: use pfc_browse_reference('plot-items') to list available item types, then pfc_browse_reference('plot-items ball') for full keyword documentation",
+    "chart-history and chart-table need an explicit data source. For chart-history, bind a trace with 'history <name>' where <name> is the Name column from 'history list' (NOT the numeric ID); passing an ID, an unknown name, or omitting the keyword draws an empty chart with no error. Repeat 'history <name>' for multiple traces; add 'vs <name>' to cross-plot against another history. See pfc_browse_reference('plot-items chart-history').",
     "Additional plot items can be added by plug-ins"
   ],
   "python_sdk_alternative": {
@@ -238,8 +239,16 @@
           "description": "Delete the first plot item"
         },
         {
-          "command": "plot 'myplot' item create chart-history",
-          "description": "Add history chart to plot 'myplot'"
+          "command": "plot 'myplot' item create chart-history history 'ratio'",
+          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'ke' history 'ratio'",
+          "description": "Plot multiple traces in one chart by repeating the 'history <name>' keyword"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'stress' vs 'strain'",
+          "description": "Cross-plot one history against another (x-y) instead of the default 'vs step'"
         },
         {
           "command": "plot item modify 2 color red",
@@ -281,8 +290,16 @@
           "description": "Delete the first plot item"
         },
         {
-          "command": "plot 'myplot' item create chart-history",
-          "description": "Add history chart to plot 'myplot'"
+          "command": "plot 'myplot' item create chart-history history 'ratio'",
+          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'ke' history 'ratio'",
+          "description": "Plot multiple traces in one chart by repeating the 'history <name>' keyword"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'stress' vs 'strain'",
+          "description": "Cross-plot one history against another (x-y) instead of the default 'vs step'"
         },
         {
           "command": "plot item modify 2 color red",
@@ -324,8 +341,16 @@
           "description": "Delete the first plot item"
         },
         {
-          "command": "plot 'myplot' item create chart-history",
-          "description": "Add history chart to plot 'myplot'"
+          "command": "plot 'myplot' item create chart-history history 'ratio'",
+          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'ke' history 'ratio'",
+          "description": "Plot multiple traces in one chart by repeating the 'history <name>' keyword"
+        },
+        {
+          "command": "plot 'myplot' item create chart-history history 'stress' vs 'strain'",
+          "description": "Cross-plot one history against another (x-y) instead of the default 'vs step'"
         },
         {
           "command": "plot item modify 2 color red",
