@@ -1,0 +1,103 @@
+{
+  "name": "chart-history",
+  "item_type": "chart-history",
+  "search_keywords": ["chart", "history", "plot history", "time series", "trace", "vs step", "cross-plot", "empty chart"],
+  "description": "Configuration keywords for 'plot item create chart-history'. Draws a line chart of one or more recorded histories. Engine-agnostic core-kernel item shared by PFC, FLAC, 3DEC, MPoint, and MassFlow. Unlike geometry items, a chart-history has no automatic data: you must bind each trace with the 'history <name>' keyword, or the chart renders empty.",
+  "base_syntax": "plot item create chart-history history '<name>' [history '<name>' ...] [vs '<name>']",
+
+  "critical_note": "The 'history <name>' argument is the history NAME (the Name column shown by 'history list'), NOT its numeric ID. A chart-history created with no 'history' keyword, or with an ID / a name that no history has, produces an empty chart (axes only, garbage auto-scale) and raises NO error. This is the most common cause of 'plot history draws nothing'.",
+
+  "history_sources_per_engine": {
+    "description": "chart-history plots any history the engine can record. Create the history first, name it, then bind that name. Per-engine history commands:",
+    "pfc": "model / ball / clump / wall / contact / measure / rblock / fish history ...",
+    "flac": "model / zone / gridpoint / structure / fish history ...",
+    "3dec": "model / block / block contact / structure / fish history ...",
+    "mpoint": "model / fish history ... (material-point quantities)",
+    "massflow": "model / fish history ... (drawpoint / flow quantities)"
+  },
+
+  "basic_keywords": [
+    {
+      "keyword": "history <name>",
+      "description": "Bind a history trace to the chart by its Name. Repeat the keyword to overlay multiple traces on one chart.",
+      "syntax": "history 'ratio'"
+    },
+    {
+      "keyword": "vs <name>",
+      "description": "Cross-plot the bound history against another history (x = the 'vs' history) instead of the default 'vs step'. Applies to the trace it follows.",
+      "syntax": "history 'stress' vs 'strain'"
+    },
+    {
+      "keyword": "active on | off",
+      "description": "Show or hide the chart item without deleting it (default on when created)",
+      "syntax": "active on"
+    },
+    {
+      "keyword": "style",
+      "description": "Trace draw style: line (default), or point / line-point variants",
+      "syntax": "history 'ratio' style line"
+    },
+    {
+      "keyword": "axis-x / axis-y",
+      "description": "Per-axis scaling. 'log on|off' toggles log scale; 'minimum <v>|auto' and 'maximum <v>|auto' set fixed or automatic limits.",
+      "syntax": "axis-y log on minimum auto maximum auto"
+    },
+    {
+      "keyword": "reversed-x / reversed-y",
+      "description": "Reverse the direction of a trace's x or y axis (default off)",
+      "syntax": "history 'ratio' reversed-y on"
+    },
+    {
+      "keyword": "begin / end / skip",
+      "description": "Restrict the sampled range of a trace: first step, last step, and stride (0 = full range / no skip)",
+      "syntax": "history 'ratio' begin 0 end 0 skip 0"
+    },
+    {
+      "keyword": "legend active on | off",
+      "description": "Show or hide the trace legend (on by default)",
+      "syntax": "legend active on"
+    }
+  ],
+
+  "common_usage_patterns": [
+    {
+      "use_case": "Plot a single history vs step",
+      "command": "plot create 'hist'\nplot 'hist' current\nplot 'hist' item create chart-history history 'ratio'",
+      "description": "Chart the history named 'ratio'. Confirm the name first with 'history list' (Name column, not ID)."
+    },
+    {
+      "use_case": "Overlay multiple histories on one chart",
+      "command": "plot item create chart-history history 'ke' history 'ratio' history 'unbal'",
+      "description": "Repeat 'history <name>' for each trace; all share the same axes"
+    },
+    {
+      "use_case": "Cross-plot one history against another",
+      "command": "plot item create chart-history history 'axial-stress' vs 'axial-strain'",
+      "description": "Stress-strain style x-y curve instead of vs step"
+    },
+    {
+      "use_case": "Export the chart to an image",
+      "command": "plot 'hist' export bitmap filename 'hist.png'",
+      "description": "Render the current chart to PNG (works headless via the bridge)"
+    }
+  ],
+
+  "troubleshooting": [
+    {
+      "symptom": "Chart is empty / no curve, axes show a huge exponent like 10^301",
+      "cause": "No valid trace bound. Usually 'history <id>' was passed a numeric ID, or the name is misspelled, or the 'history' keyword was omitted entirely.",
+      "fix": "Run 'history list', copy the exact string from the Name column, and pass it: plot item create chart-history history '<Name>'"
+    },
+    {
+      "symptom": "Curve is flat at zero",
+      "cause": "The history was created but the model has not cycled since, so only the initial sample exists.",
+      "fix": "Cycle the model (model cycle / model solve) after creating the history so it accumulates samples."
+    }
+  ],
+
+  "notes": [
+    "chart-history is engine-agnostic: the same keywords apply in PFC, FLAC, 3DEC, MPoint, and MassFlow.",
+    "These keywords are not officially documented by Itasca; they were verified empirically on all five engines — PFC3D 7.0, FLAC2D 9.7, MPoint3D 9.7, 3DEC 9.0, and MassFlow 9.7 — with identical behavior, including the name-vs-id empty-chart trap, plus 'plot export datafile'. chart-history is a shared core-kernel command.",
+    "Use 'plot <name> export datafile filename <f>' to dump the exact keyword state of an existing chart built in the GUI."
+  ]
+}
