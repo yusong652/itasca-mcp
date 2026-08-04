@@ -45,6 +45,48 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.3] - 2026-08-05
+
+All behaviour fixes below ship in `itasca-mcp-bridge` 0.4.4 and reach end
+users through the bridge's self-upgrade on next `start()`; they are
+restated here per this changelog's convention because users perceive
+them as itasca-mcp behaviour.
+
+### Fixed
+- **Defining FISH inside an async task no longer wedges the bridge.** A
+  multi-line `itasca.command()` containing `fish define ... end` was
+  split line by line, so the lone `fish define` dropped the engine
+  console into interactive FISH mode with the whole bridge unreachable
+  until someone typed `end` in the GUI. Definition blocks (`fish
+  define` / `fish operator` / legacy bare `define`) now survive
+  splitting as one command.
+- **A `model new` / `model restore` inside a multi-line command batch no
+  longer makes the bridge unreachable and tasks uninterruptible for the
+  rest of the call.** Those commands clear the engine's cycle-callback
+  registry — the sole source of busy-time reachability (status polls,
+  `execute_code` interleaving, interrupt). Batches are now split on the
+  `execute_code` path too, and the re-registration hook detects resets
+  on any line of a command, not just the first. Verified equally
+  load-bearing on PFC 6 and PFC 7.
+- **Interrupting a task on PFC 6 now reports `interrupted` instead of
+  `failed`.** PFC 6 wraps the interrupt exception opaquely; the
+  classifier now falls back to the task's pending interrupt flag.
+- **A live `itasca_execute_code` during a cycling task no longer
+  silently stops the run on PFC 6.** The console-capture machinery
+  issued a `show-message` keyword PFC 6 rejects, and a command
+  complaint inside the cycle callback aborts the running `model cycle`;
+  capture commands executing in the callback now omit the keyword.
+- **Scripts that rebind `itasca` through an intermediate variable (`_it
+  = itasca`) now get an explicit warning in the task/snippet output**
+  instead of a silently unsplit batch that can stall the bridge — the
+  splitter cannot statically prove such receivers alias itasca.
+
+### Documentation
+- **`itasca_execute_task` / `itasca_execute_code` docstrings explain
+  multi-line command normalization**: batches are split to one engine
+  call per command when `itasca.command` is reached through its import
+  name, and which rebinding shapes bypass the mechanism.
+
 ## [0.6.2] - 2026-08-04
 
 ### Fixed
