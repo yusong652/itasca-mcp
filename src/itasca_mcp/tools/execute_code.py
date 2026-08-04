@@ -56,6 +56,17 @@ def register(mcp: FastMCP) -> None:
         - Create and export plots: itasca.command('plot ...')
         - Development and REPL-style testing
 
+        Multi-line itasca.command(\"\"\"...\"\"\") batches are normalized to
+        one engine call per command, which keeps the bridge reachable
+        while the batch runs — including after a `model new`/
+        `model restore`, which reset the engine's cycle-callback
+        registry mid-batch. The normalization applies when
+        itasca.command is reached through its import name
+        (`import itasca` / `import itasca as x` / `from itasca import
+        command`); rebinding through intermediate variables
+        (`_it = itasca`) bypasses it, and the output then carries a
+        bridge warning.
+
         `program call '<file>.p3dat'` (or .p2dat / .dat) through this
         tool is engine-version-gated. On 6/7 the command-script
         interpreter blocks the bridge for the script's entire
