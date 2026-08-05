@@ -45,6 +45,50 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.4] - 2026-08-05
+
+Documentation-corpus release. Every claim below was verified against a
+live PFC2D 7.00 GUI (error-token enumeration and single-bond calibration
+runs) after a real agent-driven Brazilian-test session exposed the gaps.
+
+### Documentation
+- **PFC now serves its own `plot item` command doc instead of the shared
+  kernel copy.** The shared list was FLAC-flavored (structure/zone items)
+  and missed every PFC-native type; PFC's doc now lists the 35 item types
+  enumerated from the engine itself (ball, clump, contact, dfn, fracture,
+  measure, inlet, thermal variants, ...). Other engines keep the shared
+  copy.
+- **New `plot-items` references for `fracture` and `dfn`.** The fracture
+  item has **no per-DFN color attribute** — coloring or filtering cracks
+  by family must go through groups (`color-by text-attribute 'group'
+  <slot|Any>`, `range group`); the `dfn` item is the "DFN Fracture
+  Contour" and its creation requires the `contour` keyword. Verified
+  recipes for tension/shear crack visualization included.
+- **`linearpbond` reference now documents the `bond_break` callback
+  event arguments — and warns that the official PFC 7 `rocktest` example
+  is buggy.** The failure mode is `entries(2)` {1 tension, 2 shear};
+  `entries(3)` is the failure strength. The official example reads the
+  mode from `entries(3)`, so any crack-tracking FISH copied from it
+  silently classifies every bond break as shear. Adjudicated with
+  single-bond tension/shear calibration runs; a corrected FISH pattern
+  (which also group-tags cracks for per-family plot coloring) is
+  provided.
+- **The `plot export datafile` syntax-inspection advice is gone.** In
+  PFC 7 the command takes no filename and opens a GUI file dialog,
+  wedging a bridge-driven session; the docs now describe the safe
+  error-token probing technique instead.
+- Contact plot-item reference warns that `radius-factor` and a bare
+  `automatic` are not valid keywords (force-chain thickness is
+  `scale-by-force`); `range-elements` gains the `dfn` element with its
+  distance-from-DFN (not membership) semantics; `fracture group` gains
+  the official `range fish` scoping examples.
+- Stale `pfc_browse_*` tool names updated to `itasca_browse_*` across
+  the corpus (the pre-rename names no longer exist on the unified
+  server).
+
+### Added
+- `server.json` manifest for MCP registry publishing.
+
 ## [0.6.3] - 2026-08-05
 
 All behaviour fixes below ship in `itasca-mcp-bridge` 0.4.4 and reach end
