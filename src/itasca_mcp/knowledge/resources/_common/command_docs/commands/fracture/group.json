@@ -4,7 +4,10 @@
     "group"
   ],
   "description": "Specify fracture group names. Use of the group logic is described in Groups . By default, s is assigned to the default slot Default . Use the remove keyword to remove s from all slots.",
-  "notes": [],
+  "notes": [
+    "To scope the assignment to the fractures of ONE DFN, use 'range fish <fn>' with a FISH function filtering on the fracture (official pattern), or assign the group right when each fracture is created. 'range dfn <name>' does NOT work here - that range element selects by distance from a DFN, not by membership, and fracture-scoped commands reject it.",
+    "Groups are the route to per-family fracture visualization: the fracture plot item has no per-DFN color attribute, but supports 'color-by text-attribute' with value 'group' followed by a slot name or the keyword Any, and 'range group <name>'."
+  ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": ""
@@ -25,7 +28,16 @@
           "description": "Assign group s to the slot named slot . By default, slot Default is used."
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "command": "fracture group 'large' slot 'size' range fish mylarge",
+          "description": "Official pattern: assign group via a FISH filter function (mylarge returns 1 for fractures with area > 4); \"fracture group 'small' slot 'size' range fish mylarge not\" assigns the complement"
+        },
+        {
+          "command": "fracture group 'shear_cracks'",
+          "description": "No range: assigns the group to ALL fractures (slot Default)"
+        }
+      ]
     },
     "7.0": {
       "command": "fracture group",
@@ -42,7 +54,16 @@
           "description": "Assign group s to the slot named slot . By default, slot Default is used."
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "command": "fracture group 'large' slot 'size' range fish mylarge",
+          "description": "Official pattern: assign group via a FISH filter function (mylarge returns 1 for fractures with area > 4); \"fracture group 'small' slot 'size' range fish mylarge not\" assigns the complement"
+        },
+        {
+          "command": "fracture group 'shear_cracks'",
+          "description": "No range: assigns the group to ALL fractures (slot Default)"
+        }
+      ]
     },
     "9.0": {
       "command": "fracture group",
@@ -59,7 +80,16 @@
           "description": "Assign group s to the slot named slot . By default, slot Default is used."
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "command": "fracture group 'large' slot 'size' range fish mylarge",
+          "description": "Official pattern: assign group via a FISH filter function (mylarge returns 1 for fractures with area > 4); \"fracture group 'small' slot 'size' range fish mylarge not\" assigns the complement"
+        },
+        {
+          "command": "fracture group 'shear_cracks'",
+          "description": "No range: assigns the group to ALL fractures (slot Default)"
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "dfn",
+  "element_type": "pfc_specific",
+  "search_keywords": ["dfn", "discrete fracture network", "distance", "proximity"],
+  "description": "Select objects based on their DISTANCE from the discrete fracture network with name s - a geometric proximity element, NOT a DFN-membership filter. Additional fracture networks can be added to the same element using the name keyword. The extent keyword can be used with this element.",
+  "syntax": "range dfn <s> [keyword ...]",
+
+  "common_pitfall": "This element does NOT mean 'objects belonging to DFN s'. To operate on the fractures of one DFN (e.g. assign a group per crack family), use 'range fish <fn>' filtering on dfn.fracture.dfn(frac), or tag groups at fracture creation time. Fracture-scoped commands in PFC 7 reject 'range dfn' outright ('Bad conversion').",
+
+  "examples": [
+    {
+      "command": "ball group 'near_joints' range dfn 'joints'",
+      "description": "Group balls near the fractures of DFN 'joints' (distance-based selection)"
+    }
+  ],
+
+  "notes": [
+    "Verified PFC2D 7.00: 'fracture group <name> range dfn <dfn_name>' fails - the element is not available in fracture-scoped range phrases.",
+    "Official reference: range phrase reference, 'dfn' element - 'Select objects based on their distance from the discrete fracture network with name s.'"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "fracture",
+  "item_type": "fracture",
+  "search_keywords": ["fracture", "dfn", "crack", "discrete fracture network", "color", "group", "bond break"],
+  "description": "Configuration keywords for 'plot item create fracture'. Draws the fractures of the Discrete Fracture Network (DFN) system - including cracks recorded during bond breakage - with coloring and range filtering. Verified against PFC2D 7.00.",
+  "base_syntax": "plot item create fracture <keywords...>",
+
+  "basic_keywords": [
+    {
+      "keyword": "active on|off",
+      "description": "Show or hide the item without removing it",
+      "syntax": "active on"
+    },
+    {
+      "keyword": "color-by text-attribute 'group' <slot>",
+      "description": "Color fractures by group. The slot argument after 'group' is REQUIRED: a slot name string (e.g. 'Default') or the keyword Any",
+      "syntax": "color-by text-attribute 'group' Any",
+      "notes": "This is the way to distinguish crack families (e.g. tension vs shear) - see the per-DFN recipe in notes"
+    },
+    {
+      "keyword": "color-by text-attribute 'id'",
+      "description": "Color each fracture individually by ID",
+      "syntax": "color-by text-attribute 'id'"
+    },
+    {
+      "keyword": "color-by numeric-attribute",
+      "description": "Contour fractures by a numeric attribute. Valid attributes (verified 2D): 'aperture', 'length', 'cluster'; 3D uses 'area' instead of 'length'",
+      "syntax": "color-by numeric-attribute 'aperture'"
+    },
+    {
+      "keyword": "range group",
+      "description": "Restrict the item to fractures in a group - the supported way to build one plot item per crack family",
+      "syntax": "range group 'tension_cracks'"
+    },
+    {
+      "keyword": "legend active on|off",
+      "description": "Show or hide this item's legend entry",
+      "syntax": "legend active on"
+    }
+  ],
+
+  "common_usage_patterns": [
+    {
+      "use_case": "Cracks colored by family (tension vs shear)",
+      "command": "plot item create fracture color-by text-attribute 'group' Any",
+      "description": "Requires groups assigned first (see notes). Legend then lists each group with its own color"
+    },
+    {
+      "use_case": "One item per crack family",
+      "command": "plot item create fracture range group 'tension_cracks'",
+      "description": "Separate items allow per-family styling; repeat with the other group name"
+    },
+    {
+      "use_case": "Fracture size contour",
+      "command": "plot item create fracture color-by numeric-attribute 'length' color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
+      "description": "Contour fractures by trace length (2D; use 'area' in 3D)"
+    }
+  ],
+
+  "notes": [
+    "There is NO color-by attribute for the parent DFN: text-attribute 'dfn', 'dfn-group', 'name' etc. are rejected as invalid attributes (verified PFC2D 7.00). Coloring or filtering by DFN membership must go through groups.",
+    "Per-DFN recipe: assign a group to each DFN's fractures, then color by group. Scope the assignment with 'fracture group <name> range fish <fn>' (official pattern, filter on dfn.fracture.dfn(frac)), or simplest: tag each crack's group right when it is created in the bond-break callback.",
+    "'range dfn <name>' does NOT select by DFN membership - the dfn range element selects by DISTANCE from a named DFN (geometric proximity) and is not accepted by fracture-scoped commands in PFC 7.",
+    "Plot legend groups fractures under 'Fracture group <slot>' when coloring by group; a plain fracture item shows a single 'fractures' entry regardless of how many DFNs exist."
+  ]
+}
