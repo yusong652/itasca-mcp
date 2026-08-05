@@ -4,6 +4,8 @@
 
 # itasca-mcp
 
+[![MCP Toplist](https://mcptoplist.com/badge/io.github.yusong652%2Fpfc.svg)](https://mcptoplist.com/server/io.github.yusong652%2Fpfc)
+
 [English](https://github.com/yusong652/itasca-mcp/blob/main/README.md) | [简体中文](https://github.com/yusong652/itasca-mcp/blob/main/README.zh-CN.md)
 
 [![PyPI](https://img.shields.io/pypi/v/itasca-mcp)](https://pypi.org/project/itasca-mcp/)
