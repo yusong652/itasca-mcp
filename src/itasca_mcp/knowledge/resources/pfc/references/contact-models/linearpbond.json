@@ -6,7 +6,11 @@
     "parallel",
     "bond",
     "contact",
-    "model"
+    "model",
+    "bond_break",
+    "callback",
+    "crack",
+    "failure mode"
   ],
   "description": "Linear parallel bond model simulates a finite-sized piece of cement-like material deposited between two contacting pieces. It combines a linear elastic interface with a parallel bond that transmits both force and moment, allowing the bonded interface to resist relative rotation. This is the most commonly used model for simulating cemented particulate materials.",
   "typical_applications": [
@@ -627,5 +631,41 @@
     "6.0": true,
     "7.0": true,
     "9.0": true
+  },
+  "callback_events": {
+    "description": "FISH callback events fired by this model (register with 'fish callback add <fn> event <name>'). The FISH function receives ONE argument: an entries array.",
+    "events": [
+      {
+        "name": "bond_break",
+        "when": "The parallel bond breaks (tension or shear)",
+        "entries": [
+          {
+            "index": 1,
+            "type": "C_PNT",
+            "meaning": "Contact pointer"
+          },
+          {
+            "index": 2,
+            "type": "INT",
+            "meaning": "Failure mode: 1 = failed in TENSION, 2 = failed in SHEAR"
+          },
+          {
+            "index": 3,
+            "type": "FLT",
+            "meaning": "Failure strength [stress]: sigma_c (pb_ten) or tau_c, according to the failure mode"
+          },
+          {
+            "index": 4,
+            "type": "FLT",
+            "meaning": "Bond strain energy at onset of failure"
+          }
+        ],
+        "warning": "The official PFC 7 'rocktest' example reads the failure mode from entries(3) - that is a BUG in the example. entries(3) is the failure strength (a float), so 'mode == 1' never matches and every crack classifies as shear (or whatever the else-branch is). The failure mode is entries(2). Verified empirically on PFC2D 7.00.161 with single-bond tension and shear calibration tests: tension break -> entries(2)=1, entries(3)=pb_ten value; shear break -> entries(2)=2, entries(3)=cohesion-derived tau_c.",
+        "usage_pattern": {
+          "description": "Crack tracking with tension/shear classification (Brazilian/UCS tests). Tag each crack's group at creation so the fracture plot item can color by family (see itasca_browse_reference('plot-items fracture')).",
+          "fish": "fish define add_crack(entries)\n    local cp   = entries(1)\n    local mode = entries(2)   ; 1=tension, 2=shear  (NOT entries(3)!)\n    local dfn_label = 'crack_shear'\n    if mode = 1 then\n        dfn_label = 'crack_tension'\n    endif\n    ; ... create fracture in dfn.find(dfn_label), then:\n    ; fracture.group(frac) = dfn_label   ; enables per-family plot coloring\nend\nfish callback add add_crack event bond_break"
+        }
+      }
+    ]
   }
 }
