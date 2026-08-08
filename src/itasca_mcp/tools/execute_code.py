@@ -67,6 +67,21 @@ def register(mcp: FastMCP) -> None:
         (`_it = itasca`) bypasses it, and the output then carries a
         bridge warning.
 
+        FISH definition blocks (`fish define` / `fish operator` /
+        legacy bare `define` ... `end`) must arrive at the engine
+        whole: pass the complete block, header through its
+        terminating standalone `end`, in ONE itasca.command() string —
+        on its own or inside a multi-line batch (normalization keeps
+        definition blocks intact as a single engine call). Never feed
+        a definition line-by-line (e.g. looping with one
+        itasca.command(line) per line): the `fish define` header alone
+        drops the console into interactive FISH mode and that engine
+        call blocks waiting for body input that can never arrive over
+        the bridge, leaving the engine stuck until someone completes
+        the definition manually in the GUI console. Per-line loops
+        are fine for ordinary commands; only definition blocks must
+        stay in one string.
+
         `program call '<file>.p3dat'` (or .p2dat / .dat) through this
         tool is engine-version-gated. On 6/7 the command-script
         interpreter blocks the bridge for the script's entire
