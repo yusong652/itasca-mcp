@@ -1871,13 +1871,13 @@
     {
       "name": "fix",
       "signature": "clump.fix(component: int) -> bool",
-      "description": "Get clump fixity condition for DOF. 3D: 0-2=xyz velocity, 3-5=xyz angular velocity. 2D: 0-1=xy velocity, 2=angular velocity.",
+      "description": "Get clump fixity condition for DOF. Indices are 1-based, same as set_fix. 3D: 1-3=xyz velocity, 4-6=xyz angular velocity (range 1-6). 2D: 1-2=xy velocity, 3=spin (range 1-3). Verified live in PFC2D/PFC3D 7.0: index 0 is rejected ('Expected a value 1 <= x <= 6'); the official manual's 0-based description of this getter is wrong.",
       "parameters": [
         {
           "name": "component",
           "type": "int",
           "required": true,
-          "description": "DOF index"
+          "description": "DOF index (1-based)"
         }
       ],
       "returns": {
@@ -1888,7 +1888,7 @@
     {
       "name": "set_fix",
       "signature": "clump.set_fix(component: int, fixity: bool) -> None",
-      "description": "Set clump fixity condition for DOF. 3D: 1-3=xyz velocity, 4-6=xyz angular velocity. 2D: 1-2=xy velocity, 3=angular velocity.",
+      "description": "Set clump fixity condition for DOF. 3D: 1-3=xyz velocity, 4-6=xyz angular velocity. 2D: 1-2=xy velocity, 3=angular velocity. Verified live in PFC2D/PFC3D 7.0 against the named command keywords (clump fix velocity-x/y/z, spin-x/y/z).",
       "parameters": [
         {
           "name": "component",

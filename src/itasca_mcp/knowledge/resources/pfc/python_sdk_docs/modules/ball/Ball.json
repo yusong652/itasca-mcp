@@ -1510,13 +1510,13 @@
     {
       "name": "fix",
       "signature": "ball.fix(component: int) -> bool",
-      "description": "Get ball fixity condition for a vector component.",
+      "description": "Get ball fixity condition for a DOF. Indices are 1-based, same as set_fix. 3D: 1-3=xyz velocity, 4-6=xyz angular velocity (range 1-6). 2D: 1-2=xy velocity, 3=spin (range 1-3). Verified live in PFC2D/PFC3D 7.0: index 0 is rejected ('Expected a value 1 <= x <= 6'); the official manual's 0-based description of this getter is wrong.",
       "parameters": [
         {
           "name": "component",
           "type": "int",
           "required": true,
-          "description": "Degree of freedom (0-5: 0=X, 1=Y, 2=Z, 3=RX, 4=RY, 5=RZ)"
+          "description": "DOF index, 1-based. 3D: 1=X, 2=Y, 3=Z, 4=RX, 5=RY, 6=RZ. 2D: 1=X, 2=Y, 3=spin."
         }
       ],
       "returns": {
@@ -1527,13 +1527,13 @@
     {
       "name": "set_fix",
       "signature": "ball.set_fix(component: int, fix: bool) -> None",
-      "description": "Set ball fixity condition.",
+      "description": "Set ball fixity condition for a DOF. Indices are 1-based, same as fix. 3D: 1-3=xyz velocity, 4-6=xyz angular velocity (range 1-6). 2D: 1-2=xy velocity, 3=spin (range 1-3). Verified live in PFC2D/PFC3D 7.0 against the named command keywords (ball fix velocity-x/y/z, spin-x/y/z).",
       "parameters": [
         {
           "name": "component",
           "type": "int",
           "required": true,
-          "description": "Degree of freedom (0-5: 0=X, 1=Y, 2=Z, 3=RX, 4=RY, 5=RZ)"
+          "description": "DOF index, 1-based. 3D: 1=X, 2=Y, 3=Z, 4=RX, 5=RY, 6=RZ. 2D: 1=X, 2=Y, 3=spin."
         },
         {
           "name": "fix",
