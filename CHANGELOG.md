@@ -45,6 +45,37 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.5] - 2026-08-09
+
+Documentation-corpus release, continuing the live-verification pass against
+PFC2D 7.00: every claim below was checked in a running GUI before it was
+written down.
+
+### Documentation
+- **FISH definition blocks must reach the engine in one command string.**
+  The `itasca_execute_code` / `itasca_execute_task` tool docs now spell out
+  that `fish define` / `fish operator` (and legacy bare `define` ... `end`)
+  blocks must be passed whole in a single `itasca.command()` call. Feeding a
+  definition line-by-line drops the console into interactive FISH mode on
+  the header line alone, and that engine call blocks forever waiting for
+  body input that can never arrive over the bridge. Per-line loops remain
+  fine for ordinary commands.
+- **2D products expose a different `plot view` keyword set.** `plot view`
+  on 2D products (e.g. PFC2D) accepts only `extent` and `reset`; every 3D
+  camera keyword (center, eye, magnification, distance, dip, roll,
+  rotation, perspective, projection, clip, isometric) is rejected. The
+  `extent <v2> <v2>` syntax (lower-left then upper-right corner in model
+  coordinates) is documented here even though it is absent from the
+  official manual - it is only discoverable in-product via `plot view ?`.
+- **`plot create` names must be quoted strings or positive integers.**
+  A bare unquoted name is rejected with 'Unused extra parameter'; the doc
+  now shows the accepted forms and follow-up addressing (`plot '<name>'
+  view ...`, `plot '<name>' delete`).
+- **Fixity DOF indices corrected to 1-based.** `Ball.set_fix` /
+  `Clump.set_fix` / `RBlock.set_fix` component indices are 1-based
+  (3D: 1=X, 2=Y, 3=Z, 4-6=rotations; 2D: 1=X, 2=Y, 3=spin), not 0-based
+  as the command docs and Python API docs previously claimed.
+
 ## [0.6.4] - 2026-08-05
 
 Documentation-corpus release. Every claim below was verified against a
