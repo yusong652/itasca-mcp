@@ -14,9 +14,12 @@
     "roll",
     "rotation",
     "clip",
-    "dip"
+    "dip",
+    "extent",
+    "2d",
+    "window"
   ],
-  "description": "Control the camera view of a plot. If no plot name is specified, the current view is assumed. The camera always points from the eye position to the view center.",
+  "description": "Control the camera view of a plot. If no plot name is specified, the current view is assumed. The camera always points from the eye position to the view center. The keyword set depends on the product dimension: 3D products expose the full camera keyword set below; 2D products (e.g. PFC2D) have a flat view and accept only 'extent' and 'reset' - all camera keywords (center, eye, magnification, distance, dip, roll, rotation, perspective, projection, clip-front, clip-back, isometric) are rejected with 'Unused extra parameter'.",
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('plot view <keyword> <value>') - no direct Python SDK method"
@@ -57,6 +60,11 @@
           "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
         },
         {
+          "name": "extent",
+          "syntax": "extent <v2> <v2>",
+          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
+        },
+        {
           "name": "eye",
           "syntax": "eye <v>",
           "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
@@ -79,7 +87,7 @@
         {
           "name": "reset",
           "syntax": "reset",
-          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]."
+          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]. With 'extent', one of the only two keywords accepted by 2D products."
         },
         {
           "name": "roll",
@@ -99,7 +107,11 @@
         },
         {
           "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin"
+          "description": "Set view center to origin (3D products)"
+        },
+        {
+          "command": "plot view extent (0,0) (10,10)",
+          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
         },
         {
           "command": "plot view eye (10,10,10)",
@@ -166,6 +178,11 @@
           "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
         },
         {
+          "name": "extent",
+          "syntax": "extent <v2> <v2>",
+          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
+        },
+        {
           "name": "eye",
           "syntax": "eye <v>",
           "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
@@ -193,7 +210,11 @@
         },
         {
           "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin"
+          "description": "Set view center to origin (3D products)"
+        },
+        {
+          "command": "plot view extent (0,0) (10,10)",
+          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
         },
         {
           "command": "plot view eye (10,10,10)",
@@ -260,6 +281,11 @@
           "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
         },
         {
+          "name": "extent",
+          "syntax": "extent <v2> <v2>",
+          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
+        },
+        {
           "name": "eye",
           "syntax": "eye <v>",
           "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
@@ -282,7 +308,7 @@
         {
           "name": "reset",
           "syntax": "reset",
-          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]."
+          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]. With 'extent', one of the only two keywords accepted by 2D products."
         },
         {
           "name": "roll",
@@ -302,7 +328,11 @@
         },
         {
           "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin"
+          "description": "Set view center to origin (3D products)"
+        },
+        {
+          "command": "plot view extent (0,0) (10,10)",
+          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
         },
         {
           "command": "plot view eye (10,10,10)",
@@ -336,6 +366,7 @@
     }
   },
   "notes": [
-    "For detailed plot item keywords (color-by, cut, transparency, legend), use itasca_browse_reference(\"plot-items\") to list item types and itasca_browse_reference(\"plot-items ball\") for full syntax."
+    "For detailed plot item keywords (color-by, cut, transparency, legend), use itasca_browse_reference(\"plot-items\") to list item types and itasca_browse_reference(\"plot-items ball\") for full syntax.",
+    "2D products: verified in PFC2D 7.0 (2026-08) that 'plot view ?' enumerates only 'extent reset'; every camera keyword (center, eye, magnification, distance, dip, dip-direction, roll, rotation, perspective, projection, clip-front, clip-back, isometric) fails with 'Unused extra parameter 3'. 'plot view extent <v2> <v2>' takes lower-left then upper-right corner of the visible window in model coordinates (confirmed by exporting bitmaps of known ball positions). The 'extent' keyword is absent from the official manual - in-product '?' enumeration is the only way to discover it."
   ]
 }
