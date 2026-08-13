@@ -16,7 +16,7 @@
   "property_groups": [
     {
       "name": "Properties",
-      "description": "Joint properties for the 'ratestate' joint constitutive model. Assign the model with 'block contact jmodel assign ratestate [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel ratestate]'.",
+      "description": "Joint properties for the 'ratestate' joint constitutive model. Assign the model with 'block contact jmodel assign ratestate [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel ratestate]'. Property table completed 2026-08-14 from live enumeration (this file previously documented only the two stiffnesses; the model has NO official 9.7 property page - names are live ground truth, per-property semantics mostly uncurated).",
       "properties": [
         {
           "keyword": "stiffness-normal",
@@ -29,10 +29,111 @@
           "symbol": "k_s",
           "description": "joint shear stiffness (STRESS/LENGTH)",
           "type": "FLT"
+        },
+        {
+          "keyword": "a",
+          "description": "Rate-and-state friction direct-effect parameter a. Live-enumerated; no official 9.7 property page.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "b",
+          "description": "Rate-and-state friction evolution parameter b. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "c",
+          "description": "Live-enumerated; semantics uncurated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dc",
+          "description": "Characteristic slip distance Dc. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "alpha",
+          "description": "Live-enumerated; semantics uncurated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-zero",
+          "description": "Reference friction coefficient at the reference velocity. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-current",
+          "description": "Current friction (state variable). Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "velocity-zero",
+          "description": "Reference (steady-state) velocity. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "velocity-minimum",
+          "description": "Minimum velocity cutoff. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "theta",
+          "description": "State variable theta. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "theta-minimum",
+          "description": "Minimum state-variable value. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "statelaw",
+          "description": "Selects the state evolution law. Live-enumerated; accepted values uncurated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "maxmult",
+          "description": "Maximum multiplier bound. Live-enumerated; semantics uncurated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "minmult",
+          "description": "Minimum multiplier bound. Live-enumerated; semantics uncurated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sdis",
+          "description": "Shear displacement (state variable). Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "slip",
+          "description": "Slip flag/state. Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "slip-velocity",
+          "description": "Slip velocity magnitude (state variable). Live-enumerated.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation",
+          "description": "Dilation angle (degrees).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation-zero",
+          "description": "Shear displacement at which the joint ceases to dilate.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tension",
+          "description": "Tensile strength (Pa).",
+          "type": "FLT"
         }
       ]
     }
   ],
   "note": "Detailed property documentation is not present in the local 9.0 manual; only the universal joint stiffness terms are listed. Use 'block contact property' against the running engine for the full rate-state parameter set.",
-  "usage": "block contact jmodel assign ratestate ; block contact property <prop> <value> [range jmodel ratestate]"
+  "usage": "block contact jmodel assign ratestate ; block contact property <prop> <value> [range jmodel ratestate]",
+  "verification": "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted)."
 }

@@ -1,0 +1,113 @@
+{
+  "model": "velocity-weakening",
+  "full_name": "Velocity Weakening Joint Model",
+  "search_keywords": [
+    "velocity-weakening",
+    "joint",
+    "constitutive",
+    "jmodel",
+    "subcontact",
+    "friction-static",
+    "friction-dynamic",
+    "reference-velocity",
+    "dynamic",
+    "seismic"
+  ],
+  "description": "The Velocity Weakening joint model is similar to a slip-softening model, except that friction reduces as a function of increasing velocity rather than slip distance. Based on the standard Mohr-Coulomb joint model. Documented in the official 9.7 THEORY section only (no command-reference page); this file was authored 2026-08-14 from that page + live 3DEC 9.7.47 enumeration (the 9th jmodel in 'block contact jmodel assign ?').",
+  "property_groups": [
+    {
+      "name": "Properties",
+      "description": "Joint properties for the 'velocity-weakening' joint constitutive model. Assign with 'block contact jmodel assign velocity-weakening [range ...]', then set with 'block contact property <keyword> <value> [range ...]'.",
+      "properties": [
+        {
+          "keyword": "stiffness-normal",
+          "description": "Joint normal stiffness (stress/distance).",
+          "type": "FLT",
+          "symbol": "k_n"
+        },
+        {
+          "keyword": "stiffness-shear",
+          "description": "Joint shear stiffness (stress/distance).",
+          "type": "FLT",
+          "symbol": "k_s"
+        },
+        {
+          "keyword": "cohesion",
+          "description": "Joint cohesion (Pa).",
+          "type": "FLT",
+          "symbol": "c"
+        },
+        {
+          "keyword": "cohesion-residual",
+          "description": "Residual joint cohesion (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tension",
+          "description": "Tensile strength (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tension-residual",
+          "description": "Residual joint tensile strength (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-static",
+          "description": "Peak (static) friction coefficient.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-dynamic",
+          "description": "Residual (dynamic) friction coefficient.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-current",
+          "description": "Current friction angle in degrees (read only per the official theory page; the live engine accepts writes).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation",
+          "description": "Joint dilation angle in degrees.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation-zero",
+          "description": "Shear displacement at which the joint ceases to dilate.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "exponent",
+          "description": "Exponent a in the friction-velocity law.",
+          "type": "FLT",
+          "symbol": "a"
+        },
+        {
+          "keyword": "reference-velocity",
+          "description": "Reference velocity v* in the friction-velocity law.",
+          "type": "FLT",
+          "symbol": "v*"
+        },
+        {
+          "keyword": "slip-plastic",
+          "description": "Plastic shear displacement (3D VECTOR - the live engine expects a 3-component value; state variable).",
+          "type": "VEC3"
+        },
+        {
+          "keyword": "slip-velocity",
+          "description": "Shear velocity magnitude v in the friction-velocity law (state variable).",
+          "type": "FLT",
+          "symbol": "v"
+        },
+        {
+          "keyword": "use-plastic",
+          "description": "Set true to use plastic shear velocity in the friction-velocity law. Default false (live engine expects a boolean).",
+          "type": "BOOL"
+        }
+      ]
+    }
+  ],
+  "source": "Official 9.7 theory page 'Velocity Weakening Joint Model In 3DEC' + live 3DEC 9.7.47 enumeration",
+  "verification": "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted)."
+}

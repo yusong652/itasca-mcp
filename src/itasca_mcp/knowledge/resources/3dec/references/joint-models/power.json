@@ -16,7 +16,7 @@
   "property_groups": [
     {
       "name": "Properties",
-      "description": "Joint properties for the 'power' joint constitutive model. Assign the model with 'block contact jmodel assign power [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel power]'.",
+      "description": "Joint properties for the 'power' joint constitutive model. Assign the model with 'block contact jmodel assign power [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel power]'. Property table completed 2026-08-14 from the official 9.7 Power Law Creeping Joint theory page + live enumeration (this file previously documented only the two stiffnesses).",
       "properties": [
         {
           "keyword": "stiffness-normal",
@@ -29,11 +29,94 @@
           "symbol": "k_s",
           "description": "joint shear stiffness (STRESS/LENGTH)",
           "type": "FLT"
+        },
+        {
+          "keyword": "cohesion",
+          "description": "Cohesion (Pa).",
+          "type": "FLT",
+          "symbol": "c"
+        },
+        {
+          "keyword": "cohesion-residual",
+          "description": "Residual cohesion (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tension",
+          "description": "Tensile strength (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tension-residual",
+          "description": "Residual tensile strength (Pa).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction",
+          "description": "Friction angle (degrees).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-residual",
+          "description": "Residual friction angle (degrees).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation",
+          "description": "Dilation angle (degrees).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation-residual",
+          "description": "Residual dilation angle (degrees). Live-enumerated; not in the official property table.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "dilation-zero",
+          "description": "Shear displacement at which the joint ceases to dilate. Live-enumerated; not in the official property table.",
+          "type": "FLT"
+        },
+        {
+          "keyword": "constant-1",
+          "description": "Power-law constant A1.",
+          "type": "FLT",
+          "symbol": "A_1"
+        },
+        {
+          "keyword": "constant-2",
+          "description": "Power-law constant A2.",
+          "type": "FLT",
+          "symbol": "A_2"
+        },
+        {
+          "keyword": "exponent-1",
+          "description": "Power-law exponent n1.",
+          "type": "FLT",
+          "symbol": "n_1"
+        },
+        {
+          "keyword": "exponent-2",
+          "description": "Power-law exponent n2.",
+          "type": "FLT",
+          "symbol": "n_2"
+        },
+        {
+          "keyword": "stress-1",
+          "description": "Reference stress sigma_1^ref (Pa).",
+          "type": "FLT",
+          "symbol": "sigma_1^ref"
+        },
+        {
+          "keyword": "stress-2",
+          "description": "Reference stress sigma_2^ref (Pa).",
+          "type": "FLT",
+          "symbol": "sigma_2^ref"
         }
       ]
     }
   ],
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/theory/creep/creep.html",
   "note": "Power-law (Norton) creep joint model. The creep page documents the rheology rather than a flat property-keyword table; only the universal stiffness terms are listed here — see the source page and 'block contact property' for the full creep parameter set.",
-  "usage": "block contact jmodel assign power ; block contact property <prop> <value> [range jmodel power]"
+  "usage": "block contact jmodel assign power ; block contact property <prop> <value> [range jmodel power]",
+  "verification": "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted)."
 }
