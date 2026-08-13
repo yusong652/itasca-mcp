@@ -25,9 +25,9 @@
       "syntax": "plot [<s>] export keyword",
       "keywords": [
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "renders the plot to a bitmap file. The following keywords can be used to control the format and size of the bitmap created: sets the dots per inch setting in the resulting file (if applicable). The default will be based on the current video display. sets the dots per meter setting in the resulting file (if applicable). The default will be based on the current video display. sets the destination file name. If one is not specified, then one will be assigned. The extension determines the format, and PNG is used by default if no extension is specified. PNG, BMP, PPM, XBM, and XPM formats are supported. determines the size of the bitmap (in pixels). The default is 1024 x 768."
+          "name": "bitmap",
+          "syntax": "bitmap [dpi <i>] [dpm <i>] [filename <s>] [size <ix> <iy>]",
+          "description": "Renders the plot to a bitmap file. dpi/dpm set the dots-per-inch / dots-per-meter of the resulting file (default from the current video display). filename sets the destination file name; the extension determines the format (PNG default; PNG, BMP, PPM, XBM and XPM supported). size determines the bitmap size in pixels (default 1024 x 768). (Keyword name restored from the official 7.0 command index; a crawler artifact had collapsed it to 'size'.)"
         },
         {
           "name": "csv",
@@ -45,14 +45,14 @@
           "description": "This command attempts to export the geometric contents of the plot as a DXF file. NOTE: The DXF format does not support all of the features used to generate a plot. Your results may differ substantially from the plot on the screen. The filename keyword can be used to specify the file output, which will have the DXF extension by default."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a PDF file of the plot. sets the destination file name. The default extension will be PDF. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "pdf",
+          "syntax": "pdf [filename <s>] [landscape] [margin <fx1> <fx2> <fy1> <fy2>] [paper <fx> <fy>] [size <ix> <iy>]",
+          "description": "Creates a PDF file of the plot. filename sets the destination file name (default extension PDF). landscape selects landscape layout (default portrait). margin sets the page margins (inches or millimeters; default 0.25 all around). paper sets the paper size (default 11.0 x 8.5 in). size determines the size of the bitmap used to render the 3D image (default from the print image size setting; see the plot print-size command). (Keyword name restored from the official 7.0 command index.)"
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a Postscript file of the plot. sets the destination file name. The default extension will be PS. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "postscript",
+          "syntax": "postscript [filename <s>] [landscape] [margin <fx1> <fx2> <fy1> <fy2>] [paper <fx> <fy>] [size <ix> <iy>]",
+          "description": "Creates a Postscript file of the plot; same layout keywords as pdf (filename default extension PS). (Keyword name restored from the official 7.0 command index.)"
         },
         {
           "name": "print",
@@ -60,9 +60,9 @@
           "description": "sends the plot to the operating system print system. If in interactive mode, this will open up a print dialog. If running as part of a data file, the plot will be sent to the default windows printer."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "generates a Scalable Vector Graphics (SVG) file of the plot. The following keywords are available: specifies which file and path to give to the SVG file. The default extension is SVG. specifies the size of the bitmap portion of the plot (in pixels). By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "svg",
+          "syntax": "svg [filename <s>] [size <ix> <iy>]",
+          "description": "Generates a Scalable Vector Graphics (SVG) file of the plot. filename specifies the output file (default extension SVG). size specifies the size of the bitmap portion of the plot in pixels (default from the print image size setting; see the plot print-size command). (Keyword name restored from the official 7.0 command index.)"
         }
       ],
       "examples": [
@@ -97,9 +97,9 @@
       "syntax": "plot [<s>] export keyword",
       "keywords": [
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "renders the plot to a bitmap file. The following keywords can be used to control the format and size of the bitmap created: sets the destination file name. If one is not specified, then one will be assigned. The extension determines the format, and PNG is used by default if no extension is specified. PNG, BMP, PPM, XBM, and XPM formats are supported. determines the size of the bitmap (in pixels). The default is 1024 x 768."
+          "name": "bitmap",
+          "syntax": "bitmap [filename <s>] [size <ix> <iy>]",
+          "description": "Renders the plot to a bitmap file. filename sets the destination file name; the extension determines the format (PNG default; PNG, BMP, PPM, XBM and XPM supported). size determines the bitmap size in pixels (default 1024 x 768). (Keyword name restored; a crawler artifact had collapsed it to 'size'.)"
         },
         {
           "name": "csv",
@@ -117,14 +117,14 @@
           "description": "This command attempts to export the geometric contents of the plot as a DXF file. NOTE: The DXF format does not support all of the features used to generate a plot. Your results may differ substantially from the plot on the screen. The filename keyword can be used to specify the file output, which will have the DXF extension by default."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a PDF file of the plot. sets the destination file name. The default extension will be PDF. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "pdf",
+          "syntax": "pdf [filename <s>] [landscape] [margin <fx1> <fx2> <fy1> <fy2>] [paper <fx> <fy>] [size <ix> <iy>]",
+          "description": "Creates a PDF file of the plot. filename sets the destination file name (default extension PDF). landscape selects landscape layout (default portrait). margin sets the page margins (inches or millimeters; default 0.25 all around). paper sets the paper size (default 11.0 x 8.5 in). size determines the size of the bitmap used to render the 3D image (default from the print image size setting; see the plot print-size command). (Keyword name restored.)"
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a Postscript file of the plot. sets the destination file name. The default extension will be PS. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "postscript",
+          "syntax": "postscript [filename <s>] [landscape] [margin <fx1> <fx2> <fy1> <fy2>] [paper <fx> <fy>] [size <ix> <iy>]",
+          "description": "Creates a Postscript file of the plot; same layout keywords as pdf (filename default extension PS). (Keyword name restored.)"
         },
         {
           "name": "print",
@@ -132,14 +132,14 @@
           "description": "sends the plot to the operating system print system. If in interactive mode, this will open up a print dialog. If running as part of a data file, the plot will be sent to the default windows printer."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "generates a Scalable Vector Graphics (SVG) file of the plot. The following keywords are available: specifies which file and path to give to the SVG file. The default extension is SVG. specifies the size of the bitmap portion of the plot (in pixels). By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "svg",
+          "syntax": "svg [filename <s>] [size <ix> <iy>]",
+          "description": "Generates a Scalable Vector Graphics (SVG) file of the plot. filename specifies the output file (default extension SVG). size specifies the size of the bitmap portion of the plot in pixels (default from the print image size setting; see the plot print-size command). (Keyword name restored.)"
         },
         {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "generates a VRML file representing the plot. This file can be viewed directly by a compatible application. For example, Adobe Acrobat 3D can be used to turn the resulting VRML into a PDF file, or to embed the VRML file into another PDF document. The following keywords are available: specifies whether the VRML file output will be compressed or in plain text. The default is false. specifies which file and path to give to the VRML file. The default extension is WRL."
+          "name": "vrml",
+          "syntax": "vrml [compress <b>] [filename <s>]",
+          "description": "generates a VRML file representing the plot. This file can be viewed directly by a compatible application. For example, Adobe Acrobat 3D can be used to turn the resulting VRML into a PDF file, or to embed the VRML file into another PDF document. compress specifies whether the VRML file output will be compressed or in plain text (default false). filename specifies which file and path to give to the VRML file (default extension WRL). (Keyword name restored; 6.0 only.)"
         }
       ],
       "examples": [
@@ -174,44 +174,44 @@
       "syntax": "plot [<s>] export keyword",
       "keywords": [
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "renders the plot to a bitmap file. The following keywords can be used to control the format and size of the bitmap created: sets the dots per inch setting in the resulting file (if applicable). The default will be based on the current video display. sets the dots per meter setting in the resulting file (if applicable). The default will be based on the current video display. sets the destination file name. If one is not specified, then one will be assigned. The extension determines the format, and PNG is used by default if no extension is specified. PNG, BMP, PPM, XBM, and XPM formats are supported. determines the size of the bitmap (in pixels). The default is 1024 x 768."
+          "name": "bitmap",
+          "syntax": "bitmap [dpi <i>] [dpm <i>] [filename <s>] [size <ix> <iy>]",
+          "description": "Renders the plot to a bitmap file (format from the filename extension; PNG default). dpi/dpm set the resolution metadata, size the pixel dimensions. Sub-keywords enumerated live: dpi, dpm, filename, size. Verified against FLAC3D 9.7 (bitmap export produced a valid PNG)."
         },
         {
           "name": "csv",
           "syntax": "csv [filename <s>]",
-          "description": "creates a text file of data in CSV (Comma Separated Values) format, with data data from all plot items that support the conversion (e.g., charts, tables, etc.). This will be arranged in tabular form. This file can be easily imported into a spreadsheet progral like Excel, for further processing. The filename keyword can be used to specify the file output, which will have the CSV extension by default."
+          "description": "creates a text file of data in CSV (Comma Separated Values) format, with data from all plot items that support the conversion (e.g., charts, tables, etc.), arranged in tabular form for spreadsheet import. Sub-keyword enumerated live: filename. Verified against FLAC3D 9.7."
         },
         {
           "name": "datafile",
           "syntax": "datafile [filename <s>]",
-          "description": "This command exports a data file that, if read with the program call command, should completely recreate the contents of the plot. The filename keyword can be used to specify the file output, which will have the F3DAT extension by default."
+          "description": "This command exports a data file that, if read with the program call command, should completely recreate the contents of the plot. Sub-keyword enumerated live: filename. Verified against FLAC3D 9.7."
         },
         {
           "name": "dxf",
           "syntax": "dxf [filename <s>]",
-          "description": "This command attempts to export the geometric contents of the plot as a DXF file. NOTE: The DXF format does not support all of the features used to generate a plot. Your results may differ substantially from the plot on the screen. The filename keyword can be used to specify the file output, which will have the DXF extension by default."
+          "description": "This command attempts to export the geometric contents of the plot as a DXF file. NOTE: The DXF format does not support all of the features used to generate a plot; results may differ substantially from the plot on screen. Sub-keyword enumerated live: filename. Verified against FLAC3D 9.7."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a PDF file of the plot. sets the destination file name. The default extension will be PDF. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "pdf",
+          "syntax": "pdf [filename <s>] [landscape] [margin <fx1> <fx2> <fy1> <fy2>] [paper <fx> <fy>] [size <ix> <iy>]",
+          "description": "Creates a PDF file of the plot. filename sets the destination (default extension PDF); landscape selects landscape layout; margin and paper set page geometry; size sets the bitmap render size. Sub-keywords enumerated live: filename, landscape, margin, paper, size. Verified against FLAC3D 9.7."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "creates a Postscript file of the plot. sets the destination file name. The default extension will be PS. specifies use of the landscape layout. The default is portrait. specifies the amount of margin to leave around the edges of the page in the layout (in inches or millimeters). The default is 0.25, 0.25, 0.25, 0.25 in. specifies the paper size to use in the layout (in inches or millimeters). The default is 11.0, 8.5 in. determines the size of the bitmap used to render the 3D image. By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "postscript",
+          "syntax": "postscript",
+          "description": "DEPRECATED in 9.x: the keyword is still enumerated by the parser, but execution fails with 'Rendering to postscript is no longer supported'. Verified against FLAC3D 9.7. Use pdf or svg instead."
         },
         {
           "name": "print",
           "syntax": "print",
-          "description": "sends the plot to the operating system print system. If in interactive mode, this will open up a print dialog. If running as part of a data file, the plot will be sent to the default windows printer."
+          "description": "Sends the plot to the operating system print system (print dialog in interactive mode, default printer otherwise). Takes no further keywords in 9.x (live '?' probe returned an empty token list). Verified against FLAC3D 9.7."
         },
         {
-          "name": "size",
-          "syntax": "size <ix><iy>",
-          "description": "generates a Scalable Vector Graphics (SVG) file of the plot. The following keywords are available: specifies which file and path to give to the SVG file. The default extension is SVG. specifies the size of the bitmap portion of the plot (in pixels). By default, the current print image size setting is used. See the PRINT SIZE property in the PLOT global settings dialog and the plot print-size command."
+          "name": "svg",
+          "syntax": "svg [filename <s>] [size <ix> <iy>]",
+          "description": "Generates a Scalable Vector Graphics (SVG) file of the plot. Sub-keywords enumerated live: filename, size. Verified against FLAC3D 9.7."
         }
       ],
       "examples": [
@@ -243,6 +243,7 @@
     }
   },
   "notes": [
-    "For detailed plot item keywords (color-by, cut, transparency, legend), use itasca_browse_reference(\"plot-items\") to list item types and itasca_browse_reference(\"plot-items ball\") for full syntax."
+    "For detailed plot item keywords (color-by, cut, transparency, legend), use itasca_browse_reference(\"plot-items\") to list item types and itasca_browse_reference(\"plot-items ball\") for full syntax.",
+    "9.x keyword set verified live against FLAC3D 9.7 (2026-08-13); 7.0/6.0 keyword names restored from the official FLAC3D 7.0 command index (the crawler had collapsed every format keyword's name to its trailing 'size' sub-keyword)."
   ]
 }

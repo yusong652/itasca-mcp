@@ -1,6 +1,6 @@
 {
   "type": "plot_item_keywords",
-  "description": "Configuration keywords for FLAC plot item types created via 'plot item create <type>'. Item types and their keyword sets are binary-validated against FLAC2D 9.0.",
+  "description": "Configuration keywords for FLAC plot item types created via 'plot item create <type>'. Item types and their keyword sets are binary-validated against FLAC2D 9.0 and FLAC3D 9.7 (see per-file validation notes).",
   "usage_context": "plot item create <type> <keyword> <keyword> ...",
   "items": [
     {
@@ -26,10 +26,16 @@
       "file": "_common/references/plot-items/chart-history.json",
       "description": "History time-series line chart: bind traces with 'history <name>', plot vs step or cross-plot vs another history",
       "common_use": "Plot recorded histories over cycling: convergence ratio, zone/gridpoint/structure quantities"
+    },
+    {
+      "name": "flac3d-items",
+      "file": "flac3d-items.json",
+      "description": "FLAC3D 9.7 verified keyword sets for the 3D item types not covered by the FLAC2D-validated files: zone-vector, zone-tensor, zone-face, zone-isosurface, zone-profile, zone-boundary, zone-water, zone-interface, zone-attach, zone-joint, zone-track, zone-stereonet, struct-node-fix, structure-shell, structure-vector, chart-table, fos, history-locations, axes, scalebox, plus the beam-family keyword set.",
+      "common_use": "Look up 3D-only plot item types and the 2D/3D keyword differences."
     }
   ],
   "shared_keywords": {
-    "description": "Top-level keywords accepted by most FLAC plot item types (validated against FLAC2D 9.0).",
+    "description": "Top-level keywords accepted by most FLAC plot item types (validated against FLAC2D 9.0). FLAC3D 9.7 additionally accepts clip, cut and transparency on most items, and drops the 2D-only color/show-zone-id/text/zone-id-max/zone-id-min from the zone item.",
     "list": [
       "active",
       "color-list",
@@ -46,6 +52,7 @@
     "Plot-item keywords are appended after the item type.",
     "Some compound settings are easier to apply with 'plot item modify <id> ...' after creating the item.",
     "Probe the binary live with 'plot item create <type> ?' to see the full keyword set for any type, and 'plot item create <type> <kw> ?' to drill into a keyword.",
-    "Other plot item types (zone-vector, zone-tensor, zone-face, pp-fix, struct-node-fix, etc.) are accepted by FLAC2D 9.0 but not yet documented here."
+    "FLAC3D 9.7 item types are covered in flac3d-items.json. The unified 9.x kernel enumerates every engine's item types in 'plot item create ?'; acceptance does not imply the item renders FLAC data.",
+    "'plot delete' takes NO plot name (deleting the current plot); use \"plot '<name>' delete\" to target one. A name passed to 'plot delete' is reported as an unused extra parameter AFTER the current plot has already been deleted. Verified FLAC3D 9.7."
   ]
 }

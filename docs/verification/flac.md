@@ -65,6 +65,46 @@ Evidence grades per docs/verification/README.md: static / syntax / state.
   `zone gridpoint initialize saturation` reports "modified" but does not
   hold either); fixing saturation holds the value. Documented. (state)
 
+### Batch 2 — plot / plot-items (2026-08-13)
+
+- [x] Full FLAC3D 9.7 plot item type enumeration captured. The unified 9.x
+  kernel enumerates ALL engines' item types (~95: ball/clump/rblock from
+  PFC, block-* from 3DEC, mpoint-*, drawpoint/mineblock, ...) — acceptance
+  does not imply the item renders FLAC data; documented in the plot-items
+  index and new `flac3d-items.json`. (syntax)
+- [x] New `flac/references/plot-items/flac3d-items.json`: verified top-level
+  keyword sets for 20 3D item types (zone-vector/-tensor/-face/-isosurface/
+  -profile/-boundary/-water/-interface/-attach/-joint/-track/-stereonet,
+  struct-node-fix, structure-shell/-vector, chart-table, fos,
+  history-locations, axes, scalebox) plus the beam-family set. Discovered
+  quirks: `zonetensor` is an alias of `zone-tensor` (which REQUIRES a
+  quantity keyword first); beam family carries CamelCase `Bar`/`BarScale`/
+  `FlipBars` keywords (leaked internal names, really accepted); zone-face
+  uses `highlight-selected` where zone uses `selected-highlight`. (syntax)
+- [x] 2D/3D dimension differences recorded in zone/index, zone/contour,
+  zone/label, gridpoint-fix, structure/index, structure/contour: 3D adds
+  clip/cut/transparency + -z/-xz/-yz components + face-based label types;
+  2D-only zone keywords (color, show-zone-id, text, zone-id-*) and contour
+  attributes (fluid-bulk-modulus, saturation-apparent) rejected by 9.7.
+  (syntax)
+- [x] `plot view` 9.0: `perspective` keyword replaced by
+  `projection <parallel|perspective>` (9.x rejects bare `perspective`;
+  `extent` remains 2D-only as previously documented from PFC2D work).
+  (syntax)
+- [x] `plot export` (_common): all three version blocks had every format
+  keyword's name collapsed to its trailing `size` sub-keyword (crawler
+  artifact) and 9.0 was missing bitmap/pdf/postscript/svg entirely.
+  Rebuilt: 9.0 live-verified (sub-keywords enumerated; bitmap export
+  state-verified — PNG on disk, legend max matched `gridpointarray.disp()`
+  readback to 5 significant digits); 7.0/6.0 names restored from the
+  official FLAC3D 7.0 index. `postscript` is enumerated but DEPRECATED in
+  9.x ("no longer supported" at execution). (state for bitmap; syntax rest)
+- [x] `plot delete` trap documented: name goes BEFORE the verb
+  (`plot 'name' delete`); `plot delete <name>` deletes the CURRENT plot
+  first, then errors on the extra parameter. (state: observed)
+- [x] `chart-history` (_common): 9.x top-level keyword list added
+  (begin/end/skip were undocumented). (syntax)
+
 ## Open — from live verification
 
 - [ ] `pore-pressure-maximum` exact semantics (cap? applied load limit?):
@@ -124,9 +164,21 @@ P3 (design decisions, discuss before executing):
 - [ ] `vertexarray` described as "wall vertices" (faithful copy of an
   upstream wording bug) — add clarifying note.
 
+## Open — plot follow-ups (from Batch 2)
+
+- [ ] Author command docs for the 9 undocumented `plot` subcommands
+  enumerated live: legend, load, movie, outline, print-size, reset, show,
+  target, title-job (_common scope — verify on a second engine before
+  writing).
+- [ ] Drill-down keyword sets below the top level (e.g. `contour` config
+  sub-keywords vs attributes are mixed in the positional `?` enumeration;
+  `zone-isosurface`/`zone-profile` config keywords listed but not
+  individually probed).
+- [ ] structure-liner/-pile/-geogrid/-dowel/-hybrid keyword sets asserted by
+  family analogy only (beam/cable and shell verified).
+
 ## Not yet started
 
-- [ ] plot / plot-items reference verification (high-risk by PFC analogy)
 - [ ] constitutive-models reference vs `zone cmodel` + property enumeration
 - [ ] structure command family (131 files — largest block)
 - [ ] Python SDK per-function verification (zone/zonearray/gridpointarray/
@@ -139,3 +191,4 @@ P3 (design decisions, discuss before executing):
 | Date | PR | Scope | Files touched |
 |------|----|-------|---------------|
 | 2026-08-13 | #75 | Batch 1: zone BC family live verification + scan P0 fixes + workspace setup | 15 corpus JSONs + docs/verification/ |
+| 2026-08-13 | #76 | Batch 2: plot / plot-items FLAC3D 9.7 enumeration, 2D/3D diffs, export/view/delete fixes | 12 corpus JSONs (1 new) |

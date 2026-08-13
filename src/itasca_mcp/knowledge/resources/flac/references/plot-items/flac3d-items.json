@@ -1,0 +1,369 @@
+{
+  "name": "flac3d-items",
+  "dimension": "3D",
+  "description": "FLAC3D 9.7 plot item types and their verified top-level keyword sets, captured live via 'plot item create <type> ?' error/'?' enumeration. Complements the FLAC2D 9.0-validated zone/gridpoint-fix/structure references. Verified against FLAC3D 9.7 via '?' probing (2026-08-13).",
+  "unified_kernel_note": "The Itasca 9.x unified kernel enumerates ALL engines' plot item types in 'plot item create ?' (ball/clump/rblock from PFC, block-* from 3DEC, mpoint-* from MPM, drawpoint/mineblock from MassFlow, ...). Acceptance by the parser does not mean the item is meaningful in a FLAC model -- only the types listed here (plus zone, gridpoint-fix, structure-beam/-cable/-liner/-pile/-geogrid/-dowel/-hybrid, chart-history) render FLAC data.",
+  "beam_family_keywords": {
+    "types": [
+      "structure-beam",
+      "structure-cable (verified identical)",
+      "structure-pile",
+      "structure-dowel",
+      "structure-hybrid (untested, by family analogy)"
+    ],
+    "keywords": [
+      "Bar",
+      "BarScale",
+      "FlipBars",
+      "active",
+      "clip",
+      "color-list",
+      "contour",
+      "cut",
+      "deformation-factor",
+      "label",
+      "legend",
+      "line",
+      "map",
+      "marker",
+      "range",
+      "shrink",
+      "slot",
+      "system",
+      "transparency"
+    ],
+    "notes": [
+      "'Bar', 'BarScale' and 'FlipBars' are CamelCase keywords leaked from internal property names; 'Bar' takes a boolean. They are real, accepted keywords in 9.7.",
+      "'contour <attribute>' accepts the beam-family attribute set including 3D-only -z / angular / plastic entries (see structure/contour.json)."
+    ]
+  },
+  "items": {
+    "zone-vector": {
+      "keywords": [
+        "active",
+        "boundaries",
+        "by-magnitude",
+        "clip",
+        "color",
+        "cut",
+        "deformation-factor",
+        "draw-as",
+        "legend",
+        "map",
+        "maximum-number",
+        "point-to-base",
+        "quality",
+        "range",
+        "scale",
+        "shape",
+        "skip",
+        "transparency",
+        "uniform-mag",
+        "value"
+      ],
+      "notes": [
+        "'value' selects the vector quantity: acceleration, displacement, flow, flux, force-applied, reaction, unbalanced-force, velocity."
+      ]
+    },
+    "zone-tensor": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-by",
+        "color-list",
+        "cut",
+        "def-factor",
+        "legend",
+        "line",
+        "map",
+        "maxnumber",
+        "range",
+        "scale",
+        "skip",
+        "transparency"
+      ],
+      "notes": [
+        "A tensor quantity keyword is REQUIRED first, before any other keyword: principal, ssi, ssr, strainincrement, strainrate, or stress.",
+        "'zonetensor' is accepted as an alias with the identical quantity and keyword sets."
+      ]
+    },
+    "zone-face": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "cut",
+        "cut-line",
+        "deformation-factor",
+        "hide-null",
+        "highlight-selected",
+        "legend",
+        "map",
+        "polygons",
+        "range",
+        "selected-only",
+        "show",
+        "transparency"
+      ],
+      "notes": [
+        "Uses 'highlight-selected' where the zone item uses 'selected-highlight'."
+      ]
+    },
+    "zone-isosurface": {
+      "keywords_note": "First token is a field attribute (same attribute families as zone contour, including -z/-xz/-yz components); configuration keywords include: active, autocalc, balloon, clip, color-by, color-list, component, cut, cut-line, deformation-factor, hide-null, isovalue, legend, log, map, method, multiplier, null, polygons, range, recalculate, surface, transparency."
+    },
+    "zone-profile": {
+      "keywords_note": "First token is a field attribute (same families as zone contour); chart-style configuration keywords include: alias, axis-x, axis-y, balloon, base-value, chart, labels, legend, log, marks, name, profile, reversed-x, reversed-y, style, style-line, style-mark, swap, title, transparency, type."
+    },
+    "zone-boundary": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "cut",
+        "cut-line",
+        "def-fac",
+        "groups",
+        "hide-null",
+        "legend",
+        "line",
+        "map",
+        "polygons",
+        "range",
+        "slot",
+        "transparency"
+      ]
+    },
+    "zone-water": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "cut",
+        "legend",
+        "map",
+        "polygons",
+        "range",
+        "transparency"
+      ]
+    },
+    "zone-interface": {
+      "keywords": [
+        "contour",
+        "location",
+        "node"
+      ]
+    },
+    "zone-attach": {
+      "keywords": [
+        "active",
+        "clip",
+        "def-fac",
+        "follower-gp",
+        "joint-line",
+        "leader-edge",
+        "leader-face",
+        "leader-gp",
+        "legend",
+        "map",
+        "range",
+        "transparency"
+      ]
+    },
+    "zone-joint": {
+      "keywords": [
+        "active",
+        "all-contacts",
+        "both-directions",
+        "caption",
+        "clip",
+        "color-by",
+        "color-options",
+        "cut",
+        "ghosts",
+        "interpolate",
+        "legend",
+        "map",
+        "orientation",
+        "outline",
+        "range",
+        "scale-by-magnitude",
+        "selected-only",
+        "shape",
+        "transparency"
+      ]
+    },
+    "zone-track": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-by",
+        "color-list",
+        "end-point",
+        "legend",
+        "line",
+        "path",
+        "range",
+        "transparency"
+      ]
+    },
+    "zone-stereonet": {
+      "keywords": [
+        "active",
+        "border",
+        "color-by",
+        "contours",
+        "density",
+        "grid",
+        "hemisphere",
+        "legend",
+        "points",
+        "position",
+        "range",
+        "resolution",
+        "size",
+        "transparency",
+        "type"
+      ]
+    },
+    "struct-node-fix": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "cut",
+        "def-fac",
+        "legend",
+        "line",
+        "map",
+        "range",
+        "rotational",
+        "scale",
+        "transparency"
+      ]
+    },
+    "structure-shell": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "contour",
+        "cut",
+        "deformation-factor",
+        "label",
+        "legend",
+        "map",
+        "marker",
+        "polygons",
+        "range",
+        "shrink",
+        "slot",
+        "system",
+        "transparency"
+      ],
+      "notes": [
+        "Surface family (uses 'polygons'; no Bar/line keywords). Contrast with the beam family below."
+      ]
+    },
+    "structure-vector": {
+      "keywords": [
+        "active",
+        "by-magnitude",
+        "clip",
+        "color",
+        "cut",
+        "deformation-factor",
+        "draw-as",
+        "legend",
+        "map",
+        "point-to-base",
+        "quality",
+        "range",
+        "scale",
+        "shape",
+        "structures",
+        "transparency",
+        "value"
+      ]
+    },
+    "chart-table": {
+      "keywords": [
+        "active",
+        "axis-x",
+        "axis-y",
+        "chart",
+        "labels",
+        "legend",
+        "marks",
+        "swap",
+        "table",
+        "title",
+        "transparency"
+      ]
+    },
+    "fos": {
+      "keywords": [
+        "active",
+        "legend"
+      ]
+    },
+    "history-locations": {
+      "keywords": [
+        "active",
+        "color-list",
+        "cut",
+        "legend",
+        "mark",
+        "numbers",
+        "pixel-size",
+        "range",
+        "scale",
+        "transparency"
+      ]
+    },
+    "axes": {
+      "keywords": [
+        "active",
+        "auto-configure",
+        "axis-x",
+        "axis-y",
+        "axis-z",
+        "font",
+        "legend",
+        "position",
+        "scale",
+        "screen",
+        "size",
+        "transparency"
+      ]
+    },
+    "scalebox": {
+      "keywords": [
+        "active",
+        "arrows",
+        "auto-range",
+        "box",
+        "color",
+        "color-list",
+        "cut-line",
+        "exponent",
+        "front",
+        "label-lines",
+        "labels",
+        "legend",
+        "major-auto",
+        "major-grid",
+        "major-line",
+        "major-scale",
+        "minor-auto",
+        "minor-grid",
+        "minor-line",
+        "minor-scale",
+        "polygons",
+        "text",
+        "transparency"
+      ]
+    }
+  },
+  "probing_recipe": "plot item create <type> ? enumerates top-level keywords; plot item create <type> <kw> ? drills into a keyword. The '?' output goes to the console, not an error."
+}
