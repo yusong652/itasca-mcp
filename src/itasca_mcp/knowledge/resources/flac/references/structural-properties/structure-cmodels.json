@@ -1,0 +1,41 @@
+{
+  "name": "structure-cmodels",
+  "dimension": "3D",
+  "full_name": "Structural-Element Constitutive Models (FLAC3D 9.x)",
+  "description": "In the 9.x series, structural elements carry their own constitutive models, assigned with 'structure <type> cmodel assign <model>'. The 'structure <type> property' keyword set is MODEL-DEPENDENT: material property names (young, poisson, cohesion, ...) only parse after the corresponding cmodel is assigned, on top of a fixed per-type base set (thickness, density, coupling-*, ...). All facts below were live-verified against FLAC3D 9.7 (error-enumeration probing plus set-and-list readback).",
+  "cmodel_support_by_type": {
+    "shell": ["anisotropic", "concrete", "elastic", "mohr-coulomb", "orthotropic", "strain-softening", "von-mises"],
+    "liner": ["anisotropic", "concrete", "elastic", "mohr-coulomb", "orthotropic", "strain-softening", "von-mises"],
+    "geogrid": ["anisotropic", "concrete", "elastic", "mohr-coulomb", "orthotropic", "strain-softening", "von-mises"],
+    "beam": ["concrete", "elastic", "mohr-coulomb", "strain-softening", "von-mises"],
+    "pile": ["concrete", "elastic", "mohr-coulomb", "strain-softening", "von-mises"],
+    "cable": [],
+    "notes": [
+      "beam/pile omit the anisotropic/orthotropic surface models (1D elements).",
+      "cable has NO cmodel subcommand at all ('structure cable cmodel' is rejected with 'Unused extra parameter'); cable material behavior is fully driven by its fixed property set.",
+      "'structure <type> cmodel' subcommands: assign, list, plastic-integration."
+    ]
+  },
+  "assignment_trap": {
+    "description": "Once an elastic-family model (elastic/anisotropic/orthotropic) has been explicitly assigned, reassigning a PLASTIC model (concrete/mohr-coulomb/strain-softening/von-mises) to the same elements is rejected: 'Cannot replace an elastic model with a plastic model'. The reverse direction (plastic -> elastic) IS accepted, as are swaps within the elastic family. Freshly created elements (default state, no explicit assign yet) accept any model.",
+    "workaround": "Assign the plastic model first on fresh elements, or delete and recreate the elements ('structure <type> delete' then create).",
+    "verified": "Reproduced on both shell and liner elements against FLAC3D 9.7."
+  },
+  "property_sets_by_cmodel": {
+    "description": "Full 'structure shell property' keyword enumeration per assigned cmodel (FLAC3D 9.7; 'range' omitted). Each set = the type's base set (density, thermal-expansion, thickness for shell) + the model's material properties. liner/geogrid/beam/pile follow the same expansion pattern on top of their own base sets (spot-verified: liner + elastic adds young, poisson).",
+    "shell_base_no_cmodel": ["density", "thermal-expansion", "thickness"],
+    "elastic": ["density", "poisson", "thermal-expansion", "thickness", "young"],
+    "anisotropic": ["aniso-bend-constants", "aniso-bend-thickness", "aniso-memb-constants", "aniso-memb-thickness", "density", "material-x", "thermal-expansion", "thickness"],
+    "orthotropic": ["density", "material-x", "ortho-bend-constants", "ortho-bend-thickness", "ortho-memb-constants", "ortho-memb-thickness", "thermal-expansion", "thickness"],
+    "mohr-coulomb": ["bulk", "cohesion", "density", "dilation", "flag-brittle", "friction", "plastic-strain", "poisson", "shear", "tension", "thermal-expansion", "thickness", "young"],
+    "strain-softening": ["bulk", "cohesion", "density", "dilation", "flag-brittle", "friction", "length-calibration", "plastic-strain", "poisson", "shear", "strain-shear-plastic", "strain-tension-plastic", "table-cohesion", "table-dilation", "table-friction", "table-tension", "tension", "thermal-expansion", "thickness", "young"],
+    "von-mises": ["bulk", "density", "modulus-plastic", "poisson", "shear", "strength-yield", "thermal-expansion", "thickness", "young"],
+    "concrete": ["bulk", "compression", "compression-d", "compression-energy-fracture", "compression-initial", "compression-length-reference", "compression-strength", "damage", "damage-compression", "damage-tension", "density", "dilation", "poisson", "ratio-biaxial", "shear", "strain-plastic-compression", "strain-plastic-tension", "tension", "tension-d", "tension-energy-fracture", "tension-initial", "tension-length-reference", "tension-recovery", "tension-strength", "thermal-expansion", "thickness", "young"]
+  },
+  "enumeration_caveats": [
+    "The 'structure <type> property' error enumeration only lists properties valid for the CURRENTLY assigned cmodel -- it is not the union across models. Probing with no elements of the type present enumerates nothing but 'range'.",
+    "The legacy 7.0-style vector property 'isotropic (E, nu)' is still ACCEPTED by 9.7 shells even though it never appears in any error enumeration (it maps onto the elastic material).",
+    "Evidence grade: property names are enumeration-verified; young/poisson additionally state-verified (set 3.21e9, read back via 'structure shell list property young')."
+  ],
+  "official_documentation": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html"
+}

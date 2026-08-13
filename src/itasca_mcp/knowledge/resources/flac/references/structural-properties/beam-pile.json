@@ -27,7 +27,7 @@
         "plastic-shear"
       ],
       "notes": [
-        "'moi' is the single in-plane moment of inertia in FLAC2D. The 'moi-y'/'moi-z'/'moi-polar' family is FLAC3D-only and rejected by FLAC2D.",
+        "'moi' is the single in-plane moment of inertia in FLAC2D. The split 'moi-y'/'moi-z' family is FLAC3D-only and rejected by FLAC2D. NOTE: FLAC3D 9.7 has NO 'moi-polar' -- torsional stiffness is set via 'torsion-constant' (live-enumerated).",
         "'shear-coefficient' is a single scalar in FLAC2D; 'shear-coefficient-y'/'shear-coefficient-z' are FLAC3D-only.",
         "'spacing' is the out-of-plane element spacing (FLAC2D-only concept; FLAC3D models real spacing geometrically).",
         "'direction-y' orients the local y-axis of the beam cross section.",
@@ -84,8 +84,10 @@
     ],
     "notes": [
       "FLAC3D beam/pile use the SPLIT principal-axis form (moi-y/-z, shear-coefficient-y/-z, plastic-moment-y/-z, plastic-shear-y/-z) and accept 'torsion-constant' + 'thermal-expansion'. FLAC2D uses the unified scalars (moi, shear-coefficient, plastic-moment, plastic-shear) and does NOT accept the -y/-z forms or 'thermal-expansion' or 'torsion-constant'.",
+      "FLAC3D 9.7 additionally accepts the UNIFIED 'plastic-moment' and 'plastic-shear' scalars alongside the split -y/-z forms (live-enumerated; sets both axes at once). The unified 'moi' and 'shear-coefficient' are still rejected in 3D.",
       "'spacing' is FLAC2D-only (out-of-plane spacing); FLAC3D rejects it.",
-      "Property keyword sets verified against FLAC3D 9.0 'structure beam property ?' and FLAC2D 9.0 binary."
+      "Property keyword sets verified against FLAC2D 9.0 binary and live FLAC3D 9.7 error enumeration ('structure beam/pile property <bogus>' with elements present).",
+      "9.x beam/pile also carry constitutive models ('structure beam cmodel assign', 5 models: concrete/elastic/mohr-coulomb/strain-softening/von-mises) -- see structure-cmodels.json for the mechanism and the elastic->plastic assignment trap."
     ]
   },
   "common_patterns": [
