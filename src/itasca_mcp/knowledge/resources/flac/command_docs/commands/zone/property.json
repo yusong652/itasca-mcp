@@ -4,7 +4,7 @@
     "property",
     "zone"
   ],
-  "description": "Make a constitutive model(s) property assignment. Properties are name-value pairs where the name is the keyword given in the command and the value type is specific to the property. The assignment will affect any zone whose constitutive model includes the property named (noting that some properties, such as bulk , for instance, appear in many constitutive models). Limiting a property assignment to zones that have a particular constitutive model assignment is done using the range component of the command. For instance,",
+  "description": "Make a constitutive model(s) property assignment. Properties are name-value pairs where the name is the keyword given in the command and the value type is specific to the property. The assignment will affect any zone whose constitutive model includes the property named (noting that some properties, such as bulk , for instance, appear in many constitutive models). Limiting a property assignment to zones that have a particular constitutive model assignment is done using the range component of the command. For instance, Property keywords are model-dependent: assign a constitutive model first ('zone cmodel assign <model>'), then set that model's properties (see the constitutive-models reference for verified per-model keyword sets). 'density' is always available.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -21,11 +21,40 @@
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
-      }
+      },
+      "keywords": [
+        {
+          "name": "density",
+          "syntax": "density <f >",
+          "description": "Mass density of the zones. Always available regardless of the assigned constitutive model. State-verified on FLAC3D 9.7: 'zone property density 2000' reads back via zone.density()."
+        },
+        {
+          "name": "<model property>",
+          "syntax": "<property-name> <value>",
+          "description": "All other property names depend on the constitutive model assigned to the zones in the range - there is no fixed keyword list. See the constitutive-models reference (itasca_browse_reference('constitutive-models <model>')) for each model's verified property set. Matching is case-insensitive and supports unambiguous prefix abbreviation; canonical names are listed in the reference. Verified against FLAC3D 9.7."
+        }
+      ]
     },
     "9.0": {
       "command": "zone property",
-      "syntax": "zone property [density <f>] keyword ... [range]"
+      "syntax": "zone property [density <f>] keyword ... [range]",
+      "keywords": [
+        {
+          "name": "density",
+          "syntax": "density <f >",
+          "description": "Mass density of the zones. Always available regardless of the assigned constitutive model. State-verified on FLAC3D 9.7: 'zone property density 2000' reads back via zone.density()."
+        },
+        {
+          "name": "<model property>",
+          "syntax": "<property-name> <value>",
+          "description": "All other property names depend on the constitutive model assigned to the zones in the range - there is no fixed keyword list. See the constitutive-models reference (itasca_browse_reference('constitutive-models <model>')) for each model's verified property set. Matching is case-insensitive and supports unambiguous prefix abbreviation; canonical names are listed in the reference. Verified against FLAC3D 9.7."
+        },
+        {
+          "name": "(discovery trick)",
+          "syntax": "zone property <bogus-token> 1",
+          "description": "A wrong property name fails with an enumeration of every property name valid for the models currently assigned in the range (including density and range) - the fastest way to discover a model's property set live. Setting a state variable fails with 'Property <name> of model <Model> is read-only'. Verified against FLAC3D 9.7."
+        }
+      ]
     }
   }
 }

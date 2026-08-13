@@ -13,7 +13,8 @@
     "description": "Description including physical meaning and units",
     "type": "Coarse data type (FLT=float, BOOL=boolean) — heuristic",
     "default": "Default value if documented",
-    "dim": "Present (value '3D') only for the dip/dip-direction weak-plane orientation keywords, which FLAC2D rejects (it uses 'angle'). Self-evidently out-of-plane keywords (xz/yz/-z) are left untagged. Absent = dimension-agnostic or obvious from the name."
+    "dim": "Present (value '3D') only for the dip/dip-direction weak-plane orientation keywords, which FLAC2D rejects (it uses 'angle'). Self-evidently out-of-plane keywords (xz/yz/-z) are left untagged. Absent = dimension-agnostic or obvious from the name.",
+    "readonly": "Present (true) when FLAC3D 9.7 rejects setting the property with an 'is read-only' error - it is a queryable state variable, not an input."
   },
   "models": [
     {
@@ -52,6 +53,20 @@
       "property_count": 27
     },
     {
+      "name": "cavehoek",
+      "file": "_common/references/constitutive-models/cavehoek.json",
+      "full_name": "CaveHoek Model",
+      "description": "Caving-oriented Hoek-Brown variant associated with the IMASS framework. Requires 'model configure imass' before 'zone cmodel assign cavehoek'. NOT documented in the official 7.0 or",
+      "property_count": 75
+    },
+    {
+      "name": "clay-and-sand",
+      "file": "_common/references/constitutive-models/clay-and-sand.json",
+      "full_name": "Clay and Sand Model (CASM)",
+      "description": "Unified critical-state model for clays and sands. New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "property_count": 19
+    },
+    {
       "name": "columnar-basalt",
       "file": "_common/references/constitutive-models/columnar-basalt.json",
       "full_name": "Columnar-Basalt (COMBA) Model**",
@@ -64,6 +79,13 @@
       "full_name": "Concrete Model",
       "description": "This concrete model is a plastic-damage model extended and modified from the work in Lublinear et al (1989) and Lee & Fe",
       "property_count": 24
+    },
+    {
+      "name": "curved-mohr-coulomb",
+      "file": "_common/references/constitutive-models/curved-mohr-coulomb.json",
+      "full_name": "Curved Mohr-Coulomb Model",
+      "description": "Mohr-Coulomb variant with a curved (nonlinear) strength envelope. New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "property_count": 21
     },
     {
       "name": "double-yield",
@@ -122,6 +144,13 @@
       "property_count": 63
     },
     {
+      "name": "jones-wilkins-lee",
+      "file": "_common/references/constitutive-models/jones-wilkins-lee.json",
+      "full_name": "Jones-Wilkins-Lee (JWL) Model",
+      "description": "Jones-Wilkins-Lee equation-of-state model (explosive detonation products). NOT documented in the official 7.0 or 9.7 HTML manuals - live-engine discovery.",
+      "property_count": 14
+    },
+    {
       "name": "maxwell",
       "file": "_common/references/constitutive-models/maxwell.json",
       "full_name": "Maxwell Model",
@@ -148,6 +177,13 @@
       "full_name": "Mohr-Coulomb Tension Crack (MohrT) Model**",
       "description": "Note **Not available in FLAC2D . The Mohr-Coulomb model is not well suited for simulation of tensile failure (fracturing",
       "property_count": 15
+    },
+    {
+      "name": "munson-dawson",
+      "file": "_common/references/constitutive-models/munson-dawson.json",
+      "full_name": "Munson-Dawson Creep Model",
+      "description": "Multi-mechanism deformation creep model for rock salt (Munson-Dawson). New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "property_count": 38
     },
     {
       "name": "norsand",
@@ -281,5 +317,11 @@
       "description": "A crushed-salt constitutive model is implemented in FLAC3D / 3DEC to simulate volumetric and deviatoric creep compaction",
       "property_count": 22
     }
+  ],
+  "notes": [
+    "All 41 model names and per-model property keyword sets verified against FLAC3D 9.7 via live z.props() readback (2026-08-13). 'cavehoek' and 'imass' require 'model configure imass' before assignment.",
+    "Property keywords are matched case-insensitively and support unambiguous prefix abbreviation (e.g. 'strain-volume-plastic' matches 'strain-volumetric-plastic'); docs list canonical names.",
+    "A wrong property name errors with an enumeration of every property name valid for the models currently assigned in the range - a fast way to discover property sets live ('zone property <bogus> 1').",
+    "Setting a read-only property fails with 'Property <name> of model <Model> is read-only'; such properties are marked readonly here."
   ]
 }
