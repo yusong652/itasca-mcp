@@ -177,7 +177,7 @@
         {
           "name": "saturation",
           "syntax": "saturation [<f >] <[gridpointfixblock]>",
-          "description": "Fix saturation at the gridpoints. If f is given, the saturation is fixed at that value. Requires the model to be configured for fluid (model configure fluid-flow). Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
+          "description": "Fix saturation at the gridpoints. If f is given, the saturation is fixed at that value. Executing requires the model configured for fluid (any fluid mode; without it the engine rejects with 'Not configured for fluid calculations', though the keyword still appears in parser enumerations -- keyword enumeration is context-free in 9.7). Fixed saturation values hold in both fluid-flow (implicit) and fluid-explicit modes. State-verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
         },
         {
           "name": "source",
@@ -187,7 +187,7 @@
         {
           "name": "temperature",
           "syntax": "temperature [<f>] [[gridpointfixblock]]",
-          "description": "Fixes temperatures. If f is given, the temperature is fixed at that value. This is only available if model configure thermal has been specified."
+          "description": "Fixes temperatures. If f is given, the temperature is fixed at that value. This is only available if model configure thermal has been specified: without it the engine rejects with 'Not configured for thermal calculations' (the keyword still appears in parser enumerations -- keyword enumeration is context-free in 9.7). State-verified against FLAC3D 9.7: 'fix temperature 42' reads back 42.0 via gp.temp()."
         },
         {
           "name": "velocity",

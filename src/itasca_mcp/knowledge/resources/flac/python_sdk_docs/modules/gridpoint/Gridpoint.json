@@ -327,7 +327,7 @@
     {
       "name": "fix",
       "signature": "gridpoint.fix(component: int) -> bool",
-      "description": "Get the gridpoint fixity condition. The component index is 1-based: 1 = x, 2 = y, 3 = z (accepted range 1-5; components 4 and 5 do not map to the velocity, pore-pressure, or saturation fixity flags and were observed always True -- read pore-pressure fixity via pp_fix() instead). WARNING: asymmetric with set_fix, whose component index is 0-based. Verified against FLAC3D 9.7.",
+      "description": "Get the gridpoint fixity condition. The component index is 1-based: 1 = x, 2 = y, 3 = z (accepted range 1-5; components 4 and 5 read True regardless of model state -- verified unchanged in a model with thermal AND fluid configured while fixing/freeing pore-pressure, temperature, and saturation -- so they do not map to pore-pressure, saturation, or temperature fixity; read pore-pressure fixity via pp_fix() instead). Note fixity from 'zone gridpoint fix acceleration-*' is also NOT reflected in components 1-3 (those track velocity fixity only). WARNING: asymmetric with set_fix, whose component index is 0-based. State-verified against FLAC3D 9.7.",
       "parameters": [
         {
           "name": "component",
@@ -693,7 +693,7 @@
     {
       "name": "sat",
       "signature": "gridpoint.sat() -> float",
-      "description": "Get the gridpoint fluid saturation. Note: unfixed saturation is engine-managed -- values written via set_sat() or 'zone gridpoint initialize saturation' are immediately clamped back (observed snapping to 1.0 in a fluid-flow configured model even though the command reports 'saturation modified'); to impose a saturation value, fix it ('zone gridpoint fix saturation <f>'), which holds. Verified against FLAC3D 9.7.",
+      "description": "Get the gridpoint fluid saturation. Note: unfixed-saturation write behavior depends on the fluid configure MODE -- in fluid-flow (implicit) mode, values written via set_sat() or 'zone gridpoint initialize saturation' are immediately clamped back to 1.0 (even though the command reports 'saturation modified'); in fluid-explicit mode the written values hold. Fixing saturation ('zone gridpoint fix saturation <f>') holds the value in both modes. State-verified against FLAC3D 9.7 under both modes with otherwise identical models.",
       "returns": {
         "type": "float"
       }
@@ -1216,7 +1216,7 @@
     {
       "name": "set_sat",
       "signature": "gridpoint.set_sat(value: float) -> None",
-      "description": "Set the gridpoint fluid saturation. WARNING: on an unfixed gridpoint the written value is immediately clamped back by the engine (observed reading 1.0 right after set_sat(0.8) in a fluid-flow configured model); fix saturation first if the value must hold. Verified against FLAC3D 9.7.",
+      "description": "Set the gridpoint fluid saturation. WARNING: mode-dependent -- in a fluid-flow (implicit) configured model the written value on an unfixed gridpoint is immediately clamped back to 1.0 (reads 1.0 right after set_sat(0.8)); in a fluid-explicit configured model the written value holds (set_sat(0.7) reads back 0.7). Fix saturation first if the value must hold in implicit mode. State-verified against FLAC3D 9.7 under both modes.",
       "parameters": [
         {
           "name": "value",
