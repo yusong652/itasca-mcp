@@ -92,7 +92,6 @@
         "set_fluid_timestep",
         "set_thermal_time_total",
         "set_thermal_timestep",
-        "thermal_ratio",
         "thermal_time_total",
         "thermal_timestep",
         "unbal"
@@ -156,7 +155,6 @@
         "set_flow",
         "set_fluid_load",
         "set_fluid_modulus",
-        "set_fluid_tension",
         "set_fluid_unbal",
         "set_force_app",
         "set_force_load",
@@ -307,6 +305,20 @@
       "description": "Functions and classes for working with FLAC interface nodes.",
       "file": "flac/python_sdk_docs/modules/interface/node/module.json",
       "functions": []
+    },
+    "zone.field": {
+      "description": "Spatial interpolation queries at arbitrary model points (Python counterpart of FISH zone.field.*)",
+      "file": "flac/python_sdk_docs/modules/zone/field/module.json",
+      "functions": [
+        "get",
+        "get_extra",
+        "get_prop",
+        "get_prop_fluid",
+        "get_prop_thermal",
+        "get_scalar",
+        "get_tensor",
+        "get_vector"
+      ]
     }
   },
   "objects": {
@@ -1046,5 +1058,6 @@
   "fallback_hints": {
     "model solve": "For solving to equilibrium, use itasca.command('model solve'). Python SDK has itasca.cycle() for fixed cycles only.",
     "automatic timestep": "For automatic timestep calculation, use itasca.command('model auto dt'). Python SDK itasca.set_timestep() sets manual values only."
-  }
+  },
+  "live_verification_flac3d_97": "All 12 module units (181 module functions + 327 class methods) diffed against live FLAC3D 9.7 introspection (2026-08-13). Result: exact match everywhere except 7 upstream-documented names the engine does not expose (flagged available_in_flac3d_97=false in their files): gridpointarray.set_fluid_tension, zone.thermal_ratio, Gridpoint.set_biot_modulus, Gridpoint.set_fluid_modulus, interface Element.join, Zone.fluid_model, Zone.set_fluid_model. itasca.zone.field added from live signatures."
 }
