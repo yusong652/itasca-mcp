@@ -1,0 +1,76 @@
+{
+  "module": "itasca.zone.field",
+  "description": "Spatial-interpolation queries over the zone/gridpoint fields: get scalar/vector/tensor values at arbitrary model-space points (not necessarily on gridpoints). This is the Python counterpart of the FISH zone.field.* family, but exposed as pure functions taking the field name and location per call (no persistent zone.field.name state to set). Signatures captured from live FLAC3D 9.7 docstrings (2026-08-13). Common optional kwargs (defaults): method='constant' (interpolation method), hide_null=False, fill_value=0.0, skip_init=False, radius_ratio=0.75, log=False, source='gridpoint', tolerance=1e-7.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/manual/scripting/python/doc/itasca.zone.field.html",
+  "functions": [
+    {
+      "name": "get",
+      "signature": "itasca.zone.field.get(name: str, location: vec, method='constant', hide_null=False, fill_value=0.0, skip_init=False, radius_ratio=0.75, log=False, source='gridpoint', quantity='norm', component='magnitude', tolerance=1e-7) -> float",
+      "description": "Get an interpolated value from the zones. 'name' is a zone field name (see the zone-field-data reference); tensor/vector fields are reduced via 'quantity'/'component'.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "get_scalar",
+      "signature": "itasca.zone.field.get_scalar(name: str, location: vec, ..., quantity='norm', component='magnitude', tolerance=1e-7) -> float",
+      "description": "Get an interpolated scalar value from the zones (same argument set as get()).",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "get_vector",
+      "signature": "itasca.zone.field.get_vector(name: str, location: vec, ..., tolerance=1e-7) -> vec3",
+      "description": "Get an interpolated vector from the zones.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "get_tensor",
+      "signature": "itasca.zone.field.get_tensor(name: str, location: vec, ..., tolerance=1e-7) -> sten3",
+      "description": "Get an interpolated symmetric tensor from the zones.",
+      "returns": {
+        "type": "sten3"
+      }
+    },
+    {
+      "name": "get_extra",
+      "signature": "itasca.zone.field.get_extra(extra: int, location: vec, ..., tolerance=1e-7) -> float",
+      "description": "Get an interpolated value from the gridpoint or zone extra variable at the given index.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "get_prop",
+      "signature": "itasca.zone.field.get_prop(prop: str, location: vec, ..., tolerance=1e-7) -> float",
+      "description": "Get an interpolated value of a mechanical (constitutive-model) property.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "get_prop_fluid",
+      "signature": "itasca.zone.field.get_prop_fluid(prop: str, location: vec, ..., tolerance=1e-7) -> float",
+      "description": "Get an interpolated value of a fluid property.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "get_prop_thermal",
+      "signature": "itasca.zone.field.get_prop_thermal(prop: str, location: vec, ..., tolerance=1e-7) -> float",
+      "description": "Get an interpolated value of a thermal property.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ],
+  "notes": [
+    "All eight functions and their signatures verified against live FLAC3D 9.7 (__doc__ introspection).",
+    "The FISH-style stateful API (zone.field.name = ...; zone.field.get(pos)) documented in the fish-intrinsics/field-query reference is the FISH surface; the Python surface is stateless."
+  ]
+}

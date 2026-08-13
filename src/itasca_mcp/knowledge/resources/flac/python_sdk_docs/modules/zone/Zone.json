@@ -466,10 +466,11 @@
     {
       "name": "fluid_model",
       "signature": "zone.fluid_model() -> str",
-      "description": "Get the fluid flow constitituve model for the zone.",
+      "description": "Get the fluid flow constitituve model for the zone. NOT AVAILABLE in FLAC3D 9.7: live introspection (dir() + hasattr on real objects, 2026-08-13) shows the engine does not expose this name even though the official 9.x documentation lists it. Query/assign the fluid constitutive model via the command layer ('zone fluid cmodel'); fluid_prop()/set_fluid_prop() DO exist for properties.",
       "returns": {
         "type": "str"
-      }
+      },
+      "available_in_flac3d_97": false
     },
     {
       "name": "fluid_prop",
@@ -873,7 +874,7 @@
     {
       "name": "set_fluid_model",
       "signature": "zone.set_fluid_model(model: str) -> None",
-      "description": "Set the fluid flow constitituve model for the zone. The currently available constitutive models are anisotropic, isotropic, and null.",
+      "description": "Set the fluid flow constitituve model for the zone. The currently available constitutive models are anisotropic, isotropic, and null. NOT AVAILABLE in FLAC3D 9.7: live introspection (dir() + hasattr on real objects, 2026-08-13) shows the engine does not expose this name even though the official 9.x documentation lists it. Assign via 'zone fluid cmodel assign'; fluid_prop()/set_fluid_prop() DO exist for properties.",
       "parameters": [
         {
           "name": "model",
@@ -883,7 +884,8 @@
       ],
       "returns": {
         "type": "None"
-      }
+      },
+      "available_in_flac3d_97": false
     },
     {
       "name": "set_fluid_prop",
