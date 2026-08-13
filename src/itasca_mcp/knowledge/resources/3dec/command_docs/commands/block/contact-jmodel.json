@@ -5,7 +5,7 @@
     "contact",
     "jmodel"
   ],
-  "description": "This command is used to assign joint constitutive models or user-defined joint models (UDJM) to sub-contacts in 3DEC (see Constitutive Models in 3DEC ). Note that subcontacts must be created before models can be assigned, using either block zone generate for deformable blocks, or block contact generate-subcontacts for rigid blocks.",
+  "description": "This command is used to assign joint constitutive models or user-defined joint models (UDJM) to sub-contacts in 3DEC (see Constitutive Models in 3DEC ). Note that subcontacts must be created before models can be assigned, using either block zone generate for deformable blocks, or block contact generate-subcontacts for rigid blocks. The live engine also accepts a model name directly at the first slot as a shortcut for assign. The previously documented 'table' keyword is rejected by live 3DEC 9.7.47 and has been removed.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -15,19 +15,19 @@
       "syntax": "block contact jmodel keyword [range]",
       "keywords": [
         {
-          "name": "softening-mohr",
-          "syntax": "softening-mohr",
-          "description": "Assign (with keyword ) the dynamic joint constitutive model \\(jmodel\\) to all of the subcontacts in the range. If not already loaded, the system will attempt to automatically load the library. Assign the bilinear mohr-coulomb joint model to subcontacts in the range. Assign continuously-yielding joint model to subcontacts in the range. Assign the elastic joint model to subcontacts in the range. Assign the mohr-coulomb joint model to subcontacts in the range. Assign the power-law joint model to subcontacts in the range. Assign the softening-healing mohr-coulomb joint model to subcontacts in the range."
+          "name": "assign",
+          "syntax": "assign <jmodel-name> [range]",
+          "description": "Assign a joint constitutive model to all subcontacts in the range. Live 3DEC 9.7.47 model names (state: engine enumeration): bilinear-mohr, cyjm, elastic, mohr, nonlinear, power, ratestate, softening-mohr, velocity-weakening. Subcontacts must exist first (block zone generate for deformable blocks, block contact generate-subcontacts for rigid blocks)."
         },
         {
-          "name": "table",
-          "syntax": "table",
-          "description": "List model keyword(s), name(s), and version number(s). List property list for model(s). Lists possible state flags for model(s). List table of contact (joint) material mappings."
+          "name": "list",
+          "syntax": "list",
+          "description": "List joint constitutive model assignments."
         },
         {
           "name": "load",
-          "syntax": "load [<s>]",
-          "description": "Dynamically loads a joint constitutive model. The dynamic library should have the name “jmodelname007.dll.” For example, joint model “mohr” would have a library name of “jmodelmohr007.dll.”"
+          "syntax": "load <s>",
+          "description": "Load a user-defined joint model (UDJM) plugin library."
         }
       ],
       "examples": []

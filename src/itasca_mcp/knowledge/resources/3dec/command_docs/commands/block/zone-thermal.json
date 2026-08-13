@@ -5,19 +5,19 @@
     "zone",
     "thermal"
   ],
-  "description": "Set the thermal properties of the block zone constitutive model.",
+  "description": "Set the thermal properties of the block zone constitutive model. Gating: requires model configure thermal. Probe trap: with any first token other than 'property' the live engine reports 'block zone thermal: command not found' (misleading - the command exists); unconfigured it reports 'Not configured for thermal calculations'.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "block zone thermal",
-      "syntax": "block zone thermal keyword [range]",
+      "syntax": "block zone thermal property keyword <f> ... [range]",
       "keywords": [
         {
-          "name": "expansion",
-          "syntax": "expansion <f>",
-          "description": "Set thermal conductivity (isotropic). Set thermal conductivity in x direction for anistropic conductivity. Set thermal conductivity in y direction for anistropic conductivity. Set thermal conductivity in z direction for anistropic conductivity. Set specific heat. Set thermal-expansion coefficient."
+          "name": "property",
+          "syntax": "property keyword <f> ...",
+          "description": "Set thermal properties of the block zone constitutive model. Property names (official 9.7 page; conductivity state-verified live: 'Thermal property conductivity set in 48 zones'): conductivity, conductivity-x, conductivity-y, conductivity-z, specific-heat, expansion."
         }
       ],
       "examples": []
