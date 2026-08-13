@@ -138,4 +138,4 @@ P3 (design decisions, discuss before executing):
 
 | Date | PR | Scope | Files touched |
 |------|----|-------|---------------|
-| 2026-08-13 | #74 | Batch 1: zone BC family live verification + scan P0 fixes + workspace setup | 13 corpus JSONs + docs/verification/ |
+| 2026-08-13 | #75 | Batch 1: zone BC family live verification + scan P0 fixes + workspace setup | 15 corpus JSONs + docs/verification/ |
