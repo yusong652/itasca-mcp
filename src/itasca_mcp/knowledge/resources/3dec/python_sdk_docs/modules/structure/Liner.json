@@ -596,10 +596,11 @@
     {
       "name": "stress_max",
       "signature": "liner.stress_max() -> float",
-      "description": "Get the maximum stress of the element. This is the maximum principal stress of the fiber stress at depth +1 or -1, which is the combination of membrane and bending resultants.",
+      "description": "Warning: documented upstream but ABSENT from live 3DEC 9.7.47 (dir() and instance introspection). Use the generic prop()/set_prop() accessor instead. Get the maximum stress of the element. This is the maximum principal stress of the fiber stress at depth +1 or -1, which is the combination of membrane and bending resultants.",
       "returns": {
         "type": "float"
-      }
+      },
+      "available_in_3dec_97": false
     },
     {
       "name": "stress_prin",
@@ -662,6 +663,141 @@
       "description": "Get the Youngs modulus of the element. Modifying the value during cycling may be a danger.",
       "returns": {
         "type": "float"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "liner.prop(property_name: str) -> any",
+      "description": "Get a property value of this element (undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified).",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "liner.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this element (undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified).",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_stiffness",
+      "signature": "liner.set_normal_stiffness(float, float) -> None",
+      "description": "Set the normal coupling spring stiffness of the liner element for each side of the liner. (Undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified.)",
+      "parameters": [
+        {
+          "name": "side1",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "side2",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "liner.set_shear_cohesion(float, float) -> None",
+      "description": "Set the shear coupling spring cohesion for each side of the liner element. (Undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified.)",
+      "parameters": [
+        {
+          "name": "side1",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "side2",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "liner.set_shear_friction(float, float) -> None",
+      "description": "Set the shear coupling spring friction for each side of the liner element. (Undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified.)",
+      "parameters": [
+        {
+          "name": "side1",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "side2",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_residual",
+      "signature": "liner.set_shear_residual(float, float) -> None",
+      "description": "Set the residual shear coupling spring cohesion for each side of the liner element. (Undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified.)",
+      "parameters": [
+        {
+          "name": "side1",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "side2",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "liner.set_shear_stiffness(float, float) -> None",
+      "description": "Set the shear coupling spring stiffness for each side of the liner element. (Undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified.)",
+      "parameters": [
+        {
+          "name": "side1",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "side2",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
       }
     }
   ]

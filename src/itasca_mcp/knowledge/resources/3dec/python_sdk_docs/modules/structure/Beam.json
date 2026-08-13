@@ -215,10 +215,11 @@
     {
       "name": "moi",
       "signature": "beam.moi() -> vec3",
-      "description": "Get the moment of inertia of the beam. This is defined as the moment of inertia with respect to the x-, y-, and z-axes.",
+      "description": "Warning: documented upstream but ABSENT from live 3DEC 9.7.47 (dir() and instance introspection). Use the generic prop()/set_prop() accessor instead. Get the moment of inertia of the beam. This is defined as the moment of inertia with respect to the x-, y-, and z-axes.",
       "returns": {
         "type": "vec3"
-      }
+      },
+      "available_in_3dec_97": false
     },
     {
       "name": "moment",
@@ -375,7 +376,7 @@
     {
       "name": "set_moi",
       "signature": "beam.set_moi(vec3) -> None",
-      "description": "Set the moment of inertia of the beam. This is defined as the moment of inertia with respect to the x-, y-, and z-axes.",
+      "description": "Warning: documented upstream but ABSENT from live 3DEC 9.7.47 (dir() and instance introspection). Use the generic prop()/set_prop() accessor instead. Set the moment of inertia of the beam. This is defined as the moment of inertia with respect to the x-, y-, and z-axes.",
       "parameters": [
         {
           "name": "vec3",
@@ -384,7 +385,8 @@
       ],
       "returns": {
         "type": "None"
-      }
+      },
+      "available_in_3dec_97": false
     },
     {
       "name": "set_moment_plastic",
@@ -508,6 +510,41 @@
       "description": "Get the Youngs modulus of the beam element.",
       "returns": {
         "type": "float"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "beam.prop(property_name: str) -> any",
+      "description": "Get a property value of this element (undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified).",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "beam.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this element (undocumented upstream; present in live 3DEC 9.7.47 introspection, __doc__-verified).",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
       }
     }
   ]
