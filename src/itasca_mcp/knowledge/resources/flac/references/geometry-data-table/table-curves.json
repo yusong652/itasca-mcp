@@ -13,7 +13,7 @@
     "table list",
     "history export <id|name> table '<name>'"
   ],
-  "syntax_note": "Every table subcommand except 'table list' REQUIRES a table name first: 'table <name-string-or-int> <subcommand> ...'. PR-6 forms like 'table add' without a name are rejected by FLAC2D 9.0 with 'A table has not been specified.'",
+  "syntax_note": "Every table subcommand except 'table list' REQUIRES a table name first: 'table <name-string-or-int> <subcommand> ...'. PR-6 forms like 'table add' without a name are rejected by FLAC2D 9.0 with 'A table has not been specified.' FLAC3D 9.7 reproduces the same behavior verbatim ('A table has not been specified.') — the name-first requirement holds in 3D too.",
   "common_patterns": [
     {
       "name": "Time-dependent load table",
@@ -44,5 +44,9 @@
     "Use table list after import to catch delimiter or unit mistakes.",
     "Prefer named tables over numeric IDs in generated scripts."
   ],
-  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/flac3dhome.html"
+  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/flac3dhome.html",
+  "live_verification_flac3d_97": [
+    "\"table 'tt' add (0,0) (1,1)\" state-verified: engine reports 'The table with name tt had 2 values added.'",
+    "The subcommand slot after the table name is NOT keyword-enumerated ('Unused extra parameter') — probe by acceptance, not enumeration."
+  ]
 }
