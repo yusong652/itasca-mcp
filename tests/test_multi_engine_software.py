@@ -754,7 +754,9 @@ def test_3dec_zone_models_are_engine_filtered_subset() -> None:
     }
     # 3DEC exposes a strict subset of FLAC's zone models (block zone cmodel list).
     assert tdec_names < flac_names
-    assert len(tdec_names) == 26
+    # 28 = 26 + curved-mohr-coulomb + munson-dawson, matching the 28 model names
+    # (incl. null) enumerated by live 3DEC 9.7 'block zone cmodel assign'.
+    assert len(tdec_names) == 28
     # 3DEC-supported model present; FLAC-only models (no 3DEC support) excluded.
     assert "columnar-basalt" in tdec_names
     assert {"plastic-hardening", "norsand", "soft-soil"}.isdisjoint(tdec_names)
