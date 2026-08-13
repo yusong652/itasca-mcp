@@ -327,7 +327,7 @@
     {
       "name": "fix",
       "signature": "gridpoint.fix(component: int) -> bool",
-      "description": "Get the gridpoint fixity condition. The first argument is the vector component.",
+      "description": "Get the gridpoint fixity condition. The component index is 1-based: 1 = x, 2 = y, 3 = z (accepted range 1-5; components 4 and 5 do not map to the velocity, pore-pressure, or saturation fixity flags and were observed always True -- read pore-pressure fixity via pp_fix() instead). WARNING: asymmetric with set_fix, whose component index is 0-based. Verified against FLAC3D 9.7.",
       "parameters": [
         {
           "name": "component",
@@ -693,7 +693,7 @@
     {
       "name": "sat",
       "signature": "gridpoint.sat() -> float",
-      "description": "Get the gridpoint gridpoint fluid saturation.",
+      "description": "Get the gridpoint fluid saturation. Note: unfixed saturation is engine-managed -- values written via set_sat() or 'zone gridpoint initialize saturation' are immediately clamped back (observed snapping to 1.0 in a fluid-flow configured model even though the command reports 'saturation modified'); to impose a saturation value, fix it ('zone gridpoint fix saturation <f>'), which holds. Verified against FLAC3D 9.7.",
       "returns": {
         "type": "float"
       }
@@ -856,7 +856,7 @@
     {
       "name": "set_fix",
       "signature": "gridpoint.set_fix(component: int, fix: bool) -> None",
-      "description": "Set the gridpoint fixity condition. The first argument is the vector component to set and the second components is a the fixity flag. The component starts at 0.",
+      "description": "Set the gridpoint fixity condition. The first argument is the vector component to set and the second is the fixity flag. The component index is 0-based: 0 = x, 1 = y, 2 = z (accepted range 0-3; slot 3 has no observable effect on fix()). WARNING: asymmetric with fix(), whose component index is 1-based (fix(1) reads what set_fix(0, ...) writes). Verified against FLAC3D 9.7.",
       "parameters": [
         {
           "name": "component",
@@ -1216,7 +1216,7 @@
     {
       "name": "set_sat",
       "signature": "gridpoint.set_sat(value: float) -> None",
-      "description": "Set the gridpoint gridpoint fluid saturation.",
+      "description": "Set the gridpoint fluid saturation. WARNING: on an unfixed gridpoint the written value is immediately clamped back by the engine (observed reading 1.0 right after set_sat(0.8) in a fluid-flow configured model); fix saturation first if the value must hold. Verified against FLAC3D 9.7.",
       "parameters": [
         {
           "name": "value",

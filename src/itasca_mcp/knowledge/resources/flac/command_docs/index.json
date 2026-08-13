@@ -1255,7 +1255,7 @@
     },
     "fracture": {
       "full_name": "Fracture (DFN) Commands",
-      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. Drives Smooth-Joint and similar contact models.",
+      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. The DFN module is shared across Itasca engines; fracture-driven contact-model assignment is a PFC feature and does not apply to FLAC zones.",
       "command_prefix": "fracture",
       "related_categories": [
         "geometry",
@@ -1266,7 +1266,7 @@
         "fracture generate creates statistical DFNs; fracture import reads explicit fracture files",
         "fracture template defines reusable fracture geometries (fracture template create / delete / modify-default)",
         "fracture intersections compute / scanline produces connectivity data for joint-set analysis",
-        "Use 'contact model smoothjoint' (or similar) to wire fractures into mechanical behavior"
+        "The 'fracture contact-model' command applies to PFC only (FLAC has no contact-model concept for zones); in FLAC, use zone interfaces or zone joints to give fractures mechanical behavior."
       ],
       "commands": [
         {
@@ -1314,7 +1314,7 @@
         {
           "name": "contact-model",
           "file": "_common/command_docs/commands/fracture/contact-model.json",
-          "short_description": "Assign contact models via fractures",
+          "short_description": "Assign contact models via fractures (PFC only; not applicable in FLAC)",
           "syntax": "fracture contact-model keyword ... [rangeof dfns]",
           "python_available": false
         },
