@@ -5,29 +5,29 @@
     "contact",
     "history"
   ],
-  "description": "Adds a history of a contact value. Review the common c history commands. The history can be assigned a name for later reference with the optional name keyword. If not, the history will be given a default name based on its internally assigned id number.",
+  "description": "Adds a history of a contact value. Review the common c history commands. The history can be assigned a name for later reference with the optional name keyword. If not, the history will be given a default name based on its internally assigned id number. Live slot order: variable keyword first, then a required location keyword ('Must add a keyword to select the contact or subcontact' otherwise); position state-verified.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "block contact history",
-      "syntax": "block contact history [name <s>] location-keyword variable-keyword [keyword ...]",
+      "syntax": "block contact history [name <s>] variable-keyword location-keyword [keyword ...]",
       "keywords": [
         {
           "name": "contact-id",
           "syntax": "contact-id <i>",
-          "description": "Set history location at the contact with ID i . This only applies to contact type histories \\(area-sum\\) , \\(force-normal-sum\\) and \\(force-shear-sum\\) ."
+          "description": "Set history location at the contact with ID i . This only applies to contact type histories \\(area-sum\\) , \\(force-normal-sum\\) and \\(force-shear-sum\\) . Only applies to contact-type histories (area-sum, force-normal-sum, force-shear-sum); state-verified: 'block contact history area-sum contact-id 1' creates the history, 'area contact-id 1' is rejected."
         },
         {
           "name": "dip",
           "syntax": "dip <f>",
-          "description": "Only contacts or subcontacts with a dip equal to f will be considered when using the \\(position\\) keyword."
+          "description": "Location keyword - must FOLLOW the variable keyword in the live engine (first slot enumerates variable keywords + label/name only). Only contacts or subcontacts with a dip equal to f will be considered when using the \\(position\\) keyword."
         },
         {
           "name": "dip-direction",
           "syntax": "dip-direction <f>",
-          "description": "Only contacts or subcontacts with a dip-direction equal to f will be considered when using the \\(position\\) keyword."
+          "description": "Location keyword - must FOLLOW the variable keyword in the live engine (first slot enumerates variable keywords + label/name only). Only contacts or subcontacts with a dip-direction equal to f will be considered when using the \\(position\\) keyword."
         },
         {
           "name": "position",
@@ -143,6 +143,11 @@
           "name": "velocity-shear-z",
           "syntax": "velocity-shear-z",
           "description": "Get the \\(z\\) -component of shear velocity in global coordinates."
+        },
+        {
+          "name": "label",
+          "syntax": "label <s>",
+          "description": "Set a label for the history (first-slot enumerated by live 3DEC 9.7.47; absent from the official 9.7 page, which documents name only)."
         }
       ],
       "examples": []

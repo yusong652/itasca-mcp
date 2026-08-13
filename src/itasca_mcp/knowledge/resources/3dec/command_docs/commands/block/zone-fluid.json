@@ -5,19 +5,19 @@
     "zone",
     "fluid"
   ],
-  "description": "Assign fluid properties to zones.",
+  "description": "Assign fluid properties to zones. Gating: requires model configure matrixflow (zoning then creates matrix flow arrays/knots). Probe trap: with any first token other than 'property' the live engine reports 'block zone fluid: command not found' (misleading - the command exists, verified under matrixflow).",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "block zone fluid",
-      "syntax": "block zone fluid keyword [range]",
+      "syntax": "block zone fluid property keyword <f> ... [range]",
       "keywords": [
         {
-          "name": "porosity",
-          "syntax": "porosity <f>",
-          "description": "Set the fluid flow mobility coefficient in the matrix zones (SI units of m 2 /(Pa/s)). Set the porosity for fluid flow in the matrix zones."
+          "name": "property",
+          "syntax": "property keyword <f> ...",
+          "description": "Assign fluid properties to matrix zones. Property names (official 9.7 page; porosity state-verified live: 'Fluid property porosity set in 48 zones'): permeability (mobility coefficient, SI m^2/(Pa*s)), porosity."
         }
       ],
       "examples": []

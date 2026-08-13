@@ -21,12 +21,12 @@
         {
           "name": "radius-2",
           "syntax": "radius-2 <f>",
-          "description": "Create a drum-shaped block from two faces. All keywords except angle are required. Specify the an angle of rotation about the drum axis. Default is 0. Specify the center of the first face. Specify the center of the second face. Specify the number of edges comprising the sides of the drum. Specify the radius of the first face. Specify the radius of the second face."
+          "description": "Sub-keyword of drum, not a first-slot keyword (live 3DEC 9.7.47 rejects it at the first slot). Create a drum-shaped block from two faces. All keywords except angle are required. Specify the an angle of rotation about the drum axis. Default is 0. Specify the center of the first face. Specify the center of the second face. Specify the number of edges comprising the sides of the drum. Specify the radius of the first face. Specify the radius of the second face."
         },
         {
           "name": "face-group",
           "syntax": "face-group <s1>[slot <s2>]",
-          "description": "Define a polyhedron by specifying its sides. Multiple face keywords must be used in this command to define all sides of single polyhedron. Note that the line continuation symbol (…) may be used without limit — but do not continue a line from within a vector that defines a vertex. Define a face of the polyhedron. Three to n vertices must be entered per face, in clockwise order (looking at the block face from outside the block). Optionally, blocks derived from a face are assigned to joint-set i . Optionally, blocks derived from a face are assigned to face-group s1 in slot s2 ."
+          "description": "Sub-keyword of polyhedron, not a first-slot keyword (live 3DEC 9.7.47 rejects it at the first slot). Define a polyhedron by specifying its sides. Multiple face keywords must be used in this command to define all sides of single polyhedron. Note that the line continuation symbol (…) may be used without limit — but do not continue a line from within a vector that defines a vertex. Define a face of the polyhedron. Three to n vertices must be entered per face, in clockwise order (looking at the block face from outside the block). Optionally, blocks derived from a face are assigned to joint-set i . Optionally, blocks derived from a face are assigned to face-group s1 in slot s2 ."
         },
         {
           "name": "group",
@@ -36,7 +36,7 @@
         {
           "name": "nonplanar",
           "syntax": "nonplanar <b>",
-          "description": "Create a prism-shaped block from two faces, both of which must be planar and convex unless nonplanar is set to true . Specify faces using either face-1 and face-2 or the combination of table-1 , table-2 , and axis . Define the first face with n vertices, in either a clockwise or counterclockwise order. Define the second face with the same number of vertices as in face-1 , and specified in the same order. Specify a line that defines the orientation axis of the prism (used with table-1 and table-2 only). Use table s1 to create the first face. Use table s2 to create the second face. Allow the specified planes to be non-planar if set true ; default is false ."
+          "description": "Sub-keyword of prism, not a first-slot keyword (live 3DEC 9.7.47 rejects it at the first slot). Create a prism-shaped block from two faces, both of which must be planar and convex unless nonplanar is set to true . Specify faces using either face-1 and face-2 or the combination of table-1 , table-2 , and axis . Define the first face with n vertices, in either a clockwise or counterclockwise order. Define the second face with the same number of vertices as in face-1 , and specified in the same order. Specify a line that defines the orientation axis of the prism (used with table-1 and table-2 only). Use table s1 to create the first face. Use table s2 to create the second face. Allow the specified planes to be non-planar if set true ; default is false ."
         },
         {
           "name": "tetrahedron",
@@ -46,12 +46,32 @@
         {
           "name": "radius-ratio",
           "syntax": "radius-ratio <f>",
-          "description": "Generate a circular tunnel model with intact inner and outer blocks. The size of the blocks increases radially outward from the center. The user can control how many blocks are used to create the model. Set the number of annular blocks to generate radially from the tunnel boundary to the edge of the model. (The default = 1.) Set is the number of blocks to generate in each 45-degree segment of the tunnel circumference. The total for the circumference will be 8 × n. (The default = 1.) Set is the number of blocks to generate along the tunnel axis. (The default = 1.) Set the number of tunnel radii from tunnel boundary to edge of the model a must be greater than 1.0. (The default = 4.0.) Set the the dip of tunnel axis. (The default = 0.) Set the dip direction of tunnel axis. (The default = 0.) Set the the location of the tunnel relative to the tunnel origin along the dip and dip direction. The length of the tunnel will be f1 - f2 along the tunnel center. (The default is f1 = −10, f2 = 10.0.) Set is the origin of the center of the tunnel. The tunnel axis will pass through this point. (The default = 0,0,0.) Set the radius of the tunnel. (The default = 1.0.) Set the multiplier for size of blocks in radial direction out from center. It is used to grade block sizes out from center. (The default = 1.0.)"
+          "description": "Sub-keyword of tunnel, not a first-slot keyword (live 3DEC 9.7.47 rejects it at the first slot). Generate a circular tunnel model with intact inner and outer blocks. The size of the blocks increases radially outward from the center. The user can control how many blocks are used to create the model. Set the number of annular blocks to generate radially from the tunnel boundary to the edge of the model. (The default = 1.) Set is the number of blocks to generate in each 45-degree segment of the tunnel circumference. The total for the circumference will be 8 × n. (The default = 1.) Set is the number of blocks to generate along the tunnel axis. (The default = 1.) Set the number of tunnel radii from tunnel boundary to edge of the model a must be greater than 1.0. (The default = 4.0.) Set the the dip of tunnel axis. (The default = 0.) Set the dip direction of tunnel axis. (The default = 0.) Set the the location of the tunnel relative to the tunnel origin along the dip and dip direction. The length of the tunnel will be f1 - f2 along the tunnel center. (The default is f1 = −10, f2 = 10.0.) Set is the origin of the center of the tunnel. The tunnel axis will pass through this point. (The default = 0,0,0.) Set the radius of the tunnel. (The default = 1.0.) Set the multiplier for size of blocks in radial direction out from center. It is used to grade block sizes out from center. (The default = 1.0.)"
         },
         {
           "name": "wall",
           "syntax": "wall <b>",
           "description": "Specify that blocks created should be wall type blocks."
+        },
+        {
+          "name": "drum",
+          "syntax": "drum keyword ...",
+          "description": "Create a drum-shaped block from two circular faces (sub-keywords: angle, center-1 <v>, center-2 <v>, number-edges <i>, radius-1 <f>, radius-2 <f>). Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
+        },
+        {
+          "name": "polyhedron",
+          "syntax": "polyhedron face <v>... [joint-set <i>] [face-group <s1> [slot <s2>]] ...",
+          "description": "Define a block by specifying its faces. Three to n vertices per face keyword, in clockwise order looking at the face from outside the block. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
+        },
+        {
+          "name": "prism",
+          "syntax": "prism face-1 <v>... face-2 <v>... | table-1 <s> table-2 <s> axis <v> [nonplanar <b>]",
+          "description": "Create a prism-shaped block from two faces, both planar and convex unless nonplanar is true. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
+        },
+        {
+          "name": "tunnel",
+          "syntax": "tunnel keyword ...",
+          "description": "Create blocks forming a tunnel-shaped region. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
         }
       ],
       "examples": []
