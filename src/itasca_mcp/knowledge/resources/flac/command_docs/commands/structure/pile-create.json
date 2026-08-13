@@ -87,22 +87,22 @@
       "keywords": [
         {
           "name": "by-line",
-          "syntax": "by-line <v1><v2>[pilecreateblock]",
+          "syntax": "by-line <v1> <v2> [pilecreateblock]",
           "description": "create a collection of elements that lie along a straight line between the locations v1 and v2 . New nodes associated with the elements will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 to v2 corresponds with the direction from the begin point to the end point. If there are objects (zones in FLAC3D and 3DEC, and particles in PFC3D) in these locations, the element will be attached to the objects at its nodes such that the translational degrees-of-freedom are rigidly connected to the objects and the rotational degrees-of-freedom are free. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element."
         },
         {
           "name": "by-nodeids",
-          "syntax": "by-nodeids <i1><i2>[pilecreateblock]",
+          "syntax": "by-nodeids <i1> <i2> [pilecreateblock]",
           "description": "specify the ID numbers ( i1 , i2 ) of two nodes that will define the element. These nodes must already exist\u2014nodes can be created with the structure node create command. Ordering of the nodes defines the beam element coordinate system as follows. The positive \\(x\\) -direction lies along the line from i1 to i2 , and the \\(y\\) -direction is found by projecting the global \\(y\\) - or \\(x\\) -directions onto the element cross-section. The \\(y\\) -direction can also be modified with the property direction-y . The new element will not be attached to any objects (zones in FLAC3D and 3DEC, and particles in PFC3D); if you wish to attach it to objects, then after creating it, position its nodes with the structure node initialize position command (which will create links and set appropriate attachment conditions for all nodes that are moved into an object."
         },
         {
           "name": "by-ray",
-          "syntax": "by-ray <v1><v2><f>[pilecreateblock]",
+          "syntax": "by-ray <v1> <v2> <f> [pilecreateblock]",
           "description": "creates a collection of elements that lie along a straight line starting at v1 , proceeding in the direction specified by v2 for a distance given by f . New nodes associated with the element will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 corresponds with the direction from the begin point to the end point. If there are objects (zones in FLAC3D and 3DEC, and particles in PFC3D) in these locations, the element will be attached to the objects at its nodes such that the translational degrees-of-freedom are rigidly connected to the objects and the rotational degrees-of-freedom are free. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element."
         },
         {
           "name": "by-zone-face",
-          "syntax": "by-zone-face 2D ONLY [pilecreateblock] [range]",
+          "syntax": "by-zone-face (2D ONLY) [pilecreateblock] [range]",
           "description": "create new elements that are attached to the set of 2-noded edges (faces) in the range. By default, only surface faces will be considered, and the internal keyword can be used to select internal faces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(y\\) axis point outward from the zone face. The orientation of the \\(y\\) axis can be reversed with the reverse keyword. Note that after creating the elements with this command, the zones may be deleted and the elements may be positioned by moving their nodes with the structure node initialize position command."
         },
         {
@@ -117,12 +117,12 @@
         },
         {
           "name": "group",
-          "syntax": "group <s>[slot <s>]",
+          "syntax": "group <s> [slot <s>]",
           "description": "Assign all newly created elements to the group s . The optional keyword slot can be used to specify the group slot; if not specified, the group is assigned to the slot Default . Use of the group logic is described in Groups . If not specified, the default group name assigned will be Pile N where N is the ID number assigned to the pile."
         },
         {
           "name": "group-begin",
-          "syntax": "group-begin <s>[slot <s>]",
+          "syntax": "group-begin <s> [slot <s>]",
           "description": "A group name that will be assigned to the first node of the elements created along a line or ray. The default name assigned will be Pile Begin ."
         },
         {
@@ -142,7 +142,7 @@
         },
         {
           "name": "reverse",
-          "syntax": "reverse 2D ONLY",
+          "syntax": "reverse (2D ONLY)",
           "description": "Specifies that the orientation of the element will be reversed from the default, so that only the element \\(y\\) axis points in the other direction."
         },
         {
