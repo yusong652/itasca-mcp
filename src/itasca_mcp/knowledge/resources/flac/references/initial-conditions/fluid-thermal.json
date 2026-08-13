@@ -29,7 +29,9 @@
       "notes": [
         "Pore-pressure, saturation, and head are nodal scalar quantities → use 'zone gridpoint initialize <kw>' (NOT 'zone initialize <kw>').",
         "Gridpoint pore pressures are used to derive zone pore pressures.",
-        "Effective stresses depend on pore pressure when using effective-stress constitutive behavior."
+        "Effective stresses depend on pore pressure when using effective-stress constitutive behavior.",
+        "SATURATION TRAP (state-verified, FLAC3D 9.7): in fluid-flow (implicit) mode, 'initialize saturation' on unfixed gridpoints is clamped back to 1.0 (the command still reports 'saturation modified') — fix saturation to impose a value; in fluid-explicit mode initialized values hold.",
+        "'biot', 'fluid-modulus', and 'fluid-tension' are accepted and execute ('-biot modified in N gridpoints') but never appear in the parser's keyword enumeration in 9.7 — enumeration-invisible keywords; do not conclude from an enumeration diff that they are gone."
       ]
     },
     {

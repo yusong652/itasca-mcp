@@ -25,11 +25,18 @@
       "file": "link.json",
       "description": "Structural link per-DOF property selectors (x / y / rotation in FLAC2D) plus attachment concepts.",
       "common_use": "Control how structural nodes interact with zones or other structural objects."
+    },
+    {
+      "name": "structure-cmodels",
+      "file": "structure-cmodels.json",
+      "description": "FLAC3D 9.x structural constitutive models: cmodel support per element type, per-model property sets, and the elastic->plastic assignment trap.",
+      "common_use": "Choosing/assigning shell, liner, geogrid, beam, or pile constitutive models and knowing which property names each unlocks."
     }
   ],
   "notes": [
-    "Property keyword sets are binary-validated against FLAC2D 9.0 (probed via 'structure <type> property ?').",
-    "'shell' and 'geogrid' are FLAC3D-only structure types — rejected by FLAC2D 9.0. They are documented inline in liner.json under 'related_3d_only'."
+    "Property keyword sets are binary-validated against FLAC2D 9.0 (probed via 'structure <type> property ?') and re-verified against live FLAC3D 9.7 error enumeration (2026-08-13).",
+    "'shell' and 'geogrid' are FLAC3D-only structure types — rejected by FLAC2D 9.0. They are documented inline in liner.json under 'related_3d_only'.",
+    "In 9.x the property keyword set is cmodel-dependent for shell/liner/geogrid/beam/pile: material property names only parse after the matching 'structure <type> cmodel assign'. See structure-cmodels.json."
   ],
   "official_sources": [
     "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/cables/cables.html",
