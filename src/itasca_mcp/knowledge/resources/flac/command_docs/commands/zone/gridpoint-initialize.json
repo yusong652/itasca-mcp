@@ -312,12 +312,12 @@
         {
           "name": "saturation",
           "syntax": "saturation <f> [[gridpointinitializeblock]]",
-          "description": "Saturation at the gridpoint. Only available if the model configure fluid has been given."
+          "description": "Saturation at the gridpoint. Only available if the model configure fluid has been given. MODE-DEPENDENT in 9.7: in fluid-flow (implicit) mode, initialized values on unfixed gridpoints are clamped back by the engine (the command reports 'saturation modified' but the value reads back 1.0) -- fix saturation instead to impose a value; in fluid-explicit mode initialized values hold (0.8 reads back 0.8). State-verified against FLAC3D 9.7 under both modes with otherwise identical models."
         },
         {
           "name": "temperature",
           "syntax": "temperature <f> [[gridpointinitializeblock]]",
-          "description": "temperature at the gridpoint. Only available if the model configure thermal has been given."
+          "description": "temperature at the gridpoint. Only available if the model configure thermal has been given (without it the engine rejects with 'Not configured for thermal calculation'). Unlike saturation, initialized temperature holds on unfixed gridpoints ('initialize temperature 25' reads back 25.0 via gp.temp()). State-verified against FLAC3D 9.7."
         },
         {
           "name": "velocity",

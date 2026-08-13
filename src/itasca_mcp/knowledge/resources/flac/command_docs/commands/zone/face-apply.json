@@ -391,6 +391,7 @@
     "9.0": {
       "command": "zone face apply",
       "syntax": "zone face apply keyword [range]",
+      "description": "This command is used to apply boundary conditions at surface faces of the model. Process gating (verified against FLAC3D 9.7): the keyword ENUMERATION below is context-free -- the parser lists the identical 47-keyword set whether or not thermal/dynamic/creep/fluid are configured -- but EXECUTION is gated per process: thermal keywords (temperature, flux, convection) require 'model configure thermal', dynamic keywords (quiet*, acceleration*) require 'model configure dynamic', fluid keywords (pore-pressure*, head*, discharge, leakage) require a fluid configure; without the configure the engine rejects with a message naming the missing process. Applying a condition to gridpoints that already carry a conflicting apply removes the old condition (reported in the command output).",
       "keywords": [
         {
           "name": "acceleration",
@@ -470,7 +471,7 @@
         {
           "name": "pore-pressure-maximum",
           "syntax": "pore-pressure-maximum [<f >] [applyblock]",
-          "description": "Apply a pore-pressure condition with a maximum limit; the value is optional. Requires the model configured for fluid. Keyword and optional argument shape verified against FLAC3D 9.7; exact semantics are undocumented upstream (absent from the official 9.x HTML documentation)."
+          "description": "Seepage-type limited-pore-pressure boundary. Gridpoint pore pressure on the face is left FREE while below f (it follows the flow field, unlike a plain pore-pressure apply which pins the value from both directions) and is clamped at f whenever flow would push it higher -- the face acts as a drain at pp = f. At apply time, any pore pressure above f in the range is immediately reduced to f. Omitting f is equivalent to f = 0 (zero-pressure seepage face). Requires the model configured for fluid. State-verified against FLAC3D 9.7 (fluid-explicit diffusion tests with gp.pp() readback, contrasted against a plain pore-pressure face); absent from the official 9.x HTML documentation."
         },
         {
           "name": "pore-pressure-saturation",
