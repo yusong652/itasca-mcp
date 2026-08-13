@@ -68,6 +68,22 @@
       "full_name": "Rate-State Joint Model",
       "description": "Rate- and state-dependent friction joint model (laboratory rate-state friction law), available via 'block contact jmodel assign ratestate'.",
       "property_count": 2
+    },
+    {
+      "name": "velocity-weakening",
+      "file": "velocity-weakening.json",
+      "full_name": "Velocity Weakening Joint Model",
+      "description": "Mohr-Coulomb-based joint model whose friction weakens with increasing slip velocity (rate-dependent, for seismic/dynamic slip). Live-discovered 9th jmodel; official docs cover it in the theory section only.",
+      "property_count": 16
     }
+  ],
+  "live_verification_notes": [
+    "All 9 model names live-verified 2026-08-14 via 'block contact jmodel assign ?' on 3DEC 9.7.47: bilinear-mohr, cyjm, elastic, mohr, nonlinear, power, ratestate, softening-mohr, velocity-weakening.",
+    "A model name is also accepted directly at the 'block contact jmodel' first slot as a shortcut for 'assign'.",
+    "Subcontacts must exist before assignment (block zone generate for deformable blocks, block contact generate-subcontacts for rigid blocks).",
+    "Property discovery trick: with a jmodel ASSIGNED, a wrong name in 'block contact property' error-enumerates the model's full property set. With NO jmodel assigned the same command accepts any name silently ('assigned to 0/N subcontacts') - probe only after assigning.",
+    "Python Subcontact.prop(name) accepts ANY name without error (returns a value even for nonexistent properties) - it cannot be used for membership testing; s.model() reads the assigned model name back.",
+    "Unlike FLAC zone cmodels, the live engine has NO read-only guard: state variables (kn-current, friction-current, plastic-strain, theta, ...) accept writes via 'block contact property' and hold the written value (verified with set/readback round-trips).",
+    "State round-trip verified per model on stiffness-normal (set 1.25e9 -> Subcontact.prop reads 1.25e9)."
   ]
 }

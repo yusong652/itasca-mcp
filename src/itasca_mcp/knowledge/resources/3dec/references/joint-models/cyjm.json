@@ -23,7 +23,7 @@
   "property_groups": [
     {
       "name": "Properties",
-      "description": "Joint properties for the 'cyjm' joint constitutive model. Assign the model with 'block contact jmodel assign cyjm [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel cyjm]'.",
+      "description": "Joint properties for the 'cyjm' joint constitutive model. Assign the model with 'block contact jmodel assign cyjm [range ...]', then set these with 'block contact property <keyword> <value> [range jmodel cyjm]'. Property table completed 2026-08-14 from the official 9.7 Continuously Yielding theory page + live enumeration; two 'kwd:' crawler artifacts removed.",
       "properties": [
         {
           "keyword": "kn-initial",
@@ -62,26 +62,92 @@
           "type": "FLT"
         },
         {
-          "keyword": "kwd: \\(kn-current\\)",
-          "symbol": "k_n",
-          "description": "normal stiffness defined as a function of \\(\\sigma_n\\)",
-          "type": "FLT"
-        },
-        {
-          "keyword": "kwd: \\(ks-current\\)",
-          "symbol": "k_s",
-          "description": "shear stiffness defined as a function of \\(\\sigma_n\\)",
-          "type": "FLT"
-        },
-        {
           "keyword": "plastic-strain",
           "symbol": "u^(p)_s",
           "description": "accumulated plastic shear displacement",
+          "type": "FLT"
+        },
+        {
+          "keyword": "kn-current",
+          "description": "Current joint normal stiffness (read only per the official page).",
+          "type": "FLT",
+          "symbol": "k_n"
+        },
+        {
+          "keyword": "ks-current",
+          "description": "Current joint shear stiffness (read only per the official page).",
+          "type": "FLT",
+          "symbol": "k_s"
+        },
+        {
+          "keyword": "kn-maximum",
+          "description": "Joint maximum normal stiffness (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "kn-minimum",
+          "description": "Joint minimum normal stiffness (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "ks-maximum",
+          "description": "Joint maximum shear stiffness (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "ks-minimum",
+          "description": "Joint minimum shear stiffness (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "friction-residual",
+          "description": "Joint residual friction angle in degrees (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "al",
+          "description": "Loading parameter (read only per the official page).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sdisp",
+          "description": "Shear displacement magnitude at start of last discharge (read only).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sdisp-peak",
+          "description": "Shear displacement magnitude at maximum shear stress (read only).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sdisp-residual",
+          "description": "Shear displacement magnitude at start of residual shear stress (read only).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sstress-maximum",
+          "description": "Bounding shear stress (read only).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "sstress-peak",
+          "description": "Peak shear stress (read only).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "tol",
+          "description": "Tolerance to assess residual state. Default 1e-5 (input).",
+          "type": "FLT"
+        },
+        {
+          "keyword": "ussisref",
+          "description": "Shear displacement magnitude of reference (read only).",
           "type": "FLT"
         }
       ]
     }
   ],
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/theory/cyjoint/cyjoint.html",
-  "usage": "block contact jmodel assign cyjm ; block contact property <prop> <value> [range jmodel cyjm]"
+  "usage": "block contact jmodel assign cyjm ; block contact property <prop> <value> [range jmodel cyjm]",
+  "verification": "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted). CAUTION: properties marked read-only on the official page are nonetheless writable via 'block contact property' on the live engine (no read-only guard, unlike FLAC zone cmodels)."
 }
