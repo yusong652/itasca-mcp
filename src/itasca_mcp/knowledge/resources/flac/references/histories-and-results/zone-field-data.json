@@ -80,11 +80,9 @@
       "names": [
         "pore-pressure",
         "saturation",
-        "saturation-apparent",
         "temperature",
         "density-fluid",
         "fluid-biot-modulus",
-        "fluid-bulk-modulus",
         "fluid-head",
         "permeability-ratio"
       ],
@@ -92,7 +90,8 @@
         "Fluid fields require fluid configuration where applicable.",
         "Thermal fields require thermal configuration where applicable.",
         "'thermal-flux' is NOT a zone field name — use 'property-thermal' for thermal material constants and a thermal-specific FISH query for flux.",
-        "DIMENSION SPLIT (live-verified): 'saturation-apparent' and 'fluid-bulk-modulus' are FLAC2D-only — FLAC3D 9.7 does not enumerate them in 'zone history' (matches the plot-contour finding). FLAC3D 9.7 instead adds fluid names absent in 2D: mobility-coefficient (+ -xx/-xy/-xz/-yy/-yz/-zz), porosity, density-fluid, oob-flow."
+        "REMOVED as field names (live-verified both engines, 2026-08-13): 'saturation-apparent' and 'fluid-bulk-modulus' are rejected by 'zone history' in live FLAC2D 9 ('Bad conversion') and absent from the FLAC3D 9.7 enumeration — they are NOT history/field names in current 9.x engines. They exist only as 2D plot-contour attributes (see the plot-items reference).",
+        "The mobility-coefficient family, porosity, density-fluid, density-wet, and oob-flow enumerate in BOTH current engines (2D lacks only the -xz/-yz tensor components) — they are not 3D-only."
       ]
     }
   ],
@@ -139,8 +138,8 @@
     "notes": [
       "Full 'zone history <bogus>' first-token enumeration captured (76 names). All names documented in this file are present EXCEPT saturation-apparent and fluid-bulk-modulus (FLAC2D-only, see fluid-thermal group note).",
       "'condition' is confirmed present and 'state' confirmed absent in 9.7 — the file's claim holds in 3D too.",
-      "3D names beyond this file's groups: balloon, density-wet, mobility-coefficient family, oob-flow, porosity, name, stress-effective (+ six components), per-component strain-increment/strain-rate/unbalanced-force forms.",
-      "The quantity_names list is an exact match with the live 'quantity' enumeration (plus the six tensor components xx/yy/zz/xy/xz/yz, which the enumeration folds into the same slot)."
+      "The quantity_names list is an exact match with the live 'quantity' enumeration (plus the six tensor components xx/yy/zz/xy/xz/yz, which the enumeration folds into the same slot).",
+      "FLAC2D 9 comparison (live, 2026-08-13): 62-name 2D enumeration differs from the 76-name 3D one only by dimension-mechanical names (-z kinematics, -xz/-yz tensor components, mobility-coefficient-xz) — the scalar name sets otherwise match, including balloon/porosity/density-wet/oob-flow/stress-effective."
     ]
   }
 }
