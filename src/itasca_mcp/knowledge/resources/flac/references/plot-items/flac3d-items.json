@@ -7,9 +7,8 @@
     "types": [
       "structure-beam",
       "structure-cable (verified identical)",
-      "structure-pile",
-      "structure-dowel",
-      "structure-hybrid (untested, by family analogy)"
+      "structure-pile (verified identical, 2026-08-13)",
+      "structure-hybrid (verified identical, 2026-08-13)"
     ],
     "keywords": [
       "Bar",
@@ -34,7 +33,8 @@
     ],
     "notes": [
       "'Bar', 'BarScale' and 'FlipBars' are CamelCase keywords leaked from internal property names; 'Bar' takes a boolean. They are real, accepted keywords in 9.7.",
-      "'contour <attribute>' accepts the beam-family attribute set including 3D-only -z / angular / plastic entries (see structure/contour.json)."
+      "'contour <attribute>' accepts the beam-family attribute set including 3D-only -z / angular / plastic entries (see structure/contour.json).",
+      "structure-dowel REMOVED from this family (2026-08-13): live '?' enumeration shows it has its own keyword set (no Bar/BarScale/FlipBars/line; six unique keywords) — see the structure-dowel item entry."
     ]
   },
   "items": {
@@ -362,6 +362,80 @@
         "polygons",
         "text",
         "transparency"
+      ]
+    },
+    "structure-liner": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "contour",
+        "cut",
+        "deformation-factor",
+        "label",
+        "legend",
+        "map",
+        "marker",
+        "polygons",
+        "range",
+        "shrink",
+        "slot",
+        "system",
+        "transparency"
+      ],
+      "notes": [
+        "Shell-flavor set plus 'polygons'. Live '?' enumeration, FLAC3D 9.7 (2026-08-13); previously asserted by family analogy only."
+      ]
+    },
+    "structure-geogrid": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "contour",
+        "cut",
+        "deformation-factor",
+        "label",
+        "legend",
+        "map",
+        "marker",
+        "polygons",
+        "range",
+        "shrink",
+        "slot",
+        "system",
+        "transparency"
+      ],
+      "notes": [
+        "Identical to structure-liner (shell-flavor + polygons). Live '?' enumeration, FLAC3D 9.7 (2026-08-13)."
+      ]
+    },
+    "structure-dowel": {
+      "keywords": [
+        "active",
+        "clip",
+        "color-list",
+        "contour",
+        "cut",
+        "deformation-factor",
+        "doweloffset",
+        "label",
+        "legend",
+        "length-scale",
+        "map",
+        "marker",
+        "minval",
+        "offsetnormal",
+        "range",
+        "shrink",
+        "slot",
+        "system",
+        "transparency",
+        "usesminval",
+        "width-scale"
+      ],
+      "notes": [
+        "UNIQUE set — NOT beam-family despite being a 1D element type: no Bar/BarScale/FlipBars/line; six dowel-specific keywords (doweloffset, length-scale, minval, offsetnormal, usesminval, width-scale — several are leaked internal names, really accepted). Live '?' enumeration, FLAC3D 9.7 (2026-08-13). The prior family-analogy assertion was wrong for this type."
       ]
     }
   },

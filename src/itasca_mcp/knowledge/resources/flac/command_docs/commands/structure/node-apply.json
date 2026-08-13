@@ -131,7 +131,7 @@
         {
           "name": "remove",
           "syntax": "remove keyword",
-          "description": "Remove an existing applied force/moment from nodes in the range. Sub-keywords: force, moment."
+          "description": "Remove an existing applied condition from nodes in the range. Sub-keywords (live-enumerated, FLAC3D 9.7): force, force-edge, moment. TRAP: a bare 'remove' (or one followed by an invalid token) EXECUTES immediately with the default (force) before any error is raised — observed 'Force removed from 13 nodes' on a bogus trailing token."
         },
         {
           "name": "remove-force",
@@ -146,7 +146,7 @@
         {
           "name": "system",
           "syntax": "system keyword",
-          "description": "Set the coordinate system in which the applied force/moment is interpreted. Sub-keywords: local, global."
+          "description": "Set the coordinate system in which the applied force/moment is interpreted. Sub-keywords (live-enumerated, FLAC3D 9.7): global, local. TRAP: a bare 'system' (or one followed by an invalid token) executes and assigns the default before erroring — observed 'System assigned to 13 nodes'."
         },
         {
           "name": "system-local",
@@ -163,7 +163,8 @@
           "syntax": "range ...",
           "description": "Range block selecting which nodes the apply condition is applied to."
         }
-      ]
+      ],
+      "description": "Apply concentrated conditions (force, edge force, moment) at structural nodes. Keyword shapes live-verified against FLAC3D 9.7: first-token enumeration is force / force-edge / moment / remove / system (+ range); add|multiply are position-2 modifiers after the value."
     }
   }
 }
