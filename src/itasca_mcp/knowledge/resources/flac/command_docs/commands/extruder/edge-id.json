@@ -10,6 +10,48 @@
     "available": false
   },
   "versions": {
+    "7.0": {
+      "command": "extrude edge id",
+      "syntax": "extrude edge id <i> <keyword ...>",
+      "keywords": [
+        {
+          "name": "control-point",
+          "syntax": "control-point keyword"
+        },
+        {
+          "name": "group",
+          "syntax": "group <s1> <slot <s2> > <remove>",
+          "description": "Assign the group name s1 in slot s2 (if supplied) to the edge. The edge is removed from the group/slot if remove is present. The slot is Default if not supplied."
+        },
+        {
+          "name": "ratio",
+          "syntax": "ratio <f>",
+          "description": "Set the ratio f (a number between 0.1 and 10.1 ), which is used to distribute zone lengths along the edge (each zone will be f of the size of the zone preceding it). This setting automatically propagates across dependent edges of regular blocks while Ratio-Isolate is false ."
+        },
+        {
+          "name": "ratio-isolate",
+          "syntax": "ratio-isolate <b>",
+          "description": "The option only applies to the edges which form regular (3- or 4-sided) blocks. Set the flag to control ratio propagation. Ratio settings propagate when false (the default). If set true , a ratio assignment on this edge will not propagate to dependent edges."
+        },
+        {
+          "name": "size",
+          "syntax": "size <i>",
+          "description": "Set the number of zones on the edge. This will also automatically propagate across dependent edges of regular blocks."
+        },
+        {
+          "name": "split",
+          "syntax": "split <v2> <keyword>",
+          "description": "Split the edge at location v2 , a 2D coordinate vector ( \\(x\\) , \\(y\\) ). If keyword \u201cblock\u201d is not provided or the edge belongs to an irregular block, the command splits the edge and deletes the block."
+        },
+        {
+          "name": "type",
+          "syntax": "type keyword",
+          "description": "Specify the curve type of the edge."
+        }
+      ],
+      "source": "Backfilled from the official FLAC3D 7.0 documentation tree (out_commands.txt index + command pages), 2026-08-13.",
+      "description": "Modify a single edge by ID."
+    },
     "9.0": {
       "command": "sketch edge id",
       "syntax": "sketch edge id <i> keyword",
