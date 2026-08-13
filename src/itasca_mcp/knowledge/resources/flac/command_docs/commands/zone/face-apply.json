@@ -438,6 +438,11 @@
           "description": "Apply prescribed pore-pressure head. (Fluid config.)"
         },
         {
+          "name": "head-saturation",
+          "syntax": "head-saturation <f > [applyblock]",
+          "description": "Uses head to calculate and fix pore pressures together with saturation (companion keyword to head). Requires the model configured for fluid, with fluid density and gravity defined beforehand. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
+        },
+        {
           "name": "leakage",
           "syntax": "leakage <f1> <f2> [faceapplyblock]",
           "description": "Apply leakage boundary condition. (Fluid config.)"
@@ -446,6 +451,16 @@
           "name": "pore-pressure",
           "syntax": "pore-pressure <f> [faceapplyblock]",
           "description": "Apply prescribed pore pressure. (Fluid config.)"
+        },
+        {
+          "name": "pore-pressure-maximum",
+          "syntax": "pore-pressure-maximum [<f >] [applyblock]",
+          "description": "Apply a pore-pressure condition with a maximum limit; the value is optional. Requires the model configured for fluid. Keyword and optional argument shape verified against FLAC3D 9.7; exact semantics are undocumented upstream (absent from the official 9.x HTML documentation)."
+        },
+        {
+          "name": "pore-pressure-saturation",
+          "syntax": "pore-pressure-saturation <v2 > [applyblock]",
+          "description": "Apply pore pressure and saturation together; takes a 2-component vector (pore pressure, saturation). Requires the model configured for fluid. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
         },
         {
           "name": "quiet",
@@ -630,17 +645,27 @@
         {
           "name": "fish",
           "syntax": "fish <s>",
-          "description": "Use the FISH function named s to compute the applied value per face/gridpoint."
+          "description": "Use the FISH function named s to compute the applied value per face/gridpoint. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
         },
         {
           "name": "fish-local",
           "syntax": "fish-local <s>",
-          "description": "Use the local-namespace FISH function s to compute the applied value."
+          "description": "Use the local-namespace FISH function s to compute the applied value. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
         },
         {
           "name": "gradient",
           "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a linear spatial gradient v to the base value (optionally with a reference origin)."
+        },
+        {
+          "name": "servo",
+          "syntax": "servo [latency <i >] [lower-bound <f >] [lower-multiplier <f >] [maximum <f >] [minimum <f >] [ramp] [ratio keyword] [reduce] [upper-bound <f >] [upper-multiplier <f >]",
+          "description": "Servo-control the applied magnitude based on the mechanical convergence ratio. Sub-keywords verified against FLAC3D 9.7: latency, lower-bound, lower-multiplier (must be > 1), maximum, minimum, ramp, ratio (one of average / convergence / global / local / maximum), reduce, upper-bound, upper-multiplier (must be < 1). Replaces the 7.0 hyphenated servo-* keywords (servo-ratio, servo-latency, ...), which FLAC3D 9.x rejects."
+        },
+        {
+          "name": "table",
+          "syntax": "table <s >",
+          "description": "Specify a value multiplier from the table named s (the x-value of the table is time by default). The table name must be given as a quoted string (e.g. table 'name'); an unquoted name is rejected. Replaces the 7.0 table-creep / table-dynamic / table-fluid / table-mechanical / table-step / table-thermal variants, which FLAC3D 9.x no longer accepts. Verified against FLAC3D 9.7."
         },
         {
           "name": "vary",
@@ -650,7 +675,7 @@
         {
           "name": "update-direction",
           "syntax": "update-direction <b>",
-          "description": "If on, the direction of the applied vector quantity is updated each step to follow the current face normal (for large-strain analyses)."
+          "description": "If on, the direction of the applied vector quantity is updated each step to follow the current face normal (for large-strain analyses). Verified FLAC3D 9.7: accepted after gridpoint-based vector conditions (velocity, velocity-normal, acceleration, ...); rejected after face-based stress conditions (stress-normal, stress-xx, ...)."
         }
       ],
       "figure_reference": {

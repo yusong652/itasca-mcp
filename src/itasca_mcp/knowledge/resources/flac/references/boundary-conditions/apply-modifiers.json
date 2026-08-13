@@ -18,21 +18,24 @@
       "keyword": "fish",
       "purpose": "Multiply the base value by a FISH function return value each step.",
       "notes": [
-        "The FISH function should return a scalar or vector compatible with the applied condition."
+        "The FISH function should return a scalar or vector compatible with the applied condition.",
+        "The function name is an unquoted FISH symbol; a quoted string is rejected. Verified against FLAC3D 9.7."
       ]
     },
     {
       "keyword": "fish-local",
       "purpose": "Evaluate a FISH multiplier separately for each face or gridpoint affected by the condition.",
       "notes": [
-        "For face-based conditions, the function can use the zone pointer and side number."
+        "For face-based conditions, the function can use the zone pointer and side number.",
+        "Takes an unquoted FISH symbol, like 'fish'. Verified against FLAC3D 9.7."
       ]
     },
     {
       "keyword": "servo",
       "purpose": "Control the applied magnitude based on mechanical convergence ratio.",
       "notes": [
-        "Use ramp to increase load gradually; use reduce to remove a condition gradually."
+        "Use ramp to increase load gradually; use reduce to remove a condition gradually.",
+        "FLAC3D 9.x syntax is 'servo' followed by sub-keywords: latency <i>, lower-bound <f>, lower-multiplier <f> (must be > 1), maximum <f>, minimum <f>, ramp, ratio (average/convergence/global/local/maximum), reduce, upper-bound <f>, upper-multiplier <f> (must be < 1). The 7.0 hyphenated servo-* keywords are rejected by 9.x. Verified against FLAC3D 9.7."
       ]
     },
     {
@@ -46,7 +49,8 @@
       "keyword": "table",
       "purpose": "Vary a condition through a table-controlled multiplier.",
       "notes": [
-        "Useful for staged loading, histories, hydrographs, and dynamic input records."
+        "Useful for staged loading, histories, hydrographs, and dynamic input records.",
+        "In 9.x the table name must be a quoted string (table 'name'); an unquoted name is rejected. The 7.0 table-creep/-dynamic/-fluid/-mechanical/-step/-thermal variants no longer exist. Verified against FLAC3D 9.7."
       ]
     },
     {
@@ -54,6 +58,13 @@
       "purpose": "Apply a per-component variation profile to a condition value.",
       "notes": [
         "Validated against the FLAC2D 9.0 binary modifier set after 'zone face apply <kw> <value> ?'."
+      ]
+    },
+    {
+      "keyword": "update-direction",
+      "purpose": "Update the direction of an applied vector quantity each step to follow the moving face/gridpoint frame.",
+      "notes": [
+        "Accepted after gridpoint-based vector conditions (velocity, velocity-normal, acceleration, ...); rejected after face-based stress conditions (stress-normal, stress-xx, ...). Verified against FLAC3D 9.7."
       ]
     }
   ],
@@ -68,7 +79,19 @@
   ],
   "notes_general": [
     "'range' is treated as a modifier-position keyword by the parser (it follows the value, like the other modifiers).",
-    "'symmetry' is accepted only after local-axis conditions (velocity-local / -normal / -tangential, reaction-local / -normal / -tangential, acceleration-local / -normal / -tangential). It is not a universal modifier."
+    "'symmetry' is accepted only after local-axis conditions (velocity-local / -normal / -tangential, reaction-local / -normal / -tangential, acceleration-local / -normal / -tangential). It is not a universal modifier.",
+    "Commands parse-and-execute incrementally: a command line with a trailing invalid token may already have executed its valid prefix before the error is raised (e.g. 'zone gridpoint fix velocity-x 0 <badtoken>' fixes velocity-x, then errors). An error message does not mean the command had no effect. Verified FLAC3D 9.7.",
+    "'zone face apply-remove' with no keyword removes ALL apply conditions in the range; a misspelled first keyword is treated as a trailing extra parameter, so the remove-everything action executes before the error is raised. Verified FLAC3D 9.7."
   ],
-  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html"
+  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html",
+  "binary_validated_modifier_set_3d_97": [
+    "fish",
+    "fish-local",
+    "gradient",
+    "range",
+    "servo",
+    "table",
+    "update-direction",
+    "vary"
+  ]
 }
