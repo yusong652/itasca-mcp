@@ -691,10 +691,11 @@ def test_3dec_joint_models_reference_category() -> None:
     assert "contact-models" not in cats
 
 
-def test_3dec_joint_models_lists_all_eight() -> None:
+def test_3dec_joint_models_lists_all_nine() -> None:
     cat = ReferenceLoader.load_category_index("joint-models", software="3dec")
     assert cat is not None
     names = {m["name"] for m in cat["models"]}
+    # The nine jmodels enumerated by live 3DEC 9.7 'block contact jmodel assign'.
     assert names == {
         "elastic",
         "mohr",
@@ -704,6 +705,7 @@ def test_3dec_joint_models_lists_all_eight() -> None:
         "nonlinear",
         "power",
         "ratestate",
+        "velocity-weakening",
     }
 
 
