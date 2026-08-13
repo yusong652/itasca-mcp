@@ -45,6 +45,78 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.6] - 2026-08-14
+
+FLAC documentation-corpus release: the entire bundled FLAC corpus — 333
+command files (9.0 and 7.0 version blocks), all 45 reference files, and all
+13 Python SDK module units — now carries explicit verdicts from live
+engines (FLAC3D 9.7, FLAC3D 7.0, and FLAC2D 9), plus a dedicated FLAC2D
+sweep that upgraded every 2D-side claim from inference to direct evidence.
+
+### Documentation
+- **Every FLAC constitutive model verified live.** All 41 mechanical zone
+  models enumerated and their property sets read back; 5 models added that
+  were missing from the corpus (two of them — cavehoek and
+  jones-wilkins-lee — absent from ALL official manuals); 8 wrong property
+  names corrected and 27 missing properties added; read-only state
+  variables now marked. Thermal constitutive models enumerated too (the
+  official "Isotropic/Anisotropic Heat Conduction" pages map to the single
+  `linear` cmodel with scalar vs tensor conductivity; `assign active` is a
+  reactivation alias of linear).
+- **9.x structural constitutive models documented** (new
+  `structure-cmodels` reference): shell/liner/geogrid carry 7 models,
+  beam/pile 5, cable none; the `structure <type> property` keyword set is
+  cmodel-dependent; one-way assignment trap on FLAC3D surface elements
+  ("Cannot replace an elastic model with a plastic model") with the
+  delete-and-recreate workaround.
+- **`zone face apply pore-pressure-maximum` semantics solved** (was
+  undocumented upstream): seepage-type limited-pressure boundary — free
+  below the cap, drain-clamped at it, immediately reduced at apply time;
+  bare form means cap 0 (zero-pressure seepage face). Companion keywords
+  `pore-pressure-saturation` / `head-saturation` verified on both engines.
+- **Process gating clarified corpus-wide:** keyword enumeration is
+  context-free in 9.x, but execution is gated per process with explicit
+  errors ('Not configured for thermal/fluid/dynamic calculations').
+  Saturation write-back is fluid-mode-dependent (implicit clamps unfixed
+  writes to 1.0, explicit holds them; fixing holds in both). `head` works
+  in current FLAC2D 9 (gated on fluid density + gravity), correcting the
+  earlier "2D rejects head" note.
+- **Python SDK docs verified by introspection:** all 508 documented names
+  diffed against live `dir()`/`hasattr`; 7 upstream-documented names the
+  engine does not expose are now flagged with working alternatives; the
+  missing `itasca.zone.field` module (8 spatial-interpolation functions)
+  documented from live signatures; `vertexarray` clarified as the PFC
+  wall-vertex module that is always empty in FLAC3D.
+- **FLAC3D 7.0 blocks are now first-class:** 100 body/extruder commands
+  backfilled from the official 7.0 doc tree, then the whole 7.0 block set
+  swept against a live FLAC3D 7.0 engine — including two places where the
+  official 7.0 HTML docs are themselves wrong (beam property is `young`,
+  not `youngs`; shell-family history takes `stress-*`, not `principal-*`).
+- **2D/3D dimension splits recorded from both sides:** `*-tangential` and
+  `stress-shear` are FLAC2D-only (3D uses `-dip`/`-strike`); `-z`/`-xz`/
+  `-yz` components, sketch `segment`/`path`, and building-blocks are
+  3D-only; `zone create2d`, `model configure axisymmetry`, and the range
+  element `circle` are 2D-only; per-engine range-element and plot-item
+  enumerations captured (with the unified-kernel caveat that the parser
+  accepts other engines' tokens without rendering their data).
+- **Execution traps documented where agents will hit them:** bare
+  `zone face apply-remove` removes ALL conditions before erroring; a
+  trailing invalid token does not undo the already-executed prefix;
+  `plot 'name' delete` puts the name BEFORE the verb; bare
+  `structure node apply remove`/`system` execute defaults before erroring;
+  structure history quantities require `component-id` or `position`;
+  structure property enumeration requires elements to exist; several
+  keyword families are accepted but enumeration-invisible (`biot`,
+  `fluid-modulus`, shell `isotropic`, node-initialize modifiers).
+- **Plot-item coverage completed:** structure-pile/-hybrid verified
+  identical to the beam family, structure-liner/-geogrid captured, and the
+  structure-dowel family-analogy claim corrected (it has its own
+  21-keyword set); full FLAC3D 9.7 `zone results`, history, quantity, and
+  range-element keyword sets stamped as exact matches.
+- `zone face apply-remove` keyword descriptions filled (83 entries) and 22
+  collapsed hyperlink anchors repaired, including replacing dead thermal
+  property-table links with the live-enumerated property sets.
+
 ## [0.6.5] - 2026-08-09
 
 Documentation-corpus release, continuing the live-verification pass against
