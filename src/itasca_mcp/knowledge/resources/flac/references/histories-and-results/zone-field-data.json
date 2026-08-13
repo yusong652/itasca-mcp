@@ -91,7 +91,8 @@
       "notes": [
         "Fluid fields require fluid configuration where applicable.",
         "Thermal fields require thermal configuration where applicable.",
-        "'thermal-flux' is NOT a zone field name — use 'property-thermal' for thermal material constants and a thermal-specific FISH query for flux."
+        "'thermal-flux' is NOT a zone field name — use 'property-thermal' for thermal material constants and a thermal-specific FISH query for flux.",
+        "DIMENSION SPLIT (live-verified): 'saturation-apparent' and 'fluid-bulk-modulus' are FLAC2D-only — FLAC3D 9.7 does not enumerate them in 'zone history' (matches the plot-contour finding). FLAC3D 9.7 instead adds fluid names absent in 2D: mobility-coefficient (+ -xx/-xy/-xz/-yy/-yz/-zz), porosity, density-fluid, oob-flow."
       ]
     }
   ],
@@ -133,5 +134,13 @@
       ]
     }
   ],
-  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/zones/zones.html"
+  "official_documentation": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/zones/zones.html",
+  "live_verification_flac3d_97": {
+    "notes": [
+      "Full 'zone history <bogus>' first-token enumeration captured (76 names). All names documented in this file are present EXCEPT saturation-apparent and fluid-bulk-modulus (FLAC2D-only, see fluid-thermal group note).",
+      "'condition' is confirmed present and 'state' confirmed absent in 9.7 — the file's claim holds in 3D too.",
+      "3D names beyond this file's groups: balloon, density-wet, mobility-coefficient family, oob-flow, porosity, name, stress-effective (+ six components), per-component strain-increment/strain-rate/unbalanced-force forms.",
+      "The quantity_names list is an exact match with the live 'quantity' enumeration (plus the six tensor components xx/yy/zz/xy/xz/yz, which the enumeration folds into the same slot)."
+    ]
+  }
 }
