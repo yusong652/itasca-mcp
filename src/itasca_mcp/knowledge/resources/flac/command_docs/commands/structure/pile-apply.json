@@ -16,9 +16,9 @@
       "description": "Applies conditions to pile elements in the range. The following keywords and options are available:",
       "keywords": [
         {
-          "name": "adummy",
+          "name": "on/off",
           "syntax": "f1 f2",
-          "description": "assign uniform applied distributed loads. Loads (force per unit length) are applied to all elements in the range. Positive loads act in the positive \\(y\\)- or \\(z\\)-directions (f1 and f2, respectively) of the element system and maintain this orientation during large-strain motion. Point loads are applied at the nodes using the command structure node apply."
+          "description": "assign uniform applied distributed loads. Loads (force per unit length) are applied to all elements in the range. Positive loads act in the positive \\(y\\)- or \\(z\\)-directions (f1 and f2, respectively) of the element system and maintain this orientation during large-strain motion. Point loads are applied at the nodes using the command structure node apply. NOTE: 'adummy' was a crawler placeholder; the real first token is an optional boolean (on/off). The engine's first-token enumeration here is the full range-element keyword set (active, annulus, cylinder, group, position-*, ...) because the range follows directly - see the range-elements reference. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
         },
         {
           "name": "tension",
@@ -48,7 +48,14 @@
     },
     "9.0": {
       "command": "structure pile apply",
-      "syntax": "structure pile apply keyword [range]"
+      "syntax": "structure pile apply keyword [range]",
+      "keywords": [
+        {
+          "name": "tension",
+          "syntax": "tension <f >",
+          "description": "Apply tensile load. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+        }
+      ]
     }
   }
 }
