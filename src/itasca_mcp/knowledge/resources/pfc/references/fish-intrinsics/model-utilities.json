@@ -1,8 +1,8 @@
 {
   "name": "model-utilities",
   "dimension": "3D",
-  "full_name": "Measurement, Inlet, Fragment, Domain & CFD FISH Intrinsics",
-  "description": "PFC model-level helper namespaces: measurement spheres (measure.*), particle inlets (inlet.*), fragment analysis (fragment.*), the model domain (domain.*), and global CFD state (cfd.*).",
+  "full_name": "Measurement, Inlet, Fragment, Domain, CFD & Brick FISH Intrinsics",
+  "description": "PFC model-level helper namespaces: measurement spheres (measure.*), particle inlets (inlet.*), fragment analysis (fragment.*), the model domain (domain.*), global CFD state (cfd.*), and saved periodic-space assemblies (brick.*).",
   "intrinsic_families": [
     {
       "family": "measurement spheres",
@@ -75,6 +75,9 @@
           "name": "inlet.brick",
           "signature": "brick_pnt := inlet.brick(inlet_pnt) := int"
         }
+      ],
+      "notes": [
+        "The inlet.* namespace does not exist on 6.0."
       ]
     },
     {
@@ -161,11 +164,67 @@
           "signature": "int = cfd.step()"
         }
       ]
+    },
+    {
+      "family": "bricks (periodic-space assemblies)",
+      "examples": [
+        {
+          "name": "brick.list",
+          "signature": "brick_list_pnt = brick.list()"
+        },
+        {
+          "name": "brick.find",
+          "signature": "brick_pnt = brick.find(int)"
+        },
+        {
+          "name": "brick.assemble",
+          "signature": "bool = brick.assemble(brick_pnt,vec3,<int>,<int>,<int>)"
+        },
+        {
+          "name": "brick.delete",
+          "signature": "bool = brick.delete(brick_pnt)"
+        },
+        {
+          "name": "brick.extent",
+          "signature": "vec3/flt := brick.extent(brick_pnt,<int>)"
+        },
+        {
+          "name": "brick.lower.corner",
+          "signature": "vec3/flt := brick.lower.corner(brick_pnt,<int>)"
+        },
+        {
+          "name": "brick.upper.corner",
+          "signature": "vec3/flt := brick.upper.corner(brick_pnt,<int>)"
+        }
+      ],
+      "notes": [
+        "A brick is a saved periodic-cell particle assembly replicated into the model with brick.assemble."
+      ]
     }
   ],
   "live_inventory": {
-    "count": 115,
+    "count": 135,
     "names": [
+      "brick.assemble",
+      "brick.delete",
+      "brick.extent",
+      "brick.extent.x",
+      "brick.extent.y",
+      "brick.extent.z",
+      "brick.find",
+      "brick.id",
+      "brick.list",
+      "brick.lower.corner",
+      "brick.lower.corner.x",
+      "brick.lower.corner.y",
+      "brick.lower.corner.z",
+      "brick.maxid",
+      "brick.num",
+      "brick.typeid",
+      "brick.upper.corner",
+      "brick.upper.corner.x",
+      "brick.upper.corner.y",
+      "brick.upper.corner.z",
       "cfd.age",
       "cfd.cycle",
       "cfd.energy",
@@ -281,7 +340,59 @@
       "measure.stress.zy",
       "measure.stress.zz",
       "measure.typeid"
-    ]
+    ],
+    "absent_on": {
+      "6.0": [
+        "brick.extent",
+        "brick.extent.x",
+        "brick.extent.y",
+        "brick.extent.z",
+        "brick.lower.corner",
+        "brick.lower.corner.x",
+        "brick.lower.corner.y",
+        "brick.lower.corner.z",
+        "brick.upper.corner",
+        "brick.upper.corner.x",
+        "brick.upper.corner.y",
+        "brick.upper.corner.z",
+        "fragment.bodylist",
+        "fragment.childlist",
+        "fragment.list",
+        "inlet.active",
+        "inlet.brick",
+        "inlet.delete",
+        "inlet.find",
+        "inlet.flow.vel",
+        "inlet.flow.vel.x",
+        "inlet.flow.vel.y",
+        "inlet.flow.vel.z",
+        "inlet.id",
+        "inlet.list",
+        "inlet.maxid",
+        "inlet.num",
+        "inlet.orientation",
+        "inlet.orientation.x",
+        "inlet.orientation.y",
+        "inlet.orientation.z",
+        "inlet.pos",
+        "inlet.pos.x",
+        "inlet.pos.y",
+        "inlet.pos.z",
+        "inlet.rotation.center",
+        "inlet.rotation.center.x",
+        "inlet.rotation.center.y",
+        "inlet.rotation.center.z",
+        "inlet.spin",
+        "inlet.spin.x",
+        "inlet.spin.y",
+        "inlet.spin.z",
+        "inlet.typeid",
+        "inlet.vel",
+        "inlet.vel.x",
+        "inlet.vel.y",
+        "inlet.vel.z"
+      ]
+    }
   },
-  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any). Re-checked against the complete live 'fish list intrinsics' table of PFC3D 6.00 (1542 names): entries in live_inventory.absent_on['6.0'] do not exist on 6.0."
 }
