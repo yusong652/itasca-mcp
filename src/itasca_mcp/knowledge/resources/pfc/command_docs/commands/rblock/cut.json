@@ -83,11 +83,6 @@
           "description": "Specify a deviation (in degrees) of the {dip and dip direction in 3D; dip only in 2D}. If the cut would be successful with the specified plane, the plane orientation is perturbed randomly (using a uniform distribution) with dip within f1 degrees {and dip direction within f2 degrees in 3D}. Thus, different orientation is used for each cut with the same plane. By default there is no deviation."
         },
         {
-          "name": "throughgoing",
-          "syntax": "throughgoing",
-          "description": "Cut rigid blocks with fractures. If the optional DFN name s is given only fractures from the specified DFN are used. By default all cut vertices must fall within a fracture for a cut to be successful. This is equivalent to stating that the fracture must cut the entire block. The optional throughgoing keyword specifies that a rigid block will be cut if the fracture intersects the rigid block at all. Thus a small fracture entirely inside a rigid block may cut the block. The optional infinite-plane keyword specifies that each fracture is treated as an infinite plane. Fractures are processed one at a time by decreasing fracture area. Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword. Fractures cut rigid blocks that they intersect. Cannot be given with the infinite-plane keyword."
-        },
-        {
           "name": "group",
           "syntax": "group <s>[slot <slot>]",
           "description": "The group slot slot is set to the group s for the cut rigid blocks. If slot is not specified, then the group s is assigned to the group slot Default ."
@@ -96,11 +91,6 @@
           "name": "group-facets",
           "syntax": "group-facets <s>[slot <slot>]",
           "description": "The group slot slot is set to the group s for the facets that are cut. If slot is not specified, then the group s is assigned to the group slot Default ."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Apply groups from fractures. The group name from the fracture is appended with either “_above” or “_below” depending on whether the centroid of the block is above or below the cutting fracture if b is true. By default b = false. Use the fracture group name in slot slot to set the rblock groups."
         },
         {
           "name": "group-sides",
@@ -123,19 +113,9 @@
           "description": "Specify the minimum length of the rigid blocks resulting from a cut to produce a sliver. The aspect ratio computation provides a set of axes aligned with the rigid block maximum and minimum dimensions. The minimum length is the minimum dimension. The default value is 0."
         },
         {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Cut all blocks in range by a single plane. Specify the normal of the plane. By default the normal points in the positive {y-direction in 2D; z-direction in 3D}. Specify a point on the plane. Be default the point on the plane is the origin. Specify the radius of the cut. If the distance from the point on the plane (specified with the point keyword) to any of the points corresponding to the intersection of the plane with the rigid block is greater than f then the cut is unsuccessful."
-        },
-        {
           "name": "persistence",
           "syntax": "persistence <f>",
           "description": "Specify the persistence of the cut. If a cut is successful, a uniform random number is selected to model persistence; if this value is greater than or equal to f the cut is abandoned and the original rigid block is retained. The default value is 1.0."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "Specify size parameters for a cut to be deemed successful. Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0. Specify the relative ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05."
         },
         {
           "name": "sliver-group",
@@ -151,6 +131,26 @@
           "name": "sliver-remove",
           "syntax": "sliver-remove <b>",
           "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword."
+        },
+        {
+          "name": "fractures",
+          "syntax": "fractures",
+          "description": ""
+        },
+        {
+          "name": "group-fractures",
+          "syntax": "group-fractures",
+          "description": ""
+        },
+        {
+          "name": "plane",
+          "syntax": "plane",
+          "description": ""
+        },
+        {
+          "name": "size",
+          "syntax": "size",
+          "description": ""
         }
       ],
       "examples": []
