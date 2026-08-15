@@ -65,6 +65,12 @@
           "modifiable": true,
           "inheritable": false,
           "notes": ""
+        },
+        {
+          "keyword": "f_min",
+          "type": "FLT",
+          "default": "0.0",
+          "description": "Live-enumerated on PFC3D 9.7 via BallBallContact.props() (Batch P3). Minimum (pull-off) force (live spelling of the documented 'force_min')."
         }
       ]
     },
@@ -197,7 +203,7 @@
         {
           "keyword": "force_min",
           "symbol": "f_min",
-          "description": "Minimum force",
+          "description": "STALE SPELLING - not in the live 9.7 property set; the live keyword is 'f_min'. Minimum force",
           "type": "FLT",
           "range": "",
           "default": "1",
@@ -275,7 +281,8 @@
     }
   ],
   "notes": [
-    "Edinburgh Elasto-Plastic Adhesive: hysteretic loading/unloading with adhesion."
+    "Edinburgh Elasto-Plastic Adhesive: hysteretic loading/unloading with adhesion.",
+    "Live 9.7 creation requirement: 'eepa_shear' must be > 0 BEFORE contacts form - 'model clean' with the default 0 fails with \"'eepa_shear' must be specified using a value larger than zero\"; set it in the cmat default ('contact cmat default model eepa property eepa_shear <f>')."
   ],
   "source": "PFC 7.0 documentation",
   "availability": {

@@ -1,0 +1,102 @@
+{
+  "model": "hill",
+  "full_name": "Hill Contact Model",
+  "search_keywords": [
+    "hill",
+    "contact model",
+    "pfc"
+  ],
+  "description": "Hill (moist granular / capillary suction) contact model: nonlinear elasticity with moisture-induced suction forces. 9.x-new in this corpus - property set live-read on PFC3D 9.7. SETUP REQUIREMENT (live): the model derives elasticity from body SURFACE properties - 'model clean' can fail with 'Surface property young_mod has not been assigned to a body' when balls lack young_mod (observed intermittently on 9.7: some cleans pass with young_mod/pois_ratio at the -1.0 sentinel and the check fires later). Set them via ball property with QUOTED names (ball property 'young_mod' 1e8 'pois_ratio' 0.3 - unquoted names are rejected). Even when clean errors, the contact is still created and props() reads back fine.",
+  "typical_applications": [],
+  "property_groups": [
+    {
+      "name": "Hill Group",
+      "description": "Live-enumerated on PFC3D 9.7 via BallBallContact.props() (Batch P3). Names, Python types and freshly-created defaults verbatim from the live instance.",
+      "properties": [
+        {
+          "keyword": "damp_con",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "fric_coef",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "mois_force",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "mois_state",
+          "type": "INT",
+          "default": "0",
+          "description": ""
+        },
+        {
+          "keyword": "ndamp_coef",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "nstiff_coef",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "overlap",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "pois_ratio",
+          "type": "FLT",
+          "default": "-1.0",
+          "description": ""
+        },
+        {
+          "keyword": "sdamp_coef",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "sstiff_coef",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "suction",
+          "type": "FLT",
+          "default": "0.0",
+          "description": ""
+        },
+        {
+          "keyword": "surf_force",
+          "type": "VEC",
+          "default": "vec3((0,0,0))",
+          "description": ""
+        },
+        {
+          "keyword": "young_mod",
+          "type": "FLT",
+          "default": "-1.0",
+          "description": ""
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Authored in Batch P3 from live enumeration; official-page prose not yet merged.",
+    "9.7-verified; 6.0/7.0 availability unverified (flagged false in the index pending the PFC 7.0 pass)."
+  ],
+  "source": "live PFC3D 9.7 enumeration (Batch P3)"
+}
