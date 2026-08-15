@@ -1,0 +1,287 @@
+{
+  "name": "model-utilities",
+  "dimension": "3D",
+  "full_name": "Measurement, Inlet, Fragment, Domain & CFD FISH Intrinsics",
+  "description": "PFC model-level helper namespaces: measurement spheres (measure.*), particle inlets (inlet.*), fragment analysis (fragment.*), the model domain (domain.*), and global CFD state (cfd.*).",
+  "intrinsic_families": [
+    {
+      "family": "measurement spheres",
+      "examples": [
+        {
+          "name": "measure.list",
+          "signature": "measure_list_pnt = measure.list()"
+        },
+        {
+          "name": "measure.find",
+          "signature": "measure_pnt = measure.find(int)"
+        },
+        {
+          "name": "measure.pos",
+          "signature": "vec3/flt = measure.pos(measure_pnt,<int>) = vec3/flt"
+        },
+        {
+          "name": "measure.radius",
+          "signature": "flt = measure.radius(measure_pnt) = flt"
+        },
+        {
+          "name": "measure.porosity",
+          "signature": "flt = measure.porosity(measure_pnt)"
+        },
+        {
+          "name": "measure.coordination",
+          "signature": "flt = measure.coordination(measure_pnt)"
+        },
+        {
+          "name": "measure.stress",
+          "signature": "mat/flt = measure.stress(measure_pnt,<int>,<int>)"
+        },
+        {
+          "name": "measure.strain.rate",
+          "signature": "mat/flt = measure.strain.rate(measure_pnt,<int>,<int>)"
+        }
+      ],
+      "notes": [
+        "stress/strain.rate carry full 9-component .xx...zz variants."
+      ]
+    },
+    {
+      "family": "inlets",
+      "examples": [
+        {
+          "name": "inlet.list",
+          "signature": "inlet_list_pnt := inlet.list()"
+        },
+        {
+          "name": "inlet.find",
+          "signature": "inlet_pnt := inlet.find(int)"
+        },
+        {
+          "name": "inlet.active",
+          "signature": "bool := inlet.active(inlet_pnt) := bool"
+        },
+        {
+          "name": "inlet.pos",
+          "signature": "vec3/flt := inlet.pos(inlet_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "inlet.vel",
+          "signature": "vec3/flt := inlet.vel(inlet_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "inlet.flow.vel",
+          "signature": "vec3/flt := inlet.flow.vel(inlet_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "inlet.brick",
+          "signature": "brick_pnt := inlet.brick(inlet_pnt) := int"
+        }
+      ]
+    },
+    {
+      "family": "fragments",
+      "examples": [
+        {
+          "name": "fragment.list",
+          "signature": "list := fragment.list(<int>)"
+        },
+        {
+          "name": "fragment.find",
+          "signature": "fragment_pnt := fragment.find(int)"
+        },
+        {
+          "name": "fragment.bodylist",
+          "signature": "list := fragment.bodylist(fragment_pnt,<int>)"
+        },
+        {
+          "name": "fragment.childlist",
+          "signature": "list := fragment.childlist(fragment_pnt)"
+        },
+        {
+          "name": "fragment.parent",
+          "signature": "int := fragment.parent(fragment_pnt)"
+        },
+        {
+          "name": "fragment.vol",
+          "signature": "flt := fragment.vol(fragment_pnt,<int>)"
+        },
+        {
+          "name": "fragment.catalog",
+          "signature": "map := fragment.catalog()"
+        },
+        {
+          "name": "fragment.history",
+          "signature": "map := fragment.history(body_pnt)"
+        }
+      ],
+      "notes": [
+        "Requires fragment tracking to be enabled (fragment compute workflow)."
+      ]
+    },
+    {
+      "family": "domain",
+      "examples": [
+        {
+          "name": "domain.min",
+          "signature": "vec3/flt := domain.min(<int>) := vec3/flt"
+        },
+        {
+          "name": "domain.max",
+          "signature": "vec3/flt := domain.max(<int>) := vec3/flt"
+        },
+        {
+          "name": "domain.condition",
+          "signature": "str := domain.condition(int) := str"
+        },
+        {
+          "name": "domain.strain.rate",
+          "signature": "mat/flt := domain.strain.rate(<int>,<int>) := mat/flt"
+        }
+      ],
+      "notes": [
+        "domain.condition reads the model-domain boundary condition."
+      ]
+    },
+    {
+      "family": "global CFD state",
+      "examples": [
+        {
+          "name": "cfd.age",
+          "signature": "flt = cfd.age()"
+        },
+        {
+          "name": "cfd.cycle",
+          "signature": "int = cfd.cycle()"
+        },
+        {
+          "name": "cfd.energy",
+          "signature": "flt = cfd.energy(str)"
+        },
+        {
+          "name": "cfd.step",
+          "signature": "int = cfd.step()"
+        }
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 115,
+    "names": [
+      "cfd.age",
+      "cfd.cycle",
+      "cfd.energy",
+      "cfd.step",
+      "domain.condition",
+      "domain.max",
+      "domain.max.x",
+      "domain.max.y",
+      "domain.max.z",
+      "domain.min",
+      "domain.min.x",
+      "domain.min.y",
+      "domain.min.z",
+      "domain.strain.rate",
+      "domain.strain.rate.xx",
+      "domain.strain.rate.xy",
+      "domain.strain.rate.xz",
+      "domain.strain.rate.yx",
+      "domain.strain.rate.yy",
+      "domain.strain.rate.yz",
+      "domain.strain.rate.zx",
+      "domain.strain.rate.zy",
+      "domain.strain.rate.zz",
+      "fragment.bodylist",
+      "fragment.bodymap",
+      "fragment.bodynum",
+      "fragment.catalog",
+      "fragment.catalog.num",
+      "fragment.childlist",
+      "fragment.childmap",
+      "fragment.find",
+      "fragment.history",
+      "fragment.id",
+      "fragment.index",
+      "fragment.list",
+      "fragment.map",
+      "fragment.num",
+      "fragment.parent",
+      "fragment.pos",
+      "fragment.pos.catalog",
+      "fragment.pos.catalog.x",
+      "fragment.pos.catalog.y",
+      "fragment.pos.catalog.z",
+      "fragment.pos.x",
+      "fragment.pos.y",
+      "fragment.pos.z",
+      "fragment.vol",
+      "inlet.active",
+      "inlet.brick",
+      "inlet.delete",
+      "inlet.find",
+      "inlet.flow.vel",
+      "inlet.flow.vel.x",
+      "inlet.flow.vel.y",
+      "inlet.flow.vel.z",
+      "inlet.id",
+      "inlet.list",
+      "inlet.maxid",
+      "inlet.num",
+      "inlet.orientation",
+      "inlet.orientation.x",
+      "inlet.orientation.y",
+      "inlet.orientation.z",
+      "inlet.pos",
+      "inlet.pos.x",
+      "inlet.pos.y",
+      "inlet.pos.z",
+      "inlet.rotation.center",
+      "inlet.rotation.center.x",
+      "inlet.rotation.center.y",
+      "inlet.rotation.center.z",
+      "inlet.spin",
+      "inlet.spin.x",
+      "inlet.spin.y",
+      "inlet.spin.z",
+      "inlet.typeid",
+      "inlet.vel",
+      "inlet.vel.x",
+      "inlet.vel.y",
+      "inlet.vel.z",
+      "measure.coordination",
+      "measure.delete",
+      "measure.find",
+      "measure.id",
+      "measure.list",
+      "measure.maxid",
+      "measure.num",
+      "measure.porosity",
+      "measure.pos",
+      "measure.pos.x",
+      "measure.pos.y",
+      "measure.pos.z",
+      "measure.radius",
+      "measure.size",
+      "measure.strain.rate",
+      "measure.strain.rate.xx",
+      "measure.strain.rate.xy",
+      "measure.strain.rate.xz",
+      "measure.strain.rate.yx",
+      "measure.strain.rate.yy",
+      "measure.strain.rate.yz",
+      "measure.strain.rate.zx",
+      "measure.strain.rate.zy",
+      "measure.strain.rate.zz",
+      "measure.stress",
+      "measure.stress.xx",
+      "measure.stress.xy",
+      "measure.stress.xz",
+      "measure.stress.yx",
+      "measure.stress.yy",
+      "measure.stress.yz",
+      "measure.stress.zx",
+      "measure.stress.zy",
+      "measure.stress.zz",
+      "measure.typeid"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}
