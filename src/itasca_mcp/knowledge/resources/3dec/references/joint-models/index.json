@@ -84,6 +84,7 @@
     "Property discovery trick: with a jmodel ASSIGNED, a wrong name in 'block contact property' error-enumerates the model's full property set. With NO jmodel assigned the same command accepts any name silently ('assigned to 0/N subcontacts') - probe only after assigning.",
     "Python Subcontact.prop(name) accepts ANY name without error (returns a value even for nonexistent properties) - it cannot be used for membership testing; s.model() reads the assigned model name back.",
     "Unlike FLAC zone cmodels, the live engine has NO read-only guard: state variables (kn-current, friction-current, plastic-strain, theta, ...) accept writes via 'block contact property' and hold the written value (verified with set/readback round-trips).",
-    "State round-trip verified per model on stiffness-normal (set 1.25e9 -> Subcontact.prop reads 1.25e9)."
+    "State round-trip verified per model on stiffness-normal (set 1.25e9 -> Subcontact.prop reads 1.25e9).",
+    "Material-table routing (live-verified 2026-08-15): 'block contact material-table default jmodel <name>' selects the model for new contacts (unknown names rejected); 'block contact material-table default property' accepts the UNION of all 9 models' property command-names (68 keywords), while plain 'block contact material-table property' offers only the default model's (mohr) set. Cycling a model with subcontacts but no default stiffness fails with 'Default contact stiffness not set. Use BLOCK CONTACT MATERIAL-TABLE DEFAULT PROP'."
   ]
 }

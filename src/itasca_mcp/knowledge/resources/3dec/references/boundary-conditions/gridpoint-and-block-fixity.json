@@ -2,7 +2,7 @@
   "name": "gridpoint-and-block-fixity",
   "dimension": "3D",
   "full_name": "Gridpoint and Rigid-Block Fixity / Prescribed Motion",
-  "description": "Constrain or drive motion at gridpoints (deformable blocks) with 'block gridpoint apply', and at rigid blocks with 'block fix' / 'block apply'. Velocity/force here are the workhorse mechanical BCs.",
+  "description": "Constrain or drive motion at gridpoints (deformable blocks) with 'block gridpoint apply', and at rigid blocks with 'block fix' / 'block apply'. Velocity/force here are the workhorse mechanical BCs. A 'range' is REQUIRED on 'block gridpoint apply <condition> <value>' — omitting it is rejected with 'A range must be specified' (live 9.7.47).",
   "primary_commands": [
     "block gridpoint apply",
     "block gridpoint apply-remove",
@@ -31,12 +31,13 @@
         "force-y",
         "force-z",
         "reaction",
+        "reaction-normal",
         "reaction-x",
         "reaction-y",
         "reaction-z"
       ],
       "notes": [
-        "'reaction' reports/holds the reaction force at constrained gridpoints."
+        "'reaction' reports/holds the reaction force at constrained gridpoints; 'reaction-normal' (live-enumerated) is the face-normal variant."
       ]
     },
     {
@@ -53,9 +54,18 @@
       ],
       "notes": [
         "'block fix velocity|rotation ...' fixes rigid-block translation/rotation;",
-        "'block apply velocity ...' drives rigid-block translation."
+        "'block apply velocity ...' drives rigid-block translation. Live 'block apply' enumeration: fish range table velocity velocity-x velocity-y velocity-z — the value can also come from a 'fish' function or 'table'."
       ]
     }
   ],
+  "live_enumeration_9_7": {
+    "block gridpoint apply": "apply apply-remove fish force force-x force-y force-z group initialize list quiet quiet-x quiet-y quiet-z range reaction reaction-normal reaction-x reaction-y reaction-z source table temperature trace velocity velocity-normal velocity-x velocity-y velocity-z verbose viscous viscous-x viscous-y viscous-z",
+    "block gridpoint subcommands": "apply apply-remove group initialize list trace",
+    "block fix": "range rotation rotation-x rotation-y rotation-z velocity velocity-x velocity-y velocity-z",
+    "notes": [
+      "The 'block gridpoint apply' enumeration is context-free (identical under thermal/dynamic/fluid configure): quiet/viscous (dynamic), temperature (thermal) and source (fluid) are always visible — see thermal-and-dynamic and fluid-flow.",
+      "There is NO 'block gridpoint history' subcommand (live 9.7 rejects it) — sample gridpoint quantities via 'block history <field> gridpointid <i>'."
+    ]
+  },
   "official_documentation": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html"
 }

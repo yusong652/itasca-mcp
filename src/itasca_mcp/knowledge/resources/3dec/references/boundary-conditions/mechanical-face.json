@@ -2,7 +2,7 @@
   "name": "mechanical-face",
   "dimension": "3D",
   "full_name": "Mechanical Face Boundary Conditions",
-  "description": "Mechanical conditions applied to deformable-block boundary faces with 'block face apply' — stress (traction), point loads, and prescribed normal velocity.",
+  "description": "Mechanical conditions applied to deformable-block boundary faces with 'block face apply' — stress (traction), point loads, and prescribed normal velocity. A 'range' is REQUIRED on 'block face apply <condition> <value>' — omitting it is rejected with 'A range must be specified' (live 9.7.47).",
   "primary_commands": [
     "block face apply",
     "block face apply-remove"
@@ -11,6 +11,9 @@
     {
       "family": "stress (traction)",
       "keywords": [
+        "stress",
+        "stress-normal",
+        "stress-principal",
         "stress-xx",
         "stress-yy",
         "stress-zz",
@@ -19,7 +22,8 @@
         "stress-yz"
       ],
       "notes": [
-        "Applied as a face traction over the selected faces; compression is negative."
+        "Applied as a face traction over the selected faces; compression is negative.",
+        "'stress' takes the full tensor; 'stress-normal' the face-normal component; 'stress-principal' principal values (all live-enumerated)."
       ]
     },
     {
@@ -31,7 +35,8 @@
         "point-load-z"
       ],
       "notes": [
-        "A concentrated load distributed to the face."
+        "A concentrated load distributed to the face.",
+        "'block face apply-remove' names these 'load'/'load-x'/'load-y'/'load-z' (NOT point-load) — live-enumerated rename on the removal side."
       ]
     },
     {
@@ -44,5 +49,13 @@
       ]
     }
   ],
+  "live_enumeration_9_7": {
+    "block face apply": "apply apply-remove convection fish flux gradient-x gradient-y gradient-z group list merge point-load point-load-x point-load-y point-load-z range stress stress-normal stress-principal stress-xx stress-xy stress-xz stress-yy stress-yz stress-zz table triangulate velocity-normal westergaard",
+    "block face apply-remove": "apply apply-remove convection flux group list load load-x load-y load-z merge range stress triangulate velocity-normal westergaard",
+    "notes": [
+      "The enumeration is context-free: identical with and without 'model configure thermal/dynamic/fluid-flow' — thermal (convection, flux) and water (westergaard) keywords are always visible.",
+      "Thermal conditions: see thermal-and-dynamic; flux/westergaard: see fluid-flow; gradient-x/y/z, fish, table: see apply-modifiers."
+    ]
+  },
   "official_documentation": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html"
 }

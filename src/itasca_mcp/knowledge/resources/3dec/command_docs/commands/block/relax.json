@@ -4,7 +4,7 @@
     "block",
     "relax"
   ],
-  "description": "Excavate blocks in the range and apply tractions on the face of the excavation to prevent large, instantaneous force changes. The tractions are then gradually reduced according to the keywords below. The following should be noted before using the block relax command: Live 3DEC 9.7.47 semantics: 'linear <i>' / 'nonlinear <i>' take the step count directly and EXECUTE immediately (blocks are excavated and one calculation step runs); at least one of a step count (via linear/nonlinear), table or fish must be specified or the engine rejects with 'Step, table or fish must be specified'. Note the official 9.7 page (and this file) spell 'minimium' as the official docs do - that spelling is the official one.",
+  "description": "Excavate blocks in the range and apply tractions on the face of the excavation to prevent large, instantaneous force changes. The tractions are then gradually reduced according to the keywords below. The following should be noted before using the block relax command: Live 3DEC 9.7.47 semantics: 'linear <i>' / 'nonlinear <i>' take the step count directly and EXECUTE immediately (blocks are excavated and one calculation step runs); at least one of a step count (via linear/nonlinear), table or fish must be specified or the engine rejects with 'Step, table or fish must be specified'. Keyword ORDER matters: the step spec must come first and 'minimium' after it — 'block relax linear 10 minimium 0.5' parses and executes, while 'block relax minimium 0.5 linear 10' is rejected with the step/table/fish error. Note the official 9.7 page (and this file) spell 'minimium' as the official docs do - that spelling is the official one.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -31,7 +31,7 @@
         {
           "name": "minimium",
           "syntax": "minimium <f>",
-          "description": "The applied forces are reduced by a factor of f . f must be between 0 and 1. If a minimum is not specified, then this defaults to 0."
+          "description": "The applied forces are reduced by a factor of f . f must be between 0 and 1. If a minimum is not specified, then this defaults to 0. Must FOLLOW the step spec (linear/nonlinear/table/fish); giving minimium first is rejected with 'Step, table or fish must be specified' (live 9.7.47)."
         },
         {
           "name": "delete",
