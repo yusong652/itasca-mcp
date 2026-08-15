@@ -269,9 +269,60 @@
           "notes": ""
         }
       ]
+    },
+    {
+      "name": "Live-only Dipole State Group",
+      "description": "Seven additional live 9.7 properties absent from the official page (Batch P3).",
+      "properties": [
+        {
+          "keyword": "dipole_pos1",
+          "type": "VEC",
+          "default": "",
+          "description": "Dipole 1 position (live-only; enumerated via the cmat property slot, verified with Contact.has_prop/prop)."
+        },
+        {
+          "keyword": "dipole_pos2",
+          "type": "VEC",
+          "default": "",
+          "description": "Dipole 2 position (live-only)."
+        },
+        {
+          "keyword": "dipole_size1",
+          "type": "QUAT2D",
+          "default": "",
+          "description": "Dipole 1 size - a 2D-quaternion-typed property: Python Contact.props()/prop() CANNOT convert it ('Cannot convert property type 2d quaternion to PyObject'), which makes props() raise for the whole model; read other properties per-name instead."
+        },
+        {
+          "keyword": "dipole_size2",
+          "type": "QUAT2D",
+          "default": "",
+          "description": "Dipole 2 size - same 2D-quaternion Python conversion limitation as dipole_size1."
+        },
+        {
+          "keyword": "dipole_t1",
+          "type": "VEC",
+          "default": "",
+          "description": "Dipole 1 orientation/torque vector (live-only)."
+        },
+        {
+          "keyword": "dipole_t2",
+          "type": "VEC",
+          "default": "",
+          "description": "Dipole 2 orientation/torque vector (live-only)."
+        },
+        {
+          "keyword": "dipole_tabpos",
+          "type": "INT",
+          "default": "",
+          "description": "Table position index (live-only)."
+        }
+      ]
     }
   ],
-  "notes": [],
+  "notes": [
+    "Python SDK caveat (9.7): Contact.props() fails on this model because dipole_size1/dipole_size2 are 2D-quaternion typed ('Cannot convert property type 2d quaternion to PyObject'). Use per-name Contact.prop('<name>') for everything else - unlike 3DEC's Subcontact.prop, PFC's prop() DOES validate membership ('Property ... not recognized by contact model ...').",
+    "PFC3D 7.00: Contact.props() fails there too, with a different conversion error ('unknown type in conversion from QVariant to PyObject qulonglong') - the per-name prop() workaround applies on both versions."
+  ],
   "source": "PFC 7.0 documentation",
   "availability": {
     "6.0": false,
