@@ -45,6 +45,66 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.7] - 2026-08-15
+
+3DEC documentation-corpus release: the entire bundled 3DEC corpus — 125
+command files, all 60 reference files, and all Python SDK units — now
+carries explicit verdicts from live 3DEC 9.7, completing the same
+verification discipline the FLAC corpus received in 0.6.6 (eight batches,
+PRs #93–#100). The checklist closed with zero open items.
+
+### Documentation
+
+- **Full command corpus verified live.** Three sweep rounds plus a
+  value-then-probe pass over every positional/no-enum file: 49 crawler
+  `kwd:` artifacts stripped; live renames adopted (`cy`,
+  `density-scaling-factor`, `edgelength`, `block mechanical damping`,
+  `block to-flac3d block-ids`); doc-side ghosts flagged (`block disp`,
+  `fblock delete`, `block joint-plane new`, `block thermal solve`);
+  live-only commands authored (`block ratio`, `block remove`,
+  `flowplane pipe`, `block contact use-actual`); `block create` first
+  slot and the 66-token `block history` quantity set rebuilt from live
+  enumerations.
+- **Dispatcher traps documented so agents stop mis-diagnosing:**
+  `block zone thermal/fluid` report "command not found" for everything
+  except `property` (they are real, gated behind
+  `model configure thermal`/`matrixflow`); many slots swallow wrong
+  tokens silently and only `?` enumerates; `flowplane vertex initialize`
+  has a hidden keyword table ("keyword not found" for every probe) yet
+  its documented proppant keywords work.
+- **All 9 joint (sub-contact) models live-enumerated** with per-model
+  property sets: `power` grew 2→17 properties, `cyjm` 7→22,
+  `ratestate` 2→22, and the previously missing ninth model
+  `velocity-weakening` was authored. Unlike FLAC zone models, 3DEC has
+  NO read-only guard — official read-only state variables accept and
+  hold writes (caution recorded). Material-table routing documented:
+  `default jmodel <name>` selects the model, `default property` accepts
+  the 68-keyword union of all model property sets, and cycling requires
+  default contact stiffnesses.
+- **Python SDK docs diffed against live introspection** (1123 names):
+  the whole documented `block.gridpoint.*` FISH family was fictional —
+  live namespace is `block.gp.*` (renamed corpus-wide, workflow files
+  included); `flowknot.head` re-described as the list-head iterator it
+  actually is; 7 fictional SDK methods flagged with working
+  alternatives; undocumented live methods added (prop/set_prop on all
+  structure element classes, per-side liner setters) and the live-only
+  `itasca.block.field` module authored.
+- **Plot-items registry re-verified as engine-scoped** (48 types — no
+  PFC/FLAC leakage, unlike FLAC3D's unified registry): per-type
+  structure contour splits, vector variants and undocumented types
+  captured; cut/clip drill-downs recorded; bitmap export state-verified
+  to disk with its asynchronous-write caveat.
+- **Workflow references stamped end-to-end:** `block face/gridpoint
+  apply` fully enumerated (a `range` is required; keyword visibility is
+  context-free — configure gates act at execution); `block insitu`
+  gradient forms corrected (per-axis after `stress`, bare after
+  `pore-pressure`; `total` belongs to `topography`); `block relax`
+  grammar resolved (step spec first, `minimium` after; `table` only
+  combines with a step spec despite the engine's own error message);
+  group-command grammar (`remove`/`slot`) completed across all 11
+  entity families; DFN fracture statistics (`p10`…`p33`) surfaced under
+  `block contact compute`.
+
 ## [0.6.6] - 2026-08-14
 
 FLAC documentation-corpus release: the entire bundled FLAC corpus — 333
