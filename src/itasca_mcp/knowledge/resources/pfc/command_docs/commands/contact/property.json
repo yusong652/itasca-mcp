@@ -311,31 +311,7 @@
     "6.0": {
       "command": "contact property",
       "syntax": "contact [<sprocess>] property <s>a[inheritance <b>] ...",
-      "keywords": [
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Apply to mechanical contacts (default behavior)"
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Apply to thermal contacts (instead of mechanical)"
-        },
-        {
-          "name": "inheritance",
-          "syntax": "inheritance <b>",
-          "description": "Set property inheritance flag",
-          "parameters": [
-            {
-              "name": "b",
-              "type": "boolean",
-              "description": "true to enable inheritance, false to disable"
-            }
-          ],
-          "notes": "Only applicable to inheritable properties. Not all properties support inheritance."
-        }
-      ],
+      "keywords": [],
       "examples": [
         {
           "command": "contact property pb_kn 1e7 pb_ks 1e7 pb_ten 4e5 pb_coh 4e5 pb_fa 20.0",
@@ -382,6 +358,9 @@
           "description": "Set normal stiffness and enable inheritance from contacting pieces",
           "model": "linear, linearpbond, linearcbond"
         }
+      ],
+      "notes": [
+        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. The property slot enumerates the union of all contact models' property names (~164 keywords on 6.00); per-model membership lives in the contact-models reference."
       ]
     },
     "9.0": {
