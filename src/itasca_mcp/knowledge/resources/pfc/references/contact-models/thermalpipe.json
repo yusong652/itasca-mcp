@@ -43,7 +43,7 @@
   "notes": [
     "Thermal option model. Properties documented under the PFC thermal option manual.",
     "Assignment grammar (live 6.0/7.0/9.7): the thermal CMAT uses a process selector - 'contact cmat thermal default model thermalpipe'. Requires 'model configure thermal'. The thermal model-name slot enumerates exactly: null thermalpipe; the thermalpipe property slot enumerates exactly: temperature thexp thres.",
-    "Thermal contacts are invisible to Python itasca.contact.list() (only the mechanical contact is returned) - verified on 6.0 and 9.7."
+    "Python access (live 6.0 and 9.7): itasca.contact.list('thermal') - the first argument of contact.list is process_name (default 'Mechanical'), so a bare list() returns mechanical contacts only. Returned objects are Ball*ThermalContact types (see the ThermalContact SDK interface); props() reads temperature/thexp/thres. Command-side listing: 'contact thermal list' (process selector before the subcommand)."
   ],
   "source": "PFC 7.0 documentation",
   "availability": {
