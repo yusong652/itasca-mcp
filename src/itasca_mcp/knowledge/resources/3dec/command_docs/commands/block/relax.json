@@ -4,7 +4,7 @@
     "block",
     "relax"
   ],
-  "description": "Excavate blocks in the range and apply tractions on the face of the excavation to prevent large, instantaneous force changes. The tractions are then gradually reduced according to the keywords below. The following should be noted before using the block relax command: Live 3DEC 9.7.47 semantics: 'linear <i>' / 'nonlinear <i>' take the step count directly and EXECUTE immediately (blocks are excavated and one calculation step runs); at least one of a step count (via linear/nonlinear), table or fish must be specified or the engine rejects with 'Step, table or fish must be specified'. Keyword ORDER matters: the step spec must come first and 'minimium' after it — 'block relax linear 10 minimium 0.5' parses and executes, while 'block relax minimium 0.5 linear 10' is rejected with the step/table/fish error. Note the official 9.7 page (and this file) spell 'minimium' as the official docs do - that spelling is the official one.",
+  "description": "Excavate blocks in the range and apply tractions on the face of the excavation to prevent large, instantaneous force changes. The tractions are then gradually reduced according to the keywords below. The following should be noted before using the block relax command: Live 3DEC 9.7.47 semantics: 'linear <i>' / 'nonlinear <i>' take the step count directly and EXECUTE immediately (blocks are excavated and one calculation step runs); at least one of a step count (via linear/nonlinear), table or fish must be specified or the engine rejects with 'Step, table or fish must be specified'. Keyword ORDER matters: the step spec must come first and 'minimium' after it — 'block relax linear 10 minimium 0.5' parses and executes, while 'block relax minimium 0.5 linear 10' is rejected with the step/table/fish error. Note the official 9.7 page (and this file) spell 'minimium' as the official docs do - that spelling is the official one. The 'table' form is a MODIFIER, not a step spec by itself: 'block relax table <name>' alone is rejected with the same step/table/fish error (quoted, unquoted and integer forms all tried, table existing), while 'block relax linear <n> table <name>' parses and executes; 'fish <fn>' IS valid alone (executes: excavation + step). Live 9.7.47.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -42,6 +42,11 @@
           "name": "face-group",
           "syntax": "face-group <s>[slot <s>]",
           "description": "When a block relax command is given, all faces in the range are automatically assigned a group name. By default, the group name is relax in the slot relax . It is possible to overwrite this default by assigning a specific group name (and, optionally, slot) to the faces in the range. Note that if a group name is chosen that already exists, the string _1 will be appended to the specified group name."
+        },
+        {
+          "name": "table",
+          "syntax": "table '<name>'",
+          "description": "Reduce the applied forces according to a table of (step, factor) pairs. Live 9.7.47: NOT valid alone despite the engine's 'Step, table or fish must be specified' message - must be combined with a step spec, e.g. 'block relax linear <n> table <name>'."
         }
       ],
       "examples": [],
