@@ -199,7 +199,8 @@
       "notes": [
         "Brick commands manage reusable geometry definitions and inlets rather than simulation pieces directly",
         "Use brick inlets to generate balls, clumps, or rblocks during cycling",
-        "Most brick operations currently rely on the command interface via itasca.command()"
+        "Most brick operations currently rely on the command interface via itasca.command()",
+        "Live 7.00 subcommand enumeration: assemble delete export id import make - 'brick id <i>' is live but undocumented; the inlet commands are the TOP-LEVEL 'inlet create|modify' family (id-first grammar), not brick subcommands"
       ],
       "commands": [
         {
@@ -905,16 +906,16 @@
       ],
       "notes": [
         "Domain must be configured before generating particles ('model domain extent ...')",
-        "'domain condition' sets per-face boundary behavior (rigid, destroy, periodic, reflect)",
-        "'domain strain-rate' drives periodic-cell deformation for representative-volume-element (REV) studies",
-        "Most domain configuration is done via 'model domain' shortcuts; standalone 'domain' commands are lower-level overrides"
+        "'model domain condition' sets per-face boundary behavior (destroy, periodic, reflect, stop)",
+        "'model domain strain-rate' drives periodic-cell deformation for representative-volume-element (REV) studies",
+        "All domain commands live under 'model domain'; a bare top-level 'domain' command does not exist (live-verified on 7.00)"
       ],
       "commands": [
         {
           "name": "condition",
           "file": "pfc/command_docs/commands/domain/condition.json",
           "short_description": "Set the domain boundary conditions",
-          "syntax": "domain condition <sx>[<sy><sz>] <sz>",
+          "syntax": "model domain condition <sx>[<sy><sz>] <sz>",
           "python_available": false,
           "python_alternative": ""
         },
@@ -922,7 +923,7 @@
           "name": "extent",
           "file": "pfc/command_docs/commands/domain/extent.json",
           "short_description": "Specify the locations of the sides of the domain",
-          "syntax": "domain extent <fxl><fxu>[<fyl><fyu><fzl><fzu>]",
+          "syntax": "model domain extent <fxl><fxu>[<fyl><fyu><fzl><fzu>]",
           "python_available": false,
           "python_alternative": ""
         },
@@ -930,7 +931,7 @@
           "name": "strain-rate",
           "file": "pfc/command_docs/commands/domain/strain-rate.json",
           "short_description": "Specify the domain strain rate",
-          "syntax": "domain strain-rate <v>",
+          "syntax": "model domain strain-rate <v>",
           "python_available": false,
           "python_alternative": ""
         }
@@ -1346,7 +1347,7 @@
       ],
       "notes": [
         "Fragment registration (fragment register) is required before any computation",
-        "By default, only bonded contacts contribute to fragment connectivity (use ignorebond for all contacts)",
+        "By default, only bonded contacts contribute to fragment connectivity (use ignore-bond for all contacts; live 7.00 spelling)",
         "Fragment ID 0 indicates isolated body (no contacts)",
         "fragment activate enables automatic periodic computation; fragment compute is one-time",
         "After computation, query fragment IDs via ball.fragment() or clump.fragment() in Python"

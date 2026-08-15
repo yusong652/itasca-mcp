@@ -63,52 +63,52 @@
           "description": "Create a clump from the balls within range."
         },
         {
-          "name": "kwd:calculate",
+          "name": "calculate",
           "syntax": "calculate <f>",
           "description": "This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration the “final” volume is extrapolated, and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated volumes are within the desired tolerance. By default, the percentage difference f = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump."
         },
         {
-          "name": "kwd:density",
+          "name": "density",
           "syntax": "density <f>",
           "description": "Clump density with default value 1.0."
         },
         {
-          "name": "kwd:group",
+          "name": "group",
           "syntax": "group <s>[slot <slot>] [pebble] ...",
           "description": "The group name at slot slot is set to s for the newly created clump. The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump. If slot is not specified, then the group name at slot Default is set to s ."
         },
         {
-          "name": "kwd:id",
+          "name": "id",
           "syntax": "id <i>",
           "description": "Clump ID. If not specified, then the next available ID is used."
         },
         {
-          "name": "kwd:inertia",
+          "name": "inertia",
           "syntax": "inertia <fe11><fe22><fe33><fe12><fe13><fe23>",
           "description": "Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume, and this keyword cannot be specified with the calculate keyword."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the calculate keyword."
         },
         {
-          "name": "kwd:position-x",
+          "name": "position-x",
           "syntax": "position-x <f>",
           "description": "The \\(x\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
         },
         {
-          "name": "kwd:position-y",
+          "name": "position-y",
           "syntax": "position-y <f>",
           "description": "The \\(y\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
         },
         {
-          "name": "kwd:position-z",
+          "name": "position-z",
           "syntax": "position-z <f>",
           "description": "The \\(z\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
         },
         {
-          "name": "kwd:volume",
+          "name": "volume",
           "syntax": "volume <f>",
           "description": "Set the {volume per unit thickness in 2D; volume in 3D} to f . One must also specify the inertia tensor, and this keyword cannot be given with the calculate keyword. Please be aware that this parameter doesn’t affect the geometry of the clump; as a result, the apparent geometric volume of the clump remains unchanged. This is the volume (from which the mass is computed) that is used to solve the law of motion for the clump."
         }
@@ -130,6 +130,9 @@
           "command": "ball clump create range box -5 5 position (0,0,0) density 1000 calculate",
           "description": "Create clump from balls in box region with specified density"
         }
+      ],
+      "notes": [
+        "The calculate/density/group/id/inertia/position*/volume keywords belong to the 'create' sub-grammar (live 7.00: 'ball clump create' demands volume+inertia or calculate)."
       ]
     },
     "6.0": {
