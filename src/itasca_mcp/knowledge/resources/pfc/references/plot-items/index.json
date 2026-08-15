@@ -1,9 +1,7 @@
 {
   "type": "plot_item_keywords",
   "description": "Configuration keywords for plot item types created via 'plot item create <type>'. These keywords are appended after the item type to control appearance, coloring, clipping, and legend.",
-
   "usage_context": "plot item create <type> <keyword> <keyword> ...",
-
   "items": [
     {
       "name": "ball",
@@ -54,15 +52,32 @@
       "common_use": "Plot recorded histories over cycling: convergence ratio, energy, ball/wall/measure quantities"
     }
   ],
-
   "shared_keywords": {
-    "description": "Keywords common to most plot item types",
-    "list": ["active", "color-by", "color-options", "cut", "legend"]
+    "description": "Live PFC3D 9.7 common first-slot core shared by the entity item types (ball/wall/clump/contact/rblock/fracture and the thermal/cfd twins)",
+    "list": [
+      "active",
+      "both-directions",
+      "clip",
+      "color-by",
+      "color-options",
+      "cut",
+      "ghosts",
+      "legend",
+      "map",
+      "orientation",
+      "range",
+      "scale-by-magnitude",
+      "selected-only",
+      "shape",
+      "transparency"
+    ]
   },
-
   "notes": [
     "Keywords are appended directly after 'plot item create <type>'",
     "Multiple keywords can be combined in a single command",
-    "These keywords are not officially documented; derived from working patterns"
+    "Live-verified against PFC3D 9.7 (Batch P1): every documented type's first-slot keyword set was enumerated with '?'; per-type sets recorded in each type's file/notes.",
+    "Live 9.7 type registry = 87 types, UNIFIED KERNEL: PFC types are mixed with other engines' (block*/bzone/zone*/flowplane/mpoint/structure-* ...). Cross-engine types parse but render no PFC data. PFC-relevant types beyond the documented eight, with live first-slot sets captured (Batch P1 workspace): ballthermal/clumpthermal/rblockthermal/cfdball/cfdclump/cfdelement/measure (= entity core set), contactthermal/wallthermal (+display), inlet (core minus shape), domain (active clip color-list cut-line legend polygons transparency), fracture-zone (contour-style: above/below/interval/maximum/minimum/ramp/log/value/...), particle-trace (active contour legend line skip trace-name transparency), geometry (edge/node/polygon/sets/import/view/...), chart-table (axis-x axis-y chart labels legend marks swap table title transparency), plus shared infrastructure items (axes scalebox data-* history-locations stereonet).",
+    "ATTRIBUTE-NAME TRAP (9.7): 'color-by <mode> <name>' accepts ANY string at create time - a bogus attribute is accepted silently and even 'plot export' raises no error (verified Batch P1). Attribute typos produce a wrong plot, not an error message. The attribute lists in the per-type files are verified on PFC2D 7.00, where create-time validation still rejected invalid names.",
+    "plot command family on PFC3D 9.7 matches the FLAC/3DEC re-stamp: 22 'plot' subcommands; export formats bitmap/csv/datafile/dxf/pdf/postscript/print/svg (bitmap: dpi/dpm/filename/size); 'plot view' = 13 3D-navigation keywords."
   ]
 }

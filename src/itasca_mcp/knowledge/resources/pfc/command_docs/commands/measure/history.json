@@ -5,7 +5,7 @@
     "track",
     "monitor"
   ],
-  "description": "Add a measurement history. A history is a floating point variable that can be sampled and stored during a model run, allowing tracking of measurement quantities over time. The history records values such as porosity, coordination number, stress, strain rate, position, or radius from a specified measurement object as the simulation progresses.",
+  "description": "Add a measurement history. A history is a floating point variable that can be sampled and stored during a model run, allowing tracking of measurement quantities over time. The history records values such as porosity, coordination number, stress, strain rate, position, or radius from a specified measurement object as the simulation progresses. Live 9.7: the quantity slot was fully enumerated (Batch P1); an object selector (id <i> or position <v>) is REQUIRED after the quantity - omitting it fails with 'No object for history specified'.",
   "notes": [
     "History records floating point values sampled during model run",
     "Allows tracking measurement quantities over time (e.g., porosity evolution)",
@@ -521,22 +521,22 @@
           "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are:"
         },
         {
-          "name": "kwd:id",
+          "name": "id",
           "syntax": "id <i>",
           "description": "Record the history of measure with ID i ."
         },
         {
-          "name": "kwd:index",
+          "name": "index",
           "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra ), this specifies the index that should be used."
         },
         {
-          "name": "kwd:log",
+          "name": "log",
           "syntax": "log <b>",
           "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Record the history of measure either containing or closest to position v ."
         },
@@ -892,22 +892,22 @@
           "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Record the \\(x\\) -component of the vector. Record the \\(y\\) -component of the vector. Record the \\(z\\) -component of the vector. Record the vector magnitude."
         },
         {
-          "name": "kwd:id",
+          "name": "id",
           "syntax": "id <i>",
           "description": "Record the history of measure with ID i ."
         },
         {
-          "name": "kwd:index",
+          "name": "index",
           "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra ), this specifies the index that should be used."
         },
         {
-          "name": "kwd:log",
+          "name": "log",
           "syntax": "log <b>",
           "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Record the history of measure either containing or closest to position v ."
         },
@@ -920,6 +920,11 @@
           "name": "vector",
           "syntax": "vector",
           "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Specify a scalar float type. Specify a tensor type. Specify a vector type."
+        },
+        {
+          "name": "name",
+          "syntax": "name <s>",
+          "description": "Live-enumerated on PFC3D 9.7 (Batch P1); not on the official page. Assign a custom name to the history."
         }
       ],
       "examples": [
