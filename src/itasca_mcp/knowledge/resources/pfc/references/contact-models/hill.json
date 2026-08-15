@@ -6,7 +6,7 @@
     "contact model",
     "pfc"
   ],
-  "description": "Hill (moist granular / capillary suction) contact model: nonlinear elasticity with moisture-induced suction forces. 9.x-new in this corpus - property set live-read on PFC3D 9.7. SETUP REQUIREMENT (live): the model derives elasticity from body SURFACE properties - 'model clean' can fail with 'Surface property young_mod has not been assigned to a body' when balls lack young_mod (observed intermittently on 9.7: some cleans pass with young_mod/pois_ratio at the -1.0 sentinel and the check fires later). Set them via ball property with QUOTED names (ball property 'young_mod' 1e8 'pois_ratio' 0.3 - unquoted names are rejected). Even when clean errors, the contact is still created and props() reads back fine.",
+  "description": "Hill (moist granular / capillary suction) contact model: nonlinear elasticity with moisture-induced suction forces. Available on 6.0/7.0/9.x; property set live-enumerated. SETUP REQUIREMENT (live): the model derives elasticity from body SURFACE properties - 'model clean' can fail with 'Surface property young_mod has not been assigned to a body' when balls lack young_mod (observed intermittently on 9.7: some cleans pass with young_mod/pois_ratio at the -1.0 sentinel and the check fires later). Set them via ball property with QUOTED names (ball property 'young_mod' 1e8 'pois_ratio' 0.3 - unquoted names are rejected). Even when clean errors, the contact is still created and props() reads back fine.",
   "typical_applications": [],
   "property_groups": [
     {
@@ -95,8 +95,13 @@
     }
   ],
   "notes": [
-    "Authored in Batch P3 from live enumeration; official-page prose not yet merged.",
-    "PFC3D 7.00 pass: model EXISTS on 7.0 with an identical property set (availability corrected to 7.0+9.0; 6.0 unverified)."
+    "Official-page prose not yet merged; property metadata comes from live enumeration.",
+    "Property set live-verified identical on PFC3D 6.00, 7.00 and 9.7. The intermittent 'model clean' surface-property error occurs on all three versions; the contact is still created and props() reads back fine."
   ],
-  "source": "live PFC3D 9.7 enumeration (Batch P3)"
+  "source": "live PFC3D 6.00/7.00/9.7 enumeration",
+  "availability": {
+    "6.0": true,
+    "7.0": true,
+    "9.0": true
+  }
 }
