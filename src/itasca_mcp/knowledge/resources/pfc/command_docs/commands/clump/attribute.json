@@ -781,39 +781,34 @@
           "description": "Clump volume. When modified, only the clump mass and real mass are modified and the other clump attributes based on volume are not changed (e.g., moment of inertia, pebble sizes). The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the clump.moi.fix intrinsic)."
         },
         {
-          "name": "kwd:add",
-          "syntax": "add <f>",
-          "description": "Add f to the existing value."
-        },
-        {
-          "name": "kwd:gradient",
-          "syntax": "gradient <v>",
+          "name": "gradient",
+          "syntax": "gradient fx fy fz (post-value modifier)",
           "description": "Apply a linear gradient in each of the axes directions starting at the origin."
         },
         {
-          "name": "kwd:gradient-x",
-          "syntax": "gradient-x <f>",
-          "description": "Apply a linear gradient in the \\(x\\) -direction starting at the origin."
+          "name": "axis-angle",
+          "syntax": "axis-angle",
+          "description": ""
         },
         {
-          "name": "kwd:gradient-y",
-          "syntax": "gradient-y <f>",
-          "description": "Apply a linear gradient in the \\(y\\) -direction starting at the origin."
+          "name": "euler",
+          "syntax": "euler",
+          "description": ""
         },
         {
-          "name": "kwd:gradient-z",
-          "syntax": "gradient-z <f>3D ONLY",
-          "description": "Apply a linear gradient in the \\(z\\) -direction starting at the origin."
+          "name": "force-applied-x",
+          "syntax": "force-applied-x",
+          "description": ""
         },
         {
-          "name": "kwd:multiply",
-          "syntax": "multiply <f>",
-          "description": "Multiply the existing value by f ."
+          "name": "force-applied-y",
+          "syntax": "force-applied-y",
+          "description": ""
         },
         {
-          "name": "kwd:replace",
-          "syntax": "replace <f>",
-          "description": "Replace the existing value with f ."
+          "name": "force-applied-z",
+          "syntax": "force-applied-z",
+          "description": ""
         }
       ],
       "examples": [
@@ -833,6 +828,9 @@
           "command": "clump attribute volume 0.5 multiply 1.2 range id 1 100",
           "description": "Multiply volume by 1.2 for clumps with ID 1-100 (sets moment of inertia to fixed state)"
         }
+      ],
+      "notes": [
+        "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7."
       ]
     }
   }
