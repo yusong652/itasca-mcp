@@ -178,11 +178,6 @@
           "description": "Specify the amount of memory to be used by 3DEC in MB. The default is 2000."
         },
         {
-          "name": "axisymmetry",
-          "syntax": "axisymmetry",
-          "description": "FLAC2D axisymmetric analysis. Currently available for standard mechanical analysis only (no full dynamics)."
-        },
-        {
           "name": "cfd",
           "syntax": "cfd",
           "description": "PFC CFD analysis"
@@ -208,11 +203,6 @@
           "description": "Finite element blocks in 3DEC"
         },
         {
-          "name": "fluid",
-          "syntax": "fluid",
-          "description": "Fluid-flow analysis"
-        },
-        {
           "name": "highorder",
           "syntax": "highorder",
           "description": "Include higher-order tetrahedra in the model (must be given before blocks are created in 3DEC )."
@@ -233,14 +223,34 @@
           "description": "Matrix flow in 3DEC"
         },
         {
-          "name": "plugins",
-          "syntax": "plugins",
-          "description": "C++ user-defined models and/or FISH intrinsic plugins.* FISH plugins can be loaded (but cycling is disabled) without this configuration."
-        },
-        {
           "name": "thermal",
           "syntax": "thermal",
           "description": "Thermal analysis"
+        },
+        {
+          "name": "cluster",
+          "syntax": "cluster",
+          "description": ""
+        },
+        {
+          "name": "fluid-explicit",
+          "syntax": "fluid-explicit",
+          "description": ""
+        },
+        {
+          "name": "fluid-flow",
+          "syntax": "fluid-flow",
+          "description": ""
+        },
+        {
+          "name": "fluid-implicit",
+          "syntax": "fluid-implicit",
+          "description": ""
+        },
+        {
+          "name": "mechanical",
+          "syntax": "mechanical",
+          "description": ""
         }
       ],
       "examples": [
@@ -256,6 +266,9 @@
           "command": "model configure cfd\nball generate number 1000 radius 0.5\n; ... set up fluid domain ...\nmodel solve",
           "description": "Configure CFD, create particles and fluid domain, then solve"
         }
+      ],
+      "notes": [
+        "Live 9.7 enum: the fluid option is configured via fluid-explicit / fluid-flow / fluid-implicit; axisymmetry and plugins are not live on 9.7."
       ]
     }
   }
