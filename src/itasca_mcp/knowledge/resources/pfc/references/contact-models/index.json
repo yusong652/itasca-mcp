@@ -294,7 +294,7 @@
       "status": "documented",
       "availability": {
         "6.0": false,
-        "7.0": false,
+        "7.0": true,
         "9.0": true
       }
     },
@@ -433,7 +433,7 @@
       "status": "documented",
       "availability": {
         "6.0": false,
-        "7.0": false,
+        "7.0": true,
         "9.0": true
       }
     },
@@ -450,7 +450,7 @@
       "status": "documented",
       "availability": {
         "6.0": false,
-        "7.0": false,
+        "7.0": true,
         "9.0": true
       }
     },
@@ -508,7 +508,8 @@
     "Live PFC3D 9.7 mechanical model enumeration (Batch P3) = 23 names: arrlinear beam bilinear bisubspringnetwork burger eepa fish flatjoint hertz hill hysteretic jkr linear linearcbond lineardipole linearpbond mohr null rrhertz rrlinear smoothjoint softbond springnetwork subspringnetwork. Thermal process slot ('contact cmat thermal default model') enumerates: null thermalpipe.",
     "Every model's full property set was read back from a live BallBallContact via Python props() (Batch P3): 12 models matched the corpus exactly; renames and live-only additions are annotated in the per-model files.",
     "TRAP: the cmat property slot ('contact cmat default model <m> property ?') enumerates the UNION of ALL models' property command-names (~280 keywords), not the selected model's set - do not use it for per-model membership. Per-model membership: Python Contact.prop()/has_prop (name-validated on PFC, unlike 3DEC).",
-    "Python SDK caveats (9.7): Contact.props() raises on lineardipole (2D-quaternion properties); 'contact cmat default type' enumerates 13 unified-kernel pair types including MPMPoint-facet."
+    "Python SDK caveats (9.7): Contact.props() raises on lineardipole (2D-quaternion properties); 'contact cmat default type' enumerates 13 unified-kernel pair types including MPMPoint-facet.",
+    "PFC3D 7.00 pass (2026-08-15): live 7.0 mechanical enumeration = 21 models (the 9.7 set minus rrhertz and bisubspringnetwork, which 7.0 parse-rejects - genuinely 9.x-only). beam and hill EXIST on 7.0 with identical property sets (previous 9.0-only marking corrected). The thermal slot enumerates null|thermalpipe on 7.0 too. All other models' property sets are identical across 7.0/9.7 except mohr (7.0 uses mc:-prefixed names) and subspringnetwork (9.x adds sn_cntconv/sn_conv/sn_convlim/sn_states)."
   ],
-  "verification": "Batch P3 (2026-08-15, live PFC3D 9.7): all 23 mechanical models + 2 thermal models property-enumerated via live contact instances; 4 corpus-missing models authored (beam, hill, rrhertz, bisubspringnetwork); bilinear/thermalpipe stubs filled; burger/eepa/jkr renames flagged. "
+  "verification": "Batch P3 (2026-08-15, live PFC3D 9.7 + PFC3D 7.00): all 23 mechanical models + 2 thermal models property-enumerated via live contact instances; 4 corpus-missing models authored (beam, hill, rrhertz, bisubspringnetwork); bilinear/thermalpipe stubs filled; burger/eepa/jkr renames flagged. "
 }
