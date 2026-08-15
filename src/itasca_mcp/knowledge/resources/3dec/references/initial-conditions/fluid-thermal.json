@@ -15,7 +15,8 @@
         "block gridpoint initialize pore-pressure 0 gradient 0 0 -9810"
       ],
       "notes": [
-        "Use 'gradient' for a hydrostatic profile; pair with the fluid/effective-stress workflow."
+        "Use 'gradient' for a hydrostatic profile; pair with the fluid/effective-stress workflow.",
+        "Live 9.7 post-value modifier slot on 'block gridpoint initialize': add apply apply-remove gradient group initialize list multiply range trace vary; 'block insitu pore-pressure <f>' likewise takes bare 'gradient' (unlike 'block insitu stress', which uses per-axis gradient-x/y/z)."
       ]
     },
     {
@@ -30,7 +31,7 @@
     }
   ],
   "validation_checks": [
-    "FISH: block.gridpoint.pp(gp) / block.gridpoint.temp(gp) confirm the initialized field"
+    "FISH: block.gp.pp(gp) / block.gp.temp(gp) confirm the initialized field (the block.gridpoint.* spellings do NOT exist — live FISH namespace is block.gp.*)"
   ],
   "official_documentation": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html"
 }

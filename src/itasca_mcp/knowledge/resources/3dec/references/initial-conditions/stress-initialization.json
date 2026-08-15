@@ -19,27 +19,29 @@
         "block zone initialize stress-xy 0"
       ],
       "notes": [
-        "Components: stress-xx/yy/zz (normal) and stress-xy/xz/yz (shear).",
-        "Use modifier keywords add / gradient / multiply / vary to build depth-varying fields."
+        "Components: stress-xx/yy/zz (normal) and stress-xy/xz/yz (shear); the first slot also enumerates stress (full tensor), stress-principal and state (live 9.7).",
+        "Use modifier keywords add / gradient / multiply / vary to build depth-varying fields (all four live-enumerated at the post-value slot)."
       ]
     },
     {
       "name": "gravitational in-situ stress",
       "commands": [
         "model gravity 0 0 -9.81",
-        "block insitu stress -1e6 -1e6 -2e6 0 0 0 gradient 0 0 1e4 0 0 2e4 0 0 0",
+        "block insitu stress -1e6 -1e6 -2e6 0 0 0 gradient-z 0 0 2e4 0 0 0",
         "block insitu stress ... nodisplacements"
       ],
       "notes": [
-        "'block insitu stress' sets the full tensor with optional 'gradient' (per-axis variation).",
-        "'nodisplacements' suppresses displacements during the seating solve; 'total' includes pore pressure."
+        "'block insitu stress <6 components>' then optional per-axis gradients: live 9.7 slot enumerates gradient-x gradient-y gradient-z nodisplacements — each gradient keyword is followed by the stress-component gradient values (floats).",
+        "A bare 'gradient' keyword is REJECTED on live 9.7 ('Unused extra parameter') — use the per-axis form.",
+        "'nodisplacements' suppresses displacements during the seating solve and is terminal (no further keywords).",
+        "'total' is NOT accepted at the 'block insitu stress' slot on live 9.7 — it belongs to 'block insitu topography' (live sub-keywords: overburden overburden-xx/yy/zz ratio-x/y/z total; requires gravity to be defined)."
       ]
     }
   ],
   "validation_checks": [
     "block zone list information",
     "FISH: block.zone.stress(z) to confirm the assigned field",
-    "Solve elastically and confirm small block.gridpoint.force.unbal (near equilibrium)"
+    "Solve elastically and confirm small block.gp.force.unbal (near equilibrium)"
   ],
   "official_documentation": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html"
 }

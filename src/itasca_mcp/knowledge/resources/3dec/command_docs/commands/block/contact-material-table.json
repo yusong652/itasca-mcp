@@ -5,44 +5,44 @@
     "contact",
     "material-table"
   ],
-  "description": "The material table is used to define the joint constitutive model and properties that should be assigned when new contacts form. By default, all new contacts are assigned the mohr material type. Use the commands below to change this default. No default properties are assigned. All large-strain models must supply default normal and shear stiffnesses at a minimum.",
+  "description": "The material table is used to define the joint constitutive model and properties that should be assigned when new contacts form. By default, all new contacts are assigned the mohr material type. Use the commands below to change this default. No default properties are assigned. All large-strain models must supply default normal and shear stiffnesses at a minimum — cycling a model with subcontacts but no default stiffness fails with 'Default contact stiffness not set. Use BLOCK CONTACT MATERIAL-TABLE DEFAULT PROP' (live 9.7.47). Property-name routing (live-verified): 'property' directly after 'material-table' accepts the DEFAULT model's property set (mohr: cohesion, cohesion-residual, dilation, dilation-zero, friction, friction-residual, stiffness-normal, stiffness-shear, tension, tension-residual); 'default property' accepts the union of ALL joint-model property command-names (68 keywords spanning elastic/mohr/bilinear-mohr/nonlinear/softening-mohr/power/cyjm/ratestate/velocity-weakening — see references/joint-models for the per-model sets).",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "block contact material-table",
-      "syntax": "block contact material-table keyword [range]",
+      "syntax": "block contact material-table keyword ...",
       "keywords": [
         {
-          "name": "property",
-          "syntax": "property keyword ...",
-          "description": "Add an entry to the material table that specifies the joint constitutive model to be used for new contacts that form and fall into the range. Add an entry to the material table that specifies the joint property value to be used for new contacts that form and fall into the range."
+          "name": "add",
+          "syntax": "add range ... [jmodel <name>] [property <keyword> <value> ...]",
+          "description": "Add an entry to the material table that specifies the joint constitutive model and/or property values to be used for new contacts that form and fall into the range. A range (filter) is REQUIRED: 'add' without one is rejected with 'You need to specify a filter to add an entry in the material table' (live 9.7.47)."
         },
         {
           "name": "apply",
           "syntax": "apply",
-          "description": "Apply the material table to set constitutive models of existing contacts according the the ranges"
+          "description": "Apply the material table to set constitutive models of existing contacts according to the ranges (live: reports 'Joint model and properties applied to N subcontacts')."
         },
         {
-          "name": "property",
-          "syntax": "property keyword ...",
-          "description": "Specify the default joint constitutive model to be assigned to new contacts. By default the mohr model is assigned to all new contacts. Specify the default value \\(f\\) for property keyword to be assigned to new contacts. There is no default, so generally a normal stiffness and shear stiffness must be specified."
+          "name": "default",
+          "syntax": "default [jmodel <name>] [property <keyword> <value> ...]",
+          "description": "Modify the default slot: the joint constitutive model ('jmodel <name>' — an unknown name is rejected with 'Model ... not found') and/or default property values assigned to new contacts. By default the mohr model is assigned. There is no default property set, so generally a normal stiffness and shear stiffness must be specified here before cycling."
         },
         {
           "name": "list",
           "syntax": "list",
-          "description": "Print out the material table (constitutive models, properties and ranges)"
+          "description": "Print out the material table (constitutive models, properties and ranges)."
         },
         {
-          "name": "property",
-          "syntax": "property keyword ...",
-          "description": "Modify entry \\(i\\) of the material table that specifies the joint constitutive model to be used for new contacts that form and fall into the range. Modify the entry \\(i\\) of the material table that specifies the joint property value to be used for new contacts that form and fall into the range."
+          "name": "modify",
+          "syntax": "modify <i> [jmodel <name>] [property <keyword> <value> ...]",
+          "description": "Modify entry i of the material table. An index is REQUIRED: 'modify' without one is rejected with 'You need to specify a valid index or use the block contact material-table default command' (live 9.7.47)."
         },
         {
           "name": "remove",
           "syntax": "remove [<i>] [all]",
-          "description": "Remove entry \\(i\\) from the material table."
+          "description": "Remove entry i from the material table, or all entries with 'all' (live slot enumerates: integer | all)."
         }
       ],
       "examples": []

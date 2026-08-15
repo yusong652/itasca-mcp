@@ -2,7 +2,7 @@
   "name": "apply-modifiers",
   "dimension": "3D",
   "full_name": "Apply Modifiers (Spatial / Functional Variation, Removal)",
-  "description": "Modifier keywords shared across the 'block ... apply' family to vary a condition in space or time and to remove it: spatial gradients, FISH/table functions, history attachment, and apply-remove.",
+  "description": "Modifier keywords shared across the 'block ... apply' family to vary a condition in space or time and to remove it: spatial gradients, FISH/table functions, and apply-remove. All 'block face apply' / 'block gridpoint apply' conditions REQUIRE a 'range' (live 9.7.47: 'A range must be specified').",
   "primary_commands": [
     "block face apply",
     "block gridpoint apply",
@@ -13,11 +13,14 @@
     {
       "family": "spatial variation",
       "keywords": [
-        "gradient-z",
-        "origin"
+        "gradient-x",
+        "gradient-y",
+        "gradient-z"
       ],
       "notes": [
-        "'gradient-z' varies the value with depth about 'origin'."
+        "Per-axis gradient keywords vary the applied value with position — live 9.7 has gradient-x/gradient-y/gradient-z on 'block face apply' ONLY; 'block gridpoint apply' has no gradient keywords (use 'fish' there instead).",
+        "There is NO 'origin' keyword in the live 9.7 apply enumerations (removed from this file — previously listed in error).",
+        "'block gridpoint initialize <field> <value>' has its own modifier slot: add gradient multiply vary (live-enumerated) — see initial-conditions."
       ]
     },
     {
@@ -27,7 +30,8 @@
         "table"
       ],
       "notes": [
-        "'fish <fn>' or 'table <name>' make the applied value a function of time/state."
+        "'fish <fn>' or 'table <name>' make the applied value a function of time/state.",
+        "Live on both 'block face apply' and 'block gridpoint apply' (and on rigid-block 'block apply')."
       ]
     },
     {
@@ -36,7 +40,8 @@
         "apply-remove"
       ],
       "notes": [
-        "'block face apply-remove ...' / 'block gridpoint apply-remove ...' clears conditions."
+        "'block face apply-remove ...' / 'block gridpoint apply-remove ...' clears conditions.",
+        "The removal keyword sets differ from the apply side: face apply-remove uses 'load(-x/y/z)' for point loads (not 'point-load'), and drops the fish/table/gradient modifiers (live-enumerated)."
       ]
     }
   ],
