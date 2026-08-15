@@ -108,6 +108,26 @@
       "syntax": "wall generate keyword ...",
       "keywords": [
         {
+          "name": "box",
+          "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall]",
+          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., {top, bottom, left, or right in 2d; top, bottom, left, right, front, or back in 3D}) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
+        },
+        {
+          "name": "cone",
+          "syntax": "cone",
+          "description": ""
+        },
+        {
+          "name": "cylinder",
+          "syntax": "cylinder",
+          "description": ""
+        },
+        {
+          "name": "disk",
+          "syntax": "disk",
+          "description": ""
+        },
+        {
           "name": "group",
           "syntax": "group <s>[slot <slot>] [facet] ...",
           "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
@@ -118,44 +138,24 @@
           "description": "Wall ID. If not specified, then the next available ID is used."
         },
         {
+          "name": "line",
+          "syntax": "line",
+          "description": ""
+        },
+        {
           "name": "name",
           "syntax": "name <s>",
           "description": "Wall name. If not specified, then each shape defines a wall name with the ID post pended."
         },
         {
-          "name": "box",
-          "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall]",
-          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., {top, bottom, left, or right in 2d; top, bottom, left, right, front, or back in 3D}) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
+          "name": "plane",
+          "syntax": "plane",
+          "description": ""
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed circle in 2D. If the name keyword has not been specified, then s = circleWall . Position of the center of the circle that is the origin by default. Radius of the circle that is 1.0 by default. Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off such as a funnel if the caps are absent) can be generated. If the name keyword has not been specified, then s = coneWall . By default, the cone base is closed and the base and side of the cone are separate walls. In this case, the wall name is concatenated with the wall side name (e.g., top (if a frustum), bottom, or side) and the wall ID. For instance, if s = fred , the name of the bottom wall is fredBottomXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all cone sides belong to a single wall. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z -direction by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin by default. Indicate the inclusion status of the end caps. If one boolean is specified, then this state is given to both end caps. If two booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1. Specify that the end caps and side of the cone (if all created) belong to a single wall. Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cylinder in 3D. If the name keyword has not been specified, then s = cylinderWall . By default, the cylinder is closed and each side of the cylinder is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., top, bottom, or side) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all cylinder sides belong to a single wall. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin by default. Indicate the inclusion status of the end caps. If one boolean is specified, then this state is given to both end caps. If two booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1. Specify that the end caps and side of the cylinder (if all created) belong to a single wall. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a disk in 3D. If the name keyword has not been specified, then s = diskWall . Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy plane to the disk surface measured in the negative z -direction. By default, fdip = 0. Dip direction of the disk in degrees as measured in a clockwise fashion from the positive y -axis in the range [0,360]. By default, fddir = 0. Position of the center of the disk that is the origin by default. Radius of the disk that is 1.0 by default. Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Generate a plane wall that spans the entire domain and is truncated at the domain boundaries. If the name keyword has not been specified, then s = planeWall . Dip angle of the plane in the range {[0,180] in 2D; [0,90] in 3D}. Dip is the angle from the {positive y -direction in 2D; dip direction projected on the xy plane to the disk surface measured in the negative z -direction in 3D}. By default, fdip = 0. Dip direction of the plane in degrees as measured in a clockwise fashion from the positive y -axis in the range [0,360]. By default, fddir = 0. Position of a point on the plane."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a point wall. If the name keyword has not been specified, then s = pointWall . A point wall is a {line segment in 2D; equilateral triangle in 3D} that should be much smaller (i.e., 1/10th the size) of the minimum ball/pebble in the model. Use the resolution keyword to specify the size. Position of the point wall with default the origin. Resolution of the point wall. This corresponds to the {facet length in 2D; equilateral triangle edge length in 3D}. By default, fres is 1/100th of the minimum length of the sides of the model domain."
+          "name": "point",
+          "syntax": "point",
+          "description": ""
         },
         {
           "name": "polygon",
@@ -163,9 +163,9 @@
           "description": "Generate a planar, polygonal wall in 3D. If the name keyword has not been specified, then s = polygonWall . There are two modes of operation: the default mode which is guaranteed to work for convex polygons and the triangulation mode, specified with the optional triangulate keyword, that works for both convex and concave polygons. In both modes, the makeplanar keyword is used to snap the vertices to the plane with point equal to the average location of vertices (called the center). The plane normal is defined by the cross product of two vectors, namely the vector difference between the center and vertex 1 and the vector difference between the center and vertex 2. In the default mode, the vertices of the wall can be input in any order and the command is guaranteed to work for sets of vertices defining convex polygons. The algorithm proceeds by ordering the points in clockwise order about the center. The first facet is created from the [1,2,num] vertex where num is the total number of vertices. The next facet is made from the [2,num,3] vertices, and the following from the [num,3,num-1] vertices, and so on. In triangulation mode, the vertices must be input in an ordered fashion around the perimeter of the polygon. The sweep line algorithm is used to triangulate the polygon."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed sphere wall in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin by default. Radius of the sphere that is 1.0 by default. Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere",
+          "description": ""
         }
       ],
       "examples": [

@@ -16,17 +16,25 @@
       "syntax": "rblock template keyword ...",
       "keywords": [
         {
-          "name": "vertices",
-          "syntax": "vertices <v1><v2>...",
-          "description": "Create a rigid block template with name s . The inertial attributes are computed and stored. The template is translated so that its centroid coincides with the origin. The original rigid block position is also retained and can be used for replication. Unit density is assumed at creation unless the density keyword is given. If no name is specified then the name is set to rblock ; if a template exists with this name, then an integer is appended to rblock until a unique name is created. Create a rigid block template in the shape of an axis-aligned box. Following specification of the box in the x -direction, if subsequent extents are omitted, then the latest specified extent is used. Generate a closed circular rigid block template in 2D. Position of the center of the circle that is the origin by default. Radius of the circle that is 1.0 by default. Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1. Create a conical rigid block template in 3D. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1. Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1. Create a cylindrical rigid block template in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1. Rigid block template density with default value 1.0. Specify the {linear in 2D; triangular in 3D} facets of the rigid block template. These can be specified in any order but all facets must be completely specified. Create a rigid block template from the vertices of polygons in a geometry set. If no set is provided then the current set is used. The optional range is applied to polygons in the specified set. The group name at slot slot is set to s for the newly created rigid block template. If slot is not specified, then the group name at slot Default is set to s . Rigid block template ID. If not specified, then the next available ID is used. Introduce rigid block rounding. Rigid blocks are represented by a core shape that is composed of {linear facets in 2D; triangular facets in 3D}. The core shape is convex, closed and manifold. When rounding is nonzero, the core shape is expanded in a directions by a {circle in 2D; sphere in 3D} of a specified radius with center passing along all points on the exterior of the core shape. The value of the rounding corresponds to the radius of this expansion {circle in 2D; sphere in 3D}. If the relative keyword is given, the rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. When the rounding is changed so are the inertial properties. Create a spherical rigid block template in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin by default. Radius of the sphere that is 1.0 by default. Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1. Specify the vertices of the rigid block template. The convex hull of the input points is computed and the rigid block is created from the convex hull."
+          "name": "create",
+          "syntax": "create",
+          "description": ""
         },
         {
           "name": "delete",
           "syntax": "delete [range]",
           "description": "Delete rigid block templates in range. If no range is specified, then all rigid block templates are deleted."
+        },
+        {
+          "name": "scale",
+          "syntax": "scale",
+          "description": ""
         }
       ],
-      "examples": []
+      "examples": [],
+      "notes": [
+        "volume/name/vertices keywords belong to the create sub-grammar."
+      ]
     },
     "7.0": {
       "command": "rblock template",
