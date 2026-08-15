@@ -2,7 +2,6 @@
   "name": "cut",
   "parent": "rblock",
   "description": "Cut plane for clipping rblock visualization. Shows only material on one side of a defined plane.",
-
   "keywords": [
     {
       "keyword": "cut active on",
@@ -32,12 +31,11 @@
       ]
     }
   ],
-
   "usage_in_creation": "Cut cannot be inlined in 'item create'. First create the item, then use 'item modify' to add the cut plane.",
   "usage_in_modification": "plot \"<name>\" item modify <id> cut active on type plane surface on front off back on origin (0,0,0) normal (0,1,0)",
-
   "notes": [
     "Cut plane syntax is identical across ball, clump, contact, rblock, and wall item types.",
-    "IMPORTANT: cut parameters must be set via 'plot item modify', not inline in 'plot item create'. Create the item first, then modify to add the cut."
+    "IMPORTANT: cut parameters must be set via 'plot item modify', not inline in 'plot item create'. Create the item first, then modify to add the cut.",
+    "Live PFC3D 9.7 (Batch P1): cut keywords DO parse inline at create time - 'plot item create <type> cut ?' enumerates active/back/front/surface/type, with type = none/octant/plane/wedge and front/surface booleans. The 'must use plot item modify' rule above was verified on PFC2D 7.00; on 9.7 both routes parse."
   ]
 }

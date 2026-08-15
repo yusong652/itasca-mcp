@@ -5,7 +5,7 @@
     "track",
     "monitor"
   ],
-  "description": "Adds a history of a wall value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional 'id' keyword followed by an integer id, 2) an additional 'name' keyword followed by a string s, or 3) an additional 'position' keyword followed by a position vector v must be given to define the specific wall.",
+  "description": "Adds a history of a wall value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional 'id' keyword followed by an integer id, 2) an additional 'name' keyword followed by a string s, or 3) an additional 'position' keyword followed by a position vector v must be given to define the specific wall. Live 9.7: the quantity slot was fully enumerated (Batch P1); an object selector (id <i> or position <v>) is REQUIRED after the quantity - omitting it fails with 'No object for history specified'.",
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('wall history ...') - Python SDK does not provide history recording. Use history commands for manipulation"
@@ -161,27 +161,27 @@
           "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are:"
         },
         {
-          "name": "kwd:id",
+          "name": "id",
           "syntax": "id <i>",
           "description": "Record the history of wall with ID i ."
         },
         {
-          "name": "kwd:index",
+          "name": "index",
           "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra ), this specifies the index that should be used."
         },
         {
-          "name": "kwd:log",
+          "name": "log",
           "syntax": "log <b>",
           "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
         },
         {
-          "name": "kwd:name",
+          "name": "name",
           "syntax": "name <s>",
           "description": "Record the history of wall with name s ."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Record the history of wall either containing or closest to position v ."
         },
@@ -548,27 +548,27 @@
           "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Record the \\(x\\) -component of the vector. Record the \\(y\\) -component of the vector. Record the \\(z\\) -component of the vector. Record the vector magnitude."
         },
         {
-          "name": "kwd:id",
+          "name": "id",
           "syntax": "id <i>",
           "description": "Record the history of wall with ID i ."
         },
         {
-          "name": "kwd:index",
+          "name": "index",
           "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra ), this specifies the index that should be used."
         },
         {
-          "name": "kwd:log",
+          "name": "log",
           "syntax": "log <b>",
           "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
         },
         {
-          "name": "kwd:name",
+          "name": "name",
           "syntax": "name <s>",
           "description": "Record the history of wall with name s ."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Record the history of wall either containing or closest to position v ."
         },
@@ -581,6 +581,21 @@
           "name": "vector",
           "syntax": "vector",
           "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Specify a scalar float type. Specify a tensor type. Specify a vector type."
+        },
+        {
+          "name": "axis-angle-x",
+          "syntax": "axis-angle-x",
+          "description": "Live-enumerated on PFC3D 9.7 (Batch P1); not on the official page. x-component of the axis-angle orientation measure."
+        },
+        {
+          "name": "axis-angle-y",
+          "syntax": "axis-angle-y",
+          "description": "Live-enumerated on PFC3D 9.7 (Batch P1); not on the official page. y-component of the axis-angle orientation measure."
+        },
+        {
+          "name": "axis-angle-z",
+          "syntax": "axis-angle-z",
+          "description": "Live-enumerated on PFC3D 9.7 (Batch P1); not on the official page. z-component of the axis-angle orientation measure."
         }
       ],
       "examples": [

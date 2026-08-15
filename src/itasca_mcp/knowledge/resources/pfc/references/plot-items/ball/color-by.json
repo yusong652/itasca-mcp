@@ -2,7 +2,6 @@
   "name": "color-by",
   "parent": "ball",
   "description": "Color-by modes for ball plot items. Three modes depending on attribute type: vector, numeric, and text.",
-
   "modes": [
     {
       "keyword": "color-by vector-attribute",
@@ -14,9 +13,16 @@
         "color-by vector-attribute \"force-contact\""
       ],
       "available_attributes": [
-        "position", "velocity", "displacement", "spin",
-        "force-contact", "force-applied", "force-unbalanced",
-        "moment-contact", "moment-applied", "moment-unbalanced"
+        "position",
+        "velocity",
+        "displacement",
+        "spin",
+        "force-contact",
+        "force-applied",
+        "force-unbalanced",
+        "moment-contact",
+        "moment-applied",
+        "moment-unbalanced"
       ],
       "notes": "Defaults to magnitude. Append 'color-options scaled ramp rainbow minimum automatic maximum automatic' for rainbow scale."
     },
@@ -28,7 +34,12 @@
         "color-by numeric-attribute \"radius\"",
         "color-by numeric-attribute \"density\""
       ],
-      "available_attributes": ["radius", "damp", "density", "mass"],
+      "available_attributes": [
+        "radius",
+        "damp",
+        "density",
+        "mass"
+      ],
       "notes": "Append 'color-options scaled ramp rainbow minimum automatic maximum automatic' for rainbow scale"
     },
     {
@@ -39,7 +50,10 @@
         "color-by text-attribute \"id\" color-options named maximum-names 1000000 name-controls true",
         "color-by text-attribute \"group\" 'Any' color-options named maximum-names 1000000 name-controls true"
       ],
-      "available_attributes": ["id", "group"],
+      "available_attributes": [
+        "id",
+        "group"
+      ],
       "notes": "group attribute requires slot name ('Any' for default slot). Use 'color-options named' instead of 'scaled ramp'."
     },
     {
@@ -51,5 +65,8 @@
         "color-by numeric-attribute \"extra\" 3"
       ]
     }
+  ],
+  "notes": [
+    "PFC3D 9.7 behavior change (Batch P1): the attribute-name slot is a free-form String - create accepts ANY name silently (no error at create or export), so typos cannot be caught from the CLI. The attribute lists here are verified on PFC2D 7.00 (which rejected invalid names at create). Live 9.7 mode grammar confirmed: {numeric,tensor,text,vector} x {attribute,property} plus add-* overlay variants."
   ]
 }

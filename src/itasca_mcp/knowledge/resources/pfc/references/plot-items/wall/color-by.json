@@ -2,7 +2,6 @@
   "name": "color-by",
   "parent": "wall",
   "description": "Color-by modes for wall plot items.",
-
   "modes": [
     {
       "keyword": "color-by vector-attribute",
@@ -12,7 +11,12 @@
         "color-by vector-attribute \"velocity\"",
         "color-by vector-attribute \"force-contact\""
       ],
-      "available_attributes": ["position", "velocity", "displacement", "force-contact"]
+      "available_attributes": [
+        "position",
+        "velocity",
+        "displacement",
+        "force-contact"
+      ]
     },
     {
       "keyword": "color-by text-attribute",
@@ -22,7 +26,10 @@
         "color-by text-attribute \"name\" color-options named maximum-names 1000000 name-controls true",
         "color-by text-attribute \"group\" 'Any' piece off color-options named maximum-names 1000000 name-controls true"
       ],
-      "available_attributes": ["name", "group"],
+      "available_attributes": [
+        "name",
+        "group"
+      ],
       "notes": "group attribute requires slot name and 'piece off' for wall facets"
     },
     {
@@ -33,5 +40,8 @@
         "color-by numeric-attribute \"extra\" 1"
       ]
     }
+  ],
+  "notes": [
+    "PFC3D 9.7 behavior change (Batch P1): the attribute-name slot is a free-form String - create accepts ANY name silently (no error at create or export), so typos cannot be caught from the CLI. The attribute lists here are verified on PFC2D 7.00 (which rejected invalid names at create). Live 9.7 mode grammar confirmed: {numeric,tensor,text,vector} x {attribute,property} plus add-* overlay variants."
   ]
 }
