@@ -1,0 +1,466 @@
+{
+  "name": "clump",
+  "dimension": "3D",
+  "full_name": "Clump / Pebble / Clump-Template FISH Intrinsics",
+  "description": "FISH access to clumps (rigid pebble clusters): the clump body, its pebbles (clump.pebble.*), reusable clump templates (clump.template.*), and thermal/cfd twins.",
+  "intrinsic_families": [
+    {
+      "family": "clump body",
+      "examples": [
+        {
+          "name": "clump.list",
+          "signature": "clump_list_pnt = clump.list()"
+        },
+        {
+          "name": "clump.find",
+          "signature": "clump_pnt = clump.find(int)"
+        },
+        {
+          "name": "clump.pos",
+          "signature": "vec3/flt := clump.pos(clump_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "clump.vel",
+          "signature": "vec3/flt := clump.vel(clump_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "clump.spin",
+          "signature": "vec3/flt := clump.spin(clump_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "clump.mass",
+          "signature": "flt := clump.mass(clump_pnt)"
+        },
+        {
+          "name": "clump.vol",
+          "signature": "flt := clump.vol(clump_pnt)"
+        },
+        {
+          "name": "clump.moi.prin",
+          "signature": "vec3/flt := clump.moi.prin(clump_pnt,<int>)"
+        },
+        {
+          "name": "clump.inglobal",
+          "signature": "vec3/flt := clump.inglobal(clump_pnt,vec3/flt)"
+        },
+        {
+          "name": "clump.inprin",
+          "signature": "vec3/flt := clump.inprin(clump_pnt,vec3/flt)"
+        },
+        {
+          "name": "clump.rotate",
+          "signature": "int := clump.rotate(clump_pnt,vec3/flt)"
+        },
+        {
+          "name": "clump.scalesphere",
+          "signature": "int := clump.scalesphere(clump_pnt,flt)"
+        },
+        {
+          "name": "clump.scalevol",
+          "signature": "int := clump.scalevol(clump_pnt,flt)"
+        },
+        {
+          "name": "clump.calculate",
+          "signature": "bool := clump.calculate(clump_pnt,<int>)"
+        }
+      ],
+      "notes": [
+        "clump.inglobal/clump.inprin convert between global and principal-axis frames; moi has .real (deformable-mass) variants."
+      ]
+    },
+    {
+      "family": "pebbles",
+      "examples": [
+        {
+          "name": "clump.pebblelist",
+          "signature": "pebble_list_pnt := clump.pebblelist(clump_pnt)"
+        },
+        {
+          "name": "clump.pebble.list",
+          "signature": "pebble_list_pnt = clump.pebble.list()"
+        },
+        {
+          "name": "clump.pebble.find",
+          "signature": "pebble_pnt = clump.pebble.find(int)"
+        },
+        {
+          "name": "clump.pebble.clump",
+          "signature": "clump_pnt := clump.pebble.clump(pebble_pnt)"
+        },
+        {
+          "name": "clump.pebble.pos",
+          "signature": "vec3/flt := clump.pebble.pos(pebble_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "clump.pebble.radius",
+          "signature": "flt := clump.pebble.radius(pebble_pnt) := flt"
+        },
+        {
+          "name": "clump.addpebble",
+          "signature": "clump_pnt := clump.addpebble(clump_pnt,flt,vec3,<int>)"
+        },
+        {
+          "name": "clump.deletepebble",
+          "signature": "bool = clump.deletepebble(clump_pnt,pebble_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "templates",
+      "examples": [
+        {
+          "name": "clump.template.list",
+          "signature": "template_list_pnt = clump.template.list()"
+        },
+        {
+          "name": "clump.template.find",
+          "signature": "template_pnt = clump.template.find(str)"
+        },
+        {
+          "name": "clump.template.make",
+          "signature": "template_pnt = clump.template.make(template_pnt,str)"
+        },
+        {
+          "name": "clump.template.clone",
+          "signature": "template_pnt = clump.template.clone(template_pnt,str)"
+        },
+        {
+          "name": "clump.template.name",
+          "signature": "str = clump.template.name(template_pnt)"
+        },
+        {
+          "name": "clump.template.pebblelist",
+          "signature": "pebble_list_pnt = clump.template.pebblelist(template_pnt)"
+        },
+        {
+          "name": "clump.template.vol",
+          "signature": "flt = clump.template.vol(template_pnt) = flt"
+        }
+      ],
+      "notes": [
+        "Templates are the reusable shape library behind 'clump template create' / 'clump generate'."
+      ]
+    },
+    {
+      "family": "process sub-namespaces",
+      "examples": [
+        {
+          "name": "clump.thermal.temp",
+          "signature": "flt = clump.thermal.temp(tclump_pnt) = flt"
+        },
+        {
+          "name": "clump.thermal.pebble.list",
+          "signature": "pebblet_list_pnt = clump.thermal.pebble.list()"
+        },
+        {
+          "name": "clump.cfd.force",
+          "signature": "vec3/flt = clump.cfd.force(cfdclump_pnt,<int>) = vec3/flt"
+        }
+      ],
+      "notes": [
+        "clump.thermal.* (55 names incl. thermal pebbles) and clump.cfd.* (39 incl. cfd pebbles) mirror the mechanical namespaces."
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 295,
+    "names": [
+      "clump.addpebble",
+      "clump.axis.angle",
+      "clump.axis.angle.x",
+      "clump.axis.angle.y",
+      "clump.axis.angle.z",
+      "clump.calculate",
+      "clump.cfd.clump",
+      "clump.cfd.element.list",
+      "clump.cfd.elementmap",
+      "clump.cfd.extra",
+      "clump.cfd.find",
+      "clump.cfd.force",
+      "clump.cfd.force.x",
+      "clump.cfd.force.y",
+      "clump.cfd.force.z",
+      "clump.cfd.group",
+      "clump.cfd.group.remove",
+      "clump.cfd.id",
+      "clump.cfd.inbox",
+      "clump.cfd.isgroup",
+      "clump.cfd.list",
+      "clump.cfd.near",
+      "clump.cfd.num",
+      "clump.cfd.pebble.clump",
+      "clump.cfd.pebble.find",
+      "clump.cfd.pebble.group",
+      "clump.cfd.pebble.group.remove",
+      "clump.cfd.pebble.id",
+      "clump.cfd.pebble.inbox",
+      "clump.cfd.pebble.isgroup",
+      "clump.cfd.pebble.list",
+      "clump.cfd.pebble.near",
+      "clump.cfd.pebble.num",
+      "clump.cfd.pebble.pebble",
+      "clump.cfd.pebble.pos",
+      "clump.cfd.pebble.pos.x",
+      "clump.cfd.pebble.pos.y",
+      "clump.cfd.pebble.pos.z",
+      "clump.cfd.pebble.typeid",
+      "clump.cfd.pebblelist",
+      "clump.cfd.pos",
+      "clump.cfd.pos.x",
+      "clump.cfd.pos.y",
+      "clump.cfd.pos.z",
+      "clump.cfd.typeid",
+      "clump.contact.list",
+      "clump.contact.list.all",
+      "clump.contactmap",
+      "clump.contactmap.all",
+      "clump.contactnum",
+      "clump.contactnum.all",
+      "clump.containing",
+      "clump.convergence",
+      "clump.damp",
+      "clump.delete",
+      "clump.deletepebble",
+      "clump.density",
+      "clump.disp",
+      "clump.disp.x",
+      "clump.disp.y",
+      "clump.disp.z",
+      "clump.energy",
+      "clump.euler",
+      "clump.euler.x",
+      "clump.euler.y",
+      "clump.euler.z",
+      "clump.extra",
+      "clump.find",
+      "clump.fix",
+      "clump.force.app",
+      "clump.force.app.x",
+      "clump.force.app.y",
+      "clump.force.app.z",
+      "clump.force.contact",
+      "clump.force.contact.x",
+      "clump.force.contact.y",
+      "clump.force.contact.z",
+      "clump.force.unbal",
+      "clump.force.unbal.x",
+      "clump.force.unbal.y",
+      "clump.force.unbal.z",
+      "clump.fragment",
+      "clump.group",
+      "clump.group.list",
+      "clump.group.remove",
+      "clump.groupmap",
+      "clump.id",
+      "clump.inbox",
+      "clump.inglobal",
+      "clump.inprin",
+      "clump.inside",
+      "clump.isbonded",
+      "clump.isgroup",
+      "clump.list",
+      "clump.mass",
+      "clump.mass.real",
+      "clump.maxid",
+      "clump.mech.convergence",
+      "clump.mech.ratio.avg",
+      "clump.mech.ratio.local",
+      "clump.mech.ratio.max",
+      "clump.mech.unbal.max",
+      "clump.moi",
+      "clump.moi.fix",
+      "clump.moi.prin",
+      "clump.moi.prin.real",
+      "clump.moi.prin.real.x",
+      "clump.moi.prin.real.y",
+      "clump.moi.prin.real.z",
+      "clump.moi.prin.x",
+      "clump.moi.prin.y",
+      "clump.moi.prin.z",
+      "clump.moi.real",
+      "clump.moi.real.xx",
+      "clump.moi.real.xy",
+      "clump.moi.real.xz",
+      "clump.moi.real.yy",
+      "clump.moi.real.yz",
+      "clump.moi.real.zz",
+      "clump.moi.xx",
+      "clump.moi.xy",
+      "clump.moi.xz",
+      "clump.moi.yy",
+      "clump.moi.yz",
+      "clump.moi.zz",
+      "clump.moment.app",
+      "clump.moment.app.x",
+      "clump.moment.app.y",
+      "clump.moment.app.z",
+      "clump.moment.contact",
+      "clump.moment.contact.x",
+      "clump.moment.contact.y",
+      "clump.moment.contact.z",
+      "clump.moment.unbal",
+      "clump.moment.unbal.x",
+      "clump.moment.unbal.y",
+      "clump.moment.unbal.z",
+      "clump.near",
+      "clump.num",
+      "clump.pebble.clump",
+      "clump.pebble.contact.list",
+      "clump.pebble.contact.list.all",
+      "clump.pebble.contactmap",
+      "clump.pebble.contactmap.all",
+      "clump.pebble.contactnum",
+      "clump.pebble.contactnum.all",
+      "clump.pebble.delete",
+      "clump.pebble.extra",
+      "clump.pebble.find",
+      "clump.pebble.group",
+      "clump.pebble.group.list",
+      "clump.pebble.group.remove",
+      "clump.pebble.groupmap",
+      "clump.pebble.id",
+      "clump.pebble.inbox",
+      "clump.pebble.isbonded",
+      "clump.pebble.isgroup",
+      "clump.pebble.isprop",
+      "clump.pebble.list",
+      "clump.pebble.maxid",
+      "clump.pebble.near",
+      "clump.pebble.num",
+      "clump.pebble.pos",
+      "clump.pebble.pos.x",
+      "clump.pebble.pos.y",
+      "clump.pebble.pos.z",
+      "clump.pebble.prop",
+      "clump.pebble.radius",
+      "clump.pebble.typeid",
+      "clump.pebble.vel",
+      "clump.pebble.vel.x",
+      "clump.pebble.vel.y",
+      "clump.pebble.vel.z",
+      "clump.pebblelist",
+      "clump.pos",
+      "clump.pos.x",
+      "clump.pos.y",
+      "clump.pos.z",
+      "clump.prop",
+      "clump.ratio",
+      "clump.ratio.target",
+      "clump.rotate",
+      "clump.scalesphere",
+      "clump.scalevol",
+      "clump.spin",
+      "clump.spin.x",
+      "clump.spin.y",
+      "clump.spin.z",
+      "clump.stress",
+      "clump.stress.xx",
+      "clump.stress.xy",
+      "clump.stress.xz",
+      "clump.stress.yy",
+      "clump.stress.yz",
+      "clump.stress.zz",
+      "clump.template",
+      "clump.template.aangle",
+      "clump.template.aangle.x",
+      "clump.template.aangle.y",
+      "clump.template.aangle.z",
+      "clump.template.addpebble",
+      "clump.template.clone",
+      "clump.template.delete",
+      "clump.template.deletepebble",
+      "clump.template.euler",
+      "clump.template.euler.x",
+      "clump.template.euler.y",
+      "clump.template.euler.z",
+      "clump.template.find",
+      "clump.template.findpebble",
+      "clump.template.list",
+      "clump.template.make",
+      "clump.template.maxid",
+      "clump.template.moi",
+      "clump.template.moi.prin",
+      "clump.template.moi.prin.x",
+      "clump.template.moi.prin.y",
+      "clump.template.moi.prin.z",
+      "clump.template.moi.xx",
+      "clump.template.moi.xy",
+      "clump.template.moi.xz",
+      "clump.template.moi.yy",
+      "clump.template.moi.yz",
+      "clump.template.moi.zz",
+      "clump.template.name",
+      "clump.template.num",
+      "clump.template.origpos",
+      "clump.template.origpos.x",
+      "clump.template.origpos.y",
+      "clump.template.origpos.z",
+      "clump.template.pebblelist",
+      "clump.template.scale",
+      "clump.template.typeid",
+      "clump.template.vol",
+      "clump.thermal.clump",
+      "clump.thermal.contact.list",
+      "clump.thermal.contact.list.all",
+      "clump.thermal.contactmap",
+      "clump.thermal.contactmap.all",
+      "clump.thermal.contactnum",
+      "clump.thermal.contactnum.all",
+      "clump.thermal.expansion",
+      "clump.thermal.extra",
+      "clump.thermal.find",
+      "clump.thermal.fix",
+      "clump.thermal.group",
+      "clump.thermal.group.list",
+      "clump.thermal.group.remove",
+      "clump.thermal.groupmap",
+      "clump.thermal.id",
+      "clump.thermal.inbox",
+      "clump.thermal.isgroup",
+      "clump.thermal.list",
+      "clump.thermal.near",
+      "clump.thermal.num",
+      "clump.thermal.pebble.clump",
+      "clump.thermal.pebble.contact.list",
+      "clump.thermal.pebble.contact.list.all",
+      "clump.thermal.pebble.contactmap",
+      "clump.thermal.pebble.contactmap.all",
+      "clump.thermal.pebble.contactnum",
+      "clump.thermal.pebble.contactnum.all",
+      "clump.thermal.pebble.find",
+      "clump.thermal.pebble.group",
+      "clump.thermal.pebble.group.list",
+      "clump.thermal.pebble.group.remove",
+      "clump.thermal.pebble.groupmap",
+      "clump.thermal.pebble.id",
+      "clump.thermal.pebble.inbox",
+      "clump.thermal.pebble.isgroup",
+      "clump.thermal.pebble.isprop",
+      "clump.thermal.pebble.list",
+      "clump.thermal.pebble.near",
+      "clump.thermal.pebble.num",
+      "clump.thermal.pebble.pebble",
+      "clump.thermal.pebble.pos",
+      "clump.thermal.pebble.pos.x",
+      "clump.thermal.pebble.pos.y",
+      "clump.thermal.pebble.pos.z",
+      "clump.thermal.pebble.prop",
+      "clump.thermal.pebble.typeid",
+      "clump.thermal.pebblelist",
+      "clump.thermal.power.app",
+      "clump.thermal.power.unbal",
+      "clump.thermal.prop",
+      "clump.thermal.specific.heat",
+      "clump.thermal.temp",
+      "clump.thermal.temp.increment",
+      "clump.thermal.typeid",
+      "clump.typeid",
+      "clump.vel",
+      "clump.vel.x",
+      "clump.vel.y",
+      "clump.vel.z",
+      "clump.vol"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}

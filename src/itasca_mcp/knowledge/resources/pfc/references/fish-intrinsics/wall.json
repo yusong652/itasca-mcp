@@ -1,0 +1,440 @@
+{
+  "name": "wall",
+  "dimension": "3D",
+  "full_name": "Wall / Facet / Vertex FISH Intrinsics",
+  "description": "FISH access to walls and their facets/vertices, including the wall servo controls used for stress-controlled boundaries and facet conveyor velocities.",
+  "intrinsic_families": [
+    {
+      "family": "wall body",
+      "examples": [
+        {
+          "name": "wall.list",
+          "signature": "wall_list_pnt = wall.list()"
+        },
+        {
+          "name": "wall.find",
+          "signature": "wall_pnt = wall.find(int/str)"
+        },
+        {
+          "name": "wall.name",
+          "signature": "str := wall.name(wall_pnt) := str"
+        },
+        {
+          "name": "wall.pos",
+          "signature": "vec3/flt := wall.pos(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.vel",
+          "signature": "vec3/flt := wall.vel(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.disp",
+          "signature": "vec3/flt := wall.disp(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.spin",
+          "signature": "vec3/flt := wall.spin(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.force.contact",
+          "signature": "vec3/flt := wall.force.contact(wall_pnt,<int>)"
+        },
+        {
+          "name": "wall.moment.contact",
+          "signature": "vec3/flt := wall.moment.contact(wall_pnt,<int>)"
+        },
+        {
+          "name": "wall.rotation.center",
+          "signature": "vec3/flt := wall.rotation.center(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.delete",
+          "signature": "bool = wall.delete(wall_pnt)"
+        },
+        {
+          "name": "wall.closed",
+          "signature": "bool := wall.closed(wall_pnt)"
+        },
+        {
+          "name": "wall.convex",
+          "signature": "bool := wall.convex(wall_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "servo control",
+      "examples": [
+        {
+          "name": "wall.servo.active",
+          "signature": "bool := wall.servo.active(wall_pnt) := bool"
+        },
+        {
+          "name": "wall.servo.force",
+          "signature": "vec3/flt := wall.servo.force(wall_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.servo.gain",
+          "signature": "flt := wall.servo.gain(wall_pnt)"
+        },
+        {
+          "name": "wall.servo.gainfactor",
+          "signature": "flt := wall.servo.gainfactor(wall_pnt) := flt"
+        },
+        {
+          "name": "wall.servo.gainupdate",
+          "signature": "int := wall.servo.gainupdate(wall_pnt) := int"
+        },
+        {
+          "name": "wall.servo.vmax",
+          "signature": "flt := wall.servo.vmax(wall_pnt) := flt"
+        }
+      ],
+      "notes": [
+        "The FISH handle for 'wall servo' stress-controlled boundaries - read/set the target force, gain, and activation per wall."
+      ]
+    },
+    {
+      "family": "facets",
+      "examples": [
+        {
+          "name": "wall.facetlist",
+          "signature": "facet_list_pnt := wall.facetlist(wall_pnt)"
+        },
+        {
+          "name": "wall.facet.list",
+          "signature": "facet_list_pnt := wall.facet.list()"
+        },
+        {
+          "name": "wall.facet.find",
+          "signature": "facet_pnt := wall.facet.find(int)"
+        },
+        {
+          "name": "wall.facet.wall",
+          "signature": "wall_pnt := wall.facet.wall(facet_pnt)"
+        },
+        {
+          "name": "wall.facet.normal",
+          "signature": "vec3/flt := wall.facet.normal(facet_pnt,<int>)"
+        },
+        {
+          "name": "wall.facet.pos",
+          "signature": "vec3/flt := wall.facet.pos(facet_pnt,<int>)"
+        },
+        {
+          "name": "wall.facet.conveyor",
+          "signature": "vec3/flt := wall.facet.conveyor(facet_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.facet.active",
+          "signature": "int := wall.facet.active(facet_pnt) := int"
+        },
+        {
+          "name": "wall.facet.pair",
+          "signature": "facet_pnt := wall.facet.pair(facet_pnt,int)"
+        },
+        {
+          "name": "wall.facet.pointnear",
+          "signature": "vec3/flt := wall.facet.pointnear(facet_pnt,vec3+,<int>)"
+        },
+        {
+          "name": "wall.addfacet",
+          "signature": "facet_pnt = wall.addfacet(wall_pnt,vec3+,<vertex_pnt>)"
+        },
+        {
+          "name": "wall.facet.delete",
+          "signature": "bool = wall.facet.delete(facet_pnt)"
+        }
+      ],
+      "notes": [
+        "wall.facet.conveyor(.x/y/z) is the conveyor-belt surface velocity."
+      ]
+    },
+    {
+      "family": "vertices",
+      "examples": [
+        {
+          "name": "wall.vertexlist",
+          "signature": "vertex_list_pnt := wall.vertexlist(wall_pnt)"
+        },
+        {
+          "name": "wall.vertex.list",
+          "signature": "vertex_list_pnt = wall.vertex.list()"
+        },
+        {
+          "name": "wall.vertex.find",
+          "signature": "vertex_pnt = wall.vertex.find(int,<wall_pnt>)"
+        },
+        {
+          "name": "wall.vertex.pos",
+          "signature": "vec3/flt := wall.vertex.pos(vertex_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.vertex.vel",
+          "signature": "vec3/flt := wall.vertex.vel(vertex_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "wall.vertex.facetarray",
+          "signature": "arr := wall.vertex.facetarray(vertex_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "process sub-namespaces",
+      "examples": [
+        {
+          "name": "wall.thermal.list",
+          "signature": "fwallt_list_pnt = wall.thermal.list()"
+        },
+        {
+          "name": "wall.fluid.list",
+          "signature": "fwallt_list_pnt = wall.fluid.list()"
+        }
+      ],
+      "notes": [
+        "wall.thermal.* (48 names incl. thermal facets) and wall.fluid.* (49) mirror the mechanical wall/facet namespaces."
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 236,
+    "names": [
+      "wall.addfacet",
+      "wall.axis.angle",
+      "wall.axis.angle.x",
+      "wall.axis.angle.y",
+      "wall.axis.angle.z",
+      "wall.closed",
+      "wall.contact.list",
+      "wall.contact.list.all",
+      "wall.contactmap",
+      "wall.contactmap.all",
+      "wall.contactnum",
+      "wall.contactnum.all",
+      "wall.convex",
+      "wall.cutoff",
+      "wall.delete",
+      "wall.disp",
+      "wall.disp.x",
+      "wall.disp.y",
+      "wall.disp.z",
+      "wall.energy",
+      "wall.euler",
+      "wall.euler.x",
+      "wall.euler.y",
+      "wall.euler.z",
+      "wall.extra",
+      "wall.facet.active",
+      "wall.facet.contact.list",
+      "wall.facet.contact.list.all",
+      "wall.facet.contactmap",
+      "wall.facet.contactmap.all",
+      "wall.facet.contactnum",
+      "wall.facet.contactnum.all",
+      "wall.facet.conveyor",
+      "wall.facet.conveyor.x",
+      "wall.facet.conveyor.y",
+      "wall.facet.conveyor.z",
+      "wall.facet.delete",
+      "wall.facet.extra",
+      "wall.facet.find",
+      "wall.facet.group",
+      "wall.facet.group.list",
+      "wall.facet.group.remove",
+      "wall.facet.groupmap",
+      "wall.facet.id",
+      "wall.facet.inbox",
+      "wall.facet.isbonded",
+      "wall.facet.isgroup",
+      "wall.facet.isprop",
+      "wall.facet.list",
+      "wall.facet.maxid",
+      "wall.facet.near",
+      "wall.facet.normal",
+      "wall.facet.normal.x",
+      "wall.facet.normal.y",
+      "wall.facet.normal.z",
+      "wall.facet.num",
+      "wall.facet.pair",
+      "wall.facet.pointnear",
+      "wall.facet.pointnear.x",
+      "wall.facet.pointnear.y",
+      "wall.facet.pointnear.z",
+      "wall.facet.pos",
+      "wall.facet.pos.x",
+      "wall.facet.pos.y",
+      "wall.facet.pos.z",
+      "wall.facet.prop",
+      "wall.facet.typeid",
+      "wall.facet.vertex",
+      "wall.facet.wall",
+      "wall.facetlist",
+      "wall.find",
+      "wall.fluid.contact.list",
+      "wall.fluid.contact.list.all",
+      "wall.fluid.contactmap",
+      "wall.fluid.contactmap.all",
+      "wall.fluid.extra",
+      "wall.fluid.facet.contact.list",
+      "wall.fluid.facet.contact.list.all",
+      "wall.fluid.facet.contactmap",
+      "wall.fluid.facet.contactmap.all",
+      "wall.fluid.facet.facet",
+      "wall.fluid.facet.find",
+      "wall.fluid.facet.group",
+      "wall.fluid.facet.group.list",
+      "wall.fluid.facet.group.remove",
+      "wall.fluid.facet.groupmap",
+      "wall.fluid.facet.id",
+      "wall.fluid.facet.inbox",
+      "wall.fluid.facet.isgroup",
+      "wall.fluid.facet.isprop",
+      "wall.fluid.facet.list",
+      "wall.fluid.facet.near",
+      "wall.fluid.facet.num",
+      "wall.fluid.facet.pos",
+      "wall.fluid.facet.pos.x",
+      "wall.fluid.facet.pos.y",
+      "wall.fluid.facet.pos.z",
+      "wall.fluid.facet.prop",
+      "wall.fluid.facet.typeid",
+      "wall.fluid.facet.wall",
+      "wall.fluid.facetlist",
+      "wall.fluid.find",
+      "wall.fluid.group",
+      "wall.fluid.group.list",
+      "wall.fluid.group.remove",
+      "wall.fluid.groupmap",
+      "wall.fluid.id",
+      "wall.fluid.inbox",
+      "wall.fluid.isgroup",
+      "wall.fluid.list",
+      "wall.fluid.near",
+      "wall.fluid.num",
+      "wall.fluid.pos",
+      "wall.fluid.pos.x",
+      "wall.fluid.pos.y",
+      "wall.fluid.pos.z",
+      "wall.fluid.prop",
+      "wall.fluid.typeid",
+      "wall.fluid.wall",
+      "wall.force.contact",
+      "wall.force.contact.x",
+      "wall.force.contact.y",
+      "wall.force.contact.z",
+      "wall.fragment",
+      "wall.group",
+      "wall.group.list",
+      "wall.group.remove",
+      "wall.groupmap",
+      "wall.id",
+      "wall.inbox",
+      "wall.inside",
+      "wall.isbonded",
+      "wall.isgroup",
+      "wall.list",
+      "wall.maxid",
+      "wall.moment.contact",
+      "wall.moment.contact.x",
+      "wall.moment.contact.y",
+      "wall.moment.contact.z",
+      "wall.name",
+      "wall.near",
+      "wall.num",
+      "wall.pos",
+      "wall.pos.x",
+      "wall.pos.y",
+      "wall.pos.z",
+      "wall.prop",
+      "wall.rotation.center",
+      "wall.rotation.center.x",
+      "wall.rotation.center.y",
+      "wall.rotation.center.z",
+      "wall.servo.active",
+      "wall.servo.force",
+      "wall.servo.force.x",
+      "wall.servo.force.y",
+      "wall.servo.force.z",
+      "wall.servo.gain",
+      "wall.servo.gainfactor",
+      "wall.servo.gainupdate",
+      "wall.servo.vmax",
+      "wall.spin",
+      "wall.spin.x",
+      "wall.spin.y",
+      "wall.spin.z",
+      "wall.thermal.contact.list",
+      "wall.thermal.contact.list.all",
+      "wall.thermal.contactmap",
+      "wall.thermal.contactmap.all",
+      "wall.thermal.extra",
+      "wall.thermal.facet.contact.list",
+      "wall.thermal.facet.contact.list.all",
+      "wall.thermal.facet.contactmap",
+      "wall.thermal.facet.contactmap.all",
+      "wall.thermal.facet.facet",
+      "wall.thermal.facet.find",
+      "wall.thermal.facet.group",
+      "wall.thermal.facet.group.list",
+      "wall.thermal.facet.group.remove",
+      "wall.thermal.facet.groupmap",
+      "wall.thermal.facet.id",
+      "wall.thermal.facet.inbox",
+      "wall.thermal.facet.isgroup",
+      "wall.thermal.facet.isprop",
+      "wall.thermal.facet.list",
+      "wall.thermal.facet.near",
+      "wall.thermal.facet.num",
+      "wall.thermal.facet.pos",
+      "wall.thermal.facet.pos.x",
+      "wall.thermal.facet.pos.y",
+      "wall.thermal.facet.pos.z",
+      "wall.thermal.facet.prop",
+      "wall.thermal.facet.typeid",
+      "wall.thermal.facet.wall",
+      "wall.thermal.facetlist",
+      "wall.thermal.find",
+      "wall.thermal.group",
+      "wall.thermal.group.list",
+      "wall.thermal.group.remove",
+      "wall.thermal.groupmap",
+      "wall.thermal.id",
+      "wall.thermal.inbox",
+      "wall.thermal.isgroup",
+      "wall.thermal.list",
+      "wall.thermal.near",
+      "wall.thermal.num",
+      "wall.thermal.pos",
+      "wall.thermal.pos.x",
+      "wall.thermal.pos.y",
+      "wall.thermal.pos.z",
+      "wall.thermal.prop",
+      "wall.thermal.typeid",
+      "wall.thermal.wall",
+      "wall.typeid",
+      "wall.vel",
+      "wall.vel.x",
+      "wall.vel.y",
+      "wall.vel.z",
+      "wall.vertex.delete",
+      "wall.vertex.facetarray",
+      "wall.vertex.find",
+      "wall.vertex.id",
+      "wall.vertex.inbox",
+      "wall.vertex.list",
+      "wall.vertex.maxid",
+      "wall.vertex.near",
+      "wall.vertex.num",
+      "wall.vertex.pos",
+      "wall.vertex.pos.x",
+      "wall.vertex.pos.y",
+      "wall.vertex.pos.z",
+      "wall.vertex.typeid",
+      "wall.vertex.vel",
+      "wall.vertex.vel.x",
+      "wall.vertex.vel.y",
+      "wall.vertex.vel.z",
+      "wall.vertexlist"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}

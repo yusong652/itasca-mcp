@@ -1,0 +1,329 @@
+{
+  "name": "contact",
+  "dimension": "3D",
+  "full_name": "Contact FISH Intrinsics",
+  "description": "FISH access to contacts (all pair types): forces in global/local frames, gap, contact-model properties, end bodies, activity/bond state, and the contact.fluid.* fluid-pipe namespace.",
+  "intrinsic_families": [
+    {
+      "family": "iteration & topology",
+      "examples": [
+        {
+          "name": "contact.list",
+          "signature": "contact_list_pnt := contact.list(<str>)"
+        },
+        {
+          "name": "contact.find",
+          "signature": "contact_pnt := contact.find(int/str,int,<int>)"
+        },
+        {
+          "name": "contact.num",
+          "signature": "int := contact.num(<str>)"
+        },
+        {
+          "name": "contact.end1",
+          "signature": "piece_pnt := contact.end1(contact_pnt)"
+        },
+        {
+          "name": "contact.end2",
+          "signature": "piece_pnt := contact.end2(contact_pnt)"
+        },
+        {
+          "name": "contact.otherend",
+          "signature": "flt := contact.otherend(contact_pnt,any)"
+        },
+        {
+          "name": "contact.pos",
+          "signature": "vec3/flt := contact.pos(contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.gps",
+          "signature": "gp_list_pnt = contact.gps(con_pnt)"
+        }
+      ],
+      "notes": [
+        "contact.list.all / contact.num.all include inactive contacts; contact.list takes an optional type-name filter."
+      ]
+    },
+    {
+      "family": "forces & moments",
+      "examples": [
+        {
+          "name": "contact.force.global",
+          "signature": "vec3/flt := contact.force.global(mech_contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.force.local",
+          "signature": "vec3/flt := contact.force.local(mech_contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.force.normal",
+          "signature": "flt := contact.force.normal(mech_contact_pnt)"
+        },
+        {
+          "name": "contact.force.shear",
+          "signature": "flt := contact.force.shear(mech_contact_pnt)"
+        },
+        {
+          "name": "contact.force.set",
+          "signature": "contact.force.set(mech_contact_pnt) := vec3"
+        },
+        {
+          "name": "contact.moment.on1.global",
+          "signature": "vec3/flt := contact.moment.on1.global(mech_contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.moment.on2.global",
+          "signature": "vec3/flt := contact.moment.on2.global(mech_contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.gap",
+          "signature": "flt := contact.gap(contact_pnt)"
+        },
+        {
+          "name": "contact.normal",
+          "signature": "vec3/flt := contact.normal(contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.branch",
+          "signature": "vec3/flt := contact.branch(mech_contact_pnt,<int>)"
+        },
+        {
+          "name": "contact.offset",
+          "signature": "vec3/flt := contact.offset(contact_pnt,<int>)"
+        }
+      ],
+      "notes": [
+        "Frame conversion via contact.to.global / contact.to.local."
+      ]
+    },
+    {
+      "family": "model & properties",
+      "examples": [
+        {
+          "name": "contact.model",
+          "signature": "str := contact.model(contact_pnt) := str"
+        },
+        {
+          "name": "contact.prop",
+          "signature": "any := contact.prop(contact_pnt,str,<int>) := any"
+        },
+        {
+          "name": "contact.prop.index",
+          "signature": "int := contact.prop.index(contact_pnt,str)"
+        },
+        {
+          "name": "contact.model.prop.index",
+          "signature": "int := contact.model.prop.index(str,str)"
+        },
+        {
+          "name": "contact.isprop",
+          "signature": "bool := contact.isprop(contact_pnt,str,<int>)"
+        },
+        {
+          "name": "contact.method",
+          "signature": "bool := contact.method(contact_pnt,str,<arr>)"
+        }
+      ],
+      "notes": [
+        "contact.prop reads/writes contact-model properties by name; contact.method invokes model methods (e.g. bond/unbond on bonded models)."
+      ]
+    },
+    {
+      "family": "state & lifecycle",
+      "examples": [
+        {
+          "name": "contact.active",
+          "signature": "bool := contact.active(contact_pnt)"
+        },
+        {
+          "name": "contact.activate",
+          "signature": "bool := contact.activate(contact_pnt) := bool"
+        },
+        {
+          "name": "contact.inhibit",
+          "signature": "bool := contact.inhibit(contact_pnt) := bool"
+        },
+        {
+          "name": "contact.isbonded",
+          "signature": "bool := contact.isbonded(mech_contact_pnt)"
+        },
+        {
+          "name": "contact.unbond",
+          "signature": "bool := contact.unbond(mech_contact_pnt)"
+        },
+        {
+          "name": "contact.persist",
+          "signature": "bool := contact.persist(contact_pnt) := bool"
+        },
+        {
+          "name": "contact.energy",
+          "signature": "flt := contact.energy(contact_pnt,str)"
+        },
+        {
+          "name": "contact.fid",
+          "signature": "int := contact.fid(contact_pnt)"
+        },
+        {
+          "name": "contact.group",
+          "signature": "str := contact.group(contact_pnt,<str/index>) := str/index"
+        }
+      ]
+    },
+    {
+      "family": "fluid pipe namespace",
+      "examples": [
+        {
+          "name": "contact.fluid.flow.rate",
+          "signature": "flt := contact.fluid.flow.rate(fcon_pnt,int)"
+        },
+        {
+          "name": "contact.fluid.pressure.pore",
+          "signature": "flt := contact.fluid.pressure.pore(fcon_pnt) := flt"
+        },
+        {
+          "name": "contact.fluid.pipe.area",
+          "signature": "flt := contact.fluid.pipe.area(fcon_pnt) := flt"
+        },
+        {
+          "name": "contact.fluid.open",
+          "signature": "bool := contact.fluid.open(fcon_pnt) := bool"
+        }
+      ],
+      "notes": [
+        "contact.fluid.* (27 names) serves the fluid-pipe network riding on the contact fabric."
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 126,
+    "names": [
+      "contact.activate",
+      "contact.active",
+      "contact.area",
+      "contact.branch",
+      "contact.branch.x",
+      "contact.branch.y",
+      "contact.branch.z",
+      "contact.end1",
+      "contact.end2",
+      "contact.energy",
+      "contact.energy.sum",
+      "contact.extra",
+      "contact.fid",
+      "contact.find",
+      "contact.fluid.contact.mech",
+      "contact.fluid.flow.rate",
+      "contact.fluid.flow.rate.reservoir",
+      "contact.fluid.flow.rate.source",
+      "contact.fluid.force.effective.global",
+      "contact.fluid.force.effective.global.x",
+      "contact.fluid.force.effective.global.y",
+      "contact.fluid.force.effective.global.z",
+      "contact.fluid.force.pressure",
+      "contact.fluid.force.total.global",
+      "contact.fluid.force.total.global.x",
+      "contact.fluid.force.total.global.y",
+      "contact.fluid.force.total.global.z",
+      "contact.fluid.id",
+      "contact.fluid.internal",
+      "contact.fluid.model",
+      "contact.fluid.open",
+      "contact.fluid.pipe.area",
+      "contact.fluid.pipe.length",
+      "contact.fluid.pressure.fixed",
+      "contact.fluid.pressure.head",
+      "contact.fluid.pressure.hydrostatic",
+      "contact.fluid.pressure.pore",
+      "contact.fluid.type.name",
+      "contact.fluid.volume.external",
+      "contact.fluid.volume.material",
+      "contact.fluid.volume.total",
+      "contact.force.from.stress",
+      "contact.force.global",
+      "contact.force.global.x",
+      "contact.force.global.y",
+      "contact.force.global.z",
+      "contact.force.local",
+      "contact.force.local.x",
+      "contact.force.local.y",
+      "contact.force.local.z",
+      "contact.force.normal",
+      "contact.force.set",
+      "contact.force.shear",
+      "contact.fullupdate",
+      "contact.gap",
+      "contact.gps",
+      "contact.group",
+      "contact.group.list",
+      "contact.group.list.all",
+      "contact.group.remove",
+      "contact.groupmap",
+      "contact.groupmap.all",
+      "contact.id",
+      "contact.inherit",
+      "contact.inhibit",
+      "contact.isbonded",
+      "contact.isenergy",
+      "contact.isgroup",
+      "contact.isprop",
+      "contact.joint",
+      "contact.list",
+      "contact.list.all",
+      "contact.method",
+      "contact.model",
+      "contact.model.prop.index",
+      "contact.moment.on1.global",
+      "contact.moment.on1.global.x",
+      "contact.moment.on1.global.y",
+      "contact.moment.on1.global.z",
+      "contact.moment.on1.local",
+      "contact.moment.on1.local.x",
+      "contact.moment.on1.local.y",
+      "contact.moment.on1.local.z",
+      "contact.moment.on2.global",
+      "contact.moment.on2.global.x",
+      "contact.moment.on2.global.y",
+      "contact.moment.on2.global.z",
+      "contact.moment.on2.local",
+      "contact.moment.on2.local.x",
+      "contact.moment.on2.local.y",
+      "contact.moment.on2.local.z",
+      "contact.normal",
+      "contact.normal.x",
+      "contact.normal.y",
+      "contact.normal.z",
+      "contact.num",
+      "contact.num.all",
+      "contact.offset",
+      "contact.offset.x",
+      "contact.offset.y",
+      "contact.offset.z",
+      "contact.otherend",
+      "contact.persist",
+      "contact.pos",
+      "contact.pos.x",
+      "contact.pos.y",
+      "contact.pos.z",
+      "contact.prop",
+      "contact.prop.index",
+      "contact.shear",
+      "contact.shear.x",
+      "contact.shear.y",
+      "contact.shear.z",
+      "contact.spin",
+      "contact.spin.x",
+      "contact.spin.y",
+      "contact.spin.z",
+      "contact.thermal.power",
+      "contact.to.global",
+      "contact.to.local",
+      "contact.typeid",
+      "contact.unbond",
+      "contact.vel",
+      "contact.vel.x",
+      "contact.vel.y",
+      "contact.vel.z"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}

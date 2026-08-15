@@ -1,0 +1,342 @@
+{
+  "name": "fracture-dfn",
+  "dimension": "3D",
+  "full_name": "Fracture / DFN FISH Intrinsics",
+  "description": "FISH access to the Discrete Fracture Network: fractures (geometry, statistics, per-fracture properties), fracture intersections and intersection sets, fracture templates and vertices, and the DFN containers (dfn.*).",
+  "intrinsic_families": [
+    {
+      "family": "fracture geometry & attributes",
+      "examples": [
+        {
+          "name": "fracture.list",
+          "signature": "frac_network_list_pnt := fracture.list()"
+        },
+        {
+          "name": "fracture.find",
+          "signature": "frac_pnt := fracture.find(int)"
+        },
+        {
+          "name": "fracture.pos",
+          "signature": "vec3/flt := fracture.pos(frac_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "fracture.dip",
+          "signature": "flt := fracture.dip(frac_pnt) := flt"
+        },
+        {
+          "name": "fracture.ddir",
+          "signature": "flt := fracture.ddir(frac_pnt) := flt"
+        },
+        {
+          "name": "fracture.normal",
+          "signature": "vec3/flt := fracture.normal(frac_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "fracture.area",
+          "signature": "flt := fracture.area(frac_pnt) := flt"
+        },
+        {
+          "name": "fracture.diameter",
+          "signature": "flt := fracture.diameter(frac_pnt) := flt"
+        },
+        {
+          "name": "fracture.aperture",
+          "signature": "flt := fracture.aperture(frac_pnt) := flt"
+        },
+        {
+          "name": "fracture.isdisk",
+          "signature": "bool := fracture.isdisk(frac_pnt)"
+        },
+        {
+          "name": "fracture.dfn",
+          "signature": "frac_network_pnt := fracture.dfn(frac_pnt)"
+        },
+        {
+          "name": "fracture.from.contact",
+          "signature": "frac_pnt = fracture.from.contact(frac_network_pnt,contact_pnt)"
+        },
+        {
+          "name": "fracture.create",
+          "signature": "frac_pnt = fracture.create(frac_network_pnt,arr)"
+        },
+        {
+          "name": "fracture.delete",
+          "signature": "bool = fracture.delete(frac_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "network statistics",
+      "examples": [
+        {
+          "name": "fracture.p10",
+          "signature": "flt := fracture.p10(vec3,vec3,<frac_network_pnt>)"
+        },
+        {
+          "name": "fracture.geomp10",
+          "signature": "flt := fracture.geomp10(geom_set_pnt,<frac_network_pnt>)"
+        },
+        {
+          "name": "fracture.geomp21",
+          "signature": "flt := fracture.geomp21(geom_set_pnt,<frac_network_pnt>)"
+        },
+        {
+          "name": "fracture.centerdensity",
+          "signature": "flt := fracture.centerdensity(<vec3>,<vec3>,<frac_network_pnt>)"
+        },
+        {
+          "name": "fracture.density",
+          "signature": "flt := fracture.density(<vec3>,<vec3>,<frac_network_pnt>)"
+        },
+        {
+          "name": "fracture.percolation",
+          "signature": "flt := fracture.percolation(<vec3>,<vec3>,<int>,<frac_network_pnt>)"
+        }
+      ],
+      "notes": [
+        "Same Pxy fracture-intensity vocabulary as the plot/compute commands."
+      ]
+    },
+    {
+      "family": "intersections",
+      "examples": [
+        {
+          "name": "fracture.intersect.list",
+          "signature": "intersect_list_pnt := fracture.intersect.list()"
+        },
+        {
+          "name": "fracture.intersect.find",
+          "signature": "intersect_pnt := fracture.intersect.find(int)"
+        },
+        {
+          "name": "fracture.intersect.end1",
+          "signature": "frac_pnt := fracture.intersect.end1(intersect_pnt)"
+        },
+        {
+          "name": "fracture.intersect.len",
+          "signature": "vec3/flt := fracture.intersect.len(intersect_pnt)"
+        },
+        {
+          "name": "fracture.intersect.set.list",
+          "signature": "intersection_set_list_pnt := fracture.intersect.set.list()"
+        },
+        {
+          "name": "fracture.intersect.set.name",
+          "signature": "str := fracture.intersect.set.name(intersect_set_pnt)"
+        }
+      ],
+      "notes": [
+        "Intersections live in named intersection sets (fracture.intersect.set.*)."
+      ]
+    },
+    {
+      "family": "templates & vertices",
+      "examples": [
+        {
+          "name": "fracture.template.list",
+          "signature": "dfn_template_list_pnt := fracture.template.list()"
+        },
+        {
+          "name": "fracture.template.name",
+          "signature": "str := fracture.template.name(dfn_template_pnt)"
+        },
+        {
+          "name": "fracture.template.sizemin",
+          "signature": "flt := fracture.template.sizemin(dfn_template_pnt) := flt"
+        },
+        {
+          "name": "fracture.vertexlist",
+          "signature": "list := fracture.vertexlist(frac_pnt)"
+        },
+        {
+          "name": "fracture.vertex.pos",
+          "signature": "vec3/flt := fracture.vertex.pos(dfn_vertex_pnt,<int>)"
+        }
+      ]
+    },
+    {
+      "family": "DFN containers",
+      "examples": [
+        {
+          "name": "dfn.list",
+          "signature": "list := dfn.list()"
+        },
+        {
+          "name": "dfn.find",
+          "signature": "frac_network_pnt := dfn.find(int/str)"
+        },
+        {
+          "name": "dfn.name",
+          "signature": "str := dfn.name(frac_network_pnt)"
+        },
+        {
+          "name": "dfn.fracturelist",
+          "signature": "frac_network_list_pnt := dfn.fracturelist(frac_network_pnt)"
+        },
+        {
+          "name": "dfn.fracturenum",
+          "signature": "int := dfn.fracturenum(frac_network_pnt)"
+        },
+        {
+          "name": "dfn.dominance",
+          "signature": "int := dfn.dominance(frac_network_pnt) := int"
+        },
+        {
+          "name": "dfn.create",
+          "signature": "frac_network_pnt := dfn.create(<str>)"
+        },
+        {
+          "name": "dfn.delete",
+          "signature": "bool := dfn.delete(frac_network_pnt)"
+        }
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 141,
+    "names": [
+      "dfn.contact.list",
+      "dfn.contact.list.all",
+      "dfn.contactmap",
+      "dfn.contactmap.all",
+      "dfn.create",
+      "dfn.delete",
+      "dfn.dominance",
+      "dfn.extra",
+      "dfn.find",
+      "dfn.fracturelist",
+      "dfn.fracturenum",
+      "dfn.group",
+      "dfn.group.remove",
+      "dfn.id",
+      "dfn.isgroup",
+      "dfn.list",
+      "dfn.maxid",
+      "dfn.name",
+      "dfn.num",
+      "dfn.prop",
+      "dfn.template",
+      "dfn.typeid",
+      "fracture.aperture",
+      "fracture.area",
+      "fracture.centerdensity",
+      "fracture.contact.list",
+      "fracture.contact.list.all",
+      "fracture.contactmap",
+      "fracture.contactmap.all",
+      "fracture.copy",
+      "fracture.create",
+      "fracture.ddir",
+      "fracture.decimate",
+      "fracture.delete",
+      "fracture.density",
+      "fracture.dfn",
+      "fracture.diameter",
+      "fracture.dip",
+      "fracture.extra",
+      "fracture.find",
+      "fracture.from.contact",
+      "fracture.genpos",
+      "fracture.genpos.x",
+      "fracture.genpos.y",
+      "fracture.genpos.z",
+      "fracture.gensize",
+      "fracture.geomp10",
+      "fracture.geomp20",
+      "fracture.geomp21",
+      "fracture.geomtrace",
+      "fracture.gintersect",
+      "fracture.group",
+      "fracture.group.remove",
+      "fracture.id",
+      "fracture.inbox",
+      "fracture.interarray",
+      "fracture.intersect",
+      "fracture.intersect.end1",
+      "fracture.intersect.end2",
+      "fracture.intersect.find",
+      "fracture.intersect.id",
+      "fracture.intersect.len",
+      "fracture.intersect.list",
+      "fracture.intersect.maxid",
+      "fracture.intersect.npolylinept",
+      "fracture.intersect.num",
+      "fracture.intersect.polylinept",
+      "fracture.intersect.pos1",
+      "fracture.intersect.pos1.x",
+      "fracture.intersect.pos1.y",
+      "fracture.intersect.pos1.z",
+      "fracture.intersect.pos2",
+      "fracture.intersect.pos2.x",
+      "fracture.intersect.pos2.y",
+      "fracture.intersect.pos2.z",
+      "fracture.intersect.set",
+      "fracture.intersect.set.delete",
+      "fracture.intersect.set.find",
+      "fracture.intersect.set.id",
+      "fracture.intersect.set.interlist",
+      "fracture.intersect.set.internum",
+      "fracture.intersect.set.list",
+      "fracture.intersect.set.maxid",
+      "fracture.intersect.set.name",
+      "fracture.intersect.set.num",
+      "fracture.intersect.set.path",
+      "fracture.intersect.set.typeid",
+      "fracture.intersect.typeid",
+      "fracture.isdisk",
+      "fracture.isgroup",
+      "fracture.isprop",
+      "fracture.list",
+      "fracture.maxid",
+      "fracture.near",
+      "fracture.normal",
+      "fracture.normal.x",
+      "fracture.normal.y",
+      "fracture.normal.z",
+      "fracture.num",
+      "fracture.p10",
+      "fracture.percolation",
+      "fracture.pointnear",
+      "fracture.pos",
+      "fracture.pos.x",
+      "fracture.pos.y",
+      "fracture.pos.z",
+      "fracture.prop",
+      "fracture.template.ddirmax",
+      "fracture.template.ddirmin",
+      "fracture.template.dipmax",
+      "fracture.template.dipmin",
+      "fracture.template.find",
+      "fracture.template.id",
+      "fracture.template.list",
+      "fracture.template.maxid",
+      "fracture.template.name",
+      "fracture.template.norientparam",
+      "fracture.template.nposparam",
+      "fracture.template.nsizeparam",
+      "fracture.template.num",
+      "fracture.template.orientparam",
+      "fracture.template.orienttype",
+      "fracture.template.posparam",
+      "fracture.template.postype",
+      "fracture.template.sizemax",
+      "fracture.template.sizemin",
+      "fracture.template.sizeparam",
+      "fracture.template.sizetype",
+      "fracture.template.typeid",
+      "fracture.typeid",
+      "fracture.vertex.find",
+      "fracture.vertex.list",
+      "fracture.vertex.maxid",
+      "fracture.vertex.num",
+      "fracture.vertex.pos",
+      "fracture.vertex.pos.x",
+      "fracture.vertex.pos.y",
+      "fracture.vertex.pos.z",
+      "fracture.vertex.typeid",
+      "fracture.vertexarray",
+      "fracture.vertexlist"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}

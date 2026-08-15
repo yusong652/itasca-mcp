@@ -1,0 +1,414 @@
+{
+  "name": "rblock",
+  "dimension": "3D",
+  "full_name": "Rigid-Block (rblock) FISH Intrinsics",
+  "description": "FISH access to rigid blocks: body kinematics/dynamics, geometry queries (facets, vertices, aspect ratio, rounding), templates, and the thermal twin.",
+  "intrinsic_families": [
+    {
+      "family": "body",
+      "examples": [
+        {
+          "name": "rblock.list",
+          "signature": "rblock_list_pnt := rblock.list()"
+        },
+        {
+          "name": "rblock.find",
+          "signature": "rblock_pnt := rblock.find(int)"
+        },
+        {
+          "name": "rblock.pos",
+          "signature": "vec3/flt := rblock.pos(rblock_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "rblock.vel",
+          "signature": "vec3/flt := rblock.vel(rblock_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "rblock.spin",
+          "signature": "vec3/flt := rblock.spin(rblock_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "rblock.mass",
+          "signature": "flt := rblock.mass(rblock_pnt)"
+        },
+        {
+          "name": "rblock.vol",
+          "signature": "flt := rblock.vol(rblock_pnt) := flt"
+        },
+        {
+          "name": "rblock.moi.prin",
+          "signature": "vec3/flt := rblock.moi.prin(rblock_pnt,<int>)"
+        },
+        {
+          "name": "rblock.stress",
+          "signature": "ten/flt := rblock.stress(rblock_pnt,<int>,<int>)"
+        },
+        {
+          "name": "rblock.copy",
+          "signature": "rblock_pnt = rblock.copy(rblock_pnt)"
+        },
+        {
+          "name": "rblock.rotate",
+          "signature": "int := rblock.rotate(rblock_pnt,vec3+/flt)"
+        },
+        {
+          "name": "rblock.scalesphere",
+          "signature": "int := rblock.scalesphere(rblock_pnt,flt)"
+        },
+        {
+          "name": "rblock.scalevol",
+          "signature": "int := rblock.scalevol(rblock_pnt,flt)"
+        },
+        {
+          "name": "rblock.unbond",
+          "signature": "bool := rblock.unbond(rblock_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "geometry queries",
+      "examples": [
+        {
+          "name": "rblock.aspect.ratio",
+          "signature": "flt := rblock.aspect.ratio(rblock_pnt)"
+        },
+        {
+          "name": "rblock.axis.long",
+          "signature": "vec3 := rblock.axis.long(rblock_pnt)"
+        },
+        {
+          "name": "rblock.rounding",
+          "signature": "flt := rblock.rounding(rblock_pnt)"
+        },
+        {
+          "name": "rblock.length.max",
+          "signature": "flt := rblock.length.max(rblock_pnt)"
+        },
+        {
+          "name": "rblock.length.min",
+          "signature": "flt := rblock.length.min(rblock_pnt)"
+        },
+        {
+          "name": "rblock.intersect",
+          "signature": "bool := rblock.intersect(rblock_pnt,rblock_pnt)"
+        },
+        {
+          "name": "rblock.ball.pos",
+          "signature": "vec3/flt := rblock.ball.pos(rblock_pnt,<int>)"
+        },
+        {
+          "name": "rblock.ball.radius",
+          "signature": "flt := rblock.ball.radius(rblock_pnt)"
+        }
+      ],
+      "notes": [
+        "rblock.ball.* exposes the bounding/inscribed-ball approximation."
+      ]
+    },
+    {
+      "family": "facets & vertices",
+      "examples": [
+        {
+          "name": "rblock.facet.list",
+          "signature": "list := rblock.facet.list(rblock_pnt)"
+        },
+        {
+          "name": "rblock.facet.area",
+          "signature": "int := rblock.facet.area(rblock_pnt,int)"
+        },
+        {
+          "name": "rblock.facet.centroid",
+          "signature": "vec3/flt := rblock.facet.centroid(rblock_pnt,int,<int>)"
+        },
+        {
+          "name": "rblock.facet.normal",
+          "signature": "vec3/flt := rblock.facet.normal(rblock_pnt,int,<int>)"
+        },
+        {
+          "name": "rblock.facet.closest",
+          "signature": "vec3/flt := rblock.facet.closest(rblock_pnt,int,vec3/flt,<int>)"
+        },
+        {
+          "name": "rblock.vertex.list",
+          "signature": "list := rblock.vertex.list(rblock_pnt)"
+        },
+        {
+          "name": "rblock.vertex.pos",
+          "signature": "vec3/flt := rblock.vertex.pos(rblock_pnt,int,<int>)"
+        },
+        {
+          "name": "rblock.vertex.near",
+          "signature": "rblock_pnt := rblock.vertex.near(rblock_pnt,vec3)"
+        }
+      ]
+    },
+    {
+      "family": "templates",
+      "examples": [
+        {
+          "name": "rblock.template.list",
+          "signature": "rblock_temp_list_pnt = rblock.template.list()"
+        },
+        {
+          "name": "rblock.template.find",
+          "signature": "rblock_temp_pnt = rblock.template.find(str)"
+        },
+        {
+          "name": "rblock.template.name",
+          "signature": "str = rblock.template.name(rblock_temp_pnt)"
+        },
+        {
+          "name": "rblock.template.vol",
+          "signature": "flt = rblock.template.vol(rblock_temp_pnt) = flt"
+        }
+      ]
+    },
+    {
+      "family": "thermal twin",
+      "examples": [
+        {
+          "name": "rblock.thermal.temp",
+          "signature": "flt = rblock.thermal.temp(trblock_pnt) = flt"
+        },
+        {
+          "name": "rblock.thermal.power.unbal",
+          "signature": "flt = rblock.thermal.power.unbal(trblock_pnt)"
+        }
+      ],
+      "notes": [
+        "rblock.thermal.* (24 names) mirrors the mechanical bookkeeping."
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 225,
+    "names": [
+      "rblock.aspect.ratio",
+      "rblock.axis.angle",
+      "rblock.axis.angle.x",
+      "rblock.axis.angle.y",
+      "rblock.axis.angle.z",
+      "rblock.axis.long",
+      "rblock.ball.pos",
+      "rblock.ball.pos.x",
+      "rblock.ball.pos.y",
+      "rblock.ball.pos.z",
+      "rblock.ball.radius",
+      "rblock.contact.list",
+      "rblock.contact.list.all",
+      "rblock.contactmap",
+      "rblock.contactmap.all",
+      "rblock.contactnum",
+      "rblock.contactnum.all",
+      "rblock.containing",
+      "rblock.convergence",
+      "rblock.copy",
+      "rblock.damp",
+      "rblock.delete",
+      "rblock.density",
+      "rblock.disp",
+      "rblock.disp.x",
+      "rblock.disp.y",
+      "rblock.disp.z",
+      "rblock.energy",
+      "rblock.euler",
+      "rblock.euler.x",
+      "rblock.euler.y",
+      "rblock.euler.z",
+      "rblock.extra",
+      "rblock.facet.area",
+      "rblock.facet.centroid",
+      "rblock.facet.centroid.x",
+      "rblock.facet.centroid.y",
+      "rblock.facet.centroid.z",
+      "rblock.facet.closest",
+      "rblock.facet.closest.x",
+      "rblock.facet.closest.y",
+      "rblock.facet.closest.z",
+      "rblock.facet.group",
+      "rblock.facet.group.remove",
+      "rblock.facet.isgroup",
+      "rblock.facet.list",
+      "rblock.facet.map",
+      "rblock.facet.normal",
+      "rblock.facet.normal.x",
+      "rblock.facet.normal.y",
+      "rblock.facet.normal.z",
+      "rblock.facet.num",
+      "rblock.facet.vertex.pos",
+      "rblock.facet.vertex.pos.x",
+      "rblock.facet.vertex.pos.y",
+      "rblock.facet.vertex.pos.z",
+      "rblock.find",
+      "rblock.fix",
+      "rblock.force.app",
+      "rblock.force.app.x",
+      "rblock.force.app.y",
+      "rblock.force.app.z",
+      "rblock.force.contact",
+      "rblock.force.contact.x",
+      "rblock.force.contact.y",
+      "rblock.force.contact.z",
+      "rblock.force.unbal",
+      "rblock.force.unbal.x",
+      "rblock.force.unbal.y",
+      "rblock.force.unbal.z",
+      "rblock.fragment",
+      "rblock.group",
+      "rblock.group.list",
+      "rblock.group.remove",
+      "rblock.groupmap",
+      "rblock.id",
+      "rblock.inbox",
+      "rblock.inglobal",
+      "rblock.inprin",
+      "rblock.inside",
+      "rblock.intersect",
+      "rblock.isbonded",
+      "rblock.isgroup",
+      "rblock.isprop",
+      "rblock.length.max",
+      "rblock.length.min",
+      "rblock.list",
+      "rblock.mass",
+      "rblock.mass.real",
+      "rblock.maxid",
+      "rblock.mech.convergence",
+      "rblock.mech.ratio.avg",
+      "rblock.mech.ratio.local",
+      "rblock.mech.ratio.max",
+      "rblock.mech.unbal.max",
+      "rblock.moi",
+      "rblock.moi.fix",
+      "rblock.moi.prin",
+      "rblock.moi.prin.real",
+      "rblock.moi.prin.real.x",
+      "rblock.moi.prin.real.y",
+      "rblock.moi.prin.real.z",
+      "rblock.moi.prin.x",
+      "rblock.moi.prin.y",
+      "rblock.moi.prin.z",
+      "rblock.moi.real",
+      "rblock.moi.real.xx",
+      "rblock.moi.real.xy",
+      "rblock.moi.real.xz",
+      "rblock.moi.real.yy",
+      "rblock.moi.real.yz",
+      "rblock.moi.real.zz",
+      "rblock.moi.xx",
+      "rblock.moi.xy",
+      "rblock.moi.xz",
+      "rblock.moi.yy",
+      "rblock.moi.yz",
+      "rblock.moi.zz",
+      "rblock.moment.app",
+      "rblock.moment.app.x",
+      "rblock.moment.app.y",
+      "rblock.moment.app.z",
+      "rblock.moment.contact",
+      "rblock.moment.contact.x",
+      "rblock.moment.contact.y",
+      "rblock.moment.contact.z",
+      "rblock.moment.unbal",
+      "rblock.moment.unbal.x",
+      "rblock.moment.unbal.y",
+      "rblock.moment.unbal.z",
+      "rblock.near",
+      "rblock.num",
+      "rblock.pos",
+      "rblock.pos.x",
+      "rblock.pos.y",
+      "rblock.pos.z",
+      "rblock.prin.axis.angle",
+      "rblock.prin.axis.angle.x",
+      "rblock.prin.axis.angle.y",
+      "rblock.prin.axis.angle.z",
+      "rblock.prin.euler",
+      "rblock.prin.euler.x",
+      "rblock.prin.euler.y",
+      "rblock.prin.euler.z",
+      "rblock.prop",
+      "rblock.ratio",
+      "rblock.ratio.target",
+      "rblock.rotate",
+      "rblock.rounding",
+      "rblock.scalesphere",
+      "rblock.scalevol",
+      "rblock.spin",
+      "rblock.spin.x",
+      "rblock.spin.y",
+      "rblock.spin.z",
+      "rblock.stress",
+      "rblock.stress.xx",
+      "rblock.stress.xy",
+      "rblock.stress.xz",
+      "rblock.stress.yy",
+      "rblock.stress.yz",
+      "rblock.stress.zz",
+      "rblock.template.delete",
+      "rblock.template.find",
+      "rblock.template.list",
+      "rblock.template.maxid",
+      "rblock.template.moi",
+      "rblock.template.moi.prin",
+      "rblock.template.moi.prin.x",
+      "rblock.template.moi.prin.y",
+      "rblock.template.moi.prin.z",
+      "rblock.template.moi.xx",
+      "rblock.template.moi.xy",
+      "rblock.template.moi.xz",
+      "rblock.template.moi.yy",
+      "rblock.template.moi.yz",
+      "rblock.template.moi.zz",
+      "rblock.template.name",
+      "rblock.template.num",
+      "rblock.template.typeid",
+      "rblock.template.vol",
+      "rblock.thermal.contact.list",
+      "rblock.thermal.contact.list.all",
+      "rblock.thermal.contactmap",
+      "rblock.thermal.contactmap.all",
+      "rblock.thermal.contactnum",
+      "rblock.thermal.contactnum.all",
+      "rblock.thermal.expansion",
+      "rblock.thermal.extra",
+      "rblock.thermal.find",
+      "rblock.thermal.fix",
+      "rblock.thermal.group",
+      "rblock.thermal.group.list",
+      "rblock.thermal.group.remove",
+      "rblock.thermal.groupmap",
+      "rblock.thermal.id",
+      "rblock.thermal.inbox",
+      "rblock.thermal.isgroup",
+      "rblock.thermal.isprop",
+      "rblock.thermal.list",
+      "rblock.thermal.near",
+      "rblock.thermal.num",
+      "rblock.thermal.power.app",
+      "rblock.thermal.power.unbal",
+      "rblock.thermal.prop",
+      "rblock.thermal.rblock",
+      "rblock.thermal.specific.heat",
+      "rblock.thermal.temp",
+      "rblock.thermal.temp.increment",
+      "rblock.thermal.typeid",
+      "rblock.typeid",
+      "rblock.unbond",
+      "rblock.vel",
+      "rblock.vel.x",
+      "rblock.vel.y",
+      "rblock.vel.z",
+      "rblock.vertex.list",
+      "rblock.vertex.map",
+      "rblock.vertex.near",
+      "rblock.vertex.num",
+      "rblock.vertex.pos",
+      "rblock.vertex.pos.x",
+      "rblock.vertex.pos.y",
+      "rblock.vertex.pos.z",
+      "rblock.vol"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}

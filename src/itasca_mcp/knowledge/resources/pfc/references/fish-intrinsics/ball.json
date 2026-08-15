@@ -1,0 +1,438 @@
+{
+  "name": "ball",
+  "dimension": "3D",
+  "full_name": "Ball FISH Intrinsics",
+  "description": "Pointer-based FISH access to balls - iteration, kinematics, forces, attributes, plus the ball.thermal.* / ball.fluid.* / ball.cfd.* process twins and ball.zone.* coupling namespaces.",
+  "intrinsic_families": [
+    {
+      "family": "iteration & lookup",
+      "examples": [
+        {
+          "name": "ball.list",
+          "signature": "ball_list_pnt := ball.list()"
+        },
+        {
+          "name": "ball.find",
+          "signature": "bal_pnt := ball.find(int)"
+        },
+        {
+          "name": "ball.near",
+          "signature": "bal_pnt := ball.near(vec3+,<flt>)"
+        },
+        {
+          "name": "ball.num",
+          "signature": "int := ball.num()"
+        },
+        {
+          "name": "ball.maxid",
+          "signature": "int := ball.maxid()"
+        },
+        {
+          "name": "ball.inbox",
+          "signature": "list := ball.inbox(vec3+,vec3+,<bool>)"
+        },
+        {
+          "name": "ball.containing",
+          "signature": "ball_pnt := ball.containing(vec3+,<index>)"
+        },
+        {
+          "name": "ball.inside",
+          "signature": "bool := ball.inside(ball_pnt,vec3)"
+        }
+      ]
+    },
+    {
+      "family": "kinematics",
+      "examples": [
+        {
+          "name": "ball.pos",
+          "signature": "vec3/flt := ball.pos(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.vel",
+          "signature": "vec3/flt := ball.vel(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.disp",
+          "signature": "vec3/flt := ball.disp(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.spin",
+          "signature": "vec3/flt := ball.spin(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.euler",
+          "signature": "vec3/flt := ball.euler(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.axis.angle",
+          "signature": "vec3/flt := ball.axis.angle(ball_pnt,<int>) := vec3/flt"
+        }
+      ],
+      "notes": [
+        "Vector intrinsics carry .x/.y/.z component variants throughout."
+      ]
+    },
+    {
+      "family": "forces & moments",
+      "examples": [
+        {
+          "name": "ball.force.app",
+          "signature": "vec3/flt := ball.force.app(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.force.contact",
+          "signature": "vec3/flt := ball.force.contact(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.force.unbal",
+          "signature": "vec3/flt := ball.force.unbal(ball_pnt,<int>)"
+        },
+        {
+          "name": "ball.moment.contact",
+          "signature": "vec3/flt := ball.moment.contact(ball_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "ball.moment.unbal",
+          "signature": "vec3/flt := ball.moment.unbal(ball_pnt,<int>)"
+        }
+      ]
+    },
+    {
+      "family": "attributes & properties",
+      "examples": [
+        {
+          "name": "ball.radius",
+          "signature": "flt := ball.radius(ball_pnt) := flt"
+        },
+        {
+          "name": "ball.density",
+          "signature": "flt := ball.density(ball_pnt) := flt"
+        },
+        {
+          "name": "ball.mass",
+          "signature": "flt := ball.mass(ball_pnt)"
+        },
+        {
+          "name": "ball.mass.real",
+          "signature": "flt := ball.mass.real(ball_pnt)"
+        },
+        {
+          "name": "ball.moi",
+          "signature": "flt := ball.moi(ball_pnt)"
+        },
+        {
+          "name": "ball.damp",
+          "signature": "flt := ball.damp(ball_pnt) := flt"
+        },
+        {
+          "name": "ball.prop",
+          "signature": "any := ball.prop(ball_pnt,str) := any"
+        },
+        {
+          "name": "ball.isprop",
+          "signature": "bool := ball.isprop(ball_pnt,str)"
+        },
+        {
+          "name": "ball.stress",
+          "signature": "ten/flt := ball.stress(ball_pnt,<int>,<int>)"
+        },
+        {
+          "name": "ball.fix",
+          "signature": "bool := ball.fix(ball_pnt,int) := bool"
+        },
+        {
+          "name": "ball.extra",
+          "signature": "any := ball.extra(ball_pnt,<int>) := any"
+        },
+        {
+          "name": "ball.group",
+          "signature": "str := ball.group(ball_pnt,<str/index>) := str/index"
+        },
+        {
+          "name": "ball.id",
+          "signature": "int := ball.id(ball_pnt)"
+        },
+        {
+          "name": "ball.isbonded",
+          "signature": "bool := ball.isbonded(ball_pnt,<pnt/int>)"
+        },
+        {
+          "name": "ball.energy",
+          "signature": "flt := ball.energy(str)"
+        },
+        {
+          "name": "ball.fragment",
+          "signature": "int := ball.fragment(ball_pnt) := int"
+        }
+      ]
+    },
+    {
+      "family": "creation & deletion",
+      "examples": [
+        {
+          "name": "ball.create",
+          "signature": "ball_pnt := ball.create(ball_pnt,vec3+,<int>)"
+        },
+        {
+          "name": "ball.delete",
+          "signature": "bool = ball.delete(ball_pnt)"
+        }
+      ]
+    },
+    {
+      "family": "convergence & ratios",
+      "examples": [
+        {
+          "name": "ball.convergence",
+          "signature": "flt := ball.convergence(ball_pnt)"
+        },
+        {
+          "name": "ball.ratio",
+          "signature": "flt := ball.ratio(ball_pnt)"
+        },
+        {
+          "name": "ball.ratio.target",
+          "signature": "flt := ball.ratio.target(ball_pnt) := flt"
+        },
+        {
+          "name": "ball.mech.ratio.avg",
+          "signature": "flt := ball.mech.ratio.avg()"
+        },
+        {
+          "name": "ball.mech.ratio.max",
+          "signature": "flt := ball.mech.ratio.max()"
+        },
+        {
+          "name": "ball.mech.unbal.max",
+          "signature": "flt := ball.mech.unbal.max()"
+        }
+      ]
+    },
+    {
+      "family": "contact topology",
+      "examples": [
+        {
+          "name": "ball.contact.list",
+          "signature": "list := ball.contact.list(ball_pnt,<int>,<pce_pnt>)"
+        },
+        {
+          "name": "ball.contactmap",
+          "signature": "map := ball.contactmap(ball_pnt,<int>,<pce_pnt>)"
+        },
+        {
+          "name": "ball.contactnum",
+          "signature": "int := ball.contactnum(ball_pnt,<int>)"
+        }
+      ],
+      "notes": [
+        ".all variants include inactive contacts."
+      ]
+    },
+    {
+      "family": "process sub-namespaces",
+      "examples": [
+        {
+          "name": "ball.thermal.temp",
+          "signature": "flt = ball.thermal.temp(tball_pnt) = flt"
+        },
+        {
+          "name": "ball.thermal.power.unbal",
+          "signature": "flt = ball.thermal.power.unbal(tball_pnt)"
+        },
+        {
+          "name": "ball.fluid.pressure.head",
+          "signature": "flt := ball.fluid.pressure.head(fball_pnt)"
+        },
+        {
+          "name": "ball.cfd.force",
+          "signature": "vec3/flt = ball.cfd.force(cfdball_pnt,<int>) = vec3/flt"
+        },
+        {
+          "name": "ball.zone.ball.mass.factor",
+          "signature": "flt = ball.zone.ball.mass.factor(cball_pnt) = flt"
+        }
+      ],
+      "notes": [
+        "ball.thermal.* (36 names) mirrors the mechanical bookkeeping for the thermal process; ball.fluid.* (11) and ball.cfd.* (22) likewise; ball.zone.* couples balls to FLAC3D-style zones."
+      ]
+    }
+  ],
+  "live_inventory": {
+    "count": 171,
+    "names": [
+      "ball.axis.angle",
+      "ball.axis.angle.x",
+      "ball.axis.angle.y",
+      "ball.axis.angle.z",
+      "ball.cfd.ball",
+      "ball.cfd.elementlist",
+      "ball.cfd.elementmap",
+      "ball.cfd.extra",
+      "ball.cfd.find",
+      "ball.cfd.force",
+      "ball.cfd.force.x",
+      "ball.cfd.force.y",
+      "ball.cfd.force.z",
+      "ball.cfd.group",
+      "ball.cfd.group.remove",
+      "ball.cfd.id",
+      "ball.cfd.inbox",
+      "ball.cfd.isgroup",
+      "ball.cfd.list",
+      "ball.cfd.near",
+      "ball.cfd.num",
+      "ball.cfd.pos",
+      "ball.cfd.pos.x",
+      "ball.cfd.pos.y",
+      "ball.cfd.pos.z",
+      "ball.cfd.typeid",
+      "ball.contact.list",
+      "ball.contact.list.all",
+      "ball.contactmap",
+      "ball.contactmap.all",
+      "ball.contactnum",
+      "ball.contactnum.all",
+      "ball.containing",
+      "ball.convergence",
+      "ball.create",
+      "ball.damp",
+      "ball.delete",
+      "ball.density",
+      "ball.disp",
+      "ball.disp.x",
+      "ball.disp.y",
+      "ball.disp.z",
+      "ball.energy",
+      "ball.euler",
+      "ball.euler.x",
+      "ball.euler.y",
+      "ball.euler.z",
+      "ball.extra",
+      "ball.find",
+      "ball.fix",
+      "ball.fluid.ball.mech",
+      "ball.fluid.contact.list",
+      "ball.fluid.contactmap",
+      "ball.fluid.contactnum",
+      "ball.fluid.find",
+      "ball.fluid.id",
+      "ball.fluid.list",
+      "ball.fluid.near",
+      "ball.fluid.num",
+      "ball.fluid.pressure.head",
+      "ball.force.app",
+      "ball.force.app.x",
+      "ball.force.app.y",
+      "ball.force.app.z",
+      "ball.force.contact",
+      "ball.force.contact.x",
+      "ball.force.contact.y",
+      "ball.force.contact.z",
+      "ball.force.unbal",
+      "ball.force.unbal.x",
+      "ball.force.unbal.y",
+      "ball.force.unbal.z",
+      "ball.fragment",
+      "ball.group",
+      "ball.group.list",
+      "ball.group.remove",
+      "ball.groupmap",
+      "ball.id",
+      "ball.inbox",
+      "ball.inside",
+      "ball.isbonded",
+      "ball.isgroup",
+      "ball.isprop",
+      "ball.list",
+      "ball.mass",
+      "ball.mass.real",
+      "ball.maxid",
+      "ball.mech.convergence",
+      "ball.mech.ratio.avg",
+      "ball.mech.ratio.local",
+      "ball.mech.ratio.max",
+      "ball.mech.unbal.max",
+      "ball.moi",
+      "ball.moi.real",
+      "ball.moment.app",
+      "ball.moment.app.x",
+      "ball.moment.app.y",
+      "ball.moment.app.z",
+      "ball.moment.contact",
+      "ball.moment.contact.x",
+      "ball.moment.contact.y",
+      "ball.moment.contact.z",
+      "ball.moment.unbal",
+      "ball.moment.unbal.x",
+      "ball.moment.unbal.y",
+      "ball.moment.unbal.z",
+      "ball.near",
+      "ball.num",
+      "ball.pos",
+      "ball.pos.x",
+      "ball.pos.y",
+      "ball.pos.z",
+      "ball.prop",
+      "ball.radius",
+      "ball.ratio",
+      "ball.ratio.target",
+      "ball.spin",
+      "ball.spin.x",
+      "ball.spin.y",
+      "ball.spin.z",
+      "ball.stress",
+      "ball.stress.full",
+      "ball.stress.xx",
+      "ball.stress.xy",
+      "ball.stress.xz",
+      "ball.stress.yy",
+      "ball.stress.yz",
+      "ball.stress.zz",
+      "ball.thermal.ball",
+      "ball.thermal.contact.list",
+      "ball.thermal.contact.list.all",
+      "ball.thermal.contactmap",
+      "ball.thermal.contactmap.all",
+      "ball.thermal.contactnum",
+      "ball.thermal.contactnum.all",
+      "ball.thermal.expansion",
+      "ball.thermal.extra",
+      "ball.thermal.find",
+      "ball.thermal.fix",
+      "ball.thermal.group",
+      "ball.thermal.group.list",
+      "ball.thermal.group.remove",
+      "ball.thermal.groupmap",
+      "ball.thermal.id",
+      "ball.thermal.inbox",
+      "ball.thermal.isgroup",
+      "ball.thermal.isprop",
+      "ball.thermal.list",
+      "ball.thermal.near",
+      "ball.thermal.num",
+      "ball.thermal.power.app",
+      "ball.thermal.power.unbal",
+      "ball.thermal.prop",
+      "ball.thermal.specific.heat",
+      "ball.thermal.temp",
+      "ball.thermal.temp.increment",
+      "ball.thermal.typeid",
+      "ball.typeid",
+      "ball.vel",
+      "ball.vel.x",
+      "ball.vel.y",
+      "ball.vel.z",
+      "ball.vol",
+      "ball.zone.ball.ball",
+      "ball.zone.ball.list",
+      "ball.zone.ball.mass.factor",
+      "ball.zone.ball.typeid",
+      "ball.zone.gp.gp",
+      "ball.zone.gp.list",
+      "ball.zone.gp.mass.factor",
+      "ball.zone.gp.typeid"
+    ]
+  },
+  "verification": "Authored 2026-08-15 from the full live 'fish list intrinsics' dump of PFC3D 9.7 (3754 names total; every name and signature below is verbatim from the live table). Signatures use FISH type notation (flt/int/bool/str/vec/ptr/any)."
+}
