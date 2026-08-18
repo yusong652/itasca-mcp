@@ -45,6 +45,22 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.9] - 2026-08-19
+
+### Fixed
+
+- **Bridge requests are no longer hijacked by proxy environment
+  variables.** With `HTTP_PROXY`/`HTTPS_PROXY` set (common with
+  Clash-style terminal-proxy setups), httpx routed even
+  `localhost:9001` bridge requests through the proxy, and the failure
+  surfaced as a misleading `bridge_unavailable` ("start the bridge in
+  the GUI") while the bridge was actually running. The bridge client
+  now passes `trust_env=False`: the bridge is always reached directly,
+  so proxy variables are never consulted. `ITASCA_MCP_*` configuration
+  variables are unaffected. Diagnosed downstream by @molt213 in
+  [itasca-mcp-pfc5.00](https://github.com/molt213/itasca-mcp-pfc5.00),
+  the community PFC 5.0 port — thank you! (#113)
+
 ## [0.6.8] - 2026-08-18
 
 PFC documentation-corpus release: the entire bundled PFC corpus — all 165
