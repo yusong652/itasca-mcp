@@ -48,7 +48,11 @@ class ItascaBridgeClient:
                 return
             # Per-request timeouts are set on each POST; the SSE stream uses an
             # unbounded read timeout because it stays open between doorbells.
-            self._client = httpx.AsyncClient(base_url=self.url)
+            # trust_env=False: the bridge is reached directly (localhost by
+            # default). With proxy env vars set (HTTP_PROXY etc., common with
+            # Clash-style setups), httpx would otherwise route even localhost
+            # requests through the proxy, surfacing as bridge_unavailable.
+            self._client = httpx.AsyncClient(base_url=self.url, trust_env=False)
             self._sse_task = asyncio.create_task(self._sse_loop())
             logger.info("Connected to itasca-mcp-bridge at %s", self.url)
 
