@@ -45,6 +45,83 @@ section exists.
 
 ## [Unreleased]
 
+## [0.6.8] - 2026-08-18
+
+PFC documentation-corpus release: the entire bundled PFC corpus — all 165
+command files (6.0, 7.0, and 9.0 version blocks) plus the plot-items,
+contact-models, and fish-intrinsics reference families — now carries
+explicit verdicts from live engines on all three version axes (PFC3D 6.00,
+7.00, and 9.7), completing the verification discipline applied to FLAC in
+0.6.6 and 3DEC in 0.6.7 (batches P1–P5 and sweeps S1–S3, PRs #101–#110).
+
+### Documentation
+
+- **Full command corpus swept against all three live versions.**
+  Round-style sweeps over all 165 command files: ~730 probes on PFC3D
+  7.00 (86 files fixed), ~1000 on 9.7 (84 files), ~700 on 6.00 (74
+  files). Crawler `kwd:`/`adummy`/duplicate artifacts stripped from every
+  version block; dotted FISH-style command strings replaced with the real
+  commands (`model domain <sub>`, top-level `group <sub>`); the fictional
+  `rotation` attribute keyword removed corpus-wide; `rblock initialize`
+  proven absent on every live version and marked unavailable; empty stubs
+  (initialize/method/model/configure/domain condition) filled from live
+  enumerations. The `rblock replicate` mystery resolved live: its first
+  slot is a QUOTED template-name string, which is why every bare-token
+  probe had failed.
+- **Version renames pinned with live evidence:** wall
+  `active-sides`/`velocity-conveyor` are the true 6.0 spellings that 7.0
+  renamed to `activeside`/`conveyor` (each side rejects the other's);
+  the `mohr` contact model uses `mc-`-prefixed property names on 7.0,
+  dropped in 9.x; `ignorebond` → `ignore-bond`; fragment
+  `group-slot`/`group-isolated` canonical on all versions;
+  `add`/`multiply`/`replace` attribute modifiers rejected on every live
+  version (previously guessed 9.x-era).
+- **Contact process-selector grammar corrected:** the process selector
+  precedes the subcommand (`contact thermal list`), with a 9.x-new third
+  selector `contact fluid`; misplaced mechanical/thermal keywords removed
+  from 13 files. This also retired the long-standing "thermal contacts
+  invisible to Python" claim — an investigation artifact:
+  `contact.list("thermal")` returns thermal contacts with readable props
+  (the first argument is `process_name`, default `"Mechanical"`).
+- **All PFC contact models live-enumerated** (23 mechanical models on
+  9.7, 21 on 7.0, 14 on 6.0) with full property sets read back from live
+  contacts: 4 missing models authored (`beam`, `hill`, `rrhertz`,
+  `bisubspringnetwork`), `bilinear` stub filled 0→33 properties, renames
+  flagged in place (burger `bur_fric`, eepa `f_min`), softbond
+  since-9.0 markers removed (live on 6.0), per-version membership
+  stamped throughout; `lineardipole`'s quaternion-typed props make
+  Python `Contact.props()` raise — per-name `prop()` workaround
+  documented; the thermal slot enumerates `null|thermalpipe` on every
+  version (corpus `thermalnull` flagged stale); cmat trap recorded: the
+  property slot accepts the ~280-keyword union of all models, not the
+  per-model set.
+- **PFC fish-intrinsics reference family authored** — PFC was the only
+  engine without one. Seven family files built from complete live
+  `fish list intrinsics` dumps (3754 names on 9.7, 3793 on 7.00, 1542 on
+  6.00) with verbatim signatures and per-family inventories; every
+  name's introduction version pinned: 147 names appeared in 7.0
+  (the entire `inlet.*` namespace among them), 97 are 9.x-only
+  (ball/wall/contact `fluid.*` coupling namespaces), and the missing
+  `brick.*` family plus the 6.0 `clump.template.axis.angle` spelling
+  were recovered from the 6.00 dump.
+- **Plot-items registry live-verified as unified-kernel** (87 types —
+  cross-engine types parse but render nothing, unlike 3DEC's
+  engine-scoped registry): per-type first-slot sets recorded for all 8
+  documented types plus 14 undocumented PFC types; attribute trap
+  recorded — 9.7 silently accepts any color-by attribute string, so
+  typos give wrong plots, not errors.
+- **Histories rebuilt from live enums** for all six object families
+  (ball/clump/rblock/wall/contact/measure): contact history grammar
+  corrected — the contact-type pair is the required first slot, live
+  spellings adopted, and stale official spellings verified rejected on
+  every version and dropped; the plain `force`/`force-x` family lives
+  only on 6.0.
+- **6.0-specific agent guidance recorded:** legacy bare shortcuts
+  (`domain`/`cycle`/`solve`, top-level `list`/`print`) parse without the
+  `model` prefix; engine error text only reaches the console echo on 6.0
+  (Python exceptions are generic — parse the task log); `?` enumerates
+  AND succeeds on 6.0, unlike 7.0/9.7.
+
 ## [0.6.7] - 2026-08-15
 
 3DEC documentation-corpus release: the entire bundled 3DEC corpus — 125
