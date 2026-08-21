@@ -747,6 +747,23 @@ async def test_3dec_sel_sdk_units_resolve() -> None:
         assert payload["ok"] is True, (api, payload)
 
 
+def test_3dec_model_configure_is_engine_scoped() -> None:
+    # 3DEC-local override in the borrowed model category: the configure keyword
+    # set differs from FLAC's (no cfd/axisymmetry) and between 3DEC versions
+    # (7.0 classic 'fluid' + plugins; 9.x fluid-flow/fluid-explicit/implicit).
+    doc70 = CommandLoader.load_command_doc("model", "configure", "7.0", software="3dec")
+    assert doc70 is not None
+    kw70 = {k["name"] for k in doc70["keywords"]}
+    assert "fluid" in kw70 and "plugins" in kw70
+    assert "fluid-flow" not in kw70 and "cfd" not in kw70
+
+    doc90 = CommandLoader.load_command_doc("model", "configure", "9.0", software="3dec")
+    assert doc90 is not None
+    kw90 = {k["name"] for k in doc90["keywords"]}
+    assert {"fluid-flow", "fluid-explicit", "fluid-implicit"} <= kw90
+    assert "fluid" not in kw90 and "axisymmetry" not in kw90
+
+
 @pytest.mark.asyncio
 async def test_3dec_joint_models_version_gated() -> None:
     # 7.0 has seven jmodels; ratestate / velocity-weakening are 9.x-only.

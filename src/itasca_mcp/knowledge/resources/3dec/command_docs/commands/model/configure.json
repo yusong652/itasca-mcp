@@ -1,0 +1,179 @@
+{
+  "category": "model",
+  "search_keywords": [
+    "model",
+    "configure",
+    "config",
+    "thermal",
+    "fluid",
+    "matrixflow",
+    "feblock",
+    "dynamic",
+    "creep"
+  ],
+  "description": "Configure optional 3DEC analysis modules. Several block-family commands are gated behind a configure option (block thermal / block zone thermal <- thermal; block zone fluid <- matrixflow; flowknot/flowplane <- fluid (7.0) / fluid-flow (9.x); feblock <- feblock). 3DEC-scoped file: the keyword set differs from FLAC's (no cfd/axisymmetry) and between 3DEC versions (7.0 classic 'fluid' + 'plugins'; 9.x fluid-flow/fluid-explicit/fluid-implicit).",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "9.0": {
+      "command": "model configure",
+      "syntax": "model configure keyword ...",
+      "keywords": [
+        {
+          "name": "array",
+          "syntax": "array",
+          "description": "Configure the array process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "cluster",
+          "syntax": "cluster",
+          "description": "Configure the cluster process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "creep",
+          "syntax": "creep",
+          "description": "Creep material analysis*"
+        },
+        {
+          "name": "dynamic",
+          "syntax": "dynamic",
+          "description": "Fully dynamic analysis*"
+        },
+        {
+          "name": "energy",
+          "syntax": "energy",
+          "description": "Configure the energy process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "feblock",
+          "syntax": "feblock",
+          "description": "Enable finite-element blocks (also unlocks feblock gravity)."
+        },
+        {
+          "name": "fluid-explicit",
+          "syntax": "fluid-explicit",
+          "description": "Configure the fluid-explicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "fluid-flow",
+          "syntax": "fluid-flow",
+          "description": "Enable groundwater fluid-flow analysis. This replaces the 9.0 fluid keyword in 9.1 and later."
+        },
+        {
+          "name": "fluid-implicit",
+          "syntax": "fluid-implicit",
+          "description": "Configure the fluid-implicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "highorder",
+          "syntax": "highorder",
+          "description": "High-order zone formulation (also accepted by feblock gravity's gate)."
+        },
+        {
+          "name": "hotetra",
+          "syntax": "hotetra",
+          "description": "High-order tetrahedra."
+        },
+        {
+          "name": "imass",
+          "syntax": "imass",
+          "description": "The Itasca Model for Advanced Strain Softening*"
+        },
+        {
+          "name": "matrixflow",
+          "syntax": "matrixflow",
+          "description": "Zone matrix fluid flow; gate for 'block zone fluid property'."
+        },
+        {
+          "name": "mechanical",
+          "syntax": "mechanical",
+          "description": "Configure the mechanical process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "thermal",
+          "syntax": "thermal",
+          "description": "Thermal analysis; gate for 'block thermal' and 'block zone thermal property'."
+        }
+      ],
+      "examples": []
+    },
+    "7.0": {
+      "command": "model configure",
+      "syntax": "model configure keyword ...",
+      "keywords": [
+        {
+          "name": "array",
+          "syntax": "array",
+          "description": "Configure the array process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "cluster",
+          "syntax": "cluster",
+          "description": "Configure the cluster process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "creep",
+          "syntax": "creep",
+          "description": "Creep material analysis*"
+        },
+        {
+          "name": "dynamic",
+          "syntax": "dynamic",
+          "description": "Fully dynamic analysis*"
+        },
+        {
+          "name": "energy",
+          "syntax": "energy",
+          "description": "Configure the energy process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "feblock",
+          "syntax": "feblock",
+          "description": "Enable finite-element blocks (also unlocks feblock gravity)."
+        },
+        {
+          "name": "fluid",
+          "syntax": "fluid",
+          "description": "Classic joint fluid flow (CONFIG GW) — creates flow planes/knots at zoning. 3DEC 7.0 spelling; 9.x split this into fluid-flow / fluid-explicit / fluid-implicit."
+        },
+        {
+          "name": "highorder",
+          "syntax": "highorder",
+          "description": "High-order zone formulation (also accepted by feblock gravity's gate)."
+        },
+        {
+          "name": "hotetra",
+          "syntax": "hotetra",
+          "description": "High-order tetrahedra."
+        },
+        {
+          "name": "imass",
+          "syntax": "imass",
+          "description": "The Itasca Model for Advanced Strain Softening*"
+        },
+        {
+          "name": "matrixflow",
+          "syntax": "matrixflow",
+          "description": "Zone matrix fluid flow; gate for 'block zone fluid property'."
+        },
+        {
+          "name": "mechanical",
+          "syntax": "mechanical",
+          "description": "Configure the mechanical process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "plugins",
+          "syntax": "plugins",
+          "description": "C++ user-defined models and/or FISH intrinsic plugins.* FISH plugins can be loaded (but cycling is disabled) without this configuration."
+        },
+        {
+          "name": "thermal",
+          "syntax": "thermal",
+          "description": "Thermal analysis; gate for 'block thermal' and 'block zone thermal property'."
+        }
+      ],
+      "examples": []
+    }
+  }
+}
