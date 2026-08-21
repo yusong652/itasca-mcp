@@ -106,6 +106,103 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block face apply",
+      "syntax": "block face apply keyword [history <s>] [range]",
+      "keywords": [
+        {
+          "name": "convection",
+          "syntax": "convection <f1><f2>[[blockfaceapplyblock]]",
+          "description": "f1 is the temperature, \\(T_e\\) , of the medium at which convection occurs. f2 is the convective heat-transfer coefficient, \\(h\\) (e.g., in \\(W⁄m^{2}\\) º C). A convective boundary condition is applied over the range of faces specified. The history keyword is not active for convection."
+        },
+        {
+          "name": "flux",
+          "syntax": "flux <f>[[blockfaceapplyblock]]",
+          "description": "f is the initial thermal flux (e.g., in \\(W⁄m^2\\) ). A flux is applied over the range of faces specified. This command is used to specify a constant flux into ( f > 0) or out of ( f < 0) a thermal boundary of the grid. Decay of the flux can be represented by a FISH history using the optional keyword history. For example, the following FISH function performs an exponential decay of the applied flux: Note that a subsequent flux applied to the same boundary will add to the existing flux."
+        },
+        {
+          "name": "point-load",
+          "syntax": "point-load <v1>location <v2>[[blockfaceapplyblock]]",
+          "description": "Apply a point load of \\(v1\\) at location \\(v2\\) (deformable blocks only). Gridpoint forces are calculated by interpolating from the input location."
+        },
+        {
+          "name": "point-load-x",
+          "syntax": "point-load-x <f>location <v>[[blockfaceapplyblock]]",
+          "description": "Apply a point load of \\(f\\) in the x direction at location \\(v2\\) (deformable blocks only). Gridpoint forces are calculated by interpolating from the input location."
+        },
+        {
+          "name": "point-load-y",
+          "syntax": "point-load-y <f>location <v>[[blockfaceapplyblock]]",
+          "description": "Apply a point load of \\(f\\) in the y direction at location \\(v2\\) (deformable blocks only). Gridpoint forces are calculated by interpolating from the input location."
+        },
+        {
+          "name": "point-load-z",
+          "syntax": "point-load-z <f>location <v>[[blockfaceapplyblock]]",
+          "description": "Apply a point load of \\(f\\) in the z direction at location \\(v2\\) (deformable blocks only). Gridpoint forces are calculated by interpolating from the input location."
+        },
+        {
+          "name": "origin",
+          "syntax": "origin <v>",
+          "description": "Apply stress on block faces within the range. Set intermediate principal stress direction. Set maximum principal stress direction. Set minimum principal stress direction. Set intermediate principal stress. Set maximum principal stress. Set minimum principal stress. Set maximum principal stress dip. Set maximum principal stress dip direction. Set intermediate principal stress dip. Set intermediate principal stress dip direction. Set minimum principal stress dip. Set minimum principal stress dip direction. Set the stress gradient in the z direction. Only the z gradient direction may be specified. The other directions are scaled appropriately to prevent stress rotation. Specify the location of the stress measurement."
+        },
+        {
+          "name": "gradient-z",
+          "syntax": "gradient-z <f(sxxz)><f(syyz)><f(szzz)><f(sxyz)><f(sxzz)><f(syzz)>",
+          "description": "Set boundary stress parameters: \\(xx\\) -stress, \\(yy\\) -stress, \\(zz\\) -stress \\(xy\\) -stress, \\(xz\\) -stress, \\(yz\\) -stress. If a gradient is given, these stresses are assumed to be applied at 0,0,0 A range phrase must be specified for the \\(block face apply stress\\) command. Note All loads and stresses are assumed to be constant and permanent by default, and are added to the existing permanent loads. Transient (time-varying) loading is applied if a \\(fish\\) or \\(table\\) keyword is given on the same command line as the load or stress (see below). Specify the stress gradients in the x direction. Specify the stress gradients in the y direction. Specify the stress gradients in the z direction. If gradients are specified, boundary stresses vary linearly, where sxx0, etc. are stresses at origin (0,0,0), defined by the stress keyword, and where: \\(sxx =sxxo + (sxxx∗x) + (sxxy∗y) + (sxxz∗z)\\) \\(syy =syyo + (syyx∗x) + (syyy∗y) + (syyz∗z)\\) \\(szz =szzo + (szzx∗x) + (szzy∗y) + (szzz∗z)\\) \\(sxy =sxyo + (sxyx∗x) + (sxyy∗y) + (sxyz∗z)\\) \\(sxz =sxzo + (sxzx∗x) + (sxzy∗y) + (sxzz∗z)\\) \\(syz =syzo + (syzx∗x) + (syzy∗y) + (syzz∗z)\\) The gradient-x , gradient-y , and gradient-z keywords must follow the block face stress command on the same input line. (Use … at the end of the line if a continuation line is required.) Note, the assigned stresses always act at the origin (0,0,0). Example:"
+        },
+        {
+          "name": "stress-xx",
+          "syntax": "stress-xx <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(xx\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in xx stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "stress-xy",
+          "syntax": "stress-xy <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(xy\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in xy stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "stress-xz",
+          "syntax": "stress-xz <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(xz\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in xz stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "stress-yy",
+          "syntax": "stress-yy <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(yy\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in yy stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "stress-yz",
+          "syntax": "stress-yz <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(yz\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in xx stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "stress-zz",
+          "syntax": "stress-zz <f>[gradient <v>] [[blockfaceapplyblock]]",
+          "description": "Set boundary stress in the \\(zz\\) -direction. The optional \\(gradient\\) keyword can be used to specify the change in xx stress in the x, y and z directions. If a gradient is given, the stress value \\(f\\) is assumed to be applied at 0,0,0."
+        },
+        {
+          "name": "velocity-normal",
+          "syntax": "velocity-normal <f>[[blockfaceapplyblock]]",
+          "description": ""
+        },
+        {
+          "name": "mass-z",
+          "syntax": "mass-z",
+          "description": "Add additional dynamic masses to gridpoints on the face of blocks to simulate the effects of an adjacent mass of water. This procedure was established by Westergaard (1933). Set density of the water. Set average depth of water in the reservoir (constant added mass). Not used if water surface is specified. Set gravitational vector (if different from static gravity definition). The full solution involves a 3 × 3 matrix for each gridpoint. In 3DEC , the matrix is diagonalized. By default, each row is added into the diagonal. This keyword ( proj = 1) provides a better solution by calculating the diagonal based on the surface normal. Remove any previously defined added masses. Set water surface location if depth is to be calculated. Add mass in the \\(x\\) -direction only. Add mass in the \\(y\\) -direction only. Add mass in the \\(z\\) -direction only."
+        },
+        {
+          "name": "kwd:fish",
+          "syntax": "fish <s>",
+          "description": "The specified FISH symbol is used to provide a multiplier."
+        },
+        {
+          "name": "kwd:table",
+          "syntax": "table <s>",
+          "description": "Set the load multiplier from a multiplier given by the table create command. The table must consist of a list of pairs: time, f(time). Linear interpolation is performed between the given discrete points."
+        }
+      ],
+      "examples": []
     }
   }
 }

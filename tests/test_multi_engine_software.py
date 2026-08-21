@@ -594,21 +594,24 @@ def test_massflow_plot_items_are_engine_specific() -> None:
 
 
 # --- 9.0-only engines: version selector coerces to 9.0 ----------------------
-# 3DEC/MPoint/MassFlow ship a single 9.0 doc key. The tools' version default is
+# MPoint/MassFlow ship a single 9.0 doc key. The tools' version default is
 # 7.0 (a PFC-era leftover); without coercion every 9.0-only command would resolve
 # as "unavailable for 7.0". effective_doc_version() forces 9.0 for these engines.
+# 3DEC left this set when the 7.0 version dimension landed (3DEC700 doc parse).
 
 
 def test_effective_doc_version_coerces_nine_zero_only() -> None:
     from itasca_mcp.utils import effective_doc_version
 
-    for sw in ("3dec", "mpoint", "massflow"):
+    for sw in ("mpoint", "massflow"):
         assert effective_doc_version(sw, "7.0") == "9.0"
         assert effective_doc_version(sw, "6.0") == "9.0"
         assert effective_doc_version(sw, "9.0") == "9.0"
     # Multi-version engines keep the requested version.
     assert effective_doc_version("pfc", "7.0") == "7.0"
     assert effective_doc_version("flac", "7.0") == "7.0"
+    assert effective_doc_version("3dec", "7.0") == "7.0"
+    assert effective_doc_version("3dec", "9.0") == "9.0"
 
 
 @pytest.mark.asyncio
@@ -623,7 +626,7 @@ async def test_nine_zero_only_browse_without_version_resolves() -> None:
 
 @pytest.mark.asyncio
 async def test_nine_zero_only_reference_summary_reports_9_0() -> None:
-    for sw in ("3dec", "mpoint", "massflow"):
+    for sw in ("mpoint", "massflow"):
         result = await mcp.call_tool("itasca_browse_reference", {"software": sw})
         data = _parse_tool_payload(result)["data"]
         assert data["summary"]["version"] == "9.0", sw
@@ -677,6 +680,62 @@ def test_flac_common_doc_versions_exclude_6_0() -> None:
     pfc_doc = CommandLoader.load_command_doc("plot", "active", "6.0", software="pfc")
     assert pfc_doc is not None
     assert "6.0" in pfc_doc["versions"]
+
+
+# --- 3DEC 7.0 version dimension ----------------------------------------------
+# 3DEC700 doc parse (parse_3dec700.py) injected 7.0 blocks alongside the
+# 9.0-verified ones and authored the 7.0-only `sel` structural-element family.
+
+
+@pytest.mark.asyncio
+async def test_3dec_both_versions_resolve() -> None:
+    for version in ("7.0", "9.0"):
+        result = await mcp.call_tool(
+            "itasca_browse_commands",
+            {"software": "3dec", "command": "block create", "version": version},
+        )
+        payload = _parse_tool_payload(result)
+        assert payload["ok"] is True, (version, payload)
+        assert payload["data"]["summary"]["version"] == version
+
+
+@pytest.mark.asyncio
+async def test_3dec_sel_family_is_7_0_only() -> None:
+    result = await mcp.call_tool(
+        "itasca_browse_commands",
+        {"software": "3dec", "command": "sel hybrid create", "version": "7.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is True, payload
+    assert payload["data"]["entries"][0]["doc"]["command"] == "sel hybrid create"
+
+    result = await mcp.call_tool(
+        "itasca_browse_commands",
+        {"software": "3dec", "command": "sel hybrid create", "version": "9.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is False, payload
+    assert payload["error"]["code"] == "command_unavailable_for_version"
+
+
+@pytest.mark.asyncio
+async def test_3dec_9_x_only_command_unavailable_in_7_0() -> None:
+    # `block relax` has no 3DEC 7.0 doc page (and no 7.0 block).
+    result = await mcp.call_tool(
+        "itasca_browse_commands",
+        {"software": "3dec", "command": "block relax", "version": "7.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is False, payload
+    assert payload["error"]["code"] == "command_unavailable_for_version"
+
+
+def test_3dec_6_0_not_advertised() -> None:
+    # _common docs carry a 6.0 key for PFC; the 3DEC view must not leak it.
+    doc = CommandLoader.load_command_doc("model", "new", "7.0", software="3dec")
+    assert doc is not None
+    assert "6.0" not in doc["versions"]
+    assert {"7.0", "9.0"} <= set(doc["versions"])
 
 
 # --- 3DEC references (joint constitutive models) ----------------------------

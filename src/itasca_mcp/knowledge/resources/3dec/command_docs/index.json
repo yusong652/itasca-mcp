@@ -100,7 +100,7 @@
           "name": "contact-history",
           "file": "3dec/command_docs/commands/block/contact-history.json",
           "short_description": "Adds a history of a contact value",
-          "syntax": "block contact history [name <s>] location-keyword variable-keyword [keyword ...]",
+          "syntax": "block contact history [name <s>] variable-keyword location-keyword [keyword ...]",
           "python_available": false
         },
         {
@@ -135,7 +135,7 @@
           "name": "contact-material-table",
           "file": "3dec/command_docs/commands/block/contact-material-table.json",
           "short_description": "The material table is used to define the joint constitutive model and properties that should be a...",
-          "syntax": "block contact material-table keyword [range]",
+          "syntax": "block contact material-table keyword ...",
           "python_available": false
         },
         {
@@ -183,7 +183,7 @@
         {
           "name": "contact-use-actual",
           "file": "3dec/command_docs/commands/block/contact-use-actual.json",
-          "short_description": "Toggle first-step subcontact gap correction",
+          "short_description": "By default 3DEC checks the true distance between a subcontact vertex and its associated face on t...",
           "syntax": "block contact use-actual <b>",
           "python_available": false
         },
@@ -394,7 +394,7 @@
           "name": "history",
           "file": "3dec/command_docs/commands/block/history.json",
           "short_description": "Adds a history of a block value",
-          "syntax": "block history [name <s>] keyword",
+          "syntax": "block history [name <s>] quantity-keyword [modifier ...]",
           "python_available": false
         },
         {
@@ -484,7 +484,7 @@
         {
           "name": "ratio",
           "file": "3dec/command_docs/commands/block/ratio.json",
-          "short_description": "Set the mechanical convergence ratio limit type (live-engine discovery)",
+          "short_description": "Set the mechanical convergence ratio limit type",
           "syntax": "block ratio keyword <f>",
           "python_available": false
         },
@@ -498,7 +498,7 @@
         {
           "name": "remove",
           "file": "3dec/command_docs/commands/block/remove.json",
-          "short_description": "Remove blocks in the range (live-engine discovery)",
+          "short_description": "Remove blocks in the range (a bare invocation executes and reports 'No blocks were removed' on an...",
           "syntax": "block remove [range]",
           "python_available": false
         },
@@ -583,7 +583,7 @@
           "name": "zone-fluid",
           "file": "3dec/command_docs/commands/block/zone-fluid.json",
           "short_description": "Assign fluid properties to zones",
-          "syntax": "block zone fluid keyword [range]",
+          "syntax": "block zone fluid property keyword <f> ... [range]",
           "python_available": false
         },
         {
@@ -653,7 +653,7 @@
           "name": "zone-thermal",
           "file": "3dec/command_docs/commands/block/zone-thermal.json",
           "short_description": "Set the thermal properties of the block zone constitutive model",
-          "syntax": "block zone thermal keyword [range]",
+          "syntax": "block zone thermal property keyword <f> ... [range]",
           "python_available": false
         },
         {
@@ -869,7 +869,7 @@
         {
           "name": "pipe",
           "file": "3dec/command_docs/commands/flowplane/pipe.json",
-          "short_description": "Flow-pipe subcommand (live-engine discovery)",
+          "short_description": "Flow-pipe subcommand of the flow-plane logic",
           "syntax": "flowplane pipe list",
           "python_available": false
         },
@@ -941,6 +941,136 @@
           "file": "3dec/command_docs/commands/flowplane/zone-list.json",
           "short_description": "List flow plane zone information",
           "syntax": "flowplane zone list keyword [range]",
+          "python_available": false
+        }
+      ]
+    },
+    "sel": {
+      "full_name": "Structural Element (SEL) Commands",
+      "description": "3DEC 7.0 legacy structural-element family: hybrid bolt elements (sel hybrid), structural node settings (sel node), and local reinforcement elements (sel reinforcement).",
+      "command_prefix": "sel",
+      "notes": [
+        "7.0-only family: in 3DEC 9.x these merged into the unified structure family (structure hybrid / structure dowel / ...)",
+        "3DEC 7.0 also ships the unified structure family alongside sel (structure beam/cable/liner/... — documented on the FLAC side)"
+      ],
+      "commands": [
+        {
+          "name": "hybrid-change",
+          "file": "3dec/command_docs/commands/sel/hybrid-change.json",
+          "short_description": "Change attributes of hybrid bolt elements",
+          "syntax": "sel hybrid change keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-create",
+          "file": "3dec/command_docs/commands/sel/hybrid-create.json",
+          "short_description": "Create a hybrid bolt element",
+          "syntax": "sel hybrid create keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-delete",
+          "file": "3dec/command_docs/commands/sel/hybrid-delete.json",
+          "short_description": "Delete all hybrid bolt elements in the range",
+          "syntax": "sel hybrid delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-group",
+          "file": "3dec/command_docs/commands/sel/hybrid-group.json",
+          "short_description": "Assign hybrid bolt elements in the range to the group named s1 in slot s2 (if supplied)",
+          "syntax": "sel hybrid group <s1>[slot <s2>] [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-history",
+          "file": "3dec/command_docs/commands/sel/hybrid-history.json",
+          "short_description": "Sample hybrid bolt responses",
+          "syntax": "sel hybrid history keyword",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-list",
+          "file": "3dec/command_docs/commands/sel/hybrid-list.json",
+          "short_description": "List data for reinforcing elements (hybrids) that model shear behavior of grout annulus",
+          "syntax": "sel hybrid list keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-node",
+          "file": "3dec/command_docs/commands/sel/hybrid-node.json",
+          "short_description": "Set conditions on hybrid bolt nodes",
+          "syntax": "sel hybrid node keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-property",
+          "file": "3dec/command_docs/commands/sel/hybrid-property.json",
+          "short_description": "Set cross-sectional area, \\(A\\) ",
+          "syntax": "sel hybrid property <i>keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "hybrid-update",
+          "file": "3dec/command_docs/commands/sel/hybrid-update.json",
+          "short_description": "Set the number of cycles between updating the geometry and node positions of hybrid bolts (defaul...",
+          "syntax": "sel hybrid update <i>",
+          "python_available": false
+        },
+        {
+          "name": "node-group",
+          "file": "3dec/command_docs/commands/sel/node-group.json",
+          "short_description": "Group nodes in the specified range",
+          "syntax": "sel node group <s1>[slot <s2>] [range]",
+          "python_available": false
+        },
+        {
+          "name": "node-mass-multiplier",
+          "file": "3dec/command_docs/commands/sel/node-mass-multiplier.json",
+          "short_description": "Multiply the calculated nodal mass by a factor f ",
+          "syntax": "sel node mass-multiplier <f>",
+          "python_available": false
+        },
+        {
+          "name": "node-property",
+          "file": "3dec/command_docs/commands/sel/node-property.json",
+          "short_description": "Set a property number for nodes in the range",
+          "syntax": "sel node property <i>[range]",
+          "python_available": false
+        },
+        {
+          "name": "reinforcement-create",
+          "file": "3dec/command_docs/commands/sel/reinforcement-create.json",
+          "short_description": "Create a reinforcement element",
+          "syntax": "sel reinforcement create keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "reinforcement-group",
+          "file": "3dec/command_docs/commands/sel/reinforcement-group.json",
+          "short_description": "Assign reinforcement elements in the range to the group named s1 in slot s2 (if supplied)",
+          "syntax": "sel reinforcement group <s1>[slot <s2>] [range]",
+          "python_available": false
+        },
+        {
+          "name": "reinforcement-history",
+          "file": "3dec/command_docs/commands/sel/reinforcement-history.json",
+          "short_description": "Sample reinforcement responses",
+          "syntax": "sel reinforcement history keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "reinforcement-list",
+          "file": "3dec/command_docs/commands/sel/reinforcement-list.json",
+          "short_description": "List data for axial reinforcement elements",
+          "syntax": "sel reinforcement list keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "reinforcement-property",
+          "file": "3dec/command_docs/commands/sel/reinforcement-property.json",
+          "short_description": "Assign property values to reinforcement property \\(i\\) ",
+          "syntax": "sel reinforcement property <i>keyword ...",
           "python_available": false
         }
       ]
@@ -1241,7 +1371,7 @@
     },
     "fracture": {
       "full_name": "Fracture (DFN) Commands",
-      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. Drives Smooth-Joint and similar contact models.",
+      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. The DFN module is shared across Itasca engines; fracture-driven contact-model assignment is a PFC feature and does not apply to FLAC zones.",
       "command_prefix": "fracture",
       "related_categories": [
         "geometry",
@@ -1252,7 +1382,7 @@
         "fracture generate creates statistical DFNs; fracture import reads explicit fracture files",
         "fracture template defines reusable fracture geometries (fracture template create / delete / modify-default)",
         "fracture intersections compute / scanline produces connectivity data for joint-set analysis",
-        "Use 'contact model smoothjoint' (or similar) to wire fractures into mechanical behavior"
+        "The 'fracture contact-model' command applies to PFC only (FLAC has no contact-model concept for zones); in FLAC, use zone interfaces or zone joints to give fractures mechanical behavior."
       ],
       "commands": [
         {
@@ -1300,7 +1430,7 @@
         {
           "name": "contact-model",
           "file": "_common/command_docs/commands/fracture/contact-model.json",
-          "short_description": "Assign contact models via fractures",
+          "short_description": "Assign contact models via fractures (PFC only; not applicable in FLAC)",
           "syntax": "fracture contact-model keyword ... [rangeof dfns]",
           "python_available": false
         },

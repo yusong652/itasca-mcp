@@ -120,6 +120,73 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block fluid",
+      "syntax": "block fluid keyword ... [range]",
+      "keywords": [
+        {
+          "name": "crack-flow",
+          "syntax": "crack-flow <b>",
+          "description": "Ensure that flow only occurs within portions of flow planes where the associated sub-contacts have failed. When crack flow is off , flow will occur in all planes. The default is off ."
+        },
+        {
+          "name": "datum",
+          "syntax": "datum <f>",
+          "description": "Specify the \\(z\\) value used in hydraulic head plots."
+        },
+        {
+          "name": "relaxation",
+          "syntax": "relaxation <f>",
+          "description": "Specify settings for fast flow calculation. Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .) Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
+        },
+        {
+          "name": "density-minimum",
+          "syntax": "density-minimum <f>",
+          "description": "Specify settings for gas flow calculation. Turn controls for gas-flow logic on / off . Define “a” factor for gas flow. Specify the minimum bulk modulus for gas flow. Specify the gas constant for gas flow. Specify the minimum density for gas flow."
+        },
+        {
+          "name": "jointflow-substep",
+          "syntax": "jointflow-substep <i>",
+          "description": "Set the maximum number of joint fluid steps between matrix flow calculations (default = 10). When mechanical calculations are active, jointflow-substep = 1."
+        },
+        {
+          "name": "list",
+          "syntax": "list",
+          "description": "List fluid information."
+        },
+        {
+          "name": "matrix-flow",
+          "syntax": "matrix-flow <b>",
+          "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
+        },
+        {
+          "name": "viscosity",
+          "syntax": "viscosity <f>",
+          "description": "Specify fluid properties used for fluid flow calculations. Set the bulk modulus of the fluid in the joints and the matrix. Set the bulk modulus of the fluid in the matrix. Set the cohesion of the fluid for non-Newtonian flow. Set the density of the fluid. Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1. Set fluid heat-transfer coefficient. Set fluid-specific heat. Set fluid-thermal conductivity. Set the fluid viscosity."
+        },
+        {
+          "name": "permeability-factor",
+          "syntax": "permeability-factor <f>",
+          "description": "Set properties and configure proppant calculations. Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state. Turn on / off off proppant settling calculations (default = off ). Set the concentration limit of proppant (0-1) above which it takes load. Set the mass concentration limit of proppant above which it takes load (mass / volume) Set the density of the fluid. Set the grain size (diameter) of proppant particles. Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability. List information about proppant. Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit). Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load. Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
+        },
+        {
+          "name": "sync-mech",
+          "syntax": "sync-mech <b>",
+          "description": "Set \\(b\\) to \\(on\\) to keep mechanical and fluid time in sync. The smallest timestep of fluid and mechanical will be used. Fluid and mechanical substeps are autoamtically set to 1 if \\(b\\) is \\(on\\) . The default is \\(off\\) ."
+        },
+        {
+          "name": "timestep",
+          "syntax": "timestep <f>",
+          "description": ""
+        },
+        {
+          "name": "timestep-update",
+          "syntax": "timestep-update <in>",
+          "description": "Specify the interval at which fluid timestep is recalculated. By default, \\(n\\) = 1, so that the timesep is recalculated every fluid step."
+        }
+      ],
+      "examples": []
     }
   }
 }
