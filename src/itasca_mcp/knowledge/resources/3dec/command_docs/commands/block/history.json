@@ -561,27 +561,27 @@
           "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: \\(x\\) -component of the vector \\(y\\) -component of the vector \\(z\\) -component of the vector vector magnitude"
         },
         {
-          "name": "kwd:index",
+          "name": "index",
           "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
         },
         {
-          "name": "kwd:gravity",
+          "name": "gravity",
           "syntax": "gravity <b>",
           "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
         },
         {
-          "name": "kwd:gridpointid",
+          "name": "gridpointid",
           "syntax": "gridpointid <i>",
           "description": "Specifies the location of the history by the location of the gridpoint with ID number i ."
         },
         {
-          "name": "kwd:label",
+          "name": "label",
           "syntax": "label <s>",
           "description": "Assigns a label to the history, used in prints and plots."
         },
         {
-          "name": "kwd:log",
+          "name": "log",
           "syntax": "log <b>",
           "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
         },
@@ -591,12 +591,12 @@
           "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use. This uses an volume weighted average of all the zones connected to the gridpoint. This uses an weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Specifies the power of the distance used to weight values. The default power is 3.0. Specifies the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75. Uses a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
         },
         {
-          "name": "kwd:name",
+          "name": "name",
           "syntax": "name <s>",
           "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
         },
         {
-          "name": "kwd:position",
+          "name": "position",
           "syntax": "position <v>",
           "description": "Specifies the location of the history at v . This location must be inside a zone."
         },
@@ -611,7 +611,7 @@
           "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Values are retrieved directly from the gridpoint. Values are retrieved from the zone."
         },
         {
-          "name": "kwd:stress",
+          "name": "stress",
           "syntax": "stress <b>",
           "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
         },
@@ -621,9 +621,209 @@
           "description": "In certain cases the type (scalar, vector, ro tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. A scalar float type. This is the default. A vector type. A tensor type."
         },
         {
-          "name": "kwd:zoneid",
+          "name": "zoneid",
           "syntax": "zoneid <i>",
           "description": "Specifies the location of the history is at the centroid of zone with ID i ."
+        },
+        {
+          "name": "block-extra",
+          "syntax": "block-extra",
+          "description": "History of a block extra variable. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "convergence",
+          "syntax": "convergence",
+          "description": "History of the mechanical convergence measure. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "face-extra",
+          "syntax": "face-extra",
+          "description": "History of a face extra variable. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "factor-of-safety",
+          "syntax": "factor-of-safety",
+          "description": "History of the factor of safety. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "gpextra",
+          "syntax": "gpextra",
+          "description": "History of a gridpoint extra variable. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "gpppressure",
+          "syntax": "gpppressure",
+          "description": "History of gridpoint pore pressure. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress",
+          "syntax": "hostress",
+          "description": "History of host (in-situ) stress magnitude. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-xx",
+          "syntax": "hostress-xx",
+          "description": "History of host stress component xx. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-xy",
+          "syntax": "hostress-xy",
+          "description": "History of host stress component xy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-xz",
+          "syntax": "hostress-xz",
+          "description": "History of host stress component xz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-yy",
+          "syntax": "hostress-yy",
+          "description": "History of host stress component yy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-yz",
+          "syntax": "hostress-yz",
+          "description": "History of host stress component yz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "hostress-zz",
+          "syntax": "hostress-zz",
+          "description": "History of host stress component zz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "kinematic-fos",
+          "syntax": "kinematic-fos",
+          "description": "History of the kinematic factor of safety. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "ratio",
+          "syntax": "ratio",
+          "description": "History of the mechanical convergence ratio. Live replacement for the official page's 'ratio-local' keyword (which live 3DEC 9.7.47 rejects). (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-xx",
+          "syntax": "strain-increment-xx",
+          "description": "History of strain increment component xx. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-xy",
+          "syntax": "strain-increment-xy",
+          "description": "History of strain increment component xy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-xz",
+          "syntax": "strain-increment-xz",
+          "description": "History of strain increment component xz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-yy",
+          "syntax": "strain-increment-yy",
+          "description": "History of strain increment component yy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-yz",
+          "syntax": "strain-increment-yz",
+          "description": "History of strain increment component yz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-increment-zz",
+          "syntax": "strain-increment-zz",
+          "description": "History of strain increment component zz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-xx",
+          "syntax": "strain-rate-xx",
+          "description": "History of strain rate component xx. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-xy",
+          "syntax": "strain-rate-xy",
+          "description": "History of strain rate component xy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-xz",
+          "syntax": "strain-rate-xz",
+          "description": "History of strain rate component xz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-yy",
+          "syntax": "strain-rate-yy",
+          "description": "History of strain rate component yy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-yz",
+          "syntax": "strain-rate-yz",
+          "description": "History of strain rate component yz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "strain-rate-zz",
+          "syntax": "strain-rate-zz",
+          "description": "History of strain rate component zz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-xx",
+          "syntax": "stress-effective-xx",
+          "description": "History of effective stress component xx. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-xy",
+          "syntax": "stress-effective-xy",
+          "description": "History of effective stress component xy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-xz",
+          "syntax": "stress-effective-xz",
+          "description": "History of effective stress component xz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-yy",
+          "syntax": "stress-effective-yy",
+          "description": "History of effective stress component yy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-yz",
+          "syntax": "stress-effective-yz",
+          "description": "History of effective stress component yz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-effective-zz",
+          "syntax": "stress-effective-zz",
+          "description": "History of effective stress component zz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-xx",
+          "syntax": "stress-xx",
+          "description": "History of zone stress component xx. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-xy",
+          "syntax": "stress-xy",
+          "description": "History of zone stress component xy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-xz",
+          "syntax": "stress-xz",
+          "description": "History of zone stress component xz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-yy",
+          "syntax": "stress-yy",
+          "description": "History of zone stress component yy. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-yz",
+          "syntax": "stress-yz",
+          "description": "History of zone stress component yz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "stress-zz",
+          "syntax": "stress-zz",
+          "description": "History of zone stress component zz. (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
+        },
+        {
+          "name": "zone-condition",
+          "syntax": "zone-condition",
+          "description": "History of zone condition. Live replacement for the official page's 'condition' keyword (which live 3DEC 9.7.47 rejects). (Enumerated by live 3DEC 9.7.47; absent from the official 9.7 HTML history page.)"
         }
       ],
       "examples": []
