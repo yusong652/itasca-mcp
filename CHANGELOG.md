@@ -45,6 +45,80 @@ section exists.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-21
+
+3DEC 7.0 release: the 3dec corpus gains a second version dimension,
+verified end-to-end against a live 3DEC 7.00 (Release 161, embedded
+Python 3.6.1) — commands, Python SDK, and references (PRs #116–#118).
+This completes Python-3 Itasca product-line coverage: PFC 6.0/7.0/9.x,
+FLAC3D 7.0/9.x, 3DEC 7.0/9.x, MPoint 9.x, MassFlow 9.x.
+
+### Changed
+
+- **3DEC is now a multi-version engine (7.0/9.0) in the documentation
+  tools.** Previously every 3dec query was coerced to 9.0 regardless of
+  the requested version; now `version` is honored and, like FLAC/PFC,
+  **defaults to 7.0 when omitted**. Callers who relied on the bare-call
+  9.0 behavior should pass `version="9.0"` — 9.x-only commands (`block
+  relax`, `block join-by-contact`, contact `compute-stiffness`/
+  `persistence`/`use-actual`/`vertex-vertex`, `fblock delete`) now
+  correctly report "not available in 7.0".
+
+### Added
+
+- **3DEC 7.0 command blocks**: `parse_3dec700.py` injected 7.0 version
+  blocks from the 3DEC700 HTML tree into all matching command files
+  (137 pages), then three live sweep rounds (146 commands, `?`-first +
+  bogus probing, fresh sacrificial model per command) corrected them
+  against the engine. Live-discovered commands absent from the official
+  doc trees got files/blocks authored: `block ratio` / `block remove` /
+  `flowplane pipe` (missing 7.0 pages) and `block contact safe-delete` /
+  `block face merge` (absent from both trees).
+- **The 7.0-only `sel` structural-element family**, across all three
+  doc surfaces: 17 command files (`sel hybrid` / `sel node` /
+  `sel reinforcement`), 16 Python SDK units for the `itasca.sel` module
+  family (authored from live `__doc__`; `sel hybrid create` produces
+  `sel.cable` "hybrid bolt" elements), and `sel-hybrid` /
+  `sel-reinforcement` structural-properties references — everything
+  availability-gated to 7.0 (9.x merged these into the unified
+  `structure` family).
+- **3DEC-scoped `model configure` documentation** — previously missing
+  from the 3dec corpus entirely (the shared doc lives on the FLAC side)
+  despite gating thermal/matrixflow/fluid/feblock features. Live-verified
+  per-version keyword sets: 7.0 uses classic `fluid` (+`plugins`); 9.x
+  uses `fluid-flow`/`fluid-explicit`/`fluid-implicit`. The 3dec index
+  generator now merges local overrides inside borrowed shared categories.
+
+### Documentation
+
+- **Version verdicts recorded corpus-wide with availability gates.**
+  Joint models: 7.0 has seven of the nine (`ratestate` and
+  `velocity-weakening` are 9.x-only) with property sets identical to the
+  9.7 enumerations; trap recorded — `block contact jmodel ?` omits
+  `softening-mohr` although assign accepts it. Constitutive models: five
+  marked 9.x-only (`columnar-basalt`, `concrete`, `curved-mohr-coulomb`,
+  `munson-dawson`, `von-mises`). Python SDK: `itasca.block.field`,
+  `Fracture.decimate`, and `prop`/`set_prop` on the six structure
+  element classes marked 9.x-only; everything else matches 7.0 exactly
+  (all 26 classes name-for-name).
+- **Structural-element version pattern documented**: 7.0 spells the
+  polar moment `moi-polar` where 9.x renamed it `torsion-constant`
+  (beam/pile); the `plastic-shear` family and `shear-coefficient-y/z`
+  are 9.x-only; shell-type elastic materials are `property` keywords in
+  7.0 (`isotropic`/`orthotropic-*`/`anisotropic-*`/`material-x`) but
+  cmodel-based in 9.x; 7.0 face-based creation uses `by-block-face`;
+  `spacing` (cable/pile) proven unavailable on both versions.
+- **7.0 engine traps recorded**: `model cycle` requires an explicit
+  `model large-strain`; zone density assigned before `block zone cmodel
+  assign` is a silent no-op (state-verified via `zone.prop('density')`);
+  the material-table default-stiffness gate exists in 7.0 too;
+  `block zone thermal|fluid property` masquerades exist but do not
+  error-enumerate property names in 7.0; plot items enumerate 63 types
+  on 7.0 (legacy SEL items coexist with the `structure-*` family);
+  `fish list intrinsics` confirms every documented intrinsic including
+  the `block.gp.*` naming.
+- Execution tool docstrings trimmed to behavioral rules (#115).
+
 ## [0.6.9] - 2026-08-19
 
 ### Fixed
