@@ -30,7 +30,7 @@
 
 ### Prerequisites
 
-- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended; PFC 6.0 / 7.0 and FLAC 7.0 are also supported.
+- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended; PFC 6.0 / 7.0, FLAC 7.0, and 3DEC 7.0 are also supported.
 - **[uv](https://docs.astral.sh/uv/getting-started/installation/)** installed (for `uvx`)
 - **An AI agent** — Claude Code, Codex CLI, Gemini CLI, or any MCP-capable client
 
@@ -100,7 +100,7 @@ itasca_mcp_bridge.start()
 ## Features
 
 - **Multi-engine corpus** - command, Python API, and reference docs for PFC, FLAC, 3DEC, MPoint, and MassFlow, selected via the required `software` parameter
-- **Multi-version support** - command docs across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0) via the `version` parameter
+- **Multi-version support** - command docs across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0, 3DEC: 7.0/9.0) via the `version` parameter
 - **Hierarchical documentation browsing** - agents navigate the engine command tree to discover capabilities and boundaries, reducing hallucinated commands
 - **Enhanced plot documentation** - plot items reference docs supplementing the official documentation
 - **Live REPL alongside running tasks** - execute code while a simulation is running: check model state and intermediate results without stopping the task; also useful for quick iteration before writing a full script
