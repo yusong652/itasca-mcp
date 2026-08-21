@@ -126,6 +126,47 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
     return out
 
 
+def merge_local_shared_overrides(categories: dict[str, Any]) -> list[str]:
+    """Merge 3DEC-local files that live in a borrowed (shared) category.
+
+    Some shared-kernel commands need a 3DEC-scoped doc because the engine's
+    keyword set diverges from the FLAC/_common one (e.g. ``model configure``:
+    no cfd/axisymmetry, 7.0 classic ``fluid``). Those files live under
+    ``commands/<shared-category>/`` next to the proprietary families; this
+    scans every non-proprietary directory and inserts/overrides the matching
+    command entries so a rerun never drops them.
+    """
+    merged: list[str] = []
+    for cat_dir in sorted(COMMANDS_DIR.iterdir()):
+        if not cat_dir.is_dir() or cat_dir.name in PROPRIETARY:
+            continue
+        category = cat_dir.name
+        if category not in categories:
+            continue
+        commands = categories[category]["commands"]
+        by_name = {c["name"]: i for i, c in enumerate(commands)}
+        for cmd_path in sorted(cat_dir.glob("*.json")):
+            data = _resolve_versioned(json.loads(cmd_path.read_text(encoding="utf-8")))
+            description = data.get("description", "")
+            short = description.split(".")[0] if description else ""
+            if len(short) > 100:
+                short = short[:97] + "..."
+            entry = {
+                "name": cmd_path.stem,
+                "file": f"3dec/command_docs/commands/{category}/{cmd_path.name}",
+                "short_description": short,
+                "syntax": data.get("syntax", ""),
+                "python_available": data.get("python_sdk_alternative", {}).get("available", False),
+            }
+            if cmd_path.stem in by_name:
+                commands[by_name[cmd_path.stem]] = entry
+            else:
+                commands.append(entry)
+                commands.sort(key=lambda c: c["name"])
+            merged.append(f"{category}/{cmd_path.stem}")
+    return merged
+
+
 def main() -> None:
     categories: dict[str, Any] = {}
     for category in PROPRIETARY:
@@ -133,6 +174,7 @@ def main() -> None:
     common = borrow_common_categories()
     for name, meta in common.items():
         categories[name] = meta
+    merged = merge_local_shared_overrides(categories)
 
     index = {
         "version": "1.0",
@@ -146,6 +188,7 @@ def main() -> None:
     print(f"  categories: {len(categories)}  total commands: {total}")
     print("  proprietary:", {c: len(categories[c]["commands"]) for c in PROPRIETARY})
     print("  reused _common:", {n: len(categories[n]["commands"]) for n in common})
+    print("  local shared overrides:", merged)
 
 
 if __name__ == "__main__":

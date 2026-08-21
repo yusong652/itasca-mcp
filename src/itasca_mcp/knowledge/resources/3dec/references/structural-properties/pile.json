@@ -56,33 +56,57 @@
         },
         {
           "keyword": "plastic-shear",
-          "description": "plastic shear capacity in Y and Z",
-          "type": "FLT"
+          "description": "plastic shear capacity in Y and Z [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "plastic-shear-y",
-          "description": "plastic shear capacity in Y",
-          "type": "FLT"
+          "description": "plastic shear capacity in Y [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "plastic-shear-z",
-          "description": "plastic shear capacity in Z",
-          "type": "FLT"
+          "description": "plastic shear capacity in Z [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "shear-coefficient-y",
-          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam only)",
-          "type": "FLT"
+          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam only) [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "shear-coefficient-z",
-          "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam only)",
-          "type": "FLT"
+          "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam only) [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "spacing",
-          "description": "spacing ( 2D only)",
-          "type": "FLT"
+          "description": "spacing (2D only). NOT enumerated by live 3DEC 9.7.47 nor by live 3DEC 7.00 'structure pile property' (with elements present) - likely FLAC2D-only spacing logic; treat as unavailable in 3DEC on both versions.",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": false
+          }
         },
         {
           "keyword": "thermal-expansion",
@@ -91,8 +115,12 @@
         },
         {
           "keyword": "torsion-constant",
-          "description": "torsion constant",
-          "type": "FLT"
+          "description": "torsion constant [9.x-only: absent from the live 3DEC 7.00 'structure pile property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "coupling-cohesion-normal",
@@ -193,10 +221,20 @@
           "keyword": "poisson",
           "description": "Poisson's ratio. Live-enumerated by 3DEC 9.7.47; was missing from this file.",
           "type": "FLT"
+        },
+        {
+          "keyword": "moi-polar",
+          "type": "FLT",
+          "availability": {
+            "7.0": true,
+            "9.0": false
+          },
+          "description": "polar moment of inertia. 7.0-only spelling: 9.x renamed this slot to torsion-constant.",
+          "symbol": "J"
         }
       ]
     }
   ],
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.property.html",
-  "verification": "Live-verified 2026-08-14 against 3DEC 9.7.47 (enumeration with elements): documented set confirmed except 'spacing' (not enumerated by 3DEC 9.7 - flagged); young/poisson added (35-keyword live set)."
+  "verification": "Live-verified 2026-08-14 against 3DEC 9.7.47 (enumeration with elements): documented set confirmed except 'spacing' (not enumerated by 3DEC 9.7 - flagged); young/poisson added (35-keyword live set). 3DEC 7.00 Release 161 (2026-08-21): full property enumeration captured with elements present (30 keywords + range); per-keyword availability marked where the 7.0 and 9.7 sets diverge."
 }
