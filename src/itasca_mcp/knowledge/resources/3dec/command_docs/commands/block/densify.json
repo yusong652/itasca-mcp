@@ -57,6 +57,60 @@
         ],
         "note": "The text below explicitly defers to figures that are not captured in this corpus, so load-bearing detail (reference-point ordering point 0..N, size -> direction mapping, dimension meaning) is missing here. Do not guess it: read the figure -- Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly. Or confirm empirically: build one primitive and read back gridpoint coordinates via itasca_execute_code to deduce the convention."
       }
+    },
+    "7.0": {
+      "command": "block densify",
+      "syntax": "block densify keyword ... [range]",
+      "keywords": [
+        {
+          "name": "gradient-limit",
+          "syntax": "gradient-limit",
+          "description": "Blocks chosen for “densification” will be checked to attempt to ensure that adjacent blocks differ by, at most, one level of densification. This may mean more blocks will be densified than actually fall into the range."
+        },
+        {
+          "name": "hexahedra",
+          "syntax": "hexahedra",
+          "description": "Use this keyword if blocks in the range are hexahedra (8-sided). Certain efficiencies are achieved when densifying hexahedral blocks and the command will be executed significantly faster. If blocks in the range are not hexahedra, the keyword is ignored and the default densification scheme is used."
+        },
+        {
+          "name": "joint-set",
+          "syntax": "joint-set <i>",
+          "description": "Specify joint ID i for faces and joints created with this command."
+        },
+        {
+          "name": "join",
+          "syntax": "join",
+          "description": "Join blocks across the joints created with this command."
+        },
+        {
+          "name": "maximum-length",
+          "syntax": "maximum-length <f1>[<f2>[<f3>]]",
+          "description": "This specifies the maximum edge lengths to be densified, in order. If f2 and f3 are not specified, they will be set to the same number as f1 ."
+        },
+        {
+          "name": "repeat",
+          "syntax": "repeat [<i>]",
+          "description": "Repeat the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then 3DEC will repeat until the maximum-length length is reached, applying the division specified in segments each time."
+        },
+        {
+          "name": "segments",
+          "syntax": "segments <i1>[<i2>[<i3>]]",
+          "description": "This specifies the number of subdivisions in the \\(x\\) -, \\(y\\) - and \\(z\\) -directions. If i2 and i3 are not specified, they will be set to the same number as i1 ."
+        },
+        {
+          "name": "tetrahedra",
+          "syntax": "tetrahedra",
+          "description": "Tetrahedral blocks will be split by first making cuts through the midpoint of each edge. This results in four new tetrahedra and an octahedron in the center. The octahedron is then split into four tetrahedra with two further cuts along the diagonals (see the figure below). Note that if the tet keyword is given, the \\(segments\\) value is ignored for tetrahedral blocks. Blocks that are not tetrahedral are split normally along the global x,y and z axes."
+        }
+      ],
+      "examples": [],
+      "figure_reference": {
+        "text_incomplete": true,
+        "deferrals": [
+          "The octahedron is then split into four tetrahedra with two further cuts along the diagonals (see the figure below)."
+        ],
+        "note": "The text below explicitly defers to figures that are not captured in this corpus, so load-bearing detail (reference-point ordering point 0..N, size -> direction mapping, dimension meaning) is missing here. Do not guess it: read the figure -- Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly. Or confirm empirically: build one primitive and read back gridpoint coordinates via itasca_execute_code to deduce the convention."
+      }
     }
   }
 }

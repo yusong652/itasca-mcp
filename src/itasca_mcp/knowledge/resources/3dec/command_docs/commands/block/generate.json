@@ -55,6 +55,53 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block generate",
+      "syntax": "block generate keyword",
+      "keywords": [
+        {
+          "name": "filename",
+          "syntax": "filename <s>",
+          "description": "Create blocks defined by a block geometries in a VRML file (Virtual Reality Modeling Language). Shapes in the VRML file must be closed, convex surfaces. The file must be in VRML 2.0 format. m ,,, Specify the angle between faces below which two separate faces are merged. The default is 1 degree. Specify the filename of the VRML file."
+        },
+        {
+          "name": "set",
+          "syntax": "set <s>",
+          "description": "Create tetrahedral blocks to fill a closed volume defined by a geometric set. Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing. Rate at which, on the surface of the tetrahedral mesh, neighboring triangle sizes vary as triangles increase or decrease in size due to local size adaptation Rate at which neighboring tetrahedra will increase in size away from the surface. Specify the maximum edge length for any tetra to be generated. The actual maximum edge length will be close to this, but the result is not guaranteed to be exact. Specify the minimum edge length for any tetra to be generated. The actual minimum edge length will be close to this, but the result is not guaranteed to be exact. If specified, all the blocks in the same groups will be merged in one block Specify the geometry set used to define the surface. By default, the current geometric set will be used."
+        },
+        {
+          "name": "segments",
+          "syntax": "segments <i>",
+          "description": "Generates blocks by extruding surface faces in the range until they meet polygons in a geometric set. Block faces could be triangulated if they are not planar. Set a break angle greater than 0 to simplify the geometric set by merging triangular faces if the angle between them is less the f . The default is 0. Specify the extrusion direction that will be used to create blocks on surface faces. From a surface gridpoint, a ray will be cast in this direction until it intersects a polygon in the geomtric set. This will define the shape and size of the blocks created. By default this value will be (0,0,1). If a face normal is parallel to this direction vector (with a tolerance of about 0.5 degrees) the face will be neglected even it if is in the range. Specify the geometry set used to define the surface to which blocks are being extruded. By default the current geometric set will be used. Assign the group s1 to the created blocks, in slot s2 . If not specified, the default slot is Default . Use of the group logic is described in Groups . Give the plane keyword to indicate that the extrusion is to a plane rather than a geometric set. The plane must be defined by a normal and origin . Give the normal to the plane to which you are extruding if plane is specified. Give the origin of the plane to which you are extruding if plane is specified. Specify the ratio used to distribute blocks from the surface face to the geometric set. A ratio of 1.1 means that each block edge in that direction will be 1.1 times the length of the previous block. So, by default, a ratio of > 1 means blocks will get larger in the positive \\(z\\) direction. If not specified, the default ratio is 1.0. Specify the number of blocks layers created between the existing surface block faces and the geometry set. By default this value is 1."
+        },
+        {
+          "name": "set",
+          "syntax": "set <s>",
+          "description": "Create Voronoi blocks to fill a closed volume defined by a geometric set (restricted surface). Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing. Rate at which, on the restricted surface, distance between two seeds vary (increase or decrease) in size due to local size adaptation Rate at which distance between two seeds will increase in size away from the restricted surface. Specify the maximum distance between two seeds. The actual maximum distance will be close to this, but the result is not guaranteed to be exact. Specify the minimum distance between two seeds. The actual minimum distance will be close to this, but the result is not guaranteed to be exact. Specify the geometry set used to define the restricted surface. By default, the current geometric set will be used."
+        },
+        {
+          "name": "from-geometry",
+          "syntax": "from-geometry <keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Generate blocks from a geometry set."
+        },
+        {
+          "name": "from-topography",
+          "syntax": "from-topography <keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Generate blocks from topography data."
+        },
+        {
+          "name": "from-vrml",
+          "syntax": "from-vrml <keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Generate blocks from a VRML file."
+        },
+        {
+          "name": "voronoi",
+          "syntax": "voronoi <keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Generate a Voronoi block assembly."
+        }
+      ],
+      "examples": []
     }
   }
 }

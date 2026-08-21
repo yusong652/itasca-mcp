@@ -55,6 +55,53 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block insitu",
+      "syntax": "block insitu keyword ... [range]",
+      "keywords": [
+        {
+          "name": "fluid-temperature",
+          "syntax": "fluid-temperature <f>[gradient <v>]",
+          "description": "Set the insitu fluid temperature. The optional gradient keyword gives the gradient in temperature in the x, y and z directions from the specified value at (0,0,0)."
+        },
+        {
+          "name": "gradient",
+          "syntax": "gradient <v>",
+          "description": "Set pore-water pressure. This will set gridpoint pore pressures. If configure fluid is on , pore pressures are set for flow knots on the flow planes. Otherwise, fluid pressures are set on the joint sub-contacts. Specify the gradient in pore pressure in the x, y and z directions from the specified value at the origin."
+        },
+        {
+          "name": "nodisplacements",
+          "syntax": "nodisplacements",
+          "description": "Initialize insitu stresses in deformable blocks. An optional gradient and measurement point may also be specified. Set direction of intermediate principal stress. Directions only need to be provided for two principal components. Dip and dip-direction may be given instead of the direction vector. Set direction of maximum princpal stress. Directions only need to be provided for two principal components. Dip and dip-direction may be given instead of the direction vector. Set direction of minimum principal stress. Directions only need to be provided for two principal components. Dip and dip-direction may be given instead of the direction vector. Set intermediate principal stress. Specify the measurement point which defaults to the origin. Set maximum principal stress. Set minimum principal stress. Set dip of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components. Set dip direction of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components. Set dip of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components. Set dip direction of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components. Set dip of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components. Set dip direction of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal directions. Specify the stress gradient in the z-direction (vertical). An optional location specifies the coordinates of the stress measurement. If not given, a default coordinate of 0,0,0 is assumed. The gradient is the stress change in the vertical direction. All other stresses are incremented proportionally to prevent stress rotation. The optional nodisplacements keyword prevents normal displacements (due to initial stress) from being subtracted from azero (hydraulic aperture at zero stress). Consequently, if nodisplacements is used, aperture-initial is the initial stress aperture, not the zero-stress aperture."
+        },
+        {
+          "name": "stress",
+          "syntax": "stress <fsxx0><fsyy0><fszz0><fsxy0><fsxz0><fsyz0>[gradient-x <fsxxx><fsyyx><fszzx><fsxyx><fsxzx><fsyzx>] [gradient-y <fsxxy><fsyyy><fszzy><fsxyy><fsxzy><fsyzy>] [gradient-z <fsxxz><fsyyz><fszzz><fsxyz><fsxzz><fsyzz>] [nodisplacements]",
+          "description": "Initialize in situ stresses in deformable blocks by specifying a complete stress tensor with optional gradients in the x, y and z directions. If gradients are provided, the input stress is assumed to be the stress at 0,0,0 and gradients are applied accordingly. For example, at point x,y,z, the xx stress will be sxx = \\(sxx0\\) + \\(sxxx\\) *x + \\(sxxy\\) *y + \\(sxxz\\) *z. The nodisplacements keyword prevents normal displacements (due to initial stress) from being subtracted from aperture-initial (hydraulic aperture at zero stress). Consequently, if nodis is used, aperture-initial is the initial stress aperture, not the zero-stress aperture."
+        },
+        {
+          "name": "overburden-zz",
+          "syntax": "overburden-zz <f>",
+          "description": "Initialize in situ stresses based on the density of overburden. This command is used in models where the top surface is irregular, giving rise to significant variation in stress due to overburden. Set stress ratio in the \\(x\\) -direction relative to the vertical stress. The vertical direction is obtained from the direction of gravity. Set stress ratio in the \\(y\\) -direction relative to the vertical stress. The vertical direction is obtained from the direction of gravity. Set stress ratio in the \\(z\\) -direction relative to the vertical stress. The vertical direction is obtained from the direction of gravity. Set xx component of overburden stress. Remember that compressive stresses are negative. Set yy component of overburden stress. Remember that compressive stresses are negative. Set zz component of overburden stress. Remember that compressive stresses are negative."
+        },
+        {
+          "name": "pore-pressure",
+          "syntax": "pore-pressure <f> [keyword]",
+          "description": "Set pore-water pressure at gridpoints (flow knots on flow planes if configure fluid is on, otherwise fluid pressures on joint sub-contacts). First-slot keyword verified by live 3DEC 9.7.47 enumeration."
+        },
+        {
+          "name": "principal",
+          "syntax": "principal <f1> <f2> <f3> keyword ...",
+          "description": "Specify in-situ stress state via principal stresses and orientations. First-slot keyword verified by live 3DEC 9.7.47 enumeration."
+        },
+        {
+          "name": "topography",
+          "syntax": "topography keyword ...",
+          "description": "Set in-situ stresses accounting for topography. First-slot keyword verified by live 3DEC 9.7.47 enumeration. Live 9.7.47 sub-keywords: overburden overburden-xx overburden-yy overburden-zz ratio-x ratio-y ratio-z total; execution requires gravity to be defined first ('gravity must be defined')."
+        }
+      ],
+      "examples": []
     }
   }
 }

@@ -65,6 +65,63 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block cut",
+      "syntax": "block cut keyword",
+      "keywords": [
+        {
+          "name": "id",
+          "syntax": "id <i>",
+          "description": "Cut blocks according to the discrete fracture network specified. A cut will be made from each fracture in the DFN, but be aware that the generated joints will generally be larger than the actual fractures of the DFN. After zoning, use the command CHANGE dfn to set different properties to subcontacts inside and outside of the DFN fractures. Either the name or id keyword must be supplied. Cut using the DFN with the name s . Cut using the DFN with the ID i ."
+        },
+        {
+          "name": "geometry",
+          "syntax": "geometry <s>",
+          "description": "Cut using the geometry set with the given name \\(s\\) . WARNING: a cut will be made for every polygon in the surface geometry, therefore to minimum the number of blocks created it is recommended to simplify the geometry as much as possible to reduce the number of polygons."
+        },
+        {
+          "name": "spacing",
+          "syntax": "spacing <f>[<f2>]",
+          "description": "Cut blocks by a joint set described by the keywords supplied. Defaults for these parameters, if not given, are zero, except for persistence and number , which both default to 1. Set the dip, in degrees, of the joints making up the set (i.e., the angle of the joints below the \\(y\\) = 0 plane; see NOTE, below). An optional random deviation, f2 , specifies the limit of deviation; a different deviation is applied to each block split. Set the dip direction, in degrees, of joints making up the set given by angle \\(a\\) , where 0 < \\(a\\) < 360◦, measured clockwise from the positive \\(z\\) -axis, which is taken as North (see NOTE, below). A random deviation, different for each block cut, is specified by f . Join blocks across the joints created by the this command command. Specify the number of joints in the set. Joints are produced symmetrically about the joint-set origin, given by the origin keyword. Set the origin, or starting point, of the joint set. The first joint generated will pass through this point. Specify the joint orientation by the plane defined by the points v1 , v2 , and v3 . Set the probability that any given block lying in the path of a joint will be split (i.e., if f = 0.5, then 50% of the blocks will be split, on average). Set the spacing between joints of the set. A random deviation (different for each block cut) is specified optionally with f2 ."
+        },
+        {
+          "name": "jointset-id",
+          "syntax": "jointset-id <i>",
+          "description": "Set the joint set ID of all faces and contacts created with this command. This will override the number that would be assigned automatically. The joint plane id is normally automatically incremented with each operation that creates new faces, starting with 0 as the base number for automatic id assignment. Use the set minimum-id keywords (see below) to set the base number to something other than 0. The joint set id can be used with kwd: \\(range joint-set\\) to identify specific joints."
+        },
+        {
+          "name": "minimum-id",
+          "syntax": "minimum-id <i>",
+          "description": "Configure options for cut operations performed with this command. Specify whether to split non-convex faces. (The default is on .) Set the minimum edge angle allowed for a block cut. (The default is 1º.) Set the starting number for the joint plane ID numbers."
+        },
+        {
+          "name": "x-local",
+          "syntax": "x-local <v>",
+          "description": "Method 1: Create a tunnel between the two faces defined by the keywords face-1 and face-2 . The shape of the tunnel face is prescribed by an arbitrary number of vertices with coordinates va1 , va2 , va3 , etc. Straight lines between the vertices (in their respective order as listed) connect the two faces to define the tunnel boundary. The same number of vertices must exist on both faces, which may be positioned either inside or outside the model. Method 2: Create a tunnel between the two tables defined by the keywords table-1 and table-2 . The same procedure for creation of the tunnel applies: points in respective order on each table are connected by straight lines that define the tunnel boundary, etc. The orientation of the tables in the third dimension is determined using the axis keyword. Define a tunnel face with three to n vertices. If continuations (&) are used for long input lines of vertices, do not split the values of a v across lines. Define a corresponding tunnel face with the same number of vertices as supplied for face-1 . Cause the cuts used for the tunnel shape to be radial to the center rather than tangential to the tunnel edges. Note: The apparent extra cut through the model occurs because any single cut must pass entirely through a block. Thus the first cut passing through the first vertex cuts through both sides of the tunnel outline. Assign a specific group name (and, optionally, slot) to the blocks within the defined tunnel region. Orient the tunnel to be created using table-1 and table-2 along the axis defined by v1 and v2 . Specify a table to be used as the first tunnel face. Specify a table to be used as the second tunnel face. Specify the local x-axis if faces are defined with tables. The local y-axis will be the cross product of the local x-axis and the tunnel axis."
+        },
+        {
+          "name": "dfn",
+          "syntax": "dfn <name/keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Cut along a discrete fracture network."
+        },
+        {
+          "name": "joint-set",
+          "syntax": "joint-set <keyword> ...",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Cut a joint set (the documented dip/dip-direction/origin/id/spacing/... keywords are sub-keywords of this slot)."
+        },
+        {
+          "name": "set",
+          "syntax": "set",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Alias/related form of joint-set (live-enumerated at the first slot)."
+        },
+        {
+          "name": "tunnel",
+          "syntax": "tunnel",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Tunnel-shaped cut."
+        }
+      ],
+      "examples": []
     }
   }
 }

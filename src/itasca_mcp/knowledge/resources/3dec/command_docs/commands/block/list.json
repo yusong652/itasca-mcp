@@ -235,6 +235,228 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block list",
+      "syntax": "block list keyword [range]",
+      "keywords": [
+        {
+          "name": "apply",
+          "syntax": "apply",
+          "description": "List information on blocks with applied velocities or applied thermal conditions."
+        },
+        {
+          "name": "at",
+          "syntax": "at <v>",
+          "description": "Print zone stresses, vertex displacements and velocities nearest to specified location"
+        },
+        {
+          "name": "brick",
+          "syntax": "brick",
+          "description": "This command provides an alternative to the LIST boundary reactions command. It is used when the stresses inside a global model are to be transferred as boundary conditions to a smaller model. The smaller model must be defined as a brick-shaped polyhedron. The command creates a file with BOUNDARY point, BOUNDARY xload, BOUNDARY yload and BOUNDARY zload, which are used as input in the smaller model data file. The global model need not have joints corresponding to the boundaries of the smaller model, as required by the LIST boundary reactions command. The forces are calculated by sampling stresses in a regular grid located on the brick faces. The grid size may be defined by the user. The forces are corrected so that the force sums balance the gravity forces acting inside the brick region. It is assumed that no holes exist inside the brick. The default file name is “BRICK.PRN.” The default grid-spacing is 0.1 × largest brick dimension."
+        },
+        {
+          "name": "cell",
+          "syntax": "cell",
+          "description": "List cell space data."
+        },
+        {
+          "name": "concave",
+          "syntax": "concave [angle <f>]",
+          "description": "List block edges that have a face-to-face angle of 180◦ or greater. Face-to-face angles greater than 180◦ are concave, and may cause problems when zoning or sliding. Block information is printed if face-to-face angle is greater than value (default = 210◦)."
+        },
+        {
+          "name": "contacts",
+          "syntax": "contacts",
+          "description": "List block contact list data."
+        },
+        {
+          "name": "energy",
+          "syntax": "energy",
+          "description": "List summary of strain-energy calculation."
+        },
+        {
+          "name": "extra",
+          "syntax": "extra <i>",
+          "description": "List the contents of extra variable i for blocks in the range."
+        },
+        {
+          "name": "screen",
+          "syntax": "screen",
+          "description": "List normal and shear tractions on a hypothetical plane, specified by dip , dip direction ( dip-direction ) and origin coordinates. The area of output may be limited by the radius keyword. This is used to assess slip potential in different orientations. Specify the dip angle. Specify the dip direction. Specify that output will be sent to the text file s . Specify the origin of sphere if radius is used. Specify that output is limited to a sphere of radius f . Specify that output is sent to the screen than to a file."
+        },
+        {
+          "name": "group",
+          "syntax": "group",
+          "description": "List block group names."
+        },
+        {
+          "name": "information",
+          "syntax": "information",
+          "description": "List general block information, including ID, material number, constitutive number, region, type and master-slave status (this is the default)."
+        },
+        {
+          "name": "limits",
+          "syntax": "limits",
+          "description": "List the largest and smallest positions, displacements, and velocities in the model."
+        },
+        {
+          "name": "master",
+          "syntax": "master",
+          "description": "List master blocks."
+        },
+        {
+          "name": "memory",
+          "syntax": "memory",
+          "description": "List amount of memory that is actively being used by 3DEC ."
+        },
+        {
+          "name": "moment",
+          "syntax": "moment",
+          "description": "List block moments of inertia."
+        },
+        {
+          "name": "poly",
+          "syntax": "poly [<s>]",
+          "description": "Create a file that contains block create polyhedron face commands that will recreate the block. This file can be called directly as a data file. This is used to extract portions of a model (only visible blocks are printed). This may also be used to reduce the amount of memory required by a model in which many blocks were deleted during the construction process. If not specified, the file is named spoly.txt . The number of significant digits is equal to the 12 or the global model precision, whichever is greater. To increase the precision above 12 digits, use the model precision command."
+        },
+        {
+          "name": "position",
+          "syntax": "position",
+          "description": "List the position of each block in the range."
+        },
+        {
+          "name": "velocity-z",
+          "syntax": "velocity-z",
+          "description": "List values of a specified quantity at points spaced equally over a line. Only one of the following quantities is specified for the profile. See beginkwdforblocklistprofile below for other keywords to define the line start and end point, number of segments, etc. acceleration magnitude at the gridpoint (only available in if model configure dynamic has been specified) \\(x\\) -acceleration at the gridpoint (only available in if model configure dynamic has been specified) \\(y\\) -acceleration at the gridpoint (only available in if model configure dynamic has been specified) \\(z\\) -acceleration at the gridpoint (only available in if model configure dynamic has been specified) a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up The density of the zone. displacement magnitude at the gridpoint \\(x\\) -displacement at the gridpoint \\(y\\) -displacement at the gridpoint \\(z\\) -displacement at the gridpoint extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the grid point extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword. pore pressure in zone. By default this will be the grid point pore pressure, but the zone average pore pressure can be specified by using the source keyword modifier. a property of the mechanical constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword. a property of the fluid constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword. a property of the thermal constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword. the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier. the saturation at the gridpoint (only available in if model configure fluid has been specified) the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor. the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor. the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor. the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10. the effective stress tensor of the zone, determined by the weighted average of the subzone stresses minus the zone averaged pore pressure. Use the quantity keyword to specify which scalar value to retrieve from the tensor. the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead. the local critical dynamic time step of that particular gridpoint. (only available in if model configure dynamic has been specified) the unbalanced force magnitude at the gridpoint. \\(x\\) -unbalanced force at the gridpoint. \\(y\\) -unbalanced force at the gridpoint \\(z\\) -unbalanced force at the gridpoint the velocity magnitude at the gridpoint \\(x\\) -velocity at the gridpoint \\(y\\) -velocity at the gridpoint \\(z\\) -velocity at the gridpoint"
+        },
+        {
+          "name": "slave",
+          "syntax": "slave <i>",
+          "description": "List the blocks that are slaved to block ID i ."
+        },
+        {
+          "name": "unbalanced-force",
+          "syntax": "unbalanced-force",
+          "description": "List rigid-block unbalanced forces."
+        },
+        {
+          "name": "velocity",
+          "syntax": "velocity",
+          "description": "List block translational and rotational velocities."
+        },
+        {
+          "name": "wall",
+          "syntax": "wall",
+          "description": "List wall-typed blocks."
+        },
+        {
+          "name": "water-table",
+          "syntax": "water-table",
+          "description": "List the water table definition."
+        },
+        {
+          "name": "begin",
+          "syntax": "begin <v>",
+          "description": "Set the beginning point of the profile line. If not supplied, this value is set to the origin by default. See also the c end and c segments keywords."
+        },
+        {
+          "name": "magnitude",
+          "syntax": "magnitude",
+          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are:"
+        },
+        {
+          "name": "end",
+          "syntax": "end <v>",
+          "description": "Set the end point of the profile line. If not supplied, this value is set to (1,1,1) by default. See also the c begin and c segments keywords."
+        },
+        {
+          "name": "filename",
+          "syntax": "filename <s>",
+          "description": "Specify a filename to output the profile. If not givien, the output will go to the screen."
+        },
+        {
+          "name": "index",
+          "syntax": "index <i>",
+          "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
+        },
+        {
+          "name": "gravity",
+          "syntax": "gravity <b>",
+          "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
+        },
+        {
+          "name": "gridpoint-id",
+          "syntax": "gridpoint-id <i>",
+          "description": "Specifies the location of the history by the location of the gridpoint with ID number i ."
+        },
+        {
+          "name": "log",
+          "syntax": "log <b>",
+          "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
+        },
+        {
+          "name": "polynomial",
+          "syntax": "polynomial [tolerance <f>]",
+          "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use. This uses an volume weighted average of all the zones connected to the gridpoint. This uses an weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Specifies the power of the distance used to weight values. The default power is 3.0. Specifies the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75. Uses a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
+        },
+        {
+          "name": "name",
+          "syntax": "name <s>",
+          "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
+        },
+        {
+          "name": "zz",
+          "syntax": "zz",
+          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: intermediate principal stress the maximum (most positive) value of principal stress. Note that in 3DEC compressive stresses are negative . The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure. The minimum (most negative) principal stress. Note that in 3DEC compressive stresses are negative . The norm of the strain rate; see the equation in Zone Field Data Names octahedral stress; see the equation in Zone Field Data Names maximum shear stress distance of tensor value to the origin in principal space volumetric change, or trace Von Mises measure; see the equation in Zone Field Data Names xx -component of the tensor xy -component of the tensor xz -component of the tensor yy -component of the tensor yz -component of the tensor zz -component of the tensor"
+        },
+        {
+          "name": "segments",
+          "syntax": "segments <i>",
+          "description": "Specify, by segmenting the profile line, the number of points to distribute evenly along the line from c begin to c end (where the number of points will be i + 1). If not supplied, this value is set to 2 by default."
+        },
+        {
+          "name": "zone",
+          "syntax": "zone",
+          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Values are retrieved directly from the gridpoint. Values are retrieved from the zone."
+        },
+        {
+          "name": "stress",
+          "syntax": "stress <b>",
+          "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
+        },
+        {
+          "name": "tensor",
+          "syntax": "tensor",
+          "description": "In certain cases the type (scalar, vector, ro tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. A scalar float type. This is the default. A vector type. A tensor type."
+        },
+        {
+          "name": "zone-id",
+          "syntax": "zone-id <i>",
+          "description": "Specifies the location of the history is at the centroid of zone with ID i ."
+        },
+        {
+          "name": "details",
+          "syntax": "details",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Detailed per-block listing."
+        },
+        {
+          "name": "flaw",
+          "syntax": "flaw",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. List flaws."
+        },
+        {
+          "name": "maxima",
+          "syntax": "maxima",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. List maximum values."
+        },
+        {
+          "name": "profile",
+          "syntax": "profile",
+          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. List a profile of block quantities."
+        }
+      ],
+      "examples": []
     }
   }
 }

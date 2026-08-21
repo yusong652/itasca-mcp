@@ -59,17 +59,29 @@ CATEGORY_META: dict[str, dict[str, Any]] = {
         "description": "Commands for flow planes — the planar fracture-flow elements (with edge/vertex/zone sub-namespaces) of 3DEC's hydro-mechanical fluid-flow model.",
         "command_prefix": "flowplane",
     },
+    "sel": {
+        "full_name": "Structural Element (SEL) Commands",
+        "description": "3DEC 7.0 legacy structural-element family: hybrid bolt elements (sel hybrid), structural node settings (sel node), and local reinforcement elements (sel reinforcement).",
+        "command_prefix": "sel",
+        "notes": [
+            "7.0-only family: in 3DEC 9.x these merged into the unified structure family (structure hybrid / structure dowel / ...)",
+            "3DEC 7.0 also ships the unified structure family alongside sel (structure beam/cable/liner/... — documented on the FLAC side)",
+        ],
+    },
 }
 
 PROPRIETARY = list(CATEGORY_META.keys())
 
 
-def _resolve_9_0(cmd_data: dict[str, Any]) -> dict[str, Any]:
+def _resolve_versioned(cmd_data: dict[str, Any]) -> dict[str, Any]:
+    """Merge the newest available version block (9.0, else 7.0) for index fields."""
     versions = cmd_data.get("versions")
-    if isinstance(versions, dict) and "9.0" in versions:
-        merged = dict(cmd_data)
-        merged.update(versions["9.0"])
-        return merged
+    if isinstance(versions, dict):
+        for key in ("9.0", "7.0"):
+            if key in versions:
+                merged = dict(cmd_data)
+                merged.update(versions[key])
+                return merged
     return cmd_data
 
 
@@ -77,7 +89,7 @@ def build_proprietary_category(category: str) -> dict[str, Any]:
     cat_dir = COMMANDS_DIR / category
     commands = []
     for cmd_path in sorted(cat_dir.glob("*.json")):
-        data = _resolve_9_0(json.loads(cmd_path.read_text(encoding="utf-8")))
+        data = _resolve_versioned(json.loads(cmd_path.read_text(encoding="utf-8")))
         description = data.get("description", "")
         short = description.split(".")[0] if description else ""
         if len(short) > 100:

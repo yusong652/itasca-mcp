@@ -1,0 +1,58 @@
+{
+  "module": "itasca.sel.cablearray",
+  "description": "Array interface for SEL cable / hybrid bolt elements.",
+  "import_statement": "import itasca",
+  "availability": {
+    "versions": [
+      "7.0"
+    ]
+  },
+  "note": "3DEC 7.0-only module: the legacy SEL (structural element) scripting interface. Absent from 3DEC 9.x, where structural elements are accessed through itasca.structure instead. All signatures and descriptions were captured from live 3DEC 7.00 (Release 161) __doc__ introspection.",
+  "functions": [
+    {
+      "name": "extra",
+      "signature": "itasca.sel.cablearray.extra(slot: int) -> array float{cable} or float{cable,3}",
+      "description": "Get the cable extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec."
+    },
+    {
+      "name": "force_axial",
+      "signature": "itasca.sel.cablearray.force_axial() -> array float{cable}",
+      "description": "Get a numpy array of the force axial in cable."
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.sel.cablearray.ids() -> array int{cable}",
+      "description": "Get the cable ids as an array."
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.sel.cablearray.in_group(group_name: str, slot=\"default\") -> array bool{ncable}",
+      "description": "Return block group membership as a Boolean array."
+    },
+    {
+      "name": "length",
+      "signature": "itasca.sel.cablearray.length() -> array float{cable}",
+      "description": "Get a numpy array of the cable length."
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.sel.cablearray.set_extra(slot: int, data: array float{cable} or float{cable,3}) -> None",
+      "description": "Set the cable extra data in the given slot with an array. Extra variables set by array must be of type float or vec."
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.sel.cablearray.set_group(membership: array bool{ncable}, group_name: str, slot=\"default\") -> None",
+      "description": "Set block group from an array. Where membership True set the corresponding block to be a member of group group_name in the given slot."
+    },
+    {
+      "name": "strain_axial",
+      "signature": "itasca.sel.cablearray.strain_axial() -> array float{cable}",
+      "description": "Get a numpy array of the strain axial in cable."
+    },
+    {
+      "name": "stress_axial",
+      "signature": "itasca.sel.cablearray.stress_axial() -> array float{cable}",
+      "description": "Get a numpy array of the stress axial in cable."
+    }
+  ]
+}

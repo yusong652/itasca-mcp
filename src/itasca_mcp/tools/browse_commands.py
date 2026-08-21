@@ -39,8 +39,8 @@ def register(mcp: FastMCP) -> None:
             CommandDocVersion.V7_0,
             description=(
                 "Documentation version to browse. Defaults to 7.0 for multi-version engines "
-                "(PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0); 9.0-only engines (3DEC, MPoint, MassFlow) "
-                "always resolve at 9.0."
+                "(PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0, 3DEC: 7.0/9.0); 9.0-only engines "
+                "(MPoint, MassFlow) always resolve at 9.0."
             ),
         ),
     ) -> dict[str, Any]:

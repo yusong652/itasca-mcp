@@ -84,6 +84,102 @@
         ],
         "note": "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
       }
+    },
+    "7.0": {
+      "command": "block thermal",
+      "syntax": "block thermal keyword [range]",
+      "keywords": [
+        {
+          "name": "solve",
+          "syntax": "solve time <f>",
+          "description": "Switch the thermal logic used in 3DEC to the analytic solution method (set on ). If no value for b is given, it is assumed the user wishes to turn the analytical solution on. By default, the analytical solution is off . Set the number of mechanical steps to execute between analytic thermal solutions. Set a tolerance for thermal calculations. This tolerance can be thought of as a source radius. If temperatures are calculated at a point closer than f to a gridpoint, the distance from the gridpoint is taken as f . This is necessary because the analytical solution for the temperature due to a point source approaches infinity as the distance from the source approaches zero. (The default is f = 0.1.) Set the thermal conductivity used in the analytical solution. Set the thermal diffusivity used in the analytical solution. Solve the analytical solution to a time of f ."
+        },
+        {
+          "name": "convection",
+          "syntax": "convection <b>",
+          "description": "Turn convection calculations on / off during fluid/thermal coupled calculations."
+        },
+        {
+          "name": "time-start",
+          "syntax": "time-start <a>",
+          "description": "Set up a grid of point sources, each of strength f . The source may be outside the 3DEC grid. time-start defaults to zero if not specified. type and strength must specified. The type, strength and number of sources may be specified in any order. Specify the top left corner of the grid. Specify the top right corner of the grid. Specify the bottom right corner of the grid. Remove all grid sources Specify the source number. This is a reference to the source defined with the block thermal source command. Specify the strength of each point source. Set the number of points across the grid from left to right. Set the number of point across the grid from top to bottom. Set the start time. Figure 1: A grid of heat sources, input with the command BLOCK THERMAL GRID POINT-1 (10, 10, 10) POINT-2 (20, 20, 20) POINT-3 (20, 0, 10) SOURCE=1 STRENGTH=10 N12=5 N23=6"
+        },
+        {
+          "name": "isothermal",
+          "syntax": "isothermal [<fx>] [<fy>] [<fz>]",
+          "description": "Define isothermal boundary layers. For example, the two planes defined by \\(x\\) = 0 and \\(y\\) = 0 are isothermal if the command block isothermal 0 0 is issued. Note A plane cannot simultaneously be an isothermal boundary and a symmetry plane.S"
+        },
+        {
+          "name": "implicit",
+          "syntax": "implicit <b>",
+          "description": "Turn the implicit solution scheme in the thermal model on / off . The default is off ."
+        },
+        {
+          "name": "<time-start",
+          "syntax": "time-start",
+          "description": "Create a line heat source. The heat source consists a beginning point, and end point, and i point sources. A strength and type must be specified. The source may be outside the 3DEC grid. The type, strength and number of sources may be specified in any order. Set the line start point. Set the line end point. Remove all line sources. Set the source number. This is a reference to the source defined with the block thermal source command. Set the strength. Set the number of points on the line. Set the start time. If not specified, start time is zero by default."
+        },
+        {
+          "name": "heat",
+          "syntax": "heat",
+          "description": "List model thermal settings. List blocks with applied thermal conditions. List heat source data (only available with thermal option – see Thermal Option )."
+        },
+        {
+          "name": "mass-scale",
+          "syntax": "mass-scale <b>",
+          "description": "Turn thermal mass scaling on / off . The default is off ."
+        },
+        {
+          "name": "point",
+          "syntax": "point [remove] <v>source <i>strength <f1>[time-start <f2>]",
+          "description": ""
+        },
+        {
+          "name": "number-components",
+          "syntax": "number-components <i>",
+          "description": "Set general information about the heat source components. The identifying number of the source \\(n\\) must be the first entry following the words block thermal source in the command. Before the fractions and decay constants can be input, the number of components must be specified, either on the same command line or on a preceding one. The sum of all the fractions must be 1. This is only available for the Thermal Option (see Thermal Option ). Specify the component of heat source. Specify the fraction of the initial source strength produced by each component. Specify the decay constants of the components. Set the number of components making up the source."
+        },
+        {
+          "name": "symmetry-planes",
+          "syntax": "symmetry-planes [<fx>] [<fy>] [<fz>]",
+          "description": "This command is used to define thermal symmetry planes. For example, the plane defined by \\(y\\) = 0 is a symmetry plane if the command block thermal symmetry-planes fy is issued. Symmetry planes are used to represent adiabatic boundaries."
+        },
+        {
+          "name": "analytical",
+          "syntax": "analytical",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+        },
+        {
+          "name": "grid",
+          "syntax": "grid",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+        },
+        {
+          "name": "line",
+          "syntax": "line",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+        },
+        {
+          "name": "list",
+          "syntax": "list",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+        },
+        {
+          "name": "source",
+          "syntax": "source",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+        }
+      ],
+      "examples": [],
+      "figure_reference": {
+        "figures": [
+          {
+            "name": "thermal-analytical-heatsources.png",
+            "doc_path": "_images/thermal-analytical-heatsources.png"
+          }
+        ],
+        "note": "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+      }
     }
   }
 }

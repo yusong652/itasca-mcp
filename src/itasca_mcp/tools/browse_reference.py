@@ -44,7 +44,7 @@ def register(mcp: FastMCP) -> None:
                 "version-specific items (e.g. PFC contact models by availability). "
                 "range-elements, plot-items, and the FLAC/3DEC reference sets are "
                 "version-agnostic, so the value is ignored for them. "
-                "9.0-only engines (3DEC, MPoint, MassFlow) always resolve at 9.0."
+                "9.0-only engines (MPoint, MassFlow) always resolve at 9.0."
             ),
         ),
     ) -> dict[str, Any]:

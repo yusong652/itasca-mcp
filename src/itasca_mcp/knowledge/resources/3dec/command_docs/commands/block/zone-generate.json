@@ -116,6 +116,113 @@
         }
       ],
       "examples": []
+    },
+    "7.0": {
+      "command": "block zone generate",
+      "syntax": "block zone generate keyword [range]",
+      "keywords": [
+        {
+          "name": "distance",
+          "syntax": "distance <f>",
+          "description": "Generate a radially graded mesh from point v . If center is inside a block, a uniform mesh with edge length of edgelength-center f will be generated. Set the edge length at the center point to f . Set the edge length at distance to f . Set a distance f from the center point at which edgelength-distance will be used."
+        },
+        {
+          "name": "edgelength",
+          "syntax": "edgelength <f>",
+          "description": "The parameter f defines the average edge length of tetrahedral zones. The alternate keyword may be used for blocks that do not zone properly using the normal schemes (see below). In this case, the block is meshed independent of adjacent blocks, and gridpoint matching is performed post-zoning. In general this scheme leads to more-poorly shaped zones, and should be used as a last resort. Retrying zone generation with either a longer or shorter length can be done safely. Retrying zone generation with a different edge length often produces good results. For flat or narrow blocks, sometimes a shorter length is better. For large blocks, the edge length may have to be increased."
+        },
+        {
+          "name": "flowzone-new",
+          "syntax": "flowzone-new <b>",
+          "description": "Set b to on to use new trangulation logic for flow zones. Default is off ."
+        },
+        {
+          "name": "high-order-tetra",
+          "syntax": "high-order-tetra",
+          "description": "This keyword causes the constant strain elements to be converted to degenerate isoparametric brick elements (4 sides rather than 6). An extra gridpoint is added to the center of each zone edge. The command may be used only after the blocks have already been zoned using the normal block zone generate commands. The high-order zones cannot be joined ( block join ) to lower-order zones. The model config highorder command must be given before any blocks are created. The plasticity solution for the high-order zones is more accurate than for the normal constant-strain tetrahedral zones. Under certain conditions the solution may not be as accurate as for mixed discretization zones ( block zone generate hexahedra ). However, the high-order logic does not have the same shape restrictions as do the mixed discretization zones. Stresses in the high-order zones may be projected to the gridpoints (see block gridpoint list stress ). Note: The high-order elements are incompatible with the free-field boundary and with joint fluid flow."
+        },
+        {
+          "name": "limit-iteration",
+          "syntax": "limit-iteration <i>",
+          "description": "Limit the interior gridpoint spacing algorithm to zones with fewer than i gridpoints. The spacing algorithm is designed to evenly space interior gridpoints. This process can be very slow for blocks with a large number of zones, and is probably not necessary. This command allows the user to skip the spacing algorithm for these blocks."
+        },
+        {
+          "name": "ratio-multiply",
+          "syntax": "ratio-multiply <f>",
+          "description": "Generate a grid of hexahedral zones in cubic, six-sided polyhedra. (Each hex zone consists of 2 sets of five overlapping tetrahedral zones.) This is referred to as mixed discretization, and greatly improves the solution when plastic deformations occur. Note: This technique works only with regular six-sided polyhedra, and it is used to make the zone overlays geometrically compatible. The keyword single quad indicates that each six-sided block will be divided into five non-overlapping tetrahedra. Control the way discretization is done. i1 , i2 , and i3 are the numbers of zones generated along three local directions (as shown in Figure 1.2): i1 is the number of zones along the direction of the shortest edge length; i2 is the number of zones along the intermediate edge length; and i3 is the number of zones along the longest edge length. The maximum number of subdivisions in each axis is 200. Allow the zone size to be automatically graded across the block. Unfortunately, it works in local block coordinates, so it is only useful if you only have one block in the model. If there are multiple blocks in the model, each block will be graded from its lower left corner."
+        },
+        {
+          "name": "verbose",
+          "syntax": "verbose <b>",
+          "description": "Provide additional information to be printed during the zone generation process. Set off to turn off verbose. The default is on ."
+        },
+        {
+          "name": "edge-length",
+          "syntax": "edge-length <f>",
+          "description": "Allow the rezoning of blocks after cycling. This keyword is designed to address problems with backfilling nulled blocks. Often, the zones have collapsed in these blocks due to distortion. This new keyword may help in those cases. The stresses in the new zones will be 0.0. Set the edge length of rezoned blocks to f ."
+        },
+        {
+          "name": "alternate",
+          "syntax": "alternate",
+          "description": "Invokes a different zoning scheme where the gridpoints on the surface of a block are not forced to match the gridpoints of neighboring blocks. This keyword is to be used only if changing the edge lengths of zones fails to succeed in zoning a block. The gridpoints of the neighboring blocks are adjusted to match after the gridpoints are created."
+        },
+        {
+          "name": "check",
+          "syntax": "check",
+          "description": "Check whether face gridpoints match."
+        },
+        {
+          "name": "fix",
+          "syntax": "fix <v>",
+          "description": "Define the location of a single gridpoint (vertex) at position v . This command is helpful when a boundary condition is to be applied at a specific location (either internal or external). Multiple fix keywords may be used to fix several vertices."
+        },
+        {
+          "name": "gridpoint-match",
+          "syntax": "gridpoint-match [<b>]",
+          "description": "Toggle gridpoint matching between blocks. This may result in nonuniform stress distributions. This may also affect stresses in zones near the edges of joined blocks."
+        },
+        {
+          "name": "gridpoint-post-match",
+          "syntax": "gridpoint-post-match",
+          "description": "Perform gridpoint matching for previously zoned blocks."
+        },
+        {
+          "name": "tolerance",
+          "syntax": "tolerance <f1><f2>",
+          "description": "Change the tolerance values used in the zoning process (default values are f1 = 10 −6 , f2 = 10 −4 )."
+        },
+        {
+          "name": "center",
+          "syntax": "center <v>",
+          "description": "Engine-enumerated by live 3DEC 9.7.47; absent from the previous corpus list."
+        },
+        {
+          "name": "divisions",
+          "syntax": "divisions <i1> <i2> <i3>",
+          "description": "Engine-enumerated by live 3DEC 9.7.47; absent from the previous corpus list."
+        },
+        {
+          "name": "edgelength-center",
+          "syntax": "edgelength-center keyword ...",
+          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance from a center point."
+        },
+        {
+          "name": "edgelength-distance",
+          "syntax": "edgelength-distance keyword ...",
+          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance."
+        },
+        {
+          "name": "hexahedra",
+          "syntax": "hexahedra",
+          "description": "Generate hexahedral zones where possible (engine-enumerated by live 3DEC 9.7.47)."
+        },
+        {
+          "name": "rezone",
+          "syntax": "rezone",
+          "description": "Engine-enumerated by live 3DEC 9.7.47; absent from the previous corpus list."
+        }
+      ],
+      "examples": []
     }
   }
 }
