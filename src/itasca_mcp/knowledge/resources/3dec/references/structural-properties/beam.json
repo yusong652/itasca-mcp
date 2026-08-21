@@ -60,32 +60,52 @@
         },
         {
           "keyword": "plastic-shear",
-          "description": "plastic shear capacity in Y and Z",
-          "type": "FLT"
+          "description": "plastic shear capacity in Y and Z [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
+          "type": "FLT",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "plastic-shear-y",
-          "description": "plastic shear capacity in Y",
+          "description": "plastic shear capacity in Y [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
           "type": "FLT",
-          "dim": "3D"
+          "dim": "3D",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "plastic-shear-z",
-          "description": "plastic shear capacity in Z",
+          "description": "plastic shear capacity in Z [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
           "type": "FLT",
-          "dim": "3D"
+          "dim": "3D",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "shear-coefficient-y",
-          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only)",
+          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only) [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
           "type": "FLT",
-          "dim": "3D"
+          "dim": "3D",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "shear-coefficient-z",
-          "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam element only)",
+          "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam element only) [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
           "type": "FLT",
-          "dim": "3D"
+          "dim": "3D",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "thermal-expansion",
@@ -94,9 +114,13 @@
         },
         {
           "keyword": "torsion-constant",
-          "description": "torsion constant",
+          "description": "torsion constant [9.x-only: absent from the live 3DEC 7.00 'structure beam property' enumeration.]",
           "type": "FLT",
-          "dim": "3D"
+          "dim": "3D",
+          "availability": {
+            "7.0": false,
+            "9.0": true
+          }
         },
         {
           "keyword": "young",
@@ -107,10 +131,20 @@
           "keyword": "poisson",
           "description": "Poisson's ratio. Live-enumerated by 3DEC 9.7.47; was missing from this file.",
           "type": "FLT"
+        },
+        {
+          "keyword": "moi-polar",
+          "symbol": "J",
+          "description": "polar moment of inertia. 7.0-only spelling: the live 3DEC 7.00 enumeration has moi-polar and lacks torsion-constant; 9.x renamed this slot to torsion-constant.",
+          "type": "FLT",
+          "availability": {
+            "7.0": true,
+            "9.0": false
+          }
         }
       ]
     }
   ],
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.property.html",
-  "verification": "Live-verified 2026-08-14 against 3DEC 9.7.47 ('structure <type> property' enumeration WITH elements present): documented set confirmed; young/poisson added from the live enumeration. NOTE: 'spacing' is NOT enumerated by 3DEC 9.7 (see cable note)."
+  "verification": "Live-verified 2026-08-14 against 3DEC 9.7.47 ('structure <type> property' enumeration WITH elements present): documented set confirmed; young/poisson added from the live enumeration. NOTE: 'spacing' is NOT enumerated by 3DEC 9.7 (see cable note). 3DEC 7.00 Release 161: live enumeration = cross-sectional-area density direction-y moi-polar moi-y moi-z plastic-moment plastic-moment-y plastic-moment-z poisson thermal-expansion young (13 with range). plastic-shear family, shear-coefficient-y/z and torsion-constant are 9.x-only; moi-polar is the 7.0 spelling of torsion-constant."
 }

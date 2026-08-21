@@ -39,14 +39,22 @@
       "file": "_common/references/constitutive-models/columnar-basalt.json",
       "full_name": "Columnar-Basalt (COMBA) Model**",
       "description": "Note **Not available in FLAC2D . The Columnar-Basalt (COMBA) model (Detournay et al 2016, Meng et al 2020) accounts for ",
-      "property_count": 32
+      "property_count": 32,
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     },
     {
       "name": "concrete",
       "file": "_common/references/constitutive-models/concrete.json",
       "full_name": "Concrete Model",
       "description": "This concrete model is a plastic-damage model extended and modified from the work in Lublinear et al (1989) and Lee & Fe",
-      "property_count": 24
+      "property_count": 24,
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     },
     {
       "name": "double-yield",
@@ -171,7 +179,11 @@
       "file": "_common/references/constitutive-models/von-mises.json",
       "full_name": "Von-Mises Model",
       "description": "The yield envelope for this model involves a von-Mises criterion. The position of a stress point on this envelope is con",
-      "property_count": 6
+      "property_count": 6,
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     },
     {
       "name": "wipp",
@@ -196,12 +208,23 @@
     },
     {
       "name": "curved-mohr-coulomb",
-      "description": "Curved (nonlinear) Mohr-Coulomb failure envelope model. 9.x-new; enumerated by live 3DEC 9.7.47 'block zone cmodel assign ?' but previously missing from this index (same gap the FLAC corpus had)."
+      "description": "Curved (nonlinear) Mohr-Coulomb failure envelope model. 9.x-new; enumerated by live 3DEC 9.7.47 'block zone cmodel assign ?' but previously missing from this index (same gap the FLAC corpus had).",
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     },
     {
       "name": "munson-dawson",
-      "description": "Munson-Dawson creep model. 9.x-new; enumerated by live 3DEC 9.7.47 but previously missing from this index (same gap the FLAC corpus had)."
+      "description": "Munson-Dawson creep model. 9.x-new; enumerated by live 3DEC 9.7.47 but previously missing from this index (same gap the FLAC corpus had).",
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     }
   ],
-  "live_verification": "Live-verified 2026-08-14 against 3DEC 9.7.47: 'block zone cmodel assign' enumerates exactly these 28 zone models (incl. null): anisotropic, burgers, burgers-mohr, columnar-basalt, concrete, curved-mohr-coulomb, double-yield, drucker-prager, elastic, hoek-brown, imass, maxwell, modified-cam-clay, mohr-coulomb, mohr-coulomb-tension, munson-dawson, null, orthotropic, power, power-mohr, softening-ubiquitous, strain-softening, ubiquitous-anisotropic, ubiquitous-joint, von-mises, wipp, wipp-drucker, wipp-salt. This is a strict subset of the FLAC3D 41-model set (no cavehoek/cap-yield/hoek-brown-pac/jointed-* etc.); zone cmodel property semantics are shared with FLAC and deliberately not duplicated here."
+  "live_verification": "Live-verified 2026-08-14 against 3DEC 9.7.47: 'block zone cmodel assign' enumerates exactly these 28 zone models (incl. null): anisotropic, burgers, burgers-mohr, columnar-basalt, concrete, curved-mohr-coulomb, double-yield, drucker-prager, elastic, hoek-brown, imass, maxwell, modified-cam-clay, mohr-coulomb, mohr-coulomb-tension, munson-dawson, null, orthotropic, power, power-mohr, softening-ubiquitous, strain-softening, ubiquitous-anisotropic, ubiquitous-joint, von-mises, wipp, wipp-drucker, wipp-salt. This is a strict subset of the FLAC3D 41-model set (no cavehoek/cap-yield/hoek-brown-pac/jointed-* etc.); zone cmodel property semantics are shared with FLAC and deliberately not duplicated here.",
+  "notes": [
+    "3DEC 7.00 Release 161 (2026-08-21): 'block zone cmodel ?' enumerates 24 tokens = 22 models + assign/list + 'load' (a plugin-DLL load subcommand, not a model). Absent from 7.0: columnar-basalt, concrete, curved-mohr-coulomb, munson-dawson, von-mises (9.x-only; availability marked per model). All other documented models are present at the 7.0 first slot."
+  ]
 }
