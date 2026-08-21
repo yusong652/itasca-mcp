@@ -18,63 +18,99 @@
       "file": "elastic.json",
       "full_name": "Elastic Joint Model",
       "description": "The Elastic model provides a linear representation of joint stiffness (normal and shear). There is no yield. Elastic joints are infinitely strong.",
-      "property_count": 2
+      "property_count": 2,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "mohr",
       "file": "mohr.json",
       "full_name": "Mohr-Coulomb Joint Model",
       "description": "The Coulomb slip model provides a linear representation of joint stiffness and yield limit, and is based upon elastic stiffness, frictional, cohesive, and tensi",
-      "property_count": 10
+      "property_count": 10,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "bilinear-mohr",
       "file": "bilinear-mohr.json",
       "full_name": "Bilinear Mohr-Coulomb Joint Model",
       "description": "The Bilinear Mohr-Coulomb Joint Model has two different shear strength envelopes. The failure envelope changes when a critical level of normal stress is exceede",
-      "property_count": 17
+      "property_count": 17,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "softening-mohr",
       "file": "softening-mohr.json",
       "full_name": "Softening-Healing Mohr-Coulomb Joint Model",
       "description": "The Mohr-Coulomb joint model has the following deficiencies when used to model seismicity.",
-      "property_count": 15
+      "property_count": 15,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "cyjm",
       "file": "cyjm.json",
       "full_name": "Continuously Yielding Joint Model",
       "description": "Background",
-      "property_count": 9
+      "property_count": 9,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "nonlinear",
       "file": "nonlinear.json",
       "full_name": "Nonlinear Joint Model",
       "description": "The Nonlinear model is the same as the Mohr-Coulomb Joint Model In 3DEC except that the normal and shear stiffness may depend on the normal stress as in the Con",
-      "property_count": 18
+      "property_count": 18,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "power",
       "file": "power.json",
       "full_name": "Power-Law Creeping Joint Model",
       "description": "The creep behavior in a discontinuity is of a different nature depending on the joint surface (planar or rough) and on the filling material.",
-      "property_count": 2
+      "property_count": 2,
+      "availability": {
+        "7.0": true,
+        "9.0": true
+      }
     },
     {
       "name": "ratestate",
       "file": "ratestate.json",
       "full_name": "Rate-State Joint Model",
       "description": "Rate- and state-dependent friction joint model (laboratory rate-state friction law), available via 'block contact jmodel assign ratestate'.",
-      "property_count": 2
+      "property_count": 2,
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     },
     {
       "name": "velocity-weakening",
       "file": "velocity-weakening.json",
       "full_name": "Velocity Weakening Joint Model",
       "description": "Mohr-Coulomb-based joint model whose friction weakens with increasing slip velocity (rate-dependent, for seismic/dynamic slip). Live-discovered 9th jmodel; official docs cover it in the theory section only.",
-      "property_count": 16
+      "property_count": 16,
+      "availability": {
+        "7.0": false,
+        "9.0": true
+      }
     }
   ],
   "live_verification_notes": [
@@ -85,6 +121,7 @@
     "Python Subcontact.prop(name) accepts ANY name without error (returns a value even for nonexistent properties) - it cannot be used for membership testing; s.model() reads the assigned model name back.",
     "Unlike FLAC zone cmodels, the live engine has NO read-only guard: state variables (kn-current, friction-current, plastic-strain, theta, ...) accept writes via 'block contact property' and hold the written value (verified with set/readback round-trips).",
     "State round-trip verified per model on stiffness-normal (set 1.25e9 -> Subcontact.prop reads 1.25e9).",
-    "Material-table routing (live-verified 2026-08-15): 'block contact material-table default jmodel <name>' selects the model for new contacts (unknown names rejected); 'block contact material-table default property' accepts the UNION of all 9 models' property command-names (68 keywords), while plain 'block contact material-table property' offers only the default model's (mohr) set. Cycling a model with subcontacts but no default stiffness fails with 'Default contact stiffness not set. Use BLOCK CONTACT MATERIAL-TABLE DEFAULT PROP'."
+    "Material-table routing (live-verified 2026-08-15): 'block contact material-table default jmodel <name>' selects the model for new contacts (unknown names rejected); 'block contact material-table default property' accepts the UNION of all 9 models' property command-names (68 keywords), while plain 'block contact material-table property' offers only the default model's (mohr) set. Cycling a model with subcontacts but no default stiffness fails with 'Default contact stiffness not set. Use BLOCK CONTACT MATERIAL-TABLE DEFAULT PROP'.",
+    "3DEC 7.00 Release 161 (2026-08-21): SEVEN of the nine jmodels exist (ratestate and velocity-weakening are 9.x-only). TRAP: the first-slot enumeration 'block contact jmodel ?' omits softening-mohr, but 'assign softening-mohr' works and the bad-model-name error enumerates all seven. Property sets of all seven are IDENTICAL to the 9.7 enumerations. In 7.0 the 'block contact property' slot error-enumerates even with no jmodel assigned (defaults to the mohr set) — unlike 9.7 where the unassigned slot is free-form/silent."
   ]
 }

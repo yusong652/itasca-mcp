@@ -747,6 +747,55 @@ async def test_3dec_sel_sdk_units_resolve() -> None:
         assert payload["ok"] is True, (api, payload)
 
 
+@pytest.mark.asyncio
+async def test_3dec_joint_models_version_gated() -> None:
+    # 7.0 has seven jmodels; ratestate / velocity-weakening are 9.x-only.
+    result = await mcp.call_tool(
+        "itasca_browse_reference",
+        {"software": "3dec", "topic": "joint-models ratestate", "version": "7.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is False, payload
+    assert payload["error"]["code"] == "item_unavailable_for_version"
+
+    result = await mcp.call_tool(
+        "itasca_browse_reference",
+        {"software": "3dec", "topic": "joint-models softening-mohr", "version": "7.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is True, payload
+
+    # category listing at 7.0 shows exactly the seven 7.0 jmodels
+    items = ReferenceLoader.get_item_list("joint-models", "7.0", software="3dec")
+    assert {m["name"] for m in items} == {
+        "elastic",
+        "mohr",
+        "bilinear-mohr",
+        "softening-mohr",
+        "cyjm",
+        "nonlinear",
+        "power",
+    }
+
+
+@pytest.mark.asyncio
+async def test_3dec_sel_structural_properties_7_0_only() -> None:
+    result = await mcp.call_tool(
+        "itasca_browse_reference",
+        {"software": "3dec", "topic": "structural-properties sel-hybrid", "version": "7.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is True, payload
+
+    result = await mcp.call_tool(
+        "itasca_browse_reference",
+        {"software": "3dec", "topic": "structural-properties sel-hybrid", "version": "9.0"},
+    )
+    payload = _parse_tool_payload(result)
+    assert payload["ok"] is False, payload
+    assert payload["error"]["code"] == "item_unavailable_for_version"
+
+
 def test_3dec_sdk_version_availability_markers() -> None:
     import json
 
@@ -954,8 +1003,18 @@ def test_3dec_geometry_data_table_topics() -> None:
 def test_3dec_structural_properties_all_sel_types() -> None:
     cat = ReferenceLoader.load_category_index("structural-properties", software="3dec")
     assert cat is not None
-    # 3DEC's six SEL types (more than FLAC's set — geogrid/shell included).
-    assert {m["name"] for m in cat["models"]} == {"beam", "cable", "geogrid", "liner", "pile", "shell"}
+    # 3DEC's six SEL types (more than FLAC's set — geogrid/shell included),
+    # plus the two 7.0-only legacy SEL entries (availability-gated to 7.0).
+    assert {m["name"] for m in cat["models"]} == {
+        "beam",
+        "cable",
+        "geogrid",
+        "liner",
+        "pile",
+        "shell",
+        "sel-hybrid",
+        "sel-reinforcement",
+    }
     beam = ReferenceLoader.load_item_doc("structural-properties", "beam", software="3dec")
     kws = {p["keyword"] for p in beam["property_groups"][0]["properties"]}
     assert "cross-sectional-area" in kws
