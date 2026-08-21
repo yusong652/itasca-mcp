@@ -25,86 +25,52 @@ def register(mcp: FastMCP) -> None:
         namespace as any running task — side effects persist and are
         immediately visible to the task on its next cycle.
 
-        This tool remains responsive EVEN WHILE a simulation task is
-        running (submitted via itasca_execute_task), as long as the task
-        is actively cycling — execute_code interleaves at cycle gaps.
-        Use it as a live REPL to inspect simulation state in real
-        time — no need to pre-script print statements, and parameter
-        sweeps or sentinel-based control don't have to be baked into
-        the task script up front.
-
-        Environment: the Itasca engine's embedded Python interpreter.
-        The version is bundled with the engine (Itasca 6/7 → Python 3.6,
-        Itasca 9 → 3.10); the product+version is encoded in sys.executable
-        (e.g. PFC900, FLAC900). When unsure, write code compatible with
-        Python 3.6+.
-
-        Typical uses:
-        - Query model state: ball/wall/contact counts, current cycle
-        - Issue Itasca commands and read their console output:
-          itasca.command('ball list'), itasca.command('model list
-          information'). Table dumps, list output, and command
-          summaries are captured and interleaved with Python prints
-          in execution order — no need to re-implement queries via
-          the SDK just to see what a command would print
-        - Live inspection during a running task: check forces,
-          energy, coordination number, contact statistics
-        - Live tuning during a running task: modify parameters,
-          swap callbacks, or set sentinel variables that the task
-          reads each cycle (e.g. change a servo target, adjust
-          damping, signal early termination)
+        The tool stays responsive while a task submitted via
+        itasca_execute_task is cycling (calls interleave at cycle
+        gaps), so use it as a live REPL — nothing has to be
+        pre-scripted into the task up front. Typical uses:
+        - Query model state and read Itasca command output:
+          itasca.command('ball list') etc. — table dumps, list output,
+          and command summaries are captured and interleaved with
+          Python prints in execution order
+        - Live inspection and tuning during a running task: check
+          forces or contact statistics, modify parameters, swap
+          callbacks, set sentinel variables the task reads each cycle
         - Create and export plots: itasca.command('plot ...')
-        - Development and REPL-style testing
 
-        Multi-line itasca.command(\"\"\"...\"\"\") batches are normalized to
-        one engine call per command, which keeps the bridge reachable
-        while the batch runs — including after a `model new`/
-        `model restore`, which reset the engine's cycle-callback
-        registry mid-batch. The normalization applies when
-        itasca.command is reached through its import name
-        (`import itasca` / `import itasca as x` / `from itasca import
-        command`); rebinding through intermediate variables
-        (`_it = itasca`) bypasses it, and the output then carries a
-        bridge warning.
+        Environment: the engine's embedded Python interpreter
+        (Itasca 9+ → Python 3.10, pre-9 → Python 3.6 or older; the
+        product+version is encoded in sys.executable, e.g. PFC900).
+        When unsure, check sys.version_info before relying on newer
+        syntax.
 
-        FISH definition blocks (`fish define` / `fish operator` /
-        legacy bare `define` ... `end`) must arrive at the engine
-        whole: pass the complete block, header through its
-        terminating standalone `end`, in ONE itasca.command() string —
-        on its own or inside a multi-line batch (normalization keeps
-        definition blocks intact as a single engine call). Never feed
-        a definition line-by-line (e.g. looping with one
-        itasca.command(line) per line): the `fish define` header alone
-        drops the console into interactive FISH mode and that engine
-        call blocks waiting for body input that can never arrive over
-        the bridge, leaving the engine stuck until someone completes
-        the definition manually in the GUI console. Per-line loops
-        are fine for ordinary commands; only definition blocks must
-        stay in one string.
+        Code-writing rules (shared with itasca_execute_task):
+        - Multi-line itasca.command(\"\"\"...\"\"\") batches are normalized
+          to one engine call per command, keeping the bridge reachable
+          mid-batch. Normalization recognizes itasca.command through
+          its import name; call it through that name directly —
+          rebinding via intermediate variables (`_it = itasca`)
+          bypasses it and the output carries a bridge warning.
+        - Pass each FISH definition block (`fish define` /
+          `fish operator` / legacy bare `define`, through its
+          terminating standalone `end`) whole, in ONE itasca.command()
+          string; feeding one line-by-line leaves the engine blocked in
+          interactive FISH mode until completed manually in the GUI
+          console. Per-line loops are fine for ordinary commands.
+        - `program call '<file>.p3dat'` (or .p2dat / .dat) keeps the
+          bridge responsive only on engine 9.7+; on 6/7 and unverified
+          versions (including 9.0-9.6) it blocks the bridge for the
+          script's entire duration, so never emit it there. Even on
+          9.7+, prefer translating the file's commands into
+          itasca.command(...) calls — that keeps per-command output,
+          error locality, and mid-script control.
 
-        `program call '<file>.p3dat'` (or .p2dat / .dat) through this
-        tool is engine-version-gated. On 6/7 the command-script
-        interpreter blocks the bridge for the script's entire
-        duration with no cycle-gap interleaving — any long
-        `model cycle` inside the file leaves the bridge unreachable
-        until the engine is stopped manually. Never emit it there, and
-        treat unknown or unverified versions (including 9.0-9.6) the
-        same way. On 9.7+ the bridge stays fully
-        responsive during a `program call` (verified on 9.7: status
-        polling, cycle-gap interleaving, and interrupt all work
-        mid-call). Even where it is safe, prefer reading the file
-        and translating its commands into a sequence of
-        `itasca.command(...)` calls in Python — that keeps
-        per-command output, error locality, and mid-script control
-        that a single opaque `program call` cannot give.
-
-        This is a synchronous tool: the request blocks until the code
-        finishes or hits the timeout (default 10s, max 600s). Output
-        is returned in full; the call is NOT tracked by itasca_list_tasks
-        and cannot be interrupted mid-execution. For cancellable,
-        pollable, or background work, submit it via itasca_execute_task
-        instead — and you can still call itasca_execute_code against the
-        task while it cycles.
+        Synchronous semantics: the request blocks until the code
+        finishes or hits the timeout (default 10s, max 600s), and
+        output is returned in full. The call is not tracked by
+        itasca_list_tasks and cannot be interrupted mid-execution.
+        For cancellable, pollable, or background work, submit via
+        itasca_execute_task instead.
         """
         try:
             client = await get_bridge_client()
