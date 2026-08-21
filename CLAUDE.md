@@ -146,8 +146,9 @@ Steps to release `itasca-mcp`:
 
 1. Bump `__version__` in `src/itasca_mcp/__init__.py` (the single source of truth).
 2. Curate `## [Unreleased]` in `CHANGELOG.md` from `git log` since the previous release (grouped per the convention comment at the top of that file), rename it to `## [x.y.z] - YYYY-MM-DD`, then start a fresh empty `## [Unreleased]`. The publish workflow extracts the section whose header matches the tag version exactly and fails if it is missing.
-3. Commit and push to `main`.
-4. Tag the commit: `git tag v0.x.x` and `git push origin v0.x.x`.
+3. **Sweep user-facing docs for claims the release invalidates** — `README.md` (supported engines/versions matrix, feature bullets, install flow) and `addon.py` messages. README is the PyPI long_description: anything stale at tag time is frozen into that PyPI release page and can only be fixed by the *next* release, so this check must happen BEFORE tagging, in the same release PR.
+4. Commit and push to `main`.
+5. Tag the commit: `git tag v0.x.x` and `git push origin v0.x.x`.
 
 **Important**: tag version must match `__version__`. PyPI rejects duplicate version uploads.
 
