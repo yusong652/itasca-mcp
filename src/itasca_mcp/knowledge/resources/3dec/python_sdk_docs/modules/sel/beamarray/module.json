@@ -1,0 +1,58 @@
+{
+  "module": "itasca.sel.beamarray",
+  "description": "Array interface for SEL beam elements.",
+  "import_statement": "import itasca",
+  "availability": {
+    "versions": [
+      "7.0"
+    ]
+  },
+  "note": "3DEC 7.0-only module: the legacy SEL (structural element) scripting interface. Absent from 3DEC 9.x, where structural elements are accessed through itasca.structure instead. All signatures and descriptions were captured from live 3DEC 7.00 (Release 161) __doc__ introspection.",
+  "functions": [
+    {
+      "name": "extra",
+      "signature": "itasca.sel.beamarray.extra(slot: int) -> array float{beam} or float{beam,3}",
+      "description": "Get the beam extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec."
+    },
+    {
+      "name": "force_axial",
+      "signature": "itasca.sel.beamarray.force_axial() -> array float{beam}",
+      "description": "Get a numpy array of the force axial in beam."
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.sel.beamarray.ids() -> array int{beam}",
+      "description": "Get the beam ids as an array."
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.sel.beamarray.in_group(group_name: str, slot=\"default\") -> array bool{nbeam}",
+      "description": "Return beam group membership as a Boolean array."
+    },
+    {
+      "name": "length",
+      "signature": "itasca.sel.beamarray.length() -> array float{beam}",
+      "description": "Get a numpy array of the beam length."
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.sel.beamarray.set_extra(slot: int, data: array float{beam} or float{beam,3}) -> None",
+      "description": "Set the beam extra data in the given slot with an array. Extra variables set by array must be of type float or vec."
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.sel.beamarray.set_group(membership: array bool{nbeam}, group_name: str, slot=\"default\") -> None",
+      "description": "Set beam group from an array. Where membership True set the corresponding block to be a member of group group_name in the given slot."
+    },
+    {
+      "name": "strain_axial",
+      "signature": "itasca.sel.beamarray.strain_axial() -> array float{beam}",
+      "description": "Get a numpy array of the strain axial in beam."
+    },
+    {
+      "name": "stress_axial",
+      "signature": "itasca.sel.beamarray.stress_axial() -> array float{beam}",
+      "description": "Get a numpy array of the stress axial in beam."
+    }
+  ]
+}

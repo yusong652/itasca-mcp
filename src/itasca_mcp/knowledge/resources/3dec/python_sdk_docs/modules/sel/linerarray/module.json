@@ -1,0 +1,38 @@
+{
+  "module": "itasca.sel.linerarray",
+  "description": "Array interface for SEL liner elements.",
+  "import_statement": "import itasca",
+  "availability": {
+    "versions": [
+      "7.0"
+    ]
+  },
+  "note": "3DEC 7.0-only module: the legacy SEL (structural element) scripting interface. Absent from 3DEC 9.x, where structural elements are accessed through itasca.structure instead. All signatures and descriptions were captured from live 3DEC 7.00 (Release 161) __doc__ introspection.",
+  "functions": [
+    {
+      "name": "extra",
+      "signature": "itasca.sel.linerarray.extra(slot: int) -> array float{liner} or float{liner,3}",
+      "description": "Get the liner extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec."
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.sel.linerarray.ids() -> array int{liner}",
+      "description": "Get the liner ids as an array."
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.sel.linerarray.in_group(group_name: str, slot=\"default\") -> array bool{nliner}",
+      "description": "Return block group membership as a Boolean array."
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.sel.linerarray.set_extra(slot: int, data: array float{liner} or float{liner,3}) -> None",
+      "description": "Set the liner extra data in the given slot with an array. Extra variables set by array must be of type float or vec."
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.sel.linerarray.set_group(membership: array bool{nliner}, group_name: str, slot=\"default\") -> None",
+      "description": "Set block group from an array. Where membership True set the corresponding block to be a member of group group_name in the given slot."
+    }
+  ]
+}

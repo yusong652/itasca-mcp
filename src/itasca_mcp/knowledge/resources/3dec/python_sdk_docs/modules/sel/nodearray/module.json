@@ -1,0 +1,38 @@
+{
+  "module": "itasca.sel.nodearray",
+  "description": "Array interface for SEL structural nodes.",
+  "import_statement": "import itasca",
+  "availability": {
+    "versions": [
+      "7.0"
+    ]
+  },
+  "note": "3DEC 7.0-only module: the legacy SEL (structural element) scripting interface. Absent from 3DEC 9.x, where structural elements are accessed through itasca.structure instead. All signatures and descriptions were captured from live 3DEC 7.00 (Release 161) __doc__ introspection.",
+  "functions": [
+    {
+      "name": "extra",
+      "signature": "itasca.sel.nodearray.extra(slot: int) -> array float{node} or float{node,3}",
+      "description": "Get the node extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec."
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.sel.nodearray.ids() -> array int{node}",
+      "description": "Get the node ids as an array."
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.sel.nodearray.in_group(group_name: str, slot=\"default\") -> array bool{nnode}",
+      "description": "Return block group membership as a Boolean array."
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.sel.nodearray.set_extra(slot: int, data: array float{node} or float{node,3}) -> None",
+      "description": "Set the node extra data in the given slot with an array. Extra variables set by array must be of type float or vec."
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.sel.nodearray.set_group(membership: array bool{nnode}, group_name: str, slot=\"default\") -> None",
+      "description": "Set block group from an array. Where membership True set the corresponding block to be a member of group group_name in the given slot."
+    }
+  ]
+}
