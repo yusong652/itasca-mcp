@@ -14,7 +14,7 @@
 
 `itasca>model new ;now, with LLM.`
 
-**itasca-mcp** connects AI agents to [ITASCA](https://www.itascacg.com/)'s numerical modeling software — PFC, FLAC, 3DEC, MPoint, and MassFlow — through the [Model Context Protocol](https://modelcontextprotocol.io/). Browse documentation, run simulations, and execute code, all through natural conversation.
+**itasca-mcp** connects AI agents to [ITASCA](https://www.itascacg.com/)'s geomechanics simulation software — PFC, FLAC, 3DEC, MPoint, and MassFlow — through the [Model Context Protocol](https://modelcontextprotocol.io/). Browse documentation, run simulations, and execute code, all through natural conversation.
 
 `itasca>model solve ;LLM solves.`
 
@@ -25,6 +25,15 @@
 **5 documentation tools** — browse and search the selected engine's commands, Python API, and reference docs. No bridge required.
 
 **5 execution tools** — interactive REPL, task submission, progress monitoring, interruption, and history. Requires bridge.
+
+## Example Prompts
+
+- *"Run a biaxial compression test on a dense specimen and plot the stress–strain curve"*
+- *"Build a slope model in FLAC3D and find the factor of safety"*
+- *"Model a tunnel excavation in jointed rock with 3DEC and check block displacements around the opening"*
+- *"Simulate a landslide runout with MPoint and report the final deposit profile"*
+- *"The simulation is still running — check the current unbalanced force without stopping it"*
+- *"What's different about the `zone` commands between FLAC 7.0 and 9.0?"*
 
 ## First-time Setup
 
