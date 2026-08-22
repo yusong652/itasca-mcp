@@ -14,7 +14,7 @@
 
 `itasca>model new ;now, with LLM.`
 
-**itasca-mcp** 通过 [Model Context Protocol](https://modelcontextprotocol.io/) 将 AI 智能体连接到 [ITASCA](https://www.itascacg.com/) 的数值模拟软件 —— PFC、FLAC、3DEC、MPoint、MassFlow。通过自然语言对话即可浏览文档、运行仿真和执行代码。
+**itasca-mcp** 通过 [Model Context Protocol](https://modelcontextprotocol.io/) 将 AI 智能体连接到 [ITASCA](https://www.itascacg.com/) 的地质力学数值模拟软件 —— PFC、FLAC、3DEC、MPoint、MassFlow。通过自然语言对话即可浏览文档、运行仿真和执行代码。
 
 `itasca>model solve ;LLM solves.`
 
@@ -25,6 +25,15 @@
 **5 个文档工具** — 浏览和搜索所选引擎的命令、Python API 及参考文档。无需 bridge。
 
 **5 个执行工具** — 交互式 REPL、任务提交、进度监控、中断和历史浏览。需要 bridge。
+
+## 示例提示词
+
+- *「做一组密实试样的双轴压缩试验，绘制应力–应变曲线」*
+- *「用 FLAC3D 建一个边坡模型，求安全系数」*
+- *「用 3DEC 模拟节理岩体中的隧道开挖，查看洞周块体位移」*
+- *「用 MPoint 模拟滑坡运动全过程，输出最终堆积形态」*
+- *「模拟还在跑——不要中断任务，查一下当前的不平衡力」*
+- *「FLAC 7.0 和 9.0 的 `zone` 命令有什么区别？」*
 
 ## 首次启动配置
 
