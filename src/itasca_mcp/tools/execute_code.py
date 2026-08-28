@@ -58,9 +58,9 @@ def register(mcp: FastMCP) -> None:
           interactive FISH mode until completed manually in the GUI
           console. Per-line loops are fine for ordinary commands.
         - `program call '<file>.p3dat'` (or .p2dat / .dat) keeps the
-          bridge responsive only on engine 9.7+; on 6/7 and unverified
-          versions (including 9.0-9.6) it blocks the bridge for the
-          script's entire duration, so never emit it there. Even on
+          bridge responsive only on engine 9.7+; on 6/7/9.0 (all
+          verified) and unverified 9.1-9.6 it blocks the bridge for
+          the script's entire duration, so never emit it there. Even on
           9.7+, prefer translating the file's commands into
           itasca.command(...) calls — that keeps per-command output,
           error locality, and mid-script control.
