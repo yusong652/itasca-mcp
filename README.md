@@ -131,7 +131,9 @@ See [Developer Guide: Install and Run from Source](docs/development/source-insta
 
 ## Contributing
 
-PRs and issues are welcome! See the [Developer Guide](docs/development/source-install.md) to get started.
+PRs and issues are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for where changes land and how the
+documentation corpus is structured, and the [Developer Guide](docs/development/source-install.md) for the
+source install.
 
 ## License
 

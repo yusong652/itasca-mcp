@@ -131,7 +131,8 @@ itasca_mcp_bridge.start()
 
 ## 贡献
 
-欢迎提交 PR 和 Issue！参见[开发者指南](docs/development/source-install.zh-CN.md)了解如何开始。
+欢迎提交 PR 和 Issue！[CONTRIBUTING.md](CONTRIBUTING.md) 说明改动该落在哪里以及文档语料的组织方式，
+[开发者指南](docs/development/source-install.zh-CN.md)说明如何从源码安装。
 
 ## 许可证
 
