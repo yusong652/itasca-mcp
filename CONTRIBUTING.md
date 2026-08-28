@@ -1,5 +1,7 @@
 # Contributing to itasca-mcp
 
+English | [简体中文](CONTRIBUTING.zh-CN.md)
+
 Thanks for taking the time. Issues, corpus fixes, and code PRs are all welcome —
 this guide exists so you do not have to reverse-engineer the conventions first.
 
