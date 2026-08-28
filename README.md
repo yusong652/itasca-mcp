@@ -6,6 +6,7 @@
 
 [English](https://github.com/yusong652/itasca-mcp/blob/main/README.md) | [简体中文](https://github.com/yusong652/itasca-mcp/blob/main/README.zh-CN.md)
 
+[![CI](https://github.com/yusong652/itasca-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/yusong652/itasca-mcp/actions/workflows/test.yml)
 [![PyPI](https://img.shields.io/pypi/v/itasca-mcp)](https://pypi.org/project/itasca-mcp/)
 [![Downloads](https://static.pepy.tech/badge/itasca-mcp)](https://pepy.tech/project/itasca-mcp)
 [![GitHub stars](https://img.shields.io/github/stars/yusong652/itasca-mcp)](https://github.com/yusong652/itasca-mcp/stargazers)
