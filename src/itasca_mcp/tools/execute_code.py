@@ -58,14 +58,10 @@ def register(mcp: FastMCP) -> None:
           interactive FISH mode until completed manually in the GUI
           console. Per-line loops are fine for ordinary commands.
         - `program call '<file>'` (.p3dat / .p2dat / .dat / ...) is
-          fine with bridge >= 0.5.0 on any engine version: the bridge
-          runs the file inline, one command per engine call, so a
-          `model new` inside it keeps the bridge reachable, the run
-          interruptible, and the output incremental. On an older
-          bridge it blocks the bridge for the file's whole duration
-          regardless of engine version; if the bridge startup banner
-          shows a version below 0.5.0, translate the file's commands
-          into itasca.command(...) calls instead.
+          supported: the bridge runs the file inline, one command per
+          engine call, so the bridge stays reachable, the run stays
+          interruptible, and the file's output arrives command by
+          command.
 
         Synchronous semantics: the request blocks until the code
         finishes or hits the timeout (default 10s, max 600s), and
