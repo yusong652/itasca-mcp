@@ -45,6 +45,54 @@ section exists.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-06
+
+Data files are first-class: an agent can now run a `.p3dat` / `.dat`
+via `program call` from either execution tool, with the bridge staying
+reachable and the run interruptible. Ships with itasca-mcp-bridge 0.5.0
+(the bridge self-upgrades on start; no user action needed).
+
+### Changed
+
+- **`program call '<file>'` is supported from `itasca_execute_code` and
+  `itasca_execute_task`.** The bridge (0.5.0) runs the data file inline,
+  one command per engine call, so a `model new` inside the file no
+  longer leaves the bridge unreachable or the task uninterruptible for
+  the file's duration, and the file's console output — including its
+  comment lines — lands in the task log command by command. Engine
+  semantics are preserved: nested relative `program call` resolves
+  against the calling file's directory, a missing extension is
+  defaulted, `program return` ends the file, `label` / `line` /
+  `suppress` are honored, and forms the bridge cannot reproduce exactly
+  (multi-file calls, `.py` targets, encrypted files) go to the engine
+  unchanged. Verified on PFC3D 9.7 including FISH definition blocks,
+  `command … endcommand` loops, and `io.out` inside the called file.
+  The execution tool docstrings drop the old engine-version matrix
+  ("responsive only on 9.7+, blocks on 6/7/9.0"): that reading was
+  wrong — the wedge was never engine-specific.
+
+### Fixed
+
+- **Bridge no longer goes silent when the agent cycles after the model
+  was reset in the GUI** (itasca-mcp-bridge 0.4.5). `model new` /
+  `model restore` typed in the engine console, run from the File menu,
+  or executed inside a called data file wiped the engine's
+  cycle-callback registry; the bridge could only repair resets issued
+  through the Python `itasca.command`, so the agent's next `model cycle`
+  wedged the whole bridge for its duration with no error anywhere. The
+  bridge now re-registers its callbacks before every execution. This is
+  the likely cause of the long-unreproduced "bridge disappears as soon
+  as the agent starts cycling" report: it needs the user to have touched
+  the model in the GUI first.
+- `ball property density` documentation now carries its description
+  (alias of `ball attribute density`) (#126).
+
+### Documentation
+
+- `CONTRIBUTING.md` and a Simplified Chinese `CONTRIBUTING.zh-CN.md`.
+- README states the geomechanics domain up front, adds example prompts,
+  a CI status badge, and lists 3DEC 7.0 among supported engines.
+
 ## [0.7.0] - 2026-08-21
 
 3DEC 7.0 release: the 3dec corpus gains a second version dimension,
