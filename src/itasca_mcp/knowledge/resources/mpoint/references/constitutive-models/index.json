@@ -1,9 +1,17 @@
 {
   "type": "constitutive_model_properties",
-  "description": "MPoint (MPM) material-point constitutive model properties — the property vocabulary for 'mpoint cmodel assign' + 'mpoint property'. Shared 9.0 kernel with FLAC3D/3DEC (docs live in _common). MPoint exposes a superset of FLAC's models; the models documented here are the 38 with a shared _common doc.",
+  "description": "MPoint (MPM) material-point constitutive model properties — the property vocabulary for 'mpoint cmodel assign' + 'mpoint property'. Shared 9.0 kernel with FLAC3D/3DEC (docs live in _common). All 43 models MPoint exposes are documented; each model's 'property_count' is the size of its keyword table as read back off the live engine.",
   "usage_contexts": [
     "mpoint cmodel assign <name> [range ...]",
     "mpoint property <prop> <value> [range ...]"
+  ],
+  "universal_properties": [
+    {
+      "keyword": "density",
+      "description": "Mass density of the material points. Present in every model's live keyword table but absent from every _common model doc, because the official per-model pages document it separately from the property table. There is no 'mpoint density' command -- unlike some other Itasca families, density on material points is set only as a model property.",
+      "usage": "mpoint property density <value> [range ...]",
+      "verified": "state -- accepted on all 42 assignable models, MPoint3D 9.7"
+    }
   ],
   "models": [
     {
@@ -11,266 +19,362 @@
       "file": "_common/references/constitutive-models/anisotropic.json",
       "full_name": "Anisotropic (Transversely) Elastic Model",
       "description": "The transversely isotropic model takes a plane of isotropy into consideration. Let the axis of rotational symmetry, norm",
-      "property_count": 12
+      "documented_property_count": 12,
+      "live_property_count": 13
     },
     {
       "name": "burgers",
       "file": "_common/references/constitutive-models/burgers.json",
       "full_name": "Burgers Model",
       "description": "The Burgers model is composed of a Kelvin model and a Maxwell model connected in series (see Figure 1 for symbol definit",
-      "property_count": 11
+      "documented_property_count": 11,
+      "live_property_count": 12
     },
     {
       "name": "burgers-mohr",
       "file": "_common/references/constitutive-models/burgers-mohr.json",
       "full_name": "Burgers-Mohr Model",
       "description": "A viscoplastic model in FLAC3D or 3DEC is characterized by a visco-elasto-plastic deviatoric behavior and an elasto-plas",
-      "property_count": 17
+      "documented_property_count": 17,
+      "live_property_count": 18
     },
     {
       "name": "cap-yield",
       "file": "_common/references/constitutive-models/cap-yield.json",
       "full_name": "Cap-Yield (CYSoil) Model*",
       "description": "Note *Not available in 3DEC . The CYSoil model is a strain-hardening constitutive model characterized by a frictional an",
-      "property_count": 41
+      "documented_property_count": 41,
+      "live_property_count": 42
     },
     {
       "name": "cap-yield-simplified",
       "file": "_common/references/constitutive-models/cap-yield-simplified.json",
       "full_name": "Simplified Cap-Yield (CHSoil) Model*",
       "description": "Note *This model is not available in 3DEC . As discussed previously in the CYSoil model , when soils are subjected to de",
-      "property_count": 27
+      "documented_property_count": 27,
+      "live_property_count": 28
+    },
+    {
+      "name": "cavehoek",
+      "file": "_common/references/constitutive-models/cavehoek.json",
+      "full_name": "CaveHoek Model",
+      "description": "Caving-oriented Hoek-Brown variant associated with the IMASS framework. Requires 'model configure imass' before 'zone cmodel assign cavehoek'. NOT documented in the official 7.0 or",
+      "documented_property_count": 75,
+      "live_property_count": 76,
+      "requires": "model configure imass",
+      "property_naming": "snake_case"
+    },
+    {
+      "name": "clay-and-sand",
+      "file": "_common/references/constitutive-models/clay-and-sand.json",
+      "full_name": "Clay and Sand Model (CASM)",
+      "description": "Unified critical-state model for clays and sands. New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "documented_property_count": 19,
+      "live_property_count": 20
     },
     {
       "name": "columnar-basalt",
       "file": "_common/references/constitutive-models/columnar-basalt.json",
       "full_name": "Columnar-Basalt (COMBA) Model**",
       "description": "Note **Not available in FLAC2D . The Columnar-Basalt (COMBA) model (Detournay et al 2016, Meng et al 2020) accounts for ",
-      "property_count": 32
+      "documented_property_count": 32,
+      "live_property_count": 96
     },
     {
       "name": "concrete",
       "file": "_common/references/constitutive-models/concrete.json",
       "full_name": "Concrete Model",
       "description": "This concrete model is a plastic-damage model extended and modified from the work in Lublinear et al (1989) and Lee & Fe",
-      "property_count": 24
+      "documented_property_count": 24,
+      "live_property_count": 25
+    },
+    {
+      "name": "curved-mohr-coulomb",
+      "file": "_common/references/constitutive-models/curved-mohr-coulomb.json",
+      "full_name": "Curved Mohr-Coulomb Model",
+      "description": "Mohr-Coulomb variant with a curved (nonlinear) strength envelope. New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "documented_property_count": 21,
+      "live_property_count": 22
     },
     {
       "name": "double-yield",
       "file": "_common/references/constitutive-models/double-yield.json",
       "full_name": "Double-Yield Model",
       "description": "Permanent volume changes caused by the application of isotropic pressure are taken into account in this model by includi",
-      "property_count": 21
+      "documented_property_count": 21,
+      "live_property_count": 22
     },
     {
       "name": "drucker-prager",
       "file": "_common/references/constitutive-models/drucker-prager.json",
       "full_name": "Drucker-Prager Model",
       "description": "The failure envelope for this model involves a Drucker-Prager criterion with tension cutoff. The position of a stress po",
-      "property_count": 8
+      "documented_property_count": 8,
+      "live_property_count": 9
     },
     {
       "name": "elastic",
       "file": "_common/references/constitutive-models/elastic.json",
       "full_name": "Isotropic Elastic Model",
       "description": "In this isotropic elastic (or just, elastic, for simplicity) model, strain increments generate stress increments accordi",
-      "property_count": 4
+      "documented_property_count": 4,
+      "live_property_count": 5
     },
     {
       "name": "finn",
       "file": "_common/references/constitutive-models/finn.json",
       "full_name": "Finn Model*",
       "description": "Note *Not available in 3DEC . In reality, pore pressure build-up is a secondary effect, although many people seem to thi",
-      "property_count": 23
+      "documented_property_count": 23,
+      "live_property_count": 24
     },
     {
       "name": "hoek-brown",
       "file": "_common/references/constitutive-models/hoek-brown.json",
       "full_name": "Hoek-Brown Model",
       "description": "This model is derived directly from the Mohr-Coulomb model , and, like the Mohr-Coulomb model, can be used to perform fa",
-      "property_count": 32
+      "documented_property_count": 33,
+      "live_property_count": 34
     },
     {
       "name": "hoek-brown-pac",
       "file": "_common/references/constitutive-models/hoek-brown-pac.json",
       "full_name": "Hoek-Brown-PAC Model",
       "description": "The Hoek-Brown failure criterion is an empirical relation that characterizes the stress conditions that lead to failure ",
-      "property_count": 19
+      "documented_property_count": 19,
+      "live_property_count": 20
     },
     {
       "name": "hydration-drucker-prager",
       "file": "_common/references/constitutive-models/hydration-drucker-prager.json",
       "full_name": "Hydration-Drucker-Prager Model",
       "description": "The mechanical aspects of hydration in FLAC3D are handled by a modified Drucker-Prager constitutive model where elastic ",
-      "property_count": 17
+      "documented_property_count": 17,
+      "live_property_count": 18
     },
     {
       "name": "imass",
       "file": "_common/references/constitutive-models/imass.json",
       "full_name": "IMASS Model **",
       "description": "Note **This model requires separate license. Not available in FLAC2D . Introduction The original CaveHoek constitutive m",
-      "property_count": 63
+      "documented_property_count": 67,
+      "live_property_count": 68,
+      "requires": "model configure imass",
+      "property_naming": "snake_case"
+    },
+    {
+      "name": "jones-wilkins-lee",
+      "file": "_common/references/constitutive-models/jones-wilkins-lee.json",
+      "full_name": "Jones-Wilkins-Lee (JWL) Model",
+      "description": "Jones-Wilkins-Lee equation-of-state model (explosive detonation products). NOT documented in the official 7.0 or 9.7 HTML manuals - live-engine discovery.",
+      "documented_property_count": 14,
+      "live_property_count": 15
     },
     {
       "name": "maxwell",
       "file": "_common/references/constitutive-models/maxwell.json",
       "full_name": "Maxwell Model",
       "description": "The classical notion of Newtonian viscosity is that the rate of strain is proportional to stress. Stress-strain relation",
-      "property_count": 5
+      "documented_property_count": 5,
+      "live_property_count": 6
     },
     {
       "name": "modified-cam-clay",
       "file": "_common/references/constitutive-models/modified-cam-clay.json",
       "full_name": "Modified Cam-Clay Model",
       "description": "The modified Cam-Clay model is an incremental hardening/softening elastoplastic model. Its features include a particular",
-      "property_count": 14
+      "documented_property_count": 14,
+      "live_property_count": 15
     },
     {
       "name": "mohr-coulomb",
       "file": "_common/references/constitutive-models/mohr-coulomb.json",
       "full_name": "Mohr-Coulomb Model",
       "description": "The failure envelope for this model corresponds to a Mohr-Coulomb criterion (shear yield function) with tension cutoff (",
-      "property_count": 9
+      "documented_property_count": 10,
+      "live_property_count": 11
     },
     {
       "name": "mohr-coulomb-tension",
       "file": "_common/references/constitutive-models/mohr-coulomb-tension.json",
       "full_name": "Mohr-Coulomb Tension Crack (MohrT) Model**",
       "description": "Note **Not available in FLAC2D . The Mohr-Coulomb model is not well suited for simulation of tensile failure (fracturing",
-      "property_count": 15
+      "documented_property_count": 15,
+      "live_property_count": 16
+    },
+    {
+      "name": "munson-dawson",
+      "file": "_common/references/constitutive-models/munson-dawson.json",
+      "full_name": "Munson-Dawson Creep Model",
+      "description": "Multi-mechanism deformation creep model for rock salt (Munson-Dawson). New in the 9.x series (documented in the official Itasca 9.7 manual; absent from FLAC3D 7.0).",
+      "documented_property_count": 38,
+      "live_property_count": 39
     },
     {
       "name": "norsand",
       "file": "_common/references/constitutive-models/norsand.json",
       "full_name": "NorSand Model*",
       "description": "Note *Not available in 3DEC . NorSand (Jefferies 1993, Jefferies and Been 2015) is a critical state model applicable to ",
-      "property_count": 36
+      "documented_property_count": 37,
+      "live_property_count": 38
     },
     {
       "name": "null",
       "file": "_common/references/constitutive-models/null.json",
       "full_name": "Null Model",
-      "property_count": 0
+      "documented_property_count": 0
     },
     {
       "name": "orthotropic",
       "file": "_common/references/constitutive-models/orthotropic.json",
       "full_name": "Orthotropic Elastic Model**",
       "description": "Note **Not available in FLAC2D . The orthotropic model accounts for three orthogonal planes of elastic symmetry. Princip",
-      "property_count": 16
+      "documented_property_count": 17,
+      "live_property_count": 18
     },
     {
       "name": "p2psand",
       "file": "_common/references/constitutive-models/p2psand.json",
       "full_name": "P2PSand Model*",
       "description": "Note *Not available in 3DEC . P2PSand model ( Cheng and Detournay, 2021 ) refers to a Practical TWO-surface Plastic SAND",
-      "property_count": 42
+      "documented_property_count": 52,
+      "live_property_count": 53
     },
     {
       "name": "plastic-hardening",
       "file": "_common/references/constitutive-models/plastic-hardening.json",
       "full_name": "Plastic-Hardening (PH) Model*",
       "description": "Note *Not available in 3DEC . The Plastic-Hardening (PH) model is a shear and volumetric hardening constitutive model fo",
-      "property_count": 33
+      "documented_property_count": 33,
+      "live_property_count": 34
     },
     {
       "name": "power",
       "file": "_common/references/constitutive-models/power.json",
       "full_name": "Power Model",
       "description": "The two-component Norton power law (Norton 1929) is commonly used to model the creep behavior of salt. The standard form",
-      "property_count": 10
+      "documented_property_count": 10,
+      "live_property_count": 11
     },
     {
       "name": "power-mohr",
       "file": "_common/references/constitutive-models/power-mohr.json",
       "full_name": "Power-Mohr Model",
       "description": "This viscoplastic model cpower combines the behavior of the viscoelastic two-component power model and the elasto-plasti",
-      "property_count": 15
+      "documented_property_count": 15,
+      "live_property_count": 16
     },
     {
       "name": "power-ubiquitous",
       "file": "_common/references/constitutive-models/power-ubiquitous.json",
       "full_name": "Power-Ubiquitous Model",
       "description": "This model simulates the visco-elasto-plastic mechanical behavior of ubiquitous joint rock with creep occurring in a roc",
-      "property_count": 26
+      "documented_property_count": 28,
+      "live_property_count": 29
     },
     {
       "name": "soft-soil",
       "file": "_common/references/constitutive-models/soft-soil.json",
       "full_name": "Soft-Soil Model*",
       "description": "Note *Not available in 3DEC . Soft soils generally refer to normally consolidated or slightly over-consolidated clays, s",
-      "property_count": 24
+      "documented_property_count": 24,
+      "live_property_count": 25
     },
     {
       "name": "soft-soil-creep",
       "file": "_common/references/constitutive-models/soft-soil-creep.json",
       "full_name": "Soft-Soil-Creep Model*",
       "description": "Note *Not available in 3DEC . The Soft-Soil (SS) model cannot simulate time-dependent behavior such as the creep that de",
-      "property_count": 25
+      "documented_property_count": 25,
+      "live_property_count": 26
     },
     {
       "name": "softening-ubiquitous",
       "file": "_common/references/constitutive-models/softening-ubiquitous.json",
       "full_name": "Bilinear Strain-Softening/Hardening Ubiquitous-Joint (SUBI) Model",
       "description": "The bilinear strain-softening/hardening ubiquitous-joint (or, SUBI, for simplicity) model is a generalization of the ubi",
-      "property_count": 45
+      "documented_property_count": 49,
+      "live_property_count": 50
     },
     {
       "name": "strain-softening",
       "file": "_common/references/constitutive-models/strain-softening.json",
       "full_name": "Strain-Softening/Hardening Mohr-Coulomb (SSoft) Model",
       "description": "This model is based on the Mohr-Coulomb model with non-associated shear and associated tension flow rules, as described ",
-      "property_count": 15
+      "documented_property_count": 17,
+      "live_property_count": 18
     },
     {
       "name": "swell",
       "file": "_common/references/constitutive-models/swell.json",
       "full_name": "Swell Model*",
       "description": "Note *This model is not available in 3DEC . This model is based on the Mohr-Coulomb model with nonassociated shear and a",
-      "property_count": 34
+      "documented_property_count": 34,
+      "live_property_count": 35
     },
     {
       "name": "ubiquitous-anisotropic",
       "file": "_common/references/constitutive-models/ubiquitous-anisotropic.json",
       "full_name": "Ubiquitous-Anisotropic Model",
       "description": "This model combines the logic of the anisotropic elastic model and Mohr-Coulomb model with that of the ubiquitous-joint ",
-      "property_count": 20
+      "documented_property_count": 22,
+      "live_property_count": 23
     },
     {
       "name": "ubiquitous-joint",
       "file": "_common/references/constitutive-models/ubiquitous-joint.json",
       "full_name": "Ubiquitous-Joint Model",
       "description": "This model accounts for the presence of an orientation of weakness (weak plane) in a Mohr-Coulomb model . The criterion ",
-      "property_count": 20
+      "documented_property_count": 22,
+      "live_property_count": 23
     },
     {
       "name": "von-mises",
       "file": "_common/references/constitutive-models/von-mises.json",
       "full_name": "Von-Mises Model",
       "description": "The yield envelope for this model involves a von-Mises criterion. The position of a stress point on this envelope is con",
-      "property_count": 6
+      "documented_property_count": 6,
+      "live_property_count": 7
     },
     {
       "name": "wipp",
       "file": "_common/references/constitutive-models/wipp.json",
       "full_name": "WIPP Model",
       "description": "An empirical creep law, known as the WIPP-reference creep law, has been developed to describe the time- and temperature-",
-      "property_count": 14
+      "documented_property_count": 14,
+      "live_property_count": 15
     },
     {
       "name": "wipp-drucker",
       "file": "_common/references/constitutive-models/wipp-drucker.json",
       "full_name": "WIPP-Drucker Model",
       "description": "Viscoplasticity is also modeled in FLAC3D or 3DEC by combining the viscoelastic WIPP model with the elasto-plastic Druck",
-      "property_count": 20
+      "documented_property_count": 20,
+      "live_property_count": 21
     },
     {
       "name": "wipp-salt",
       "file": "_common/references/constitutive-models/wipp-salt.json",
       "full_name": "WIPP-Salt Model",
       "description": "A crushed-salt constitutive model is implemented in FLAC3D / 3DEC to simulate volumetric and deviatoric creep compaction",
-      "property_count": 22
+      "documented_property_count": 22,
+      "live_property_count": 23
     }
   ],
-  "note": "MPoint also exposes these models which do not yet have a shared _common doc and are therefore not listed above: cavehoek, clay-and-sand, curved-mohr-coulomb, jones-wilkins-lee, munson-dawson. They are valid in 'mpoint cmodel assign'."
+  "notes": [
+    "'mpoint property' operates on whatever model is currently assigned, so assign first. Assigning 'null' removes the constitutive model entirely and any following 'mpoint property' fails with 'There are no constitutive models in material points.'",
+    "cavehoek and imass are listed by 'mpoint cmodel assign' but refuse to assign until the model is configured: run 'model configure imass' right after 'model new'. Their properties are snake_case (in_stren_gsi, hb_cohesion, ...), not the kebab-case every other model uses.",
+    "Property availability is per-model, not global: 'mpoint property <name>' is rejected unless <name> belongs to the assigned model's table."
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": "For each model: 'mpoint cmodel assign <model>' onto 8 generated material points, then 'mpoint property zzbogus 1.0' to make the engine enumerate that model's legal property keywords. The returned sets were diffed against the _common docs.",
+    "result": "All 43 models assign successfully (2 of them only after 'model configure imass'). Every property name in the _common docs is accepted by the engine. The diff reduced to three facts, all now reflected in the docs: 'density' is universal and was missing everywhere; double-yield spells it 'strain-tension-plastic' (not 'tensile'); and columnar-basalt's '-i' keywords expand to 1..4.",
+    "traps": [
+      "The enumerated keyword table under-reports: 'strain-volume-plastic' is accepted by both cap-yield and double-yield but is listed by neither. Absence from the table is not proof a keyword is rejected -- only a rejection is.",
+      "'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks."
+    ]
+  }
 }

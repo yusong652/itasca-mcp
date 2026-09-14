@@ -559,8 +559,124 @@ def test_mpoint_borrows_constitutive_models_from_common() -> None:
     # Resolving the borrowed item returns the shared _common doc (same as FLAC's).
     doc = ReferenceLoader.load_item_doc("constitutive-models", "mohr-coulomb", software="mpoint")
     assert doc == ReferenceLoader.load_item_doc("constitutive-models", "mohr-coulomb", software="flac")
-    # The 5 MPoint-only models without a _common doc are disclosed, not fabricated.
-    assert "jones-wilkins-lee" in cat["note"]
+    # Every model MPoint's 'mpoint cmodel assign' accepts resolves to a real doc.
+    # This used to be 38 + a note claiming the other 5 were undocumented; the note
+    # went stale when those docs landed in _common and nothing regenerated the index.
+    assert len(cat["models"]) == 43
+    assert "note" not in cat
+    for m in cat["models"]:
+        assert ReferenceLoader.load_item_doc("constitutive-models", m["name"], software="mpoint")
+
+
+def test_mpoint_constitutive_models_carry_live_evidence() -> None:
+    cat = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
+    assert cat["live_verification"]["grade"] == "state"
+    # Property-table sizes were read back off the engine, so every assignable model
+    # has one. 'null' has none: assigning it removes the constitutive model.
+    counted = [m for m in cat["models"] if "live_property_count" in m]
+    assert len(counted) == 42
+    assert next(m for m in cat["models"] if m["name"] == "null").get("live_property_count") is None
+    mc = next(m for m in counted if m["name"] == "mohr-coulomb")
+    # live table is exactly the documented set plus the undocumented "density"
+    assert mc["live_property_count"] == 11
+    assert mc["documented_property_count"] == 10  # live = documented + "density"
+    # The two IMASS-family models need a config step before they will assign.
+    for name in ("cavehoek", "imass"):
+        entry = next(m for m in cat["models"] if m["name"] == name)
+        assert entry["requires"] == "model configure imass"
+        assert entry["property_naming"] == "snake_case"
+    # 'density' is accepted by every model but documented by none of the per-model pages.
+    assert [p["keyword"] for p in cat["universal_properties"]] == ["density"]
+
+
+def test_reference_indexes_do_not_carry_another_engines_evidence() -> None:
+    """Isolation covers measurements, not just file pointers.
+
+    MPoint's range-elements index is cloned from FLAC's, which carries blocks of
+    FLAC3D/FLAC2D live-probe results. Copying those verbatim republished, under
+    MPoint, findings that were only ever measured on FLAC — a claim no MPoint
+    session backs. Shared *docs* travel between engines; another engine's
+    evidence does not.
+    """
+    from itasca_mcp.knowledge.config import RESOURCES_DIR, SUPPORTED_SOFTWARE
+
+    others = {"flac", "pfc", "3dec", "mpoint", "massflow"}
+    for software in SUPPORTED_SOFTWARE:
+        foreign = sorted(others - {software})
+        for index_path in (RESOURCES_DIR / software / "references").rglob("index.json"):
+            keys = json.loads(index_path.read_text(encoding="utf-8")).keys()
+            for key in keys:
+                assert not any(name in key.lower() for name in foreign), (
+                    f"{software} reference index {index_path.name} has key {key!r} naming another engine"
+                )
+
+
+def test_item_list_is_not_shadowed_by_a_sibling_list() -> None:
+    """A category's item list is chosen by name, not by document order.
+
+    'constitutive-models' gained a 'universal_properties' list that sorts before
+    'models' in the file; the old first-list-of-dicts rule returned that instead
+    and browse reported one item where there are 43.
+    """
+    items = ReferenceLoader.get_item_list("constitutive-models", "9.0", software="mpoint")
+    assert len(items) == 43
+    assert {i["name"] for i in items} >= {"mohr-coulomb", "null", "imass"}
+    assert "density" not in {i.get("name") for i in items}
+    # the other category shapes still resolve
+    assert len(ReferenceLoader.get_item_list("range-elements", None, software="mpoint")) == 22
+    assert len(ReferenceLoader.get_item_list("joint-models", None, software="3dec")) == 9
+    assert len(ReferenceLoader.get_item_list("contact-models", None, software="pfc")) == 26
+
+
+def test_mpoint_live_property_tables_account_for_every_documented_property() -> None:
+    """Live table == documented set + 'density', for all 42 assignable models.
+
+    This is the whole point of the live pass: it says the _common property tables
+    are complete, not merely plausible. Asserting it against shipped data means a
+    later edit to a _common doc that drops or invents a property is caught in CI,
+    without needing the engine.
+    """
+    cat = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
+    basalt = ReferenceLoader.load_item_doc("constitutive-models", "columnar-basalt", software="mpoint")
+    assert basalt is not None
+    indexed = len(basalt["index_expansion"]["indexed_keywords"])
+    fanout = len(basalt["index_expansion"]["values"])
+
+    for m in cat["models"]:
+        live = m.get("live_property_count")
+        if live is None:
+            continue
+        doc = m["documented_property_count"]
+        expected = (doc - indexed) + indexed * fanout + 1 if m["name"] == "columnar-basalt" else doc + 1
+        assert live == expected, f"{m['name']}: live={live} documented={doc} expected={expected}"
+
+
+def test_common_constitutive_property_spellings_match_the_engine() -> None:
+    """double-yield and cap-yield genuinely disagree; neither is a typo to normalise.
+
+    The official pages print both 'strain-tensile-plastic' and 'strain-tension-plastic'
+    in different blocks, so only a live probe settles which one each model accepts.
+    """
+
+    def keywords(model: str) -> set[str]:
+        doc = ReferenceLoader.load_item_doc("constitutive-models", model, software="mpoint")
+        assert doc is not None
+        return {p["keyword"] for g in doc["property_groups"] for p in g.get("properties", [])}
+
+    assert "strain-tension-plastic" in keywords("double-yield")
+    assert "strain-tensile-plastic" not in keywords("double-yield")
+    for model in ("cap-yield", "cap-yield-simplified"):
+        assert "strain-tensile-plastic" in keywords(model)
+        assert "strain-tension-plastic" not in keywords(model)
+    # columnar-basalt's joint keywords follow double-yield, and '-i' is a placeholder
+    # the engine expands to 1..4 rather than a literal keyword.
+    basalt = ReferenceLoader.load_item_doc("constitutive-models", "columnar-basalt", software="mpoint")
+    assert basalt is not None
+    assert "strain-tension-plastic-joint-i" in {
+        p["keyword"] for g in basalt["property_groups"] for p in g.get("properties", [])
+    }
+    assert basalt["index_expansion"]["values"] == [1, 2, 3, 4]
+    assert len(basalt["index_expansion"]["indexed_keywords"]) == 21
 
 
 def test_mpoint_range_elements_shared_via_common() -> None:

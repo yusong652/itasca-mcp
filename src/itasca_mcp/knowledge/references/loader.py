@@ -258,11 +258,21 @@ class ReferenceLoader:
             return []
 
         # Each category uses its own list key: "models", "elements", "items".
+        # Match those by name. The old code took whichever list-of-dicts came
+        # first in the file, so any sibling list added later -- a set of shared
+        # properties, a table of traps -- silently became "the items" and the
+        # real list disappeared from browse output.
         items: list[dict[str, Any]] = []
-        for _key, value in index.items():
+        for key in ("models", "elements", "items"):
+            value = index.get(key)
             if isinstance(value, list) and value and isinstance(value[0], dict):
                 items = cast(list[dict[str, Any]], value)
                 break
+        else:  # unknown category shape: fall back to the first list of dicts
+            for _key, value in index.items():
+                if isinstance(value, list) and value and isinstance(value[0], dict):
+                    items = cast(list[dict[str, Any]], value)
+                    break
 
         if version is None:
             return items
