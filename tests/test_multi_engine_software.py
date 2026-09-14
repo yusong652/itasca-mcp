@@ -688,6 +688,43 @@ def test_mpoint_range_elements_shared_via_common() -> None:
     assert mp is not None and mp == flac
 
 
+def test_mpoint_range_elements_carry_their_own_evidence() -> None:
+    """Inherited elements, but not inherited evidence.
+
+    The 22 range elements are kernel-level and shared, so MPoint's index points
+    at the same _common docs FLAC uses. What a filter selects on *material
+    points* is a different question from what it selects on zones, though, and
+    this category had only ever been assumed.
+    """
+    cat = ReferenceLoader.load_category_index("range-elements", software="mpoint")
+    assert cat["live_verification"]["grade"] == "state"
+    counts = cat["mpoint_selection_counts"]
+    assert counts["lattice"]["points"] == 216
+    by_range = {c["range"]: c["selected"] for c in counts["counts"]}
+    # hand-checkable on a 216-point lattice with coordinates +-{0.2, 0.6, 1.0}
+    assert by_range["range position (0,0,0) (10,10,10)"] == 27  # 3x3x3
+    assert by_range["range sphere center (0,0,0) radius 0.5"] == 8
+    assert by_range["range position-x 0 20 position-y 0 20 union"] == 162  # 108+108-54
+    assert by_range["range id 42"] == 1
+    # 'by' enumerates but cannot name material points, so it changes nothing here
+    inapplicable = {e["name"] for e in cat["mpoint_inapplicable_elements"]}
+    assert "by" in inapplicable and "radius" in inapplicable
+    extra = {e["name"] for e in cat["mpoint_additional_elements"]}
+    assert {"volume", "velocity", "displacement"} <= extra
+
+
+def test_common_fish_range_element_is_not_quoted() -> None:
+    """'range fish "name"' is rejected; the symbol is passed bare, 2-arg."""
+    doc = ReferenceLoader.load_item_doc("range-elements", "fish", software="mpoint")
+    assert doc is not None
+    assert doc["syntax"] == "fish <fish-symbol>"
+    assert "range fish my_filter" in doc["examples"]
+    assert not any("range fish '" in ex for ex in doc["examples"])
+    assert any("2 arguments" in n for n in doc["notes"])
+    # shared doc: the other engines see the same correction
+    assert doc == ReferenceLoader.load_item_doc("range-elements", "fish", software="flac")
+
+
 def test_mpoint_fish_intrinsics_engine_specific() -> None:
     cats = ReferenceLoader.load_index(software="mpoint").get("categories", {})
     assert "fish-intrinsics" in cats
