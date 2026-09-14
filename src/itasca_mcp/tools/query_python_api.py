@@ -59,13 +59,14 @@ def register(mcp: FastMCP) -> None:
             },
         )
 
-        if not results_payload:
-            index = DocumentationLoader.load_index(software=sw)
-            hints = []
-            for hint_key, hint_msg in index.get("fallback_hints", {}).items():
-                if hint_key in query.lower():
-                    hints.append(hint_msg)
-            if hints:
-                payload["summary"]["hints"] = hints
+        # Fallback hints fire on a query-text match, not only on an empty result
+        # set. A hint key names something the SDK does not cover (material points
+        # in MPoint, "model solve"), and for those the fuzzy matcher does return
+        # results -- just misleading ones. Suppressing the hint exactly when the
+        # search looks successful is the wrong way round.
+        index = DocumentationLoader.load_index(software=sw)
+        hints = [msg for key, msg in index.get("fallback_hints", {}).items() if key in query.lower()]
+        if hints:
+            payload["summary"]["hints"] = hints
 
         return build_ok(payload)

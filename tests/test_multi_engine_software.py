@@ -341,6 +341,48 @@ async def test_mpoint_query_command_finds_mpoint_create() -> None:
 
 
 @pytest.mark.asyncio
+async def test_mpoint_python_api_covers_the_continuum_kernel() -> None:
+    """MPoint borrows FLAC's Python SDK docs -- verified name-for-name on 9.7."""
+    result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": "itasca.zone"})
+    data = _parse_tool_payload(result)["data"]
+    names = {e.get("name") for e in data["entries"]}
+    assert {"count", "find", "list"} <= names
+
+    result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": "itasca.zone.Zone.stress"})
+    data = _parse_tool_payload(result)["data"]
+    assert data["entries"][0]["doc"]["name"] == "stress"
+
+
+@pytest.mark.asyncio
+async def test_mpoint_python_query_warns_material_points_are_fish_only() -> None:
+    """The single most likely thing for a new MPoint user to get wrong.
+
+    Material points have no Python binding, but a query about them still returns
+    plausible-looking fuzzy matches (interface nodes, attach points), so the hint
+    has to reach the user alongside results rather than instead of them.
+    """
+    result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "material point position"})
+    data = _parse_tool_payload(result)["data"]
+    assert data["entries"], "fuzzy matches are expected here -- that is the point"
+    hints = data["summary"]["hints"]
+    assert any("FISH" in h for h in hints)
+
+    result = await mcp.call_tool(
+        "itasca_query_python_api", {"software": "mpoint", "query": "how do I get mpoint velocities"}
+    )
+    hints = _parse_tool_payload(result)["data"]["summary"]["hints"]
+    assert any("no itasca.mpoint module" in h.lower() for h in hints)
+
+
+@pytest.mark.asyncio
+async def test_python_query_hints_do_not_fire_on_ordinary_queries() -> None:
+    for software, query in (("mpoint", "read zone stress"), ("flac", "read zone stress")):
+        result = await mcp.call_tool("itasca_query_python_api", {"software": software, "query": query})
+        summary = _parse_tool_payload(result)["data"]["summary"]
+        assert "hints" not in summary
+
+
+@pytest.mark.asyncio
 async def test_mpoint_python_api_exposes_itasca_core() -> None:
     result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "run command"})
     data = _parse_tool_payload(result)["data"]
