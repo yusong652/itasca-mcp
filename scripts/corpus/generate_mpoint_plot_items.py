@@ -39,6 +39,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
+
 RES = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources")
 OUT = RES / "mpoint/references"
 CAT_DIR = OUT / "plot-items"
@@ -595,6 +600,11 @@ def main() -> None:
             "common_usage_patterns": item["common_usage_patterns"],
             "notes": [PROBE_NOTE, *item.get("notes_extra", [])],
         }
+        doc["dimension_differences"] = {
+            "3d_only_keywords": [k for k in dims.PLOT_KEYWORDS_3D_ONLY if k in item["top_level_keywords"]],
+            "mpoint2d_only_keywords": (dims.PLOT_KEYWORDS_2D_ONLY if name in dims.PLOT_2D_ONLY_APPLIES_TO else []),
+            "note": dims.PLOT_KEYWORD_NOTE,
+        }
         if name == "mpoint":
             # Argument types matter more than keyword names here: an LLM that
             # knows 'extra' exists still cannot write the command without
@@ -639,6 +649,14 @@ def main() -> None:
                 "items": catalog,
                 "live_verification": LIVE_VERIFICATION,
                 "verified_example_commands": VERIFIED_EXAMPLE_COMMANDS,
+                "dimension_differences": {
+                    "item_types": "identical -- all six exist on both binaries",
+                    "3d_only_keywords": dims.PLOT_KEYWORDS_3D_ONLY,
+                    "mpoint2d_only_keywords": dims.PLOT_KEYWORDS_2D_ONLY,
+                    "mpoint2d_only_applies_to": dims.PLOT_2D_ONLY_APPLIES_TO,
+                    "note": dims.PLOT_KEYWORD_NOTE,
+                    "verified": dims.DIMENSION_VERIFICATION,
+                },
                 "notes": [
                     "Plot-item keywords are appended after the item type.",
                     PROBE_NOTE,

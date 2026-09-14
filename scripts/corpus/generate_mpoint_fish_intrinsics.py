@@ -26,6 +26,11 @@ Usage:
 
 import json
 from pathlib import Path
+
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
 from typing import Any
 
 OUT = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources/mpoint/references")
@@ -461,9 +466,20 @@ def main() -> None:
         ),
         "items": index_items,
         "live_verification": LIVE_VERIFICATION,
+        "dimension_differences": {
+            "mpoint3d_count": len(SIGNATURES),
+            "mpoint2d_count": len(SIGNATURES) - len(dims.FISH_3D_ONLY),
+            "3d_only": dims.FISH_3D_ONLY,
+            "mpoint2d_only": [],
+            "note": dims.FISH_NOTE,
+            "verified": dims.DIMENSION_VERIFICATION,
+        },
         "official_sources": ["https://docs.itascacg.com/itasca900/mpm/mpm/doc/source/manual/fish/fish.html"],
     }
     (CAT_DIR / "index.json").write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    unknown = [n for n in dims.FISH_3D_ONLY if n not in SIGNATURES]
+    if unknown:
+        raise SystemExit(f"mpoint_dimensions.FISH_3D_ONLY names non-existent intrinsics: {unknown}")
     total = sum(i["intrinsic_count"] for i in index_items)
     print(f"total: {total} intrinsics (signature table has {len(SIGNATURES)})")
 

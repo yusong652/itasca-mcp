@@ -24,6 +24,11 @@ Usage:
 import json
 from pathlib import Path
 
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
+
 RES = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources")
 TARGET = RES / "mpoint/command_docs/commands/model/configure.json"
 
@@ -110,6 +115,19 @@ def build() -> dict:
                     },
                 ],
             }
+        },
+        "dimension_differences": {
+            "note": (
+                "This option list is MPoint3D's. MPoint2D offers a different nine, including one 3D does not have."
+            ),
+            "mpoint2d_options": dims.CONFIGURE_2D_OPTIONS,
+            "3d_only": dims.CONFIGURE_3D_ONLY,
+            "mpoint2d_only": dims.CONFIGURE_2D_ONLY,
+            "consequence": (
+                "'imass' is 3D-only, so the cavehoek and imass constitutive models cannot be configured "
+                "for on MPoint2D at all -- yet MPoint2D still lists cavehoek among its models."
+            ),
+            "verified": dims.DIMENSION_VERIFICATION,
         },
         "live_verification": {
             "grade": "state",

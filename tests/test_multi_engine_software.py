@@ -539,6 +539,93 @@ def test_mpoint_borrows_common_kernel_verbatim() -> None:
     assert all(f.startswith("_common/") for n, f in model.items() if n != "configure")
 
 
+def test_mpoint_dimension_differences_are_measured_on_both_binaries() -> None:
+    """Every earlier 'absent' verdict was really 'absent in 3D'.
+
+    The whole campaign before this ran on mpoint3d9_gui.exe, so it could not
+    tell a product fact from a binary fact. 'zone create2d' is the case that
+    exposed it: recorded as missing, actually present on MPoint2D.
+    """
+    cat = ReferenceLoader.load_category_index("dimension-differences", software="mpoint")
+    assert cat["live_verification"]["grade"] == "state"
+    assert set(cat["live_verification"]["engines"]) == {"MPoint3D 9.7", "MPoint2D 9.7"}
+    by_cat = {d["category"]: d for d in cat["differences"]}
+    assert set(by_cat) == {
+        "constitutive-models",
+        "model configure",
+        "range-elements",
+        "plot-items",
+        "boundary-conditions",
+    }
+    assert by_cat["constitutive-models"]["counts"] == {"mpoint3d": 43, "mpoint2d": 39}
+    assert by_cat["range-elements"]["3d_only"] == ["sphere", "cylinder", "position-z"]
+    assert "circle" in by_cat["range-elements"]["mpoint2d_only"]
+    assert by_cat["model configure"]["mpoint2d_only"] == ["axisymmetry"]
+    # the correction that prompted the pass
+    fix = cat["corrections"][0]
+    assert "create2d" in fix["was"] and "MPoint2D" in fix["is"]
+    # MPoint2D is the x-y plane, not FLAC2D's x-z
+    assert cat["plane"]["mpoint2d"] == "x-y"
+
+
+def test_mpoint_demo_ceiling_is_dimension_dependent() -> None:
+    """The 2D ceiling is half the 3D one, and the ratio is not a coincidence.
+
+    Material points allowed == zones allowed x points per converted zone: a 3D
+    hexahedron yields 8, a 2D quadrilateral 4. Both ceilings land exactly where
+    a full 1000-zone model ends up after 'mpoint import from-zones'.
+    """
+    limits = ReferenceLoader.load_category_index("workflows", software="mpoint")["demo_mode_limits"]
+    by_dim = limits["by_dimension"]
+    assert by_dim["zones"] == {"mpoint3d": 1000, "mpoint2d": 1000}
+    assert by_dim["material_points"] == {"mpoint3d": 8000, "mpoint2d": 4000}
+    assert by_dim["material_points"]["mpoint3d"] == by_dim["zones"]["mpoint3d"] * 8
+    assert by_dim["material_points"]["mpoint2d"] == by_dim["zones"]["mpoint2d"] * 4
+    assert "4096 failed" in by_dim["evidence_2d"]
+
+
+def test_mpoint_fish_intrinsics_lose_only_vector_z_in_2d() -> None:
+    """Vectors lose their z accessor; tensors keep all six components.
+
+    Stress and strain stay full 3D tensors in a 2D model, so mpoint.stress.zz
+    is meaningful there -- which is why the drop is 8 and not 8 plus the tensor
+    components.
+    """
+    cat = ReferenceLoader.load_category_index("fish-intrinsics", software="mpoint")
+    dd = cat["dimension_differences"]
+    assert dd["mpoint3d_count"] == 100
+    assert dd["mpoint2d_count"] == 92
+    assert dd["mpoint2d_only"] == []
+    assert all(n.endswith(".z") for n in dd["3d_only"])
+    assert len(dd["3d_only"]) == 8
+    # the tensor accessors survive
+    assert not any(".stress." in n or ".strain." in n for n in dd["3d_only"])
+
+
+def test_mpoint_dimension_flags_reach_the_point_of_use() -> None:
+    """A user picking a model or keyword should not have to find the summary."""
+    cm = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
+    assert cm["dimension_differences"]["mpoint2d_count"] == 39
+    by_name = {m["name"]: m for m in cm["models"]}
+    for name in ("columnar-basalt", "imass", "mohr-coulomb-tension", "orthotropic"):
+        assert "3D only" in by_name[name]["dimension"]
+    # cavehoek is listed by MPoint2D but can never be configured for there
+    assert "cavehoek" in by_name and "dimension_caveat" in by_name["cavehoek"]
+
+    # plot keywords: the 3D-only four, and 'spheres' only on the point items
+    for item, expect_spheres in (("mpoint", True), ("mpoint-hybrid", True), ("mpoint-vector", False)):
+        doc = ReferenceLoader.load_item_doc("plot-items", item, software="mpoint")
+        assert doc is not None
+        dd = doc["dimension_differences"]
+        assert set(dd["3d_only_keywords"]) <= {"clip", "cut", "quality", "transparency"}
+        assert bool(dd["mpoint2d_only_keywords"]) is expect_spheres
+
+    # range elements carry the flag on the element entry itself
+    re_cat = ReferenceLoader.load_category_index("range-elements", software="mpoint")
+    flagged = {e["name"] for e in re_cat["elements"] if "dimension" in e}
+    assert flagged == {"sphere", "cylinder", "position-z"}
+
+
 def test_mpoint_workflows_are_end_to_end_and_verified() -> None:
     """Command pages give vocabulary; workflows give order.
 

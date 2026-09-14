@@ -91,19 +91,22 @@
       "name": "position-z",
       "file": "_common/references/range-elements/position-z.json",
       "short_description": "Filter by Z-coordinate range.",
-      "category": "geometric"
+      "category": "geometric",
+      "dimension": "3D only -- MPoint2D has no such element"
     },
     {
       "name": "sphere",
       "file": "_common/references/range-elements/sphere.json",
       "short_description": "Spherical region selection.",
-      "category": "geometric"
+      "category": "geometric",
+      "dimension": "3D only -- MPoint2D has no such element"
     },
     {
       "name": "cylinder",
       "file": "_common/references/range-elements/cylinder.json",
       "short_description": "Cylindrical region. Two radii create annular (holl...",
-      "category": "geometric"
+      "category": "geometric",
+      "dimension": "3D only -- MPoint2D has no such element"
     },
     {
       "name": "annulus",
@@ -381,5 +384,13 @@
       "name": "index-list",
       "reason": "Always 0 on material points."
     }
-  ]
+  ],
+  "mpoint2d_only_elements": {
+    "circle": {
+      "syntax": "circle center <v> radius <f>",
+      "description": "The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'.",
+      "verified": "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
+    }
+  },
+  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention."
 }

@@ -34,7 +34,20 @@
       "not_the_background_grid": "8000 points passed with 9261, 68921 and 9801 background nodes, so the grid size is not what is counted.",
       "caveat": "Counts obtained by deleting points down from a larger generation behaved erratically (8100 alive passed while 8001 alive failed), so do not rely on 'mpoint delete' to bring a model back under the ceiling. Generate the size you want."
     },
-    "note": "Coupled zone + MPM analysis fits comfortably inside both limits: the verified coupling example uses 256 zones and 2048 material points."
+    "note": "Coupled zone + MPM analysis fits comfortably inside both limits: the verified coupling example uses 256 zones and 2048 material points.",
+    "by_dimension": {
+      "zones": {
+        "mpoint3d": 1000,
+        "mpoint2d": 1000
+      },
+      "material_points": {
+        "mpoint3d": 8000,
+        "mpoint2d": 4000
+      },
+      "explanation": "The material-point allowance is the zone allowance times the points one zone converts to: a 3D hexahedron yields 8, a 2D quadrilateral yields 4. Both ceilings therefore sit exactly where a full 1000-zone model lands after 'mpoint import from-zones' -- 1000 3D zones gave 8000 points and 1000 2D zones gave 4000, each assigning a constitutive model without complaint. The demo appears to be sized so the whole zone-import workflow runs.",
+      "evidence_2d": "3969 points assigned fine; 4096 failed. Zones: 1000 fine, 1040 failed.",
+      "evidence_3d": "8000 assigned fine (4/4) and ran 30000 cycles; 8400 failed. Zones: 1000 fine, 1100 failed."
+    }
   },
   "notes": [
     "The 'zone ...' steps in these workflows belong to the FLAC3D zone family, which runs on the MPoint binary but is documented under software='flac'.",

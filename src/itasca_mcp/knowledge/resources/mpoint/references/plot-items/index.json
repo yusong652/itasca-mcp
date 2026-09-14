@@ -68,6 +68,39 @@
     "plot item create mpoint-vector value displacement by-magnitude on",
     "plot item create meshnode-vector value velocity draw-as arrow"
   ],
+  "dimension_differences": {
+    "item_types": "identical -- all six exist on both binaries",
+    "3d_only_keywords": [
+      "clip",
+      "cut",
+      "quality",
+      "transparency"
+    ],
+    "mpoint2d_only_keywords": [
+      "spheres"
+    ],
+    "mpoint2d_only_applies_to": [
+      "mpoint",
+      "mpoint-hybrid",
+      "meshpoint"
+    ],
+    "note": "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both.",
+    "verified": {
+      "grade": "state",
+      "engines": [
+        "MPoint3D 9.7",
+        "MPoint2D 9.7"
+      ],
+      "date": "2026-09-14",
+      "method": "Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
+      "identical": "The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
+      "resolved": "'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
+      "traps": [
+        "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
+        "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
+      ]
+    }
+  },
   "notes": [
     "Plot-item keywords are appended after the item type.",
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9.",

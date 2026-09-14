@@ -77,6 +77,29 @@
       "'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
     ]
   },
+  "dimension_differences": {
+    "note": "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both.",
+    "plane": {
+      "mpoint2d": "x-y",
+      "note": "MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
+      "verified": "state -- 'mpoint fix ?' and 'mpoint node fix ?' on MPoint2D 9.7 list x and y only"
+    },
+    "verified": {
+      "grade": "state",
+      "engines": [
+        "MPoint3D 9.7",
+        "MPoint2D 9.7"
+      ],
+      "date": "2026-09-14",
+      "method": "Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
+      "identical": "The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
+      "resolved": "'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
+      "traps": [
+        "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
+        "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
+      ]
+    }
+  },
   "modifiers": [
     {
       "keyword": "add | multiply | replace",
