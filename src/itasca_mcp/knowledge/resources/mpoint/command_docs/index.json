@@ -231,6 +231,628 @@
         }
       ]
     },
+    "zone": {
+      "full_name": "Zone Commands (model building)",
+      "description": "Commands for building and configuring the continuum grid that MPoint models are authored on. In MPM the zone grid is scaffolding, not the simulated body: you build geometry with 'zone create', attach a constitutive model and properties, initialize stresses, and then convert the grid into material points with 'mpoint import from-zones' (which deletes the zones). Shares the 9.0 zone kernel with FLAC3D.",
+      "command_prefix": "zone",
+      "python_module": "itasca.zone",
+      "python_object_class": "Zone",
+      "related_categories": [
+        "mpoint",
+        "model",
+        "geometry"
+      ],
+      "notes": [
+        "Canonical MPoint workflow: zone create -> zone cmodel assign -> zone property -> zone initialize-stresses -> mpoint node spacing -> mpoint import from-zones",
+        "'mpoint import from-zones' consumes the zones: it converts each zone to material points and then deletes the zones and their gridpoints",
+        "itasca.zone / itasca.gridpoint read back zone state from Python, but only before conversion -- material points themselves are not exposed to the Python API at all (use FISH: mpoint.list, mpoint.pos, ...)",
+        "Docs are shared with FLAC3D. 'zone create2d' and 'zone consolidation' are not available in MPoint3D 9.7 and are omitted from this index"
+      ],
+      "commands": [
+        {
+          "name": "apply",
+          "file": "flac/command_docs/commands/zone/apply.json",
+          "short_description": "Create or modify zone apply conditions",
+          "syntax": "zone apply keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "apply-remove",
+          "file": "flac/command_docs/commands/zone/apply-remove.json",
+          "short_description": "Remove a zone condition",
+          "syntax": "zone apply-remove [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "attach",
+          "file": "flac/command_docs/commands/zone/attach.json",
+          "short_description": "Create attached gridpoints",
+          "syntax": "zone attach keyword",
+          "python_available": false
+        },
+        {
+          "name": "cmodel",
+          "file": "flac/command_docs/commands/zone/cmodel.json",
+          "short_description": "Assign, load, or get information on a zone constitutive model",
+          "syntax": "zone cmodel keyword",
+          "python_available": false
+        },
+        {
+          "name": "convergence-norm",
+          "file": "mpoint/command_docs/commands/zone/convergence-norm.json",
+          "short_description": "Select the norm used when testing convergence of the zone solution",
+          "syntax": "zone convergence-norm keyword",
+          "python_available": false
+        },
+        {
+          "name": "copy",
+          "file": "flac/command_docs/commands/zone/copy.json",
+          "short_description": "Copy zones",
+          "syntax": "zone copy <v>[merge <b>] [range]",
+          "python_available": false
+        },
+        {
+          "name": "create",
+          "file": "flac/command_docs/commands/zone/create.json",
+          "short_description": "Create 3D zone-filled primitive shapes ( brick , cylinder , etc",
+          "syntax": "zone create keyword",
+          "python_available": false
+        },
+        {
+          "name": "creep",
+          "file": "flac/command_docs/commands/zone/creep.json",
+          "short_description": "Sets parameters for a time-dependent creep material analysis (only available with the creep model...",
+          "syntax": "zone creep keyword",
+          "python_available": false
+        },
+        {
+          "name": "delete",
+          "file": "flac/command_docs/commands/zone/delete.json",
+          "short_description": "Delete zones",
+          "syntax": "zone delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "densify",
+          "file": "flac/command_docs/commands/zone/densify.json",
+          "short_description": "Find all zones in the range and subdivide them into smaller zones that fill the same volume",
+          "syntax": "zone densify keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "dynamic",
+          "file": "flac/command_docs/commands/zone/dynamic.json",
+          "short_description": "Set parameters for a dynamic model (only available with the dynamic model option – see Dynamic An...",
+          "syntax": "zone dynamic keyword",
+          "python_available": false
+        },
+        {
+          "name": "effective-stress-cutoff",
+          "file": "flac/command_docs/commands/zone/effective-stress-cutoff.json",
+          "short_description": "Sets the default value used for water/fluid effective stress cutoff",
+          "syntax": "zone effective-stress-cutoff [<f>]",
+          "python_available": false
+        },
+        {
+          "name": "export",
+          "file": "flac/command_docs/commands/zone/export.json",
+          "short_description": "Export a grid to a file",
+          "syntax": "zone export <s>[keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "export-data",
+          "file": "mpoint/command_docs/commands/zone/export-data.json",
+          "short_description": "Export zone field data to a file",
+          "syntax": "zone export-data <sfile> ...",
+          "python_available": false
+        },
+        {
+          "name": "face-apply",
+          "file": "flac/command_docs/commands/zone/face-apply.json",
+          "short_description": "This command is used to apply boundary conditions at surface faces of the model",
+          "syntax": "zone face apply keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-apply-remove",
+          "file": "flac/command_docs/commands/zone/face-apply-remove.json",
+          "short_description": "Remove zone face apply conditions, which are described in the documentation for that command",
+          "syntax": "zone face apply-remove [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-group",
+          "file": "flac/command_docs/commands/zone/face-group.json",
+          "short_description": "Adds a group name s to zone faces included in the optional range ",
+          "syntax": "zone face group <s>keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-hide",
+          "file": "flac/command_docs/commands/zone/face-hide.json",
+          "short_description": "Hide or un-hide zone faces in the range",
+          "syntax": "zone face hide [keyword ...] [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-list",
+          "file": "flac/command_docs/commands/zone/face-list.json",
+          "short_description": "List information about zone faces",
+          "syntax": "zone face list keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-select",
+          "file": "flac/command_docs/commands/zone/face-select.json",
+          "short_description": "Select or deselect zone faces in the range",
+          "syntax": "zone face select [keyword ...] [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-skin",
+          "file": "flac/command_docs/commands/zone/face-skin.json",
+          "short_description": "Skin the model to automatically generate face groups",
+          "syntax": "zone face skin [keyword ... ][range]",
+          "python_available": false
+        },
+        {
+          "name": "face-westergaard",
+          "file": "flac/command_docs/commands/zone/face-westergaard.json",
+          "short_description": "Applies the Westergaard approximation for the dynamic response of water to the surface faces in t...",
+          "syntax": "zone face westergaard [keyword ...] [range]",
+          "python_available": false
+        },
+        {
+          "name": "face-westergaard-remove",
+          "file": "flac/command_docs/commands/zone/face-westergaard-remove.json",
+          "short_description": "Removes any applied westergaard condition on the faces in the range",
+          "syntax": "zone face westergaard-remove [range]",
+          "python_available": false
+        },
+        {
+          "name": "fluid",
+          "file": "flac/command_docs/commands/zone/fluid.json",
+          "short_description": "Set parameters for a groundwater fluid flow analysis",
+          "syntax": "zone fluid keyword",
+          "python_available": false
+        },
+        {
+          "name": "fluid-density",
+          "file": "flac/command_docs/commands/zone/fluid-density.json",
+          "short_description": "Sets the default value used for water/fluid density",
+          "syntax": "zone fluid-density [<f>]",
+          "python_available": false
+        },
+        {
+          "name": "generate",
+          "file": "flac/command_docs/commands/zone/generate.json",
+          "short_description": "Generate zones based on an algorithm—generally from some other data structure",
+          "syntax": "zone generate keyword",
+          "python_available": false
+        },
+        {
+          "name": "geometry",
+          "file": "flac/command_docs/commands/zone/geometry.json",
+          "short_description": "Commands that modify control parameters based on the geometry of zones and/or their internal tetr...",
+          "syntax": "zone geometry keyword",
+          "python_available": false
+        },
+        {
+          "name": "geometry-test",
+          "file": "flac/command_docs/commands/zone/geometry-test.json",
+          "short_description": "Evaluate the integrity of model zones",
+          "syntax": "zone geometry-test [range]",
+          "python_available": false
+        },
+        {
+          "name": "geometry-tolerance",
+          "file": "flac/command_docs/commands/zone/geometry-tolerance.json",
+          "short_description": "Set the tolerance before an illegal geometry error happens in response to zone deformation",
+          "syntax": "zone geometry-tolerance <f>",
+          "python_available": false
+        },
+        {
+          "name": "geometry-update",
+          "file": "flac/command_docs/commands/zone/geometry-update.json",
+          "short_description": "Set a specific interval of steps at which to update zone geometry and property changes in large s...",
+          "syntax": "zone geometry-update <i>",
+          "python_available": false
+        },
+        {
+          "name": "gp",
+          "file": "mpoint/command_docs/commands/zone/gp.json",
+          "short_description": "Alias for 'zone gridpoint'",
+          "syntax": "zone gp [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint",
+          "file": "flac/command_docs/commands/zone/gridpoint.json",
+          "short_description": "For each gridpoint in the range, in each of the the specified degree-of-freedoms, checks if the g...",
+          "syntax": "zone gridpoint [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-create",
+          "file": "flac/command_docs/commands/zone/gridpoint-create.json",
+          "short_description": "Create a single gridpoint",
+          "syntax": "zone gridpoint create <v>[keyword]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-fix",
+          "file": "flac/command_docs/commands/zone/gridpoint-fix.json",
+          "short_description": "Fix a property at all gridpoints in the range",
+          "syntax": "zone gridpoint fix keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-force-reaction",
+          "file": "flac/command_docs/commands/zone/gridpoint-force-reaction.json",
+          "short_description": "For each gridpoint in the range, in each of the specified degrees-of-freedom, checks if the gridp...",
+          "syntax": "zone gridpoint force-reaction [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-free",
+          "file": "flac/command_docs/commands/zone/gridpoint-free.json",
+          "short_description": "Free properties at gridpoints in the range",
+          "syntax": "zone gridpoint free keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-group",
+          "file": "flac/command_docs/commands/zone/gridpoint-group.json",
+          "short_description": "Assign group name s to zone gridpoints in the range",
+          "syntax": "zone gridpoint group <s>[keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-import",
+          "file": "flac/command_docs/commands/zone/gridpoint-import.json",
+          "short_description": "Imports grid point data",
+          "syntax": "zone gridpoint import pore-pressure <sfile> [keyword ...] [range] (3D ONLY)",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-initialize",
+          "file": "flac/command_docs/commands/zone/gridpoint-initialize.json",
+          "short_description": "Assign or initialize values to all gridpoints in the range",
+          "syntax": "zone gridpoint initialize keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-list",
+          "file": "flac/command_docs/commands/zone/gridpoint-list.json",
+          "short_description": "Display gridpoint information in the console",
+          "syntax": "zone gridpoint list keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-merge",
+          "file": "flac/command_docs/commands/zone/gridpoint-merge.json",
+          "short_description": "Attempts to merge all gridpoints in the range",
+          "syntax": "zone gridpoint merge [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-pore-pressure",
+          "file": "flac/command_docs/commands/zone/gridpoint-pore-pressure.json",
+          "short_description": "Assign or initialize values of pore-pressure to all gridpoints in the range",
+          "syntax": "zone gridpoint pore-pressure keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "gridpoint-system",
+          "file": "flac/command_docs/commands/zone/gridpoint-system.json",
+          "short_description": "Set the local coordinate system for gridpoints within the range",
+          "syntax": "zone gridpoint system keyword",
+          "python_available": false
+        },
+        {
+          "name": "group",
+          "file": "flac/command_docs/commands/zone/group.json",
+          "short_description": "Add group name s to the zones in the range",
+          "syntax": "zone group <s>[keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "hide",
+          "file": "flac/command_docs/commands/zone/hide.json",
+          "short_description": "Hide or un-hide all zones in the range",
+          "syntax": "zone hide [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "history",
+          "file": "flac/command_docs/commands/zone/history.json",
+          "short_description": "Add a zone history ",
+          "syntax": "zone history [name <s>] keyword",
+          "python_available": false
+        },
+        {
+          "name": "import",
+          "file": "flac/command_docs/commands/zone/import.json",
+          "short_description": "Import a grid from a file",
+          "syntax": "zone import <s>[<s2>]keyword",
+          "python_available": false
+        },
+        {
+          "name": "import-data",
+          "file": "mpoint/command_docs/commands/zone/import-data.json",
+          "short_description": "Import zone field data from a file",
+          "syntax": "zone import-data <sfile> ...",
+          "python_available": false
+        },
+        {
+          "name": "initialize",
+          "file": "flac/command_docs/commands/zone/initialize.json",
+          "short_description": "Initialize a variable on all zones in the range",
+          "syntax": "zone initialize keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "initialize-stresses",
+          "file": "flac/command_docs/commands/zone/initialize-stresses.json",
+          "short_description": "Initialize zone stresses based on the density of the zones above them and gravity",
+          "syntax": "zone initialize-stresses keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-create",
+          "file": "flac/command_docs/commands/zone/interface-create.json",
+          "short_description": "Create nodes or elements on interface s ",
+          "syntax": "zone interface [<s>] create keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "interface-effective",
+          "file": "flac/command_docs/commands/zone/interface-effective.json",
+          "short_description": "The effective stress will be used in the interface calculation if on ",
+          "syntax": "zone interface [<s>] effective <b>[range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-element",
+          "file": "flac/command_docs/commands/zone/interface-element.json",
+          "short_description": "Manage zone interface elements",
+          "syntax": "zone interface [<s>] element keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-group",
+          "file": "flac/command_docs/commands/zone/interface-group.json",
+          "short_description": "Add group name s to the interfaces in the range",
+          "syntax": "zone interface [<s>] group <s>[keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-list",
+          "file": "flac/command_docs/commands/zone/interface-list.json",
+          "short_description": "Show summary data on interfaces",
+          "syntax": "zone interface [<s>] list information [range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-node",
+          "file": "flac/command_docs/commands/zone/interface-node.json",
+          "short_description": "Configure interface nodes",
+          "syntax": "zone interface [<s>] node keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-permeability",
+          "file": "flac/command_docs/commands/zone/interface-permeability.json",
+          "short_description": "Interfaces are permeable by default",
+          "syntax": "zone interface [<s>] permeability <b>[range]",
+          "python_available": false
+        },
+        {
+          "name": "interface-tolerance-contact",
+          "file": "flac/command_docs/commands/zone/interface-tolerance-contact.json",
+          "short_description": "Sets the maximum depth of penetration (of faces that contact an interface) for which a contact is...",
+          "syntax": "zone interface [<s>] tolerance-contact <f>keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-configure",
+          "file": "mpoint/command_docs/commands/zone/joint-configure.json",
+          "short_description": "Configure for zone joint usage",
+          "syntax": "zone joint configure",
+          "python_available": false
+        },
+        {
+          "name": "joint-create",
+          "file": "mpoint/command_docs/commands/zone/joint-create.json",
+          "short_description": "Create zone joints, and contacts, between zone joints",
+          "syntax": "zone joint create keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-create-contact",
+          "file": "mpoint/command_docs/commands/zone/joint-create-contact.json",
+          "short_description": "Create contacts between specified zone joints",
+          "syntax": "zone joint create-contact keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "joint-delete",
+          "file": "mpoint/command_docs/commands/zone/joint-delete.json",
+          "short_description": "Delete the walls and wall facets associated with zone joints",
+          "syntax": "zone joint delete keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-delete-attach",
+          "file": "mpoint/command_docs/commands/zone/joint-delete-attach.json",
+          "short_description": "Delete the attach conditions created for zone joints from the gridpoints in range",
+          "syntax": "zone joint delete-attach [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-gridpoint-stiffness",
+          "file": "mpoint/command_docs/commands/zone/joint-gridpoint-stiffness.json",
+          "short_description": "Specify whether or not gridpoint stiffnesses are accumulated across zone joints",
+          "syntax": "zone joint gridpoint-stiffness <b>",
+          "python_available": false
+        },
+        {
+          "name": "joint-initialize-stresses",
+          "file": "mpoint/command_docs/commands/zone/joint-initialize-stresses.json",
+          "short_description": "Set the contact forces consistent with the zone stresses",
+          "syntax": "zone joint initialize-stresses [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-permeability",
+          "file": "mpoint/command_docs/commands/zone/joint-permeability.json",
+          "short_description": "Specify the permeability of zone joints to matrix fluid flow",
+          "syntax": "zone joint permeability <b>[range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-pore-pressure-update",
+          "file": "mpoint/command_docs/commands/zone/joint-pore-pressure-update.json",
+          "short_description": "Specify whether or not gridpoint pore pressures are propagated to the contact models",
+          "syntax": "zone joint pore-pressure-update <b>",
+          "python_available": false
+        },
+        {
+          "name": "joint-results",
+          "file": "mpoint/command_docs/commands/zone/joint-results.json",
+          "short_description": "Modify the usage of the zone joint results logic",
+          "syntax": "zone joint results keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "list",
+          "file": "flac/command_docs/commands/zone/list.json",
+          "short_description": "List zone data",
+          "syntax": "zone list [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "mechanical",
+          "file": "flac/command_docs/commands/zone/mechanical.json",
+          "short_description": "Set parameters for a static mechanical analysis that are specific to zones",
+          "syntax": "zone mechanical keyword",
+          "python_available": false
+        },
+        {
+          "name": "nodal-mixed-discretization",
+          "file": "flac/command_docs/commands/zone/nodal-mixed-discretization.json",
+          "short_description": "Activate or deactivate the nodal mixed discretization (nmd) feature",
+          "syntax": "zone nodal-mixed-discretization <b>",
+          "python_available": false
+        },
+        {
+          "name": "null",
+          "file": "flac/command_docs/commands/zone/null.json",
+          "short_description": "Sets the null status of all zones in the range",
+          "syntax": "zone null [<b>] [keep-model] [range]",
+          "python_available": false
+        },
+        {
+          "name": "property",
+          "file": "flac/command_docs/commands/zone/property.json",
+          "short_description": "Make a constitutive model(s) property assignment",
+          "syntax": "zone property [density <f>] keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "property-distribution",
+          "file": "flac/command_docs/commands/zone/property-distribution.json",
+          "short_description": "Modify a zone constitutive model property",
+          "syntax": "zone property-distribution [[property] <fvalue>] keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "ratio",
+          "file": "flac/command_docs/commands/zone/ratio.json",
+          "short_description": "Please see Reaching Equilibrium ",
+          "syntax": "zone ratio keyword",
+          "python_available": false
+        },
+        {
+          "name": "reflect",
+          "file": "flac/command_docs/commands/zone/reflect.json",
+          "short_description": "All zones within the given range are reflected across the plane",
+          "syntax": "zone reflect keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "relax",
+          "file": "flac/command_docs/commands/zone/relax.json",
+          "short_description": "Create and modify a special apply condition on the zones in the range",
+          "syntax": "zone relax keyword",
+          "python_available": false
+        },
+        {
+          "name": "results",
+          "file": "flac/command_docs/commands/zone/results.json",
+          "short_description": "Controls if and what values are saved from zones in an exported results file",
+          "syntax": "zone results keyword",
+          "python_available": false
+        },
+        {
+          "name": "select",
+          "file": "flac/command_docs/commands/zone/select.json",
+          "short_description": "Select or de-select all zones in the range",
+          "syntax": "zone select [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "separate",
+          "file": "flac/command_docs/commands/zone/separate.json",
+          "short_description": "Separates internal faces, making a new internal surface",
+          "syntax": "zone separate keyword",
+          "python_available": false
+        },
+        {
+          "name": "split",
+          "file": "flac/command_docs/commands/zone/split.json",
+          "short_description": "Split zones in the range into multiple hexahedral or quadrilateral zones",
+          "syntax": "zone split [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "thermal",
+          "file": "flac/command_docs/commands/zone/thermal.json",
+          "short_description": "Set parameters for a thermal analysis (only available if model configure thermal has been specified)",
+          "syntax": "zone thermal keyword",
+          "python_available": false
+        },
+        {
+          "name": "trace",
+          "file": "flac/command_docs/commands/zone/trace.json",
+          "short_description": "Trace zone position and velocity",
+          "syntax": "zone trace keyword",
+          "python_available": false
+        },
+        {
+          "name": "validate",
+          "file": "flac/command_docs/commands/zone/validate.json",
+          "short_description": "Attempt to validate the model by performing checks for common errors or omissions in the model setup",
+          "syntax": "zone validate keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "vtk",
+          "file": "flac/command_docs/commands/zone/vtk.json",
+          "short_description": "Control if and what values are exported from zones to a VTK file",
+          "syntax": "zone vtk",
+          "python_available": false
+        },
+        {
+          "name": "water",
+          "file": "flac/command_docs/commands/zone/water.json",
+          "short_description": "This command initializes pore pressures, changing the effective stresses",
+          "syntax": "zone water keyword",
+          "python_available": false
+        }
+      ]
+    },
     "data": {
       "full_name": "Data Commands",
       "description": "Commands for creating user-defined data containers — labels, scalars, vectors, and tensors — attached to model objects. Used for visualizing imported field data or computed quantities.",
@@ -527,7 +1149,7 @@
     },
     "fracture": {
       "full_name": "Fracture (DFN) Commands",
-      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. Drives Smooth-Joint and similar contact models.",
+      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. The DFN module is shared across Itasca engines; fracture-driven contact-model assignment is a PFC feature and does not apply to FLAC zones.",
       "command_prefix": "fracture",
       "related_categories": [
         "geometry",
@@ -538,7 +1160,7 @@
         "fracture generate creates statistical DFNs; fracture import reads explicit fracture files",
         "fracture template defines reusable fracture geometries (fracture template create / delete / modify-default)",
         "fracture intersections compute / scanline produces connectivity data for joint-set analysis",
-        "Use 'contact model smoothjoint' (or similar) to wire fractures into mechanical behavior"
+        "The 'fracture contact-model' command applies to PFC only (FLAC has no contact-model concept for zones); in FLAC, use zone interfaces or zone joints to give fractures mechanical behavior."
       ],
       "commands": [
         {
@@ -586,7 +1208,7 @@
         {
           "name": "contact-model",
           "file": "_common/command_docs/commands/fracture/contact-model.json",
-          "short_description": "Assign contact models via fractures",
+          "short_description": "Assign contact models via fractures (PFC only; not applicable in FLAC)",
           "syntax": "fracture contact-model keyword ... [rangeof dfns]",
           "python_available": false
         },
