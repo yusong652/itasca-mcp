@@ -5,13 +5,16 @@ same ``range ...`` filters as FLAC3D / 3DEC, so it borrows both from the shared
 ``_common`` pool created in the 3DEC references PR — no duplication.
 
 - range-elements: all 22 kernel filters; MPoint has no engine-local range items,
-  so it clones FLAC's (already _common-pointing) index verbatim.
+  so the shared element docs are reused from _common. What is NOT reused is
+  FLAC's evidence: the elements are kernel-level, but what they select on
+  *material points* is a separate question from what they select on zones, and
+  this now carries MPoint's own counts (see RANGE_SELECTION_COUNTS).
 - constitutive-models: MPoint exposes 43 models (``mpoint cmodel assign``), and
   every one of them now has a shared _common doc. material-point properties ==
   the assigned cmodel's properties (``mpoint property`` requires an assigned
   model), so no separate properties category is needed.
 
-Evidence grade: ``state``. Every model was assigned to live material points on
+Evidence grade: ``state`` for both categories. Every model was assigned to live material points on
 MPoint3D 9.7 and its property vocabulary read back out of the engine's own
 keyword table (``mpoint property zzbogus`` error enumeration), then compared
 against the _common docs. See ``LIVE_PROPERTY_COUNTS`` below.
@@ -189,6 +192,138 @@ UNIVERSAL_PROPERTIES = [
 ]
 
 
+# ---------------------------------------------------------------------------
+# range-elements: live evidence, measured on material points (not inherited).
+# ---------------------------------------------------------------------------
+
+# A 216-point lattice: domain -1.2..1.2 cubed, `mpoint node spacing 0.4`,
+# `mpoint generate resolution 1`. One point per cell, so coordinates are exactly
+# {-1.0, -0.6, -0.2, 0.2, 0.6, 1.0} in each direction and every count below is
+# hand-checkable. Counts were read off `mpoint cmodel assign elastic range ...`,
+# which reports how many points it matched.
+RANGE_LATTICE = {
+    "setup": [
+        "model domain extent -1.2 1.2 -1.2 1.2 -1.2 1.2",
+        "mpoint node spacing 0.4",
+        "mpoint generate resolution 1",
+    ],
+    "points": 216,
+    "coordinates_per_axis": [-1.0, -0.6, -0.2, 0.2, 0.6, 1.0],
+    "point_volume": 0.064,
+}
+
+RANGE_SELECTION_COUNTS = {
+    "lattice": RANGE_LATTICE,
+    "counts": [
+        {"range": "range position (0,0,0) (10,10,10)", "selected": 27, "expected": "3x3x3 positive octant"},
+        {"range": "range position-x 0 10", "selected": 108, "expected": "half the lattice"},
+        {"range": "range sphere center (0,0,0) radius 0.5", "selected": 8, "expected": "the 8 points at |p|=0.346"},
+        {
+            "range": "range sphere center (0,0,0) radius 0.7",
+            "selected": 32,
+            "expected": "8 at 0.346 + 24 at 0.663",
+        },
+        {
+            "range": "range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+            "selected": 108,
+            "expected": "z>0 half (radius covers all)",
+        },
+        {"range": "range plane origin (0,0,0) normal (0,0,1) above", "selected": 108, "expected": "z>0 half"},
+        {
+            "range": "range polygon vertices (0,0,0) (10,0,0) (10,10,0) (0,10,0)",
+            "selected": 54,
+            "expected": "x>0 and y>0, all z",
+        },
+        {
+            "range": "range ellipse vertices (0,0,0) (10,0,0) (10,5,0) (0,5,0)",
+            "selected": 6,
+            "expected": "one (x,y) on the boundary exactly, all z -- boundary is inclusive",
+        },
+        {"range": "range id 42", "selected": 1, "expected": "single id"},
+        {"range": "range id-list 1 5 10 15 20", "selected": 5, "expected": "five ids"},
+        {"range": "range position-z 0 20 not", "selected": 108, "expected": "complement of the z>0 half"},
+        {
+            "range": "range position-x 0 20 position-y 0 20 union",
+            "selected": 162,
+            "expected": "108 + 108 - 54 overlap",
+        },
+        {"range": "range volume 0.06 0.07", "selected": 216, "expected": "every point's volume is 0.4^3"},
+    ],
+}
+
+# Elements the engine accepts on material points that the shared docs do not list.
+RANGE_EXTRA_ELEMENTS = [
+    {
+        "name": "volume",
+        "syntax": "volume <low> <high>",
+        "description": "Filter by material-point volume. Verified discriminating: 0..0.05 matched 0 "
+        "points, 0.06..0.07 matched all 216, 0.07..1 matched 0, on a lattice whose point volume is "
+        "exactly 0.4^3 = 0.064.",
+    },
+    {
+        "name": "velocity",
+        "syntax": "velocity <low> <high>",
+        "description": "Filter by velocity magnitude. Verified discriminating at a 1e-12 threshold.",
+    },
+    {
+        "name": "displacement",
+        "syntax": "displacement <low> <high>",
+        "description": "Filter by displacement magnitude. Verified discriminating at a 1e-12 threshold.",
+    },
+    {
+        "name": "selected / deselected",
+        "syntax": "selected | deselected",
+        "description": "Filter by GUI selection state. Both parse and evaluate, but there is no "
+        "'mpoint select' command, so selection can only be driven from the GUI.",
+    },
+]
+
+# Elements that enumerate on the unified binary but never match a material point.
+RANGE_INAPPLICABLE = [
+    {
+        "name": "by",
+        "reason": "Its object-type list (ball, zone, clump, structure, ...) has no 'mpoint' entry, and "
+        "'by zone' / 'by ball' on an mpoint command parse but change the result by nothing. The shared "
+        "doc's example 'range position-z 0 10 by zone' is a no-op here.",
+    },
+    {"name": "cmodel", "reason": "Matched 0 points even with every point assigned 'elastic'; it filters zone models."},
+    {"name": "radius", "reason": "Material points have no radius (a ball/pebble attribute). Always 0."},
+    {"name": "name", "reason": "Always 0 on material points."},
+    {"name": "group-intersection", "reason": "Always 0 on material points."},
+    {"name": "index-list", "reason": "Always 0 on material points."},
+]
+
+RANGE_LIVE_VERIFICATION = {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": (
+        "Every documented example was executed against a 216-point lattice with hand-checkable "
+        "coordinates, and the number of material points each range matched was compared with the "
+        "count computed by hand. This category had been inherited from FLAC by assumption -- the "
+        "elements are kernel-level, but nothing had confirmed what they select on material points, "
+        "which are not zones."
+    ),
+    "result": (
+        "All 22 documented elements parse, and every geometric and attribute element selects exactly "
+        "the predicted set. One documented example is rejected by the engine ('range fish' quoting), "
+        "one is a no-op on material points ('by'), and four useful elements were undocumented."
+    ),
+    "notes": [
+        "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is "
+        "rejected. Multiple elements go inside the single range phrase.",
+        "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so "
+        "'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' "
+        "matched 32.",
+        "Group slots hold ONE group per point. Assigning a second group in the same slot silently "
+        "replaces the first, and the replaced group then matches nothing -- the original "
+        "'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. "
+        "Groups in different slots coexist.",
+        "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works.",
+    ],
+}
+
+
 def _assert_every_model_documented(common_pool: set[str], by_name: dict[str, Any]) -> None:
     """Fail loudly rather than emitting a 'not documented yet' note.
 
@@ -314,6 +449,11 @@ def _wire_range_elements() -> int:
         del flac[key]
     if foreign:
         print(f"  dropped FLAC-only evidence blocks from MPoint's copy: {foreign}")
+    # ... and replaced with MPoint's own, measured on material points.
+    flac["live_verification"] = RANGE_LIVE_VERIFICATION
+    flac["mpoint_selection_counts"] = RANGE_SELECTION_COUNTS
+    flac["mpoint_additional_elements"] = RANGE_EXTRA_ELEMENTS
+    flac["mpoint_inapplicable_elements"] = RANGE_INAPPLICABLE
     (MP_REFS / "range-elements").mkdir(parents=True, exist_ok=True)
     (MP_REFS / "range-elements/index.json").write_text(
         json.dumps(flac, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

@@ -2,13 +2,16 @@
   "name": "fish",
   "category": "user_defined",
   "category_name": "User-Defined Elements",
-  "syntax": "fish <function_name>",
-  "description": "Custom FISH function for filtering. Function receives position and object pointer, returns true/false.",
+  "syntax": "fish <fish-symbol>",
+  "description": "Custom FISH function for filtering. The function must accept exactly TWO arguments -- the position and the object pointer -- and return true/false. The symbol is passed bare, not as a quoted string.",
   "examples": [
-    "range fish 'my_filter'"
+    "fish define my_filter(pos, ptr)\n    my_filter = pos->z > 0.0\nend",
+    "range fish my_filter"
   ],
   "notes": [
-    "Not allowed in plot windows due to potential side effects"
+    "Not allowed in plot windows due to potential side effects",
+    "The symbol is NOT quoted: 'range fish \"my_filter\"' is rejected with \"Bad conversion of parameter\". Verified on live MPoint3D 9.7 (2026-09-14); this doc previously carried the quoted form as its only example.",
+    "A one-argument function is rejected with \"FISH symbol used as a filter element must be a function accepting 2 arguments\"."
   ],
   "search_keywords": [
     "fish",

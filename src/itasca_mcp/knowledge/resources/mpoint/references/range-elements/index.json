@@ -234,5 +234,152 @@
     "model range delete",
     "model range list"
   ],
-  "official_documentation": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html"
+  "official_documentation": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": "Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
+    "result": "All 22 documented elements parse, and every geometric and attribute element selects exactly the predicted set. One documented example is rejected by the engine ('range fish' quoting), one is a no-op on material points ('by'), and four useful elements were undocumented.",
+    "notes": [
+      "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is rejected. Multiple elements go inside the single range phrase.",
+      "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so 'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' matched 32.",
+      "Group slots hold ONE group per point. Assigning a second group in the same slot silently replaces the first, and the replaced group then matches nothing -- the original 'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. Groups in different slots coexist.",
+      "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works."
+    ]
+  },
+  "mpoint_selection_counts": {
+    "lattice": {
+      "setup": [
+        "model domain extent -1.2 1.2 -1.2 1.2 -1.2 1.2",
+        "mpoint node spacing 0.4",
+        "mpoint generate resolution 1"
+      ],
+      "points": 216,
+      "coordinates_per_axis": [
+        -1.0,
+        -0.6,
+        -0.2,
+        0.2,
+        0.6,
+        1.0
+      ],
+      "point_volume": 0.064
+    },
+    "counts": [
+      {
+        "range": "range position (0,0,0) (10,10,10)",
+        "selected": 27,
+        "expected": "3x3x3 positive octant"
+      },
+      {
+        "range": "range position-x 0 10",
+        "selected": 108,
+        "expected": "half the lattice"
+      },
+      {
+        "range": "range sphere center (0,0,0) radius 0.5",
+        "selected": 8,
+        "expected": "the 8 points at |p|=0.346"
+      },
+      {
+        "range": "range sphere center (0,0,0) radius 0.7",
+        "selected": 32,
+        "expected": "8 at 0.346 + 24 at 0.663"
+      },
+      {
+        "range": "range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+        "selected": 108,
+        "expected": "z>0 half (radius covers all)"
+      },
+      {
+        "range": "range plane origin (0,0,0) normal (0,0,1) above",
+        "selected": 108,
+        "expected": "z>0 half"
+      },
+      {
+        "range": "range polygon vertices (0,0,0) (10,0,0) (10,10,0) (0,10,0)",
+        "selected": 54,
+        "expected": "x>0 and y>0, all z"
+      },
+      {
+        "range": "range ellipse vertices (0,0,0) (10,0,0) (10,5,0) (0,5,0)",
+        "selected": 6,
+        "expected": "one (x,y) on the boundary exactly, all z -- boundary is inclusive"
+      },
+      {
+        "range": "range id 42",
+        "selected": 1,
+        "expected": "single id"
+      },
+      {
+        "range": "range id-list 1 5 10 15 20",
+        "selected": 5,
+        "expected": "five ids"
+      },
+      {
+        "range": "range position-z 0 20 not",
+        "selected": 108,
+        "expected": "complement of the z>0 half"
+      },
+      {
+        "range": "range position-x 0 20 position-y 0 20 union",
+        "selected": 162,
+        "expected": "108 + 108 - 54 overlap"
+      },
+      {
+        "range": "range volume 0.06 0.07",
+        "selected": 216,
+        "expected": "every point's volume is 0.4^3"
+      }
+    ]
+  },
+  "mpoint_additional_elements": [
+    {
+      "name": "volume",
+      "syntax": "volume <low> <high>",
+      "description": "Filter by material-point volume. Verified discriminating: 0..0.05 matched 0 points, 0.06..0.07 matched all 216, 0.07..1 matched 0, on a lattice whose point volume is exactly 0.4^3 = 0.064."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <low> <high>",
+      "description": "Filter by velocity magnitude. Verified discriminating at a 1e-12 threshold."
+    },
+    {
+      "name": "displacement",
+      "syntax": "displacement <low> <high>",
+      "description": "Filter by displacement magnitude. Verified discriminating at a 1e-12 threshold."
+    },
+    {
+      "name": "selected / deselected",
+      "syntax": "selected | deselected",
+      "description": "Filter by GUI selection state. Both parse and evaluate, but there is no 'mpoint select' command, so selection can only be driven from the GUI."
+    }
+  ],
+  "mpoint_inapplicable_elements": [
+    {
+      "name": "by",
+      "reason": "Its object-type list (ball, zone, clump, structure, ...) has no 'mpoint' entry, and 'by zone' / 'by ball' on an mpoint command parse but change the result by nothing. The shared doc's example 'range position-z 0 10 by zone' is a no-op here."
+    },
+    {
+      "name": "cmodel",
+      "reason": "Matched 0 points even with every point assigned 'elastic'; it filters zone models."
+    },
+    {
+      "name": "radius",
+      "reason": "Material points have no radius (a ball/pebble attribute). Always 0."
+    },
+    {
+      "name": "name",
+      "reason": "Always 0 on material points."
+    },
+    {
+      "name": "group-intersection",
+      "reason": "Always 0 on material points."
+    },
+    {
+      "name": "index-list",
+      "reason": "Always 0 on material points."
+    }
+  ]
 }
