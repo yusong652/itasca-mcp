@@ -45,6 +45,84 @@ section exists.
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-09-14
+
+MPoint's documentation is now verified against a running engine rather than
+parsed from HTML. Every command keyword, constitutive model, plot keyword,
+range element and boundary condition was executed on MPoint3D 9.7 and its
+effect read back; the differences against MPoint2D were then measured on that
+binary too. Several corrections land in the shared `_common` layer, so FLAC,
+3DEC and PFC get them as well.
+
+### Added
+
+- **MPoint `workflows` reference** — three complete model recipes, each run end
+  to end: the official zone-import QuickStart, the zone-free native path, and
+  coupled FLAC3D zones + MPM material points. Each step that only *looks*
+  optional says why it is not.
+- **MPoint `dimension-differences` reference** — what changes between MPoint3D
+  and MPoint2D, measured on both. The `mpoint` command family is identical on
+  the two; the geometry vocabulary around it is not.
+- **`model configure` for MPoint** — the command was missing entirely, while
+  the official examples use it and the `cavehoek` / `imass` constitutive models
+  cannot be assigned without it. All 16 options documented.
+- **MPoint FISH intrinsics with signatures** — 100 intrinsics captured from the
+  engine, covering material points and background-grid nodes. FISH is the only
+  scripted access to either: neither is reachable from the Python API, and the
+  reference now says so.
+- **MPoint Python SDK reference**, scoped to what actually works, with the
+  material-point boundary stated rather than implied.
+- Undocumented keywords found by execution: `mpoint initialize`'s `add` /
+  `multiply` / `replace` / `component` / `quantity` modifiers and its
+  `gradient` option, `plot item create mpoint state omitPast`, and the
+  universal `density` property.
+
+### Changed
+
+- **MPoint documents only MPoint.** The FLAC3D `zone` family runs on the
+  MPoint binary and the official QuickStart uses it, but it is documented under
+  `software='flac'`, matching how every other engine layer behaves. MPoint's
+  category notes cross-reference it and also give the zone-free path.
+- MPoint reference entries now carry the evidence behind them — which engine,
+  which date, what was measured — instead of asserting behaviour flatly.
+
+### Fixed
+
+- **`itasca_query_python_api` fallback hints now appear when they are needed.**
+  They fired only when a search returned nothing, but a hint exists precisely
+  because the SDK does not cover something, and for those queries the fuzzy
+  matcher does return results — just misleading ones. Asking about material
+  points in MPoint now says they are FISH-only.
+- **Browsing a reference category no longer hides its items.** The loader took
+  whichever list appeared first in a category index, so a category that gained
+  any sibling list reported that instead. Lists are now matched by name.
+- **Constitutive-model property names that the engine rejects.**
+  `double-yield` takes `strain-tension-plastic`, not `strain-tensile-plastic`;
+  `columnar-basalt`'s joint variant likewise. `cap-yield` genuinely does use
+  `tensile`, so this is not a spelling to normalise. Shared fix — all engines.
+- **`range fish` takes a bare FISH symbol, not a quoted string**, and the
+  filter function must accept two arguments. The only example in the shared
+  docs used the rejected form. Shared fix — all engines.
+- MPoint command keyword names were systematically wrong where the source pages
+  wrap each character in its own markup; they are now parsed from the
+  documentation's own keyword ids. `mpoint import from-zones` was among them.
+
+### Documentation
+
+- MPoint constitutive models: all 43 assigned on a live engine and their
+  property tables read back. Each model's live table is exactly its documented
+  set plus `density`, which is what shows the shared tables are complete.
+- Plot items, range elements and boundary/initial conditions: keyword names
+  were already correct, but the grammar was not. `scale` takes a mode keyword
+  rather than a number, `color-by label` takes no argument, and
+  `mpoint fix velocity-x` restrains material points without pinning them —
+  grid-node fixity is the boundary condition in MPM.
+- Demo-mode limits measured: 1000 zones on both binaries, 8000 material points
+  in 3D and 4000 in 2D — the zone allowance times the points one zone converts
+  to, which is exactly where a full zone-import model lands.
+- FLAC gains the `zone joint` family and six other zone pages that no parser
+  had reached, found while working out what MPoint needs.
+
 ## [0.8.0] - 2026-09-06
 
 Data files are first-class: an agent can now run a `.p3dat` / `.dat`
