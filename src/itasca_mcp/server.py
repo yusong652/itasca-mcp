@@ -31,7 +31,7 @@ mcp = FastMCP(
         "Provides tools for browsing/searching engine documentation (select the "
         "engine via the required 'software' parameter) and for executing simulation "
         "tasks and managing runs through an itasca-mcp-bridge service running inside "
-        "the Itasca engine GUI."
+        "the Itasca engine GUI, or in a console build started unattended."
     ),
 )
 

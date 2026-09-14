@@ -115,6 +115,7 @@ itasca_mcp_bridge.start()
 - **增强的 plot 文档** — 在官方文档基础上补充了 plot items 参考文档
 - **任务运行时 REPL 依然可用** — 仿真运行中也能执行代码，随时查看模型状态和中间结果，无需停止任务；也适合在写完整脚本前快速迭代
 - **任务全生命周期管理** — 提交长时仿真、监控进度、中止运行中的任务、浏览历史任务
+- **智能体自主启动 bridge** — AI 智能体可以通过引擎的 `console.exe` 自行启动 bridge
 - **多客户端兼容** — 支持 Claude Code、Codex CLI、Gemini CLI、GitHub Copilot CLI、OpenCode、toyoura-nagisa 等 MCP 客户端
 
 ## 故障排查

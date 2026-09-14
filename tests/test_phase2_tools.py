@@ -52,4 +52,8 @@ def test_bridge_error_message_is_friendly() -> None:
     assert error["code"] == "bridge_unavailable"
     assert error["message"] == "Itasca bridge unavailable"
     assert error["details"]["reason"] == "cannot connect to bridge service"
-    assert error["details"]["action"] == "start itasca-mcp-bridge in the Itasca engine GUI, then retry"
+    action = error["details"]["action"]
+    assert action.startswith("start itasca-mcp-bridge in the Itasca engine GUI, then retry")
+    # The GUI stays the recommended path; the console build is offered as a
+    # fallback for when nobody is there to run it, not as the default.
+    assert "console.exe can start it unattended" in action

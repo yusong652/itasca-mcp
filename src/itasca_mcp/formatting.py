@@ -109,7 +109,10 @@ def build_bridge_error(exc: Exception, *, task_id: str | None = None) -> dict[st
     details: dict[str, Any] = {
         "bridge_url": cfg.url,
         "reason": reason,
-        "action": "start itasca-mcp-bridge in the Itasca engine GUI, then retry",
+        "action": (
+            "start itasca-mcp-bridge in the Itasca engine GUI, then retry; "
+            "if needed, the engine's console.exe can start it unattended"
+        ),
     }
     if task_id:
         details["task_id"] = task_id
