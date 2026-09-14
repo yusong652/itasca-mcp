@@ -1,0 +1,143 @@
+{
+  "category": "model",
+  "search_keywords": [
+    "configure",
+    "settings",
+    "imass",
+    "dynamic",
+    "creep",
+    "thermal",
+    "fluid"
+  ],
+  "description": "Configure an additional calculation mode. Specifies that the model uses calculation modes that need extra resources or are gated by the licence. It can be given at any stage but must come before 'model solve' / 'model cycle' invokes that mode.",
+  "notes": [
+    "Must be given BEFORE the mode is used by 'model solve' or 'model cycle'; in practice put it immediately after 'model new'.",
+    "'model configure imass' is a hard prerequisite for the cavehoek and imass constitutive models -- see references/constitutive-models.",
+    "Once configured, the mode stays active for the model.",
+    "The option list is engine-specific. MPoint's 16 options were enumerated from the live engine; they are not the same set FLAC3D or PFC offers."
+  ],
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('model configure imass') - no direct SDK method"
+  },
+  "versions": {
+    "9.0": {
+      "command": "model configure",
+      "syntax": "model configure keyword ...",
+      "keywords": [
+        {
+          "name": "array",
+          "syntax": "array <value>",
+          "description": "Array-based storage mode. Takes a further argument, unlike every other option.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "cfd",
+          "syntax": "cfd",
+          "description": "Coupled CFD (computational fluid dynamics) analysis.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "cluster",
+          "syntax": "cluster",
+          "description": "Cluster (distributed) computing.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Configured for use with cluster (distributed) computing.'"
+        },
+        {
+          "name": "creep",
+          "syntax": "creep",
+          "description": "Creep (time-dependent) material analysis.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Process creep configured.'"
+        },
+        {
+          "name": "dynamic",
+          "syntax": "dynamic",
+          "description": "Fully dynamic analysis. Used by the NaturalPeriodsElasticColumn verification problem.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Process dynamic configured.'"
+        },
+        {
+          "name": "energy",
+          "syntax": "energy",
+          "description": "Energy summation / tracking.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Energy summation has been set'"
+        },
+        {
+          "name": "feblock",
+          "syntax": "feblock",
+          "description": "Finite-element block logic.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "fluid-explicit",
+          "syntax": "fluid-explicit",
+          "description": "Fluid-flow analysis, explicit solution scheme.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "fluid-flow",
+          "syntax": "fluid-flow",
+          "description": "Fluid-flow analysis. Resolves to the implicit scheme by default.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Process fluid configured in mode fluid-flow fluid-implicit.'"
+        },
+        {
+          "name": "fluid-implicit",
+          "syntax": "fluid-implicit",
+          "description": "Fluid-flow analysis, implicit solution scheme.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "highorder",
+          "syntax": "highorder",
+          "description": "High-order element logic.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'High order element logic is set.'"
+        },
+        {
+          "name": "hotetra",
+          "syntax": "hotetra",
+          "description": "Higher-order tetrahedral element logic.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "imass",
+          "syntax": "imass",
+          "description": "The IMASS constitutive-model framework. REQUIRED before 'mpoint cmodel assign imass' or 'mpoint cmodel assign cavehoek' -- both are listed by the cmodel keyword table but refuse to assign without it, reporting 'Not configured for model X. See the MODEL CONFIG command.'",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Configured for use with the IMASS constitutive model.'"
+        },
+        {
+          "name": "matrixflow",
+          "syntax": "matrixflow",
+          "description": "Matrix-flow analysis.",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "mechanical",
+          "syntax": "mechanical",
+          "description": "Mechanical analysis (the default process).",
+          "verified": "syntax -- enumerated by the engine's keyword table, not separately executed"
+        },
+        {
+          "name": "thermal",
+          "syntax": "thermal",
+          "description": "Thermal analysis.",
+          "verified": "state -- MPoint3D 9.7 accepted it and reported: 'Process thermal configured.'"
+        }
+      ],
+      "examples": [
+        {
+          "command": "model new\nmodel configure imass\nmpoint cmodel assign cavehoek",
+          "description": "Without the configure line the assign fails with 'Not configured for model cavehoek.'"
+        },
+        {
+          "command": "model configure dynamic",
+          "description": "Fully dynamic analysis, as used by the NaturalPeriodsElasticColumn example."
+        }
+      ]
+    }
+  },
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": "Option list enumerated with 'model configure zzbogus', then nine options executed individually on a fresh model. Each printed its own confirmation line."
+  }
+}

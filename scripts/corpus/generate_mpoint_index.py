@@ -106,6 +106,44 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
     return out
 
 
+def merge_engine_local(categories: dict[str, Any]) -> dict[str, int]:
+    """Fold MPoint-local commands into an otherwise _common-sourced category.
+
+    A shared family can still have an engine-local member. ``model configure``
+    is the case that forced this: its option list differs per engine, so pfc,
+    flac and 3dec each keep their own copy rather than sharing one in _common,
+    and MPoint needs the same. Without this the file sits on disk unreferenced
+    and the command stays invisible to the tools.
+    """
+    added: dict[str, int] = {}
+    for cat_dir in sorted(COMMANDS_DIR.iterdir()):
+        if not cat_dir.is_dir() or cat_dir.name in PROPRIETARY:
+            continue
+        target = categories.get(cat_dir.name)
+        if target is None:
+            raise SystemExit(
+                f"engine-local commands in {cat_dir.name}/ but no such category in the index; "
+                "add it to CATEGORY_META or remove the files"
+            )
+        by_name = {c["name"]: c for c in target["commands"]}
+        for cmd_path in sorted(cat_dir.glob("*.json")):
+            data = _resolve_9_0(json.loads(cmd_path.read_text(encoding="utf-8")))
+            description = data.get("description", "")
+            short = description.split(".")[0] if description else ""
+            if len(short) > 100:
+                short = short[:97] + "..."
+            by_name[cmd_path.stem] = {
+                "name": cmd_path.stem,
+                "file": f"mpoint/command_docs/commands/{cat_dir.name}/{cmd_path.name}",
+                "short_description": short,
+                "syntax": data.get("syntax", ""),
+                "python_available": data.get("python_sdk_alternative", {}).get("available", False),
+            }
+            added[cat_dir.name] = added.get(cat_dir.name, 0) + 1
+        target["commands"] = sorted(by_name.values(), key=lambda c: str(c["name"]))
+    return added
+
+
 def main() -> None:
     categories: dict[str, Any] = {}
     for category in PROPRIETARY:
@@ -113,6 +151,7 @@ def main() -> None:
     common = borrow_common_categories()
     for name, meta in common.items():
         categories[name] = meta
+    local = merge_engine_local(categories)
 
     index = {
         "version": "1.0",
@@ -126,6 +165,7 @@ def main() -> None:
     print(f"  categories: {len(categories)}  total commands: {total}")
     print("  proprietary:", {c: len(categories[c]["commands"]) for c in PROPRIETARY})
     print("  reused _common:", {n: len(categories[n]["commands"]) for n in common})
+    print("  engine-local merged:", local)
 
 
 if __name__ == "__main__":
