@@ -1,28 +1,23 @@
 """Generate resources/mpoint/python_sdk_docs/index.json.
 
-Replaces the earlier skeleton, which shipped only the shared ``itasca`` core and
-deferred everything else. MPoint has no product-specific Python package -- the
-MPM doc tree contains zero Python API pages -- but the engine does expose the
-full 9.0 continuum kernel, and that is what an MPoint model is authored on:
-``zone create`` / ``cmodel`` / ``property`` build the geometry and
-``mpoint import from-zones`` converts it.
+MPoint ships no product-specific Python package: the MPM doc tree contains zero
+Python API pages, and there is no ``itasca.mpoint`` module. What the binary does
+expose is the shared Itasca 9.0 kernel -- the same ``itasca.zone`` /
+``itasca.gridpoint`` surface FLAC3D has, because Itasca 9 is one binary.
 
-So the module set is borrowed from FLAC, by pointer, exactly as the zone command
-family is. The borrow is not assumed -- every documented FLAC Python name was
-checked against live MPoint3D 9.7 introspection (2026-09-14):
+Those modules are NOT copied into this index. Every engine layer in this corpus
+documents only its own product (see generate_mpoint_index.py), and the continuum
+Python API belongs to FLAC; it is reachable under ``software="flac"``. This index
+therefore carries the ``itasca`` core from ``_common`` and nothing else.
 
-    14 module units, 236 documented functions -> 0 missing, 0 live-only extras.
-
-The 7 upstream-documented names FLAC3D 9.7 does not expose (flagged
-``available_in_flac3d_97=false`` in their files) are absent from MPoint too, so
-the borrowed files are accurate including their exclusions.
-
-The one thing this index must say loudly is what the API does *not* cover:
-material points and background-grid nodes have no Python binding at all. After
-``mpoint import from-zones`` every Python module reports a count of zero while
-FISH sees the points perfectly. That boundary is the single most likely thing
-for a new MPoint user to get wrong, so it is stated in the index description and
-in the fallback hints.
+What it does add is the part that is genuinely MPoint's: the boundary. Material
+points and background-grid nodes have no Python binding at all. After
+``mpoint import from-zones`` every ``itasca`` module reports a count of zero
+while FISH sees every point. That is the single most likely thing for a new
+MPoint user to get wrong, so it is stated in the index description and, more
+importantly, in ``fallback_hints`` -- which ``itasca_query_python_api`` surfaces
+whenever a query mentions material points, by text match rather than only on an
+empty result set.
 
 Usage:
     uv run python scripts/corpus/generate_mpoint_python_index.py
@@ -38,11 +33,11 @@ OUT_PY = RESOURCES / "mpoint" / "python_sdk_docs"
 
 DESCRIPTION = (
     "MPoint (MPM) Python SDK documentation index. MPoint ships no product-specific Python "
-    "package; it exposes the shared Itasca 9.0 continuum kernel, which is what MPoint models "
-    "are built on before conversion. IMPORTANT: material points and background-grid nodes are "
-    "NOT exposed to Python -- there is no itasca.mpoint module and no module reports them. "
-    "The Python API covers the pre-conversion zone/gridpoint phase; read material-point state "
-    "from FISH (mpoint.list, mpoint.pos, mpoint.node.num, ...)."
+    "package. IMPORTANT: material points and background-grid nodes are NOT exposed to Python -- "
+    "there is no itasca.mpoint module and no itasca module reports them; read material-point "
+    "state from FISH (mpoint.list, mpoint.pos, mpoint.node.num, ...). The shared continuum "
+    "modules (itasca.zone, itasca.gridpoint, ...) do run on the MPoint binary but belong to "
+    "FLAC and are documented under software='flac'."
 )
 
 # Hint keys are matched as substrings of the user's query, so they are written the
@@ -74,31 +69,46 @@ MPOINT_HINTS = {
         "'mpoint import from-zones' deletes the zones and their gridpoints, so itasca.zone.count() "
         "and itasca.gridpoint.count() both drop to 0 afterwards. Read zone state before converting."
     ),
+    "itasca.zone": (
+        "itasca.zone and itasca.gridpoint run on the MPoint binary -- all 236 documented functions "
+        "are present -- but they are FLAC's continuum API and are documented under software='flac'. "
+        "Note they only see the pre-conversion grid: 'mpoint import' deletes the zones."
+    ),
+    "itasca.gridpoint": (
+        "itasca.gridpoint is FLAC's zone-gridpoint API, documented under software='flac'. It is NOT "
+        "the MPM background grid -- read grid nodes from FISH (mpoint.node.*)."
+    ),
 }
 
 LIVE_VERIFICATION = (
-    "All 14 module units (236 documented functions) diffed against live MPoint3D 9.7 "
-    "introspection (2026-09-14): exact match, 0 missing and 0 live-only extras. The 7 names "
-    "flagged available_in_flac3d_97=false are absent from MPoint as well. Functional spot-checks "
-    "at state grade: itasca.zone/gridpoint/zonearray/gridpointarray read back geometry, density, "
-    "gravity-initialized stress and displacement on an 8-zone brick. Material points are not "
-    "exposed to Python (swept count()/maxid() across all 46 submodules after a 512-point import: "
-    "every one reported zero)."
+    "Material points are not exposed to Python: after a 512-point 'mpoint import from-zones', "
+    "count()/maxid() were swept across all 46 itasca submodules on live MPoint3D 9.7 (2026-09-14) "
+    "and every one reported zero, while FISH reported all 512. Separately, FLAC's 14 documented "
+    "Python module units (236 functions) were diffed against the same binary and matched exactly "
+    "(0 missing, 0 extras) -- that surface is real here, but it is FLAC's API and is documented "
+    "under software='flac'."
 )
 
 
 def main() -> None:
     flac_index = json.loads((FLAC_PY / "index.json").read_text(encoding="utf-8"))
 
-    modules = dict(flac_index["modules"])
-    assert str(modules["itasca"]["file"]).startswith("_common/"), "itasca core should live in _common/"
+    itasca_module = flac_index["modules"]["itasca"]
+    assert str(itasca_module["file"]).startswith("_common/"), "itasca core should live in _common/"
+
+    # Only the shared core travels; the continuum modules stay under software="flac".
+    quick_ref = {
+        k: v
+        for k, v in flac_index.get("quick_ref", {}).items()
+        if k.startswith("itasca.") and str(v).startswith("_common/")
+    }
 
     index = {
         "version": "1.0",
         "description": DESCRIPTION,
-        "modules": modules,
-        "objects": dict(flac_index.get("objects", {})),
-        "quick_ref": dict(flac_index.get("quick_ref", {})),
+        "modules": {"itasca": itasca_module},
+        "objects": {},
+        "quick_ref": quick_ref,
         "fallback_hints": {**flac_index.get("fallback_hints", {}), **MPOINT_HINTS},
         "live_verification_mpoint3d_97": LIVE_VERIFICATION,
     }
