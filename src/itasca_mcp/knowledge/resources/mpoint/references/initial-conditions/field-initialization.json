@@ -63,5 +63,42 @@
         "'model' / 'state' seed the constitutive model and its state; see the 'constitutive-models' reference."
       ]
     }
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "keyword_lists": "All four match the engine exactly: 'mpoint node fix' 9, 'mpoint fix' 7, 'mpoint initialize' 25, 'mpoint initialize-stresses' 5 (each including 'range').",
+    "method": "Conditions applied to a 216-point model and the resulting field read back through FISH (material points are not reachable from the Python SDK).",
+    "traps": [
+      "These commands do not enumerate on a bogus token -- 'mpoint fix zzbogus' answers 'Must specify degree of freedom to fix.' with no keyword table. Probe with '?'.",
+      "'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
+      "'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
+      "'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+    ]
+  },
+  "modifiers": [
+    {
+      "keyword": "add | multiply | replace",
+      "syntax": "mpoint initialize <field> <add|multiply|replace> <value>",
+      "description": "How the value combines with what is already there. 'replace' is the default. Verified: density 1000, then 'add 500' -> 1500, then 'multiply 2' -> 3000, then 'replace 777' -> 777.",
+      "trap": "The modifier goes BEFORE the value. Written after it ('mpoint initialize density 500 add') the engine sets the field to 500 and THEN rejects 'add' -- the command half-applies before it errors."
+    },
+    {
+      "keyword": "component",
+      "syntax": "mpoint initialize <vector-field> component <x|y|z> <value>",
+      "description": "Initialize one component of a vector field rather than the whole vector."
+    },
+    {
+      "keyword": "quantity",
+      "syntax": "mpoint initialize <tensor-field> quantity <xx|xy|xz|yy|yz|zz> <value>",
+      "description": "Initialize one component of a tensor field."
+    },
+    {
+      "keyword": "gradient",
+      "syntax": "mpoint initialize <field> <value> gradient <3D vector>",
+      "description": "Spatially varying initialization: the field becomes value + gradient . position. Verified exactly -- 'density 1000 gradient (0,0,-100)' gave 1100 at z=-1 and 900 at z=+1.",
+      "trap": "'gradient' is NOT listed by 'mpoint initialize ?'. It only appears in the keyword table of an unrelated parse error. Absence from an enumeration is not evidence a keyword is absent."
+    }
   ]
 }

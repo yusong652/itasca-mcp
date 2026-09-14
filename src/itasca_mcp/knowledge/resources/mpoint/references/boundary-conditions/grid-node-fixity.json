@@ -17,7 +17,8 @@
         "velocity-z"
       ],
       "notes": [
-        "Pin a wall/floor by fixing the relevant grid-node velocity component to 0 over a range."
+        "Pin a wall/floor by fixing the relevant grid-node velocity component to 0 over a range.",
+        "This is the boundary condition that actually holds: a prescribed 'mpoint node fix velocity-x 0.01' kept the mean point velocity at exactly 0.01 with displacement linear in time."
       ]
     },
     {
@@ -41,5 +42,39 @@
         "'range' scopes which grid nodes are affected (e.g. a boundary plane)."
       ]
     }
-  ]
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "keyword_lists": "All four match the engine exactly: 'mpoint node fix' 9, 'mpoint fix' 7, 'mpoint initialize' 25, 'mpoint initialize-stresses' 5 (each including 'range').",
+    "method": "Conditions applied to a 216-point model and the resulting field read back through FISH (material points are not reachable from the Python SDK).",
+    "traps": [
+      "These commands do not enumerate on a bogus token -- 'mpoint fix zzbogus' answers 'Must specify degree of freedom to fix.' with no keyword table. Probe with '?'.",
+      "'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
+      "'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
+      "'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+    ]
+  },
+  "measured": {
+    "experiment": "Every point given velocity-x 0.01, then the x<0 half restrained and the model cycled 20 steps. Mean x-displacement of the restrained half vs the free half.",
+    "results": [
+      {
+        "command": "mpoint fix velocity-x 0 range position-x -2 0",
+        "affected": "108 material points",
+        "restrained_half_dx": 0.0378439,
+        "free_half_dx": 0.0845669,
+        "verdict": "restrains, does not pin -- the restrained half still moved 45% as far as the free half"
+      },
+      {
+        "command": "mpoint node fix velocity-x 0 range position-x -2 0",
+        "affected": "147 mesh points",
+        "restrained_half_dx": 0.00268573,
+        "free_half_dx": 0.0162114,
+        "verdict": "effective -- an order of magnitude less motion, and it damps the free half too"
+      }
+    ],
+    "prescribed_velocity": "Driving instead of pinning tells the same story. 'mpoint node fix velocity-x 0.01' held the mean point velocity at exactly 0.01 with displacement linear in time (0.0999995 after 10 steps, 0.199999 after 20). 'mpoint fix velocity-x 0.01' did not hold it at all: the mean drifted 0.00285 -> 0.00896 -> 0.01544 over the same three intervals.",
+    "conclusion": "Grid-node fixity is the mechanical boundary condition in MPM; material-point fixity is a partial restraint. Material points re-read their velocity from the background grid every step, so a constraint held only on the points is overwritten by the grid solution."
+  }
 }

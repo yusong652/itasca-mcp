@@ -17,10 +17,75 @@
         "total"
       ],
       "notes": [
-        "'overburden' sets the surface stress; 'ratio' is the lateral/vertical stress ratio (k0).",
-        "'direction-x' orients the field; 'total' includes pore pressure in the total stress.",
-        "'model gravity 0 0 -9.81' must be defined before 'mpoint initialize-stresses'."
+        "'model gravity 0 0 -9.81' must be defined before 'mpoint initialize-stresses'; without it the command refuses even to enumerate its keywords.",
+        "The vertical gradient is exactly rho*g. 'overburden' shifts the whole profile by the value given and leaves the gradient alone.",
+        "'ratio' defaults to 1.0 -- the initialized field is isotropic unless you say otherwise. It accepts TWO values (k0 along the 'direction-x' axis and perpendicular to it), though the engine's own prompt mentions only one.",
+        "'direction-x' takes a 3D VECTOR and orients the first ratio. (0,1,0) swaps the two horizontal stresses; (1,1,0) blends them.",
+        "'total' is a bare switch that changes what 'ratio' multiplies: by default the EFFECTIVE vertical stress, with 'total' the TOTAL vertical stress. The two agree only when there is no pore pressure."
       ]
     }
-  ]
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "keyword_lists": "All four match the engine exactly: 'mpoint node fix' 9, 'mpoint fix' 7, 'mpoint initialize' 25, 'mpoint initialize-stresses' 5 (each including 'range').",
+    "method": "Conditions applied to a 216-point model and the resulting field read back through FISH (material points are not reachable from the Python SDK).",
+    "traps": [
+      "These commands do not enumerate on a bogus token -- 'mpoint fix zzbogus' answers 'Must specify degree of freedom to fix.' with no keyword table. Probe with '?'.",
+      "'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
+      "'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
+      "'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+    ]
+  },
+  "measured": {
+    "experiment": "'model gravity 0 0 -9.81' + 'mpoint initialize-stresses', then szz/sxx/syy read back at the top and bottom of the point cloud.",
+    "results": [
+      {
+        "command": "mpoint initialize-stresses",
+        "gradient_pa_per_m": -24525.0,
+        "note": "exactly rho*g = 2500 * 9.81; sxx == szz, so the default lateral ratio is 1.0"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5",
+        "sxx_over_szz": 0.5
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.25",
+        "sxx_over_szz": 0.25
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5 overburden -10000",
+        "note": "shifted both top and bottom szz by exactly -10000; the gradient is unchanged"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (1,0,0)",
+        "sxx": -27567.8,
+        "syy": -13783.9,
+        "note": "two ratios: the first goes to the direction-x axis, the second perpendicular"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (0,1,0)",
+        "sxx": -13783.9,
+        "syy": -27567.8,
+        "note": "rotating direction-x swaps them"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (1,1,0)",
+        "sxx": -20675.9,
+        "syy": -20675.9,
+        "note": "45 degrees blends them exactly: 0.375 * szz"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5   (pore pressure 20000 present)",
+        "sxx": -17567.8,
+        "note": "0.5 * the EFFECTIVE vertical stress (-35135.6)"
+      },
+      {
+        "command": "mpoint initialize-stresses ratio 0.5 total   (pore pressure 20000 present)",
+        "sxx": -27567.8,
+        "note": "'total' switches ratio to multiply the TOTAL vertical stress (-55135.6)"
+      }
+    ]
+  }
 }

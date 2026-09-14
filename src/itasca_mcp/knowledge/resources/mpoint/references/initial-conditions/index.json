@@ -12,5 +12,18 @@
       "file": "gravitational-stress.json",
       "full_name": "Gravitational (In-Situ) Stress Initialization"
     }
-  ]
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "keyword_lists": "All four match the engine exactly: 'mpoint node fix' 9, 'mpoint fix' 7, 'mpoint initialize' 25, 'mpoint initialize-stresses' 5 (each including 'range').",
+    "method": "Conditions applied to a 216-point model and the resulting field read back through FISH (material points are not reachable from the Python SDK).",
+    "traps": [
+      "These commands do not enumerate on a bogus token -- 'mpoint fix zzbogus' answers 'Must specify degree of freedom to fix.' with no keyword table. Probe with '?'.",
+      "'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
+      "'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
+      "'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+    ]
+  }
 }

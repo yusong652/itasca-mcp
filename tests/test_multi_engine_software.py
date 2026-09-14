@@ -825,6 +825,53 @@ def test_mpoint_initial_conditions_field_and_gravity() -> None:
     assert {"stress", "pore-pressure", "biot-modulus"} <= all_fields
 
 
+def test_mpoint_fixity_does_not_claim_to_pin_material_points() -> None:
+    """The measured difference between the two fixity commands.
+
+    Material points re-read their velocity from the background grid every step,
+    so a constraint held only on the points is overwritten. Measured: under
+    'mpoint fix velocity-x 0' the restrained half still moved 45% as far as the
+    free half; under 'mpoint node fix velocity-x 0' it moved an order of
+    magnitude less. The doc used to say 'pins the x-motion'.
+    """
+    mp = ReferenceLoader.load_item_doc("boundary-conditions", "material-point-fixity", software="mpoint")
+    node = ReferenceLoader.load_item_doc("boundary-conditions", "grid-node-fixity", software="mpoint")
+    assert mp is not None and node is not None
+    assert "pins the x-motion" not in json.dumps(mp)
+    assert "restrains but does not pin" in json.dumps(mp)
+    # both carry the comparison, so whichever one the reader lands on tells them
+    for doc in (mp, node):
+        assert doc["live_verification"]["grade"] == "state"
+        by_cmd = {r["command"]: r for r in doc["measured"]["results"]}
+        point_fix = next(v for k, v in by_cmd.items() if not k.startswith("mpoint node"))
+        grid_fix = next(v for k, v in by_cmd.items() if k.startswith("mpoint node"))
+        assert grid_fix["restrained_half_dx"] < point_fix["restrained_half_dx"] / 10
+
+
+def test_mpoint_initialize_documents_its_hidden_modifiers() -> None:
+    field = ReferenceLoader.load_item_doc("initial-conditions", "field-initialization", software="mpoint")
+    assert field is not None
+    keywords = {m["keyword"] for m in field["modifiers"]}
+    assert keywords == {"add | multiply | replace", "component", "quantity", "gradient"}
+    combine = next(m for m in field["modifiers"] if m["keyword"].startswith("add"))
+    # writing the modifier after the value half-applies the command, then errors
+    assert "BEFORE the value" in combine["trap"]
+    gradient = next(m for m in field["modifiers"] if m["keyword"] == "gradient")
+    assert "NOT listed by" in gradient["trap"]
+
+
+def test_mpoint_gravitational_stress_records_measured_semantics() -> None:
+    grav = ReferenceLoader.load_item_doc("initial-conditions", "gravitational-stress", software="mpoint")
+    assert grav is not None
+    blob = json.dumps(grav)
+    # the three things a user cannot guess from the keyword names
+    assert "'ratio' defaults to 1.0" in blob  # isotropic unless told otherwise
+    assert "accepts TWO values" in blob  # the engine's own prompt shows one
+    assert "3D VECTOR" in blob  # direction-x is not a scalar
+    gradient = next(r for r in grav["measured"]["results"] if "gradient_pa_per_m" in r)
+    assert gradient["gradient_pa_per_m"] == -24525.0  # exactly rho*g for 2500 kg/m3
+
+
 # --- MassFlow (gravity flow / caving) coverage (9.0-only engine) ------------
 # MassFlow is the caving / gravity-flow product. Its one proprietary family is
 # ``massflow`` (initialize/compute, drawpoints, markers, mine-blocks, fines
