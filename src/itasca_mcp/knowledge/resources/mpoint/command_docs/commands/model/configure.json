@@ -134,6 +134,49 @@
       ]
     }
   },
+  "dimension_differences": {
+    "note": "This option list is MPoint3D's. MPoint2D offers a different nine, including one 3D does not have.",
+    "mpoint2d_options": [
+      "axisymmetry",
+      "cluster",
+      "creep",
+      "dynamic",
+      "fluid-explicit",
+      "fluid-flow",
+      "fluid-implicit",
+      "mechanical",
+      "thermal"
+    ],
+    "3d_only": [
+      "array",
+      "cfd",
+      "energy",
+      "feblock",
+      "highorder",
+      "hotetra",
+      "imass",
+      "matrixflow"
+    ],
+    "mpoint2d_only": [
+      "axisymmetry"
+    ],
+    "consequence": "'imass' is 3D-only, so the cavehoek and imass constitutive models cannot be configured for on MPoint2D at all -- yet MPoint2D still lists cavehoek among its models.",
+    "verified": {
+      "grade": "state",
+      "engines": [
+        "MPoint3D 9.7",
+        "MPoint2D 9.7"
+      ],
+      "date": "2026-09-14",
+      "method": "Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
+      "identical": "The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
+      "resolved": "'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
+      "traps": [
+        "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
+        "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
+      ]
+    }
+  },
   "live_verification": {
     "grade": "state",
     "engine": "MPoint3D 9.7 (Itasca Software Subscription)",

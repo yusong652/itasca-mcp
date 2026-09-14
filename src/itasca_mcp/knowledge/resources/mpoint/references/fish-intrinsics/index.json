@@ -16,6 +16,37 @@
     }
   ],
   "live_verification": "Intrinsic set and signatures captured from 'fish list intrinsics' on live MPoint3D 9.7 (2026-09-14): 100 mpoint.* intrinsics. Every one of the 67 names in the installed out_fish.txt index is present; mpoint.node.mass.mult is live-only. State-grade spot-checks on a 512-point model: mpoint.pos/vol/density/stress.zz/prop and mpoint.node.pos/spacing/stress.zz/mass.mult all returned values consistent with the model that produced them.",
+  "dimension_differences": {
+    "mpoint3d_count": 100,
+    "mpoint2d_count": 92,
+    "3d_only": [
+      "mpoint.disp.z",
+      "mpoint.force.app.z",
+      "mpoint.node.disp.z",
+      "mpoint.node.force.unbal.z",
+      "mpoint.node.pos.z",
+      "mpoint.node.vel.z",
+      "mpoint.pos.z",
+      "mpoint.vel.z"
+    ],
+    "mpoint2d_only": [],
+    "note": "MPoint2D exposes 92 of the 100 'mpoint.*' intrinsics; nothing is 2D-only. The eight that go are the z components of the vector accessors (position, displacement, velocity, applied force, unbalanced force). The TENSOR accessors are unchanged -- 'mpoint.stress.zz' and 'mpoint.strain.xz' exist in 2D, because stress and strain remain full 3D tensors there.",
+    "verified": {
+      "grade": "state",
+      "engines": [
+        "MPoint3D 9.7",
+        "MPoint2D 9.7"
+      ],
+      "date": "2026-09-14",
+      "method": "Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
+      "identical": "The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
+      "resolved": "'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
+      "traps": [
+        "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
+        "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
+      ]
+    }
+  },
   "official_sources": [
     "https://docs.itascacg.com/itasca900/mpm/mpm/doc/source/manual/fish/fish.html"
   ]

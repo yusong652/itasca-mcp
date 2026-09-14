@@ -18,6 +18,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
+
 RES = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources")
 OUT = RES / "mpoint/references"
 CAT_DIR = OUT / "workflows"
@@ -213,6 +218,7 @@ DEMO_LIMITS = {
         "Coupled zone + MPM analysis fits comfortably inside both limits: the verified coupling example "
         "uses 256 zones and 2048 material points."
     ),
+    "by_dimension": dims.DEMO_LIMITS_BY_DIMENSION,
 }
 
 

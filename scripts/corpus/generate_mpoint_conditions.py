@@ -33,6 +33,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
+
 RES = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources")
 OUT = RES / "mpoint/references"
 CMD_INDEX = RES / "mpoint/command_docs/index.json"
@@ -372,6 +377,15 @@ def _write_category(
         _check(item["primary_commands"], valid)
         doc = {"name": item["name"], "dimension": "3D", **{k: v for k, v in item.items() if k != "name"}}
         doc["live_verification"] = CONDITIONS_LIVE_VERIFICATION
+        doc["dimension_differences"] = {
+            "note": (
+                "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: "
+                "'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. "
+                "The 'mpoint initialize' field list is identical in both."
+            ),
+            "plane": dims.PLANE,
+            "verified": dims.DIMENSION_VERIFICATION,
+        }
         if item["name"] in ("material-point-fixity", "grid-node-fixity"):
             doc["measured"] = FIXITY_MEASUREMENTS
         if item["name"] == "gravitational-stress":

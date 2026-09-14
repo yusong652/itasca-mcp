@@ -37,6 +37,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    import mpoint_dimensions as dims
+except ModuleNotFoundError:  # running as a package
+    from . import mpoint_dimensions as dims  # type: ignore[no-redef]
+
 RES = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources")
 COMMON_CM_REL = "_common/references/constitutive-models"
 COMMON_CM_DIR = RES / COMMON_CM_REL
@@ -396,6 +401,10 @@ def _wire_constitutive_models() -> int:
             m["requires"] = CONFIG_GATED[key]
         if key in SNAKE_CASE_MODELS:
             m["property_naming"] = "snake_case"
+        if key in dims.CMODELS_3D_ONLY:
+            m["dimension"] = "3D only -- not offered by MPoint2D"
+        if key in dims.CMODELS_LISTED_BUT_UNREACHABLE_2D:
+            m["dimension_caveat"] = dims.CMODELS_LISTED_BUT_UNREACHABLE_2D[key]
         models.append(m)
     _assert_live_matches_docs(models)
 
@@ -425,6 +434,12 @@ def _wire_constitutive_models() -> int:
             "unless <name> belongs to the assigned model's table.",
         ],
         "live_verification": LIVE_VERIFICATION,
+        "dimension_differences": {
+            "3d_only": dims.CMODELS_3D_ONLY,
+            "mpoint2d_count": len(MPOINT_CMODELS) - len(dims.CMODELS_3D_ONLY),
+            "listed_but_unreachable_in_2d": dims.CMODELS_LISTED_BUT_UNREACHABLE_2D,
+            "verified": dims.DIMENSION_VERIFICATION,
+        },
     }
     (MP_REFS / "constitutive-models").mkdir(parents=True, exist_ok=True)
     (MP_REFS / "constitutive-models/index.json").write_text(
@@ -454,6 +469,13 @@ def _wire_range_elements() -> int:
     flac["mpoint_selection_counts"] = RANGE_SELECTION_COUNTS
     flac["mpoint_additional_elements"] = RANGE_EXTRA_ELEMENTS
     flac["mpoint_inapplicable_elements"] = RANGE_INAPPLICABLE
+    for e in flac["elements"]:
+        if e["name"] in dims.RANGE_3D_ONLY:
+            e["dimension"] = "3D only -- MPoint2D has no such element"
+    flac["mpoint2d_only_elements"] = dims.RANGE_2D_ONLY
+    flac["dimension_note"] = (
+        "MPoint2D drops " + ", ".join(dims.RANGE_3D_ONLY) + " and adds 'circle'. " + dims.PLANE["note"]
+    )
     (MP_REFS / "range-elements").mkdir(parents=True, exist_ok=True)
     (MP_REFS / "range-elements/index.json").write_text(
         json.dumps(flac, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
