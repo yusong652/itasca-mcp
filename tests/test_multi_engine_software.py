@@ -372,6 +372,25 @@ def test_mpoint_borrows_zone_family_filtered() -> None:
     assert len(borrowed) >= 60
 
 
+def test_mpoint_local_zone_extras_override_the_borrow() -> None:
+    """Zone commands MPoint has that the FLAC corpus does not are authored locally.
+
+    'zone joint ...' is documented in the wad/ doc tree rather than flac3d/, and
+    'zone gp' / 'convergence-norm' / 'export-data' / 'import-data' are accepted by
+    the engine but documented nowhere. Both groups live under mpoint/.
+    """
+    from itasca_mcp.knowledge.config import RESOURCES_DIR
+
+    zone = CommandLoader.load_index(software="mpoint")["categories"]["zone"]["commands"]
+    local = {c["name"]: c for c in zone if c["file"].startswith("mpoint/")}
+    assert {"gp", "convergence-norm", "export-data", "import-data"} <= set(local)
+    assert len([n for n in local if n.startswith("joint-")]) >= 9
+    # every locally authored zone doc discloses how it was established
+    for name, entry in local.items():
+        doc = json.loads((RESOURCES_DIR / entry["file"]).read_text(encoding="utf-8"))
+        assert doc.get("notes"), f"{name} must carry provenance notes"
+
+
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
     mpoint = CommandLoader.load_index(software="mpoint")["categories"]
     # every borrowed kernel command points back into _common/ (single source)
