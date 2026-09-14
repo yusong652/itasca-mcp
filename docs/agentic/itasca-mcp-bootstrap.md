@@ -209,7 +209,13 @@ Expected output includes:
 
 - `Itasca MCP Bridge Server`
 - `http://localhost:9001`
-- `Task loop running via Qt timer`
+- `Mode:     Qt timer`
+
+If nobody is available to run it, the engine's `*_console.exe` can start the
+bridge unattended: it executes the data file passed on its command line, so
+put the same two `python` lines in a `.dat` and launch it. Use this only when
+you need it — the console session is tied to your own process, and a console
+build cannot plot.
 
 ## Step 5 - Verify from MCP Client
 
