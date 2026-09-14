@@ -305,9 +305,8 @@ async def test_mpoint_browse_commands_root() -> None:
     assert "model" in names  # shared kernel family
     assert "ball" not in names  # PFC-only family must not leak
     assert "block" not in names  # 3DEC-only family must not leak
-    # 'zone' IS present for MPoint on purpose: the documented MPM workflow builds
-    # geometry with zone commands and then converts via 'mpoint import from-zones'.
-    assert "zone" in names
+    # 'zone' runs on the MPoint binary but belongs to FLAC and is documented there.
+    assert "zone" not in names
     assert data["summary"]["software"] == "mpoint"
 
 
@@ -341,16 +340,20 @@ async def test_mpoint_query_command_finds_mpoint_create() -> None:
 
 
 @pytest.mark.asyncio
-async def test_mpoint_python_api_covers_the_continuum_kernel() -> None:
-    """MPoint borrows FLAC's Python SDK docs -- verified name-for-name on 9.7."""
-    result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": "itasca.zone"})
-    data = _parse_tool_payload(result)["data"]
-    names = {e.get("name") for e in data["entries"]}
-    assert {"count", "find", "list"} <= names
+async def test_mpoint_python_api_is_core_only_and_redirects() -> None:
+    """MPoint's Python index carries the shared core and nothing else.
 
-    result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": "itasca.zone.Zone.stress"})
+    itasca.zone and itasca.gridpoint run on the MPoint binary -- all 236
+    documented functions are present -- but they are FLAC's continuum API.
+    """
+    result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": None})
     data = _parse_tool_payload(result)["data"]
-    assert data["entries"][0]["doc"]["name"] == "stress"
+    paths = {e.get("path") for e in data["entries"]}
+    assert paths == {"itasca"}
+
+    result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "itasca.zone stress"})
+    hints = _parse_tool_payload(result)["data"]["summary"]["hints"]
+    assert any("software='flac'" in h for h in hints)
 
 
 @pytest.mark.asyncio
@@ -397,40 +400,62 @@ def test_mpoint_command_families_are_isolated() -> None:
     assert "ball" not in mpoint and "block" not in mpoint
 
 
-def test_mpoint_borrows_zone_family_filtered() -> None:
-    """MPoint borrows FLAC's zone docs, minus the commands it does not have.
+def test_no_engine_documents_another_engines_families() -> None:
+    """Every engine layer documents only its own product.
 
-    Live-probed on MPoint3D 9.7: every FLAC zone command in the corpus is
-    accepted except 'create2d' (2D-only) and 'consolidation' (7.0-era).
+    Itasca 9 is one binary, so each engine accepts a lot it does not own: MPoint
+    runs FLAC's zone family and PFC's ball/contact/wall with real DEM contact
+    mechanics, FLAC accepts ball, 3DEC accepts zone. The corpus deliberately does
+    not follow the binary -- a family is documented under the product that owns
+    it, and the other engines carry a cross-reference note instead.
+
+    Mechanically that means every ``file`` pointer resolves into either
+    ``_common/`` (the shared 9.0 kernel) or the engine's own directory. This test
+    exists because that invariant was briefly broken and nothing caught it.
     """
-    mpoint = CommandLoader.load_index(software="mpoint")["categories"]
-    zone = mpoint["zone"]["commands"]
-    names = {c["name"] for c in zone}
-    assert {"create", "cmodel", "property", "initialize-stresses"} <= names
-    assert "create2d" not in names
-    assert "consolidation" not in names
-    # borrowed docs stay single-source: they point back into the flac layer
-    borrowed = [c for c in zone if c["file"].startswith("flac/")]
-    assert len(borrowed) >= 60
+    from itasca_mcp.knowledge.config import RESOURCES_DIR, SUPPORTED_SOFTWARE
+
+    for software in SUPPORTED_SOFTWARE:
+        commands = CommandLoader.load_index(software=software)["categories"]
+        for family, info in commands.items():
+            for command in info["commands"]:
+                root = str(command["file"]).split("/")[0]
+                assert root in ("_common", software), (
+                    f"{software} command {family}/{command['name']} points into {root}/"
+                )
+
+        index = json.loads((RESOURCES_DIR / software / "python_sdk_docs/index.json").read_text(encoding="utf-8"))
+        entries = list(index.get("modules", {}).values()) + list(index.get("objects", {}).values())
+        for entry in entries:
+            root = str(entry.get("file", "")).split("/")[0]
+            assert root in ("_common", software), f"{software} python doc points into {root}/"
 
 
-def test_mpoint_local_zone_extras_override_the_borrow() -> None:
-    """Zone commands MPoint has that the FLAC corpus does not are authored locally.
+def test_mpoint_points_at_the_owning_engine_for_borrowed_families() -> None:
+    """Isolation is only honest if the user is told where the family went."""
+    mpoint = CommandLoader.load_index(software="mpoint")["categories"]["mpoint"]
+    notes = " ".join(mpoint["notes"])
+    assert "software='flac'" in notes and "zone" in notes
+    assert "software='pfc'" in notes
+    # and the native path that makes zone optional is spelled out
+    assert "mpoint generate" in notes and "No zone commands are required" in notes
 
-    'zone joint ...' is documented in the wad/ doc tree rather than flac3d/, and
-    'zone gp' / 'convergence-norm' / 'export-data' / 'import-data' are accepted by
-    the engine but documented nowhere. Both groups live under mpoint/.
+
+def test_flac_zone_owns_the_wad_joint_family() -> None:
+    """'zone joint' is documented in the wad/ doc tree, not flac3d/ -- hence missed.
+
+    Found during the MPoint campaign and filed under flac, which owns the family.
     """
     from itasca_mcp.knowledge.config import RESOURCES_DIR
 
-    zone = CommandLoader.load_index(software="mpoint")["categories"]["zone"]["commands"]
-    local = {c["name"]: c for c in zone if c["file"].startswith("mpoint/")}
-    assert {"gp", "convergence-norm", "export-data", "import-data"} <= set(local)
-    assert len([n for n in local if n.startswith("joint-")]) >= 9
-    # every locally authored zone doc discloses how it was established
-    for name, entry in local.items():
-        doc = json.loads((RESOURCES_DIR / entry["file"]).read_text(encoding="utf-8"))
-        assert doc.get("notes"), f"{name} must carry provenance notes"
+    zone = CommandLoader.load_index(software="flac")["categories"]["zone"]
+    names = {c["name"] for c in zone["commands"]}
+    assert len([n for n in names if n.startswith("joint-")]) >= 10
+    assert {"gp", "convergence-norm", "export-data", "import-data"} <= names
+    # every one of these states how it was established, since none were probed on FLAC3D
+    for stem in ("joint-configure", "gp", "convergence-norm"):
+        doc = json.loads((RESOURCES_DIR / f"flac/command_docs/commands/zone/{stem}.json").read_text(encoding="utf-8"))
+        assert any("MPoint3D 9.7" in n for n in doc["notes"])
 
 
 def test_mpoint_import_documents_from_zones() -> None:

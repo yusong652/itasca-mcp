@@ -3580,7 +3580,8 @@
         "'zone cmodel assign <model>' attaches a constitutive model; properties via 'zone property'",
         "Gridpoint conditions (fix/initialize) are addressed via 'zone gridpoint ...' (Python: itasca.gridpoint)",
         "Coupled physics live under zone subkeywords: 'zone fluid', 'zone thermal', 'zone dynamic', 'zone creep'",
-        "Use 'model solve' / 'model cycle' to step; 'zone relax' / 'zone initialize-stresses' for stress initialization"
+        "Use 'model solve' / 'model cycle' to step; 'zone relax' / 'zone initialize-stresses' for stress initialization",
+        "The 'zone joint' subcommands are documented in the installed 'wad' (wall-and-discontinuity) doc tree rather than under flac3d/, which is why they were missing until 2026-09. 'zone gp', 'convergence-norm', 'export-data' and 'import-data' appear in no doc tree at all and were found by live enumeration -- each file records how it was established."
       ],
       "commands": [
         {
@@ -3616,6 +3617,13 @@
           "file": "flac/command_docs/commands/zone/consolidation.json",
           "short_description": "Perform fluid calculations, simplified",
           "syntax": "zone consolidation <f>keyword",
+          "python_available": false
+        },
+        {
+          "name": "convergence-norm",
+          "file": "flac/command_docs/commands/zone/convergence-norm.json",
+          "short_description": "Select the norm used when testing convergence of the zone solution",
+          "syntax": "zone convergence-norm keyword",
           "python_available": false
         },
         {
@@ -3679,6 +3687,13 @@
           "file": "flac/command_docs/commands/zone/export.json",
           "short_description": "Export a grid to a file",
           "syntax": "zone export <s>[keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "export-data",
+          "file": "flac/command_docs/commands/zone/export-data.json",
+          "short_description": "Export zone field data to a file",
+          "syntax": "zone export-data <sfile> ...",
           "python_available": false
         },
         {
@@ -3794,6 +3809,13 @@
           "python_available": false
         },
         {
+          "name": "gp",
+          "file": "flac/command_docs/commands/zone/gp.json",
+          "short_description": "Alias for 'zone gridpoint'",
+          "syntax": "zone gp [keyword] [range]",
+          "python_available": false
+        },
+        {
           "name": "gridpoint",
           "file": "flac/command_docs/commands/zone/gridpoint.json",
           "short_description": "For each gridpoint in the range, in each of the the specified degree-of-freedoms, checks if the g...",
@@ -3906,6 +3928,13 @@
           "python_available": false
         },
         {
+          "name": "import-data",
+          "file": "flac/command_docs/commands/zone/import-data.json",
+          "short_description": "Import zone field data from a file",
+          "syntax": "zone import-data <sfile> ...",
+          "python_available": false
+        },
+        {
           "name": "initialize",
           "file": "flac/command_docs/commands/zone/initialize.json",
           "short_description": "Initialize a variable on all zones in the range",
@@ -3973,6 +4002,76 @@
           "file": "flac/command_docs/commands/zone/interface-tolerance-contact.json",
           "short_description": "Sets the maximum depth of penetration (of faces that contact an interface) for which a contact is...",
           "syntax": "zone interface [<s>] tolerance-contact <f>keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-configure",
+          "file": "flac/command_docs/commands/zone/joint-configure.json",
+          "short_description": "Configure for zone joint usage",
+          "syntax": "zone joint configure",
+          "python_available": false
+        },
+        {
+          "name": "joint-create",
+          "file": "flac/command_docs/commands/zone/joint-create.json",
+          "short_description": "Create zone joints, and contacts, between zone joints",
+          "syntax": "zone joint create keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-create-contact",
+          "file": "flac/command_docs/commands/zone/joint-create-contact.json",
+          "short_description": "Create contacts between specified zone joints",
+          "syntax": "zone joint create-contact keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "joint-delete",
+          "file": "flac/command_docs/commands/zone/joint-delete.json",
+          "short_description": "Delete the walls and wall facets associated with zone joints",
+          "syntax": "zone joint delete keyword [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-delete-attach",
+          "file": "flac/command_docs/commands/zone/joint-delete-attach.json",
+          "short_description": "Delete the attach conditions created for zone joints from the gridpoints in range",
+          "syntax": "zone joint delete-attach [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-gridpoint-stiffness",
+          "file": "flac/command_docs/commands/zone/joint-gridpoint-stiffness.json",
+          "short_description": "Specify whether or not gridpoint stiffnesses are accumulated across zone joints",
+          "syntax": "zone joint gridpoint-stiffness <b>",
+          "python_available": false
+        },
+        {
+          "name": "joint-initialize-stresses",
+          "file": "flac/command_docs/commands/zone/joint-initialize-stresses.json",
+          "short_description": "Set the contact forces consistent with the zone stresses",
+          "syntax": "zone joint initialize-stresses [range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-permeability",
+          "file": "flac/command_docs/commands/zone/joint-permeability.json",
+          "short_description": "Specify the permeability of zone joints to matrix fluid flow",
+          "syntax": "zone joint permeability <b>[range]",
+          "python_available": false
+        },
+        {
+          "name": "joint-pore-pressure-update",
+          "file": "flac/command_docs/commands/zone/joint-pore-pressure-update.json",
+          "short_description": "Specify whether or not gridpoint pore pressures are propagated to the contact models",
+          "syntax": "zone joint pore-pressure-update <b>",
+          "python_available": false
+        },
+        {
+          "name": "joint-results",
+          "file": "flac/command_docs/commands/zone/joint-results.json",
+          "short_description": "Modify the usage of the zone joint results logic",
+          "syntax": "zone joint results keyword ...",
           "python_available": false
         },
         {
