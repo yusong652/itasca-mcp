@@ -471,6 +471,36 @@ def test_mpoint_command_keywords_match_the_installed_index() -> None:
         assert any("Semantics are NOT established" in n for n in doc["notes"])
 
 
+def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:
+    """FISH is the only scripted access to material points, so this set must be whole.
+
+    Captured from `fish list intrinsics` on live MPoint3D 9.7: 100 mpoint.*
+    intrinsics. The previous corpus listed 55 names and no signatures -- none of
+    them wrong, but mpoint.create/delete and every per-component accessor were
+    missing.
+    """
+    from itasca_mcp.knowledge.config import RESOURCES_DIR
+
+    root = RESOURCES_DIR / "mpoint/references/fish-intrinsics"
+    names: set[str] = set()
+    for stem, expected in (("material-point", 61), ("background-node", 39)):
+        doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
+        found = [i for fam in doc["intrinsic_families"] for i in fam["intrinsics"]]
+        assert len(found) == expected == doc["intrinsic_count"]
+        for intrinsic in found:
+            assert intrinsic["signature"].startswith(
+                ("flt", "int", "vec3", "bool", "str", "any", "ten", "list", "map", "MPM", "MESHPOINT", "mpm")
+            )
+            names.add(intrinsic["name"])
+
+    assert len(names) == 100
+    # the ones the old corpus was missing entirely
+    assert {"mpoint.create", "mpoint.delete", "mpoint.stress.zz", "mpoint.node.mass.mult"} <= names
+    # background-node argument-kind split must be stated, not left to be guessed
+    node = json.loads((root / "background-node.json").read_text(encoding="utf-8"))
+    assert any("POINTER" in n and "POSITION" in n for n in node["notes"])
+
+
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
     mpoint = CommandLoader.load_index(software="mpoint")["categories"]
     # every borrowed kernel command points back into _common/ (single source)
@@ -525,11 +555,11 @@ def test_mpoint_fish_intrinsics_engine_specific() -> None:
     # MPoint's FISH is built around material points + background-grid nodes.
     assert names == {"material-point", "background-node"}
     mp = ReferenceLoader.load_item_doc("fish-intrinsics", "material-point", software="mpoint")
-    examples = {ex for fam in mp["intrinsic_families"] for ex in fam["examples"]}
-    assert "mpoint.stress" in examples and "mpoint.mech.ratio.max" in examples
+    names = {i["name"] for fam in mp["intrinsic_families"] for i in fam["intrinsics"]}
+    assert "mpoint.stress" in names and "mpoint.mech.ratio.max" in names
     node = ReferenceLoader.load_item_doc("fish-intrinsics", "background-node", software="mpoint")
-    node_ex = {ex for fam in node["intrinsic_families"] for ex in fam["examples"]}
-    assert "mpoint.node.force.unbal" in node_ex
+    node_names = {i["name"] for fam in node["intrinsic_families"] for i in fam["intrinsics"]}
+    assert "mpoint.node.force.unbal" in node_names
 
 
 def test_mpoint_boundary_conditions_use_mpoint_syntax() -> None:

@@ -2,99 +2,326 @@
   "name": "material-point",
   "dimension": "3D",
   "full_name": "Material Point FISH Intrinsics",
-  "description": "Pointer-based FISH access to material points — the core MPM carriers of mass, stress and history. Best for scripted stress/strain probes, convergence checks, and validation reports after command-driven setup. MPoint is 3D.",
+  "description": "Pointer-based FISH access to material points -- the MPM carriers of mass, stress and history. This is the ONLY scripted access to material points: they have no Python binding. MPoint3D is 3D.",
+  "notes": [
+    "Material points are not exposed to the Python API. itasca.* reports a count of zero after 'mpoint import from-zones' even though the points exist -- use these intrinsics.",
+    "Iterate with 'loop foreach local mp mpoint.list' rather than assuming contiguous IDs.",
+    "An intrinsic whose signature ends in ':= <type>' can be assigned to, not just read (for example mpoint.vel(mp) = vector(0,0,0)).",
+    "Properties are constitutive-model-specific: mpoint.prop(mp,'young') works only if the assigned model has that property. See references/constitutive-models."
+  ],
+  "intrinsic_count": 61,
   "intrinsic_families": [
     {
       "family": "iteration & identity",
-      "examples": [
-        "mpoint.list",
-        "mpoint.num",
-        "mpoint.find",
-        "mpoint.id",
-        "mpoint.maxid",
-        "mpoint.near",
-        "mpoint.containing",
-        "mpoint.inbox",
-        "mpoint.typeid"
+      "intrinsics": [
+        {
+          "name": "mpoint.list",
+          "signature": "mpmpoint_list_pnt = mpoint.list()"
+        },
+        {
+          "name": "mpoint.num",
+          "signature": "int = mpoint.num()"
+        },
+        {
+          "name": "mpoint.maxid",
+          "signature": "int = mpoint.maxid()"
+        },
+        {
+          "name": "mpoint.find",
+          "signature": "MPM_POINT_pnt = mpoint.find(int)"
+        },
+        {
+          "name": "mpoint.id",
+          "signature": "int := mpoint.id(mpm_point_pnt)"
+        },
+        {
+          "name": "mpoint.typeid",
+          "signature": "int = mpoint.typeid()"
+        },
+        {
+          "name": "mpoint.near",
+          "signature": "MPM_POINT_pnt = mpoint.near(vec3+,<flt>)"
+        },
+        {
+          "name": "mpoint.containing",
+          "signature": "MPM_POINT_pnt = mpoint.containing(vec3+,<index>)"
+        },
+        {
+          "name": "mpoint.inbox",
+          "signature": "list = mpoint.inbox(vec3+,vec3+,<bool>)"
+        }
       ],
       "notes": [
-        "Loop with 'loop foreach' over mpoint.list rather than assuming contiguous IDs.",
-        "mpoint.containing(pos) / mpoint.near(pos) locate a point by position."
+        "mpoint.containing(pos) finds the point occupying a position, mpoint.near(pos,<radius>) the closest one, and mpoint.inbox(lo,hi) every point in a box."
+      ]
+    },
+    {
+      "family": "creation & deletion",
+      "intrinsics": [
+        {
+          "name": "mpoint.create",
+          "signature": "mpm_point_pnt := mpoint.create(flt,vec3+,<int>)"
+        },
+        {
+          "name": "mpoint.delete",
+          "signature": "bool := mpoint.delete(mpm_point_pnt)"
+        }
+      ],
+      "notes": [
+        "FISH can build and destroy material points directly -- mpoint.create(volume,position) -- which is the scripted alternative to 'mpoint create' / 'mpoint generate'."
       ]
     },
     {
       "family": "geometry & motion",
-      "examples": [
-        "mpoint.pos",
-        "mpoint.vol",
-        "mpoint.density",
-        "mpoint.disp",
-        "mpoint.vel"
+      "intrinsics": [
+        {
+          "name": "mpoint.pos",
+          "signature": "vec3/flt := mpoint.pos(mpm_point_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "mpoint.pos.x",
+          "signature": "flt := mpoint.pos.x(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.pos.y",
+          "signature": "flt := mpoint.pos.y(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.pos.z",
+          "signature": "flt := mpoint.pos.z(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.disp",
+          "signature": "vec3/flt := mpoint.disp(mpm_point_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "mpoint.disp.x",
+          "signature": "flt := mpoint.disp.x(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.disp.y",
+          "signature": "flt := mpoint.disp.y(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.disp.z",
+          "signature": "flt := mpoint.disp.z(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.vel",
+          "signature": "vec3/flt := mpoint.vel(mpm_point_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "mpoint.vel.x",
+          "signature": "flt := mpoint.vel.x(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.vel.y",
+          "signature": "flt := mpoint.vel.y(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.vel.z",
+          "signature": "flt := mpoint.vel.z(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.vol",
+          "signature": "flt := mpoint.vol(mpm_point_pnt)"
+        },
+        {
+          "name": "mpoint.deformation",
+          "signature": "flt := mpoint.deformation(mpm_point_pnt)"
+        }
       ],
       "notes": [
-        "mpoint.pos is the current material-point position; it moves through the fixed grid."
+        "mpoint.vol is the current point volume; mpoint.deformation is the determinant of the deformation gradient (1.0 in the undeformed state).",
+        "The vector forms take an optional component index, so mpoint.pos(mp,3) and mpoint.pos.z(mp) are the same value."
       ]
     },
     {
-      "family": "state (stress / strain)",
-      "examples": [
-        "mpoint.stress",
-        "mpoint.strain",
-        "mpoint.deformation",
-        "mpoint.pp"
+      "family": "stress & strain",
+      "intrinsics": [
+        {
+          "name": "mpoint.stress",
+          "signature": "ten/flt := mpoint.stress(mpm_point_pnt,<int>,<int>) := ten/flt"
+        },
+        {
+          "name": "mpoint.stress.xx",
+          "signature": "flt := mpoint.stress.xx(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.stress.xy",
+          "signature": "flt := mpoint.stress.xy(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.stress.xz",
+          "signature": "flt := mpoint.stress.xz(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.stress.yy",
+          "signature": "flt := mpoint.stress.yy(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.stress.yz",
+          "signature": "flt := mpoint.stress.yz(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.stress.zz",
+          "signature": "flt := mpoint.stress.zz(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain",
+          "signature": "ten/flt := mpoint.strain(mpm_point_pnt,<int>,<int>) := ten/flt"
+        },
+        {
+          "name": "mpoint.strain.xx",
+          "signature": "flt := mpoint.strain.xx(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain.xy",
+          "signature": "flt := mpoint.strain.xy(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain.xz",
+          "signature": "flt := mpoint.strain.xz(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain.yy",
+          "signature": "flt := mpoint.strain.yy(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain.yz",
+          "signature": "flt := mpoint.strain.yz(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.strain.zz",
+          "signature": "flt := mpoint.strain.zz(mpm_point_pnt) := flt"
+        }
       ],
       "notes": [
-        "mpoint.stress / mpoint.strain are the carried tensors; mpoint.pp is pore pressure."
+        "Stress initialized on zones survives the conversion: after 'zone initialize-stresses' then 'mpoint import from-zones', mpoint.stress.zz matches the zone value it came from. (state)"
       ]
     },
     {
       "family": "constitutive model & properties",
-      "examples": [
-        "mpoint.prop",
-        "mpoint.prop.index",
-        "mpoint.extra"
+      "intrinsics": [
+        {
+          "name": "mpoint.prop",
+          "signature": "any := mpoint.prop(mpm_point_pnt,str/int) := any"
+        },
+        {
+          "name": "mpoint.prop.index",
+          "signature": "int := mpoint.prop.index(mpm_point_pnt,str)"
+        },
+        {
+          "name": "mpoint.density",
+          "signature": "flt := mpoint.density(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.extra",
+          "signature": "any := mpoint.extra(mpm_point_pnt,<int>) := any"
+        }
       ],
-      "notes": [
-        "mpoint.prop reads/writes the assigned cmodel's properties; see the 'constitutive-models' reference."
-      ]
+      "notes": []
+    },
+    {
+      "family": "fluid",
+      "intrinsics": [
+        {
+          "name": "mpoint.fluid.prop",
+          "signature": "any := mpoint.fluid.prop(mpm_point_pnt,str) := any"
+        },
+        {
+          "name": "mpoint.pp",
+          "signature": "flt := mpoint.pp(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.pp.fix",
+          "signature": "bool := mpoint.pp.fix(mpm_point_pnt) := bool"
+        }
+      ],
+      "notes": []
     },
     {
       "family": "fixity & loading",
-      "examples": [
-        "mpoint.fix",
-        "mpoint.pp.fix",
-        "mpoint.force.app",
-        "mpoint.mass.gravity",
-        "mpoint.fluid.prop"
+      "intrinsics": [
+        {
+          "name": "mpoint.fix",
+          "signature": "bool := mpoint.fix(mpm_point_pnt,int) := bool"
+        },
+        {
+          "name": "mpoint.force.app",
+          "signature": "vec3/flt := mpoint.force.app(mpm_point_pnt,<int>) := vec3/flt"
+        },
+        {
+          "name": "mpoint.force.app.x",
+          "signature": "flt := mpoint.force.app.x(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.force.app.y",
+          "signature": "flt := mpoint.force.app.y(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.force.app.z",
+          "signature": "flt := mpoint.force.app.z(mpm_point_pnt) := flt"
+        },
+        {
+          "name": "mpoint.mass.gravity",
+          "signature": "flt := mpoint.mass.gravity(mpm_point_pnt)"
+        }
       ],
       "notes": [
-        "mpoint.force.app is the applied force; mpoint.fix flags fixed velocity components."
+        "mpoint.fix(mp,dof) reads or sets the fixity flag for one degree of freedom; the command form is 'mpoint fix velocity-x ... range ...'."
       ]
     },
     {
       "family": "groups",
-      "examples": [
-        "mpoint.group",
-        "mpoint.group.list",
-        "mpoint.group.remove",
-        "mpoint.groupmap",
-        "mpoint.isgroup"
+      "intrinsics": [
+        {
+          "name": "mpoint.group",
+          "signature": "str := mpoint.group(mpm_point_pnt,<str/index>) := str/index"
+        },
+        {
+          "name": "mpoint.group.list",
+          "signature": "list = mpoint.group.list(str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.group.remove",
+          "signature": "bool := mpoint.group.remove(mpm_point_pnt,str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.groupmap",
+          "signature": "map = mpoint.groupmap(str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.isgroup",
+          "signature": "bool := mpoint.isgroup(mpm_point_pnt,str/index,<str/index>)"
+        }
       ],
-      "notes": [
-        "Use named groups + slots for stable selection."
-      ]
+      "notes": []
     },
     {
       "family": "convergence (unbalance)",
-      "examples": [
-        "mpoint.mech.ratio.avg",
-        "mpoint.mech.ratio.local",
-        "mpoint.mech.ratio.max",
-        "mpoint.mech.unbal.max"
+      "intrinsics": [
+        {
+          "name": "mpoint.mech.ratio.avg",
+          "signature": "flt = mpoint.mech.ratio.avg()"
+        },
+        {
+          "name": "mpoint.mech.ratio.local",
+          "signature": "flt = mpoint.mech.ratio.local()"
+        },
+        {
+          "name": "mpoint.mech.ratio.max",
+          "signature": "flt = mpoint.mech.ratio.max()"
+        },
+        {
+          "name": "mpoint.mech.unbal.max",
+          "signature": "flt = mpoint.mech.unbal.max()"
+        }
       ],
       "notes": [
-        "The mech.ratio.* intrinsics are the MPM equilibrium-convergence measures."
+        "Model-level rather than per-point: these take no arguments."
       ]
     }
-  ]
+  ],
+  "live_verification": "Intrinsic set and signatures captured from 'fish list intrinsics' on live MPoint3D 9.7 (2026-09-14): 100 mpoint.* intrinsics. Every one of the 67 names in the installed out_fish.txt index is present; mpoint.node.mass.mult is live-only. State-grade spot-checks on a 512-point model: mpoint.pos/vol/density/stress.zz/prop and mpoint.node.pos/spacing/stress.zz/mass.mult all returned values consistent with the model that produced them."
 }
