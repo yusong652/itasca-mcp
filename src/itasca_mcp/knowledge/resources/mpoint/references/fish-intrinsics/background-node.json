@@ -2,65 +2,208 @@
   "name": "background-node",
   "dimension": "3D",
   "full_name": "Background-Grid Node FISH Intrinsics",
-  "description": "Pointer-based FISH access to the background-grid nodes — the fixed computational mesh that material points move through and exchange momentum with. Use for grid-side velocity/force/pore-pressure probes and convergence checks.",
+  "description": "FISH access to the background-grid nodes -- the fixed computational mesh the material points move through. Like material points, these have no Python binding.",
+  "notes": [
+    "Background-node intrinsics take two different kinds of first argument and the engine will not convert between them. pos / vel / id / group / isgroup / force.unbal / mass.mult take a node POINTER (MESHPOINT_pnt, from mpoint.node.find or mpoint.node.list). disp / pp / stress take a POSITION (vec3) and interpolate the field there. Verified by executing both the correct and the swapped form: mpoint.node.vel(<vec3>) and mpoint.node.pp(<ptr>) both fail. (state)",
+    "The grid spans the whole 'model domain extent', not the material-point bounding box, and is built lazily at 'mpoint import' time. mpoint.node.pos of the first node is the domain corner. Keep the domain tight. (state)",
+    "mpoint.node.spacing() reports the value set by 'mpoint node spacing'.",
+    "mpoint.node.mass.mult is undocumented -- no doc page and no entry in out_fish.txt -- but the engine exposes it and it returns 1.0 on an untouched grid. (state)"
+  ],
+  "intrinsic_count": 39,
   "intrinsic_families": [
     {
       "family": "iteration & identity",
-      "examples": [
-        "mpoint.node.list",
-        "mpoint.node.num",
-        "mpoint.node.find",
-        "mpoint.node.id",
-        "mpoint.node.maxid",
-        "mpoint.node.near",
-        "mpoint.node.inbox",
-        "mpoint.node.typeid"
+      "intrinsics": [
+        {
+          "name": "mpoint.node.list",
+          "signature": "list = mpoint.node.list()"
+        },
+        {
+          "name": "mpoint.node.num",
+          "signature": "int = mpoint.node.num()"
+        },
+        {
+          "name": "mpoint.node.maxid",
+          "signature": "int = mpoint.node.maxid()"
+        },
+        {
+          "name": "mpoint.node.find",
+          "signature": "MESHPOINT_pnt = mpoint.node.find(int)"
+        },
+        {
+          "name": "mpoint.node.id",
+          "signature": "int := mpoint.node.id(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.typeid",
+          "signature": "int = mpoint.node.typeid()"
+        },
+        {
+          "name": "mpoint.node.near",
+          "signature": "MESHPOINT_pnt = mpoint.node.near(vec3+,<flt>)"
+        },
+        {
+          "name": "mpoint.node.inbox",
+          "signature": "list = mpoint.node.inbox(vec3+,vec3+,<bool>)"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "family": "grid geometry",
+      "intrinsics": [
+        {
+          "name": "mpoint.node.pos",
+          "signature": "vec3/flt := mpoint.node.pos(MESHPOINT_pnt,<int>)"
+        },
+        {
+          "name": "mpoint.node.pos.x",
+          "signature": "flt := mpoint.node.pos.x(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.pos.y",
+          "signature": "flt := mpoint.node.pos.y(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.pos.z",
+          "signature": "flt := mpoint.node.pos.z(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.spacing",
+          "signature": "flt := mpoint.node.spacing()"
+        }
       ],
       "notes": [
-        "Loop over mpoint.node.list; nodes are the fixed grid points (not material points)."
+        "Pointer-taking, except spacing, which takes no argument."
       ]
     },
     {
-      "family": "geometry",
-      "examples": [
-        "mpoint.node.pos",
-        "mpoint.node.spacing"
+      "family": "field queries at a position",
+      "intrinsics": [
+        {
+          "name": "mpoint.node.disp",
+          "signature": "vec3/flt := mpoint.node.disp(vec3,<int>)"
+        },
+        {
+          "name": "mpoint.node.disp.x",
+          "signature": "flt := mpoint.node.disp.x(vec3)"
+        },
+        {
+          "name": "mpoint.node.disp.y",
+          "signature": "flt := mpoint.node.disp.y(vec3)"
+        },
+        {
+          "name": "mpoint.node.disp.z",
+          "signature": "flt := mpoint.node.disp.z(vec3)"
+        },
+        {
+          "name": "mpoint.node.pp",
+          "signature": "flt := mpoint.node.pp(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress",
+          "signature": "ten/flt := mpoint.node.stress(vec3,<int>,<int>)"
+        },
+        {
+          "name": "mpoint.node.stress.xx",
+          "signature": "flt := mpoint.node.stress.xx(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress.xy",
+          "signature": "flt := mpoint.node.stress.xy(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress.xz",
+          "signature": "flt := mpoint.node.stress.xz(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress.yy",
+          "signature": "flt := mpoint.node.stress.yy(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress.yz",
+          "signature": "flt := mpoint.node.stress.yz(vec3)"
+        },
+        {
+          "name": "mpoint.node.stress.zz",
+          "signature": "flt := mpoint.node.stress.zz(vec3)"
+        }
       ],
       "notes": [
-        "mpoint.node.spacing is the background-grid cell spacing."
+        "These take a vec3 POSITION, not a node pointer -- they interpolate the field at that point. Passing a pointer fails. (state)"
       ]
     },
     {
-      "family": "state & motion",
-      "examples": [
-        "mpoint.node.disp",
-        "mpoint.node.vel",
-        "mpoint.node.pp",
-        "mpoint.node.stress"
+      "family": "motion, mass & convergence",
+      "intrinsics": [
+        {
+          "name": "mpoint.node.vel",
+          "signature": "vec3/flt := mpoint.node.vel(MESHPOINT_pnt,<int>)"
+        },
+        {
+          "name": "mpoint.node.vel.x",
+          "signature": "flt := mpoint.node.vel.x(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.vel.y",
+          "signature": "flt := mpoint.node.vel.y(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.vel.z",
+          "signature": "flt := mpoint.node.vel.z(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.force.unbal",
+          "signature": "vec3/flt := mpoint.node.force.unbal(MESHPOINT_pnt,<int>)"
+        },
+        {
+          "name": "mpoint.node.force.unbal.x",
+          "signature": "flt := mpoint.node.force.unbal.x(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.force.unbal.y",
+          "signature": "flt := mpoint.node.force.unbal.y(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.force.unbal.z",
+          "signature": "flt := mpoint.node.force.unbal.z(MESHPOINT_pnt)"
+        },
+        {
+          "name": "mpoint.node.mass.mult",
+          "signature": "flt := mpoint.node.mass.mult(MESHPOINT_pnt)",
+          "undocumented": true
+        }
       ],
       "notes": [
-        "Grid-node kinematics are interpolated to/from the material points each step."
-      ]
-    },
-    {
-      "family": "convergence",
-      "examples": [
-        "mpoint.node.force.unbal"
-      ],
-      "notes": [
-        "mpoint.node.force.unbal is the per-node unbalanced force used for convergence."
+        "Pointer-taking."
       ]
     },
     {
       "family": "groups",
-      "examples": [
-        "mpoint.node.group",
-        "mpoint.node.group.list",
-        "mpoint.node.group.remove",
-        "mpoint.node.groupmap",
-        "mpoint.node.isgroup"
+      "intrinsics": [
+        {
+          "name": "mpoint.node.group",
+          "signature": "str := mpoint.node.group(MESHPOINT_pnt,<str/index>) := str/index"
+        },
+        {
+          "name": "mpoint.node.group.list",
+          "signature": "list = mpoint.node.group.list(str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.node.group.remove",
+          "signature": "bool := mpoint.node.group.remove(MESHPOINT_pnt,str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.node.groupmap",
+          "signature": "map = mpoint.node.groupmap(str/index,<str/index>)"
+        },
+        {
+          "name": "mpoint.node.isgroup",
+          "signature": "bool := mpoint.node.isgroup(MESHPOINT_pnt,str/index,<str/index>)"
+        }
       ],
       "notes": []
     }
-  ]
+  ],
+  "live_verification": "Intrinsic set and signatures captured from 'fish list intrinsics' on live MPoint3D 9.7 (2026-09-14): 100 mpoint.* intrinsics. Every one of the 67 names in the installed out_fish.txt index is present; mpoint.node.mass.mult is live-only. State-grade spot-checks on a 512-point model: mpoint.pos/vol/density/stress.zz/prop and mpoint.node.pos/spacing/stress.zz/mass.mult all returned values consistent with the model that produced them."
 }
