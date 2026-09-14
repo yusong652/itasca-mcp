@@ -39,7 +39,7 @@
     "table-joint-friction-i",
     "table-joint-tension",
     "strain-shear-plastic-joint-i",
-    "strain-tensile-plastic-joint-i"
+    "strain-tension-plastic-joint-i"
   ],
   "description": "Note **Not available in FLAC2D . The Columnar-Basalt (COMBA) model (Detournay et al 2016, Meng et al 2020) accounts for the presence of up to four arbitrary orientations of weakness (ubiquitous joint) in a non-isotropic elastic matrix. The model can be applied to model quadrangular (hexagonal) columnar basalt with cross-joints by specifying that two (three) of the ubiquitous joints are oriented along the column axis, and another along the cross-joints. The model elastic behavior accounts for the compliance of the column matrix and that of the joints. The criterion for failure on the planes con",
   "property_groups": [
@@ -227,8 +227,8 @@
           "type": "FLT"
         },
         {
-          "keyword": "strain-tensile-plastic-joint-i",
-          "description": "accumulated joint plastic tensile strain of the i-th (i=1,2,3,or 4) set.",
+          "keyword": "strain-tension-plastic-joint-i",
+          "description": "accumulated joint plastic tensile strain of the i-th (i=1,2,3,or 4) set.  Verified on live MPoint3D 9.7: the engine accepts 'strain-tension-plastic-joint-i' and rejects 'strain-tensile-plastic-joint-i'. The official model page spells it both ways in different blocks; this is the spelling the engine's own keyword table uses. cap-yield and cap-yield-simplified genuinely do use 'tensile'.",
           "type": "FLT"
         }
       ]
@@ -238,5 +238,38 @@
   "usage": {
     "assign": "zone cmodel assign columnar-basalt [range ...]",
     "property": "zone property <keyword> <value> [range cmodel-name columnar-basalt]"
+  },
+  "index_expansion": {
+    "suffix": "-i",
+    "values": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "description": "Keywords ending in '-i' are the manual's generic form for a joint set index. The engine exposes each one four times, with '-i' replaced by 1, 2, 3 or 4 (for example 'joint-cohesion-1' ... 'joint-cohesion-4'). The generic '-i' spelling is not itself a legal keyword. Verified on live MPoint3D 9.7: the model's keyword table holds exactly 96 entries = 11 non-indexed + 21 indexed x 4 + 'density'.",
+    "indexed_keywords": [
+      "creep-coefficient-i",
+      "creep-exponent-i",
+      "creep-limit-ratio-i",
+      "dip-direction-i",
+      "dip-i",
+      "joint-cohesion-i",
+      "joint-dilation-i",
+      "joint-friction-i",
+      "joint-tension-i",
+      "normal-x-i",
+      "normal-y-i",
+      "normal-z-i",
+      "space-i",
+      "stiffness-normal-i",
+      "stiffness-shear-i",
+      "strain-shear-plastic-joint-i",
+      "strain-tension-plastic-joint-i",
+      "table-joint-cohesion-i",
+      "table-joint-dilation-i",
+      "table-joint-friction-i",
+      "table-joint-tension-i"
+    ]
   }
 }
