@@ -529,9 +529,80 @@ def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
     mpoint = CommandLoader.load_index(software="mpoint")["categories"]
     # every borrowed kernel command points back into _common/ (single source)
-    for fam in ("data", "fish", "geometry", "history", "model", "plot", "table"):
+    for fam in ("data", "fish", "geometry", "history", "plot", "table"):
         cmds = mpoint[fam]["commands"]
         assert cmds and all(str(c["file"]).startswith("_common/") for c in cmds)
+    # 'model' is shared except for 'configure', whose option list is per-engine
+    # (pfc/flac/3dec each keep their own copy too), so MPoint owns that one file.
+    model = {c["name"]: str(c["file"]) for c in mpoint["model"]["commands"]}
+    assert model["configure"].startswith("mpoint/")
+    assert all(f.startswith("_common/") for n, f in model.items() if n != "configure")
+
+
+def test_mpoint_workflows_are_end_to_end_and_verified() -> None:
+    """Command pages give vocabulary; workflows give order.
+
+    Each was executed top to bottom on a live engine, so the sequence is
+    evidence rather than a plausible-looking transcription.
+    """
+    cat = ReferenceLoader.load_category_index("workflows", software="mpoint")
+    names = {i["name"] for i in cat["items"]}
+    assert names == {"quickstart-zone-import", "zone-free-native", "zone-mpoint-coupling"}
+    for name in names:
+        wf = ReferenceLoader.load_item_doc("workflows", name, software="mpoint")
+        assert wf is not None and wf["steps"]
+        assert wf["verified"]["engine"].startswith("MPoint3D")
+        assert wf["verified"]["result"]
+    # the zone-free path must not smuggle a zone command back in
+    native = ReferenceLoader.load_item_doc("workflows", "zone-free-native", software="mpoint")
+    assert native is not None
+    assert not any(str(s["command"]).startswith("zone ") for s in native["steps"])
+
+
+def test_mpoint_coupling_workflow_names_the_step_that_does_the_coupling() -> None:
+    """Adjacency is not coupling.
+
+    Measured: a foundation settled -0.000797 whether or not an MPM body sat on
+    top of it -- identical to eight significant figures. 'mpoint hybrid-points'
+    took it to -0.00469. A recipe that lists the step without saying it is
+    load-bearing invites people to drop it.
+    """
+    wf = ReferenceLoader.load_item_doc("workflows", "zone-mpoint-coupling", software="mpoint")
+    assert wf is not None
+    hybrid = next(s for s in wf["steps"] if s["command"] == "mpoint hybrid-points")
+    assert "coupling step" in hybrid["why"]
+    assert "-0.00469" in hybrid["why"]  # the measurement, not an assertion of principle
+
+
+def test_mpoint_demo_limits_are_measured_not_assumed() -> None:
+    cat = ReferenceLoader.load_category_index("workflows", software="mpoint")
+    limits = cat["demo_mode_limits"]
+    assert limits["zones"]["limit"] == 1000
+    mp = limits["material_points"]
+    # the ceiling bites at cmodel assign, not at generate -- easy to conclude the opposite
+    assert "mpoint cmodel assign" in mp["evidence"]
+    assert "125000" in mp["evidence"]
+    assert "background grid" in " ".join(mp).lower() or mp["not_the_background_grid"]
+    assert "erratic" in mp["caveat"]
+
+
+def test_mpoint_documents_model_configure() -> None:
+    """The command the official examples use and two constitutive models require.
+
+    MPoint had no 'model configure' at all, while pfc, flac and 3dec each carry
+    one. Batch 5a had already recorded that cavehoek and imass need
+    'model configure imass' -- pointing at a command the corpus could not
+    resolve.
+    """
+    doc = CommandLoader.load_command_doc("model", "configure", "9.0", software="mpoint")
+    assert doc is not None
+    options = {k["name"]: k for k in doc["keywords"]}
+    assert len(options) == 16
+    assert {"imass", "dynamic", "creep", "thermal", "fluid-flow", "highorder"} <= set(options)
+    assert "cavehoek" in options["imass"]["description"]
+    # 'array' is the one option taking a further argument
+    assert options["array"]["syntax"] == "array <value>"
+    assert doc["live_verification"]["grade"] == "state"
 
 
 def test_mpoint_plot_items_are_engine_specific() -> None:

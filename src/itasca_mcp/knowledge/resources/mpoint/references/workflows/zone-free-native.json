@@ -1,0 +1,49 @@
+{
+  "dimension": "3D",
+  "name": "zone-free-native",
+  "full_name": "Build with material points only, no zones",
+  "description": "MPM does not need the zone family. This path uses only 'mpoint' commands and leaves zone.count() at zero throughout. Prefer it when the geometry can be described by a range, and reach for zones only when you need a primitive shape they can author and ranges cannot.",
+  "steps": [
+    {
+      "command": "model new"
+    },
+    {
+      "command": "model large-strain on"
+    },
+    {
+      "command": "model domain extent -1.2 1.2 -1.2 1.2 -1.2 1.2"
+    },
+    {
+      "command": "mpoint node spacing 0.4"
+    },
+    {
+      "command": "mpoint generate resolution 1 range position-x -0.4 0.4 position-y -0.4 0.4 position-z -0.4 0.4",
+      "why": "'resolution' is material points per node spacing per axis; the default is 2, so 'resolution 1' is one point per cell."
+    },
+    {
+      "command": "mpoint cmodel assign elastic",
+      "why": "Must precede 'mpoint property' -- without a model the engine answers 'There are no constitutive models in material points.'"
+    },
+    {
+      "command": "mpoint property density 2500 young 1e8 poisson 0.25",
+      "why": "'density' is a model property here. There is no 'mpoint density' command."
+    },
+    {
+      "command": "model gravity 0 0 -9.81"
+    },
+    {
+      "command": "mpoint initialize-stresses"
+    },
+    {
+      "command": "mpoint node fix velocity range position-z 0"
+    },
+    {
+      "command": "model cycle 300"
+    }
+  ],
+  "verified": {
+    "engine": "MPoint3D 9.7",
+    "date": "2026-09-14",
+    "result": "Cycles and settles with zone.count() == 0 at every step."
+  }
+}

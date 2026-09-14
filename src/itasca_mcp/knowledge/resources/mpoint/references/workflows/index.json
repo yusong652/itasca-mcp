@@ -1,0 +1,44 @@
+{
+  "type": "workflows",
+  "description": "Complete MPoint model recipes, each executed end to end on a live engine. Command pages give vocabulary; these give order, and record the steps that only look optional.",
+  "usage_context": "Follow a workflow top to bottom; every step was run in this sequence.",
+  "items": [
+    {
+      "name": "quickstart-zone-import",
+      "file": "quickstart-zone-import.json",
+      "full_name": "Build via zones, convert to material points (official QuickStart)",
+      "steps": 12
+    },
+    {
+      "name": "zone-free-native",
+      "file": "zone-free-native.json",
+      "full_name": "Build with material points only, no zones",
+      "steps": 11
+    },
+    {
+      "name": "zone-mpoint-coupling",
+      "file": "zone-mpoint-coupling.json",
+      "full_name": "Coupled FLAC3D zones + MPM material points",
+      "steps": 17
+    }
+  ],
+  "demo_mode_limits": {
+    "description": "Measured on an unlicensed MPoint3D 9.7 (the host holds only a PFC3D licence, so MPoint runs in demo mode). Over the limit the engine reports 'Failed to find a valid license(s)!', which reads as a configuration problem rather than a size problem.",
+    "zones": {
+      "limit": 1000,
+      "evidence": "1000 created fine; 1100, 8000 and 18000 each failed. Same ceiling as FLAC3D demo."
+    },
+    "material_points": {
+      "limit": "about 8000",
+      "evidence": "8000 passed four times out of four and ran the full 30000-cycle QuickStart; 8400, 8800, 9600, 10648 and above failed. The ceiling applies at 'mpoint cmodel assign', not at 'mpoint generate' -- 125000 points generate without complaint and only fail when a model is assigned to them.",
+      "not_the_background_grid": "8000 points passed with 9261, 68921 and 9801 background nodes, so the grid size is not what is counted.",
+      "caveat": "Counts obtained by deleting points down from a larger generation behaved erratically (8100 alive passed while 8001 alive failed), so do not rely on 'mpoint delete' to bring a model back under the ceiling. Generate the size you want."
+    },
+    "note": "Coupled zone + MPM analysis fits comfortably inside both limits: the verified coupling example uses 256 zones and 2048 material points."
+  },
+  "notes": [
+    "The 'zone ...' steps in these workflows belong to the FLAC3D zone family, which runs on the MPoint binary but is documented under software='flac'.",
+    "'model large-strain on' is required before any MPM cycling; without an explicit strain mode the engine refuses to cycle.",
+    "Grid-node fixity ('mpoint node fix') is the mechanical boundary condition in MPM; material-point fixity restrains but does not pin."
+  ]
+}

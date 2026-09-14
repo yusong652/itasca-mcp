@@ -1,0 +1,57 @@
+{
+  "dimension": "3D",
+  "name": "quickstart-zone-import",
+  "full_name": "Build via zones, convert to material points (official QuickStart)",
+  "description": "The workflow the official MPoint QuickStart teaches: author the geometry with the FLAC3D 'zone' family, give it a constitutive model and properties, then convert the whole thing to material points. Easiest route for primitive shapes, because 'zone create brick' has no material-point equivalent.",
+  "steps": [
+    {
+      "command": "model new",
+      "note": "also resets any 'model configure' modes"
+    },
+    {
+      "command": "model gravity 9.81",
+      "why": "The scalar form is legal and means (0, 0, -9.81) -- magnitude, direction down."
+    },
+    {
+      "command": "model large-strain on",
+      "why": "Not optional. MPM cycling refuses to start without an explicit strain mode: 'Strain calculation mode is not specified.' Large-strain is the mode MPM is for."
+    },
+    {
+      "command": "model domain extent (-5 5) (-5 5) (0 2.5)"
+    },
+    {
+      "command": "zone create brick point 0 (-1,-1,0) point 1 (1,-1,0) point 2 (-1,1,0) point 3 (-1,-1,2) size 10 10 10",
+      "why": "1000 zones -- exactly the demo-mode ceiling. 1100 fails with a licence error."
+    },
+    {
+      "command": "zone cmodel assign mohr-coulomb"
+    },
+    {
+      "command": "zone property density 1500 young 100e6 poisson 0.25 friction 35 cohesion 500 tension 500",
+      "why": "The console echoes a confirmation line for young/poisson/friction/cohesion/tension but NOT for density, though density is set (zone.density reads back 1500). Do not audit this command by counting confirmation lines."
+    },
+    {
+      "command": "zone initialize-stresses"
+    },
+    {
+      "command": "mpoint node spacing 0.2"
+    },
+    {
+      "command": "mpoint import from-zones",
+      "why": "Converts and then DELETES the zones: 1000 zones -> 8000 material points, 0 zones left. Pass 'keep' to retain them. Stress, properties and constitutive model all carry across."
+    },
+    {
+      "command": "mpoint node fix velocity range position-z 0",
+      "why": "Grid-node fixity, not material-point fixity, is the mechanical boundary condition in MPM. Fixed 2601 mesh points = the whole 51x51 z=0 plane."
+    },
+    {
+      "command": "model cycle 30000"
+    }
+  ],
+  "verified": {
+    "engine": "MPoint3D 9.7",
+    "date": "2026-09-14",
+    "runtime_seconds": 429,
+    "result": "8000 material points, 0 zones. The 2x2x2 m block slumped from z 0..2 to z 0.038..1.381 -- 1.61 m of maximum displacement, which is the large-deformation regime MPM exists for. Maximum velocity fell to 5.4e-06, so the solution had settled."
+  }
+}

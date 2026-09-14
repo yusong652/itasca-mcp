@@ -1,0 +1,68 @@
+{
+  "dimension": "3D",
+  "name": "zone-mpoint-coupling",
+  "full_name": "Coupled FLAC3D zones + MPM material points",
+  "description": "Zones and material points can live in one model and be solved together -- a continuum foundation carrying a large-deformation MPM body, say. The coupling is NOT automatic: 'mpoint hybrid-points' registers the zone gridpoints as hybrid (coupled) points, and without it the two systems cycle side by side and exchange nothing.",
+  "steps": [
+    {
+      "command": "model new"
+    },
+    {
+      "command": "model large-strain on"
+    },
+    {
+      "command": "model domain extent (-1 5) (-1 2) (0 8)"
+    },
+    {
+      "command": "zone create brick size 8 4 8 point 0 (0,0,0) point 1 (4,0,0) point 2 (0,1,0) point 3 (0,0,2)",
+      "why": "The continuum part. Stays as zones."
+    },
+    {
+      "command": "zone cmodel assign elastic"
+    },
+    {
+      "command": "zone property density 2000 young 2e7 poisson 0.25"
+    },
+    {
+      "command": "zone create brick size 8 4 8 point 0 (0,0,2) point 1 (4,0,2) point 2 (0,1,2) point 3 (0,0,4) group 'mpm'",
+      "why": "The part that becomes material points. Group it so the import can select it."
+    },
+    {
+      "command": "zone cmodel assign elastic range group 'mpm'"
+    },
+    {
+      "command": "zone property density 2000 young 2e7 poisson 0.25 range group 'mpm'"
+    },
+    {
+      "command": "mpoint node spacing 0.5"
+    },
+    {
+      "command": "mpoint import from-zones range group 'mpm'",
+      "why": "Ranged import: only the grouped zones are converted, the rest stay zones."
+    },
+    {
+      "command": "mpoint hybrid-points",
+      "why": "THE coupling step. Without it the MPM body's weight does not reach the zones at all -- measured settlement was identical to eight significant figures with the body present and absent. With it, settlement went from -0.000797 to -0.00469."
+    },
+    {
+      "command": "model gravity 0 0 -9.81"
+    },
+    {
+      "command": "zone initialize-stresses"
+    },
+    {
+      "command": "zone gridpoint fix velocity range position-z 0"
+    },
+    {
+      "command": "mpoint node fix velocity range position-z 0"
+    },
+    {
+      "command": "model cycle 400"
+    }
+  ],
+  "verified": {
+    "engine": "MPoint3D 9.7",
+    "date": "2026-09-14",
+    "result": "Three-way comparison of the foundation's top settlement: bare foundation -0.000797; MPM body resting on it but uncoupled -0.000797 (identical); with 'mpoint hybrid-points' -0.00469. Both systems advance in one 'model cycle'."
+  }
+}
