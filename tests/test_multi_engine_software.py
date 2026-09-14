@@ -305,7 +305,9 @@ async def test_mpoint_browse_commands_root() -> None:
     assert "model" in names  # shared kernel family
     assert "ball" not in names  # PFC-only family must not leak
     assert "block" not in names  # 3DEC-only family must not leak
-    assert "zone" not in names  # FLAC-only top-level family
+    # 'zone' IS present for MPoint on purpose: the documented MPM workflow builds
+    # geometry with zone commands and then converts via 'mpoint import from-zones'.
+    assert "zone" in names
     assert data["summary"]["software"] == "mpoint"
 
 
@@ -350,7 +352,24 @@ def test_mpoint_command_families_are_isolated() -> None:
     assert "mpoint" in mpoint  # proprietary family
     assert "model" in mpoint and "fish" in mpoint  # shared kernel borrowed
     # other engines' proprietary families must not leak in
-    assert "ball" not in mpoint and "block" not in mpoint and "zone" not in mpoint
+    assert "ball" not in mpoint and "block" not in mpoint
+
+
+def test_mpoint_borrows_zone_family_filtered() -> None:
+    """MPoint borrows FLAC's zone docs, minus the commands it does not have.
+
+    Live-probed on MPoint3D 9.7: every FLAC zone command in the corpus is
+    accepted except 'create2d' (2D-only) and 'consolidation' (7.0-era).
+    """
+    mpoint = CommandLoader.load_index(software="mpoint")["categories"]
+    zone = mpoint["zone"]["commands"]
+    names = {c["name"] for c in zone}
+    assert {"create", "cmodel", "property", "initialize-stresses"} <= names
+    assert "create2d" not in names
+    assert "consolidation" not in names
+    # borrowed docs stay single-source: they point back into the flac layer
+    borrowed = [c for c in zone if c["file"].startswith("flac/")]
+    assert len(borrowed) >= 60
 
 
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
