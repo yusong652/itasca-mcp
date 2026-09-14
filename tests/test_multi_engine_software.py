@@ -589,6 +589,69 @@ def test_mpoint_constitutive_models_carry_live_evidence() -> None:
     assert [p["keyword"] for p in cat["universal_properties"]] == ["density"]
 
 
+def test_mpoint_plot_items_carry_live_evidence() -> None:
+    cat = ReferenceLoader.load_category_index("plot-items", software="mpoint")
+    assert cat["live_verification"]["grade"] == "state"
+    # Every documented example was executed on the engine. 'scale 1.0' shipped
+    # broken because nobody ran it: the keyword is real and the line is still
+    # rejected, so only execution catches it.
+    documented = {
+        u["command"]
+        for item in cat["items"]
+        for u in (ReferenceLoader.load_item_doc("plot-items", item["name"], software="mpoint") or {}).get(
+            "common_usage_patterns", []
+        )
+    }
+    assert documented and documented <= set(cat["verified_example_commands"])
+    assert not any(" scale 1.0" in c or " scale 2.0" in c for c in documented), (
+        "'scale' takes a mode keyword: write 'scale value <float>'"
+    )
+
+
+def test_mpoint_plot_item_label_differs_per_item_type() -> None:
+    """Identical keyword lists, different grammar — the trap this pass found.
+
+    mpoint-hybrid and meshpoint expose byte-identical 12-keyword top-level
+    lists, so one doc was copied to the other. On the engine, mpoint-hybrid's
+    'label' takes a string and meshpoint's is a bare switch opening a
+    categorical sub-context.
+    """
+    hybrid = ReferenceLoader.load_item_doc("plot-items", "mpoint-hybrid", software="mpoint")
+    mesh = ReferenceLoader.load_item_doc("plot-items", "meshpoint", software="mpoint")
+    assert hybrid is not None and mesh is not None
+    assert hybrid["top_level_keywords"] == mesh["top_level_keywords"]
+
+    def label_syntax(doc: dict) -> str:  # type: ignore[type-arg]
+        return next(k for k in doc["basic_keywords"] if k["keyword"] == "label")["syntax"]
+
+    assert label_syntax(hybrid) == "label <string>"
+    assert label_syntax(mesh) != label_syntax(hybrid)
+    sub = next(s for s in mesh["sub_items"] if s["name"] == "label")
+    assert set(sub["keywords"]) == {"extra", "fixity", "group", "uniform"}
+
+
+def test_mpoint_plot_items_document_argument_types_and_hidden_modifier() -> None:
+    mp = ReferenceLoader.load_item_doc("plot-items", "mpoint", software="mpoint")
+    assert mp is not None
+    types = mp["keyword_argument_types"]
+    assert types["extra"].startswith("integer between 1 and 128")
+    assert types["hide-null"] == "boolean"
+    # keywords whose probe re-enumerates the parent list take no argument at all
+    assert all("bare switch" in types[k] for k in ("fixity", "model", "uniform", "state"))
+    assert [m["keyword"] for m in mp["undocumented_modifiers"]] == ["omitPast"]
+    # the three tensor quantities each open their own sub-context
+    tensor = ReferenceLoader.load_item_doc("plot-items", "mpoint-tensor", software="mpoint")
+    assert tensor is not None
+    assert {s["name"] for s in tensor["sub_items"]} == {"stress", "strain", "strainrate"}
+    assert all(len(s["keywords"]) == 13 for s in tensor["sub_items"])
+    # color-by label takes no argument of its own
+    from itasca_mcp.knowledge.config import RESOURCES_DIR
+
+    cb = json.loads((RESOURCES_DIR / "mpoint/references/plot-items/mpoint/color-by.json").read_text(encoding="utf-8"))
+    label_mode = next(m for m in cb["modes"] if m["mode"] == "label")
+    assert label_mode["syntax"] == "color-by label"
+
+
 def test_reference_indexes_do_not_carry_another_engines_evidence() -> None:
     """Isolation covers measurements, not just file pointers.
 

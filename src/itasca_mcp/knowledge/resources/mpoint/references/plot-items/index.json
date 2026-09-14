@@ -32,17 +32,45 @@
       "file": "meshpoint/index.json",
       "description": "Background-grid mesh points — the fixed computational grid through which material points move.",
       "common_use": "meshpoint"
-    },
-    {
-      "name": "chart-history",
-      "file": "_common/references/plot-items/chart-history.json",
-      "description": "History time-series line chart: bind traces with 'history <name>', plot vs step or cross-plot vs another history",
-      "common_use": "Plot recorded histories over cycling: model scalars and FISH-derived quantities"
     }
+  ],
+  "live_verification": {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": "Keyword sets enumerated with 'plot item create <type> ?' and drilled down with '<kw> ?'. Then all six item types were created together on a cycled 8-point model and the plot exported to a bitmap, so the items are known to render, not merely to parse. The rendered legend reads the values back ('Scale: 2', 'Scale: 1.5'), which is what confirms the corrected 'scale value <float>' form.",
+    "corrections": [
+      "'scale <float>' was wrong for mpoint-vector and mpoint-tensor: scale takes a mode keyword first ('scale value 2.0'). A bare 'scale 2.0' is rejected.",
+      "'color-by label <string>' was wrong: the label mode takes no argument.",
+      "meshpoint's 'label' was documented as 'label <string>' copied from mpoint-hybrid. It is actually a bare switch opening a categorical sub-context."
+    ],
+    "additions": [
+      "mpoint-tensor's three quantities each expose a 13-keyword sub-context that was undocumented.",
+      "'state omitPast <bool>' -- an undocumented camelCase modifier.",
+      "Argument types and bounds for the top-level keywords (extra 1..128, skip <=1000, maxnumber 10..1e9, interval float|automatic, and which keywords are bare switches)."
+    ],
+    "traps": [
+      "A keyword probe that answers with the item's own top-level list again means the keyword is a BARE SWITCH that consumed nothing -- not that it was rejected. 'fixity', 'model', 'uniform' and 'color-by label' all look 'invalid' this way.",
+      "Identical top-level keyword lists do not imply identical grammar. mpoint-hybrid and meshpoint have byte-identical 12-keyword lists, but their 'label' keywords differ in arity. The previous docs shared one description between them and were wrong for one.",
+      "Item types enumerate across ALL engines on the unified binary (ball, block, structure-*, zone-*, cfd*, fracture ...). Only the mpoint/meshpoint family belongs to this engine; the rest are documented under their owning engine."
+    ]
+  },
+  "verified_example_commands": [
+    "plot item create meshpoint active on",
+    "plot item create mpoint color-by contour value stress-zz legend active on",
+    "plot item create mpoint color-by contour value displacement legend active on",
+    "plot item create mpoint state legend active on",
+    "plot item create mpoint model legend active on",
+    "plot item create mpoint-hybrid active on",
+    "plot item create mpoint-tensor stress legend active on",
+    "plot item create mpoint-tensor stress scale value 1.5",
+    "plot item create mpoint-vector value velocity draw-as arrow scale value 1.0",
+    "plot item create mpoint-vector value displacement by-magnitude on",
+    "plot item create meshnode-vector value velocity draw-as arrow"
   ],
   "notes": [
     "Plot-item keywords are appended after the item type.",
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MPoint 3D 9.",
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9.",
     "MPoint also accepts the shared/other-engine plot items (zone, structure-*, fracture, geometry, chart-*, ...); this documents the MPoint-specific material-point and background-grid entities."
   ]
 }

@@ -12,6 +12,16 @@ Every keyword list was probed live against MPoint 3D 9 via the bridge with
 value / draw-as), then baked in here as constants so generation needs no live
 binary.
 
+Evidence grade: ``state``. The keyword *names* were already right -- all five
+top-level sets matched the engine exactly. What only execution caught was
+grammar: ``scale <float>`` and ``color-by label <string>`` are both rejected by
+the engine, and ``meshpoint``'s ``label`` is a bare switch where
+``mpoint-hybrid``'s takes a string, despite the two items having byte-identical
+top-level keyword lists. All six item types were then created together on a
+cycled model and the plot exported, so they are known to render; the legend
+reads the set values back. ``VERIFIED_EXAMPLE_COMMANDS`` is the set actually
+executed, and generation fails if a documented example is not in it.
+
 This is the first MPoint reference category, so it also creates
 ``mpoint/references/index.json``.
 
@@ -74,25 +84,60 @@ MPOINT_COLORBY = ["contour", "label"]
 # `mpoint color-by contour <...>`: the contoured quantity is given via
 # `value <name>` or `property <name>` (a string), with these display modifiers.
 MPOINT_CONTOUR_MODIFIERS = [
-    "value",
-    "property",
+    "above",
+    "active",
+    "below",
+    "clip",
+    "color-by",
     "component",
     "compression-positive",
-    "above",
-    "below",
+    "cut",
+    "hide-null",
     "interval",
+    "legend",
     "log",
+    "map",
     "maximum",
     "minimum",
+    "pixel-size",
+    "property",
+    "quality",
     "ramp",
-    "reversed",
-    "hide-null",
-    "legend",
-    "map",
     "range",
+    "reversed",
+    "transparency",
+    "value",
 ]
 # Categorical colouring keywords accepted directly on the mpoint item.
 MPOINT_CATEGORICAL = ["state", "model", "fixity", "group", "label", "uniform", "extra"]
+
+# Argument types, read off `plot item create mpoint <kw> ?`. A keyword whose
+# probe answers with the *parent* keyword list again takes no argument at all --
+# that re-enumeration means "I am done, what next", not "I am invalid".
+MPOINT_ARG_TYPES = {
+    "extra": "integer between 1 and 128",
+    "group": "string",
+    "hide-null": "boolean",
+    "interval": "float >= 1.4e-45, or the keyword 'automatic'",
+    "label": "string",
+    "fixity": "none (bare switch)",
+    "model": "none (bare switch)",
+    "state": "none (bare switch; takes an optional 'omitPast <bool>')",
+    "uniform": "none (bare switch)",
+}
+
+# `mpoint state` is the one categorical switch with a modifier of its own, and
+# it is spelled in camelCase -- the only such keyword in this family.
+MPOINT_STATE_MODIFIER = {
+    "keyword": "omitPast",
+    "syntax": "state omitPast <bool>",
+    "description": (
+        "Omit material points whose plastic state is historical (yielded in the past but elastic "
+        "now), leaving only points currently at yield. Undocumented in the official pages; found by "
+        "probing 'plot item create mpoint state ?', whose keyword list is the parent list plus this."
+    ),
+    "verified": "state -- MPoint3D 9.7, accepted as 'state omitPast on'",
+}
 
 MPOINT_VECTOR_TOP = [
     "active",
@@ -117,6 +162,24 @@ VECTOR_VALUES = ["discharge", "displacement", "fob", "velocity", "velocity-appli
 VECTOR_DRAW_AS = ["arrow", "disk", "line"]
 
 MPOINT_TENSOR_TOP = ["strain", "strainrate", "stress"]
+# Each of the three tensor quantities opens the same 13-keyword sub-context
+# (`plot item create mpoint-tensor stress ?`). This level was previously
+# undocumented, so the reference stopped at "stress [...]".
+TENSOR_SUB_KEYWORDS = [
+    "active",
+    "clip",
+    "color-by",
+    "color-list",
+    "cut",
+    "legend",
+    "line",
+    "map",
+    "maxnumber",
+    "range",
+    "scale",
+    "skip",
+    "transparency",
+]
 
 # mpoint-hybrid and meshpoint share this lighter grid-point keyword set.
 GRIDPOINT_TOP = [
@@ -158,32 +221,127 @@ SHARED_KW = {
         "Choose continuous (contour) or categorical (label) colouring. See sub-item 'color-by'.",
         "color-by <contour|label> ...",
     ),
+    # 'label' is NOT uniform across item types, despite mpoint-hybrid and
+    # meshpoint having byte-identical top-level keyword lists. On mpoint and
+    # mpoint-hybrid it takes a string; on meshpoint it is a bare switch opening
+    # a categorical sub-context. Items pick the right one via LABEL_KW.
     "label": _kw("label", "Categorical colour/label by a named attribute.", "label <string>"),
-    "state": _kw("state", "Colour material points by constitutive-model state (elastic/plastic/yielded).", "state ..."),
-    "model": _kw("model", "Colour material points by the assigned constitutive model.", "model ..."),
-    "fixity": _kw("fixity", "Colour material points by velocity/fluid fixity condition.", "fixity ..."),
-    "group": _kw("group", "Colour material points by group (optionally a slot).", "group [slot <slot>]"),
+    "state": _kw(
+        "state",
+        "Colour material points by constitutive-model state (elastic/plastic/yielded). Bare switch; "
+        "accepts an optional 'omitPast <bool>' to drop points that only yielded in the past.",
+        "state [omitPast <bool>]",
+    ),
+    "model": _kw("model", "Colour material points by the assigned constitutive model. Bare switch.", "model"),
+    "fixity": _kw("fixity", "Colour material points by velocity/fluid fixity condition. Bare switch.", "fixity"),
+    "group": _kw("group", "Colour material points by group (optionally a slot).", "group <string> [slot <slot>]"),
     "value": _kw(
         "value", "Vector quantity to draw (discharge/displacement/fob/velocity/velocity-applied).", "value <quantity>"
     ),
     "draw-as": _kw("draw-as", "Glyph used to draw each vector.", "draw-as <arrow|disk|line>"),
-    "scale": _kw("scale", "Scale the drawn vectors.", "scale <float>"),
+    # 'scale <float>' is rejected by the engine: scale takes a mode keyword
+    # first. 'scale value 2.0' is the literal form, confirmed by the rendered
+    # legend reading back "Scale: 2".
+    "scale": _kw(
+        "scale",
+        "Scale the drawn glyphs. Takes a mode keyword, not a bare number: 'value <float>' for a "
+        "fixed factor, 'automatic' to let the plot fit them, 'target' to size against a target.",
+        "scale <automatic | target | value <float>>",
+    ),
     "by-magnitude": _kw("by-magnitude", "Colour vectors by their magnitude.", "by-magnitude <bool>"),
-    "skip": _kw("skip", "Draw every Nth vector to thin a dense field.", "skip <int>"),
+    "skip": _kw("skip", "Draw every Nth vector to thin a dense field.", "skip <int <= 1000>"),
+    "maxnumber": _kw(
+        "maxnumber",
+        "Cap how many glyphs are drawn.",
+        "maxnumber <int between 10 and 1000000000>",
+    ),
     "global": _kw("global", "Draw across the whole model (ignore per-plot clipping).", "global <bool>"),
     "quality": _kw("quality", "Rendering quality / point tessellation level.", "quality <int>"),
 }
 
 
-def _basic(keywords: list[str]) -> list[dict[str, str]]:
-    return [SHARED_KW[k] for k in keywords if k in SHARED_KW]
+# Per-item overrides for keywords that share a name but not a grammar.
+# 'meshpoint label' is the one case found: same spelling, same position in a
+# byte-identical top-level list, different arity.
+MESHPOINT_LABEL_KW = _kw(
+    "label",
+    "Bare switch that turns on categorical colouring of grid nodes and opens a sub-context: "
+    "'label extra <1..128>', 'label fixity', 'label group <string>', 'label uniform'. Unlike "
+    "mpoint-hybrid's 'label', it takes no string of its own -- 'label \"name\"' is rejected.",
+    "label [extra <int> | fixity | group <string> | uniform | ...]",
+)
+MESHPOINT_LABEL_SUB = ["extra", "fixity", "group", "uniform"]
+
+ITEM_KW_OVERRIDES: dict[str, dict[str, dict[str, str]]] = {
+    "meshpoint": {"label": MESHPOINT_LABEL_KW},
+}
+
+
+def _basic(keywords: list[str], item: str | None = None) -> list[dict[str, str]]:
+    over = ITEM_KW_OVERRIDES.get(item or "", {})
+    return [over.get(k, SHARED_KW[k]) for k in keywords if k in SHARED_KW]
 
 
 PROBE_NOTE = (
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then "
-    "'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated "
-    "against MPoint 3D 9."
+    "'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: "
+    "'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' "
+    "without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
 )
+
+# Every command in a `common_usage_patterns` entry, executed on the live engine.
+# A documented example that was never run is how 'scale 1.0' shipped broken: the
+# keyword is real, the item is real, and the line is still rejected.
+VERIFIED_EXAMPLE_COMMANDS = [
+    "plot item create meshpoint active on",
+    "plot item create mpoint color-by contour value stress-zz legend active on",
+    "plot item create mpoint color-by contour value displacement legend active on",
+    "plot item create mpoint state legend active on",
+    "plot item create mpoint model legend active on",
+    "plot item create mpoint-hybrid active on",
+    "plot item create mpoint-tensor stress legend active on",
+    "plot item create mpoint-tensor stress scale value 1.5",
+    "plot item create mpoint-vector value velocity draw-as arrow scale value 1.0",
+    "plot item create mpoint-vector value displacement by-magnitude on",
+    "plot item create meshnode-vector value velocity draw-as arrow",
+]
+
+LIVE_VERIFICATION = {
+    "grade": "state",
+    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
+    "date": "2026-09-14",
+    "method": (
+        "Keyword sets enumerated with 'plot item create <type> ?' and drilled down with "
+        "'<kw> ?'. Then all six item types were created together on a cycled 8-point model and "
+        "the plot exported to a bitmap, so the items are known to render, not merely to parse. "
+        "The rendered legend reads the values back ('Scale: 2', 'Scale: 1.5'), which is what "
+        "confirms the corrected 'scale value <float>' form."
+    ),
+    "corrections": [
+        "'scale <float>' was wrong for mpoint-vector and mpoint-tensor: scale takes a mode keyword "
+        "first ('scale value 2.0'). A bare 'scale 2.0' is rejected.",
+        "'color-by label <string>' was wrong: the label mode takes no argument.",
+        "meshpoint's 'label' was documented as 'label <string>' copied from mpoint-hybrid. It is "
+        "actually a bare switch opening a categorical sub-context.",
+    ],
+    "additions": [
+        "mpoint-tensor's three quantities each expose a 13-keyword sub-context that was undocumented.",
+        "'state omitPast <bool>' -- an undocumented camelCase modifier.",
+        "Argument types and bounds for the top-level keywords (extra 1..128, skip <=1000, "
+        "maxnumber 10..1e9, interval float|automatic, and which keywords are bare switches).",
+    ],
+    "traps": [
+        "A keyword probe that answers with the item's own top-level list again means the keyword "
+        "is a BARE SWITCH that consumed nothing -- not that it was rejected. 'fixity', 'model', "
+        "'uniform' and 'color-by label' all look 'invalid' this way.",
+        "Identical top-level keyword lists do not imply identical grammar. mpoint-hybrid and "
+        "meshpoint have byte-identical 12-keyword lists, but their 'label' keywords differ in "
+        "arity. The previous docs shared one description between them and were wrong for one.",
+        "Item types enumerate across ALL engines on the unified binary (ball, block, structure-*, "
+        "zone-*, cfd*, fracture ...). Only the mpoint/meshpoint family belongs to this engine; "
+        "the rest are documented under their owning engine.",
+    ],
+}
 
 ITEMS: list[dict[str, Any]] = [
     {
@@ -263,7 +421,7 @@ ITEMS: list[dict[str, Any]] = [
         "common_usage_patterns": [
             {
                 "use_case": "Velocity arrows",
-                "command": "plot item create mpoint-vector value velocity draw-as arrow scale 1.0",
+                "command": "plot item create mpoint-vector value velocity draw-as arrow scale value 1.0",
                 "description": "Velocity vectors at material points.",
             },
             {
@@ -294,16 +452,33 @@ ITEMS: list[dict[str, Any]] = [
         "base_syntax": "plot item create mpoint-tensor <stress|strain|strainrate> [...]",
         "top_level_keywords": MPOINT_TENSOR_TOP,
         "basic_keywords": [
-            _kw("stress", "Draw the stress tensor glyph at each material point.", "stress [...]"),
-            _kw("strain", "Draw the strain tensor glyph.", "strain [...]"),
-            _kw("strainrate", "Draw the strain-rate tensor glyph.", "strainrate [...]"),
+            _kw("stress", "Draw the stress tensor glyph at each material point.", "stress [<sub-keyword> ...]"),
+            _kw("strain", "Draw the strain tensor glyph.", "strain [<sub-keyword> ...]"),
+            _kw("strainrate", "Draw the strain-rate tensor glyph.", "strainrate [<sub-keyword> ...]"),
         ],
-        "sub_items": [],
+        "sub_items": [
+            {
+                "name": quantity,
+                "syntax": f"plot item create mpoint-tensor {quantity} [<sub-keyword> ...]",
+                "description": (
+                    f"Tensor glyphs for the {quantity} field. All display keywords live at this level, "
+                    "not at the item's top level, which offers only the three quantities."
+                ),
+                "keywords": TENSOR_SUB_KEYWORDS,
+                "verified": "state -- MPoint3D 9.7, identical 13-keyword set for all three quantities",
+            }
+            for quantity in MPOINT_TENSOR_TOP
+        ],
         "common_usage_patterns": [
             {
                 "use_case": "Stress tensor",
                 "command": "plot item create mpoint-tensor stress legend active on",
                 "description": "Principal-stress glyphs at material points.",
+            },
+            {
+                "use_case": "Fixed glyph size",
+                "command": "plot item create mpoint-tensor stress scale value 1.5",
+                "description": "'scale' needs the 'value' keyword; a bare 'scale 1.5' is rejected.",
             },
         ],
     },
@@ -337,8 +512,21 @@ ITEMS: list[dict[str, Any]] = [
         ),
         "base_syntax": "plot item create meshpoint <keywords...>",
         "top_level_keywords": GRIDPOINT_TOP,
-        "basic_keywords": _basic(["active", "label", "global", "range", "legend", "map", "cut", "transparency"]),
-        "sub_items": [],
+        "basic_keywords": _basic(
+            ["active", "label", "global", "range", "legend", "map", "cut", "transparency"], item="meshpoint"
+        ),
+        "sub_items": [
+            {
+                "name": "label",
+                "syntax": "plot item create meshpoint label [<sub-keyword> ...]",
+                "description": (
+                    "Categorical colouring of grid nodes. 'label' itself takes no argument; it opens a "
+                    "sub-context whose keywords are NOT offered at the item's top level."
+                ),
+                "keywords": MESHPOINT_LABEL_SUB,
+                "verified": "state -- MPoint3D 9.7; each sub-keyword accepted after 'label', rejected before it",
+            }
+        ],
         "common_usage_patterns": [
             {
                 "use_case": "Show background grid",
@@ -365,8 +553,15 @@ def _write_colorby(item_dir: Path) -> None:
             },
             {
                 "mode": "label",
-                "syntax": "color-by label <string>",
-                "description": "Categorical colouring by a named attribute (takes a string).",
+                "syntax": "color-by label",
+                "description": (
+                    "Switches the item to categorical colouring. Takes no argument of its own -- "
+                    "'color-by label \"name\"' is rejected. Pick the attribute with one of the "
+                    "categorical keywords that follow it (" + ", ".join(MPOINT_CATEGORICAL) + "). "
+                    "Note the item's own top-level 'label' is different and DOES take a string."
+                ),
+                "modifiers": MPOINT_CATEGORICAL,
+                "verified": "state -- MPoint3D 9.7",
             },
         ],
         "categorical_keywords": MPOINT_CATEGORICAL,
@@ -400,6 +595,12 @@ def main() -> None:
             "common_usage_patterns": item["common_usage_patterns"],
             "notes": [PROBE_NOTE, *item.get("notes_extra", [])],
         }
+        if name == "mpoint":
+            # Argument types matter more than keyword names here: an LLM that
+            # knows 'extra' exists still cannot write the command without
+            # knowing it wants an integer in 1..128.
+            doc["keyword_argument_types"] = MPOINT_ARG_TYPES
+            doc["undocumented_modifiers"] = [MPOINT_STATE_MODIFIER]
         (item_dir / "index.json").write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", "utf-8")
         if item.get("_colorby"):
             _write_colorby(item_dir)
@@ -415,6 +616,16 @@ def main() -> None:
             f"  {name:<16} types={len(item['item_types'])} top_kw={len(item['top_level_keywords'])} subs={len(item.get('sub_items', []))}"
         )
 
+    documented = [u["command"] for it in ITEMS for u in it["common_usage_patterns"]]
+    unverified = sorted(set(documented) - set(VERIFIED_EXAMPLE_COMMANDS))
+    unused = sorted(set(VERIFIED_EXAMPLE_COMMANDS) - set(documented))
+    if unverified or unused:
+        raise SystemExit(
+            "documented examples must match the set executed on the engine:\n"
+            f"  documented but never run : {unverified}\n"
+            f"  run but not documented   : {unused}"
+        )
+
     (CAT_DIR / "index.json").write_text(
         json.dumps(
             {
@@ -426,6 +637,8 @@ def main() -> None:
                 ),
                 "usage_context": "plot item create <type> <keyword> <keyword> ...",
                 "items": catalog,
+                "live_verification": LIVE_VERIFICATION,
+                "verified_example_commands": VERIFIED_EXAMPLE_COMMANDS,
                 "notes": [
                     "Plot-item keywords are appended after the item type.",
                     PROBE_NOTE,
