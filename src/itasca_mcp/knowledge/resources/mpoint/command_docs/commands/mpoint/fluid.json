@@ -4,24 +4,69 @@
     "mpoint",
     "fluid"
   ],
-  "description": "Set parameters for a groundwater fluid flow analysis.",
+  "description": "Primary keywords: list property Set parameters for a groundwater fluid flow analysis. These commands are only available after a model configure fluid-flow command.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint fluid",
-      "syntax": "mpoint fluid keyword ... [range]",
+      "syntax": "mpoint fluid keyword ... range>",
       "keywords": [
         {
-          "name": "property",
-          "syntax": "property [keyword] [range]",
-          "description": "Output current configuration settings and status information for the fluid model. Output the values of the specified fluid property in all zones in the range. Enter no keyword to see a list of all possible fluid properties."
+          "name": "list",
+          "syntax": "list",
+          "description": ""
         },
         {
-          "name": "porosity",
-          "syntax": "porosity <f>",
-          "description": "Assign fluid properties for all zones in the range. Any number of name-value pairs may be assigned. The type of the value given must match the type expected by the property s . Set the biot coefficient (grain compressibility), \\(\\alpha\\) . The default is 1.0. Note that if the biot-coefficient is set to something other than 1.0 then a biot-modulus must be specified and a fluid-modulus cannot be specified. This value is unitless. Sets the Biot modulus. If the biot-coefficient is 1 , this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0 . In SI this value has units \\([Pa]\\) . Specifies the fluid density for this zone. The default value is 0 . In SI this value has units \\([Kg/m^3]\\) . Specify the fluid modulus in a zone. If the biot-coefficient is 1 , this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0 . In SI this value has units \\([Pa]\\) . Mpoint fluid tension limit ( f = -1e15 by default). This is the minimal (most tensile) pore pressure that can occur due to volumetric changes. Entry should be negative. Specifies an isotropic mobility coefficient for the zone. This is defined as the hydraulic conductivity divided by the unit weight of water. Or the intrinsic permeability of the medium (in \\(m^2\\) ) divided by the dynamic viscosity. The mobility coefficient must be non zero for fluid calculations to be performed. The default value is 0 . In SI this value has units \\([m^2/Pa.s]\\) . Specifies the porosity of the zone, \\(n\\) . The default value is 0.5 . This value is unitless."
+          "name": "kwd:information",
+          "syntax": "information",
+          "description": "Output current configuration settings and status information for the fluid model."
+        },
+        {
+          "name": "kwd:property",
+          "syntax": "property keyword> range>",
+          "description": "Output the values of the specified fluid property in all zones in the range. Enter no keyword to see a list of all possible fluid properties."
+        },
+        {
+          "name": "property",
+          "syntax": "property keyword ... range>",
+          "description": "Assign fluid properties for all zones in the range. Any number of name-value pairs may be assigned. The type of the value given must match the type expected by the property s."
+        },
+        {
+          "name": "kwd:biot-coefficient",
+          "syntax": "biot-coefficient f",
+          "description": "Set the biot coefficient (grain compressibility), \\(\\alpha\\). The default is 1.0. Note that if the biot-coefficient is set to something other than 1.0 then a biot-modulus must be specified and a fluid-modulus cannot be specified. This value is unitless."
+        },
+        {
+          "name": "kwd:biot-modulus",
+          "syntax": "biot-modulus f",
+          "description": "Sets the Biot modulus. If the biot-coefficient is 1, this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0. In SI this value has units \\([Pa]\\)."
+        },
+        {
+          "name": "kwd:fluid-density",
+          "syntax": "fluid-density f",
+          "description": "Specifies the fluid density for this zone. The default value is 0. In SI this value has units \\([Kg/m^3]\\)."
+        },
+        {
+          "name": "kwd:fluid-modulus",
+          "syntax": "fluid-modulus f",
+          "description": "Specify the fluid modulus in a zone. If the biot-coefficient is 1, this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0. In SI this value has units \\([Pa]\\)."
+        },
+        {
+          "name": "kwd:fluid-tension",
+          "syntax": "fluid-tension f",
+          "description": "Mpoint fluid tension limit (f = -1e15 by default). This is the minimal (most tensile) pore pressure that can occur due to volumetric changes. Entry should be negative."
+        },
+        {
+          "name": "kwd:mobility-coefficient",
+          "syntax": "mobility-coefficient f",
+          "description": "Specifies an isotropic mobility coefficient for the zone. This is defined as the hydraulic conductivity divided by the unit weight of water. Or the intrinsic permeability of the medium (in \\(m^2\\)) divided by the dynamic viscosity. The mobility coefficient must be non zero for fluid calculations to be performed. The default value is 0. In SI this value has units \\([m^2/Pa.s]\\)."
+        },
+        {
+          "name": "kwd:porosity",
+          "syntax": "porosity f",
+          "description": "Specifies the porosity of the zone, \\(n\\). The default value is 0.5. This value is unitless."
         }
       ],
       "examples": []

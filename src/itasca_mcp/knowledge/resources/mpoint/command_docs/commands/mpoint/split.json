@@ -4,28 +4,33 @@
     "mpoint",
     "split"
   ],
-  "description": "Set mpoint splitting parameters. An mpoint is split when its deformation is larger than the tolerance f . Deformation is defined either in terms of the deformation gradient, or in terms of the accumulated strain. The default behavior is to use the deformation gradient, unless one of the \\(strain\\) keywords is provided. Splitting is triggered if the ratio of the absolute values of the entries of the deformation gradient tensor exceeds the tolerance. By default, f is 0, meaning that splitting is inactive. The number entered must be greater than 1 if the deformation gradient is used. A material point is only split if the position of the two points, after splitting, is inside the model domain.",
+  "description": "Set mpoint splitting parameters. An mpoint is split when its deformation is larger than the tolerance f. Deformation is defined either in terms of the deformation gradient, or in terms of the accumulated strain. The default behavior is to use the deformation gradient, unless one of the \\(strain\\) keywords is provided. Splitting is triggered if the ratio of the absolute values of the entries of the deformation gradient tensor exceeds the tolerance. By default, f is 0, meaning that splitting is inactive. The number entered must be greater than 1 if the deformation gradient is used. A material point is only split if the position of the two points, after splitting, is inside the model domain. Note If a range is given, it must be a named range.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint split",
-      "syntax": "mpoint split [<f>] [keyword] [range]",
+      "syntax": "mpoint split f > keyword> range>",
       "keywords": [
         {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group name s to newly created mpoints. Assign the group to the slot named s . If not supplied, a group name created by the command is assigned to the slot named Default ."
+          "name": "group",
+          "syntax": "group s",
+          "description": "Assign the group name s to newly created mpoints."
+        },
+        {
+          "name": "kwd:slot",
+          "syntax": "slot s",
+          "description": "Assign the group to the slot named s. If not supplied, a group name created by the command is assigned to the slot named Default."
         },
         {
           "name": "limit",
-          "syntax": "limit <i>",
+          "syntax": "limit i",
           "description": "The maximum number of times an mpoint can split (default value is 3)."
         },
         {
           "name": "interval",
-          "syntax": "interval <i>",
+          "syntax": "interval i",
           "description": "Check for splitting every i cycles (default value is 100)."
         },
         {

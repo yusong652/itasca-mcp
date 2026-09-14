@@ -391,6 +391,44 @@ def test_mpoint_local_zone_extras_override_the_borrow() -> None:
         assert doc.get("notes"), f"{name} must carry provenance notes"
 
 
+def test_mpoint_import_documents_from_zones() -> None:
+    """The keyword the official QuickStart uses must be named correctly.
+
+    The MPM pages wrap every character in its own <span> and nest keyword
+    blocks, which shifted keyword names against their descriptions: this
+    keyword was documented as 'velocity'. Names now come from the Sphinx
+    keyword ids, so they cannot drift from the description again.
+    """
+    from itasca_mcp.knowledge.config import RESOURCES_DIR
+
+    doc = json.loads((RESOURCES_DIR / "mpoint/command_docs/commands/mpoint/import.json").read_text(encoding="utf-8"))
+    keywords = {k["name"]: k for k in doc["versions"]["9.0"]["keywords"]}
+    assert "from-zones" in keywords
+    assert "zones" in keywords["from-zones"]["description"].lower()
+    assert "from-balls" in keywords
+
+
+def test_mpoint_command_keywords_match_the_installed_index() -> None:
+    """Top-level keyword names agree with the engine's own command index.
+
+    'mpoint property' is the one exception: its page is a narrative catalogue
+    of constitutive models rather than a keyword table, so it carries notes
+    pointing at the references layer instead.
+    """
+    from itasca_mcp.knowledge.config import RESOURCES_DIR
+
+    root = RESOURCES_DIR / "mpoint/command_docs/commands/mpoint"
+    property_doc = json.loads((root / "property.json").read_text(encoding="utf-8"))
+    assert property_doc["versions"]["9.0"]["keywords"] == []
+    assert any("constitutive-models" in n for n in property_doc["notes"])
+
+    # every undocumented, live-discovered command says so rather than inventing behaviour
+    for stem in ("anisotropy", "plot-scale", "sort", "node-list"):
+        doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
+        assert doc["versions"]["9.0"]["keywords"] == []
+        assert any("Semantics are NOT established" in n for n in doc["notes"])
+
+
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
     mpoint = CommandLoader.load_index(software="mpoint")["categories"]
     # every borrowed kernel command points back into _common/ (single source)

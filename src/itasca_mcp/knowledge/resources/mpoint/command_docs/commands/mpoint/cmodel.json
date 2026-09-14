@@ -4,7 +4,7 @@
     "mpoint",
     "cmodel"
   ],
-  "description": "Assign, load, or get information on an mpoint constitutive model. This command associates a constitutive model with specified mpoint. It also allows querying of properties and states of constitutive models, and dynamic loading of user-defined mechanical models as DLLs.",
+  "description": "Primary keywords: assign list load Assign, load, or get information on an mpoint constitutive model. This command associates a constitutive model with specified mpoint. It also allows querying of properties and states of constitutive models, and dynamic loading of user-defined mechanical models as DLLs.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -14,9 +14,199 @@
       "syntax": "mpoint cmodel keyword",
       "keywords": [
         {
-          "name": "hydration-drucker-prager",
+          "name": "assign",
+          "syntax": "assign keyword range>",
+          "description": "Assign a mechanical material model to all mpoints in the range. The mechanical constitutive models are described in Constitutive Models, and the creep models are in Creep Constitutive Models. Null Mechanical Models"
+        },
+        {
+          "name": "kwd:null",
+          "syntax": "null",
+          "description": "Assign the null model. For most purposes, null models are ignored by default (see the Null model description)."
+        },
+        {
+          "name": "kwd:anisotropic",
+          "syntax": "anisotropic",
+          "description": "Assign the transversely-anisotropic elastic model (see the Anisotropic model description)."
+        },
+        {
+          "name": "kwd:elastic",
+          "syntax": "elastic",
+          "description": "Assign the isotropic elastic model (see the Elastic Model description)."
+        },
+        {
+          "name": "kwd:orthotropic",
+          "syntax": "orthotropic",
+          "description": "Assign the orthotropic elastic model (see the Orthotropic model description)."
+        },
+        {
+          "name": "kwd:columnar-basalt",
+          "syntax": "columnar-basalt",
+          "description": "Assign the columnar-basalt elasto-plasticity model, known also as COMBA model (see the Columnar-Basalt model description)."
+        },
+        {
+          "name": "kwd:concrete",
+          "syntax": "concrete",
+          "description": "Assign the concrete elasto-plasticity model (see the Concrete model description)."
+        },
+        {
+          "name": "kwd:cap-yield",
+          "syntax": "cap-yield",
+          "description": "Assign the cap-yield elasto-plasticity model, known also as CYSoil model (see the CYSoil model description)."
+        },
+        {
+          "name": "kwd:cap-yield-simplified",
+          "syntax": "cap-yield-simplified",
+          "description": "Assign the simplified cap yield elasto-plasticity model, known also as CHSoil model (see the CHSoil model description)."
+        },
+        {
+          "name": "kwd:double-yield",
+          "syntax": "double-yield",
+          "description": "Assign the double-yield (cap) elasto-plasticity model (see the Double-Yield model description)."
+        },
+        {
+          "name": "kwd:drucker-prager",
+          "syntax": "drucker-prager",
+          "description": "Assign the Drucker-Prager elasto-plasticity model (see the Drucker-Prager model description)."
+        },
+        {
+          "name": "kwd:hoek-brown",
+          "syntax": "hoek-brown",
+          "description": "Assign the Hoek-Brown elasto-plasticity model (see the Hoek-Brown model description)."
+        },
+        {
+          "name": "kwd:hoek-brown-pac",
+          "syntax": "hoek-brown-pac",
+          "description": "Assign the Hoek-Brown-PAC elasto-plasticity model (see the Hoek-Brow-PAC model description)."
+        },
+        {
+          "name": "kwd:modified-cam-clay",
+          "syntax": "modified-cam-clay",
+          "description": "Assign the modified Cam-Clay elasto-plasticity model (see the modified Cam-Clay model description)."
+        },
+        {
+          "name": "kwd:mohr-coulomb",
+          "syntax": "mohr-coulomb",
+          "description": "Assign the Mohr-Coulomb elasto-plasticity model (see the Mohr-Coulomb model description)."
+        },
+        {
+          "name": "kwd:mohr-coulomb-tension",
+          "syntax": "mohr-coulomb-tension",
+          "description": "Assign the Mohr-Coulomb elasto-plasticity model with tensile strain crack tracking, known also as the MohrT model (see the Mohr-Coulomb-Tension model description)."
+        },
+        {
+          "name": "kwd:norsand",
+          "syntax": "norsand",
+          "description": "Assign the norsand model — a critical state model applicable to soils in which particle to particle interactions are controlled by contact forces and slips rather than bonds (see the NorSand model description)."
+        },
+        {
+          "name": "kwd:plastic-hardening",
+          "syntax": "plastic-hardening",
+          "description": "Assign the elasto-plasticity model with shear and volumetric hardening, known also as PH model (see the Plastic-Hardening model description)."
+        },
+        {
+          "name": "kwd:soft-soil",
+          "syntax": "soft-soil",
+          "description": "Assign the soft-soil model for soil with significant compression (see the Soft-Soil model description)."
+        },
+        {
+          "name": "kwd:softening-ubiquitous",
+          "syntax": "softening-ubiquitous",
+          "description": "Assign the strain-softening/hardening elasto-plasticity model with bilinear failure and ubiquitous joints, known also as the SUBI model (see the Softening-Ubiquitous model description)."
+        },
+        {
+          "name": "kwd:strain-softening",
+          "syntax": "strain-softening",
+          "description": "Assign the strain-softening/hardening elasto-plasticity model (see the Strain-Softening model description)."
+        },
+        {
+          "name": "kwd:swell",
+          "syntax": "swell",
+          "description": "Assign the Mohr-Coulomb elasto-plasticity model considering wetting-induced deformation (see the Swell model description)."
+        },
+        {
+          "name": "kwd:ubiquitous-joint",
+          "syntax": "ubiquitous-joint",
+          "description": "Assign the Mohr-Coulomb elasto-plasticity model with a plane of weakness, known also as UBI model (see the Ubiquitous-Joint model description)."
+        },
+        {
+          "name": "kwd:ubiquitous-anisotropic",
+          "syntax": "ubiquitous-anisotropic",
+          "description": "Assign the model with a plane of weakness and with anisotropic elasticity (see the Ubiquitous-Anisotropic model description)."
+        },
+        {
+          "name": "kwd:von-mises",
+          "syntax": "von-mises",
+          "description": "Assign the Von-Mises elasto-plasticity model commonly for metal-like materials(see the Von-Mises model description)."
+        },
+        {
+          "name": "kwd:finn",
+          "syntax": "finn",
+          "description": "Assign the dynamic pore-pressure generation elasto-plasticity model (only available for the dynamic option; see the Finn model description)."
+        },
+        {
+          "name": "kwd:p2psand",
+          "syntax": "p2psand",
+          "description": "Assign the p2psand model refers to a Practical TWO-surface Plastic SAND constitutive model for general 3D geotechnical earthquake engineering application (see the P2PSand model description)."
+        },
+        {
+          "name": "kwd:imass",
+          "syntax": "imass",
+          "description": "Assign the IMASS model (only available for the imass option; see the IMASS model description)."
+        },
+        {
+          "name": "kwd:burgers",
+          "syntax": "burgers",
+          "description": "Assign the classical viscoelastic model known as the Burgers substance which composed of a Kelvin model and a Maxwell model (only available for the creep option; see the Burgers model description)."
+        },
+        {
+          "name": "kwd:burgers-mohr",
+          "syntax": "burgers-mohr",
+          "description": "Assign the viscoplastic model combining the Burgers model and the Mohr-Coulomb model (only available for the creep option; see the Burgers-Mohr model description)."
+        },
+        {
+          "name": "kwd:maxwell",
+          "syntax": "maxwell",
+          "description": "Assign the classical viscoelastic model known as the Maxwell substance, known also as Maxwell model (only available for the creep option; see the Maxwell model description)."
+        },
+        {
+          "name": "kwd:power",
+          "syntax": "power",
+          "description": "Assign the two-component power law model used for mining applications (only available for the creep option; see the Power model description)."
+        },
+        {
+          "name": "kwd:power-mohr",
+          "syntax": "power-mohr",
+          "description": "Assign the viscoplastic model combining the two-component Power model and the Mohr-Coulomb model (only available for the creep option; see the Power-Mohr model description)."
+        },
+        {
+          "name": "kwd:power-ubiquitous",
+          "syntax": "power-ubiquitous",
+          "description": "Assign the viscoplastic model combining the two-component Power model and the Ubiquitous-Joint model (only available for the creep option; see the Power-Ubiqitous mdoel description)."
+        },
+        {
+          "name": "kwd:soft-soil-creep",
+          "syntax": "soft-soil-creep",
+          "description": "Assign the soft-soil-creep model for soil with time-dependent behavior such as the creep that develops during the secondary compression (see the Soft-Soil-Creep model description)."
+        },
+        {
+          "name": "kwd:wipp",
+          "syntax": "wipp",
+          "description": "Assign a reference creep model commonly used in thermomechanical analyses associated with studies for the underground isolation of nuclear waste in salt (only available for the creep option; see the WIPP model description)."
+        },
+        {
+          "name": "kwd:wipp-drucker",
+          "syntax": "wipp-drucker",
+          "description": "Assign the viscoplastic model combining the WIPP model and the Drucker-Prager model (only available for the creep option, see the WIPP-Drucker model description)."
+        },
+        {
+          "name": "kwd:wipp-salt",
+          "syntax": "wipp-salt",
+          "description": "Assign the viscoplastic model modified from the WIPP model, and includes volumetric and deviatoric compaction behavior for salt-like materials (only available for the creep option; see the WIPP-Salt model description)."
+        },
+        {
+          "name": "kwd:hydration-drucker-prager",
           "syntax": "hydration-drucker-prager",
-          "description": "Assign a mechanical material model to all mpoints in the range. The mechanical constitutive models are described in Constitutive Models , and the creep models are in Creep Constitutive Models . Null Mechanical Models Assign the null model. For most purposes, null models are ignored by default (see the Null model description). Elastic Mechanical Models Assign the transversely-anisotropic elastic model (see the Anisotropic model description). Assign the isotropic elastic model (see the Elastic Model description). Assign the orthotropic elastic model (see the Orthotropic model description). Elastic-Plastic Mechanical Models Assign the columnar-basalt elasto-plasticity model, known also as COMBA model (see the Columnar-Basalt model description). Assign the concrete elasto-plasticity model (see the Concrete model description). Assign the cap-yield elasto-plasticity model, known also as CYSoil model (see the CYSoil model description). Assign the simplified cap yield elasto-plasticity model, known also as CHSoil model (see the CHSoil model description). Assign the double-yield (cap) elasto-plasticity model (see the Double-Yield model description). Assign the Drucker-Prager elasto-plasticity model (see the Drucker-Prager model description). Assign the Hoek-Brown elasto-plasticity model (see the Hoek-Brown model description). Assign the Hoek-Brown-PAC elasto-plasticity model (see the Hoek-Brow-PAC model description). Assign the modified Cam-Clay elasto-plasticity model (see the modified Cam-Clay model description). Assign the Mohr-Coulomb elasto-plasticity model (see the Mohr-Coulomb model description). Assign the Mohr-Coulomb elasto-plasticity model with tensile strain crack tracking, known also as the MohrT model (see the Mohr-Coulomb-Tension model description). Assign the norsand model — a critical state model applicable to soils in which particle to particle interactions are controlled by contact forces and slips rather than bonds (see the NorSand model description). Assign the elasto-plasticity model with shear and volumetric hardening, known also as PH model (see the Plastic-Hardening model description). Assign the soft-soil model for soil with significant compression (see the Soft-Soil model description). Assign the strain-softening/hardening elasto-plasticity model with bilinear failure and ubiquitous joints, known also as the SUBI model (see the Softening-Ubiquitous model description). Assign the strain-softening/hardening elasto-plasticity model (see the Strain-Softening model description). Assign the Mohr-Coulomb elasto-plasticity model considering wetting-induced deformation (see the Swell model description). Assign the Mohr-Coulomb elasto-plasticity model with a plane of weakness, known also as UBI model (see the Ubiquitous-Joint model description). Assign the model with a plane of weakness and with anisotropic elasticity (see the Ubiquitous-Anisotropic model description). Assign the Von-Mises elasto-plasticity model commonly for metal-like materials(see the Von-Mises model description). Dynamic Option Model Assign the dynamic pore-pressure generation elasto-plasticity model (only available for the dynamic option; see the Finn model description). Assign the p2psand model refers to a Practical TWO-surface Plastic SAND constitutive model for general 3D geotechnical earthquake engineering application (see the P2PSand model description). IMASS Option Model Assign the IMASS model (only available for the imass option; see the IMASS model description). Creep Option Model Assign the classical viscoelastic model known as the Burgers substance which composed of a Kelvin model and a Maxwell model (only available for the creep option; see the Burgers model description). Assign the viscoplastic model combining the Burgers model and the Mohr-Coulomb model (only available for the creep option; see the Burgers-Mohr model description). Assign the columnar-basalt elasto-plasticity model, known also as COMBA model (see the Columnar-Basalt model description). Assign the classical viscoelastic model known as the Maxwell substance, known also as Maxwell model (only available for the creep option; see the Maxwell model description). Assign the two-component power law model used for mining applications (only available for the creep option; see the Power model description). Assign the viscoplastic model combining the two-component Power model and the Mohr-Coulomb model (only available for the creep option; see the Power-Mohr model description). Assign the viscoplastic model combining the two-component Power model and the Ubiquitous-Joint model (only available for the creep option; see the Power-Ubiqitous mdoel description). Assign the soft-soil-creep model for soil with time-dependent behavior such as the creep that develops during the secondary compression (see the Soft-Soil-Creep model description). Assign a reference creep model commonly used in thermomechanical analyses associated with studies for the underground isolation of nuclear waste in salt (only available for the creep option; see the WIPP model description). Assign the viscoplastic model combining the WIPP model and the Drucker-Prager model (only available for the creep option, see the WIPP-Drucker model description). Assign the viscoplastic model modified from the WIPP model, and includes volumetric and deviatoric compaction behavior for salt-like materials (only available for the creep option; see the WIPP-Salt model description). Thermal Option Model Assign the modified Drucker-Prager for hydration (only available for the thermal option; see see the Hydration-Drucker-Prager model description)."
+          "description": "Assign the modified Drucker-Prager for hydration (only available for the thermal option; see see the Hydration-Drucker-Prager model description)."
         },
         {
           "name": "list",
@@ -25,7 +215,7 @@
         },
         {
           "name": "load",
-          "syntax": "load [<s>]",
+          "syntax": "load s >",
           "description": "Not yet implemented"
         }
       ],
