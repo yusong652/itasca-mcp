@@ -59,23 +59,23 @@
     },
     {
       "keyword": "state",
-      "description": "Colour material points by constitutive-model state (elastic/plastic/yielded).",
-      "syntax": "state ..."
+      "description": "Colour material points by constitutive-model state (elastic/plastic/yielded). Bare switch; accepts an optional 'omitPast <bool>' to drop points that only yielded in the past.",
+      "syntax": "state [omitPast <bool>]"
     },
     {
       "keyword": "model",
-      "description": "Colour material points by the assigned constitutive model.",
-      "syntax": "model ..."
+      "description": "Colour material points by the assigned constitutive model. Bare switch.",
+      "syntax": "model"
     },
     {
       "keyword": "fixity",
-      "description": "Colour material points by velocity/fluid fixity condition.",
-      "syntax": "fixity ..."
+      "description": "Colour material points by velocity/fluid fixity condition. Bare switch.",
+      "syntax": "fixity"
     },
     {
       "keyword": "group",
       "description": "Colour material points by group (optionally a slot).",
-      "syntax": "group [slot <slot>]"
+      "syntax": "group <string> [slot <slot>]"
     },
     {
       "keyword": "label",
@@ -138,6 +138,25 @@
     }
   ],
   "notes": [
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MPoint 3D 9."
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
+  ],
+  "keyword_argument_types": {
+    "extra": "integer between 1 and 128",
+    "group": "string",
+    "hide-null": "boolean",
+    "interval": "float >= 1.4e-45, or the keyword 'automatic'",
+    "label": "string",
+    "fixity": "none (bare switch)",
+    "model": "none (bare switch)",
+    "state": "none (bare switch; takes an optional 'omitPast <bool>')",
+    "uniform": "none (bare switch)"
+  },
+  "undocumented_modifiers": [
+    {
+      "keyword": "omitPast",
+      "syntax": "state omitPast <bool>",
+      "description": "Omit material points whose plastic state is historical (yielded in the past but elastic now), leaving only points currently at yield. Undocumented in the official pages; found by probing 'plot item create mpoint state ?', whose keyword list is the parent list plus this.",
+      "verified": "state -- MPoint3D 9.7, accepted as 'state omitPast on'"
+    }
   ]
 }

@@ -24,28 +24,97 @@
     {
       "keyword": "stress",
       "description": "Draw the stress tensor glyph at each material point.",
-      "syntax": "stress [...]"
+      "syntax": "stress [<sub-keyword> ...]"
     },
     {
       "keyword": "strain",
       "description": "Draw the strain tensor glyph.",
-      "syntax": "strain [...]"
+      "syntax": "strain [<sub-keyword> ...]"
     },
     {
       "keyword": "strainrate",
       "description": "Draw the strain-rate tensor glyph.",
-      "syntax": "strainrate [...]"
+      "syntax": "strainrate [<sub-keyword> ...]"
     }
   ],
-  "sub_items": [],
+  "sub_items": [
+    {
+      "name": "strain",
+      "syntax": "plot item create mpoint-tensor strain [<sub-keyword> ...]",
+      "description": "Tensor glyphs for the strain field. All display keywords live at this level, not at the item's top level, which offers only the three quantities.",
+      "keywords": [
+        "active",
+        "clip",
+        "color-by",
+        "color-list",
+        "cut",
+        "legend",
+        "line",
+        "map",
+        "maxnumber",
+        "range",
+        "scale",
+        "skip",
+        "transparency"
+      ],
+      "verified": "state -- MPoint3D 9.7, identical 13-keyword set for all three quantities"
+    },
+    {
+      "name": "strainrate",
+      "syntax": "plot item create mpoint-tensor strainrate [<sub-keyword> ...]",
+      "description": "Tensor glyphs for the strainrate field. All display keywords live at this level, not at the item's top level, which offers only the three quantities.",
+      "keywords": [
+        "active",
+        "clip",
+        "color-by",
+        "color-list",
+        "cut",
+        "legend",
+        "line",
+        "map",
+        "maxnumber",
+        "range",
+        "scale",
+        "skip",
+        "transparency"
+      ],
+      "verified": "state -- MPoint3D 9.7, identical 13-keyword set for all three quantities"
+    },
+    {
+      "name": "stress",
+      "syntax": "plot item create mpoint-tensor stress [<sub-keyword> ...]",
+      "description": "Tensor glyphs for the stress field. All display keywords live at this level, not at the item's top level, which offers only the three quantities.",
+      "keywords": [
+        "active",
+        "clip",
+        "color-by",
+        "color-list",
+        "cut",
+        "legend",
+        "line",
+        "map",
+        "maxnumber",
+        "range",
+        "scale",
+        "skip",
+        "transparency"
+      ],
+      "verified": "state -- MPoint3D 9.7, identical 13-keyword set for all three quantities"
+    }
+  ],
   "common_usage_patterns": [
     {
       "use_case": "Stress tensor",
       "command": "plot item create mpoint-tensor stress legend active on",
       "description": "Principal-stress glyphs at material points."
+    },
+    {
+      "use_case": "Fixed glyph size",
+      "command": "plot item create mpoint-tensor stress scale value 1.5",
+      "description": "'scale' needs the 'value' keyword; a bare 'scale 1.5' is rejected."
     }
   ],
   "notes": [
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MPoint 3D 9."
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
   ]
 }

@@ -9,28 +9,45 @@
       "syntax": "color-by contour value <quantity> | color-by contour property <name>",
       "description": "Continuous field colouring. The quantity is given by 'value <name>' (built-in field) or 'property <name>' (named property), not a fixed keyword enum.",
       "modifiers": [
-        "value",
-        "property",
+        "above",
+        "active",
+        "below",
+        "clip",
+        "color-by",
         "component",
         "compression-positive",
-        "above",
-        "below",
+        "cut",
+        "hide-null",
         "interval",
+        "legend",
         "log",
+        "map",
         "maximum",
         "minimum",
+        "pixel-size",
+        "property",
+        "quality",
         "ramp",
+        "range",
         "reversed",
-        "hide-null",
-        "legend",
-        "map",
-        "range"
+        "transparency",
+        "value"
       ]
     },
     {
       "mode": "label",
-      "syntax": "color-by label <string>",
-      "description": "Categorical colouring by a named attribute (takes a string)."
+      "syntax": "color-by label",
+      "description": "Switches the item to categorical colouring. Takes no argument of its own -- 'color-by label \"name\"' is rejected. Pick the attribute with one of the categorical keywords that follow it (state, model, fixity, group, label, uniform, extra). Note the item's own top-level 'label' is different and DOES take a string.",
+      "modifiers": [
+        "state",
+        "model",
+        "fixity",
+        "group",
+        "label",
+        "uniform",
+        "extra"
+      ],
+      "verified": "state -- MPoint3D 9.7"
     }
   ],
   "categorical_keywords": [
@@ -45,6 +62,6 @@
   "notes": [
     "For built-in vector quantities (velocity, displacement) prefer the 'mpoint-vector' item.",
     "'state' / 'model' / 'fixity' / 'group' are accepted directly on the mpoint item for categorical colouring.",
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MPoint 3D 9."
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
   ]
 }
