@@ -4,19 +4,24 @@
     "mpoint",
     "volume-limit"
   ],
-  "description": "If the volume of an mpoint is greater than f times the original mpoint volume, then the mpoint stress and strain are set to 0, the deformation gradient is set back to the identity and the velocity gradient is set to 0, pore pressure is set to 0, and the volume/density are reset to their initial values. By default no volume limit is enforced.",
+  "description": "If the volume of an mpoint is greater than f times the original mpoint volume, then the mpoint stress and strain are set to 0, the deformation gradient is set back to the identity and the velocity gradient is set to 0, pore pressure is set to 0, and the volume/density are reset to their initial values. By default no volume limit is enforced. This command is useful to stop the unrealistic deformation of material points that separate from the bulk material after tensile failure, or runout. Such isolated material points may otherwise accumulate unrestricted deformation, which can cause numerical issues and slowdown of simulations. Geomaterials typically undergo small volume changes and a sensible value might be f = 4.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint volume-limit",
-      "syntax": "mpoint volume-limit [<f>] [keyword]",
+      "syntax": "mpoint volume-limit f > keyword>",
       "keywords": [
         {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Add group name s to the mpoints to which volume limiting has been applied. Assign the group to the slot named s . If not supplied, a group name created by the command is assigned to the named Default ."
+          "name": "group",
+          "syntax": "group s keyword>",
+          "description": "Add group name s to the mpoints to which volume limiting has been applied."
+        },
+        {
+          "name": "kwd:slot",
+          "syntax": "slot s",
+          "description": "Assign the group to the slot named s. If not supplied, a group name created by the command is assigned to the named Default."
         }
       ],
       "examples": []

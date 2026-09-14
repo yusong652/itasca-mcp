@@ -4,24 +4,84 @@
     "mpoint",
     "import"
   ],
-  "description": "Import mpoints from zones or balls.",
+  "description": "Primary keywords: from-balls from-zones Import mpoints from zones or balls. Note A model domain must be specified prior to importing mpoints.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint import",
-      "syntax": "mpoint import keyword [range]",
+      "syntax": "mpoint import keyword range>",
       "keywords": [
         {
           "name": "from-balls",
-          "syntax": "from-balls [delete]",
+          "syntax": "from-balls delete>",
           "description": "Create a single mpoint for each ball. The mpoint position, volume, ID and group(s) are set equal to that of the ball. The optional delete keyword, deletes the balls after the import."
         },
         {
-          "name": "velocity",
+          "name": "from-zones",
+          "syntax": "from-zones keyword ...>",
+          "description": "Import mpoints from zones. By default an mpoint is created for each of the zone gridpoints, i.e., {4 in 2D; 8 in 3D} for {quadrilateral in 2D; hexahedral in 3D} zones, and {3 in 2D; 4 and 5 in 3D} for {triangular in 2D; tetrahedral and pyramid in 3D} zones. The mpoint volume is always set equal to the zone volume divided by the number of mpoints created per zone. By default, the mpoint density and constitutive model (including all of its property values) are set equal to that of the zone. All of the zone groups are also assigned to the mpoint. If the zone fluid model is not null, the zone porosity, permeability and fluid density are assigned to the mpoints. If the mpoint biot mode is on, the zone biot coefficient and the zone/gridpoint biot modulus are also assigned to the mpoints, and if the mpoint biot mode is off, the zone/gridpoint fluid modulus is assigned to the mpoints instead. Furthermore, the zone/gridpoint fluid-tension and flow are assigned to the mpoints. The zone/gridpoint pore-pressure is assigned to the mpoints even if the zone fluid model is null. Other behavior is possible using the keywords below, and as summarized in Figure 1. Note The zone fluid biot mode (see zone fluid) must be the same as the mpoint fluid biot mode (see mpoint fluid biot) for mpoints to be imported from zones, unless the import of fluid properties is skipped or the zones not configured for fluid (see model configure). Only the isotropic fluid constitutive model is supported, and not the anisotropic model, i.e., mpoints assume by default the isotropic model. The mpoint total stress, and not the effective stress state, is inherited from the zone. If the mpoint pore pressure is inherited, it does not affect the mpoint stress state."
+        },
+        {
+          "name": "kwd:interpolate",
+          "syntax": "interpolate",
+          "description": "Linearly interpolate the mpoint velocity, displacement and stress from gridpoints. The pore-pressure, the biot modulus or fluid modulus (depending on the biot mode settings), the fluid-tension, and the fluid flow are also interpolated from gridpoints. This behavior depends on the number of mpoints created, as specified by the number keyword, and the zone type. If the interpolate keyword is omitted, the default behavior is shown in Figure 1. All of the properties/attributes not listed in Figure 1 are set to the zone (constant) value and not interpolated from the gridpoints. For the definition of the zone stress, see zone.stress."
+        },
+        {
+          "name": "kwd:keep",
+          "syntax": "keep",
+          "description": "Keep the zones after the import. By default zones are deleted."
+        },
+        {
+          "name": "kwd:number",
+          "syntax": "number i",
+          "description": "Control the number of mpoints created per zone. The behavior depends on the zone type {quadrilateral in 2D; hexahedral in 3D} or {triangular in 2D; tetrahedral in 3D} - see Figure 1 for details. The default value is 2 (one mpoint per gridpoint for all zone types)."
+        },
+        {
+          "name": "kwd:skip",
+          "syntax": "skip keyword ...",
+          "description": "Skip importing the specified information from zones."
+        },
+        {
+          "name": "kwd:all",
+          "syntax": "all",
+          "description": "Do not import any information from zones."
+        },
+        {
+          "name": "kwd:cmodel",
+          "syntax": "cmodel",
+          "description": "Do not set the mpoint constitutive model and its properties."
+        },
+        {
+          "name": "kwd:density",
+          "syntax": "density",
+          "description": "Do not set the mpoint density."
+        },
+        {
+          "name": "kwd:displacement",
+          "syntax": "displacement",
+          "description": "Do not set the mpoint displacement."
+        },
+        {
+          "name": "kwd:fluid",
+          "syntax": "fluid",
+          "description": "Do not set any of the mpoint fluid properties, including the pore-pressure and flow."
+        },
+        {
+          "name": "kwd:group",
+          "syntax": "group",
+          "description": "Do not set the mpoint group(s)."
+        },
+        {
+          "name": "kwd:stress",
+          "syntax": "stress",
+          "description": "Do not set the mpoint stress."
+        },
+        {
+          "name": "kwd:velocity",
           "syntax": "velocity",
-          "description": "Import mpoints from zones. By default an mpoint is created for each of the zone gridpoints, i.e., {4 in 2D; 8 in 3D} for {quadrilateral in 2D; hexahedral in 3D} zones, and {3 in 2D; 4 and 5 in 3D} for {triangular in 2D; tetrahedral and pyramid in 3D} zones. The mpoint volume is always set equal to the zone volume divided by the number of mpoints created per zone. By default, the mpoint density and constitutive model (including all of its property values) are set equal to that of the zone. All of the zone groups are also assigned to the mpoint. If the zone fluid model is not null , the zone porosity, permeability and fluid density are assigned to the mpoints. If the mpoint biot mode is on , the zone biot coefficient and the zone/gridpoint biot modulus are also assigned to the mpoints, and if the mpoint biot mode is off , the zone/gridpoint fluid modulus is assigned to the mpoints instead. Furthermore, the zone/gridpoint fluid-tension and flow are assigned to the mpoints. The zone/gridpoint pore-pressure is assigned to the mpoints even if the zone fluid model is null . Other behavior is possible using the keywords below, and as summarized in Figure 1. Note The zone fluid biot mode (see zone fluid ) must be the same as the mpoint fluid biot mode (see mpoint fluid biot ) for mpoints to be imported from zones, unless the import of fluid properties is skipped or the zones not configured for fluid (see model configure ). Only the isotropic fluid constitutive model is supported, and not the anisotropic model, i.e., mpoints assume by default the isotropic model. The mpoint total stress, and not the effective stress state, is inherited from the zone. If the mpoint pore pressure is inherited, it does not affect the mpoint stress state. Linearly interpolate the mpoint velocity, displacement and stress from gridpoints. The pore-pressure, the biot modulus or fluid modulus (depending on the biot mode settings), the fluid-tension, and the fluid flow are also interpolated from gridpoints. This behavior depends on the number of mpoints created, as specified by the number keyword, and the zone type. If the interpolate keyword is omitted, the default behavior is shown in Figure 1. All of the properties/attributes not listed in Figure 1 are set to the zone (constant) value and not interpolated from the gridpoints. For the definition of the zone stress, see zone.stress . Keep the zones after the import. By default zones are deleted. Control the number of mpoints created per zone. The behavior depends on the zone type {quadrilateral in 2D; hexahedral in 3D} or {triangular in 2D; tetrahedral in 3D} - see Figure 1 for details. The default value is 2 (one mpoint per gridpoint for all zone types). Skip importing the specified information from zones. Do not import any information from zones. Do not set the mpoint constitutive model and its properties. Do not set the mpoint density. Do not set the mpoint displacement. Do not set any of the mpoint fluid properties, including the pore-pressure and flow. Do not set the mpoint group(s). Do not set the mpoint stress. Do not set the mpoint velocity."
+          "description": "Do not set the mpoint velocity."
         }
       ],
       "examples": [],

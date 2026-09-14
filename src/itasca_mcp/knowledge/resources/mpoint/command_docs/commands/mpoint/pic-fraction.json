@@ -4,14 +4,14 @@
     "mpoint",
     "pic-fraction"
   ],
-  "description": "Set the combination of PIC-FLIP velocity update used for the material points.",
+  "description": "Set the combination of PIC-FLIP velocity update used for the material points. FLIP velocity update is obtained for a fraction f =0 (the default in MPoint). This method is the standard in MPM simulations, but can result in artificial noise. PIC velocity update is obtained for a fraction f =1. This method may be more stable than FLIP but it filters velocities and dissipates more energy in dynamic simulations. A fraction 0 < f < 1 of PIC velocity can help dampen the artificial noise of the FLIP update while limiting dissipation of the PIC update. This may help stabilize some complex dynamic analyses that are sensitive to noise such as fracture and failure simulations. However, it should be avoided for seismic analyses as it filters and damps high frequencies. A dedicated dynamic damping method allowing more control is preferred for such simulations.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint pic-fraction",
-      "syntax": "mpoint pic-fraction [<f>] [keyword]",
+      "syntax": "mpoint pic-fraction f > keyword>",
       "keywords": [],
       "examples": []
     }

@@ -5,14 +5,14 @@
     "node",
     "history"
   ],
-  "description": "Adds a history of a background node value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories.",
+  "description": "Primary keywords: velocity Adds a history of a background node value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional id keyword followed by an integer id, or 2) an additional position keyword followed by a position vector v must be given to specify the node whose attribute will be recorded.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint node history",
-      "syntax": "mpoint node history [name <sid>] keyword ...",
+      "syntax": "mpoint node history name sid > keyword ...",
       "keywords": [
         {
           "name": "velocity",
@@ -20,39 +20,154 @@
           "description": "Magnitude of the node velocity vector. Use the component keyword to specify the component to be recorded."
         },
         {
-          "name": "magnitude",
+          "name": "kwd:component",
+          "syntax": "component keyword",
+          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are:"
+        },
+        {
+          "name": "kwd:component.x",
+          "syntax": "x",
+          "description": "Record the \\(x\\)-component of the vector."
+        },
+        {
+          "name": "kwd:component.y",
+          "syntax": "y",
+          "description": "Record the \\(y\\)-component of the vector."
+        },
+        {
+          "name": "kwd:component.z",
+          "syntax": "z (3D ONLY)",
+          "description": "Record the \\(z\\)-component of the vector."
+        },
+        {
+          "name": "kwd:component.magnitude",
           "syntax": "magnitude",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Record the \\(x\\) -component of the vector. Record the \\(y\\) -component of the vector. Record the \\(z\\) -component of the vector. Record the vector magnitude."
+          "description": "Record the vector magnitude."
         },
         {
           "name": "kwd:id",
-          "syntax": "id <i>",
-          "description": "Record the history of background node with ID i ."
+          "syntax": "id i",
+          "description": "Record the history of background node with ID i."
         },
         {
           "name": "kwd:index",
-          "syntax": "index <i>",
-          "description": "For keywords that require it (most notably extra ), this specifies the index that should be used."
+          "syntax": "index i",
+          "description": "For keywords that require it (most notably extra), this specifies the index that should be used."
         },
         {
           "name": "kwd:log",
-          "syntax": "log <b>",
-          "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
+          "syntax": "log b",
+          "description": "If on, the returned number is the base 10 log of the absolute value of the original value. The default is off."
         },
         {
           "name": "kwd:position",
-          "syntax": "position <v>",
-          "description": "Record the history of background node either containing or closest to position v ."
+          "syntax": "position v",
+          "description": "Record the history of background node either containing or closest to position v."
         },
         {
-          "name": "zz",
-          "syntax": "zz 3D ONLY",
-          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Record the intermediate principal value of the tensor. Record the maximum (most positive) principal value of the tensor. Note that compressive stresses are negative . Record the mean value, defined as the trace of the tensor divided by {2 in 2D; 3 in 3D}. For stresses this is most often referred to as the pressure. Record the minimum (most negative) principal value of the tensor. Note that compressive stresses are negative . Record the norm of the full tensor. This is defined as the sum of each tensor component squared. Record the octahedral measure of the tensor. Record the maximum shear value. Record the distance of the tensor value to the origin in principal space. Record the volumetric change, or trace of the tensor. Record the Von Mises measure. Record the xx -component of the tensor. Record the xy -component of the tensor. Record the xz -component of the tensor. Record the yy -component of the tensor. Record the yz -component of the tensor. Record the zz -component of the tensor."
+          "name": "kwd:quantity",
+          "syntax": "quantity keyword",
+          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are:"
         },
         {
-          "name": "vector",
+          "name": "kwd:quantity.intermediate",
+          "syntax": "intermediate (3D ONLY)",
+          "description": "Record the intermediate principal value of the tensor."
+        },
+        {
+          "name": "kwd:quantity.maximum",
+          "syntax": "maximum",
+          "description": "Record the maximum (most positive) principal value of the tensor. Note that compressive stresses are negative."
+        },
+        {
+          "name": "kwd:quantity.mean",
+          "syntax": "mean",
+          "description": "Record the mean value, defined as the trace of the tensor divided by {2 in 2D; 3 in 3D}. For stresses this is most often referred to as the pressure."
+        },
+        {
+          "name": "kwd:quantity.minimum",
+          "syntax": "minimum",
+          "description": "Record the minimum (most negative) principal value of the tensor. Note that compressive stresses are negative."
+        },
+        {
+          "name": "kwd:quantity.norm",
+          "syntax": "norm",
+          "description": "Record the norm of the full tensor. This is defined as the sum of each tensor component squared."
+        },
+        {
+          "name": "kwd:quantity.octahedral",
+          "syntax": "octahedral (3D ONLY)",
+          "description": "Record the octahedral measure of the tensor."
+        },
+        {
+          "name": "kwd:quantity.shear-maximum",
+          "syntax": "shear-maximum",
+          "description": "Record the maximum shear value."
+        },
+        {
+          "name": "kwd:quantity.total-measure",
+          "syntax": "total-measure (3D ONLY)",
+          "description": "Record the distance of the tensor value to the origin in principal space."
+        },
+        {
+          "name": "kwd:quantity.volumetric",
+          "syntax": "volumetric",
+          "description": "Record the volumetric change, or trace of the tensor."
+        },
+        {
+          "name": "kwd:quantity.von-mises",
+          "syntax": "von-mises (3D ONLY)",
+          "description": "Record the Von Mises measure."
+        },
+        {
+          "name": "kwd:quantity.xx",
+          "syntax": "xx",
+          "description": "Record the xx-component of the tensor."
+        },
+        {
+          "name": "kwd:quantity.xy",
+          "syntax": "xy",
+          "description": "Record the xy-component of the tensor."
+        },
+        {
+          "name": "kwd:quantity.xz",
+          "syntax": "xz (3D ONLY)",
+          "description": "Record the xz-component of the tensor."
+        },
+        {
+          "name": "kwd:quantity.yy",
+          "syntax": "yy",
+          "description": "Record the yy-component of the tensor."
+        },
+        {
+          "name": "kwd:quantity.yz",
+          "syntax": "yz (3D ONLY)",
+          "description": "Record the yz-component of the tensor."
+        },
+        {
+          "name": "kwd:quantity.zz",
+          "syntax": "zz (3D ONLY)",
+          "description": "Record the zz-component of the tensor."
+        },
+        {
+          "name": "kwd:type",
+          "syntax": "type keyword",
+          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned."
+        },
+        {
+          "name": "kwd:type.scalar",
+          "syntax": "scalar",
+          "description": "Specify a scalar float type."
+        },
+        {
+          "name": "kwd:type.tensor",
+          "syntax": "tensor",
+          "description": "Specify a tensor type."
+        },
+        {
+          "name": "kwd:type.vector",
           "syntax": "vector",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Specify a scalar float type. Specify a tensor type. Specify a vector type."
+          "description": "Specify a vector type."
         }
       ],
       "examples": []

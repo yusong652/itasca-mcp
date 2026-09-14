@@ -5,7 +5,7 @@
     "node",
     "dynamic"
   ],
-  "description": "Specify mpoint dynamic quantities.",
+  "description": "Primary keywords: damping Specify mpoint dynamic quantities.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -15,9 +15,34 @@
       "syntax": "mpoint node dynamic keyword ...",
       "keywords": [
         {
-          "name": "stiffness",
+          "name": "damping",
+          "syntax": "damping",
+          "description": "Specify the damping used during the background node equations of motion when the dynamic process is in use. By default, local damping is active with value 0.0."
+        },
+        {
+          "name": "kwd:combined",
+          "syntax": "combined f >",
+          "description": "Specify node combined damping. f is the optional combined damping coefficient where f ≥ 0. By default, f = 0.0."
+        },
+        {
+          "name": "kwd:local",
+          "syntax": "local f >",
+          "description": "Specify node local damping. f is the optional local damping coefficient where f ≥ 0. By default, f = 0.0."
+        },
+        {
+          "name": "kwd:rayleigh",
+          "syntax": "rayleigh f1 f2 > keyword ...",
+          "description": "Specify Rayleigh damping with fraction of critical damping f1 (1 ≥ f ≥ 0) centered at frequency f2 (in units cycles/sec). Both mass- and stiffness-proportional terms are present, reducing the timestep."
+        },
+        {
+          "name": "kwd:mass",
+          "syntax": "mass",
+          "description": "Restrict Rayleigh damping to mass-proportional. The timestep is not affected."
+        },
+        {
+          "name": "kwd:stiffness",
           "syntax": "stiffness",
-          "description": "Specify the damping used during the background node equations of motion when the dynamic process is in use. By default, local damping is active with value 0.0. Specify node combined damping. f is the optional combined damping coefficient where f ≥ 0. By default, f = 0.0. Specify node local damping. f is the optional local damping coefficient where f ≥ 0. By default, f = 0.0. Specify Rayleigh damping with fraction of critical damping f1 (1 ≥ f ≥ 0) centered at frequency f2 (in units cycles/sec). Both mass- and stiffness-proportional terms are present, reducing the timestep. Restrict Rayleigh damping to mass-proportional. The timestep is not affected. Restrict Rayleigh damping to stiffness-proportional. The timestep is reduced."
+          "description": "Restrict Rayleigh damping to stiffness-proportional. The timestep is reduced."
         }
       ],
       "examples": []

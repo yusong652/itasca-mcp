@@ -4,24 +4,24 @@
     "mpoint",
     "initialize-stresses"
   ],
-  "description": "Initialize mpoint stresses based on the density of the mpoints above them and gravity.",
+  "description": "Primary keywords: direction-x overburden total ratio Initialize mpoint stresses based on the density of the mpoints above them and gravity. For all mpoints in the range, the total column of mpoint densities above them (opposite the direction of gravity) is accumulated into a stress. The ratio keyword is used to determine both horizontal stresses, and defaults to 1.0. This mpoint stress state is then initialized to this value. Note that this works even if gravity is not vertical—in which case the vertical and horizontal stresses are the principal components aligned with gravity and perpendicular to gravity, respectively. Note that in MPoint, compressive stresses are negative. Note This command should be used after assigning a constitutive model, setting the gravity and material densities. The available keywords are:",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint initialize-stresses",
-      "syntax": "mpoint initialize-stresses keyword [range]",
+      "syntax": "mpoint initialize-stresses keyword range>",
       "keywords": [
         {
           "name": "direction-x",
-          "syntax": "direction-x <v>3D Only",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x'\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0)."
+          "syntax": "direction-x v (3D Only)",
+          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\)-direction the system should use. The \\(y\\)-direction is determined automatically using the \\(x'\\)-direction and the direction of gravity to create an orthonormal system. The \\(x'\\)-direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\)-direction is (1,0,0)."
         },
         {
           "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specify an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative."
+          "syntax": "overburden f",
+          "description": "Specify an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0. Remember that compressive stresses are negative, so this value will typically be negative."
         },
         {
           "name": "total",
@@ -30,8 +30,8 @@
         },
         {
           "name": "ratio",
-          "syntax": "ratio <f>[<fs>]",
-          "description": "Determine the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fs is given, then a different ratio is used in the local horizontal directions. Typically, the \\(z\\) -direction is assumed vertical in MPoint3D and the \\(y\\) -direction is assumed vertical in MPoint2D . Hence, the horizontal directions are the \\(x-\\) and \\(y-\\) directions in MPoint3D and the \\(x-\\) and \\(z-\\) directions in MPoint2D ."
+          "syntax": "ratio f fs >",
+          "description": "Determine the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fs is given, then a different ratio is used in the local horizontal directions. Typically, the \\(z\\)-direction is assumed vertical in MPoint3D and the \\(y\\)-direction is assumed vertical in MPoint2D. Hence, the horizontal directions are the \\(x-\\) and \\(y-\\)directions in MPoint3D and the \\(x-\\) and \\(z-\\)directions in MPoint2D."
         }
       ],
       "examples": []
