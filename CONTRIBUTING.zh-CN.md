@@ -91,7 +91,7 @@ src/itasca_mcp/knowledge/resources/
 
 ## 代码改动
 
-动工具接口之前请先读仓库根目录的 `CLAUDE.md`——审阅是按那里的架构约定来的，
+动工具接口之前请先读仓库根目录的 `AGENTS.md`——审阅是按那里的架构约定来的，
 尤其是统一的 `{ok, data, error}` 信封、MCP 侧与 bridge 侧的职责分离，
 以及两种执行模型（同步 REPL 与异步 task）。
 
