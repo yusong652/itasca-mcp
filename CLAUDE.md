@@ -147,10 +147,16 @@ Steps to release `itasca-mcp`:
 1. Bump `__version__` in `src/itasca_mcp/__init__.py` (the single source of truth).
 2. Curate `## [Unreleased]` in `CHANGELOG.md` from `git log` since the previous release (grouped per the convention comment at the top of that file), rename it to `## [x.y.z] - YYYY-MM-DD`, then start a fresh empty `## [Unreleased]`. The publish workflow extracts the section whose header matches the tag version exactly and fails if it is missing.
 3. **Sweep user-facing docs for claims the release invalidates** — `README.md` (supported engines/versions matrix, feature bullets, install flow) and `addon.py` messages. README is the PyPI long_description: anything stale at tag time is frozen into that PyPI release page and can only be fixed by the *next* release, so this check must happen BEFORE tagging, in the same release PR.
-4. Commit and push to `main`.
-5. Tag the commit: `git tag v0.x.x` and `git push origin v0.x.x`.
+4. Bump both `version` fields in `server.json` (top-level and `packages[0]`) to the same version, in the same release PR. Keep the `description` there at or under 100 characters; the registry rejects longer ones. Also re-check that `pyproject.toml` `description`/`keywords` still list every supported engine.
+5. Commit and push to `main`.
+6. Tag the commit: `git tag v0.x.x` and `git push origin v0.x.x`.
+7. **Publish to the MCP registry** once the PyPI release is live: run `mcp-publisher publish` from the repo root. The registry does not follow PyPI or GitHub tags on its own, so skipping this leaves the registry entry frozen at the last published version. If the token has expired, run `mcp-publisher login github` first (device-code flow; log in as `yusong652`). Verify with the registry API:
 
-**Important**: tag version must match `__version__`. PyPI rejects duplicate version uploads.
+   ```bash
+   curl -s "https://registry.modelcontextprotocol.io/v0.1/servers?search=itasca-mcp"
+   ```
+
+**Important**: tag version must match `__version__` and `server.json`. PyPI rejects duplicate version uploads.
 
 CI runs on every push/PR to `main`: ruff check, ruff format, mypy, pytest with coverage.
 
