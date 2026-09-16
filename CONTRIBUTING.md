@@ -101,7 +101,7 @@ touched the loader and its types).
 
 ## Code changes
 
-Read `CLAUDE.md` at the repo root before touching tool surfaces — it carries the
+Read `AGENTS.md` at the repo root before touching tool surfaces — it carries the
 architectural rules that reviews are held to, in particular the unified
 `{ok, data, error}` envelope, the separation between MCP-side and bridge-side
 concerns, and the two execution models (synchronous REPL vs. async task).

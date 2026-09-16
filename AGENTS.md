@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for coding agents working in the `itasca-mcp` repository.
+Guidance for coding agents working in the `itasca-mcp` repository. This file is the single source of truth; `CLAUDE.md` only imports it.
 
 ## Project Overview
 
@@ -11,7 +11,9 @@ This repository has two runtime contexts:
 - `src/itasca_mcp/` (Python >= 3.10): MCP server package used by clients/tooling
 - `itasca-mcp-bridge/` (submodule, PFC embedded Python often 3.6): HTTP bridge running inside PFC GUI
 
-End users get the bridge from PyPI (`pip install itasca-mcp-bridge`): first install happens via the agentic bootstrap's terminal pip step or `addon.py`, and from then on `itasca_mcp_bridge.start()` self-upgrades on every start. The submodule exists only so contributors can edit bridge code alongside MCP code without two clones. The legacy `pfc-mcp-bridge` PyPI package (last release `bridge-v0.3.3`) is deprecated.
+Treat these as separate deployment targets. End users get the bridge from PyPI (`pip install itasca-mcp-bridge`): first install happens via the agentic bootstrap's terminal pip step or `addon.py`, and from then on `itasca_mcp_bridge.start()` self-upgrades on every start. The submodule exists only so contributors can edit bridge code alongside MCP code without two clones.
+
+The legacy `pfc-mcp-bridge` PyPI package (last release `bridge-v0.3.3`) is deprecated and no longer maintained — its code lived in `pfc-mcp-bridge/` here and was removed when the submodule replaced it.
 
 ## Core Architecture
 
@@ -28,6 +30,7 @@ End users get the bridge from PyPI (`pip install itasca-mcp-bridge`): first inst
 - Owns thread-safe interaction with ITASCA SDK
 - Handles long-running tasks and diagnostics
 - Started inside PFC GUI via `itasca_mcp_bridge.start()`, which self-upgrades from PyPI first (best-effort); `addon.py` remains the manual first-install bootstrap
+- The submodule pin in this repo controls which bridge revision contributors develop against; runtime users always get whatever is on PyPI
 
 ## Repository Layout
 
@@ -43,6 +46,13 @@ itasca-mcp/
 ├── addon.py             # PFC-side first-install bootstrap (pip-installs the bridge)
 └── tests/               # MCP/tool contract tests
 ```
+
+**Submodule workflow** (mirrors flac-mcp):
+
+- Fresh clone needs `git clone --recurse-submodules <url>` or, after a non-recursive clone, `git submodule update --init --recursive`
+- After `git pull` on this repo, re-sync with `git submodule update --recursive` if the pin moved
+- To bump the bridge pin: `cd itasca-mcp-bridge`, fetch/checkout the new commit, then commit the gitlink update in this repo. Push order: bridge repo first (so the pinned commit exists on its origin), itasca-mcp second
+- "Modified content" / "untracked content" in `git status` for the submodule is normal during local bridge dev — only commit the gitlink when you actually want to bump the pin
 
 ## Development Commands
 
@@ -91,6 +101,26 @@ uv run pytest tests/test_tool_contracts.py
      runtime dependency, so it installs into any ITASCA embedded Python (3.6+)
      with no version pins.
 
+6. Judge each dependency by the complexity it carries, not by a blanket
+   "fewer deps is better" rule. The two runtime contexts land on opposite
+   answers for the same reason, not different ones:
+   - Keep a dependency when it owns hard correctness you would not write
+     better yourself. On the MCP side, FastMCP + Pydantic own tool-schema
+     declaration, JSON Schema generation, input validation, and alignment
+     with the MCP protocol — protocol-boundary complexity. Do not reimplement
+     it; do not drop these deps to chase minimalism.
+   - Drop a dependency when it is not carrying real complexity for your
+     semantics. The bridge transport is self-hosted on stdlib HTTP + SSE
+     because the interaction is just request → execute → result, with the
+     server->client push reduced to a payload-free doorbell — a transport
+     library's extra machinery (duplex/heartbeat/version negotiation) is not
+     load-bearing here, and a pinned dependency is itself a liability in the
+     engine's embedded Python.
+   - The rule of thumb: validation at the protocol boundary is outsourced;
+     the execution transport is self-hosted when the semantics are simple
+     enough to not need a library. Minimalism is a consequence of this test,
+     never the goal itself.
+
 ## Testing Expectations
 
 - For tool/contract changes, run:
@@ -108,6 +138,12 @@ PFC searchable docs live under:
 
 When changing schema/content shape, verify browse/query tool behavior remains consistent.
 
+## Release Process
+
+Releases are cut by the maintainer; the step-by-step checklist (version bump, changelog curation, README sweep, `server.json` + MCP registry publish, tagging) lives in [`docs/RELEASING.md`](docs/RELEASING.md). Contributors do not need it: a clear conventional commit is enough (see Commit Style below).
+
+CI runs on every push/PR to `main`: ruff check, ruff format, mypy, pytest with coverage.
+
 ## Commit Style
 
 Use conventional prefixes seen in repository history, for example:
@@ -119,3 +155,14 @@ Use conventional prefixes seen in repository history, for example:
 - `docs: ...`
 
 Keep commit messages focused on why the change was needed.
+
+Documentation is first-class for this project -- agents rely on the docs and
+the agentic install guides to understand and operate itasca-mcp, so notable
+documentation/install-flow changes belong in the changelog alongside
+behaviour changes.
+
+Contributors only need a clear conventional commit message; they do NOT
+edit `CHANGELOG.md`. The maintainer curates the `## [Unreleased]` section
+from commit history at release time (see `docs/RELEASING.md` and the convention
+comment at the top of `CHANGELOG.md`). This keeps the changelog complete
+without putting changelog friction on any single change or PR.
