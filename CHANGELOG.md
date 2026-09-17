@@ -45,6 +45,58 @@ section exists.
 
 ## [Unreleased]
 
+## [0.8.2] - 2026-09-17
+
+Command search now ranks the command that *owns* a keyword ahead of commands
+that merely mention it. `ball velocity` used to return `ball fix`, `ball free`
+and `wall velocity-conveyor` before `ball attribute`; `contact hertz` did not
+reach `contact model` at all; `zone mohr-coulomb` missed `zone cmodel`. The
+cause was one shape repeated across every engine: a generically named command
+(attribute, initialize, history, cmodel, property, model solve, model
+configure) whose real vocabulary lived only in its keyword table, unmentioned
+in the description and untagged for search, and a scorer that punished a
+command for carrying more tags.
+
+### Fixed
+
+- **Keyword-vocabulary commands rank first.** Across PFC, FLAC, 3DEC and
+  MPoint, container commands (attribute, initialize, history, cmodel,
+  property, fluid, thermal, dynamic, creep, relax, configure, contact model,
+  model solve) now carry their keyword-table vocabulary as search tags and
+  one description sentence enumerating what they set, record or accept.
+  Action commands (fix, free, apply) are deliberately left untagged: their
+  name is the search term. Measured on every command of each corpus, the
+  owner of a `<category> <keyword>` query lands in the top three for 26% of
+  PFC pairs (was 18%), 22% of FLAC (was 7%), 25% of 3DEC (was 17%) and 27%
+  of MPoint (was 20%); exact-name queries hit first place on 100% of PFC and
+  MPoint commands and 99.5% or more of FLAC and 3DEC, with no regressions.
+- **Scorer semantics per field.** The keywords field scores tag presence
+  only (no length normalization, no term-frequency saturation), so tagging
+  honestly no longer dilutes each tag. Description length normalization is
+  milder than the name field's, because a one-line summary and a full
+  official paragraph say nothing about relevance by their length. The
+  exact-name boost now applies to multi-token command names as a graded
+  factor, so `zone export` is not outscored by `zone export-data` and
+  `zone initialize stress` is not hijacked by the shorter `zone initialize`.
+- **Partial matching direction.** Abbreviations match only from a shorter
+  query to a longer doc token (`pos` → `position`), plus short inflections
+  (`balls` → `ball`). A doc token that merely sat inside a long query word
+  no longer counts as a hit, so nonsense queries return nothing instead of
+  low-score noise.
+- **`rank` is the position in the returned list.** It was numbered in index
+  order before sorting, so the first result of a query could report rank 6
+  or 21; the Python API path also dropped entries during consolidation
+  without renumbering.
+
+### Documentation
+
+- `AGENTS.md` is the single canonical agent guide; `CLAUDE.md` only imports
+  it and `GEMINI.md` is no longer tracked. The maintainer release checklist
+  moved to `docs/RELEASING.md`, now including the `server.json` bump and the
+  `mcp-publisher publish` step the MCP registry needs.
+- Package metadata and `server.json` list MPoint and MassFlow alongside PFC,
+  FLAC3D and 3DEC; the registry description fits its 100-character limit.
+
 ## [0.8.1] - 2026-09-14
 
 MPoint's documentation is now verified against a running engine rather than
