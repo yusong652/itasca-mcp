@@ -167,5 +167,8 @@ class APISearch:
         # while preserving component information in metadata['has_components']
         consolidated = consolidate_component_apis(consolidated)
 
-        # Return final top_k results after consolidation
-        return consolidated[:top_k]
+        # Consolidation drops entries, so renumber before returning the final top_k
+        final = consolidated[:top_k]
+        for rank, result in enumerate(final, start=1):
+            result.rank = rank
+        return final
