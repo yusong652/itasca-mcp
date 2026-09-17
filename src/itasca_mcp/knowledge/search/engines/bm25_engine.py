@@ -140,17 +140,19 @@ class BM25SearchEngine(BaseSearchEngine):
         assert self.scorer is not None
         scored_results = self.scorer.batch_score(query, self.documents)
 
-        # Convert to SearchResult objects with ranks
-        search_results = []
-        for rank, (document, score, match_info) in enumerate(scored_results, start=1):
-            search_results.append(SearchResult(document=document, score=score, match_info=match_info, rank=rank))
+        search_results = [
+            SearchResult(document=document, score=score, match_info=match_info, rank=0)
+            for document, score, match_info in scored_results
+        ]
 
         # Apply filters if provided
         if filters:
             search_results = self._apply_filters(search_results, filters)
 
-        # Sort by score (descending) and return top_k
+        # Sort by score (descending); ranks are 1-based positions in that order
         search_results.sort(key=lambda r: r.score, reverse=True)
+        for rank, result in enumerate(search_results, start=1):
+            result.rank = rank
 
         return search_results[:top_k]
 
