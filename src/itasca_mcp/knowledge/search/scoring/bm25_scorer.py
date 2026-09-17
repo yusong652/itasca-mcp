@@ -6,7 +6,7 @@ using only Python standard library (no NumPy dependency).
 
 from typing import Any
 
-from itasca_mcp.knowledge.models.document import SearchDocument
+from itasca_mcp.knowledge.models.document import DocumentType, SearchDocument
 from itasca_mcp.knowledge.search.indexing.bm25_indexer import BM25Indexer
 from itasca_mcp.knowledge.search.keyword_matcher import find_partial_matches
 from itasca_mcp.knowledge.search.preprocessing.tokenizer import TextTokenizer
@@ -53,7 +53,20 @@ class BM25Scorer:
 
     # BM25 hyperparameters (tunable)
     K1 = 1.5  # Term frequency saturation (1.2-2.0 recommended)
-    B = 0.75  # Document length normalization (0.5-0.8 recommended)
+    B = 0.75  # Document length normalization (0.5-0.8 recommended); used for the name field
+    # Length normalization is per field, because length means different things:
+    # - name: extra tokens in a command/API name are extra distance from the
+    #   query ("fracture delete" vs "fracture template-delete"), so the short
+    #   name bonus is a real relevance signal and stays at the default B.
+    # - description: ranges from one curated sentence to a full official
+    #   paragraph plus live-behaviour notes, and that length says nothing about
+    #   relevance, so the short-document bonus is kept mild.
+    B_DESCRIPTION = 0.5
+    # The keywords field is a curated tag list, not prose. A document tagged with
+    # more concepts is not "longer" in the BM25 sense, and a tag repeated across
+    # phrase-style entries is not "more about" that concept, so a keywords hit is
+    # scored as plain presence: IDF only, no length normalization, no tf saturation.
+    B_KEYWORDS = 0.0
 
     # Field weights (tunable) - must sum to 1.0
     # These define relative importance of each field in final score
@@ -117,6 +130,22 @@ class BM25Scorer:
         doc_name_lower = document.name.rsplit(".", 1)[-1].lower() if "." in document.name else document.name.lower()
         if doc_name_lower in query_set:
             total_score *= 2.0
+        # Graded version of the same rule for multi-token command names. The
+        # factor runs from 1 (name shares nothing with the query) to 2 (query
+        # spells out exactly the name) as the product of two ratios:
+        # - name precision |name ∩ query| / |name|: a longer sibling
+        #   ("zone export-data" for "zone export") carries tokens the query
+        #   never asked for, so it earns less than the exact name;
+        # - query coverage |name ∩ query| / |query|: a shorter name
+        #   ("zone initialize" for "zone initialize stress") ignores query
+        #   words another command's name answers, so it earns less than that
+        #   command. Query tokens include stems, which deflates coverage the
+        #   same way for every document, so ranking is unaffected.
+        elif document.doc_type == DocumentType.COMMAND:
+            name_tokens = set(self.indexer.get_field_tokens(doc_id, field="name"))
+            shared = len(name_tokens & query_set)
+            if shared:
+                total_score *= 1.0 + (shared / len(name_tokens)) * (shared / len(query_set))
 
         # 4. Collect all matched terms (union across fields)
         all_matched_terms = set()
@@ -216,7 +245,10 @@ class BM25Scorer:
         - TF(t, D, f): Frequency of term t in document D's field f
         - |D_f|: Length of document D's field f
         - avgdl_f: Average document length for field f
-        - k1, b: Tuning parameters
+        - k1, b: Tuning parameters (b is per field: B for name, B_DESCRIPTION
+          for description)
+
+        The keywords field short-circuits to IDF(t, f) alone (tag presence).
 
         Args:
             term: Term to score
@@ -241,14 +273,19 @@ class BM25Scorer:
         if tf == 0:
             return 0.0
 
+        # Tag semantics for the keywords field: presence only (see B_KEYWORDS).
+        if field == "keywords":
+            return idf
+
         # 3. Get field-specific document length and average
         doc_len = self.indexer.get_doc_length(doc_id, field=field)
         avg_len = self.indexer.get_avg_doc_length(field=field)
 
+        b = self.B_DESCRIPTION if field == "description" else self.B
         if avg_len == 0:
             norm_factor = 1.0
         else:
-            norm_factor = 1 - self.B + self.B * (doc_len / avg_len)
+            norm_factor = 1 - b + b * (doc_len / avg_len)
 
         # 4. Calculate saturated term frequency
         saturated_tf = (tf * (self.K1 + 1)) / (tf + self.K1 * norm_factor)
@@ -299,7 +336,7 @@ class BM25Scorer:
 
         Args:
             k1: Term frequency saturation (default: 1.5, range: 1.2-2.0)
-            b: Length normalization (default: 0.75, range: 0.5-0.8)
+            b: Length normalization for the name field (default: 0.75, range: 0.5-0.8)
             weight_name: Name field weight (default: 0.5)
             weight_desc: Description field weight (default: 0.2)
             weight_kw: Keywords field weight (default: 0.3)

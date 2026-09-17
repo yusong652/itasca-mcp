@@ -88,7 +88,8 @@ def find_partial_matches(
 ) -> tuple[set[tuple[str, str]], float]:
     """Find partial matches between unmatched query and keyword words.
 
-    Uses prefix and substring matching to handle abbreviations:
+    Uses prefix and substring matching to handle abbreviations and short
+    inflections (see word_match_quality for the direction rules):
     - Prefix matching (minimum 3 chars): quality 0.8
     - Substring matching: quality 0.6
 
@@ -157,6 +158,13 @@ def word_match_quality(query_word: str, keyword_word: str) -> float:
     - Substring match: 0.6
     - No match: 0.0
 
+    Direction matters. Partial matching exists for abbreviations, so the
+    query word must be the shorter one (``pos`` -> ``position``). The reverse
+    direction (query longer than the doc token) is accepted only as a short
+    inflection, at most 2 extra characters (``balls`` -> ``ball``,
+    ``fixed`` -> ``fix``); otherwise any doc token that happens to sit inside
+    a long query word (``one`` in ``nonexistent``) would count as a hit.
+
     Minimum prefix length of 3 chars prevents false positives from
     common short words like "a", "an", "the".
 
@@ -185,22 +193,36 @@ def word_match_quality(query_word: str, keyword_word: str) -> float:
 
         >>> word_match_quality("mod", "model")
         0.8  # Prefix match (exactly 3 chars)
+
+        >>> word_match_quality("balls", "ball")
+        0.8  # Reverse prefix, short inflection
+
+        >>> word_match_quality("definitelynonexistentkeyword", "defin")
+        0.0  # Reverse prefix, but far more than an inflection
     """
     if query_word == keyword_word:
         return 1.0  # Exact match (shouldn't happen in partial matching)
 
-    # Prefix matching (minimum 3 chars to avoid false positives)
     min_prefix_len = 3
-    if len(query_word) >= min_prefix_len and len(keyword_word) >= min_prefix_len:
-        # Check if one is prefix of the other
-        if keyword_word.startswith(query_word) or query_word.startswith(keyword_word):
-            return 0.8
+    max_inflection = 2
 
-    # Substring matching (one is contained in the other)
+    # Abbreviation: query is a prefix of the doc token ("pos" -> "position")
+    if len(query_word) >= min_prefix_len and keyword_word.startswith(query_word):
+        return 0.8
+
+    # Inflection: doc token is a prefix of the query, by at most a couple of
+    # characters ("balls" -> "ball", "fixed" -> "fix")
+    if (
+        len(keyword_word) >= min_prefix_len
+        and query_word.startswith(keyword_word)
+        and len(query_word) - len(keyword_word) <= max_inflection
+    ):
+        return 0.8
+
+    # Substring: query contained in the doc token ("loc" in "velocity")
     # IMPORTANT: Skip substring matching for single-character query words
     # to avoid false positives (e.g., "z" matching "horizontal")
-    if len(query_word) > 1:
-        if query_word in keyword_word or keyword_word in query_word:
-            return 0.6
+    if len(query_word) > 1 and query_word in keyword_word:
+        return 0.6
 
     return 0.0
