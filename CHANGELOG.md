@@ -45,6 +45,85 @@ section exists.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-09-20
+
+MassFlow went through the same verification sweep FLAC, PFC, 3DEC and MPoint
+had: every claim in the corpus checked against a live MassFlow 9.7 engine, and
+every gap closed. It was the last engine still at documentation-only grade, and
+it turned out to be the one with the widest gap between its manual and its
+binary — a third of its commands had no manual page at all, and the file
+formats that are its only way to define material properties had been reduced to
+a one-line summary.
+
+### Added
+
+- **17 MassFlow commands that exist only in the binary.** The corpus was built
+  from the 30 manual pages; the engine carries 47 command leaves. The additions
+  are the tab-delimited `-txt` import family (the base `import` commands read
+  CSV — both file sets ship with the vendor's own examples), `mine-block
+  export` / `export-caved`, `couplingFLAC3D` / `couplingFunction`,
+  `marker air-porosity` / `trace-report-daily`, `mine-block import-old`,
+  `collapse-only`, and the four `*-GUI` file-dialog variants. Each says it has
+  no manual page.
+- **A `file-formats` reference for MassFlow (12 topics).** MassFlow has no
+  property-setting command: mine-block material properties, drawpoint geometry,
+  drawbell shapes and the whole draw schedule exist only as columns of import
+  files, and every result leaves through a report file. Block model, draw
+  points, draw bells, draw schedule and trace markers on the input side; the
+  marker / trace / daily-trace / extraction reports and the caved-block and
+  FLAC3D-grid exports on the output side; plus the project file types. Every
+  import and export command now points at its format.
+- **A `fish-intrinsics` reference for MassFlow (175 functions).** The massflow
+  binary exposes no MassFlow-specific Python module, so FISH is the only
+  scripted access to mine blocks, markers, drawpoints and draw periods. 81 of
+  the 175 have no manual page and are marked as such; two documented names are
+  gone from the binary and are listed as renames rather than as usable
+  functions.
+- **MassFlow chart plot items.** `chart-table` and `chart-history`. A table
+  chart is how MassFlow results are read — `massflow record`,
+  `drawpoint dump-drawperiod` and `marker size-distribution` all write tables.
+- **26 more range elements for MassFlow**, including its own `active` and
+  `marker-type`, taking the set from 22 to the 48 the engine accepts.
+
+### Changed
+
+- **`massflow mine-block ...` and `massflow couplingFLAC3D` are reachable
+  again.** The corpus keyed them as `mineblock-*` and lower case, so browsing
+  the engine's real spelling returned nothing.
+- **MassFlow keyword corrections.** `list` takes `information`, not `info`;
+  `fines-migration` and `secondary-fragmentation` take `on`/`off` keywords, not
+  a string; `initialize` has 16 keywords, not 13; `dump-drawperiod` and
+  `record` require `name`; `extraction-report` and `trace-report` carry a
+  `filename` keyword with a documented default output name.
+- **MassFlow `constitutive-models` is scoped to coupled analysis.** Its 43 zone
+  models are real but reachable only with FLAC3D coupling; mine-block material
+  behaviour comes from the block-model file, and the category now says so and
+  links there.
+- **The MassFlow Python API says what it cannot reach.** `itasca` on that
+  binary is a flat module with contact/fish/history and no model-object module
+  at all; the index and module descriptions now state it and point at the FISH
+  reference.
+
+### Documentation
+
+- **MassFlow semantics verified by execution, not by reading.** `massflow
+  clean` is required before `massflow compute`; `compute days/periods` and a
+  bare `compute` are increments, never targets; `initialize filename` is a
+  save-file prefix; `marker initialize spacing` changes the extracted-mass
+  accounting, not just glyph density; `record` starts at the period it was
+  issued in; `marker size-distribution` writes a `size-distribution` table of
+  cumulative percent passing; `fines-migration` and `secondary-fragmentation`
+  change the solution.
+- **Five ways to terminate MassFlow 9.7 are documented**, listed together in
+  the command index and in each command's own notes: computing without
+  `clean`, probing `collapse-only` with `?`, `mine-block import-old`,
+  `drawpoint import-drawperiod-txt`, and `marker import-trace` with a point
+  outside the block model. None of them reports an error first.
+- **Manual/binary divergences recorded rather than smoothed over**, including
+  `drawpoint dump-drawperiod` creating an empty table, the `massflow.mass.DpDay`
+  and drawpoint mass accessors disagreeing, and the undocumented
+  `massflow.drawperiod.*` family shipping with its semantics marked unverified.
+
 ## [0.8.2] - 2026-09-17
 
 Command search now ranks the command that *owns* a keyword ahead of commands
