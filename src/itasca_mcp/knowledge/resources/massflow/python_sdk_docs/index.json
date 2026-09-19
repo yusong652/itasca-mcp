@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "description": "MassFlow Python SDK documentation index for quick lookup and LLM-assisted API discovery",
+  "description": "MassFlow Python SDK index. The massflow binary exposes `itasca` as a flat module (not a package) with 49 core functions and three kernel submodules — contact, fish, history. There is no MassFlow Python module and no zone/gridpoint module: every model object is reached through FISH.",
   "modules": {
     "contact": {
-      "description": "Functions and classes for working with Itasca contacts.",
+      "description": "Shared 9.0 kernel contact module. MassFlow creates no contacts of its own — this is only populated in a coupled FLAC3D analysis.",
       "file": "massflow/python_sdk_docs/modules/contact/module.json",
       "functions": [
         "count",
@@ -14,7 +14,7 @@
       ]
     },
     "fish": {
-      "description": "Itasca FISH module.",
+      "description": "Call FISH functions and read/write FISH symbols from Python. On the massflow binary this is the only Python route to model objects: mine blocks, drawpoints, markers, extracted markers and draw periods have no Python binding — see the fish-intrinsics reference for the 175 massflow.* intrinsics that do reach them.",
       "file": "massflow/python_sdk_docs/modules/fish/module.json",
       "functions": [
         "call_function",
@@ -25,7 +25,7 @@
       ]
     },
     "history": {
-      "description": "Functions and classes for working with FLAC3d histories.",
+      "description": "Read recorded histories. Shared 9.0 kernel module; MassFlow adds no history types of its own.",
       "file": "massflow/python_sdk_docs/modules/history/module.json",
       "functions": [
         "get"
