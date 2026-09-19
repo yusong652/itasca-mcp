@@ -1088,6 +1088,24 @@ async def test_massflow_python_api_exposes_itasca_core() -> None:
     assert any(e.get("api_path") == "itasca.command" for e in data["entries"])
 
 
+def test_massflow_python_says_model_objects_are_fish_only() -> None:
+    """itasca on the massflow binary has no model-object module — say so where a
+    user browsing the Python API will read it."""
+    index = DocumentationLoader.load_index(software="massflow")
+    assert "no MassFlow Python module" in index["description"]
+    fish = DocumentationLoader.load_module("fish", software="massflow")
+    assert fish is not None
+    assert "fish-intrinsics" in fish["description"]
+
+
+def test_massflow_constitutive_models_scoped_to_coupled_analysis() -> None:
+    """The 43 zone models are real but they are not mine-block properties."""
+    cat = ReferenceLoader.load_index(software="massflow")["categories"]["constitutive-models"]
+    assert "coupled" in cat["description"].lower()
+    assert "file-formats" in cat["description"]
+    assert "NOT mine-block properties" in cat["summary"]
+
+
 def test_massflow_python_exposes_kernel_modules_only() -> None:
     # MassFlow has no proprietary Python package; itasca is flat and exposes only
     # the generic 9.0-kernel sub-modules (contact/history/fish) beyond the core.
