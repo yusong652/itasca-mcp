@@ -1,0 +1,172 @@
+{
+  "name": "drawpoint",
+  "full_name": "Draw Point FISH Intrinsics",
+  "description": "Pointer-based access to drawpoints — position, drawbell, the IMZ slice geometry above them, and the requested versus actual extracted mass per day and per period.",
+  "notes": [
+    "`massflow.drawpoint.radius(dp, i)` and `height(dp, i)` index the IMZ slices listed by `massflow.drawpoint.slices(dp)`.",
+    "`mass.requested` works by day; `mass.actual`, `mass.actual.cum` and `mass.actual.period` report what was really drawn."
+  ],
+  "intrinsic_count": 29,
+  "undocumented_count": 11,
+  "intrinsics": [
+    {
+      "name": "massflow.drawpoint.active",
+      "signature": "bool := massflow.drawpoint.active(drawpoint_pnt)",
+      "description": "Return the active state of the drawpoint. Returns true if mass is being extracted during the current period. Returns false otherwise."
+    },
+    {
+      "name": "massflow.drawpoint.drawbell.id",
+      "signature": "int := massflow.drawpoint.drawbell.id(drawpoint_pnt)",
+      "description": "Get the ID of the drawbell associated with the drawpoint dp."
+    },
+    {
+      "name": "massflow.drawpoint.drawbell.name",
+      "signature": "str := massflow.drawpoint.drawbell.name(drawpoint_pnt)",
+      "description": "Get the name of the drawbell associated with the drawpoint dp."
+    },
+    {
+      "name": "massflow.drawpoint.extra",
+      "signature": "any := massflow.drawpoint.extra(massflow.drawpoint_pnt,<int>) := any",
+      "description": "massflow.drawpoint.extra(dp,int>) := a Get/set the extra variable at the index associated with the drawpoint. An extra variable can be of any valid FISH parameter type."
+    },
+    {
+      "name": "massflow.drawpoint.find",
+      "signature": "massflow.drawpoint_pnt := massflow.drawpoint.find(int)",
+      "description": "Get a pointer to the drawpoint with internally assigned ID number i. If no drawpoint exists with that ID number, then null is returned."
+    },
+    {
+      "name": "massflow.drawpoint.group",
+      "signature": "str := massflow.drawpoint.group(massflow.drawpoint_pnt,<str/index>) := str/index",
+      "description": "massflow.drawpoint.group(dp,slot>) := s Get/set the group name assigned to drawpoint dp in slot slot, if provided. The slot named 'Default' is used by default if slot is not provided."
+    },
+    {
+      "name": "massflow.drawpoint.group.remove",
+      "signature": "bool := massflow.drawpoint.group.remove(massflow.drawpoint_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.height",
+      "signature": "flt := massflow.drawpoint.height(drawpoint_pnt,int)",
+      "description": "Get the height, for this drawpoint, at slice number i."
+    },
+    {
+      "name": "massflow.drawpoint.id",
+      "signature": "int := massflow.drawpoint.id(massflow.drawpoint_pnt)",
+      "description": "Get the ID of a drawpoint."
+    },
+    {
+      "name": "massflow.drawpoint.isgroup",
+      "signature": "bool := massflow.drawpoint.isgroup(massflow.drawpoint_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.list",
+      "signature": "massflow.drawpoint_list_pnt/list := massflow.drawpoint.list(<list>)",
+      "description": "Get a pointer to the container of all drawpoints in the block model."
+    },
+    {
+      "name": "massflow.drawpoint.mass.actual",
+      "signature": "flt := massflow.drawpoint.mass.actual(drawpoint_pnt,int)",
+      "description": "Get the actual mass pulled for this drawpoint at DAY i."
+    },
+    {
+      "name": "massflow.drawpoint.mass.actual.cum",
+      "signature": "flt := massflow.drawpoint.mass.actual.cum(drawpoint_pnt,int)",
+      "description": "Get the actual cumulative mass pulled for this drawpoint at DAY i."
+    },
+    {
+      "name": "massflow.drawpoint.mass.actual.period",
+      "signature": "flt := massflow.drawpoint.mass.actual.period(drawpoint_pnt,int)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.mass.ore",
+      "signature": "flt := massflow.drawpoint.mass.ore(drawpoint_pnt,int,str)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.mass.requested",
+      "signature": "flt := massflow.drawpoint.mass.requested(drawpoint_pnt,int)",
+      "description": "Get the requested mass for this drawpoint at DAY i. This comes from the input draw schedule."
+    },
+    {
+      "name": "massflow.drawpoint.mass.requested.period",
+      "signature": "flt := massflow.drawpoint.mass.requested.period(drawpoint_pnt,int)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.mass.updatedrawratebyday",
+      "signature": "flt := massflow.drawpoint.mass.updatedrawratebyday(drawpoint_pnt,int) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.maxid",
+      "signature": "int := massflow.drawpoint.maxid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.name",
+      "signature": "str := massflow.drawpoint.name(drawpoint_pnt)",
+      "description": "Get the name assigned to drawpoint dp."
+    },
+    {
+      "name": "massflow.drawpoint.near.list",
+      "signature": "list := massflow.drawpoint.near.list(drawpoint_pnt,flt)",
+      "description": "Return a fish::List of drawpoint pointers (DP_PNT) that lie strictly within a given 3D radius from the provided drawpoint."
+    },
+    {
+      "name": "massflow.drawpoint.num",
+      "signature": "int := massflow.drawpoint.num()",
+      "description": "Get the total number of drawpoints in the model."
+    },
+    {
+      "name": "massflow.drawpoint.pos",
+      "signature": "vec3/flt := massflow.drawpoint.pos(drawpoint_pnt,<int>)",
+      "description": "v = massflow.drawpoint.pos(dp) Get the drawpoint centroid position."
+    },
+    {
+      "name": "massflow.drawpoint.pos.x",
+      "signature": "flt := massflow.drawpoint.pos.x(drawpoint_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.pos.y",
+      "signature": "flt := massflow.drawpoint.pos.y(drawpoint_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.pos.z",
+      "signature": "flt := massflow.drawpoint.pos.z(drawpoint_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawpoint.radius",
+      "signature": "flt := massflow.drawpoint.radius(drawpoint_pnt,int)",
+      "description": "Get the radius of a given IMZ slice of a drawpoint."
+    },
+    {
+      "name": "massflow.drawpoint.slices",
+      "signature": "list := massflow.drawpoint.slices(drawpoint_pnt)",
+      "description": "Get a pointer to the container of all drawpoint IMZ slice radii for a given drawpoint."
+    },
+    {
+      "name": "massflow.drawpoint.typeid",
+      "signature": "int := massflow.drawpoint.typeid()",
+      "documented": false
+    }
+  ],
+  "live_verification": "fish list intrinsics on live MassFlow 9.7.47 (build 6bc705b1eb), massflow.* only",
+  "undocumented": [
+    "massflow.drawpoint.group.remove",
+    "massflow.drawpoint.isgroup",
+    "massflow.drawpoint.mass.actual.period",
+    "massflow.drawpoint.mass.ore",
+    "massflow.drawpoint.mass.requested.period",
+    "massflow.drawpoint.mass.updatedrawratebyday",
+    "massflow.drawpoint.maxid",
+    "massflow.drawpoint.pos.x",
+    "massflow.drawpoint.pos.y",
+    "massflow.drawpoint.pos.z",
+    "massflow.drawpoint.typeid"
+  ]
+}

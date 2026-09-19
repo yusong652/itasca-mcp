@@ -1,0 +1,102 @@
+{
+  "name": "draw-period",
+  "full_name": "Draw Period FISH Intrinsics",
+  "description": "Draw-period objects: the scripted view of the draw schedule. `massflow.drawperiod.num` matches the number of periods imported, and `massflow.period.days(i)` returns the period length in days.",
+  "notes": [
+    "This whole family is undocumented: there is no `fish_massflow.drawperiod.*` page in the 9.7 manual. The signatures come from live enumeration and only `num` has been confirmed against a known model (59 imported periods -> 59).",
+    "Semantics of the per-period accessors are NOT established. On a model with 7-day periods computed to day 20, `massflow.drawperiod.find(1)` returned day.start 1 and day.end 1, and `drawpoints()` returned an empty list — neither matches the imported schedule, so do not read these as 'period 1 spans days 1-7'.",
+    "`massflow.drawperiod.drawrate` carries a `= flt` assignment form in its signature, but assigning to it on that model neither changed the value it returns nor raised. Treat it as unverified.",
+    "Use `massflow.period`, `massflow.period.days(i)` and the drawpoint mass intrinsics for schedule accounting that has been checked."
+  ],
+  "intrinsic_count": 14,
+  "undocumented_count": 14,
+  "intrinsics": [
+    {
+      "name": "massflow.drawperiod.day.end",
+      "signature": "int := massflow.drawperiod.day.end(drawperiod_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.day.start",
+      "signature": "int := massflow.drawperiod.day.start(drawperiod_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.drawpoints",
+      "signature": "list = massflow.drawperiod.drawpoints(drawperiod_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.drawrate",
+      "signature": "flt = massflow.drawperiod.drawrate(drawperiod_pnt,drawpoint_pnt) = flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.extra",
+      "signature": "any := massflow.drawperiod.extra(massflow.drawperiod_pnt,<int>) := any",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.find",
+      "signature": "massflow.drawperiod_pnt := massflow.drawperiod.find(int)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.group",
+      "signature": "str := massflow.drawperiod.group(massflow.drawperiod_pnt,<str/index>) := str/index",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.group.remove",
+      "signature": "bool := massflow.drawperiod.group.remove(massflow.drawperiod_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.id",
+      "signature": "int := massflow.drawperiod.id(massflow.drawperiod_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.isgroup",
+      "signature": "bool := massflow.drawperiod.isgroup(massflow.drawperiod_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.list",
+      "signature": "massflow.drawperiod_list_pnt/list := massflow.drawperiod.list(<list>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.maxid",
+      "signature": "int := massflow.drawperiod.maxid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.num",
+      "signature": "int := massflow.drawperiod.num()",
+      "documented": false
+    },
+    {
+      "name": "massflow.drawperiod.typeid",
+      "signature": "int := massflow.drawperiod.typeid()",
+      "documented": false
+    }
+  ],
+  "live_verification": "fish list intrinsics on live MassFlow 9.7.47 (build 6bc705b1eb), massflow.* only",
+  "undocumented": [
+    "massflow.drawperiod.day.end",
+    "massflow.drawperiod.day.start",
+    "massflow.drawperiod.drawpoints",
+    "massflow.drawperiod.drawrate",
+    "massflow.drawperiod.extra",
+    "massflow.drawperiod.find",
+    "massflow.drawperiod.group",
+    "massflow.drawperiod.group.remove",
+    "massflow.drawperiod.id",
+    "massflow.drawperiod.isgroup",
+    "massflow.drawperiod.list",
+    "massflow.drawperiod.maxid",
+    "massflow.drawperiod.num",
+    "massflow.drawperiod.typeid"
+  ]
+}

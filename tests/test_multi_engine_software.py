@@ -1272,6 +1272,51 @@ def test_massflow_range_additions_do_not_leak_into_other_engines() -> None:
         assert "active" not in names, software
 
 
+def test_massflow_fish_intrinsics_cover_the_live_set() -> None:
+    """FISH is MassFlow's only scripted access — the corpus had no reference at all."""
+    cats = ReferenceLoader.load_index(software="massflow").get("categories", {})
+    assert "fish-intrinsics" in cats
+    items = {i["name"]: i for i in ReferenceLoader.get_item_list("fish-intrinsics", software="massflow")}
+    assert set(items) == {
+        "mineblock",
+        "marker",
+        "drawpoint",
+        "extracted-marker",
+        "draw-period",
+        "model",
+    }
+    assert sum(i["intrinsic_count"] for i in items.values()) == 175
+
+
+def test_massflow_fish_marks_undocumented_intrinsics() -> None:
+    """81 of the 175 have no page; the whole drawperiod family is one of them."""
+    doc = ReferenceLoader.load_item_doc("fish-intrinsics", "draw-period", software="massflow")
+    assert doc is not None
+    assert doc["undocumented_count"] == doc["intrinsic_count"] == 14
+    assert all(i.get("documented") is False for i in doc["intrinsics"])
+    # An intrinsic with a page carries its description instead.
+    mb = ReferenceLoader.load_item_doc("fish-intrinsics", "mineblock", software="massflow")
+    containing = next(i for i in mb["intrinsics"] if i["name"] == "massflow.mineblock.containing")
+    assert "description" in containing and "documented" not in containing
+
+
+def test_massflow_fish_lists_retired_names_as_renames() -> None:
+    """Two documented names are gone from the binary; neither is offered as usable."""
+    index = ReferenceLoader.load_category_index("fish-intrinsics", software="massflow")
+    assert index is not None
+    retired = {r["name"]: r["replacement"] for r in index["retired"]}
+    assert retired == {
+        "massflow.mass.extracted": "massflow.mass.total",
+        "massflow.mineblock.friction": "massflow.mineblock.fric",
+    }
+    all_names = {
+        i["name"]
+        for item in ReferenceLoader.get_item_list("fish-intrinsics", software="massflow")
+        for i in ReferenceLoader.load_item_doc("fish-intrinsics", item["name"], software="massflow")["intrinsics"]
+    }
+    assert not (all_names & set(retired))
+
+
 def test_massflow_file_formats_cover_inputs_and_outputs() -> None:
     """MassFlow has no property command — the import files ARE the material API."""
     cats = ReferenceLoader.load_index(software="massflow").get("categories", {})
