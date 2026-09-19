@@ -34,7 +34,8 @@ CATEGORY_META: dict[str, dict[str, Any]] = {
         "description": "Core MassFlow commands for gravity-flow and caving simulation: configure and run the flow solution (initialize/compute), define and report on drawpoints and draw periods, place and trace markers, import mine-blocks, toggle fines migration and secondary fragmentation, and record results.",
         "command_prefix": "massflow",
         "notes": [
-            "Sub-namespaces are part of the JSON key: 'massflow drawpoint import' -> commands/massflow/drawpoint-import.json, 'massflow mine-block group' -> commands/massflow/mineblock-group.json",
+            "Sub-namespaces are part of the JSON key: 'massflow drawpoint import' -> commands/massflow/drawpoint-import.json, 'massflow mine-block group' -> commands/massflow/mine-block-group.json",
+            "17 of the 47 commands have no page in the MassFlow manual and are authored from live 9.7 enumeration (scripts/corpus/author_massflow_live_commands.py); each carries a note saying so",
             "Workflow: 'massflow initialize' sets the run parameters, then 'massflow compute' advances the flow solution by days/periods",
             "Drawpoints drive extraction; markers trace material provenance; mine-blocks tag the orebody for grade tracking",
             "The FLAC3D 'zone' family is available on the massflow binary for coupled mechanical analysis but is documented under software='flac'",

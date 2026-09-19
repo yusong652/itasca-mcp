@@ -1137,6 +1137,79 @@ def test_massflow_compute_resolves_with_keywords() -> None:
     assert {"days", "periods"} <= kw  # live-probed keyword set
 
 
+MASSFLOW_LIVE_ONLY_COMMANDS = {
+    "collapse-only",
+    "couplingFLAC3D",
+    "couplingFunction",
+    "drawpoint-add-drawperiod-txt",
+    "drawpoint-import-GUI",
+    "drawpoint-import-txt",
+    "drawpoint-import-drawbell-GUI",
+    "drawpoint-import-drawbell-txt",
+    "drawpoint-import-drawperiod-GUI",
+    "drawpoint-import-drawperiod-txt",
+    "marker-air-porosity",
+    "marker-trace-report-daily",
+    "mine-block-export",
+    "mine-block-export-caved",
+    "mine-block-import-GUI",
+    "mine-block-import-old",
+    "mine-block-import-txt",
+}
+
+
+def test_massflow_command_coverage_matches_live_binary() -> None:
+    """The binary carries 47 `massflow` leaves; 30 have HTML pages, 17 do not."""
+    cmds = CommandLoader.load_index(software="massflow")["categories"]["massflow"]["commands"]
+    names = {c["name"] for c in cmds}
+    assert len(names) == 47
+    assert names >= MASSFLOW_LIVE_ONLY_COMMANDS
+
+
+@pytest.mark.asyncio
+async def test_massflow_mine_block_addressable_with_binary_spelling() -> None:
+    """The binary spells it `mine-block`; the doc pages spell it `mineblock`."""
+    result = await mcp.call_tool(
+        "itasca_browse_commands",
+        {"software": "massflow", "command": "massflow mine-block group", "version": "9.0"},
+    )
+    data = _parse_tool_payload(result)["data"]
+    assert data["entries"][0]["doc"]["command"] == "massflow mine-block group"
+
+
+def test_massflow_live_only_commands_disclose_missing_docs() -> None:
+    """Commands authored from live enumeration say so instead of posing as doc-backed."""
+    for name in sorted(MASSFLOW_LIVE_ONLY_COMMANDS):
+        doc = CommandLoader.load_command_doc("massflow", name, "9.0", software="massflow")
+        assert doc is not None, name
+        assert any("no page in the 9.7 doc tree" in n for n in doc.get("notes", [])), name
+
+
+def test_massflow_list_keyword_is_information_not_info() -> None:
+    """`info` is the doc's abbreviation; the engine only accepts `information`."""
+    for family in ("drawpoint-list", "marker-list", "mine-block-list"):
+        doc = CommandLoader.load_command_doc("massflow", family, "9.0", software="massflow")
+        assert doc is not None
+        kw = {k["name"] for k in doc.get("keywords", [])}
+        assert kw == {"extra", "information"}, family
+
+
+def test_massflow_toggles_take_on_off_keywords() -> None:
+    """Both toggles are documented as taking a string; the engine takes on/off."""
+    for family in ("fines-migration", "secondary-fragmentation"):
+        doc = CommandLoader.load_command_doc("massflow", family, "9.0", software="massflow")
+        assert doc is not None
+        assert {k["name"] for k in doc.get("keywords", [])} == {"on", "off"}, family
+
+
+def test_massflow_initialize_carries_live_keyword_set() -> None:
+    doc = CommandLoader.load_command_doc("massflow", "initialize", "9.0", software="massflow")
+    assert doc is not None
+    kw = {k["name"] for k in doc.get("keywords", [])}
+    assert len(kw) == 16
+    assert {"markerfraglimit-lower", "markerfraglimit-upper", "timing"} <= kw
+
+
 def test_massflow_constitutive_models_shared_via_common() -> None:
     cats = ReferenceLoader.load_index(software="massflow").get("categories", {})
     assert "constitutive-models" in cats

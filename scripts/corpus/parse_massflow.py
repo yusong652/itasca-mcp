@@ -56,14 +56,23 @@ PREFIX_TO_CATEGORY = {
 def classify(stem: str) -> tuple[str, str] | None:
     """Map an HTML stem to (category, json_stem).
 
+    The JSON stem has to match the command as the *binary* spells it, because
+    ``browse_commands`` resolves "massflow mine-block group" by replacing spaces
+    with dashes. The HTML pages spell that family ``mineblock``, so the stem is
+    re-hyphenated here.
+
     >>> classify("cmd_massflow.compute")
     ('massflow', 'compute')
     >>> classify("cmd_massflow.drawpoint.import")
     ('massflow', 'drawpoint-import')
+    >>> classify("cmd_massflow.mineblock.group")
+    ('massflow', 'mine-block-group')
     """
     for prefix, category in PREFIX_TO_CATEGORY.items():
         if stem.startswith(prefix):
             sub = stem[len(prefix) :].replace(".", "-")
+            if sub.startswith("mineblock-"):
+                sub = "mine-block-" + sub[len("mineblock-") :]
             return category, sub
     return None
 
