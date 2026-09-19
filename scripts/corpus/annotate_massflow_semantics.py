@@ -7,6 +7,18 @@ tutorial model (9696 mine blocks, 7 drawpoints, day 20 / period 3 at rest).
 
 The raw run is in the verification workspace as `sem4_results_massflow.txt`.
 
+This script APPENDS to each doc's notes, so it runs last. Canonical order for
+regenerating the whole MassFlow corpus:
+
+    author_massflow_live_commands.py
+    generate_massflow_index.py
+    generate_massflow_file_formats.py
+    generate_massflow_range_elements.py
+    generate_massflow_fish_intrinsics.py
+    generate_massflow_plot_items.py
+    annotate_massflow_scoping.py
+    annotate_massflow_semantics.py
+
 Usage:
     uv run python scripts/corpus/annotate_massflow_semantics.py
 """
