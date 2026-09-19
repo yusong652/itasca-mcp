@@ -28,6 +28,9 @@
     }
   },
   "notes": [
-    "Both keywords are increments, not totals: they add to what has already been run. With neither keyword the command runs the `compute-days` / `compute-period` budget set by `massflow initialize`."
+    "Both keywords are increments, not totals: they add to what has already been run. With neither keyword the command runs the `compute-days` / `compute-period` budget set by `massflow initialize`.",
+    "Verified on a model resting at day 20 / period 3: `compute days 5` -> day 25, again -> day 30, then `compute periods 1` -> day 37 (the tutorial's periods are 7 days). Both keywords advance from wherever the model is.",
+    "Bare `massflow compute` runs the `compute-days` / `compute-period` budget as an increment too, not as a target: from day 20 with `compute-days 20` it reached day 40, and after `massflow initialize compute-days 3` a further `compute` reached day 43.",
+    "Markers are created lazily while computing — the marker count grows with the day count (1117 at day 20, 1450 at day 30 on the tutorial model)."
   ]
 }
