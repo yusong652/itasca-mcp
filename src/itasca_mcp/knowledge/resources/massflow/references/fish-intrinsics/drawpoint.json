@@ -4,7 +4,10 @@
   "description": "Pointer-based access to drawpoints — position, drawbell, the IMZ slice geometry above them, and the requested versus actual extracted mass per day and per period.",
   "notes": [
     "`massflow.drawpoint.radius(dp, i)` and `height(dp, i)` index the IMZ slices listed by `massflow.drawpoint.slices(dp)`.",
-    "`mass.requested` works by day; `mass.actual`, `mass.actual.cum` and `mass.actual.period` report what was really drawn."
+    "`mass.requested` works by day; `mass.actual`, `mass.actual.cum` and `mass.actual.period` report what was really drawn.",
+    "`mass.requested` is the scheduled daily tonnage — the period mass divided by the period length. On the tutorial model (2000 per 7-day period) it reads 285.714 for every day of the period.",
+    "`mass.actual` is quantised to whole markers, so a day either extracts a marker's worth or nothing: days 1-3 of DP1 read 325, 0, 0 while `mass.actual.cum` holds at 325. Over period 1 the requested 2000 came out as 1625 = 5 x 325.",
+    "`massflow.mass.DpDay(1,1)` returned 0 on that same model while `massflow.drawpoint.mass.actual(dp,1)` returned 325 — the two do not agree, so prefer the drawpoint accessors for per-day mass."
   ],
   "intrinsic_count": 29,
   "undocumented_count": 11,

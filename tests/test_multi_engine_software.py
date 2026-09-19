@@ -1098,6 +1098,29 @@ def test_massflow_python_says_model_objects_are_fish_only() -> None:
     assert "fish-intrinsics" in fish["description"]
 
 
+def test_massflow_clean_is_documented_as_required_before_compute() -> None:
+    """Skipping `massflow clean` kills the engine — the corpus has to say so."""
+    doc = CommandLoader.load_command_doc("massflow", "clean", "9.0", software="massflow")
+    assert doc is not None
+    notes = " ".join(doc["notes"])
+    assert "Required before `massflow compute`" in notes
+    assert "terminates the process" in notes
+
+
+def test_massflow_compute_documented_as_an_increment() -> None:
+    doc = CommandLoader.load_command_doc("massflow", "compute", "9.0", software="massflow")
+    assert doc is not None
+    notes = " ".join(doc["notes"])
+    assert "not as a target" in notes
+
+
+def test_massflow_dump_drawperiod_records_the_empty_table() -> None:
+    """The command runs and produces nothing; say so rather than implying a result."""
+    doc = CommandLoader.load_command_doc("massflow", "drawpoint-dump-drawperiod", "9.0", software="massflow")
+    assert doc is not None
+    assert any("leaves it EMPTY" in n for n in doc["notes"])
+
+
 def test_massflow_constitutive_models_scoped_to_coupled_analysis() -> None:
     """The 43 zone models are real but they are not mine-block properties."""
     cat = ReferenceLoader.load_index(software="massflow")["categories"]["constitutive-models"]
