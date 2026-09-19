@@ -1,0 +1,46 @@
+{
+  "name": "draw-schedule",
+  "full_name": "Draw Schedule (Draw Period) Import File",
+  "direction": "input",
+  "evidence": "docs + state",
+  "description": "How much is drawn, from where, and when. One row per drawpoint, one column per draw period; the cell is the mass drawn from that drawpoint during that period.",
+  "commands": [
+    "massflow drawpoint import-drawperiod <s>",
+    "massflow drawpoint import-drawperiod-txt <s>",
+    "massflow drawpoint import-drawperiod-GUI",
+    "massflow drawpoint add-drawperiod <s>",
+    "massflow drawpoint add-drawperiod-txt <s>"
+  ],
+  "layout": {
+    "delimiter": "comma (`import-drawperiod`) or tab (`import-drawperiod-txt`)",
+    "header": "line 1 names the periods; the first cell is the drawpoint-name column",
+    "column_order": "column 1 is DPName; each further column is one draw period"
+  },
+  "columns": [
+    {
+      "name": "DPName",
+      "required": true,
+      "description": "Drawpoint name, matching the draw-point file. Column 1."
+    },
+    {
+      "name": "<period header>",
+      "required": true,
+      "description": "One column per period. The header sets both the period name and its length in days, in one of three forms: an integer (used as both name and length in days); a string (used as the name, with a month name giving the length, so 'Sept-08' is 30 days); or `Name%Length` (e.g. `Period1%20` is a period named Period1 lasting 20 days)."
+    }
+  ],
+  "example": [
+    "DPName,7,7,7,7",
+    "DP1,2000,2000,2000,2000"
+  ],
+  "notes": [
+    "Cell values are masses, in units consistent with SolidsDen in the block model.",
+    "MassFlow divides the period mass by the period length to get a daily tonnage and moves markers once a day, so an unrealistically large period mass relative to the period length under-samples the movement inside the IMZ.",
+    "A schedule can be imported at any time. A new import deletes any *undrawn* periods from the existing schedule and appends the new ones; a partially drawn period is completed first.",
+    "On import the engine reports the total days: `--- Total number of days imported from <file>: 413`.",
+    "On MassFlow 9.7.47 `massflow drawpoint import-drawperiod-txt` terminated the process on the tab-delimited schedule shipped with the tutorial project; the comma-delimited path reads the same schedule without incident."
+  ],
+  "related_formats": [
+    "draw-points"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

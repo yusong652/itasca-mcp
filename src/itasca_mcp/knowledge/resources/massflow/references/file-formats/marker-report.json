@@ -1,0 +1,129 @@
+{
+  "name": "marker-report",
+  "full_name": "Marker Report Output File",
+  "direction": "output",
+  "evidence": "docs + state",
+  "description": "The full state of every marker: where it started, where it is, what it is made of, and — if it has been drawn — which drawpoint took it and on what day. Extracted markers are listed first, then unextracted ones.",
+  "commands": [
+    "massflow marker report-export [<s>]",
+    "massflow marker report-days <i>",
+    "massflow marker report-period <i>",
+    "massflow marker filename <s>"
+  ],
+  "layout": {
+    "delimiter": "tab",
+    "header": "line 1 is the column header",
+    "default_filename": "massflow_Day<N>.txt, where N is the current flow day"
+  },
+  "columns": [
+    {
+      "name": "MarkerID",
+      "required": true,
+      "description": "Marker ID."
+    },
+    {
+      "name": "xStart, yStart, zStart",
+      "required": true,
+      "description": "Where the marker was created."
+    },
+    {
+      "name": "xCurrent, yCurrent, zCurrent",
+      "required": true,
+      "description": "Current position, or -99 -99 -99 if the marker has been extracted."
+    },
+    {
+      "name": "ParentBlock",
+      "required": true,
+      "description": "ID of the mine block the marker came from."
+    },
+    {
+      "name": "Active",
+      "required": true,
+      "description": "1 if the marker moved during the current period, else 0."
+    },
+    {
+      "name": "Grade1..GradeN",
+      "required": false,
+      "description": "The extra ore-grade columns of the block model, under their own headings."
+    },
+    {
+      "name": "Mass",
+      "required": true,
+      "description": "Mass carried by the marker."
+    },
+    {
+      "name": "Volume",
+      "required": true,
+      "description": "Volume carried by the marker, spacing^3 / (1 - porosity)."
+    },
+    {
+      "name": "Porosity",
+      "required": true,
+      "description": "Marker porosity."
+    },
+    {
+      "name": "SolidDen",
+      "required": true,
+      "description": "Solids density of the host mine block."
+    },
+    {
+      "name": "BulkDen",
+      "required": true,
+      "description": "Bulk density of the host block, density * (1 - porosity)."
+    },
+    {
+      "name": "FricAng",
+      "required": true,
+      "description": "Friction angle of the host block."
+    },
+    {
+      "name": "FragDia",
+      "required": true,
+      "description": "Fragment diameter carried by the marker."
+    },
+    {
+      "name": "ShearStr",
+      "required": true,
+      "description": "Shear strain accumulated by the marker."
+    },
+    {
+      "name": "Work",
+      "required": true,
+      "description": "Work accumulated by the marker."
+    },
+    {
+      "name": "DPEnd",
+      "required": true,
+      "description": "Name of the drawpoint that extracted the marker, or null."
+    },
+    {
+      "name": "DayExtr",
+      "required": true,
+      "description": "Day of extraction, or -99."
+    },
+    {
+      "name": "MassExtr",
+      "required": true,
+      "description": "Cumulative mass extracted, or -99."
+    },
+    {
+      "name": "Type",
+      "required": true,
+      "description": "Marker type: -2 unbulked for IMZ growth, -1 unbulked for collapse, 0 unbulked for rilling, 1 partially bulked, 2 fully bulked."
+    },
+    {
+      "name": "TensileStrength",
+      "required": false,
+      "description": "Tensile strength carried by the marker."
+    }
+  ],
+  "notes": [
+    "`massflow marker report-days` / `report-period` schedule the report to be written automatically during the run; `report-export` writes one immediately.",
+    "The marker type also drives `range marker-type <i>`, which the engine accepts for integers between -2 and 3 — one value more than the five the manual defines.",
+    "`TensileStrength` appears in the `report-export` output but not in the trace-marker report, which otherwise shares the column set."
+  ],
+  "related_formats": [
+    "trace-marker-report"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

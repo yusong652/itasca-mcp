@@ -1,0 +1,102 @@
+{
+  "name": "draw-bells",
+  "full_name": "Draw Bell Import File",
+  "direction": "input",
+  "evidence": "docs + state",
+  "description": "The drawbell type catalogue referenced by the DBType column of the drawpoint file. Three shapes exist — conical, rectangular and SLC ring — and each uses a different subset of the columns; the unused ones are set to zero.",
+  "commands": [
+    "massflow drawpoint import-drawbell <s>",
+    "massflow drawpoint import-drawbell-txt <s>",
+    "massflow drawpoint import-drawbell-GUI"
+  ],
+  "layout": {
+    "delimiter": "comma (`import-drawbell`) or tab (`import-drawbell-txt`)",
+    "header": "line 1 is the column header; drawbell rows follow from line 2",
+    "column_order": "FIXED — the columns must appear in the order below."
+  },
+  "columns": [
+    {
+      "name": "BellName",
+      "required": true,
+      "description": "Unique drawbell type name; must start with `cone`, `rect` or `slc`, then `%` and an id."
+    },
+    {
+      "name": "DDWidth",
+      "required": true,
+      "description": "Draw-drift width."
+    },
+    {
+      "name": "DDHeight",
+      "required": true,
+      "description": "Draw-drift height."
+    },
+    {
+      "name": "BellHeight",
+      "required": true,
+      "description": "Drawbell height. Block caving only — zero for SLC rings."
+    },
+    {
+      "name": "SideAngle",
+      "required": true,
+      "description": "Wall angle (conical) or sidewall angle (rectangular). Zero for SLC rings."
+    },
+    {
+      "name": "EndAngle",
+      "required": true,
+      "description": "End-wall angle, rectangular drawbells only. Zero for conical and SLC."
+    },
+    {
+      "name": "DFZDepth",
+      "required": true,
+      "description": "SLC: depth of the disturbed flow zone, measured horizontally from the blast ring across the burden."
+    },
+    {
+      "name": "DFZWidth",
+      "required": true,
+      "description": "SLC: width of the disturbed flow zone across the ring, centred on the crosscut drift."
+    },
+    {
+      "name": "DFZHeight",
+      "required": true,
+      "description": "SLC: height of the disturbed flow zone, measured vertically up from the brow."
+    },
+    {
+      "name": "SideHoleAngle",
+      "required": true,
+      "description": "SLC: angle of the ring sideholes to the horizontal plane."
+    },
+    {
+      "name": "CrossCutSpacing",
+      "required": true,
+      "description": "SLC: horizontal centre-to-centre distance between crosscuts."
+    },
+    {
+      "name": "SublevelSpacing",
+      "required": true,
+      "description": "SLC: vertical floor-to-floor distance between sublevels."
+    },
+    {
+      "name": "Burden",
+      "required": true,
+      "description": "SLC: ring thickness, measured horizontally along the crosscut."
+    },
+    {
+      "name": "RetreatAz",
+      "required": true,
+      "description": "SLC: azimuth of retreat for the ring, clockwise from north."
+    }
+  ],
+  "example": [
+    "BellName,DDWidth,DDHeight,BellHeight,SideAngle,EndAngle,DFZDepth,DFZWidth,DFZHeight,SideHoleAngle,CrossCutSpacing,SublevelSpacing,Burden,RetreatAz",
+    "cone%1,4.5,4.5,13,70,80,0,0,0,0,0,0,0,0"
+  ],
+  "notes": [
+    "In version 9 the only block-caving (cone/rect) properties that affect IMZ growth are the draw-drift width and height; the rest describe geometry that does not yet restrict flow.",
+    "The SLC properties do drive behaviour: the disturbed-flow-zone shape has a significant effect on flow, and the ring geometry and retreat azimuth feed recovery tracking.",
+    "The long horizontal dimension of a rectangular drawbell is not in this file — it is derived from the positions of the two drawpoints that share the drawbell."
+  ],
+  "related_formats": [
+    "draw-points"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

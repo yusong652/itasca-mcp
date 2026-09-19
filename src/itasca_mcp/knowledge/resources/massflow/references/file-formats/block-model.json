@@ -1,0 +1,135 @@
+{
+  "name": "block-model",
+  "full_name": "Block Model Import File",
+  "direction": "input",
+  "evidence": "docs + state",
+  "description": "The orebody. Every MassFlow model starts here: the block model defines the geometry of the mine, the material properties, the ore grades and the period at which each block becomes free to flow. There is no command that sets these values — they exist only as columns of this file.",
+  "commands": [
+    "massflow mine-block import <s>",
+    "massflow mine-block import-txt <s>",
+    "massflow mine-block import-old <s>",
+    "massflow mine-block import-GUI"
+  ],
+  "layout": {
+    "delimiter": "comma (`massflow mine-block import`) or tab (`massflow mine-block import-txt`)",
+    "header": "line 1 is the column header; block rows follow from line 2",
+    "column_order": "free — columns are matched by name, but the names are matched exactly",
+    "notes": [
+      "The tab-delimited files shipped with the example projects begin with a `Delimiter: r;` line ahead of the header row.",
+      "All blocks must be axis-aligned and the same size; the size may differ between the three coordinate directions (10 x 15 x 20 m is allowed).",
+      "Grades are assumed to be a percentage by mass and FricAng is in degrees. Any consistent system of units may be used for everything else.",
+      "The number of blocks drives the memory requirement."
+    ]
+  },
+  "columns": [
+    {
+      "name": "Easting",
+      "required": true,
+      "description": "X of the block centre."
+    },
+    {
+      "name": "Northing",
+      "required": true,
+      "description": "Y of the block centre."
+    },
+    {
+      "name": "Elevation",
+      "required": true,
+      "description": "Z of the block centre."
+    },
+    {
+      "name": "CavePeriod",
+      "required": true,
+      "description": "Draw-schedule period at which the block becomes free to flow; the block is released at the start of that period. Use 1 for 'flowable from the start' and a number larger than the simulated period count for 'never flows' (i.e. outside the cave limits). CavePeriodDyn is initialised from this and can then be changed from FISH; when the two differ, the dynamic value wins."
+    },
+    {
+      "name": "BlockID",
+      "required": true,
+      "description": "Unique integer ID, used for block-extraction reporting."
+    },
+    {
+      "name": "SolidsDen",
+      "required": true,
+      "description": "Specific gravity (true solids density) of the block material."
+    },
+    {
+      "name": "InSituPor",
+      "required": true,
+      "description": "Porosity before the material starts flowing. Zero in blocks that have not caved; greater than zero but below MaxPor in previously caved ground."
+    },
+    {
+      "name": "MaxPor",
+      "required": true,
+      "description": "Porosity once the material has fully bulked during flow — the porosity inside the IMZs. Typically 0.45-0.55. Not the traditional cave-wide bulking factor, which averages flowing and stagnant regions."
+    },
+    {
+      "name": "FricAng",
+      "required": true,
+      "description": "Friction angle of the caved rock at maximum porosity, in degrees. Controls the IMZ base angle (45 + FricAng/2), the free-surface angle of repose (12 + FricAng/2) and the stresses inside the IMZ (proportional to 1/FricAng). Typically 35-50."
+    },
+    {
+      "name": "PriFragA",
+      "required": true,
+      "description": "Weibull alpha (shape) for the primary fragment-size distribution, s = beta * (-ln(1-r))^(1/alpha)."
+    },
+    {
+      "name": "PriFragB",
+      "required": true,
+      "description": "Weibull beta (fragment size) for the primary fragmentation distribution."
+    },
+    {
+      "name": "TenStrA",
+      "required": true,
+      "description": "Weibull alpha (shape) for the tensile-strength distribution."
+    },
+    {
+      "name": "TenStrB",
+      "required": true,
+      "description": "Weibull beta (tensile strength) — usually estimated from UCS or Is50."
+    },
+    {
+      "name": "UCS",
+      "required": true,
+      "description": "Unconfined compressive strength of the intact material, for a standard 5 cm diameter core. Fragment strength is scaled from this for secondary fragmentation."
+    },
+    {
+      "name": "PercK1",
+      "required": true,
+      "description": "Percolation-rate coefficient k1 for fines migration; recommended base value 11. Strain-rate sensitive (Pierce 2010 attributes this to k2 in error)."
+    },
+    {
+      "name": "PercK2",
+      "required": true,
+      "description": "Percolation-rate coefficient k2 for fines migration; recommended base value 4.5."
+    },
+    {
+      "name": "PercVMR",
+      "required": true,
+      "description": "Variance-to-mean ratio for percolation distance; the standard deviation is sqrt(VMR * L) around the mean distance L. Recommended base value 0.5."
+    },
+    {
+      "name": "<grade>",
+      "required": false,
+      "description": "Any number of extra columns. The column heading becomes the grade name; values are generally a percentage (0-100). Readable from FISH as massflow.mineblock.ore.name / massflow.mineblock.ore.value, and available as mineblock plot-item labels."
+    },
+    {
+      "name": "MeanDia / MeanDiaDyn / CavePeriodDyn / SDDia / Pmin / Kexp",
+      "required": false,
+      "description": "Recognised by the reader but normally computed by MassFlow: mean fragment diameter from the Weibull parameters and its user-writable dynamic twin, the dynamic cave period, and the legacy diameter/percolation columns. The legacy `import-old` files carry them explicitly."
+    }
+  ],
+  "example": [
+    "Easting,Northing,Elevation,CavePeriod,BlockID,SolidsDen,InSituPor,MaxPor,FricAng,PriFragA,PriFragB,TenStrA,TenStrB,UCS,PercK1,PercK2,PercVMR,Litho",
+    "1405,-1598,225,1,1,2.6,0,0.2,42,0.86,0.45,2.3803,3803,60000,11,4.5,0.5,9"
+  ],
+  "notes": [
+    "On import the engine echoes the extra grade columns it picked up and the block count: `--- Number of mine blocks imported: 9696`.",
+    "A second import into the same model is refused with `Mine blocks have already been imported` — start from `model new`.",
+    "On MassFlow 9.7.47 `massflow mine-block import-old` terminated the process on the legacy file shipped with the tutorial project."
+  ],
+  "related_formats": [
+    "caved-block-model",
+    "flac3d-grid"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

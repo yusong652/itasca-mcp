@@ -1231,6 +1231,67 @@ def test_massflow_range_elements_shared_via_common() -> None:
     assert mf is not None and mf == flac
 
 
+def test_massflow_file_formats_cover_inputs_and_outputs() -> None:
+    """MassFlow has no property command — the import files ARE the material API."""
+    cats = ReferenceLoader.load_index(software="massflow").get("categories", {})
+    assert "file-formats" in cats
+    items = {i["name"]: i for i in ReferenceLoader.get_item_list("file-formats", software="massflow")}
+    assert {"block-model", "draw-points", "draw-bells", "draw-schedule", "trace-markers"} <= set(items)
+    assert {"marker-report", "extraction-report", "caved-block-model", "flac3d-grid"} <= set(items)
+    assert {i["direction"] for i in items.values()} == {"input", "output", "reference"}
+
+
+def test_massflow_block_model_carries_the_mandatory_columns() -> None:
+    """The column set the reader matches by name; nothing else can set these."""
+    doc = ReferenceLoader.load_item_doc("file-formats", "block-model", software="massflow")
+    assert doc is not None
+    required = {c["name"] for c in doc["columns"] if c["required"]}
+    assert {
+        "Easting",
+        "Northing",
+        "Elevation",
+        "CavePeriod",
+        "BlockID",
+        "SolidsDen",
+        "InSituPor",
+        "MaxPor",
+        "FricAng",
+        "PriFragA",
+        "PriFragB",
+        "TenStrA",
+        "TenStrB",
+        "UCS",
+        "PercK1",
+        "PercK2",
+        "PercVMR",
+    } <= required
+
+
+def test_massflow_draw_point_columns_are_positional() -> None:
+    """Block-model columns are matched by name; draw-point columns by position."""
+    blocks = ReferenceLoader.load_item_doc("file-formats", "block-model", software="massflow")
+    points = ReferenceLoader.load_item_doc("file-formats", "draw-points", software="massflow")
+    assert "free" in blocks["layout"]["column_order"]
+    assert points["layout"]["column_order"].startswith("FIXED")
+    assert [c["name"] for c in points["columns"]] == ["DPName", "X", "Y", "Z", "DBID", "DBType"]
+
+
+def test_massflow_import_commands_point_at_their_format() -> None:
+    """Browsing the command has to lead to the format, or the command says nothing."""
+    pointers = {
+        "mine-block-import": "block-model",
+        "drawpoint-import": "draw-points",
+        "drawpoint-import-drawbell": "draw-bells",
+        "drawpoint-import-drawperiod": "draw-schedule",
+        "marker-import-trace": "trace-markers",
+        "mine-block-export": "flac3d-grid",
+    }
+    for stem, topic in pointers.items():
+        doc = CommandLoader.load_command_doc("massflow", stem, "9.0", software="massflow")
+        assert doc is not None, stem
+        assert any(f"file-formats {topic}" in n for n in doc.get("notes", [])), stem
+
+
 def test_massflow_plot_items_are_engine_specific() -> None:
     cat = ReferenceLoader.load_category_index("plot-items", software="massflow")
     assert cat is not None

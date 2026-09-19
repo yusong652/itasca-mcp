@@ -1,0 +1,48 @@
+{
+  "name": "trace-marker-report-daily",
+  "full_name": "Daily Trace Marker Report Output File",
+  "direction": "output",
+  "evidence": "state",
+  "description": "One row per trace marker per day — the trajectory, for plotting movement over time.",
+  "commands": [
+    "massflow marker trace-report-daily"
+  ],
+  "layout": {
+    "delimiter": "comma",
+    "header": "line 1 is the column header",
+    "default_filename": "traceMarkerReportDaily.csv"
+  },
+  "columns": [
+    {
+      "name": "Day",
+      "required": true,
+      "description": "Flow day."
+    },
+    {
+      "name": "MarkerID",
+      "required": true,
+      "description": "Marker ID."
+    },
+    {
+      "name": "TracerID",
+      "required": true,
+      "description": "Tracer name; `Unknown` for markers imported by position."
+    },
+    {
+      "name": "Easting, Northing, Elevation",
+      "required": true,
+      "description": "Marker position on that day."
+    }
+  ],
+  "example": [
+    "Day,MarkerID,TracerID,Easting,Northing,Elevation",
+    "2,256,Unknown,1519.08,-1552,268.204"
+  ],
+  "notes": [
+    "The command takes no filename keyword."
+  ],
+  "related_formats": [
+    "trace-marker-report"
+  ],
+  "official_documentation": "Not in the manual — the command has no page. Read back from the file it writes."
+}

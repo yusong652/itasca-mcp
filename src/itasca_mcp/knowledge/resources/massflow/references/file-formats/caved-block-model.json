@@ -1,0 +1,43 @@
+{
+  "name": "caved-block-model",
+  "full_name": "Caved Block Model Export File",
+  "direction": "output",
+  "evidence": "state",
+  "description": "The block model plus its caved state, in the same comma-delimited shape the importer reads — so a run can be continued from where another one stopped.",
+  "commands": [
+    "massflow mine-block export-caved <s>"
+  ],
+  "layout": {
+    "delimiter": "comma",
+    "header": "line 1 is the column header",
+    "default_filename": "the name given is used verbatim — no extension is appended"
+  },
+  "columns": [
+    {
+      "name": "HasCaved",
+      "required": true,
+      "description": "1 if the block has caved, else 0."
+    },
+    {
+      "name": "CavedPeriod",
+      "required": true,
+      "description": "Period at which the block caved. Note the spelling differs from the importer's `CavePeriod`."
+    },
+    {
+      "name": "<block-model columns>",
+      "required": true,
+      "description": "Every column of the imported block model, in the exporter's own order."
+    }
+  ],
+  "example": [
+    "Easting,Northing,Elevation,HasCaved,CavedPeriod,BlockID,SolidsDen,InSituPor,MaxPor,FricAng,...",
+    "1405,-1598,225,0,1,1,2.6,0,0.2,42,..."
+  ],
+  "notes": [
+    "The column order is not the import order: the exporter puts PercK1 / PercK2 / PercVMR ahead of UCS."
+  ],
+  "related_formats": [
+    "block-model"
+  ],
+  "official_documentation": "Not in the manual — the command has no page. Read back from the file it writes."
+}
