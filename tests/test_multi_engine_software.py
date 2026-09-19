@@ -1121,6 +1121,24 @@ def test_massflow_dump_drawperiod_records_the_empty_table() -> None:
     assert any("leaves it EMPTY" in n for n in doc["notes"])
 
 
+def test_massflow_import_trace_bounds_hazard_is_documented() -> None:
+    """The file reader has no bounds check; the single-point command does."""
+    imp = CommandLoader.load_command_doc("massflow", "marker-import-trace", "9.0", software="massflow")
+    trace = CommandLoader.load_command_doc("massflow", "marker-trace", "9.0", software="massflow")
+    assert imp is not None and trace is not None
+    assert any("terminates the process at import time" in n for n in imp["notes"])
+    assert any("No valid mineblock found" in n for n in trace["notes"])
+
+
+def test_massflow_index_surfaces_the_process_terminating_commands() -> None:
+    """A user browsing the family should meet the crashers before the engine does."""
+    cat = CommandLoader.load_index(software="massflow")["categories"]["massflow"]
+    notes = " ".join(cat["notes"])
+    assert "terminates the MassFlow process" in notes
+    for name in ("collapse-only", "mine-block import-old", "drawpoint import-drawperiod-txt"):
+        assert name in notes
+
+
 def test_massflow_constitutive_models_scoped_to_coupled_analysis() -> None:
     """The 43 zone models are real but they are not mine-block properties."""
     cat = ReferenceLoader.load_index(software="massflow")["categories"]["constitutive-models"]

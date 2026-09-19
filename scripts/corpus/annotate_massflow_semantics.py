@@ -98,6 +98,20 @@ NOTES: dict[str, list[str]] = {
         "The engine reports what it assigned. `range position-x 1500 2000` caught 4801 "
         "of the tutorial's 9696 mine blocks.",
     ],
+    "marker-import-trace.json": [
+        "Every point in the file must lie inside the mine-block model. On MassFlow "
+        "9.7.47 a file with a point outside it terminates the process at import time — "
+        "the file reader does no bounds check.",
+        "`massflow marker trace position <x> <y> <z>` does check, and answers "
+        "`Trace marker - No valid mineblock found at (x,y,z).` Use it to validate "
+        "coordinates before committing them to a file.",
+    ],
+    "marker-trace.json": [
+        "Bounds-checked: a position outside the mine-block model is refused with "
+        "`Trace marker - No valid mineblock found at (x,y,z).` rather than accepted. "
+        "Note the block-model extent is given by block CENTRES, so the solid reaches "
+        "half a block past them.",
+    ],
     "marker-group.json": [
         "Markers only exist once `massflow compute` has created them, so grouping by "
         "position before the material has moved there selects nothing: `range "

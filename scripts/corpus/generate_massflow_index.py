@@ -39,6 +39,8 @@ CATEGORY_META: dict[str, dict[str, Any]] = {
             "Workflow: 'massflow initialize' sets the run parameters, then 'massflow compute' advances the flow solution by days/periods",
             "Drawpoints drive extraction; markers trace material provenance; mine-blocks tag the orebody for grade tracking",
             "The FLAC3D 'zone' family is available on the massflow binary for coupled mechanical analysis but is documented under software='flac'",
+            "Run 'massflow clean' before 'massflow compute': on 9.7.47 computing an uncleaned model terminates the MassFlow process instead of reporting an error",
+            "Four commands terminate the process on 9.7.47 rather than reporting an error, each flagged in its own notes: massflow clean skipped before compute, collapse-only probed with ?, mine-block import-old, and drawpoint import-drawperiod-txt. marker import-trace does the same if any point in the file lies outside the block model",
         ],
     },
 }
