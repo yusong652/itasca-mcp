@@ -1,0 +1,237 @@
+{
+  "name": "marker",
+  "full_name": "Marker FISH Intrinsics",
+  "description": "Pointer-based access to markers — the moving carriers that track where caved material came from and where it went. Markers are created lazily as caving proceeds, so the set grows during `massflow compute`.",
+  "notes": [
+    "`massflow.marker.type` returns an integer: -2 unbulked for IMZ growth, -1 unbulked for collapse, 0 unbulked for rilling, 1 partially bulked, 2 fully bulked, 3 air.",
+    "`massflow.marker.active.tolerance` is a global setting, readable and writable, not a per-marker value.",
+    "An intrinsic whose signature ends in `:= <type>` can be assigned to, not just read.",
+    "`massflow.marker.moved-day` and `massflow.marker.moved-cycle` cannot be written in a FISH expression: the parser reads the hyphen as subtraction and fails with `massflow.marker.moved is not recognized as a library function`. They are listed by `fish list intrinsics` all the same."
+  ],
+  "intrinsic_count": 40,
+  "undocumented_count": 19,
+  "intrinsics": [
+    {
+      "name": "massflow.marker.above",
+      "signature": "marker_pnt = massflow.marker.above(marker_pnt)",
+      "description": "Get the marker above in the column"
+    },
+    {
+      "name": "massflow.marker.active",
+      "signature": "bool := massflow.marker.active(marker_pnt)",
+      "description": "Get the active state of a marker. A marker is considered active if it has moved vertically downward during the current period. See massflow.marker.active.tolerance."
+    },
+    {
+      "name": "massflow.marker.active.tolerance",
+      "signature": "flt := massflow.marker.active.tolerance() := flt",
+      "description": "Get/set the displacement tolerance that determines whether or not a marker is considered active. A marker is considered active if it has moved vertically downward more than the tolerance during the current period. The default value is 0."
+    },
+    {
+      "name": "massflow.marker.below",
+      "signature": "marker_pnt = massflow.marker.below(marker_pnt)",
+      "description": "Get the marker below in the column"
+    },
+    {
+      "name": "massflow.marker.birthday",
+      "signature": "int := massflow.marker.birthday(marker_pnt)",
+      "description": "Get the day at which the marker was formed"
+    },
+    {
+      "name": "massflow.marker.column",
+      "signature": "int := massflow.marker.column(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.disp",
+      "signature": "vec3/flt := massflow.marker.disp(marker_pnt,<int>)",
+      "description": "v = massflow.marker.disp(mm) Get the marker total accumulated displacement."
+    },
+    {
+      "name": "massflow.marker.disp.x",
+      "signature": "flt := massflow.marker.disp.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.disp.y",
+      "signature": "flt := massflow.marker.disp.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.disp.z",
+      "signature": "flt := massflow.marker.disp.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.extra",
+      "signature": "any := massflow.marker.extra(massflow.marker_pnt,<int>) := any",
+      "description": "massflow.marker.extra(mm,int>) := a Get/set the extra variable at the index associated with the marker. An extra variable can be of any valid FISH parameter type."
+    },
+    {
+      "name": "massflow.marker.find",
+      "signature": "massflow.marker_pnt := massflow.marker.find(int)",
+      "description": "Get a pointer to the marker with internally assigned ID number i. If no marker exists with that ID number, then null is returned."
+    },
+    {
+      "name": "massflow.marker.fragment.diameter",
+      "signature": "flt := massflow.marker.fragment.diameter(marker_pnt)",
+      "description": "Get the fragment diameter associated with this marker."
+    },
+    {
+      "name": "massflow.marker.friction",
+      "signature": "flt := massflow.marker.friction(marker_pnt) := flt",
+      "description": "Get the friction associated with this marker."
+    },
+    {
+      "name": "massflow.marker.group",
+      "signature": "str := massflow.marker.group(massflow.marker_pnt,<str/index>) := str/index",
+      "description": "massflow.marker.group(mm,slot>) := s Get/set the group name assigned to marker mm in slot slot, if provided. The slot named 'Default' is used by default if slot is not provided."
+    },
+    {
+      "name": "massflow.marker.group.remove",
+      "signature": "bool := massflow.marker.group.remove(massflow.marker_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.id",
+      "signature": "int := massflow.marker.id(massflow.marker_pnt)",
+      "description": "Get the ID of a marker."
+    },
+    {
+      "name": "massflow.marker.isgroup",
+      "signature": "bool := massflow.marker.isgroup(massflow.marker_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.list",
+      "signature": "massflow.marker_list_pnt/list := massflow.marker.list(<list>)",
+      "description": "Get a pointer to the container of all markers in the model."
+    },
+    {
+      "name": "massflow.marker.mass",
+      "signature": "flt := massflow.marker.mass(marker_pnt)",
+      "description": "Get the mass associated with this marker."
+    },
+    {
+      "name": "massflow.marker.maxid",
+      "signature": "int := massflow.marker.maxid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.mineblock",
+      "signature": "mineblock_pnt := massflow.marker.mineblock(marker_pnt)",
+      "description": "Get a pointer to the mineblock that contains a given marker."
+    },
+    {
+      "name": "massflow.marker.moved-cycle",
+      "signature": "bool := massflow.marker.moved-cycle(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.moved-day",
+      "signature": "bool := massflow.marker.moved-day(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.num",
+      "signature": "int := massflow.marker.num()",
+      "description": "Get the total number of markers in the model."
+    },
+    {
+      "name": "massflow.marker.origin",
+      "signature": "vec3/flt := massflow.marker.origin(marker_pnt,<int>)",
+      "description": "Get the the position of the marker at the time it was created."
+    },
+    {
+      "name": "massflow.marker.origin.x",
+      "signature": "flt := massflow.marker.origin.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.origin.y",
+      "signature": "flt := massflow.marker.origin.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.origin.z",
+      "signature": "flt := massflow.marker.origin.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.porosity",
+      "signature": "flt := massflow.marker.porosity(marker_pnt) := flt",
+      "description": "Get the porosity associated with this marker."
+    },
+    {
+      "name": "massflow.marker.pos",
+      "signature": "vec3/flt := massflow.marker.pos(marker_pnt,<int>)",
+      "description": "v = massflow.marker.pos(mm) Get the marker position."
+    },
+    {
+      "name": "massflow.marker.pos.lastperiod",
+      "signature": "vec3/flt := massflow.marker.pos.lastperiod(marker_pnt,<int>)",
+      "description": "Get the position of the marker at the end of the previous period."
+    },
+    {
+      "name": "massflow.marker.pos.lastperiod.x",
+      "signature": "flt := massflow.marker.pos.lastperiod.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.pos.lastperiod.y",
+      "signature": "flt := massflow.marker.pos.lastperiod.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.pos.lastperiod.z",
+      "signature": "flt := massflow.marker.pos.lastperiod.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.pos.x",
+      "signature": "flt := massflow.marker.pos.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.pos.y",
+      "signature": "flt := massflow.marker.pos.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.pos.z",
+      "signature": "flt := massflow.marker.pos.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.marker.type",
+      "signature": "str := massflow.marker.type(marker_pnt)",
+      "description": "Get the current marker type as an integer. The types are as follows: -2: unbulked for IMZ growth -1: unbulked for collapse 0: unbulked for rilling 1: partially bulked 2: fully bulked 3: air"
+    },
+    {
+      "name": "massflow.marker.typeid",
+      "signature": "int := massflow.marker.typeid()",
+      "documented": false
+    }
+  ],
+  "live_verification": "fish list intrinsics on live MassFlow 9.7.47 (build 6bc705b1eb), massflow.* only",
+  "undocumented": [
+    "massflow.marker.column",
+    "massflow.marker.disp.x",
+    "massflow.marker.disp.y",
+    "massflow.marker.disp.z",
+    "massflow.marker.group.remove",
+    "massflow.marker.isgroup",
+    "massflow.marker.maxid",
+    "massflow.marker.moved-cycle",
+    "massflow.marker.moved-day",
+    "massflow.marker.origin.x",
+    "massflow.marker.origin.y",
+    "massflow.marker.origin.z",
+    "massflow.marker.pos.lastperiod.x",
+    "massflow.marker.pos.lastperiod.y",
+    "massflow.marker.pos.lastperiod.z",
+    "massflow.marker.pos.x",
+    "massflow.marker.pos.y",
+    "massflow.marker.pos.z",
+    "massflow.marker.typeid"
+  ]
+}

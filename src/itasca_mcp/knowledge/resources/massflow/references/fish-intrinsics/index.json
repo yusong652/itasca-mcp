@@ -1,0 +1,72 @@
+{
+  "type": "fish_intrinsics",
+  "description": "MassFlow FISH intrinsic families — mine blocks, markers, extracted markers, drawpoints, draw periods, and model-level state. FISH is the only scripted access to any of them: the massflow binary exposes no MassFlow-specific Python module.",
+  "items": [
+    {
+      "name": "mineblock",
+      "file": "mineblock.json",
+      "full_name": "Mine Block FISH Intrinsics",
+      "intrinsic_count": 56,
+      "undocumented_count": 18
+    },
+    {
+      "name": "marker",
+      "file": "marker.json",
+      "full_name": "Marker FISH Intrinsics",
+      "intrinsic_count": 40,
+      "undocumented_count": 19
+    },
+    {
+      "name": "drawpoint",
+      "file": "drawpoint.json",
+      "full_name": "Draw Point FISH Intrinsics",
+      "intrinsic_count": 29,
+      "undocumented_count": 11
+    },
+    {
+      "name": "extracted-marker",
+      "file": "extracted-marker.json",
+      "full_name": "Extracted Marker FISH Intrinsics",
+      "intrinsic_count": 23,
+      "undocumented_count": 10
+    },
+    {
+      "name": "draw-period",
+      "file": "draw-period.json",
+      "full_name": "Draw Period FISH Intrinsics",
+      "intrinsic_count": 14,
+      "undocumented_count": 14
+    },
+    {
+      "name": "model",
+      "file": "model.json",
+      "full_name": "Model-Level FISH Intrinsics",
+      "intrinsic_count": 13,
+      "undocumented_count": 9
+    }
+  ],
+  "usage_pattern": {
+    "invocation": "fish define <name> ... end  then  [<name>]",
+    "iteration": "loop foreach local mb massflow.mineblock.list ... end_loop",
+    "assignment": "an intrinsic whose signature ends in ':= <type>' can be written, e.g. massflow.mineblock.frag.primary.a(mb) = 1.0",
+    "examples": [
+      "[massflow.mineblock.num]",
+      "[massflow.drawpoint.mass.actual(massflow.drawpoint.find(1), 50)]",
+      "[massflow.mass.total]"
+    ]
+  },
+  "live_verification": "175 massflow.* intrinsics captured from `fish list intrinsics` on live MassFlow 9.7.47; 81 of them have no page in the 9.7 manual and are marked `documented: false`. State-grade spot checks on the tutorial model: massflow.mass.total, massflow.day, massflow.period, massflow.mineblock.fric, massflow.marker.type, massflow.extractedmarker.num, massflow.drawperiod.num (59 imported periods) and massflow.period.days(1) (7-day period) all returned values consistent with the model that produced them. The per-period massflow.drawperiod.* accessors did not, and their family file says so.",
+  "retired": [
+    {
+      "name": "massflow.mass.extracted",
+      "replacement": "massflow.mass.total",
+      "note": "Has a page in the 9.7 manual but is gone from the binary: evaluating it answers 'massflow.mass.extracted is not recognized as a library function'. Use massflow.mass.total."
+    },
+    {
+      "name": "massflow.mineblock.friction",
+      "replacement": "massflow.mineblock.fric",
+      "note": "Has a page in the 9.7 manual but is gone from the binary: evaluating it answers 'massflow.mineblock.friction is not recognized as a library function'. Use massflow.mineblock.fric."
+    }
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual, FISH Functions (96 fish_massflow.* pages)"
+}

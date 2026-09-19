@@ -1,0 +1,315 @@
+{
+  "name": "mineblock",
+  "full_name": "Mine Block FISH Intrinsics",
+  "description": "Pointer-based access to mine blocks — the orebody cells that carry material properties, ore grades, caving state and fragmentation. Imported block columns are read through here, and the `.dyn` variants are the writable twins that let a script override an imported value mid-run.",
+  "notes": [
+    "`massflow.mineblock.state` returns an integer. The manual lists -1 solid, 1 caved, 2 mobilized active, 3 mobilized inactive, 4 air, 5 extracted — but block 1 of the tutorial model reads back **0**, which the manual does not list, and the vendor's own unittests.dat asserts that same 0.",
+    "Pairs like `frag.primary.a` / `frag.primary.a.dyn` are the imported value and its user-writable override; when they differ, the dynamic one is used.",
+    "Iterate with `loop foreach local mb massflow.mineblock.list` rather than assuming contiguous IDs."
+  ],
+  "intrinsic_count": 56,
+  "undocumented_count": 18,
+  "intrinsics": [
+    {
+      "name": "massflow.mineblock.containing",
+      "signature": "mineblock_pnt := massflow.mineblock.containing(vec3+)",
+      "description": "Get the mineblock mb that contains the input position v. A null pointer is returned if no block contains the vector."
+    },
+    {
+      "name": "massflow.mineblock.dens.current",
+      "signature": "flt := massflow.mineblock.dens.current(mineblock_pnt)",
+      "description": "Get the current density of the mineblock."
+    },
+    {
+      "name": "massflow.mineblock.dens.insitu",
+      "signature": "flt := massflow.mineblock.dens.insitu(mineblock_pnt)",
+      "description": "Get the insitu density of the mineblock (solids density / (1 - porosity))."
+    },
+    {
+      "name": "massflow.mineblock.dens.solids",
+      "signature": "flt := massflow.mineblock.dens.solids(mineblock_pnt) := flt",
+      "description": "Get the density of the solids component of the mineblock."
+    },
+    {
+      "name": "massflow.mineblock.diam.current",
+      "signature": "flt := massflow.mineblock.diam.current(mineblock_pnt)",
+      "description": "Get the current mean diameter of the primary fragmentation in the block"
+    },
+    {
+      "name": "massflow.mineblock.diam.mean",
+      "signature": "flt := massflow.mineblock.diam.mean(mineblock_pnt)",
+      "description": "Get the mean diameter of the primary fragmentation expected in the block"
+    },
+    {
+      "name": "massflow.mineblock.diam.mean.dyn",
+      "signature": "flt := massflow.mineblock.diam.mean.dyn(mineblock_pnt) := flt",
+      "description": "massflow.mineblock.diam.mean.dyn(mb) := f Get/set the mean diameter of the primary fragmentation expected in the block"
+    },
+    {
+      "name": "massflow.mineblock.diam.sd",
+      "signature": "flt := massflow.mineblock.diam.sd(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.extra",
+      "signature": "any := massflow.mineblock.extra(massflow.mineblock_pnt,<int>) := any",
+      "description": "massflow.mineblock.extra(mb,int>) := a Get/set the extra variable at the index associated with the mineblock. An extra variable can be of any valid FISH parameter type."
+    },
+    {
+      "name": "massflow.mineblock.fillairmarkers",
+      "signature": "massflow.mineblock.fillairmarkers(mineblock_pnt) := str",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.fillairmarkersdict",
+      "signature": "flt := massflow.mineblock.fillairmarkersdict(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.find",
+      "signature": "massflow.mineblock_pnt := massflow.mineblock.find(int)",
+      "description": "Get a pointer to the mineblock with internally assigned ID number i. If no mineblock exists with that ID number, then null is returned."
+    },
+    {
+      "name": "massflow.mineblock.frag.primary.a",
+      "signature": "flt := massflow.mineblock.frag.primary.a(mineblock_pnt) := flt",
+      "description": "massflow.mineblock.frag.primary.a(mb) := f Get/Set the primary fragmentation A parameter."
+    },
+    {
+      "name": "massflow.mineblock.frag.primary.a.dyn",
+      "signature": "flt := massflow.mineblock.frag.primary.a.dyn(mineblock_pnt) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.frag.primary.b",
+      "signature": "flt := massflow.mineblock.frag.primary.b(mineblock_pnt) := flt",
+      "description": "massflow.mineblock.frag.primary.b(mb) := f Get/set the primary fragmentation B parameter"
+    },
+    {
+      "name": "massflow.mineblock.frag.primary.b.dyn",
+      "signature": "flt := massflow.mineblock.frag.primary.b.dyn(mineblock_pnt) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.fric",
+      "signature": "flt := massflow.mineblock.fric(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.group",
+      "signature": "str := massflow.mineblock.group(massflow.mineblock_pnt,<str/index>) := str/index",
+      "description": "massflow.mineblock.group(mb,slot>) := s Get/set the group name assigned to mineblock mb in slot slot, if provided. The slot named 'Default' is used by default if slot is not provided."
+    },
+    {
+      "name": "massflow.mineblock.group.remove",
+      "signature": "bool := massflow.mineblock.group.remove(massflow.mineblock_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.id",
+      "signature": "int := massflow.mineblock.id(massflow.mineblock_pnt)",
+      "description": "Get the ID of a mineblock."
+    },
+    {
+      "name": "massflow.mineblock.installmarkers",
+      "signature": "int = massflow.mineblock.installmarkers(mineblock_pnt,int,<flt>)",
+      "description": "Manually install markers into mineblock mb. The marker type to be installed is given by i. The types are as follows: -2: unbulked for IMZ growth -1: unbulked for collapse 0: unbulked for rilling 1: partially bulked 2: fully bulked 3: air Optionally, if air markers are being installed, the porosity can be specified as f (between 0 and 1). If no value is given, porosity defaults to the maximum porosit of the host mine block. The function retuirns the number of markers created."
+    },
+    {
+      "name": "massflow.mineblock.isgroup",
+      "signature": "bool := massflow.mineblock.isgroup(massflow.mineblock_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.kexp",
+      "signature": "flt := massflow.mineblock.kexp(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.list",
+      "signature": "massflow.mineblock_list_pnt/list := massflow.mineblock.list(<list>)",
+      "description": "Get a pointer to the container of all mineblocks in the block model."
+    },
+    {
+      "name": "massflow.mineblock.marker.vol",
+      "signature": "flt := massflow.mineblock.marker.vol(mineblock_pnt)",
+      "description": "Get the accumulated total marker volume ??"
+    },
+    {
+      "name": "massflow.mineblock.marker.vol.air",
+      "signature": "flt := massflow.mineblock.marker.vol.air(mineblock_pnt)",
+      "description": "Get the accumulated marker air volume ??"
+    },
+    {
+      "name": "massflow.mineblock.marker.vol.solid",
+      "signature": "flt := massflow.mineblock.marker.vol.solid(mineblock_pnt)",
+      "description": "Get the accumulated marker solid volume ??"
+    },
+    {
+      "name": "massflow.mineblock.maxid",
+      "signature": "int := massflow.mineblock.maxid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.near.list",
+      "signature": "list = massflow.mineblock.near.list(mineblock_pnt,flt)",
+      "description": "Get a list of IDs to the mine blocks at a distance lower than \\(d\\)."
+    },
+    {
+      "name": "massflow.mineblock.num",
+      "signature": "int := massflow.mineblock.num()",
+      "description": "Get the total number of mineblocks in the model."
+    },
+    {
+      "name": "massflow.mineblock.num.ore",
+      "signature": "int := massflow.mineblock.num.ore(mineblock_pnt)",
+      "description": "Get the number of ore properties of a mineblock."
+    },
+    {
+      "name": "massflow.mineblock.ore.name",
+      "signature": "flt := massflow.mineblock.ore.name(mineblock_pnt,int)",
+      "description": "Get the ore name at the i position associated with the mineblock. The ore names and numbers are determined from the imported file data. See massflow mineblock import. The total number of properties is given by massflow.mineblock.num.ore."
+    },
+    {
+      "name": "massflow.mineblock.ore.value",
+      "signature": "flt := massflow.mineblock.ore.value(mineblock_pnt,int) := flt",
+      "description": "massflow.mineblock.ore.value(mb,i) := f Get/set the ore property at the i position associated with the mineblock. The property numbers are determined from the imported file data. See massflow mineblock import. The total number of properties is given by massflow.mineblock.num.ore."
+    },
+    {
+      "name": "massflow.mineblock.perc.k1",
+      "signature": "flt := massflow.mineblock.perc.k1(mineblock_pnt)",
+      "description": "Get the percolation rate parameter k1. See MassFlow Theory and Background."
+    },
+    {
+      "name": "massflow.mineblock.perc.k2",
+      "signature": "flt := massflow.mineblock.perc.k2(mineblock_pnt)",
+      "description": "Get the percolation rate parameter k2. See MassFlow Theory and Background."
+    },
+    {
+      "name": "massflow.mineblock.perc.vmr",
+      "signature": "flt := massflow.mineblock.perc.vmr(mineblock_pnt)",
+      "description": "Get the variance to mean ratio for percolation distance. See MassFlow Theory and Background."
+    },
+    {
+      "name": "massflow.mineblock.period",
+      "signature": "int := massflow.mineblock.period(mineblock_pnt)",
+      "description": "Get the period number in the draw schedule at which the block is capable of flowing."
+    },
+    {
+      "name": "massflow.mineblock.period.dyn",
+      "signature": "int := massflow.mineblock.period.dyn(mineblock_pnt) := int",
+      "description": "Get/Set the period number in the draw schedule at which the block is capable of flowing. This is different from massflow.mineblock.period in that it is editable. If the dynamic period is different from the non-dynamic period, then the dynamic period will be used."
+    },
+    {
+      "name": "massflow.mineblock.pmin",
+      "signature": "flt := massflow.mineblock.pmin(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.poros.current",
+      "signature": "flt := massflow.mineblock.poros.current(mineblock_pnt)",
+      "description": "Get the current insitu porosity of the mineblock (the porosity at the current stage of flowing)."
+    },
+    {
+      "name": "massflow.mineblock.poros.initial",
+      "signature": "flt := massflow.mineblock.poros.initial(mineblock_pnt)",
+      "description": "Get the initially specified insitu porosity of the mineblock (the porosity before it starts flowing)."
+    },
+    {
+      "name": "massflow.mineblock.poros.initial.dyn",
+      "signature": "flt := massflow.mineblock.poros.initial.dyn(mineblock_pnt) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.poros.max.current",
+      "signature": "flt := massflow.mineblock.poros.max.current(mineblock_pnt)",
+      "description": "Get the current maximum porosity of the mineblock (the recalculated maximum porosity at this stage of flow)."
+    },
+    {
+      "name": "massflow.mineblock.poros.max.initial",
+      "signature": "flt := massflow.mineblock.poros.max.initial(mineblock_pnt)",
+      "description": "Get the initially specified maximum porosity of the mineblock (the porosity when material has dilated fully)."
+    },
+    {
+      "name": "massflow.mineblock.pos",
+      "signature": "vec3/flt := massflow.mineblock.pos(mineblock_pnt,<int>)",
+      "description": "v = massflow.mineblock.pos(mb) Get the mineblock centroid position."
+    },
+    {
+      "name": "massflow.mineblock.pos.x",
+      "signature": "flt := massflow.mineblock.pos.x(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.pos.y",
+      "signature": "flt := massflow.mineblock.pos.y(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.pos.z",
+      "signature": "flt := massflow.mineblock.pos.z(mineblock_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.state",
+      "signature": "int := massflow.mineblock.state(mineblock_pnt)",
+      "description": "Get the current state indicator for the mineblock as follows: -1: solid1: caved 2: mobilized active 3: mobilized inactive 4: air 5: extracted"
+    },
+    {
+      "name": "massflow.mineblock.staticdays",
+      "signature": "flt := massflow.mineblock.staticdays(mineblock_pnt)",
+      "description": "Get the number of days that the block has been static"
+    },
+    {
+      "name": "massflow.mineblock.tension.a",
+      "signature": "flt := massflow.mineblock.tension.a(mineblock_pnt) := flt",
+      "description": "massflow.mineblock.tension.a(mb) := f Get/set the tensile strength A parameter"
+    },
+    {
+      "name": "massflow.mineblock.tension.a.dyn",
+      "signature": "flt := massflow.mineblock.tension.a.dyn(mineblock_pnt) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.tension.b",
+      "signature": "flt := massflow.mineblock.tension.b(mineblock_pnt) := flt",
+      "description": "massflow.mineblock.tension.b(mb) := f Get/set the tensile strength B parameter"
+    },
+    {
+      "name": "massflow.mineblock.tension.b.dyn",
+      "signature": "flt := massflow.mineblock.tension.b.dyn(mineblock_pnt) := flt",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.typeid",
+      "signature": "int := massflow.mineblock.typeid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.mineblock.ucs",
+      "signature": "flt := massflow.mineblock.ucs(mineblock_pnt)",
+      "description": "Get the Unconfined Compressive Strength of the intact rock material."
+    }
+  ],
+  "live_verification": "fish list intrinsics on live MassFlow 9.7.47 (build 6bc705b1eb), massflow.* only",
+  "undocumented": [
+    "massflow.mineblock.diam.sd",
+    "massflow.mineblock.fillairmarkers",
+    "massflow.mineblock.fillairmarkersdict",
+    "massflow.mineblock.frag.primary.a.dyn",
+    "massflow.mineblock.frag.primary.b.dyn",
+    "massflow.mineblock.fric",
+    "massflow.mineblock.group.remove",
+    "massflow.mineblock.isgroup",
+    "massflow.mineblock.kexp",
+    "massflow.mineblock.maxid",
+    "massflow.mineblock.pmin",
+    "massflow.mineblock.poros.initial.dyn",
+    "massflow.mineblock.pos.x",
+    "massflow.mineblock.pos.y",
+    "massflow.mineblock.pos.z",
+    "massflow.mineblock.tension.a.dyn",
+    "massflow.mineblock.tension.b.dyn",
+    "massflow.mineblock.typeid"
+  ]
+}

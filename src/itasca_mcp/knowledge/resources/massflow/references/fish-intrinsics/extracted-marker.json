@@ -1,0 +1,141 @@
+{
+  "name": "extracted-marker",
+  "full_name": "Extracted Marker FISH Intrinsics",
+  "description": "Markers that have left through a drawpoint. They form their own list with their own IDs — a marker does not stay in `massflow.marker.list` after extraction — and carry the birth day, origin, mass and fragment size that recovery accounting is built from.",
+  "notes": [
+    "Iterate with `loop foreach local m massflow.extractedmarker.list`.",
+    "`massflow.extractedmarker.mineblock` gives the block the material came from, which is what origin/destination reporting keys on."
+  ],
+  "intrinsic_count": 23,
+  "undocumented_count": 10,
+  "intrinsics": [
+    {
+      "name": "massflow.extractedmarker.birthday",
+      "signature": "int := massflow.extractedmarker.birthday(marker_pnt)",
+      "description": "Get the day at which the extracted marker was formed"
+    },
+    {
+      "name": "massflow.extractedmarker.disp",
+      "signature": "vec3/flt := massflow.extractedmarker.disp(marker_pnt,<int>)",
+      "description": "v = massflow.extractedmarker.disp(mm) Get the extracted marker total accumulated displacement."
+    },
+    {
+      "name": "massflow.extractedmarker.disp.x",
+      "signature": "flt := massflow.extractedmarker.disp.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.disp.y",
+      "signature": "flt := massflow.extractedmarker.disp.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.disp.z",
+      "signature": "flt := massflow.extractedmarker.disp.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.extra",
+      "signature": "any := massflow.extractedmarker.extra(massflow.extractedmarker_pnt,<int>) := any",
+      "description": "massflow.extractedmarker.extra(mm,int>) := a Get/set the extra variable at the index associated with the extracted marker. An extra variable can be of any valid FISH parameter type."
+    },
+    {
+      "name": "massflow.extractedmarker.find",
+      "signature": "massflow.extractedmarker_pnt := massflow.extractedmarker.find(int)",
+      "description": "Get a pointer to the extracted marker with internally assigned ID number i. If no marker exists with that ID number, then null is returned."
+    },
+    {
+      "name": "massflow.extractedmarker.fragment.diameter",
+      "signature": "flt := massflow.extractedmarker.fragment.diameter(marker_pnt)",
+      "description": "Get the fragment diameter associated with this extracted marker."
+    },
+    {
+      "name": "massflow.extractedmarker.group",
+      "signature": "str := massflow.extractedmarker.group(massflow.extractedmarker_pnt,<str/index>) := str/index",
+      "description": "massflow.extractedmarker.group(mm,slot>) := s Get/set the group name assigned to extracted marker mm in slot slot, if provided. The slot named 'Default' is used by default if slot is not provided."
+    },
+    {
+      "name": "massflow.extractedmarker.group.remove",
+      "signature": "bool := massflow.extractedmarker.group.remove(massflow.extractedmarker_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.id",
+      "signature": "int := massflow.extractedmarker.id(massflow.extractedmarker_pnt)",
+      "description": "Get the ID of an extracted marker."
+    },
+    {
+      "name": "massflow.extractedmarker.isgroup",
+      "signature": "bool := massflow.extractedmarker.isgroup(massflow.extractedmarker_pnt,str/index,<str/index>)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.list",
+      "signature": "massflow.extractedmarker_list_pnt/list := massflow.extractedmarker.list(<list>)",
+      "description": "Get a pointer to the container of all extracted markers in the model."
+    },
+    {
+      "name": "massflow.extractedmarker.mass",
+      "signature": "flt := massflow.extractedmarker.mass(marker_pnt)",
+      "description": "Get the mass associated with this extractedmarker."
+    },
+    {
+      "name": "massflow.extractedmarker.maxid",
+      "signature": "int := massflow.extractedmarker.maxid()",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.mineblock",
+      "signature": "mineblock_pnt := massflow.extractedmarker.mineblock(marker_pnt)",
+      "description": "Get a pointer to the original mineblock that contained a given extracted marker."
+    },
+    {
+      "name": "massflow.extractedmarker.num",
+      "signature": "int := massflow.extractedmarker.num()",
+      "description": "Get the total number of extracted markers in the model."
+    },
+    {
+      "name": "massflow.extractedmarker.origin",
+      "signature": "vec3/flt := massflow.extractedmarker.origin(marker_pnt,<int>)",
+      "description": "Get the the position of the extracted marker at the time it was created."
+    },
+    {
+      "name": "massflow.extractedmarker.origin.x",
+      "signature": "flt := massflow.extractedmarker.origin.x(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.origin.y",
+      "signature": "flt := massflow.extractedmarker.origin.y(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.origin.z",
+      "signature": "flt := massflow.extractedmarker.origin.z(marker_pnt)",
+      "documented": false
+    },
+    {
+      "name": "massflow.extractedmarker.type",
+      "signature": "str := massflow.extractedmarker.type(marker_pnt)",
+      "description": "Get the extracted marker type as an integer. The types are as follows: -2: unbulked for IMZ growth -1: unbulked for collapse 0: unbulked for rilling 1: partially bulked 2: fully bulked 3: air"
+    },
+    {
+      "name": "massflow.extractedmarker.typeid",
+      "signature": "int := massflow.extractedmarker.typeid()",
+      "documented": false
+    }
+  ],
+  "live_verification": "fish list intrinsics on live MassFlow 9.7.47 (build 6bc705b1eb), massflow.* only",
+  "undocumented": [
+    "massflow.extractedmarker.disp.x",
+    "massflow.extractedmarker.disp.y",
+    "massflow.extractedmarker.disp.z",
+    "massflow.extractedmarker.group.remove",
+    "massflow.extractedmarker.isgroup",
+    "massflow.extractedmarker.maxid",
+    "massflow.extractedmarker.origin.x",
+    "massflow.extractedmarker.origin.y",
+    "massflow.extractedmarker.origin.z",
+    "massflow.extractedmarker.typeid"
+  ]
+}
