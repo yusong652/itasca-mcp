@@ -278,9 +278,10 @@ EXTRA_NOTES: dict[str, list[str]] = {
         "Used by the vendor's own unittests.dat: `massflow marker list range active`.",
     ],
     "marker-type": [
-        "MassFlow-specific. The manual defines five type codes (-2 unbulked for IMZ "
-        "growth, -1 unbulked for collapse, 0 unbulked for rilling, 1 partially bulked, "
-        "2 fully bulked) but the engine accepts integers between -2 and 3.",
+        "MassFlow-specific. Type codes: -2 unbulked for IMZ growth, -1 unbulked for "
+        "collapse, 0 unbulked for rilling, 1 partially bulked, 2 fully bulked, 3 air. "
+        "The theory chapter's marker-report section omits `3: air`; the FISH page for "
+        "massflow.marker.type has it, and the engine accepts -2 to 3.",
         "Used by the vendor's own unittests.dat: `massflow marker list range marker-type 2`.",
     ],
     "fid": ["No page in the 9.7 manual; the argument type is read from live enumeration."],

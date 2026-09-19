@@ -1245,11 +1245,13 @@ def test_massflow_range_elements_match_the_live_binary() -> None:
     assert not (names & {"aspect-ratio", "jmodel", "joint-set", "structure-type", "wall", "circle"})
 
 
-def test_massflow_marker_type_records_the_doc_binary_gap() -> None:
+def test_massflow_marker_type_carries_all_six_codes() -> None:
+    """The theory chapter lists five type codes; the FISH page lists six."""
     doc = ReferenceLoader.load_item_doc("range-elements", "marker-type", software="massflow")
     assert doc is not None
     assert doc["syntax"] == "marker-type <i>"
-    assert any("-2 and 3" in n for n in doc["notes"])
+    note = " ".join(doc["notes"])
+    assert "3 air" in note and "-2 to 3" in note
 
 
 def test_massflow_range_index_prose_is_not_flac() -> None:
