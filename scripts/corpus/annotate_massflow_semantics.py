@@ -7,6 +7,18 @@ tutorial model (9696 mine blocks, 7 drawpoints, day 20 / period 3 at rest).
 
 The raw run is in the verification workspace as `sem4_results_massflow.txt`.
 
+This script APPENDS to each doc's notes, so it runs last. Canonical order for
+regenerating the whole MassFlow corpus:
+
+    author_massflow_live_commands.py
+    generate_massflow_index.py
+    generate_massflow_file_formats.py
+    generate_massflow_range_elements.py
+    generate_massflow_fish_intrinsics.py
+    generate_massflow_plot_items.py
+    annotate_massflow_scoping.py
+    annotate_massflow_semantics.py
+
 Usage:
     uv run python scripts/corpus/annotate_massflow_semantics.py
 """
@@ -97,6 +109,20 @@ NOTES: dict[str, list[str]] = {
     "mine-block-group.json": [
         "The engine reports what it assigned. `range position-x 1500 2000` caught 4801 "
         "of the tutorial's 9696 mine blocks.",
+    ],
+    "marker-import-trace.json": [
+        "Every point in the file must lie inside the mine-block model. On MassFlow "
+        "9.7.47 a file with a point outside it terminates the process at import time — "
+        "the file reader does no bounds check.",
+        "`massflow marker trace position <x> <y> <z>` does check, and answers "
+        "`Trace marker - No valid mineblock found at (x,y,z).` Use it to validate "
+        "coordinates before committing them to a file.",
+    ],
+    "marker-trace.json": [
+        "Bounds-checked: a position outside the mine-block model is refused with "
+        "`Trace marker - No valid mineblock found at (x,y,z).` rather than accepted. "
+        "Note the block-model extent is given by block CENTRES, so the solid reaches "
+        "half a block past them.",
     ],
     "marker-group.json": [
         "Markers only exist once `massflow compute` has created them, so grouping by "
