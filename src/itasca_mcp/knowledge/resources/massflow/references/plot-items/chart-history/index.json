@@ -1,0 +1,126 @@
+{
+  "name": "chart-history",
+  "item_type": "chart-history",
+  "item_types": [
+    "chart-history"
+  ],
+  "dimension": "mixed",
+  "search_keywords": [
+    "chart",
+    "history",
+    "time series",
+    "monitor"
+  ],
+  "description": "XY chart of a recorded history. 'vs' plots one history against another instead of against step; 'begin'/'end'/'skip' window and thin the series.",
+  "base_syntax": "plot item create chart-history history <name> <keywords...>",
+  "top_level_keywords": [
+    "active",
+    "axis-x",
+    "axis-y",
+    "begin",
+    "chart",
+    "end",
+    "history",
+    "labels",
+    "legend",
+    "marks",
+    "skip",
+    "swap",
+    "title",
+    "transparency",
+    "vs"
+  ],
+  "basic_keywords": [
+    {
+      "keyword": "active",
+      "description": "Show or hide the item without removing it.",
+      "syntax": "active <bool>"
+    },
+    {
+      "keyword": "history",
+      "description": "History to plot, by name or number.",
+      "syntax": "history <name>"
+    },
+    {
+      "keyword": "vs",
+      "description": "Plot this history against another one instead of against step.",
+      "syntax": "vs <name>"
+    },
+    {
+      "keyword": "begin",
+      "description": "First step/value of the history to plot.",
+      "syntax": "begin <value>"
+    },
+    {
+      "keyword": "end",
+      "description": "Last step/value of the history to plot.",
+      "syntax": "end <value>"
+    },
+    {
+      "keyword": "skip",
+      "description": "Draw every Nth trace/marker to thin a dense field.",
+      "syntax": "skip <int>"
+    },
+    {
+      "keyword": "chart",
+      "description": "Chart style and series appearance.",
+      "syntax": "chart <sub-keyword> [<value>]"
+    },
+    {
+      "keyword": "axis-x",
+      "description": "Configure the x axis (label, log, limits, exponent).",
+      "syntax": "axis-x <sub-keyword> [<value>]"
+    },
+    {
+      "keyword": "axis-y",
+      "description": "Configure the y axis (label, log, limits, exponent).",
+      "syntax": "axis-y <sub-keyword> [<value>]"
+    },
+    {
+      "keyword": "labels",
+      "description": "Show per-point value labels.",
+      "syntax": "labels <bool>"
+    },
+    {
+      "keyword": "marks",
+      "description": "Draw a glyph at each data point.",
+      "syntax": "marks <bool>"
+    },
+    {
+      "keyword": "swap",
+      "description": "Swap the x and y series.",
+      "syntax": "swap <bool>"
+    },
+    {
+      "keyword": "title",
+      "description": "Chart title.",
+      "syntax": "title <string>"
+    },
+    {
+      "keyword": "legend",
+      "description": "Show/configure the item legend.",
+      "syntax": "legend <sub-keyword> [<value>]"
+    },
+    {
+      "keyword": "transparency",
+      "description": "Set item transparency (0 opaque .. 100 fully transparent).",
+      "syntax": "transparency <0-100>"
+    }
+  ],
+  "sub_items": [],
+  "common_usage_patterns": [
+    {
+      "use_case": "Plot a history",
+      "command": "plot item create chart-history history 1",
+      "description": "Plot history 1 against step."
+    },
+    {
+      "use_case": "One history against another",
+      "command": "plot item create chart-history history 2 vs 1",
+      "description": "Cross-plot history 2 against history 1."
+    }
+  ],
+  "notes": [
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MassFlow 3D 9."
+  ]
+}

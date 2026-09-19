@@ -85,6 +85,38 @@ FLOW_VECTOR_TOP = [
     "transparency",
 ]
 PARTICLE_TRACE_TOP = ["active", "contour", "legend", "line", "skip", "trace-name", "transparency"]
+CHART_TABLE_TOP = [
+    "active",
+    "axis-x",
+    "axis-y",
+    "chart",
+    "labels",
+    "legend",
+    "marks",
+    "swap",
+    "table",
+    "title",
+    "transparency",
+]
+
+CHART_HISTORY_TOP = [
+    "active",
+    "axis-x",
+    "axis-y",
+    "begin",
+    "chart",
+    "end",
+    "history",
+    "labels",
+    "legend",
+    "marks",
+    "skip",
+    "swap",
+    "title",
+    "transparency",
+    "vs",
+]
+
 HISTORY_LOC_TOP = [
     "active",
     "color-list",
@@ -193,12 +225,48 @@ SHARED_KW = {
     "line": _kw("line", "Draw traces as connected lines.", "line <bool>"),
     "skip": _kw("skip", "Draw every Nth trace/marker to thin a dense field.", "skip <int>"),
     "trace-name": _kw("trace-name", "Select which named particle trace to draw.", "trace-name <string>"),
+    "table": _kw("table", "Table to plot, by name or number.", "table <name>"),
+    "history": _kw("history", "History to plot, by name or number.", "history <name>"),
+    "chart": _kw("chart", "Chart style and series appearance.", "chart <sub-keyword> [<value>]"),
+    "axis-x": _kw("axis-x", "Configure the x axis (label, log, limits, exponent).", "axis-x <sub-keyword> [<value>]"),
+    "axis-y": _kw("axis-y", "Configure the y axis (label, log, limits, exponent).", "axis-y <sub-keyword> [<value>]"),
+    "labels": _kw("labels", "Show per-point value labels.", "labels <bool>"),
+    "marks": _kw("marks", "Draw a glyph at each data point.", "marks <bool>"),
+    "swap": _kw("swap", "Swap the x and y series.", "swap <bool>"),
+    "title": _kw("title", "Chart title.", "title <string>"),
+    "begin": _kw("begin", "First step/value of the history to plot.", "begin <value>"),
+    "end": _kw("end", "Last step/value of the history to plot.", "end <value>"),
+    "vs": _kw("vs", "Plot this history against another one instead of against step.", "vs <name>"),
 }
 
 
 def _basic(keywords: list[str]) -> list[dict[str, str]]:
     return [SHARED_KW[k] for k in keywords if k in SHARED_KW]
 
+
+# `plot item create ?` on MassFlow 9.7.47, verbatim.
+BINARY_ITEM_TYPES = [
+    "axes",
+    "chart-history",
+    "chart-table",
+    "data-label",
+    "data-scalar",
+    "data-tensor",
+    "data-vector",
+    "drawpoint",
+    "flow-vector",
+    "fos",
+    "fracture",
+    "geometry",
+    "history-locations",
+    "imz",
+    "marker",
+    "marker-extracted",
+    "mineblock",
+    "particle-trace",
+    "particle-trace-marker",
+    "scalebox",
+]
 
 PROBE_NOTE = (
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then "
@@ -401,6 +469,91 @@ ITEMS: list[dict[str, Any]] = [
             },
         ],
     },
+    {
+        "name": "chart-table",
+        "item_types": ["chart-table"],
+        "search_keywords": ["chart", "table", "curve", "record", "size-distribution", "mass", "xy"],
+        "description": (
+            "XY chart of a table. This is how MassFlow results are read: 'massflow record' writes "
+            "extracted mass per period into a table, 'massflow drawpoint dump-drawperiod' writes a "
+            "draw schedule into one, and 'massflow marker size-distribution' writes the cumulative "
+            "fragment-size curve into one."
+        ),
+        "base_syntax": "plot item create chart-table table <name> <keywords...>",
+        "top_level_keywords": CHART_TABLE_TOP,
+        "basic_keywords": _basic(
+            [
+                "active",
+                "table",
+                "chart",
+                "axis-x",
+                "axis-y",
+                "labels",
+                "marks",
+                "swap",
+                "title",
+                "legend",
+                "transparency",
+            ]
+        ),
+        "common_usage_patterns": [
+            {
+                "use_case": "Extracted mass by period",
+                "command": "plot item create chart-table table 'all DPs'",
+                "description": "Plot the table written by `massflow record name 'all DPs'`.",
+            },
+            {
+                "use_case": "Fragment size distribution",
+                "command": "plot item create chart-table table 'size-distribution' axis-x log on",
+                "description": (
+                    "Plot the cumulative percent-passing curve written by "
+                    "`massflow marker size-distribution`, with a log size axis."
+                ),
+            },
+        ],
+    },
+    {
+        "name": "chart-history",
+        "item_types": ["chart-history"],
+        "search_keywords": ["chart", "history", "time series", "monitor"],
+        "description": (
+            "XY chart of a recorded history. 'vs' plots one history against another instead of "
+            "against step; 'begin'/'end'/'skip' window and thin the series."
+        ),
+        "base_syntax": "plot item create chart-history history <name> <keywords...>",
+        "top_level_keywords": CHART_HISTORY_TOP,
+        "basic_keywords": _basic(
+            [
+                "active",
+                "history",
+                "vs",
+                "begin",
+                "end",
+                "skip",
+                "chart",
+                "axis-x",
+                "axis-y",
+                "labels",
+                "marks",
+                "swap",
+                "title",
+                "legend",
+                "transparency",
+            ]
+        ),
+        "common_usage_patterns": [
+            {
+                "use_case": "Plot a history",
+                "command": "plot item create chart-history history 1",
+                "description": "Plot history 1 against step.",
+            },
+            {
+                "use_case": "One history against another",
+                "command": "plot item create chart-history history 2 vs 1",
+                "description": "Cross-plot history 2 against history 1.",
+            },
+        ],
+    },
 ]
 
 
@@ -522,12 +675,18 @@ def main() -> None:
                 ),
                 "usage_context": "plot item create <type> <keyword> <keyword> ...",
                 "items": catalog,
+                "binary_item_types": BINARY_ITEM_TYPES,
                 "notes": [
                     "Plot-item keywords are appended after the item type.",
                     PROBE_NOTE,
-                    "MassFlow also accepts the shared/other plot items (geometry, fracture, chart-*, "
-                    "data-*, axes, fos, scalebox); this documents the MassFlow-specific gravity-flow / "
-                    "caving entities.",
+                    "`binary_item_types` is what `plot item create ?` enumerates on MassFlow "
+                    "9.7.47. The MassFlow-specific caving entities and the two chart types are "
+                    "documented here; the remaining shared-kernel items (axes, data-label, "
+                    "data-scalar, data-tensor, data-vector, fos, fracture, geometry, scalebox) "
+                    "are named but not detailed.",
+                    "Results reach a chart through a table: `massflow record` and "
+                    "`massflow drawpoint dump-drawperiod` write tables, and "
+                    "`massflow marker size-distribution` writes the fragment-size curve.",
                 ],
             },
             indent=2,
@@ -548,7 +707,7 @@ def main() -> None:
         ),
         "directory": "plot-items",
         "index_file": "plot-items/index.json",
-        "summary": f"{len(catalog)} MassFlow plot item groups (drawpoint/mineblock/imz/marker/flow-vector/particle-trace/history-locations)",
+        "summary": f"{len(catalog)} MassFlow plot item groups (drawpoint/mineblock/imz/marker/flow-vector/particle-trace/history-locations/chart-table/chart-history)",
         "usage": "plot item create drawpoint colorby dpactive | plot item create mineblock colorby ucs | plot item create flow-vector draw-as arrow",
     }
     top_path.write_text(json.dumps(top, indent=2, ensure_ascii=False) + "\n", "utf-8")
