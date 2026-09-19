@@ -7,7 +7,8 @@
       "description": "Core MassFlow commands for gravity-flow and caving simulation: configure and run the flow solution (initialize/compute), define and report on drawpoints and draw periods, place and trace markers, import mine-blocks, toggle fines migration and secondary fragmentation, and record results.",
       "command_prefix": "massflow",
       "notes": [
-        "Sub-namespaces are part of the JSON key: 'massflow drawpoint import' -> commands/massflow/drawpoint-import.json, 'massflow mine-block group' -> commands/massflow/mineblock-group.json",
+        "Sub-namespaces are part of the JSON key: 'massflow drawpoint import' -> commands/massflow/drawpoint-import.json, 'massflow mine-block group' -> commands/massflow/mine-block-group.json",
+        "17 of the 47 commands have no page in the MassFlow manual and are authored from live 9.7 enumeration (scripts/corpus/author_massflow_live_commands.py); each carries a note saying so",
         "Workflow: 'massflow initialize' sets the run parameters, then 'massflow compute' advances the flow solution by days/periods",
         "Drawpoints drive extraction; markers trace material provenance; mine-blocks tag the orebody for grade tracking",
         "The FLAC3D 'zone' family is available on the massflow binary for coupled mechanical analysis but is documented under software='flac'"
@@ -21,10 +22,38 @@
           "python_available": false
         },
         {
+          "name": "collapse-only",
+          "file": "massflow/command_docs/commands/massflow/collapse-only.json",
+          "short_description": "Listed by `massflow ?` on the 9",
+          "syntax": "massflow collapse-only",
+          "python_available": false
+        },
+        {
           "name": "compute",
           "file": "massflow/command_docs/commands/massflow/compute.json",
           "short_description": "Solve using the parameters previously specified with the massflow initialize command",
           "syntax": "massflow compute [keyword]",
+          "python_available": false
+        },
+        {
+          "name": "couplingFLAC3D",
+          "file": "massflow/command_docs/commands/massflow/couplingFLAC3D.json",
+          "short_description": "Control the FLAC3D mechanical coupling of the gravity-flow solution",
+          "syntax": "massflow couplingFLAC3D <keyword>",
+          "python_available": false
+        },
+        {
+          "name": "couplingFunction",
+          "file": "massflow/command_docs/commands/massflow/couplingFunction.json",
+          "short_description": "Name the FISH function used by the FLAC3D coupling",
+          "syntax": "massflow couplingFunction <s>",
+          "python_available": false
+        },
+        {
+          "name": "drawpoint-add-drawperiod-txt",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-add-drawperiod-txt.json",
+          "short_description": "Append a draw schedule from a TAB-delimited text file — the tab-delimited form of `massflow drawp...",
+          "syntax": "massflow drawpoint add-drawperiod-txt <s>",
           "python_available": false
         },
         {
@@ -45,14 +74,14 @@
           "name": "drawpoint-dump-drawperiod",
           "file": "massflow/command_docs/commands/massflow/drawpoint-dump-drawperiod.json",
           "short_description": "Export a drawbell extraction schedule to a specified table",
-          "syntax": "massflow drawpoint dump-drawperiod <s>",
+          "syntax": "massflow drawpoint dump-drawperiod name <s> [keyword]",
           "python_available": false
         },
         {
           "name": "drawpoint-extraction-report",
           "file": "massflow/command_docs/commands/massflow/drawpoint-extraction-report.json",
           "short_description": "Generate an extraction report",
-          "syntax": "massflow drawpoint extraction-report [filename s:str]",
+          "syntax": "massflow drawpoint extraction-report [filename <s>]",
           "python_available": false
         },
         {
@@ -63,6 +92,20 @@
           "python_available": false
         },
         {
+          "name": "drawpoint-import-drawbell-GUI",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawbell-GUI.json",
+          "short_description": "Import drawbell types through the MassFlow file-selection dialog",
+          "syntax": "massflow drawpoint import-drawbell-GUI",
+          "python_available": false
+        },
+        {
+          "name": "drawpoint-import-drawbell-txt",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawbell-txt.json",
+          "short_description": "Import drawbell types from a TAB-delimited text file — the tab-delimited form of `massflow drawpo...",
+          "syntax": "massflow drawpoint import-drawbell-txt <s>",
+          "python_available": false
+        },
+        {
           "name": "drawpoint-import-drawbell",
           "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawbell.json",
           "short_description": "Import a drawbell description",
@@ -70,10 +113,38 @@
           "python_available": false
         },
         {
+          "name": "drawpoint-import-drawperiod-GUI",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawperiod-GUI.json",
+          "short_description": "Import a draw schedule through the MassFlow file-selection dialog",
+          "syntax": "massflow drawpoint import-drawperiod-GUI",
+          "python_available": false
+        },
+        {
+          "name": "drawpoint-import-drawperiod-txt",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawperiod-txt.json",
+          "short_description": "Import a draw schedule from a TAB-delimited text file — the tab-delimited form of `massflow drawp...",
+          "syntax": "massflow drawpoint import-drawperiod-txt <s>",
+          "python_available": false
+        },
+        {
           "name": "drawpoint-import-drawperiod",
           "file": "massflow/command_docs/commands/massflow/drawpoint-import-drawperiod.json",
           "short_description": "Import a drawbell extraction schedule",
           "syntax": "massflow drawpoint import-drawperiod <s>",
+          "python_available": false
+        },
+        {
+          "name": "drawpoint-import-GUI",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-GUI.json",
+          "short_description": "Import a drawpoint description through the MassFlow file-selection dialog instead of a filename a...",
+          "syntax": "massflow drawpoint import-GUI",
+          "python_available": false
+        },
+        {
+          "name": "drawpoint-import-txt",
+          "file": "massflow/command_docs/commands/massflow/drawpoint-import-txt.json",
+          "short_description": "Import a drawpoint description from a TAB-delimited text file",
+          "syntax": "massflow drawpoint import-txt <s>",
           "python_available": false
         },
         {
@@ -101,7 +172,7 @@
           "name": "fines-migration",
           "file": "massflow/command_docs/commands/massflow/fines-migration.json",
           "short_description": "Toggle fines migration",
-          "syntax": "massflow fines-migration <s>",
+          "syntax": "massflow fines-migration <keyword>",
           "python_available": false
         },
         {
@@ -109,6 +180,13 @@
           "file": "massflow/command_docs/commands/massflow/initialize.json",
           "short_description": "Set the value of parameters that affect the entire model, as well as parameters related to solvin...",
           "syntax": "massflow initialize keyword",
+          "python_available": false
+        },
+        {
+          "name": "marker-air-porosity",
+          "file": "massflow/command_docs/commands/massflow/marker-air-porosity.json",
+          "short_description": "Set the porosity value used for air markers — the zero-mass markers MassFlow inserts wherever an ...",
+          "syntax": "massflow marker air-porosity <f>",
           "python_available": false
         },
         {
@@ -157,7 +235,7 @@
           "name": "marker-report-export",
           "file": "massflow/command_docs/commands/massflow/marker-report-export.json",
           "short_description": "Export marker report for current day to filename s ",
-          "syntax": "massflow marker report-export <s>",
+          "syntax": "massflow marker report-export [<s>]",
           "python_available": false
         },
         {
@@ -175,10 +253,17 @@
           "python_available": false
         },
         {
+          "name": "marker-trace-report-daily",
+          "file": "massflow/command_docs/commands/massflow/marker-trace-report-daily.json",
+          "short_description": "Write a per-day trace-marker report",
+          "syntax": "massflow marker trace-report-daily",
+          "python_available": false
+        },
+        {
           "name": "marker-trace-report",
           "file": "massflow/command_docs/commands/massflow/marker-trace-report.json",
           "short_description": "Generate a trace marker report",
-          "syntax": "massflow marker trace-report [filename s:str]",
+          "syntax": "massflow marker trace-report [filename <s>]",
           "python_available": false
         },
         {
@@ -189,22 +274,57 @@
           "python_available": false
         },
         {
-          "name": "mineblock-group",
-          "file": "massflow/command_docs/commands/massflow/mineblock-group.json",
+          "name": "mine-block-export-caved",
+          "file": "massflow/command_docs/commands/massflow/mine-block-export-caved.json",
+          "short_description": "Export the current caved state of the mine-block model as a comma-delimited CSV",
+          "syntax": "massflow mine-block export-caved <s>",
+          "python_available": false
+        },
+        {
+          "name": "mine-block-export",
+          "file": "massflow/command_docs/commands/massflow/mine-block-export.json",
+          "short_description": "Export the mine-block model as a FLAC3D grid file",
+          "syntax": "massflow mine-block export <s>",
+          "python_available": false
+        },
+        {
+          "name": "mine-block-group",
+          "file": "massflow/command_docs/commands/massflow/mine-block-group.json",
           "short_description": "Assign group name s to mine block in the range",
           "syntax": "massflow mine-block group <s>[keyword] [range]",
           "python_available": false
         },
         {
-          "name": "mineblock-import",
-          "file": "massflow/command_docs/commands/massflow/mineblock-import.json",
+          "name": "mine-block-import-GUI",
+          "file": "massflow/command_docs/commands/massflow/mine-block-import-GUI.json",
+          "short_description": "Import a mine block description through the MassFlow file-selection dialog",
+          "syntax": "massflow mine-block import-GUI",
+          "python_available": false
+        },
+        {
+          "name": "mine-block-import-old",
+          "file": "massflow/command_docs/commands/massflow/mine-block-import-old.json",
+          "short_description": "Import a mine block description in the legacy MassFlow block-model text format",
+          "syntax": "massflow mine-block import-old <s>",
+          "python_available": false
+        },
+        {
+          "name": "mine-block-import-txt",
+          "file": "massflow/command_docs/commands/massflow/mine-block-import-txt.json",
+          "short_description": "Import a mine block description from a TAB-delimited text file",
+          "syntax": "massflow mine-block import-txt <s>",
+          "python_available": false
+        },
+        {
+          "name": "mine-block-import",
+          "file": "massflow/command_docs/commands/massflow/mine-block-import.json",
           "short_description": "Import a mine block description",
           "syntax": "massflow mine-block import <s>",
           "python_available": false
         },
         {
-          "name": "mineblock-list",
-          "file": "massflow/command_docs/commands/massflow/mineblock-list.json",
+          "name": "mine-block-list",
+          "file": "massflow/command_docs/commands/massflow/mine-block-list.json",
           "short_description": "List information about mine blocks",
           "syntax": "massflow mine-block list [keyword] [range]",
           "python_available": false
@@ -213,14 +333,14 @@
           "name": "record",
           "file": "massflow/command_docs/commands/massflow/record.json",
           "short_description": "Record and store mass data into tables",
-          "syntax": "massflow record keyword",
+          "syntax": "massflow record name <s> [keyword ...]",
           "python_available": false
         },
         {
           "name": "secondary-fragmentation",
           "file": "massflow/command_docs/commands/massflow/secondary-fragmentation.json",
           "short_description": "Toggle secondary fragmentation",
-          "syntax": "massflow secondary-fragmentation <s>",
+          "syntax": "massflow secondary-fragmentation <keyword>",
           "python_available": false
         }
       ]
@@ -521,7 +641,7 @@
     },
     "fracture": {
       "full_name": "Fracture (DFN) Commands",
-      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. Drives Smooth-Joint and similar contact models.",
+      "description": "Discrete Fracture Network commands for creating, importing, and analyzing planar discontinuities (fractures) and their intersections. The DFN module is shared across Itasca engines; fracture-driven contact-model assignment is a PFC feature and does not apply to FLAC zones.",
       "command_prefix": "fracture",
       "related_categories": [
         "geometry",
@@ -532,7 +652,7 @@
         "fracture generate creates statistical DFNs; fracture import reads explicit fracture files",
         "fracture template defines reusable fracture geometries (fracture template create / delete / modify-default)",
         "fracture intersections compute / scanline produces connectivity data for joint-set analysis",
-        "Use 'contact model smoothjoint' (or similar) to wire fractures into mechanical behavior"
+        "The 'fracture contact-model' command applies to PFC only (FLAC has no contact-model concept for zones); in FLAC, use zone interfaces or zone joints to give fractures mechanical behavior."
       ],
       "commands": [
         {
@@ -580,7 +700,7 @@
         {
           "name": "contact-model",
           "file": "_common/command_docs/commands/fracture/contact-model.json",
-          "short_description": "Assign contact models via fractures",
+          "short_description": "Assign contact models via fractures (PFC only; not applicable in FLAC)",
           "syntax": "fracture contact-model keyword ... [rangeof dfns]",
           "python_available": false
         },
