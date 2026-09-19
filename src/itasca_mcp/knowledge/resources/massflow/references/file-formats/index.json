@@ -1,0 +1,97 @@
+{
+  "type": "file_formats",
+  "description": "The import and export file formats MassFlow models are built from and report through: block model, draw points, draw bells, draw schedule, trace markers, the marker / trace / extraction reports, and the caved-block and FLAC3D grid exports. MassFlow has no property-setting command — mine-block material properties and the whole draw schedule exist only as columns of these files.",
+  "usage_pattern": {
+    "inputs": "massflow <family> import[-txt] '<file>' — CSV by default, tab-delimited with the -txt variants",
+    "outputs": "massflow marker report-export / trace-report[-daily] ; massflow drawpoint extraction-report ; massflow mine-block export[-caved]"
+  },
+  "items": [
+    {
+      "name": "block-model",
+      "file": "block-model.json",
+      "full_name": "Block Model Import File",
+      "direction": "input"
+    },
+    {
+      "name": "draw-points",
+      "file": "draw-points.json",
+      "full_name": "Draw Point Import File",
+      "direction": "input"
+    },
+    {
+      "name": "draw-bells",
+      "file": "draw-bells.json",
+      "full_name": "Draw Bell Import File",
+      "direction": "input"
+    },
+    {
+      "name": "draw-schedule",
+      "file": "draw-schedule.json",
+      "full_name": "Draw Schedule (Draw Period) Import File",
+      "direction": "input"
+    },
+    {
+      "name": "trace-markers",
+      "file": "trace-markers.json",
+      "full_name": "Trace Marker Import File",
+      "direction": "input"
+    },
+    {
+      "name": "marker-report",
+      "file": "marker-report.json",
+      "full_name": "Marker Report Output File",
+      "direction": "output"
+    },
+    {
+      "name": "trace-marker-report",
+      "file": "trace-marker-report.json",
+      "full_name": "Trace Marker Report Output File",
+      "direction": "output"
+    },
+    {
+      "name": "trace-marker-report-daily",
+      "file": "trace-marker-report-daily.json",
+      "full_name": "Daily Trace Marker Report Output File",
+      "direction": "output"
+    },
+    {
+      "name": "extraction-report",
+      "file": "extraction-report.json",
+      "full_name": "Period Extraction Report Output File",
+      "direction": "output"
+    },
+    {
+      "name": "caved-block-model",
+      "file": "caved-block-model.json",
+      "full_name": "Caved Block Model Export File",
+      "direction": "output"
+    },
+    {
+      "name": "flac3d-grid",
+      "file": "flac3d-grid.json",
+      "full_name": "FLAC3D Grid Export File",
+      "direction": "output"
+    },
+    {
+      "name": "project-files",
+      "file": "project-files.json",
+      "full_name": "MassFlow Project File Types",
+      "direction": "reference"
+    }
+  ],
+  "notes": [
+    "Block-model columns are matched by name in any order; draw-point and draw-bell columns are matched by POSITION and must appear in the documented order.",
+    "The `-txt` commands read the same tables tab-delimited. The tab-delimited block-model files shipped with the example projects start with a `Delimiter: r;` line."
+  ],
+  "related_commands": [
+    "massflow mine-block import",
+    "massflow drawpoint import",
+    "massflow drawpoint import-drawbell",
+    "massflow drawpoint import-drawperiod",
+    "massflow marker import-trace",
+    "massflow marker report-export",
+    "massflow drawpoint extraction-report",
+    "massflow mine-block export"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

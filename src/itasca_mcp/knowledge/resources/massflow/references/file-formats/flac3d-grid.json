@@ -1,0 +1,28 @@
+{
+  "name": "flac3d-grid",
+  "full_name": "FLAC3D Grid Export File",
+  "direction": "output",
+  "evidence": "state",
+  "description": "The block model as a FLAC3D grid — one hexahedral zone per mine block, gridpoints at the block corners. This is the handover point to a coupled mechanical model.",
+  "commands": [
+    "massflow mine-block export <s>"
+  ],
+  "layout": {
+    "delimiter": "FLAC3D grid format",
+    "header": "`*GRIDPOINTS` section, then the zone section",
+    "default_filename": "`.f3grid` is appended to the name given"
+  },
+  "example": [
+    "*GRIDPOINTS",
+    "G 1, 1400, -1603, 220"
+  ],
+  "notes": [
+    "The engine confirms with `--- The BlockModel has been exported to <name>.f3grid`.",
+    "Unlike `export-caved`, the extension is added for you."
+  ],
+  "related_formats": [
+    "block-model",
+    "caved-block-model"
+  ],
+  "official_documentation": "Not in the manual — the command has no page. Read back from the file it writes."
+}

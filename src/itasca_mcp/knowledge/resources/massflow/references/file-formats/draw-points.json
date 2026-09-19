@@ -1,0 +1,62 @@
+{
+  "name": "draw-points",
+  "full_name": "Draw Point Import File",
+  "direction": "input",
+  "evidence": "docs + state",
+  "description": "Where material is extracted. Each row places one drawpoint and binds it to a drawbell type defined in the draw-bell file.",
+  "commands": [
+    "massflow drawpoint import <s>",
+    "massflow drawpoint import-txt <s>",
+    "massflow drawpoint import-GUI"
+  ],
+  "layout": {
+    "delimiter": "comma (`massflow drawpoint import`) or tab (`massflow drawpoint import-txt`)",
+    "header": "line 1 is the column header; drawpoint rows follow from line 2",
+    "column_order": "FIXED — unlike the block model, the columns must appear in the order below. The header strings themselves are not significant."
+  },
+  "columns": [
+    {
+      "name": "DPName",
+      "required": true,
+      "description": "Unique drawpoint name. For sub-level caving the name must end with the letter l followed by the level number; levels increase with depth and increment by 1, which is what recovery-by-origin reporting keys on."
+    },
+    {
+      "name": "X",
+      "required": true,
+      "description": "Easting of the drawpoint — a point on the floor of the draw drift immediately below the brow, at the centre of the drawbell. Draw actually occurs at the top of the drift, and for rectangular drawbells half a drift width in from the edges."
+    },
+    {
+      "name": "Y",
+      "required": true,
+      "description": "Northing of the drawpoint."
+    },
+    {
+      "name": "Z",
+      "required": true,
+      "description": "Elevation of the drawpoint. Drawpoints need not share an elevation, but all of them must lie inside the block model."
+    },
+    {
+      "name": "DBID",
+      "required": true,
+      "description": "Integer ID of the drawbell this drawpoint belongs to; two drawpoints on one drawbell share it."
+    },
+    {
+      "name": "DBType",
+      "required": true,
+      "description": "Name of the drawbell type, matching a BellName in the draw-bell file. It must start with `cone` (single-drawpoint block caving), `rect` (two-drawpoint block caving) or `slc` (sublevel caving ring), then `%` and an id — e.g. `cone%1`."
+    }
+  ],
+  "example": [
+    "DPName,X,Y,Z,DBID,DBType",
+    "DP1,1500.7,-1552.7,228.4,1,cone%1"
+  ],
+  "notes": [
+    "The engine echoes `--- Number of drawpoints imported from <file>: 7`.",
+    "A second import is refused with `Draw points have already been imported`."
+  ],
+  "related_formats": [
+    "draw-bells",
+    "draw-schedule"
+  ],
+  "official_documentation": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs"
+}

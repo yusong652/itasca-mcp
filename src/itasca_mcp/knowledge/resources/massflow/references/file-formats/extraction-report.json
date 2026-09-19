@@ -1,0 +1,76 @@
+{
+  "name": "extraction-report",
+  "full_name": "Period Extraction Report Output File",
+  "direction": "output",
+  "evidence": "state",
+  "description": "What each drawpoint actually pulled, period by period, broken down by ore grade and by origin and destination level.",
+  "commands": [
+    "massflow drawpoint extraction-report [filename <s>]"
+  ],
+  "layout": {
+    "delimiter": "tab",
+    "header": "a two-line preamble (`CurPrd`, `CurPrdName`, `DaysSolved` and their values) followed by the table header on line 3",
+    "default_filename": "periodExtractionReport.txt"
+  },
+  "columns": [
+    {
+      "name": "DPName",
+      "required": true,
+      "description": "Drawpoint name."
+    },
+    {
+      "name": "Period",
+      "required": true,
+      "description": "Period number."
+    },
+    {
+      "name": "PrdName",
+      "required": true,
+      "description": "Period name, from the draw-schedule header."
+    },
+    {
+      "name": "CumMass",
+      "required": true,
+      "description": "Cumulative mass extracted at this drawpoint."
+    },
+    {
+      "name": "RingMass",
+      "required": true,
+      "description": "Mass extracted from the SLC ring."
+    },
+    {
+      "name": "PeriodMass",
+      "required": true,
+      "description": "Mass extracted during this period."
+    },
+    {
+      "name": "<grade>Mass",
+      "required": true,
+      "description": "One column per ore grade of the block model, the mass-weighted grade contribution."
+    },
+    {
+      "name": "<n>Orig",
+      "required": true,
+      "description": "Mass originating from level n."
+    },
+    {
+      "name": "<n>Dest",
+      "required": true,
+      "description": "Mass destined for level n."
+    }
+  ],
+  "example": [
+    "CurPrd\tCurPrdName\tDaysSolved",
+    "3\t7\t20",
+    "DPName\tPeriod\tPrdName\tCumMass\tRingMass\tPeriodMass\tUCSMass\t...\t1Orig\t...\t1Dest\t..."
+  ],
+  "notes": [
+    "The grade columns are named after the extra columns of the block-model file, with `Mass` appended.",
+    "The origin/destination columns are the SLC level tracking that the `l<level>` drawpoint naming convention exists for."
+  ],
+  "related_formats": [
+    "block-model",
+    "draw-schedule"
+  ],
+  "official_documentation": "Read back from the file the command writes; the command page documents no columns."
+}

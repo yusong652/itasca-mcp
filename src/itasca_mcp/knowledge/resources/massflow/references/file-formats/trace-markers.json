@@ -1,0 +1,46 @@
+{
+  "name": "trace-markers",
+  "full_name": "Trace Marker Import File",
+  "direction": "input",
+  "evidence": "state",
+  "description": "Point locations whose movement is followed through the whole draw. Trace markers are what the particle-trace plot item and the trace reports are about; the same thing can be set up one point at a time with `massflow marker trace`.",
+  "commands": [
+    "massflow marker import-trace <s>"
+  ],
+  "layout": {
+    "delimiter": "whitespace",
+    "header": "none — the file is rows of coordinates",
+    "column_order": "x y z"
+  },
+  "columns": [
+    {
+      "name": "x",
+      "required": true,
+      "description": "Easting of the point to trace."
+    },
+    {
+      "name": "y",
+      "required": true,
+      "description": "Northing of the point to trace."
+    },
+    {
+      "name": "z",
+      "required": true,
+      "description": "Elevation of the point to trace."
+    }
+  ],
+  "example": [
+    "1518.78 -1551.79 270",
+    "1534 -1541 384"
+  ],
+  "notes": [
+    "The engine confirms with `--- Trace markers imported.` and gives no count.",
+    "A second import is refused with `Trace Markers have already been imported`.",
+    "Points must lie inside the block model. A trace point outside it crashed MassFlow 9.7.47 at import time."
+  ],
+  "related_formats": [
+    "trace-marker-report",
+    "trace-marker-report-daily"
+  ],
+  "official_documentation": "Read back from the file shipped with the MassFlow tutorial project; no format page exists."
+}
