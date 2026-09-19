@@ -1,0 +1,34 @@
+{
+  "name": "dfn",
+  "category": "attribute",
+  "category_name": "Attribute Elements",
+  "syntax": "dfn <s>",
+  "description": "Select objects based on their distance from the discrete fracture network with name s. Additional fracture networks can be added to the same element using the name keyword. The extent keyword can be used with this element, and any fracture that actually intersects or is contained inside an extent is considered to have a distance of 0.0. If no distance is specified, a distance of 0 is assumed. If the object being checked is a fracture, it will be selected if it is part of the named DFN(s). aperture b Use the aperture in the distance calculation. The fractures are expanded in the normal direction by 1/2 the aperture on each side for the distance calculation.",
+  "search_keywords": [
+    "dfn"
+  ],
+  "documented_syntax": "dfn s keyword ...",
+  "sub_keywords": [
+    {
+      "name": "distance",
+      "syntax": "distance f",
+      "description": "Specify the distance from any fracture in the specified fractures within which objects will fall."
+    },
+    {
+      "name": "dominance",
+      "syntax": "dominance b",
+      "description": "Change the dominance state for selection with contacts. By default the fracture with lowest dominance index is identified per contact to decide if the contact is in range. If turned off, a contact is considered in range if any fracture, regardless of dominance, fits the range criteria."
+    },
+    {
+      "name": "name",
+      "syntax": "name s",
+      "description": "Specify additional DFNs to include during distance testing."
+    },
+    {
+      "name": "orientation",
+      "syntax": "orientation b f >",
+      "description": "Only select objects if their orientation is within f of the fracture, where f is an angle in degrees. If not given, f defaults to 2 degrees."
+    }
+  ],
+  "official_documentation": "Itasca 9.7 shared kernel manual: Range Phrase Keyword Reference"
+}

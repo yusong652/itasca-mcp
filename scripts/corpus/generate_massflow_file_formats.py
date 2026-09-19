@@ -430,16 +430,17 @@ MARKER_REPORT: dict[str, Any] = {
         col(
             "Type",
             "Marker type: -2 unbulked for IMZ growth, -1 unbulked for collapse, "
-            "0 unbulked for rilling, 1 partially bulked, 2 fully bulked.",
+            "0 unbulked for rilling, 1 partially bulked, 2 fully bulked, 3 air.",
         ),
         col("TensileStrength", "Tensile strength carried by the marker.", required=False),
     ],
     "notes": [
         "`massflow marker report-days` / `report-period` schedule the report to be "
         "written automatically during the run; `report-export` writes one immediately.",
-        "The marker type also drives `range marker-type <i>`, which the engine accepts "
-        "for integers between -2 and 3 — one value more than the five the manual "
-        "defines.",
+        "The manual disagrees with itself about the type codes: this section lists five "
+        "(-2 to 2), while the FISH page for massflow.marker.type lists six, adding "
+        "`3: air`. The engine takes the FISH page's side — `range marker-type` accepts "
+        "-2 to 3.",
         "`TensileStrength` appears in the `report-export` output but not in the "
         "trace-marker report, which otherwise shares the column set.",
     ],

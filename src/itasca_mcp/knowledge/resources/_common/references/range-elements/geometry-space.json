@@ -1,0 +1,46 @@
+{
+  "name": "geometry-space",
+  "category": "geometric",
+  "category_name": "Geometric Elements",
+  "syntax": "geometry-space <s>",
+  "description": "Select objects by their location in relation to the polygons in the geometry set named s. A direction vector is specified, and a ray is emitted from the location of the object in that direction. The number of times that ray intersects geometry polygons is counted. Objects can be selected with a given count value. If the polygons in a set form a topologically closed volume (or close enough for this purpose), then an odd numbered count will be inside the volume and an even numbered count will be outside. The geometry logic will detect the creation of topologically closed volumes, and allow the use of the inside and outside keywords on that data. If not perfectly closed, the count odd or count even can be used to approximate this. Note that geometric data can include multiple separate polygons at the same location in space, and if present this can alter the counting process. count keyword Select locations based on their intersection count. There are three possible options based on count: i Select objects with this exact intersection count. This can be used to select specific regions within a complex set of surfaces, regardless of whether they are closed or intersect.",
+  "search_keywords": [
+    "geometry",
+    "geometry-space",
+    "space"
+  ],
+  "documented_syntax": "geometry-space s keyword ...",
+  "sub_keywords": [
+    {
+      "name": "count.even",
+      "syntax": "even",
+      "description": "Select objects with an even numbered intersection count. If polygons form a perfectly closed volume, or act like it for this purpose, this will select objects outside the volume."
+    },
+    {
+      "name": "count.odd",
+      "syntax": "odd",
+      "description": "Select objects with an odd numbered intersection count. If polygons form a perfectly closed volume, or act like it for this purpose, this will select objects inside the volume."
+    },
+    {
+      "name": "direction",
+      "syntax": "direction v",
+      "description": "Specifies the direction of the ray projected from the location being checked. By default this direction is (0,0,1) in 3D and (0,1) in 2D."
+    },
+    {
+      "name": "inside",
+      "syntax": "inside",
+      "description": "Selects objects inside topologically closed volumes."
+    },
+    {
+      "name": "outside",
+      "syntax": "outside",
+      "description": "Selects objects outside topologically closed volumes."
+    },
+    {
+      "name": "set",
+      "syntax": "set s",
+      "description": "adds an additional geometry set named s to the list of those checked."
+    }
+  ],
+  "official_documentation": "Itasca 9.7 shared kernel manual: Range Phrase Keyword Reference"
+}
