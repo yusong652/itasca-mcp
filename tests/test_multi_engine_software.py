@@ -1231,6 +1231,45 @@ def test_massflow_range_elements_shared_via_common() -> None:
     assert mf is not None and mf == flac
 
 
+def test_massflow_range_elements_match_the_live_binary() -> None:
+    """MassFlow 9.7 enumerates 48 range elements; the corpus carried 22."""
+    names = {e["name"] for e in ReferenceLoader.get_item_list("range-elements", software="massflow")}
+    assert len(names) == 48
+    # MassFlow's own filters, both used by the vendor's unittests.dat.
+    assert {"active", "marker-type"} <= names
+    # Shared kernel elements `_common` was missing.
+    assert {"state", "velocity", "displacement", "volume", "geometry-space", "seed"} <= names
+    # Accepted by the binary with no page in the manual.
+    assert {"fid", "fidlist", "name", "remove"} <= names
+    # Elements the shared manual carries for other engines stay out.
+    assert not (names & {"aspect-ratio", "jmodel", "joint-set", "structure-type", "wall", "circle"})
+
+
+def test_massflow_marker_type_records_the_doc_binary_gap() -> None:
+    doc = ReferenceLoader.load_item_doc("range-elements", "marker-type", software="massflow")
+    assert doc is not None
+    assert doc["syntax"] == "marker-type <i>"
+    assert any("-2 and 3" in n for n in doc["notes"])
+
+
+def test_massflow_range_index_prose_is_not_flac() -> None:
+    """The borrowed index told MassFlow users to filter `structure` and `zone`."""
+    index = ReferenceLoader.load_category_index("range-elements", software="massflow")
+    assert index is not None
+    blob = json.dumps(index)
+    assert "in FLAC commands" not in blob
+    assert "structure node" not in blob  # `structure` does not exist in MassFlow
+    assert all(e.startswith("massflow ") for e in index["usage_pattern"]["examples"])
+
+
+def test_massflow_range_additions_do_not_leak_into_other_engines() -> None:
+    """New `_common` docs are additive; per-engine indexes are snapshots."""
+    for software in ("flac", "pfc", "3dec", "mpoint"):
+        names = {e["name"] for e in ReferenceLoader.get_item_list("range-elements", software=software)}
+        assert "marker-type" not in names, software
+        assert "active" not in names, software
+
+
 def test_massflow_file_formats_cover_inputs_and_outputs() -> None:
     """MassFlow has no property command — the import files ARE the material API."""
     cats = ReferenceLoader.load_index(software="massflow").get("categories", {})

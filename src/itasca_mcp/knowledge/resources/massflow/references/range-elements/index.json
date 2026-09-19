@@ -1,78 +1,286 @@
 {
   "type": "range_elements",
-  "description": "Range elements are filtering syntax used after the 'range' keyword in FLAC commands. They select subsets of model objects based on geometric regions, attributes, or logical conditions.",
+  "description": "Range elements are the filtering syntax that follows the `range` keyword in a MassFlow command. They scope a command to a subset of drawpoints, mine blocks or markers by spatial region, by attribute, or by MassFlow state.",
   "usage_pattern": {
-    "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
+    "syntax": "<command> ... range <element> [params] <element> [params] ...",
     "examples": [
-      "zone group 'core' range position-x 0 10 position-y 0 10",
-      "zone property density 2650 range group 'sample'",
-      "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5"
+      "massflow drawpoint group 'left' range position-x 0 1530",
+      "massflow mine-block group 'right' range position-x 1500 2000",
+      "massflow marker list range marker-type 2",
+      "massflow marker list range active",
+      "massflow mine-block list range id 1"
     ],
     "notes": [
-      "Multiple range elements create intersection (AND) by default",
-      "Use 'union' keyword for OR logic",
-      "Unspecified range affects all objects of target type"
+      "Multiple range elements intersect (AND) by default; `union` switches the whole phrase to OR.",
+      "`not` inverts the element it follows; `extent` requires the object's whole extent inside a geometric element rather than just its centroid.",
+      "A command with no range phrase affects every object of the type it acts on."
     ]
   },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
-      "description": "Select objects by spatial region",
+      "description": "Select objects by spatial region.",
       "elements": [
+        "annulus",
+        "cylinder",
+        "ellipse",
+        "geometry-distance",
+        "geometry-space",
+        "orientation",
+        "plane",
+        "polygon",
         "position",
         "position-x",
         "position-y",
         "position-z",
-        "sphere",
-        "cylinder",
-        "annulus",
-        "plane",
-        "polygon",
         "rectangle",
-        "ellipse"
+        "seed",
+        "sphere",
+        "surface",
+        "volume"
       ]
     },
     "attribute": {
       "name": "Attribute Elements",
-      "description": "Select objects by ID, group, or other attributes",
+      "description": "Select objects by ID, group, name, model, or MassFlow state.",
       "elements": [
+        "active",
+        "cmodel",
+        "component-id",
+        "component-id-list",
+        "contact",
+        "dfn",
+        "displacement",
+        "fid",
+        "fidlist",
+        "group",
         "id",
         "id-list",
-        "group",
-        "named-range"
+        "interface",
+        "marker-type",
+        "name",
+        "named-range",
+        "set",
+        "state",
+        "velocity"
       ]
     },
     "user_defined": {
       "name": "User-Defined Elements",
-      "description": "Custom filtering via extra variables or FISH",
+      "description": "Select objects by extra-variable slot or a FISH function.",
       "elements": [
         "extra",
         "extra-list",
         "fish"
       ]
     },
-    "element_modifiers": {
-      "name": "Element Modifiers",
-      "description": "Modify behavior of individual range elements",
+    "logical": {
+      "name": "Logical / Modifier Elements",
+      "description": "Combine, invert, or scope the elements around them.",
       "elements": [
-        "not",
+        "by",
+        "deselected",
         "extent",
-        "by"
-      ]
-    },
-    "phrase_modifiers": {
-      "name": "Phrase Modifiers",
-      "description": "Modify behavior of entire range phrase",
-      "elements": [
-        "union"
+        "not",
+        "project-range",
+        "remove",
+        "selected",
+        "union",
+        "use-hidden"
       ]
     }
   },
   "elements": [
     {
+      "name": "active",
+      "file": "massflow/references/range-elements/active.json",
+      "short_description": "Select markers if they are active (have moved in the last period) or select drawpoints if they ar...",
+      "category": "attribute"
+    },
+    {
+      "name": "annulus",
+      "file": "_common/references/range-elements/annulus.json",
+      "short_description": "Spherical annulus (hollow sphere) selection.",
+      "category": "geometric"
+    },
+    {
+      "name": "by",
+      "file": "_common/references/range-elements/by.json",
+      "short_description": "Specify object hierarchy level for evaluation.",
+      "category": "logical"
+    },
+    {
+      "name": "cmodel",
+      "file": "_common/references/range-elements/cmodel.json",
+      "short_description": "Select zones with model names that match s. See the zone cmodel command for keyword names. Select...",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id",
+      "file": "_common/references/range-elements/component-id.json",
+      "short_description": "For most objects, this is the same as the id range element. It selects objects based on an ID num...",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id-list",
+      "file": "_common/references/range-elements/component-id-list.json",
+      "short_description": "For most objects, this is the same as the id-list range element. It selects objects based on an I...",
+      "category": "attribute"
+    },
+    {
+      "name": "contact",
+      "file": "_common/references/range-elements/contact.json",
+      "short_description": "Select contacts. active Select only active contacts. The activity status depends on the contact m...",
+      "category": "attribute"
+    },
+    {
+      "name": "cylinder",
+      "file": "_common/references/range-elements/cylinder.json",
+      "short_description": "Cylindrical region. Two radii create annular (hollow) cylinder.",
+      "category": "geometric"
+    },
+    {
+      "name": "deselected",
+      "file": "_common/references/range-elements/deselected.json",
+      "short_description": "Include not selected objects. This causes the range to only consider objects that are not selecte...",
+      "category": "logical"
+    },
+    {
+      "name": "dfn",
+      "file": "_common/references/range-elements/dfn.json",
+      "short_description": "Select objects based on their distance from the discrete fracture network with name s. Additional...",
+      "category": "attribute"
+    },
+    {
+      "name": "displacement",
+      "file": "_common/references/range-elements/displacement.json",
+      "short_description": "Select an object with displacement between the specified upper and lower limits. Use the by keywo...",
+      "category": "attribute"
+    },
+    {
+      "name": "ellipse",
+      "file": "_common/references/range-elements/ellipse.json",
+      "short_description": "Ellipse inscribed in rectangle defined by four vertices.",
+      "category": "geometric"
+    },
+    {
+      "name": "extent",
+      "file": "_common/references/range-elements/extent.json",
+      "short_description": "Require entire object extent inside region (not just centroid). Only for geometric elements.",
+      "category": "logical"
+    },
+    {
+      "name": "extra",
+      "file": "_common/references/range-elements/extra.json",
+      "short_description": "Filter by extra variable value at specified index.",
+      "category": "user_defined"
+    },
+    {
+      "name": "extra-list",
+      "file": "_common/references/range-elements/extra-list.json",
+      "short_description": "Filter by extra variable matching integer list.",
+      "category": "user_defined"
+    },
+    {
+      "name": "fid",
+      "file": "massflow/references/range-elements/fid.json",
+      "short_description": "Accepted by the engine; not described in the 9.7 manual.",
+      "category": "attribute"
+    },
+    {
+      "name": "fidlist",
+      "file": "massflow/references/range-elements/fidlist.json",
+      "short_description": "Accepted by the engine; not described in the 9.7 manual.",
+      "category": "attribute"
+    },
+    {
+      "name": "fish",
+      "file": "_common/references/range-elements/fish.json",
+      "short_description": "Custom FISH function for filtering. The function must accept exactly TWO arguments -- the positio...",
+      "category": "user_defined"
+    },
+    {
+      "name": "geometry-distance",
+      "file": "_common/references/range-elements/geometry-distance.json",
+      "short_description": "Select objects that fall within a certain distance of points, edges, and polygons defined in the ...",
+      "category": "geometric"
+    },
+    {
+      "name": "geometry-space",
+      "file": "_common/references/range-elements/geometry-space.json",
+      "short_description": "Select objects by their location in relation to the polygons in the geometry set named s. A direc...",
+      "category": "geometric"
+    },
+    {
+      "name": "group",
+      "file": "_common/references/range-elements/group.json",
+      "short_description": "Select by group membership. Supports slot specification, logical combinations, and piece matching...",
+      "category": "attribute"
+    },
+    {
+      "name": "id",
+      "file": "_common/references/range-elements/id.json",
+      "short_description": "Select by ID range. Single value for exact match, two values for inclusive range.",
+      "category": "attribute"
+    },
+    {
+      "name": "id-list",
+      "file": "_common/references/range-elements/id-list.json",
+      "short_description": "Select by explicit list of IDs. Non-sequential values allowed.",
+      "category": "attribute"
+    },
+    {
+      "name": "interface",
+      "file": "_common/references/range-elements/interface.json",
+      "short_description": "Select objects associated with the interfaces with matching names. Any number of interface names ...",
+      "category": "attribute"
+    },
+    {
+      "name": "marker-type",
+      "file": "massflow/references/range-elements/marker-type.json",
+      "short_description": "Select markers based on their type (-2: unbulked for IMZ growth, -1: unbulked for collapse, 0: un...",
+      "category": "attribute"
+    },
+    {
+      "name": "name",
+      "file": "massflow/references/range-elements/name.json",
+      "short_description": "Accepted by the engine; not described in the 9.7 manual.",
+      "category": "attribute"
+    },
+    {
+      "name": "named-range",
+      "file": "_common/references/range-elements/named-range.json",
+      "short_description": "Reference a previously created named range (via 'model range create').",
+      "category": "attribute"
+    },
+    {
+      "name": "not",
+      "file": "_common/references/range-elements/not.json",
+      "short_description": "Invert the element's selection (exclude instead of include).",
+      "category": "logical"
+    },
+    {
+      "name": "orientation",
+      "file": "_common/references/range-elements/orientation.json",
+      "short_description": "Select objects with a matching orientation, or direction in space. The orientation may be specifi...",
+      "category": "geometric"
+    },
+    {
+      "name": "plane",
+      "file": "_common/references/range-elements/plane.json",
+      "short_description": "Infinite plane selection. Use above/below or distance from plane.",
+      "category": "geometric"
+    },
+    {
+      "name": "polygon",
+      "file": "_common/references/range-elements/polygon.json",
+      "short_description": "Polygonal cylinder extending perpendicular to polygon plane. Optional origin creates truncated cone.",
+      "category": "geometric"
+    },
+    {
       "name": "position",
       "file": "_common/references/range-elements/position.json",
-      "short_description": "Bounding box selection. Two vectors define opposit...",
+      "short_description": "Bounding box selection. Two vectors define opposite corners.",
       "category": "geometric"
     },
     {
@@ -94,145 +302,97 @@
       "category": "geometric"
     },
     {
+      "name": "project-range",
+      "file": "_common/references/range-elements/project-range.json",
+      "short_description": "Inserts the project named range s as an element within the current range phrase. Project named ra...",
+      "category": "logical"
+    },
+    {
+      "name": "rectangle",
+      "file": "_common/references/range-elements/rectangle.json",
+      "short_description": "Rectangular cylinder. Four vertices define the rectangle.",
+      "category": "geometric"
+    },
+    {
+      "name": "remove",
+      "file": "massflow/references/range-elements/remove.json",
+      "short_description": "Accepted by the engine; not described in the 9.7 manual.",
+      "category": "logical"
+    },
+    {
+      "name": "seed",
+      "file": "_common/references/range-elements/seed.json",
+      "short_description": "Select by seed zone face. The seed face is obtained by defining a ray starting at vsource and ext...",
+      "category": "geometric"
+    },
+    {
+      "name": "selected",
+      "file": "_common/references/range-elements/selected.json",
+      "short_description": "Include selected objects. This causes the range to only consider objects that are selected. [comm...",
+      "category": "logical"
+    },
+    {
+      "name": "set",
+      "file": "_common/references/range-elements/set.json",
+      "short_description": "Select based on a parent/child relationship. id i Id of set to filter by.",
+      "category": "attribute"
+    },
+    {
       "name": "sphere",
       "file": "_common/references/range-elements/sphere.json",
       "short_description": "Spherical region selection.",
       "category": "geometric"
     },
     {
-      "name": "cylinder",
-      "file": "_common/references/range-elements/cylinder.json",
-      "short_description": "Cylindrical region. Two radii create annular (holl...",
-      "category": "geometric"
-    },
-    {
-      "name": "annulus",
-      "file": "_common/references/range-elements/annulus.json",
-      "short_description": "Spherical annulus (hollow sphere) selection.",
-      "category": "geometric"
-    },
-    {
-      "name": "plane",
-      "file": "_common/references/range-elements/plane.json",
-      "short_description": "Infinite plane selection. Use above/below or dista...",
-      "category": "geometric"
-    },
-    {
-      "name": "polygon",
-      "file": "_common/references/range-elements/polygon.json",
-      "short_description": "Polygonal cylinder extending perpendicular to poly...",
-      "category": "geometric"
-    },
-    {
-      "name": "rectangle",
-      "file": "_common/references/range-elements/rectangle.json",
-      "short_description": "Rectangular cylinder. Four vertices define the rec...",
-      "category": "geometric"
-    },
-    {
-      "name": "ellipse",
-      "file": "_common/references/range-elements/ellipse.json",
-      "short_description": "Ellipse inscribed in rectangle defined by four ver...",
-      "category": "geometric"
-    },
-    {
-      "name": "id",
-      "file": "_common/references/range-elements/id.json",
-      "short_description": "Select by ID range. Single value for exact match, ...",
+      "name": "state",
+      "file": "_common/references/range-elements/state.json",
+      "short_description": "Select objects by the state indicators of the zone constitutive model. The s is matched to any st...",
       "category": "attribute"
     },
     {
-      "name": "id-list",
-      "file": "_common/references/range-elements/id-list.json",
-      "short_description": "Select by explicit list of IDs. Non-sequential val...",
-      "category": "attribute"
-    },
-    {
-      "name": "group",
-      "file": "_common/references/range-elements/group.json",
-      "short_description": "Select by group membership. Supports slot specific...",
-      "category": "attribute"
-    },
-    {
-      "name": "named-range",
-      "file": "_common/references/range-elements/named-range.json",
-      "short_description": "Reference a previously created named range (via 'm...",
-      "category": "attribute"
-    },
-    {
-      "name": "extra",
-      "file": "_common/references/range-elements/extra.json",
-      "short_description": "Filter by extra variable value at specified index.",
-      "category": "user_defined"
-    },
-    {
-      "name": "extra-list",
-      "file": "_common/references/range-elements/extra-list.json",
-      "short_description": "Filter by extra variable matching integer list.",
-      "category": "user_defined"
-    },
-    {
-      "name": "fish",
-      "file": "_common/references/range-elements/fish.json",
-      "short_description": "Custom FISH function for filtering. Function recei...",
-      "category": "user_defined"
-    },
-    {
-      "name": "not",
-      "file": "_common/references/range-elements/not.json",
-      "short_description": "Invert the element's selection (exclude instead of...",
-      "category": "element_modifiers"
-    },
-    {
-      "name": "extent",
-      "file": "_common/references/range-elements/extent.json",
-      "short_description": "Require entire object extent inside region (not ju...",
-      "category": "element_modifiers"
-    },
-    {
-      "name": "by",
-      "file": "_common/references/range-elements/by.json",
-      "short_description": "Specify object hierarchy level for evaluation.",
-      "category": "element_modifiers"
+      "name": "surface",
+      "file": "_common/references/range-elements/surface.json",
+      "short_description": "Select zone faces if they fall on the “surface” of the model, which is defined as a face with onl...",
+      "category": "geometric"
     },
     {
       "name": "union",
       "file": "_common/references/range-elements/union.json",
-      "short_description": "Change from intersection (AND) to union (OR) logic...",
-      "category": "phrase_modifiers"
-    }
-  ],
-  "common_patterns": [
-    {
-      "name": "Group zones in region",
-      "example": "zone group 'core' range position-x 0 10 position-y 0 10",
-      "description": "Assign a group to zones in an XY rectangle"
+      "short_description": "Change from intersection (AND) to union (OR) logic for multiple elements.",
+      "category": "logical"
     },
     {
-      "name": "Set property by group",
-      "example": "zone property density 2650 range group 'sample'",
-      "description": "Set density for zones in a group"
+      "name": "use-hidden",
+      "file": "_common/references/range-elements/use-hidden.json",
+      "short_description": "Include hidden objects. By default, an object that has been hidden will never by included by a ra...",
+      "category": "logical"
     },
     {
-      "name": "Cylindrical structural-node range",
-      "example": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
-      "description": "Fix structural nodes in a cylindrical region"
+      "name": "velocity",
+      "file": "_common/references/range-elements/velocity.json",
+      "short_description": "Select an object with a velocity between the specified upper and lower limits. Use the by keyword...",
+      "category": "attribute"
     },
     {
-      "name": "Named range reuse",
-      "example": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
-      "description": "Create reusable named range"
+      "name": "volume",
+      "file": "_common/references/range-elements/volume.json",
+      "short_description": "Select an object with a volume between the specified upper and lower limits.",
+      "category": "geometric"
     }
   ],
   "notes": [
-    "Multiple range elements create intersection (AND) by default",
-    "Use 'union' keyword for OR logic",
-    "Unspecified range affects all objects of target type"
+    "The 48 elements listed here are what MassFlow 9.7.47 enumerates. The shared kernel manual documents 61; the 13 it carries that MassFlow rejects belong to 3DEC blocks, structural elements, joints, or 2D.",
+    "`active` and `marker-type` are MassFlow's own filters.",
+    "`fid`, `fidlist`, `name` and `remove` are accepted by the binary but have no page in the 9.7 manual.",
+    "`cmodel`, `contact`, `dfn` and `interface` reach FLAC3D zone objects and only apply in a coupled analysis."
   ],
   "related_commands": [
-    "model range create",
-    "model range delete",
-    "model range list"
+    "massflow drawpoint group",
+    "massflow mine-block group",
+    "massflow marker group",
+    "massflow drawpoint list",
+    "massflow mine-block list",
+    "massflow marker list"
   ],
-  "official_documentation": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html"
+  "official_documentation": "Itasca 9.7 shared kernel manual: Range Phrase Keyword Reference"
 }
