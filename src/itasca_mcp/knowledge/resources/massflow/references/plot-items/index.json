@@ -46,15 +46,44 @@
       "common_use": "history-locations"
     },
     {
+      "name": "chart-table",
+      "file": "chart-table/index.json",
+      "description": "XY chart of a table.",
+      "common_use": "chart-table"
+    },
+    {
       "name": "chart-history",
-      "file": "_common/references/plot-items/chart-history.json",
-      "description": "History time-series line chart: bind traces with 'history <name>', plot vs step or cross-plot vs another history. Pair with 'history-locations' (where traces are sampled).",
-      "common_use": "Plot recorded histories over cycling: drawpoint tonnage/flow and model scalars"
+      "file": "chart-history/index.json",
+      "description": "XY chart of a recorded history.",
+      "common_use": "chart-history"
     }
+  ],
+  "binary_item_types": [
+    "axes",
+    "chart-history",
+    "chart-table",
+    "data-label",
+    "data-scalar",
+    "data-tensor",
+    "data-vector",
+    "drawpoint",
+    "flow-vector",
+    "fos",
+    "fracture",
+    "geometry",
+    "history-locations",
+    "imz",
+    "marker",
+    "marker-extracted",
+    "mineblock",
+    "particle-trace",
+    "particle-trace-marker",
+    "scalebox"
   ],
   "notes": [
     "Plot-item keywords are appended after the item type.",
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against MassFlow 3D 9.",
-    "MassFlow also accepts the shared/other plot items (geometry, fracture, chart-*, data-*, axes, fos, scalebox); this documents the MassFlow-specific gravity-flow / caving entities."
+    "`binary_item_types` is what `plot item create ?` enumerates on MassFlow 9.7.47. The MassFlow-specific caving entities and the two chart types are documented here; the remaining shared-kernel items (axes, data-label, data-scalar, data-tensor, data-vector, fos, fracture, geometry, scalebox) are named but not detailed.",
+    "Results reach a chart through a table: `massflow record` and `massflow drawpoint dump-drawperiod` write tables, and `massflow marker size-distribution` writes the fragment-size curve."
   ]
 }

@@ -1407,6 +1407,27 @@ def test_massflow_plot_items_are_engine_specific() -> None:
     assert "meanDiameter" in mcb["size_by"]
 
 
+def test_massflow_plot_items_cover_the_chart_types() -> None:
+    """MassFlow results are read off a table chart — record, dump-drawperiod,
+    size-distribution all write tables, and the corpus had no chart item."""
+    names = {i["name"] for i in ReferenceLoader.get_item_list("plot-items", software="massflow")}
+    assert {"chart-table", "chart-history"} <= names
+    table = ReferenceLoader.load_item_doc("plot-items", "chart-table", software="massflow")
+    assert table is not None
+    kw = {k["keyword"] for k in table["basic_keywords"]}
+    assert {"table", "axis-x", "axis-y"} <= kw
+
+
+def test_massflow_plot_item_index_records_the_binary_type_list() -> None:
+    """Undocumented shared items are named rather than silently absent."""
+    index = ReferenceLoader.load_category_index("plot-items", software="massflow")
+    assert index is not None
+    binary = set(index["binary_item_types"])
+    assert len(binary) == 20
+    documented = {t for i in index["items"] for t in (i.get("item_types") or [i["name"]])}
+    assert documented <= binary
+
+
 # --- 9.0-only engines: version selector coerces to 9.0 ----------------------
 # MPoint/MassFlow ship a single 9.0 doc key. The tools' version default is
 # 7.0 (a PFC-era leftover); without coercion every 9.0-only command would resolve
