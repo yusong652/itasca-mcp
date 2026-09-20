@@ -220,6 +220,9 @@ python import itasca_mcp_bridge
 python itasca_mcp_bridge.start(mode="console")
 ```
 
+`start()` does not return, so nothing after that line runs; everything else
+goes through the MCP tools.
+
 Use this only when you need it — the console session is tied to your own
 process, and a console build cannot plot.
 
@@ -251,6 +254,11 @@ Success example (shape may vary by client):
 
 - `Connection refused`:
   - Bridge not running in the engine GUI, or port `9001` not available.
+- Port `9001` accepts connections, but every task times out:
+  - The main-thread task pump is not running. The HTTP server lives on a
+    daemon thread and stays reachable on its own, so a port check proves
+    nothing; only the Step 5 round-trip does. Restart the engine and run the
+    two-liner again.
 - `No module named itasca_mcp_bridge`:
   - Bridge package not installed in the engine's embedded Python (or installed into the
     wrong interpreter). Re-run Step 3 against the resolved `itasca_python`.
