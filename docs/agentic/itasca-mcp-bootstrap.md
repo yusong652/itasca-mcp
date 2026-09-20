@@ -220,7 +220,8 @@ python import itasca_mcp_bridge
 python itasca_mcp_bridge.start(mode="console")
 ```
 
-`start()` does not return, so nothing after that line runs.
+`start()` does not return, so nothing after that line runs; everything else
+goes through the MCP tools.
 
 Use this only when you need it — the console session is tied to your own
 process, and a console build cannot plot.
