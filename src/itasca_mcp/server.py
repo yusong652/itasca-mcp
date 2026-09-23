@@ -31,7 +31,12 @@ mcp = FastMCP(
         "Provides tools for browsing/searching engine documentation (select the "
         "engine via the required 'software' parameter) and for executing simulation "
         "tasks and managing runs through an itasca-mcp-bridge service running inside "
-        "the Itasca engine GUI, or in a console build started unattended."
+        "the Itasca engine GUI, or in a console build started unattended.\n\n"
+        "Execution tool responses may carry a _context field: what the USER did in "
+        "the engine GUI since the previous call (user_console: cells they ran in the "
+        "IPython pane and lines they entered at the command prompt, with output). "
+        "It is not part of the tool's own result; read it to stay aware of what the "
+        "user is doing in the GUI alongside this session."
     ),
 )
 

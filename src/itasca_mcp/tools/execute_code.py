@@ -5,6 +5,7 @@ from typing import Any
 from fastmcp import FastMCP
 
 from itasca_mcp.bridge import get_bridge_client
+from itasca_mcp.bridge.context import with_context
 from itasca_mcp.contracts import build_ok
 from itasca_mcp.formatting import build_bridge_error, build_operation_error, is_bridge_connectivity_error
 from itasca_mcp.utils import ConsoleCode, ConsoleTimeoutSeconds
@@ -14,6 +15,7 @@ def register(mcp: FastMCP) -> None:
     """Register itasca_execute_code tool."""
 
     @mcp.tool()
+    @with_context
     async def itasca_execute_code(
         code: ConsoleCode,
         timeout: ConsoleTimeoutSeconds = 10,
