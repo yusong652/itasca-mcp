@@ -1,9 +1,11 @@
 """HTTP + SSE client for communicating with the itasca-mcp-bridge.
 
-Commands are plain ``POST /<command>`` request/response. The one
-server->client doorbell (``task_status_changed``) arrives on a single
-long-lived ``GET /events`` Server-Sent Events stream consumed in the
-background. The bridge speaks stdlib HTTP, so there is no third-party
+Commands are plain ``POST /<command>`` request/response. The
+server->client doorbells (``task_status_changed``, and ``console_entry``
+when the person types into the product GUI) arrive on a single long-lived
+``GET /events`` Server-Sent Events stream consumed in the background.
+Only the task doorbell wakes anything here: console entries are read on
+the next tool call through ``consume_console_history``. The bridge speaks stdlib HTTP, so there is no third-party
 dependency on the engine side.
 """
 
@@ -252,6 +254,19 @@ class ItascaBridgeClient:
             },
             operation_name="execute_code",
             timeout_s=timeout_s,
+        )
+
+    async def consume_console_history(self, limit: int = 20) -> dict[str, Any]:
+        """Entries the person typed into the product GUI since the last call.
+
+        The bridge keeps the delivery cursor, so this is a plain read: each
+        entry comes back once. Short timeout: this rides on every execution
+        tool's response and must never hold one up.
+        """
+        return await self._request(
+            {"type": "console_history", "limit": limit},
+            operation_name="console_history",
+            timeout_s=5.0,
         )
 
 

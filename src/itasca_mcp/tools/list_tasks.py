@@ -5,6 +5,7 @@ from typing import Any
 from fastmcp import FastMCP
 
 from itasca_mcp.bridge import get_bridge_client
+from itasca_mcp.bridge.context import with_context
 from itasca_mcp.contracts import build_ok
 from itasca_mcp.formatting import (
     build_bridge_error,
@@ -19,6 +20,7 @@ def register(mcp: FastMCP) -> None:
     """Register itasca_list_tasks tool."""
 
     @mcp.tool()
+    @with_context
     async def itasca_list_tasks(
         skip_newest: SkipNewestTasks = 0,
         limit: TaskListLimit = 32,
