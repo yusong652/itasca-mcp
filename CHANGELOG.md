@@ -45,6 +45,48 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-09-23
+
+The agent can now see what you do in the engine GUI. Until now the two sides
+of a session were blind to each other: whatever you typed into the product's
+IPython pane or at its command prompt stayed in the GUI, and the agent only
+ever knew about its own calls. With this release, what you type reaches the
+agent on its next tool call.
+
+### Added
+
+- **User console context on every execution tool.** Responses from
+  `itasca_execute_task`, `itasca_check_task_status`, `itasca_list_tasks`,
+  `itasca_interrupt_task` and `itasca_execute_code` carry a `_context`
+  field whenever the person at the engine has typed something since the
+  previous call. `_context.user_console` lists those entries in order, each
+  with its `source` (`python` for a cell run in the IPython pane, `command`
+  for a line entered at the product's command prompt), the input, what it
+  printed, the expression result for Python cells, and an error flag when
+  the engine or the interpreter reported one. The field is separate from
+  the tool's own `data` and appears on success and error responses alike;
+  nothing new typed means no field at all. The server instructions tell
+  the agent what the field is for.
+
+  On the bridge side (`itasca-mcp-bridge` 0.6.0) both places one can type
+  are hooked in the GUI builds of every product: the IPython pane through
+  the shell's cell events, the command prompt through the prompt widget's
+  own signal, with the command's output cut out of the console pane. The
+  bridge keeps the delivery cursor, so entries arrive once and survive a
+  bridge restart. Verified on PFC3D 6.0, 7.0, 9.7 and MPoint2D 9.7. An
+  older bridge simply never gets asked, and a console build has nothing to
+  report.
+
+### Documentation
+
+- The agentic bootstrap now says that `start(mode="console")` enters the
+  blocking task pump and does not return, so nothing written after it in a
+  `.dat` runs and everything from there goes through the MCP tools. Its
+  troubleshooting table gained the failure the port check cannot see: the
+  HTTP server answers on a daemon thread whether or not the main-thread
+  pump is ticking, so `/health` returning 200 while every task times out
+  is a real state, and only the Step 5 round-trip proves the bridge works.
+
 ## [0.9.0] - 2026-09-20
 
 MassFlow went through the same verification sweep FLAC, PFC, 3DEC and MPoint
