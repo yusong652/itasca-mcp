@@ -33,8 +33,9 @@
 - *"Build a slope model in FLAC3D and find the factor of safety"*
 - *"Model a tunnel excavation in jointed rock with 3DEC and check block displacements around the opening"*
 - *"Simulate a landslide runout with MPoint and report the final deposit profile"*
-- *"The simulation is still running — check the current unbalanced force without stopping it"*
-- *"What's different about the `zone` commands between FLAC 7.0 and 9.0?"*
+- *"The simulation is still running, check the current unbalanced force without stopping it"*
+- *"Look up the `plot` commands in the docs, then plot the contact force chains of the current model"*
+- *"The command I just typed in the console doesn't seem right, take a look"*
 
 ## First-time Setup
 
