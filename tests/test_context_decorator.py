@@ -107,6 +107,16 @@ async def test_fetch_formats_entries_for_the_agent():
             "success": False,
             "timestamp": 2.0,
         },
+        {
+            "id": 3,
+            "source": "command",
+            "input": "ball list",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 3.0,
+            "status": "queued",
+        },
     ]
     with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
         context = await fetch_bridge_context()
@@ -122,6 +132,7 @@ async def test_fetch_formats_entries_for_the_agent():
             "output": "*** Bad conversion of parameter number 1 (foo).",
             "error": True,
         },
+        {"source": "command", "input": "ball list", "status": "queued"},
     ]
 
 
