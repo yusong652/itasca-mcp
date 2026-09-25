@@ -45,6 +45,33 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-09-25
+
+A line you type at the engine's command prompt while the agent's task is
+cycling used to reach the agent late and empty: the engine holds such a line
+until the running command finishes, and the bridge gave up waiting for its
+output after 15 seconds. The agent now hears about the line at once and gets
+its output when the line runs.
+
+### Changed
+
+- **Queued command lines in `_context.user_console`.** A `command` entry
+  typed while the engine is busy arrives with `status: "queued"` on the
+  agent's next call, before the engine has run it. A second entry for the
+  same line with `status: "ran"` carries the output once the engine gets
+  to it, which is when the current command ends. A line that ran at once
+  has no `status`. An interrupt, or an error at that boundary, discards the
+  engine's queued lines, so a queued entry is not always followed by a
+  `ran` one. The `_context` description spells this out for the agent.
+  Backed by `itasca-mcp-bridge` 0.6.1, which also lets a discarded line go
+  instead of holding up the lines behind it, and on the 6.0/7.0 products
+  reads the prompt label again after the first line entered.
+
+### Documentation
+
+- The README example prompts now chain a documentation lookup into
+  execution, and show the agent picking up what the user typed in the GUI.
+
 ## [0.10.0] - 2026-09-23
 
 The agent can now see what you do in the engine GUI. Until now the two sides
