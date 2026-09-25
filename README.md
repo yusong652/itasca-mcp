@@ -128,6 +128,9 @@ See [Troubleshooting](docs/agentic/itasca-mcp-bootstrap.md#troubleshooting) in t
 
 See [Developer Guide: Install and Run from Source](docs/development/source-install.md).
 
+Starting the bridge with nobody typing is not a supported feature. The recipe, and the two
+approaches that do not work, are in [Advanced: Starting the Bridge Automatically](docs/development/launcher-tooling.md).
+
 <a href="https://glama.ai/mcp/servers/yusong652/itasca-mcp">
   <img width="200" height="105" src="https://glama.ai/mcp/servers/yusong652/itasca-mcp/badge" alt="itasca-mcp MCP server" />
 </a>
