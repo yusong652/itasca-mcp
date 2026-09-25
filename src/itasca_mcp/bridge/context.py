@@ -26,7 +26,11 @@ logger = logging.getLogger("itasca-mcp.context")
 USER_CONSOLE_DESCRIPTION = (
     "What the USER typed into the Itasca product GUI since the last tool call, "
     "not from this session: 'python' entries are cells run in the IPython pane, "
-    "'command' entries are lines entered at the product's command prompt."
+    "'command' entries are lines entered at the product's command prompt. "
+    "A command entry with status 'queued' was typed while the engine was busy "
+    "and has not run yet; the engine runs it when the current command finishes "
+    "(an error or an interrupt discards it instead). Its output then arrives as "
+    "a separate entry for the same line with status 'ran'."
 )
 
 
@@ -86,4 +90,7 @@ def _format_entry(entry: dict[str, Any]) -> dict[str, Any]:
         formatted["result"] = result
     if not entry.get("success", True):
         formatted["error"] = True
+    status = entry.get("status")
+    if status:
+        formatted["status"] = status
     return formatted
