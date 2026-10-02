@@ -123,7 +123,7 @@ async def test_fetch_formats_entries_for_the_agent():
 
     assert context is not None
     console = context["user_console"]
-    assert "USER typed" in console["description"]
+    assert "USER" in console["description"]
     assert console["entries"] == [
         {"source": "python", "input": "x = 6 * 7\nx", "result": 42},
         {
@@ -150,3 +150,105 @@ async def test_fetch_tolerates_an_old_bridge_without_the_command():
     client.consume_console_history.side_effect = ConnectionError("console_history failed: 404")
     with patch.object(ctx_module, "get_bridge_client", return_value=client):
         assert await fetch_bridge_context() is None
+
+
+async def test_fetch_splits_gui_entries_into_gui():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "Plot01",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"kind": "plot", "event": "open", "active": True, "items": ["Ball", "Legend"]},
+        },
+        {
+            "id": 2,
+            "source": "command",
+            "input": "ball list",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 2.0,
+        },
+        {
+            "id": 3,
+            "source": "plot_item",
+            "input": "Plot01",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 3.0,
+            "data": {"items": ["Ball", "Wall", "Legend"], "added": ["Wall"]},
+        },
+        {
+            "id": 4,
+            "source": "view",
+            "input": "consolidate.dat",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 4.0,
+            "data": {"kind": "data_file", "event": "renamed", "previous": "script"},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    assert context["user_console"]["entries"] == [{"source": "command", "input": "ball list"}]
+    gui = context["gui"]
+    assert "plot" in gui["description"] and "export" in gui["description"]
+    assert gui["entries"] == [
+        {"event": "open", "kind": "plot", "name": "Plot01", "active": True, "items": ["Ball", "Legend"]},
+        {"plot": "Plot01", "added": ["Wall"], "items": ["Ball", "Wall", "Legend"]},
+        {"event": "renamed", "kind": "data_file", "name": "consolidate.dat", "previous": "script"},
+    ]
+
+
+async def test_fetch_with_only_gui_entries_has_no_user_console():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "script",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"kind": "data_file", "event": "active"},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context == {
+        "gui": {
+            "description": ctx_module.GUI_DESCRIPTION,
+            "entries": [{"event": "active", "kind": "data_file", "name": "script"}],
+        }
+    }
+
+
+async def test_fetch_passes_changed_plot_items_through():
+    entries = [
+        {
+            "id": 1,
+            "source": "plot_item",
+            "input": "Plot02",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"items": ["Ball density", "Legend"], "changed": [["Ball", "Ball density"]]},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    assert context["gui"]["entries"] == [
+        {"plot": "Plot02", "changed": [["Ball", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
