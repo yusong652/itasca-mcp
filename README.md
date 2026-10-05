@@ -110,13 +110,11 @@ itasca_mcp_bridge.start()
 
 ## Features
 
-- **Multi-engine corpus** - command, Python API, and reference docs for PFC, FLAC, 3DEC, MPoint, and MassFlow, selected via the required `software` parameter
-- **Multi-version support** - command docs across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0, 3DEC: 7.0/9.0) via the `version` parameter
-- **Hierarchical documentation browsing** - agents navigate the engine command tree to discover capabilities and boundaries, reducing hallucinated commands
-- **Enhanced plot documentation** - plot items reference docs supplementing the official documentation
+- **Multi-engine, multi-version corpus** - command, Python API, and reference docs for PFC, FLAC, 3DEC, MPoint, and MassFlow across engine versions (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0, 3DEC: 7.0/9.0), selected via the `software` and `version` parameters
+- **Documentation agents can navigate** - agents browse the engine command tree to discover capabilities and boundaries, reducing hallucinated commands, with plot item reference docs supplementing the official documentation
 - **Live REPL alongside running tasks** - execute code while a simulation is running: check model state and intermediate results without stopping the task; also useful for quick iteration before writing a full script
 - **Task lifecycle management** - submit long-running simulations, monitor progress, interrupt running tasks, and browse task history
-- **Sees what you do in the GUI** - cells you run in the engine's IPython pane, commands you enter at its prompt, and the plots and data files you open or switch to reach the agent on its next call, so you can work in the GUI and with the agent at the same time
+- **Sees what you do in the GUI** - cells you run in the engine's IPython pane, commands you enter at its prompt, the plots and data files you open, close or switch to, the items you add to a plot, and the data files you execute from the editor all reach the agent on its next call, so you can work in the GUI and with the agent at the same time
 - **Agent-started bridge** - an AI agent can start the bridge itself through the engine's `console.exe`
 - **Multi-client compatible** - works with Claude Code, Codex CLI, Gemini CLI, GitHub Copilot CLI, OpenCode, toyoura-nagisa, and other MCP clients
 
