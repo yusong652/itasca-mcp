@@ -32,7 +32,9 @@ USER_CONSOLE_DESCRIPTION = (
 GUI_DESCRIPTION = (
     "Plots and data files opened or switched to in the Itasca GUI since the last "
     "call, by the user or by your own code ('active' = the one in front), and plot "
-    "items added, removed or changed. To see one, read the file or export the plot as an image."
+    "items added, removed or changed. 'executed' = the USER ran that data file from "
+    "its editor ('master' = the project's master files). To see one, read the file or "
+    "export the plot as an image."
 )
 
 # Console entries are what the person typed; GUI entries are what changed in
@@ -133,7 +135,7 @@ def _format_gui_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "kind": data.get("kind", ""),
         "name": entry.get("input", ""),
     }
-    for key in ("active", "previous", "items"):
+    for key in ("active", "previous", "items", "master"):
         if data.get(key):
             formatted[key] = data[key]
     return formatted
