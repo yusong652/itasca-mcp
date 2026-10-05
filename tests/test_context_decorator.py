@@ -252,3 +252,67 @@ async def test_fetch_passes_changed_plot_items_through():
     assert context["gui"]["entries"] == [
         {"plot": "Plot02", "changed": [["Ball", "Ball density"]], "items": ["Ball density", "Legend"]},
     ]
+
+
+def test_gui_entries_keep_only_the_last_view_in_front():
+    entries = [
+        {"event": "open", "kind": "plot", "name": "Plot01", "active": True, "items": ["Legend"]},
+        {"event": "active", "kind": "plot", "name": "Plot02", "items": ["Legend"]},
+        {"event": "closed", "kind": "data_file", "name": "script"},
+        {"event": "active", "kind": "plot", "name": "Plot03", "items": ["Ball", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"event": "open", "kind": "plot", "name": "Plot01", "items": ["Legend"]},
+        {"event": "closed", "kind": "data_file", "name": "script"},
+        {"event": "active", "kind": "plot", "name": "Plot03", "items": ["Ball", "Legend"]},
+    ]
+
+
+def test_gui_item_changes_of_one_plot_become_the_net_change():
+    entries = [
+        {"plot": "Plot03", "added": ["Ball"], "items": ["Ball", "Legend"]},
+        {"plot": "Plot02", "added": ["Wall"], "items": ["Wall", "Legend"]},
+        {"plot": "Plot03", "added": ["Contact"], "items": ["Ball", "Contact", "Legend"]},
+        {"plot": "Plot03", "changed": [["Contact", "Contact fric"]], "items": ["Ball", "Contact fric", "Legend"]},
+        {"plot": "Plot03", "added": ["Wall"], "items": ["Ball", "Contact fric", "Wall", "Legend"]},
+        {"plot": "Plot03", "removed": ["Wall"], "items": ["Ball", "Contact fric", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"plot": "Plot02", "added": ["Wall"], "items": ["Wall", "Legend"]},
+        {"plot": "Plot03", "added": ["Ball", "Contact fric"], "items": ["Ball", "Contact fric", "Legend"]},
+    ]
+
+
+def test_gui_item_changes_that_cancel_out_are_dropped():
+    entries = [
+        {"plot": "Plot01", "added": ["Wall"], "items": ["Ball", "Wall", "Legend"]},
+        {"plot": "Plot01", "removed": ["Wall"], "items": ["Ball", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == []
+
+
+def test_gui_item_changed_twice_is_one_change():
+    entries = [
+        {"plot": "Plot01", "changed": [["Ball", "Ball damp"]], "items": ["Ball damp", "Legend"]},
+        {"plot": "Plot01", "changed": [["Ball damp", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"plot": "Plot01", "changed": [["Ball", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
+
+
+async def test_long_console_output_keeps_head_and_tail():
+    output = "a" * 3000 + "b" * 3000
+    entry = {"id": 1, "source": "command", "input": "ball list", "output": output, "result": None, "success": True}
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([entry])):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    clipped = context["user_console"]["entries"][0]["output"]
+    assert clipped.startswith("a" * 1000 + "\n... [4000 chars omitted] ...\n")
+    assert clipped.endswith("b" * 1000)
+    assert len(clipped) < 2100
