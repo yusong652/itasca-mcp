@@ -45,6 +45,50 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-10-05
+
+The agent now follows what you do in the engine GUI beyond what you type.
+Open a plot, add an item to it, switch to a data file, run it with the
+Execute button: the agent learns of each on its next call, without you
+touching a console.
+
+### Added
+
+- **`_context.gui`.** Execution tool responses carry a second block next to
+  `user_console`, listing what changed in the product's windows since the
+  previous call:
+  - plots and data files opened, closed, renamed or brought to the front
+    (`event`: `open` / `closed` / `renamed` / `active`), by the user or by
+    the agent's own code;
+  - plot items added, removed or changed, with the plot's items after the
+    change;
+  - a data file the user ran from its editor (`event: "executed"`) with the
+    Execute button, Ctrl+E, or Ctrl+M for the project's master files
+    (`master: true`). Only that it was run: the agent reads the file to
+    learn what it did.
+
+  Names only. To see a data file the agent reads it from the working
+  directory; to see a plot it exports it. Backed by `itasca-mcp-bridge`
+  0.6.3; verified on PFC 7.0 and 9.7.
+
+### Changed
+
+- **`_context` stays short when a lot happens between calls.** GUI entries
+  are reduced to where things ended up: only the last view brought to the
+  front is marked active, and the item changes of one plot become a single
+  entry with the net change. One console entry's output is cut to 2000
+  characters, head and tail kept.
+
+### Fixed
+
+- A modal dialog left open while a task runs no longer fills the bridge log
+  with the same warning (`itasca-mcp-bridge` 0.6.3).
+
+### Documentation
+
+- README features: the corpus and documentation entries are merged, and the
+  GUI entry lists what the agent now sees (English and Chinese).
+
 ## [0.10.1] - 2026-09-25
 
 A line you type at the engine's command prompt while the agent's task is
