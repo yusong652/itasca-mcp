@@ -123,7 +123,7 @@ async def test_fetch_formats_entries_for_the_agent():
 
     assert context is not None
     console = context["user_console"]
-    assert "USER typed" in console["description"]
+    assert "USER" in console["description"]
     assert console["entries"] == [
         {"source": "python", "input": "x = 6 * 7\nx", "result": 42},
         {
@@ -150,3 +150,169 @@ async def test_fetch_tolerates_an_old_bridge_without_the_command():
     client.consume_console_history.side_effect = ConnectionError("console_history failed: 404")
     with patch.object(ctx_module, "get_bridge_client", return_value=client):
         assert await fetch_bridge_context() is None
+
+
+async def test_fetch_splits_gui_entries_into_gui():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "Plot01",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"kind": "plot", "event": "open", "active": True, "items": ["Ball", "Legend"]},
+        },
+        {
+            "id": 2,
+            "source": "command",
+            "input": "ball list",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 2.0,
+        },
+        {
+            "id": 3,
+            "source": "plot_item",
+            "input": "Plot01",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 3.0,
+            "data": {"items": ["Ball", "Wall", "Legend"], "added": ["Wall"]},
+        },
+        {
+            "id": 4,
+            "source": "view",
+            "input": "consolidate.dat",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 4.0,
+            "data": {"kind": "data_file", "event": "renamed", "previous": "script"},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    assert context["user_console"]["entries"] == [{"source": "command", "input": "ball list"}]
+    gui = context["gui"]
+    assert "plot" in gui["description"] and "export" in gui["description"]
+    assert gui["entries"] == [
+        {"event": "open", "kind": "plot", "name": "Plot01", "active": True, "items": ["Ball", "Legend"]},
+        {"plot": "Plot01", "added": ["Wall"], "items": ["Ball", "Wall", "Legend"]},
+        {"event": "renamed", "kind": "data_file", "name": "consolidate.dat", "previous": "script"},
+    ]
+
+
+async def test_fetch_with_only_gui_entries_has_no_user_console():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "script",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"kind": "data_file", "event": "active"},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context == {
+        "gui": {
+            "description": ctx_module.GUI_DESCRIPTION,
+            "entries": [{"event": "active", "kind": "data_file", "name": "script"}],
+        }
+    }
+
+
+async def test_fetch_passes_changed_plot_items_through():
+    entries = [
+        {
+            "id": 1,
+            "source": "plot_item",
+            "input": "Plot02",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"items": ["Ball density", "Legend"], "changed": [["Ball", "Ball density"]]},
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    assert context["gui"]["entries"] == [
+        {"plot": "Plot02", "changed": [["Ball", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
+
+
+def test_gui_entries_keep_only_the_last_view_in_front():
+    entries = [
+        {"event": "open", "kind": "plot", "name": "Plot01", "active": True, "items": ["Legend"]},
+        {"event": "active", "kind": "plot", "name": "Plot02", "items": ["Legend"]},
+        {"event": "closed", "kind": "data_file", "name": "script"},
+        {"event": "active", "kind": "plot", "name": "Plot03", "items": ["Ball", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"event": "open", "kind": "plot", "name": "Plot01", "items": ["Legend"]},
+        {"event": "closed", "kind": "data_file", "name": "script"},
+        {"event": "active", "kind": "plot", "name": "Plot03", "items": ["Ball", "Legend"]},
+    ]
+
+
+def test_gui_item_changes_of_one_plot_become_the_net_change():
+    entries = [
+        {"plot": "Plot03", "added": ["Ball"], "items": ["Ball", "Legend"]},
+        {"plot": "Plot02", "added": ["Wall"], "items": ["Wall", "Legend"]},
+        {"plot": "Plot03", "added": ["Contact"], "items": ["Ball", "Contact", "Legend"]},
+        {"plot": "Plot03", "changed": [["Contact", "Contact fric"]], "items": ["Ball", "Contact fric", "Legend"]},
+        {"plot": "Plot03", "added": ["Wall"], "items": ["Ball", "Contact fric", "Wall", "Legend"]},
+        {"plot": "Plot03", "removed": ["Wall"], "items": ["Ball", "Contact fric", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"plot": "Plot02", "added": ["Wall"], "items": ["Wall", "Legend"]},
+        {"plot": "Plot03", "added": ["Ball", "Contact fric"], "items": ["Ball", "Contact fric", "Legend"]},
+    ]
+
+
+def test_gui_item_changes_that_cancel_out_are_dropped():
+    entries = [
+        {"plot": "Plot01", "added": ["Wall"], "items": ["Ball", "Wall", "Legend"]},
+        {"plot": "Plot01", "removed": ["Wall"], "items": ["Ball", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == []
+
+
+def test_gui_item_changed_twice_is_one_change():
+    entries = [
+        {"plot": "Plot01", "changed": [["Ball", "Ball damp"]], "items": ["Ball damp", "Legend"]},
+        {"plot": "Plot01", "changed": [["Ball damp", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
+
+    assert ctx_module._coalesce_gui(entries) == [
+        {"plot": "Plot01", "changed": [["Ball", "Ball density"]], "items": ["Ball density", "Legend"]},
+    ]
+
+
+async def test_long_console_output_keeps_head_and_tail():
+    output = "a" * 3000 + "b" * 3000
+    entry = {"id": 1, "source": "command", "input": "ball list", "output": output, "result": None, "success": True}
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([entry])):
+        context = await fetch_bridge_context()
+
+    assert context is not None
+    clipped = context["user_console"]["entries"][0]["output"]
+    assert clipped.startswith("a" * 1000 + "\n... [4000 chars omitted] ...\n")
+    assert clipped.endswith("b" * 1000)
+    assert len(clipped) < 2100
