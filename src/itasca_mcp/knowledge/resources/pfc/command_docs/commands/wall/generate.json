@@ -13,8 +13,8 @@
   "notes": [
     "IMPORTANT: The id, name, and group keywords must be given prior to any additional keywords (shape keywords like box, cylinder, etc.)",
     "This command is designed for generating complete geometric bodies composed of multiple wall elements (e.g., box creates 6 separate walls by default)",
-    "For box shape: Each face gets auto-generated name suffix (Top/Bottom/Left/Right/Front/Back + ID)",
-    "Python SDK access requires finding each face individually: itasca.wall.find('nameTopXX') where XX is wall ID",
+    "Wall names (verified on PFC 6.0/7.0/9.0/9.7, 2D and 3D): box without one-wall gives one wall per side named <name><Side> (Bottom/Top/Left/Right/Front/Back) WITHOUT the ID when name is given, and boxWall<Side><ID> when it is not; cylinder and cone without one-wall give <name><Side><ID> (Side = Bottom/Side/Top, only for the parts generated) whether or not name is given, with prefix 'cylinder'/'cone' when it is not (not 'cylinderWall'/'coneWall'); box/cylinder/cone with one-wall and every other shape give exactly <name> when name is given; circle/disk/line/plane/point/polygon/sphere give <shape>Wall<ID> when it is not.",
+    "A named cylinder/cone is therefore NOT found by itasca.wall.find('<name>'): find '<name>Side<ID>' etc., or select from itasca.wall.list() by name prefix.",
     "For independent control of individual faces with custom names, use 'wall create' instead to avoid name concatenation"
   ],
   "versions": {
@@ -40,12 +40,52 @@
         {
           "name": "box",
           "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall] [expand <fe>]",
-          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., {top, bottom, left, or right in 2d; top, bottom, left, right, front, or back in 3D}) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. Use the optional expand keyword to expand each side of the box by a factor fe ."
+          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name ({Bottom, Right, Top, Left} in 2D; {Bottom, Top, Left, Right, Front, Back} in 3D). With the name keyword the ID is NOT appended (name 'fred' gives fredTop); without it the ID is appended (boxWallTop12). Verified on PFC 6.0/7.0/9.0/9.7. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. Use the optional expand keyword to expand each side of the box by a factor fe ."
+        },
+        {
+          "name": "circle",
+          "syntax": "circle keyword ...",
+          "description": "2D ONLY. Generate a closed circle. Sub-keywords: position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (facet length smaller than fres*frad; 0.1 by default). Wall name is the name keyword's value, or circleWall<ID> when it is not given."
+        },
+        {
+          "name": "cone",
+          "syntax": "cone keyword ...",
+          "description": "3D ONLY. Generate a cone, or a conic frustum when a nonzero top radius is given. Sub-keywords: axis <v> (symmetry axis pointing from the base, +z by default); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; by default the bottom cap is created and no top cap unless the top radius is nonzero); height <f> (1 by default); one-wall (caps and side in a single wall); radius <fbot> [<ftop>] (1.0 and 0.0 by default; ftop > 0 makes a frustum); resolution <f> (end edge length smaller than fres*min radius; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> (prefix 'cone' when name is not given); with one-wall the wall is <name>."
+        },
+        {
+          "name": "cylinder",
+          "syntax": "cylinder keyword ...",
+          "description": "3D ONLY. Generate a cylinder. Sub-keywords: axis <v> (symmetry axis pointing from the base); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; both caps by default); height <f> (1 by default); one-wall (caps and side in a single wall); radius <f>; resolution <f> (end edge length smaller than fres*frad; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> -- the ID is appended even when name is given, so name 'fred' with cap false false gives the single wall fredSide1, not fred (prefix 'cylinder' when name is not given). With one-wall the wall is <name>. Look the walls up by name after generation (e.g. itasca.wall.list()) rather than itasca.wall.find('<name>')."
+        },
+        {
+          "name": "disk",
+          "syntax": "disk keyword ...",
+          "description": "3D ONLY. Generate a disk. Sub-keywords: dip <f> (degrees in [0,90], 0 by default); dip-direction <f> (degrees clockwise from +y in [0,360], 0 by default); position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (edge length smaller than fres*frad; 0.1 by default). Wall name is <name>, or diskWall<ID> when name is not given."
+        },
+        {
+          "name": "line",
+          "syntax": "line keyword ...",
+          "description": "3D ONLY. Generate a line wall made of 2 facets. Sub-keywords: position <v1> <v2> (end points); resolution <f> (out-of-plane width, should be much smaller than the length). Wall name is <name>, or lineWall<ID> when name is not given. Accepted by PFC 6.0 although its manual does not list it."
+        },
+        {
+          "name": "plane",
+          "syntax": "plane keyword ...",
+          "description": "Generate a plane wall spanning the whole model domain, truncated at the domain boundaries. Sub-keywords: dip <f> ([0,180] in 2D, [0,90] in 3D; 0 by default); dip-direction <f> (3D ONLY; degrees clockwise from +y in [0,360], 0 by default); position <v> (a point on the plane). Wall name is <name>, or planeWall<ID> when name is not given."
+        },
+        {
+          "name": "point",
+          "syntax": "point keyword ...",
+          "description": "Generate a point wall: a line segment in 2D, an equilateral triangle in 3D, meant to be much smaller (about 1/10) than the smallest ball/pebble. Sub-keywords: position <v> (origin by default); resolution <f> (facet length in 2D, triangle edge in 3D; 1/100 of the smallest domain side by default). Wall name is <name>, or pointWall<ID> when name is not given."
         },
         {
           "name": "polygon",
           "syntax": "polygon <vpos>... [make-planar] [triangulate]",
           "description": "Generate a planar, polygonal wall in 3D. If the name keyword has not been specified, then s = polygonWall . There are two modes of operation: the default mode which is guaranteed to work for convex polygons and the triangulation mode, specified with the optional triangulate keyword, that works for both convex and concave polygons. In both modes, the makeplanar keyword is used to snap the vertices to the plane with point equal to the average location of vertices (called the center). The plane normal is defined by the cross product of two vectors, namely the vector difference between the center and vertex 1 and the vector difference between the center and vertex 2. In the default mode, the vertices of the wall can be input in any order and the command is guaranteed to work for sets of vertices defining convex polygons. The algorithm proceeds by ordering the points in clockwise order about the center. The first facet is created from the [1,2,num] vertex where num is the total number of vertices. The next facet is made from the [2,num,3] vertices, and the following from the [num,3,num-1] vertices, and so on. In triangulation mode, the vertices must be input in an ordered fashion around the perimeter of the polygon. The sweep line algorithm is used to triangulate the polygon."
+        },
+        {
+          "name": "sphere",
+          "syntax": "sphere keyword ...",
+          "description": "3D ONLY. Generate a closed sphere by refining an icosahedron until edges are shorter than fres*frad. Sub-keywords: position <v> (centroid, origin by default); radius <f> (1.0 by default); resolution <f> (0.1 by default; smaller values raise the facet count sharply, 5120 facets at 0.1). Wall name is <name>, or sphereWall<ID> when name is not given."
         }
       ],
       "examples": [
@@ -108,26 +148,6 @@
       "syntax": "wall generate keyword ...",
       "keywords": [
         {
-          "name": "box",
-          "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall]",
-          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., {top, bottom, left, or right in 2d; top, bottom, left, right, front, or back in 3D}) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
-        },
-        {
-          "name": "cone",
-          "syntax": "cone",
-          "description": ""
-        },
-        {
-          "name": "cylinder",
-          "syntax": "cylinder",
-          "description": ""
-        },
-        {
-          "name": "disk",
-          "syntax": "disk",
-          "description": ""
-        },
-        {
           "name": "group",
           "syntax": "group <s>[slot <slot>] [facet] ...",
           "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
@@ -138,24 +158,49 @@
           "description": "Wall ID. If not specified, then the next available ID is used."
         },
         {
-          "name": "line",
-          "syntax": "line",
-          "description": ""
-        },
-        {
           "name": "name",
           "syntax": "name <s>",
           "description": "Wall name. If not specified, then each shape defines a wall name with the ID post pended."
         },
         {
+          "name": "box",
+          "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall] [expand <fe>]",
+          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name ({Bottom, Right, Top, Left} in 2D; {Bottom, Top, Left, Right, Front, Back} in 3D). With the name keyword the ID is NOT appended (name 'fred' gives fredTop); without it the ID is appended (boxWallTop12). Verified on PFC 6.0/7.0/9.0/9.7. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. The optional expand keyword expands each side by a factor fe (accepted by PFC 6.0 although its manual omits it)."
+        },
+        {
+          "name": "circle",
+          "syntax": "circle keyword ...",
+          "description": "2D ONLY. Generate a closed circle. Sub-keywords: position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (facet length smaller than fres*frad; 0.1 by default). Wall name is the name keyword's value, or circleWall<ID> when it is not given."
+        },
+        {
+          "name": "cone",
+          "syntax": "cone keyword ...",
+          "description": "3D ONLY. Generate a cone, or a conic frustum when a nonzero top radius is given. Sub-keywords: axis <v> (symmetry axis pointing from the base, +z by default); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; by default the bottom cap is created and no top cap unless the top radius is nonzero); height <f> (1 by default); one-wall (caps and side in a single wall); radius <fbot> [<ftop>] (1.0 and 0.0 by default; ftop > 0 makes a frustum); resolution <f> (end edge length smaller than fres*min radius; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> (prefix 'cone' when name is not given); with one-wall the wall is <name>."
+        },
+        {
+          "name": "cylinder",
+          "syntax": "cylinder keyword ...",
+          "description": "3D ONLY. Generate a cylinder. Sub-keywords: axis <v> (symmetry axis pointing from the base); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; both caps by default); height <f> (1 by default); one-wall (caps and side in a single wall); radius <f>; resolution <f> (end edge length smaller than fres*frad; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> -- the ID is appended even when name is given, so name 'fred' with cap false false gives the single wall fredSide1, not fred (prefix 'cylinder' when name is not given). With one-wall the wall is <name>. Look the walls up by name after generation (e.g. itasca.wall.list()) rather than itasca.wall.find('<name>')."
+        },
+        {
+          "name": "disk",
+          "syntax": "disk keyword ...",
+          "description": "3D ONLY. Generate a disk. Sub-keywords: dip <f> (degrees in [0,90], 0 by default); dip-direction <f> (degrees clockwise from +y in [0,360], 0 by default); position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (edge length smaller than fres*frad; 0.1 by default). Wall name is <name>, or diskWall<ID> when name is not given."
+        },
+        {
+          "name": "line",
+          "syntax": "line keyword ...",
+          "description": "3D ONLY. Generate a line wall made of 2 facets. Sub-keywords: position <v1> <v2> (end points); resolution <f> (out-of-plane width, should be much smaller than the length). Wall name is <name>, or lineWall<ID> when name is not given. Accepted by PFC 6.0 although its manual does not list it."
+        },
+        {
           "name": "plane",
-          "syntax": "plane",
-          "description": ""
+          "syntax": "plane keyword ...",
+          "description": "Generate a plane wall spanning the whole model domain, truncated at the domain boundaries. Sub-keywords: dip <f> ([0,180] in 2D, [0,90] in 3D; 0 by default); dip-direction <f> (3D ONLY; degrees clockwise from +y in [0,360], 0 by default); position <v> (a point on the plane). Wall name is <name>, or planeWall<ID> when name is not given."
         },
         {
           "name": "point",
-          "syntax": "point",
-          "description": ""
+          "syntax": "point keyword ...",
+          "description": "Generate a point wall: a line segment in 2D, an equilateral triangle in 3D, meant to be much smaller (about 1/10) than the smallest ball/pebble. Sub-keywords: position <v> (origin by default); resolution <f> (facet length in 2D, triangle edge in 3D; 1/100 of the smallest domain side by default). Wall name is <name>, or pointWall<ID> when name is not given."
         },
         {
           "name": "polygon",
@@ -164,8 +209,8 @@
         },
         {
           "name": "sphere",
-          "syntax": "sphere",
-          "description": ""
+          "syntax": "sphere keyword ...",
+          "description": "3D ONLY. Generate a closed sphere by refining an icosahedron until edges are shorter than fres*frad. Sub-keywords: position <v> (centroid, origin by default); radius <f> (1.0 by default); resolution <f> (0.1 by default; smaller values raise the facet count sharply, 5120 facets at 0.1). Wall name is <name>, or sphereWall<ID> when name is not given."
         }
       ],
       "examples": [
@@ -242,12 +287,52 @@
         {
           "name": "box",
           "syntax": "box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>[one-wall] [expand <fe>] `z`-components are 3D ONLY",
-          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name (e.g., {top, bottom, left, or right in 2d; top, bottom, left, right, front, or back in 3D}) and the wall ID. For instance, if s = fred , the name of the top wall is fredTopXX , where XX is the wall ID. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. Use the optional expand keyword to expand each side of the box by a factor fe ."
+          "description": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name ({Bottom, Right, Top, Left} in 2D; {Bottom, Top, Left, Right, Front, Back} in 3D). With the name keyword the ID is NOT appended (name 'fred' gives fredTop); without it the ID is appended (boxWallTop12). Verified on PFC 6.0/7.0/9.0/9.7. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. Use the optional expand keyword to expand each side of the box by a factor fe ."
+        },
+        {
+          "name": "circle",
+          "syntax": "circle keyword ...",
+          "description": "2D ONLY. Generate a closed circle. Sub-keywords: position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (facet length smaller than fres*frad; 0.1 by default). Wall name is the name keyword's value, or circleWall<ID> when it is not given."
+        },
+        {
+          "name": "cone",
+          "syntax": "cone keyword ...",
+          "description": "3D ONLY. Generate a cone, or a conic frustum when a nonzero top radius is given. Sub-keywords: axis <v> (symmetry axis pointing from the base, +z by default); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; by default the bottom cap is created and no top cap unless the top radius is nonzero); height <f> (1 by default); one-wall (caps and side in a single wall); radius <fbot> [<ftop>] (1.0 and 0.0 by default; ftop > 0 makes a frustum); resolution <f> (end edge length smaller than fres*min radius; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> (prefix 'cone' when name is not given); with one-wall the wall is <name>."
+        },
+        {
+          "name": "cylinder",
+          "syntax": "cylinder keyword ...",
+          "description": "3D ONLY. Generate a cylinder. Sub-keywords: axis <v> (symmetry axis pointing from the base); base <v> (center of the bottom end, origin by default); cap <b> [<b>] (bottom/top end caps; one boolean applies to both; both caps by default); height <f> (1 by default); one-wall (caps and side in a single wall); radius <f>; resolution <f> (end edge length smaller than fres*frad; 0.1 by default). Without one-wall each part is a separate wall named <name>Bottom<ID>, <name>Side<ID>, <name>Top<ID> -- the ID is appended even when name is given, so name 'fred' with cap false false gives the single wall fredSide1, not fred (prefix 'cylinder' when name is not given). With one-wall the wall is <name>. Look the walls up by name after generation (e.g. itasca.wall.list()) rather than itasca.wall.find('<name>')."
+        },
+        {
+          "name": "disk",
+          "syntax": "disk keyword ...",
+          "description": "3D ONLY. Generate a disk. Sub-keywords: dip <f> (degrees in [0,90], 0 by default); dip-direction <f> (degrees clockwise from +y in [0,360], 0 by default); position <v> (center, origin by default); radius <f> (1.0 by default); resolution <f> (edge length smaller than fres*frad; 0.1 by default). Wall name is <name>, or diskWall<ID> when name is not given."
+        },
+        {
+          "name": "line",
+          "syntax": "line keyword ...",
+          "description": "3D ONLY. Generate a line wall made of 2 facets. Sub-keywords: position <v1> <v2> (end points); resolution <f> (out-of-plane width, should be much smaller than the length). Wall name is <name>, or lineWall<ID> when name is not given. Accepted by PFC 6.0 although its manual does not list it."
+        },
+        {
+          "name": "plane",
+          "syntax": "plane keyword ...",
+          "description": "Generate a plane wall spanning the whole model domain, truncated at the domain boundaries. Sub-keywords: dip <f> ([0,180] in 2D, [0,90] in 3D; 0 by default); dip-direction <f> (3D ONLY; degrees clockwise from +y in [0,360], 0 by default); position <v> (a point on the plane). Wall name is <name>, or planeWall<ID> when name is not given."
+        },
+        {
+          "name": "point",
+          "syntax": "point keyword ...",
+          "description": "Generate a point wall: a line segment in 2D, an equilateral triangle in 3D, meant to be much smaller (about 1/10) than the smallest ball/pebble. Sub-keywords: position <v> (origin by default); resolution <f> (facet length in 2D, triangle edge in 3D; 1/100 of the smallest domain side by default). Wall name is <name>, or pointWall<ID> when name is not given."
         },
         {
           "name": "polygon",
           "syntax": "polygon <vpos>... [make-planar] [triangulate] 3D ONLY",
           "description": "Generate a planar, polygonal wall in 3D. If the name keyword has not been specified, then s = polygonWall . There are two modes of operation: the default mode which is guaranteed to work for convex polygons and the triangulation mode, specified with the optional triangulate keyword, that works for both convex and concave polygons. In both modes, the makeplanar keyword is used to snap the vertices to the plane with point equal to the average location of vertices (called the center). The plane normal is defined by the cross product of two vectors, namely the vector difference between the center and vertex 1 and the vector difference between the center and vertex 2. In the default mode, the vertices of the wall can be input in any order and the command is guaranteed to work for sets of vertices defining convex polygons. The algorithm proceeds by ordering the points in clockwise order about the center. The first facet is created from the [1,2,num] vertex where num is the total number of vertices. The next facet is made from the [2,num,3] vertices, and the following from the [num,3,num-1] vertices, and so on. In triangulation mode, the vertices must be input in an ordered fashion around the perimeter of the polygon. The sweep line algorithm is used to triangulate the polygon."
+        },
+        {
+          "name": "sphere",
+          "syntax": "sphere keyword ...",
+          "description": "3D ONLY. Generate a closed sphere by refining an icosahedron until edges are shorter than fres*frad. Sub-keywords: position <v> (centroid, origin by default); radius <f> (1.0 by default); resolution <f> (0.1 by default; smaller values raise the facet count sharply, 5120 facets at 0.1). Wall name is <name>, or sphereWall<ID> when name is not given."
         }
       ],
       "examples": [
