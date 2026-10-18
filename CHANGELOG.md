@@ -45,6 +45,26 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.3] - 2026-10-18
+
+### Documentation
+
+- **PFC `wall generate` lists every wall shape.** The cylinder, cone, disk,
+  sphere, plane, line, point and circle keywords were missing from the 7.0
+  and 9.0 command docs and left blank in 6.0, so the docs gave agents no
+  syntax for the most common wall shapes. All three versions now list them
+  with their sub-keywords and defaults.
+- **PFC wall names are documented as the engine actually gives them.**
+  Verified on PFC 6.0, 7.0, 9.0 and 9.7, in 2D and 3D. Two points differ
+  from the Itasca manual:
+  - A named box gets no ID: `fredTop`, not `fredTopXX`.
+  - Cylinder and cone walls always carry the ID, even when named:
+    `name 'cylinder'` gives `cylinderSide1`, so `itasca.wall.find('cylinder')`
+    finds nothing.
+
+  The 6.0 entry also lists `line` and box `expand`, which that version
+  accepts although its manual omits them.
+
 ## [0.10.2] - 2026-10-05
 
 The agent now follows what you do in the engine GUI beyond what you type.
