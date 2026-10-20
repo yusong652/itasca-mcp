@@ -45,6 +45,34 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.4] - 2026-10-20
+
+### Fixed
+
+- **An engine error that never reaches Python now comes back at once**
+  (bridge 0.6.4). Some engine errors inside a Python API call show a
+  message box and abandon the call. One example is PFC 7.0
+  `itasca.facetarray.set_conveyor` with a velocity that is not parallel
+  to the facets. Before, `itasca_execute_code` hung until it timed out
+  ("stuck in a C extension"), a task stayed `running` for good, and every
+  cycle started from the GUI afterwards stopped at once as "interrupted
+  by user". Now the call returns the engine's message: error code
+  `engine_abandoned` for `itasca_execute_code`, or a failed task. The
+  bridge then cleans up its own state.
+- **Dropped client connections no longer print a traceback** in the
+  engine console (bridge 0.6.4).
+
+### Documentation
+
+- **The PFC Python API docs cover the eight vectorized array modules they
+  were missing**: `vertexarray`, `facetarray`, `cfdarray`, `pebblearray`,
+  `ballrblockarray`, `pebblerblockarray`, `rblockfacetarray` and
+  `rblockrblockarray`. Each function was checked against live PFC 6.0,
+  7.0 and 9.0, and the docs record per-version availability (the
+  `cfdarray` group functions exist only in 6.0). Notes cover the traps:
+  `vertexarray.set_vel` drives every wall vertex in one call, and
+  `facetarray.set_conveyor` must be tangential to the facets.
+
 ## [0.10.3] - 2026-10-18
 
 ### Documentation
