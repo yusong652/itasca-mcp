@@ -17,6 +17,14 @@ ARRAY_MODULES = {
     "ballpebblearray",
     "pebblepebblearray",
     "pebblefacetarray",
+    "ballrblockarray",
+    "cfdarray",
+    "facetarray",
+    "pebblearray",
+    "pebblerblockarray",
+    "rblockfacetarray",
+    "rblockrblockarray",
+    "vertexarray",
 }
 
 
@@ -77,11 +85,17 @@ def test_array_keywords_point_to_quick_ref_entries() -> None:
                 assert api_path in quick_ref, api_path
 
 
+# Version gates measured on live 6.0 / 7.0 / 9.0 consoles: cfdarray group access exists only in 6.0.
+VERSION_GATED = {
+    ("cfdarray", "in_group"): ["6.0"],
+    ("cfdarray", "set_group"): ["6.0"],
+}
+
+
 def test_array_modules_advertise_all_three_versions() -> None:
     for module in ARRAY_MODULES:
         doc = DocumentationLoader.load_module(module, software="pfc")
         assert doc is not None
         for func in doc["functions"]:
-            assert func["availability"]["versions"] == ["6.0", "7.0", "9.0"], (
-                f"{module}.{func['name']} unexpectedly version-gated"
-            )
+            expected = VERSION_GATED.get((module, func["name"]), ["6.0", "7.0", "9.0"])
+            assert func["availability"]["versions"] == expected, f"{module}.{func['name']} version gate changed"

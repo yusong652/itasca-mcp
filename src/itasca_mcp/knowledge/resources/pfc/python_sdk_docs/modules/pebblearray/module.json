@@ -1,0 +1,438 @@
+{
+  "module": "itasca.pebblearray",
+  "description": "Vectorized NumPy array access for clump pebble attributes.",
+  "import_statement": "import itasca as it",
+  "versions": [
+    "6.0",
+    "7.0",
+    "9.0"
+  ],
+  "functions": [
+    {
+      "name": "extra",
+      "signature": "itasca.pebblearray.extra(slot: int) -> array float{pebble} or float{pebble,3}",
+      "description": "Get the pebble extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{pebble} or float{pebble,3}",
+        "description": "array float{pebble} or float{pebble,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.pebblearray.extra(1)",
+          "description": "Read extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "fill_pos",
+      "signature": "itasca.pebblearray.fill_pos(data: array float{pebble, 3}) -> None",
+      "description": "Fill an existing array with the pebble location. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{pebble, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.pebblearray.pos())\nit.pebblearray.fill_pos(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_radius",
+      "signature": "itasca.pebblearray.fill_radius(data: array float{pebble}) -> None",
+      "description": "Fill an existing array with the pebble radii. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{pebble}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.pebblearray.radius())\nit.pebblearray.fill_radius(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype.",
+        "One value per pebble (the Itasca page writes {ball})."
+      ]
+    },
+    {
+      "name": "fill_vel",
+      "signature": "itasca.pebblearray.fill_vel(data: array float{pebble, 3}) -> None",
+      "description": "Fill an existing array with the pebble velocity. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{pebble, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.pebblearray.vel())\nit.pebblearray.fill_vel(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.pebblearray.ids() -> array int{pebble}",
+      "description": "Get the pebble ids as an array.",
+      "parameters": [],
+      "returns": {
+        "type": "array int{pebble}",
+        "description": "array int{pebble}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.pebblearray.ids()",
+          "description": "Call pebblearray.ids."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.pebblearray.in_group(group_name: str, slot=1) -> array bool{pebble}",
+      "description": "Return pebble group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{pebble}",
+        "description": "array bool{pebble}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.pebblearray.in_group('mygroup')",
+          "description": "Boolean mask of the objects in group 'mygroup' (slot 1)."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.pebblearray.pos() -> array float{pebble,3}",
+      "description": "Get a numpy array of the pebble location.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{pebble,3}",
+        "description": "array float{pebble,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.pebblearray.pos()",
+          "description": "Call pebblearray.pos."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "radius",
+      "signature": "itasca.pebblearray.radius() -> array float{pebble}",
+      "description": "Get a numpy array of the pebble radii.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{pebble}",
+        "description": "array float{pebble}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.pebblearray.radius()",
+          "description": "Call pebblearray.radius."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "One value per pebble (the Itasca page writes {ball})."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.pebblearray.set_extra(slot: int, data: array float{pebble} or float{pebble, 3}) -> None",
+      "description": "Set the pebble extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{pebble} or float{pebble, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nit.pebblearray.set_extra(1, np.zeros(len(it.pebblearray.ids())))",
+          "description": "Write a float into extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.pebblearray.set_group(membership: array bool{pebble}, group_name: str, slot=1) -> None",
+      "description": "Set pebble group from an array. Where membership True set the corresponding pebble to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{pebble}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.pebblearray.pos()[:, 2] > 0.0\nit.pebblearray.set_group(mask, 'upper')",
+          "description": "Put the objects above z = 0 into group 'upper'."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_pos",
+      "signature": "itasca.pebblearray.set_pos(data: array float{pebble, 3}) -> None",
+      "description": "Set the pebble location from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{pebble, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.pebblearray.pos()\n# modify data in place, then write it back\nit.pebblearray.set_pos(data)",
+          "description": "Read, modify and write back pos for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_radius",
+      "signature": "itasca.pebblearray.set_radius(data: array float{pebble}) -> None",
+      "description": "Set the pebble radii from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{pebble}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.pebblearray.radius()\n# modify data in place, then write it back\nit.pebblearray.set_radius(data)",
+          "description": "Read, modify and write back radius for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "One value per pebble (the Itasca page writes {ball})."
+      ]
+    },
+    {
+      "name": "vel",
+      "signature": "itasca.pebblearray.vel() -> array float{pebble,3}",
+      "description": "Get a numpy array of the pebble velocity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{pebble,3}",
+        "description": "array float{pebble,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.pebblearray.vel()",
+          "description": "Call pebblearray.vel."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    }
+  ]
+}

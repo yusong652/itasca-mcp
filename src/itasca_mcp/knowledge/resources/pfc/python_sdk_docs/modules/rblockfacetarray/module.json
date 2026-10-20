@@ -1,0 +1,959 @@
+{
+  "module": "itasca.rblockfacetarray",
+  "description": "Vectorized NumPy array access for rigid block-facet contact attributes.",
+  "import_statement": "import itasca as it",
+  "versions": [
+    "6.0",
+    "7.0",
+    "9.0"
+  ],
+  "functions": [
+    {
+      "name": "branch",
+      "signature": "itasca.rblockfacetarray.branch() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact branch vectors in the global coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.branch()",
+          "description": "Call rblockfacetarray.branch."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.rblockfacetarray.extra(slot: int) -> array float{contact} or float{contact,3}",
+      "description": "Get the contact extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{contact} or float{contact,3}",
+        "description": "array float{contact} or float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.extra(1)",
+          "description": "Read extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "fill_branch",
+      "signature": "itasca.rblockfacetarray.fill_branch(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact branch vectors in the global coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.branch())\nit.rblockfacetarray.fill_branch(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_force_global",
+      "signature": "itasca.rblockfacetarray.fill_force_global(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact force in the global coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.force_global())\nit.rblockfacetarray.fill_force_global(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_force_local",
+      "signature": "itasca.rblockfacetarray.fill_force_local(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact force in the local coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.force_local())\nit.rblockfacetarray.fill_force_local(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_force_normal",
+      "signature": "itasca.rblockfacetarray.fill_force_normal(data: array float{contact}) -> None",
+      "description": "Fill an existing array with the contact normal force. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.force_normal())\nit.rblockfacetarray.fill_force_normal(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_force_shear",
+      "signature": "itasca.rblockfacetarray.fill_force_shear(data: array float{contact}) -> None",
+      "description": "Fill an existing array with the contact shear force magnitude. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.force_shear())\nit.rblockfacetarray.fill_force_shear(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_gap",
+      "signature": "itasca.rblockfacetarray.fill_gap(data: array float{contact}) -> None",
+      "description": "Fill an existing array with the contact gap. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.gap())\nit.rblockfacetarray.fill_gap(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_moment1_global",
+      "signature": "itasca.rblockfacetarray.fill_moment1_global(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact moment acting on end 1 in the global coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.moment1_global())\nit.rblockfacetarray.fill_moment1_global(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_moment1_local",
+      "signature": "itasca.rblockfacetarray.fill_moment1_local(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact moment acting on end 1 in the local coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.moment1_local())\nit.rblockfacetarray.fill_moment1_local(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_moment2_global",
+      "signature": "itasca.rblockfacetarray.fill_moment2_global(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact moment acting on end 2 in the global coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.moment2_global())\nit.rblockfacetarray.fill_moment2_global(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_moment2_local",
+      "signature": "itasca.rblockfacetarray.fill_moment2_local(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact moment acting on end 2 in the local coordinate system. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.moment2_local())\nit.rblockfacetarray.fill_moment2_local(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_normal",
+      "signature": "itasca.rblockfacetarray.fill_normal(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact normal. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.normal())\nit.rblockfacetarray.fill_normal(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_offset",
+      "signature": "itasca.rblockfacetarray.fill_offset(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact offset. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.offset())\nit.rblockfacetarray.fill_offset(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_pos",
+      "signature": "itasca.rblockfacetarray.fill_pos(data: array float{contact, 3}) -> None",
+      "description": "Fill an existing array with the contact position. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.rblockfacetarray.pos())\nit.rblockfacetarray.fill_pos(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "force_global",
+      "signature": "itasca.rblockfacetarray.force_global() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact force in the global coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.force_global()",
+          "description": "Call rblockfacetarray.force_global."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "force_local",
+      "signature": "itasca.rblockfacetarray.force_local() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact force in the local coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.force_local()",
+          "description": "Call rblockfacetarray.force_local."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "force_normal",
+      "signature": "itasca.rblockfacetarray.force_normal() -> array float{contact}",
+      "description": "Get a numpy array of the contact normal force.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact}",
+        "description": "array float{contact}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.force_normal()",
+          "description": "Call rblockfacetarray.force_normal."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "force_shear",
+      "signature": "itasca.rblockfacetarray.force_shear() -> array float{contact}",
+      "description": "Get a numpy array of the contact shear force magnitude.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact}",
+        "description": "array float{contact}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.force_shear()",
+          "description": "Call rblockfacetarray.force_shear."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "gap",
+      "signature": "itasca.rblockfacetarray.gap() -> array float{contact}",
+      "description": "Get a numpy array of the contact gap.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact}",
+        "description": "array float{contact}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.gap()",
+          "description": "Call rblockfacetarray.gap."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.rblockfacetarray.ids() -> array int{contact}",
+      "description": "Get the contact ids as an array.",
+      "parameters": [],
+      "returns": {
+        "type": "array int{contact}",
+        "description": "array int{contact}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.ids()",
+          "description": "Call rblockfacetarray.ids."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.rblockfacetarray.in_group(group_name: str, slot=1) -> array bool{contact}",
+      "description": "Return contact group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{contact}",
+        "description": "array bool{contact}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.rblockfacetarray.in_group('mygroup')",
+          "description": "Boolean mask of the objects in group 'mygroup' (slot 1)."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "moment1_global",
+      "signature": "itasca.rblockfacetarray.moment1_global() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact moment acting on end 1 in the global coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.moment1_global()",
+          "description": "Call rblockfacetarray.moment1_global."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "moment1_local",
+      "signature": "itasca.rblockfacetarray.moment1_local() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact moment acting on end 1 in the local coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.moment1_local()",
+          "description": "Call rblockfacetarray.moment1_local."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "moment2_global",
+      "signature": "itasca.rblockfacetarray.moment2_global() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact moment acting on end 2 in the global coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.moment2_global()",
+          "description": "Call rblockfacetarray.moment2_global."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "moment2_local",
+      "signature": "itasca.rblockfacetarray.moment2_local() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact moment acting on end 2 in the local coordinate system.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.moment2_local()",
+          "description": "Call rblockfacetarray.moment2_local."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "normal",
+      "signature": "itasca.rblockfacetarray.normal() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact normal.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.normal()",
+          "description": "Call rblockfacetarray.normal."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "offset",
+      "signature": "itasca.rblockfacetarray.offset() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact offset.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.offset()",
+          "description": "Call rblockfacetarray.offset."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.rblockfacetarray.pos() -> array float{contact,3}",
+      "description": "Get a numpy array of the contact position.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{contact,3}",
+        "description": "array float{contact,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.rblockfacetarray.pos()",
+          "description": "Call rblockfacetarray.pos."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.rblockfacetarray.set_extra(slot: int, data: array float{contact} or float{contact, 3}) -> None",
+      "description": "Set the contact extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{contact} or float{contact, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nit.rblockfacetarray.set_extra(1, np.zeros(len(it.rblockfacetarray.ids())))",
+          "description": "Write a float into extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.rblockfacetarray.set_group(membership: array bool{contact}, group_name: str, slot=1) -> None",
+      "description": "Set contact group from an array. Where membership True set the corresponding contact to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{contact}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.rblockfacetarray.pos()[:, 2] > 0.0\nit.rblockfacetarray.set_group(mask, 'upper')",
+          "description": "Put the objects above z = 0 into group 'upper'."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    }
+  ]
+}

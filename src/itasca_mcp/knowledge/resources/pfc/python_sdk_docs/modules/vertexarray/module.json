@@ -1,0 +1,227 @@
+{
+  "module": "itasca.vertexarray",
+  "description": "Vectorized NumPy array access for wall vertex attributes.",
+  "import_statement": "import itasca as it",
+  "versions": [
+    "6.0",
+    "7.0",
+    "9.0"
+  ],
+  "notes": [
+    "Rows follow the order of ids(). A corner shared by facets of the same wall is one vertex (wall create vertices stitches coincident corners); separate walls keep separate vertices (wall generate box: 6 walls, 12 facets, 24 vertices)."
+  ],
+  "functions": [
+    {
+      "name": "fill_pos",
+      "signature": "itasca.vertexarray.fill_pos(data: array float{vertex, 3}) -> None",
+      "description": "Fill an existing array with the vertex location. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{vertex, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.vertexarray.pos())\nit.vertexarray.fill_pos(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_vel",
+      "signature": "itasca.vertexarray.fill_vel(data: array float{vertex, 3}) -> None",
+      "description": "Fill an existing array with the vertex velocity. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{vertex, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.vertexarray.vel())\nit.vertexarray.fill_vel(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.vertexarray.ids() -> array int{vertex}",
+      "description": "Get the vertex ids as an array.",
+      "parameters": [],
+      "returns": {
+        "type": "array int{vertex}",
+        "description": "array int{vertex}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.vertexarray.ids()",
+          "description": "Call vertexarray.ids."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.vertexarray.pos() -> array float{vertex,3}",
+      "description": "Get a numpy array of the vertex location.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{vertex,3}",
+        "description": "array float{vertex,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.vertexarray.pos()",
+          "description": "Call vertexarray.pos."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "set_pos",
+      "signature": "itasca.vertexarray.set_pos(data: array float{vertex, 3}) -> None",
+      "description": "Set the vertex location from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{vertex, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.vertexarray.pos()\n# modify data in place, then write it back\nit.vertexarray.set_pos(data)",
+          "description": "Read, modify and write back pos for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_vel",
+      "signature": "itasca.vertexarray.set_vel(data: array float{vertex, 3}) -> None",
+      "description": "Set the vertex velocity from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{vertex, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.vertexarray.vel()\n# modify data in place, then write it back\nit.vertexarray.set_vel(data)",
+          "description": "Read, modify and write back vel for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Vertex velocities are integrated by the engine every cycle (pos += vel * dt), persist across cycles until changed, and enter ball-facet contact kinematics; one call drives a whole deformable wall.",
+        "Conveyor velocity cannot be used on a wall while its vertex velocities are active (see wall attribute)."
+      ]
+    },
+    {
+      "name": "vel",
+      "signature": "itasca.vertexarray.vel() -> array float{vertex,3}",
+      "description": "Get a numpy array of the vertex velocity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{vertex,3}",
+        "description": "array float{vertex,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.vertexarray.vel()",
+          "description": "Call vertexarray.vel."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    }
+  ]
+}

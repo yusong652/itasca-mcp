@@ -1,0 +1,763 @@
+{
+  "module": "itasca.cfdarray",
+  "description": "Vectorized NumPy array access for CFD coupling elements (fluid mesh cells).",
+  "import_statement": "import itasca as it",
+  "versions": [
+    "6.0",
+    "7.0",
+    "9.0"
+  ],
+  "functions": [
+    {
+      "name": "create_mesh",
+      "signature": "itasca.cfdarray.create_mesh(nodes: array float{nnodes, 3}, elements: array int{nelem, 8}) -> None",
+      "description": "Create a cfd mesh. The indices in the array elem should index the node locations in the array node. Counting begins at 0.",
+      "parameters": [
+        {
+          "name": "nodes",
+          "type": "array float{nnodes, 3}",
+          "required": true
+        },
+        {
+          "name": "elements",
+          "type": "array int{nelem, 8}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nnodes = np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],\n                  [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]], dtype=float)\nelements = np.array([[0, 1, 2, 3, 4, 5, 6, 7]], dtype=np.int64)\nit.cfdarray.create_mesh(nodes, elements)",
+          "description": "Create a one-element hexahedral CFD mesh (requires model configure cfd)."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "density",
+      "signature": "itasca.cfdarray.density() -> array float{element}",
+      "description": "Get a numpy array of the cfd element fluid density.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element}",
+        "description": "array float{element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.density()",
+          "description": "Call cfdarray.density."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "drag",
+      "signature": "itasca.cfdarray.drag() -> array float{element,3}",
+      "description": "Get a numpy array of the cfd element fluid drag force.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element,3}",
+        "description": "array float{element,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.drag()",
+          "description": "Call cfdarray.drag."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.cfdarray.extra(slot: int) -> array float{CFD element} or float{CFD element,3}",
+      "description": "Get the CFD element extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{CFD element} or float{CFD element,3}",
+        "description": "array float{CFD element} or float{CFD element,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.extra(1)",
+          "description": "Read extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "fill_pos",
+      "signature": "itasca.cfdarray.fill_pos(data: array float{CFD element, 3}) -> None",
+      "description": "Fill an existing array with the CFD element centroid location. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{CFD element, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.cfdarray.pos())\nit.cfdarray.fill_pos(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_pressure",
+      "signature": "itasca.cfdarray.fill_pressure(data: array float{element}) -> None",
+      "description": "Fill an existing array with the cfd element fluid pressure. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.cfdarray.pressure())\nit.cfdarray.fill_pressure(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.cfdarray.ids() -> array int{CFD element}",
+      "description": "Get the CFD element ids as an array.",
+      "parameters": [],
+      "returns": {
+        "type": "array int{CFD element}",
+        "description": "array int{CFD element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.ids()",
+          "description": "Call cfdarray.ids."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.cfdarray.in_group(group_name: str, slot=1) -> array bool{CFD element}",
+      "description": "Return CFD element group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{CFD element}",
+        "description": "array bool{CFD element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.cfdarray.in_group('mygroup')",
+          "description": "Boolean mask of the objects in group 'mygroup' (slot 1)."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "porosity",
+      "signature": "itasca.cfdarray.porosity() -> array float{element}",
+      "description": "Get a numpy array of the cfd element fluid porosity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element}",
+        "description": "array float{element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.porosity()",
+          "description": "Call cfdarray.porosity."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.cfdarray.pos() -> array float{CFD element,3}",
+      "description": "Get a numpy array of the CFD element centroid location.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{CFD element,3}",
+        "description": "array float{CFD element,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.pos()",
+          "description": "Call cfdarray.pos."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pressure",
+      "signature": "itasca.cfdarray.pressure() -> array float{element}",
+      "description": "Get a numpy array of the cfd element fluid pressure.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element}",
+        "description": "array float{element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.pressure()",
+          "description": "Call cfdarray.pressure."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pressure_gradient",
+      "signature": "itasca.cfdarray.pressure_gradient() -> array float{element,3}",
+      "description": "Get a numpy array of the cfd element fluid pressure gradient.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element,3}",
+        "description": "array float{element,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.pressure_gradient()",
+          "description": "Call cfdarray.pressure_gradient."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.cfdarray.set_density(data: array float{element}) -> None",
+      "description": "Set the cfd element density from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.density()\n# modify data in place, then write it back\nit.cfdarray.set_density(data)",
+          "description": "Read, modify and write back density for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_drag",
+      "signature": "itasca.cfdarray.set_drag(data: array float{element, 3}) -> None",
+      "description": "Set the cfd element fluid drag force.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.drag()\n# modify data in place, then write it back\nit.cfdarray.set_drag(data)",
+          "description": "Read, modify and write back drag for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.cfdarray.set_extra(slot: int, data: array float{CFD element} or float{CFD element, 3}) -> None",
+      "description": "Set the CFD element extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{CFD element} or float{CFD element, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nit.cfdarray.set_extra(1, np.zeros(len(it.cfdarray.ids())))",
+          "description": "Write a float into extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.cfdarray.set_group(membership: array bool{CFD element}, group_name: str, slot=1) -> None",
+      "description": "Set CFD element group from an array. Where membership True set the corresponding CFD element to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{CFD element}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.cfdarray.pos()[:, 2] > 0.0\nit.cfdarray.set_group(mask, 'upper')",
+          "description": "Put the objects above z = 0 into group 'upper'."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_porosity",
+      "signature": "itasca.cfdarray.set_porosity(data: array float{element}) -> None",
+      "description": "Set the cfd element porosity from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.porosity()\n# modify data in place, then write it back\nit.cfdarray.set_porosity(data)",
+          "description": "Read, modify and write back porosity for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Porosity must lie in (2.2e-16, 1]; other values raise ValueError and nothing is set."
+      ]
+    },
+    {
+      "name": "set_pressure",
+      "signature": "itasca.cfdarray.set_pressure(data: array float{element}) -> None",
+      "description": "Set the cfd element fluid pressure from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.pressure()\n# modify data in place, then write it back\nit.cfdarray.set_pressure(data)",
+          "description": "Read, modify and write back pressure for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "set_pressure_gradient",
+      "signature": "itasca.cfdarray.set_pressure_gradient(data: array float{element, 3}) -> None",
+      "description": "Set the cfd element fluid pressure gradient.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.pressure_gradient()\n# modify data in place, then write it back\nit.cfdarray.set_pressure_gradient(data)",
+          "description": "Read, modify and write back pressure_gradient for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "set_velocity",
+      "signature": "itasca.cfdarray.set_velocity(data: array float{element, 3}) -> None",
+      "description": "Set the cfd element fluid velocity.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.velocity()\n# modify data in place, then write it back\nit.cfdarray.set_velocity(data)",
+          "description": "Read, modify and write back velocity for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "set_viscosity",
+      "signature": "itasca.cfdarray.set_viscosity(data: array float{element}) -> None",
+      "description": "Set the cfd element viscosity from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{element}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\ndata = it.cfdarray.viscosity()\n# modify data in place, then write it back\nit.cfdarray.set_viscosity(data)",
+          "description": "Read, modify and write back viscosity for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    },
+    {
+      "name": "velocity",
+      "signature": "itasca.cfdarray.velocity() -> array float{element,3}",
+      "description": "Get a numpy array of the cfd element fluid velocity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element,3}",
+        "description": "array float{element,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.velocity()",
+          "description": "Call cfdarray.velocity."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The Itasca page lists the shape as {3,element}; the arrays are (element, 3) (measured on PFC 7.0)."
+      ]
+    },
+    {
+      "name": "viscosity",
+      "signature": "itasca.cfdarray.viscosity() -> array float{element}",
+      "description": "Get a numpy array of the cfd element fluid viscosity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element}",
+        "description": "array float{element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.viscosity()",
+          "description": "Call cfdarray.viscosity."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.cfdarray.volume() -> array float{element}",
+      "description": "Get a numpy array of the cfd element volume.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{element}",
+        "description": "array float{element}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.cfdarray.volume()",
+          "description": "Call cfdarray.volume."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,406 @@
+{
+  "module": "itasca.facetarray",
+  "description": "Vectorized NumPy array access for wall facet attributes.",
+  "import_statement": "import itasca as it",
+  "versions": [
+    "6.0",
+    "7.0",
+    "9.0"
+  ],
+  "notes": [
+    "Rows follow the order of ids(); use vertexarray to move the facet corners."
+  ],
+  "functions": [
+    {
+      "name": "conveyor",
+      "signature": "itasca.facetarray.conveyor() -> array float{facet,dim}",
+      "description": "Get a numpy array of the facet conveyor velocity.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{facet,dim}",
+        "description": "array float{facet,dim}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.facetarray.conveyor()",
+          "description": "Call facetarray.conveyor."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.facetarray.extra(slot: int) -> array float{facet} or float{facet,3}",
+      "description": "Get the facet extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{facet} or float{facet,3}",
+        "description": "array float{facet} or float{facet,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.facetarray.extra(1)",
+          "description": "Read extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "fill_conveyor",
+      "signature": "itasca.facetarray.fill_conveyor(data: array float{facet, dim}) -> None",
+      "description": "Fill an existing array with the facet conveyor velocity. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{facet, dim}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.facetarray.conveyor())\nit.facetarray.fill_conveyor(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_normal",
+      "signature": "itasca.facetarray.fill_normal(data: array float{facet, dim}) -> None",
+      "description": "Fill an existing array with the facet normal. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{facet, dim}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.facetarray.normal())\nit.facetarray.fill_normal(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "fill_pos",
+      "signature": "itasca.facetarray.fill_pos(data: array float{facet, 3}) -> None",
+      "description": "Fill an existing array with the facet location. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{facet, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\ndata = np.empty_like(it.facetarray.pos())\nit.facetarray.fill_pos(data)",
+          "description": "Fill a preallocated NumPy array to avoid allocating a new result array."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "The destination array must already have the correct shape and dtype."
+      ]
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.facetarray.ids() -> array int{facet}",
+      "description": "Get the facet ids as an array.",
+      "parameters": [],
+      "returns": {
+        "type": "array int{facet}",
+        "description": "array int{facet}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.facetarray.ids()",
+          "description": "Call facetarray.ids."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.facetarray.in_group(group_name: str, slot=1) -> array bool{facet}",
+      "description": "Return facet group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{facet}",
+        "description": "array bool{facet}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.facetarray.in_group('mygroup')",
+          "description": "Boolean mask of the objects in group 'mygroup' (slot 1)."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "normal",
+      "signature": "itasca.facetarray.normal() -> array float{facet,dim}",
+      "description": "Get a numpy array of the facet normal.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{facet,dim}",
+        "description": "array float{facet,dim}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.facetarray.normal()",
+          "description": "Call facetarray.normal."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.facetarray.pos() -> array float{facet,3}",
+      "description": "Get a numpy array of the facet location.",
+      "parameters": [],
+      "returns": {
+        "type": "array float{facet,3}",
+        "description": "array float{facet,3}"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nvalues = it.facetarray.pos()",
+          "description": "Call facetarray.pos."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
+      ]
+    },
+    {
+      "name": "set_conveyor",
+      "signature": "itasca.facetarray.set_conveyor(data: array float{facet, dim}) -> None",
+      "description": "Set the facet conveyor velocity from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{facet, dim}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nn = it.facetarray.normal()\nt = np.cross(n, [0.0, 0.0, 1.0])  # in-plane direction (zero on facets normal to z)\nit.facetarray.set_conveyor(0.01 * t)",
+          "description": "Set an in-plane conveyor velocity on every facet; a normal component is an engine error."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Each conveyor velocity must lie in its facet's plane. A velocity with a normal component stops the script with the engine error 'The conveyor velocity must be parallel to the facet.'; this is not a Python exception that try/except can catch, and the GUI shows it as a blocking error dialog."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.facetarray.set_extra(slot: int, data: array float{facet} or float{facet, 3}) -> None",
+      "description": "Set the facet extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{facet} or float{facet, 3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import numpy as np\nimport itasca as it\nit.facetarray.set_extra(1, np.zeros(len(it.facetarray.ids())))",
+          "description": "Write a float into extra slot 1 for every object."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately.",
+        "Array extra variables must be float or vector values in the selected slot."
+      ]
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.facetarray.set_group(membership: array bool{facet}, group_name: str, slot=1) -> None",
+      "description": "Set facet group from an array. Where membership True set the corresponding facet to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{facet}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "Any",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "None"
+      },
+      "examples": [
+        {
+          "code": "import itasca as it\nmask = it.facetarray.pos()[:, 2] > 0.0\nit.facetarray.set_group(mask, 'upper')",
+          "description": "Put the objects above z = 0 into group 'upper'."
+        }
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
+        "Setter functions modify model state immediately."
+      ]
+    }
+  ]
+}
