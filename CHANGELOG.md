@@ -45,6 +45,24 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.5] - 2026-10-23
+
+### Changed
+
+- **`itasca_execute_code` `timeout` and `itasca_check_task_status`
+  `wait_seconds` are now capped at 20 s** (previously 600 s and 3600 s).
+  Several MCP clients drop a tool call that has not answered within
+  30 s (OpenCode, for one); above that line the agent saw an empty
+  result while the snippet or task kept running in the engine, and
+  read it as "nothing happened". Both parameters now stay under that
+  floor, and their descriptions say what they do: `wait_seconds` is a
+  long poll that returns as soon as the task changes state, and
+  `itasca_execute_code` work longer than 20 s belongs in
+  `itasca_execute_task`. Calls that already passed values at or below
+  20 s are unaffected.
+- **MCP registry description** no longer reads "Give AI agents full
+  access to ..."; it now states plainly what the server does.
+
 ## [0.10.4] - 2026-10-20
 
 ### Fixed
