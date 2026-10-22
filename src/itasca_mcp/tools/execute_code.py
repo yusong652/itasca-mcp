@@ -66,7 +66,7 @@ def register(mcp: FastMCP) -> None:
           command.
 
         Synchronous semantics: the request blocks until the code
-        finishes or hits the timeout (default 10s, max 600s), and
+        finishes or hits the timeout (default 10s, max 20s), and
         output is returned in full. The call is not tracked by
         itasca_list_tasks and cannot be interrupted mid-execution.
         For cancellable, pollable, or background work, submit via
@@ -113,7 +113,7 @@ def register(mcp: FastMCP) -> None:
                     "returns; otherwise restart the Itasca bridge."
                 )
             else:
-                action = "Reduce code complexity or increase timeout"
+                action = "Increase timeout (max 20s) or move the work to itasca_execute_task"
             return build_operation_error(
                 "timeout",
                 "Execution timed out",

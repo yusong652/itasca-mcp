@@ -16,6 +16,7 @@ import pytest
 
 from itasca_mcp.bridge.client import close_bridge_client
 from itasca_mcp.server import mcp
+from itasca_mcp.utils import HARNESS_TIMEOUT_FLOOR_S
 
 # ── Mock Bridge ──────────────────────────────────────────
 
@@ -413,3 +414,24 @@ async def test_list_tasks_empty(mock_bridge):
         data = parsed["data"]
         assert data["total_count"] == 0
         assert data["tasks"] == []
+
+
+# ── Advertised parameter bounds ──────────────────────────
+
+
+@pytest.mark.asyncio
+async def test_wait_seconds_capped_below_harness_timeout():
+    """wait_seconds stays under the shortest MCP client timeout (OpenCode 30 s)."""
+    tool = await mcp.get_tool("itasca_check_task_status")
+    wait = tool.parameters["properties"]["wait_seconds"]
+    assert wait["maximum"] == HARNESS_TIMEOUT_FLOOR_S
+    assert wait["maximum"] < 30
+
+
+@pytest.mark.asyncio
+async def test_execute_code_timeout_capped_below_harness_timeout():
+    """execute_code timeout stays under the shortest MCP client timeout (OpenCode 30 s)."""
+    tool = await mcp.get_tool("itasca_execute_code")
+    timeout = tool.parameters["properties"]["timeout"]
+    assert timeout["maximum"] == HARNESS_TIMEOUT_FLOOR_S
+    assert timeout["maximum"] < 30
