@@ -1,0 +1,854 @@
+{
+  "module": "itasca.structure.linerarray",
+  "description": "Array interface for liner elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.linerarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.linerarray.area() -> array float{liner}",
+      "description": "Get a Numpy array of surface area of the liner elements.",
+      "returns": {
+        "type": "array float{liner}"
+      }
+    },
+    {
+      "name": "beta",
+      "signature": "itasca.structure.linerarray.beta() -> array float{liner}",
+      "description": "Get a Numpy array of liner system beta angle. This is defined as the angle between the element local system x-axis and the material system x-axis. In radians measured counter-clockwise from the element local x-axis.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.linerarray.component_id() -> array int{liner}",
+      "description": "Get a NumPy array of the ID of liner component id.",
+      "returns": {
+        "type": "array int{liner}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.linerarray.density() -> array double{liner}",
+      "description": "Get a NumPy array of the density of liner elements.",
+      "returns": {
+        "type": "array double{liner}"
+      }
+    },
+    {
+      "name": "depth_factor",
+      "signature": "itasca.structure.linerarray.depth_factor() -> array float{liner}",
+      "description": "Get a Numpy array of the depth factor at which stresses have been recovered. The depth equals Ft/2 where t is the liner element thickness. F values equal to +1.0 or -1.0 correspond to the outer/inner liner surface. The outer surface is defined by the positive z-direction of the local liner element system. F values of 0.0 corresponds to the liner mid-surface. The depth factor can be modified with the \\(structure liner recover stress\\) command.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "element_type",
+      "signature": "itasca.structure.linerarray.element_type() -> array str{liner}",
+      "description": "Get a Numpy array of the name of the finite-element type used by the liner elements. The possible types for liner elements are ‘cst’, ‘csth’, ‘dkt’, ‘dkt-cst’, and ‘dkt-csth’.",
+      "returns": {
+        "type": "array str{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "embedded",
+      "signature": "itasca.structure.linerarray.embedded() -> array bool{liner}",
+      "description": "Get a Numpy array of the embedded flag. True denotes that the liner element is embedded.",
+      "returns": {
+        "type": "array bool{liner}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.linerarray.extra(slot: int) -> array float{liner} or float{liner,3}",
+      "description": "Get the liner extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{liner} or float{liner,3}"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "itasca.structure.linerarray.force() -> array float(liner,6)",
+      "description": "Get a Numpy array of the force at each end of the liner using the force-moment sign convention.",
+      "returns": {
+        "type": "array float(liner,6)"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.linerarray.force_nodal() -> array float{liner,6,3}",
+      "description": "Get a Numpy array of the generalized nodal force acting on the liner at each node. The translational and rotational components of node 1 are given first.",
+      "returns": {
+        "type": "array float{liner,6,3}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.linerarray.id() -> array int{liner}",
+      "description": "Get a NumPy array of the ID of liner element id.",
+      "returns": {
+        "type": "array int{liner}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.linerarray.in_group(group_name: str, slot=1) -> array bool{liner}",
+      "description": "Return liner group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{liner}"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "itasca.structure.linerarray.length() -> array float{liner}",
+      "description": "Get a Numpy array of the length of the liner elements.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "load",
+      "signature": "itasca.structure.linerarray.load() -> array float{liner,3}",
+      "description": "Get a Numpy array of the uniform applied distributed load acting on the liner elements in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "array float{liner,3}"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.linerarray.local_system() -> array double{liner,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of liner elements.",
+      "returns": {
+        "type": "array double{liner,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.linerarray.mark() -> array bool{liner}",
+      "description": "Get a NumPy array of the mark flag of liner elements.",
+      "returns": {
+        "type": "array bool{liner}"
+      }
+    },
+    {
+      "name": "moment",
+      "signature": "itasca.structure.linerarray.moment() -> float(liner,6)",
+      "description": "Get a Numpy array of the moment at each end of the liner using the force-moment sign convention.",
+      "returns": {
+        "type": "float(liner,6)"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "itasca.structure.linerarray.moment_plastic() -> array float{liner}",
+      "description": "Get a Numpy array of the plastic moment capacity in the liner.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "normal_dir",
+      "signature": "itasca.structure.linerarray.normal_dir() -> array float{liner,3,3}",
+      "description": "Get a Numpy array of the direction (unit vector in global system) in which the liner elements are being loaded by the normal coupling spring at each node.",
+      "returns": {
+        "type": "array float{liner,3,3}"
+      }
+    },
+    {
+      "name": "normal_disp",
+      "signature": "itasca.structure.linerarray.normal_disp() -> array float{liner}",
+      "description": "Get a Numpy array of the displacement magnitude in the normal coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(normal_dir\\) method.",
+      "returns": {
+        "type": "array float{liner}"
+      }
+    },
+    {
+      "name": "normal_state",
+      "signature": "itasca.structure.linerarray.normal_state() -> array int{liner,4}",
+      "description": "Get a Numpy array of the yield state of the coupling spring at each side of each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively. Side 1 and 2 of node 1 are given first.",
+      "returns": {
+        "type": "array int{liner,4}"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "normal_stiffness",
+      "signature": "itasca.structure.linerarray.normal_stiffness() -> array float{liner,2}",
+      "description": "Get a Numpy array of the normal coupling spring stiffness of the liner element for each side of the liner.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "normal_strength",
+      "signature": "itasca.structure.linerarray.normal_strength() -> array float{liner,2}",
+      "description": "Get a Numpy array of the normal coupling spring tensile strength for each side of the liner element.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "normal_stress",
+      "signature": "itasca.structure.linerarray.normal_stress() -> array float{liner,3}",
+      "description": "Get a Numpy array of the stress magnitude in the normal coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(normal_dir\\) method.",
+      "returns": {
+        "type": "array float{liner,3}"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "itasca.structure.linerarray.poisson() -> array float{liner}",
+      "description": "Get a Numpy array of the Poisson’s ratio of the elements.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.linerarray.pos() -> array vec3{liner}",
+      "description": "Get a NumPy array of the current position of liner elements.",
+      "returns": {
+        "type": "array vec3{liner}"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "itasca.structure.linerarray.pressure() -> array float{liner}",
+      "description": "Get a Numpy array of the uniform pressure acting on the liner elements. A positive value acts in the z-direction of the element local system.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop_anis",
+      "signature": "itasca.structure.linerarray.prop_anis() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the anisotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have anisotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop_ortho",
+      "signature": "itasca.structure.linerarray.prop_ortho() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the orthotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have orthotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop_type",
+      "signature": "itasca.structure.linerarray.prop_type() -> array str{liner}",
+      "description": "Get a Numpy array of the material property type. Possible return values are ‘isotropic’, ‘orthotripc’, and ‘anisotropic’.",
+      "returns": {
+        "type": "array str{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "resultant",
+      "signature": "itasca.structure.linerarray.resultant(location: int) -> length 8 tuple of array float{liner}",
+      "description": "Get a Numpy array of stress resultants last calculated for the element at the index \\(location\\). A \\(location\\) value of 0 gives the resultant at the element centroid; \\(location\\) values 1, 2 and 3 give the resultant at the nodes. The components in the return value are: Mx, My, Mxy, Nx, Ny, Nxy, Qx and Qy. Note that stress resultants must be calculated with the \\(structure liner recover\\) command. See also the \\(resultant_valid\\) method.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "length 8 tuple of array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "resultant_valid",
+      "signature": "itasca.structure.linerarray.resultant_valid() -> array bool{liner}",
+      "description": "Get a Numpy array of of the stress resultant validity flag. True indicates that the stress resultant values are valid. False indicates that resultants have not been calculated or that there has been a change since they were last calculated that would invalidate the results.",
+      "returns": {
+        "type": "array bool{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_area",
+      "signature": "itasca.structure.linerarray.set_area(array float{liner}) -> None",
+      "description": "Set the cross-section area of the elements.",
+      "parameters": [
+        {
+          "name": "float{liner}",
+          "type": "array",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.linerarray.set_density(array double{liner}) -> None",
+      "description": "Set the density of liner elements.",
+      "parameters": [
+        {
+          "name": "array double{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.linerarray.set_extra(slot: int, data: array float{liner} or float{liner, 3}) -> None",
+      "description": "Set the liner extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{liner} or float{liner",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.linerarray.set_group(membership: array bool{liner}, group_name: str, slot=1) -> None",
+      "description": "Set liner group from an array. Where membership True set the corresponding liner to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{liner}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "itasca.structure.linerarray.set_load(array float{liner,3}) -> None",
+      "description": "Set the uniform applied distributed load acting on the liner elements in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "float{liner",
+          "type": "array",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.linerarray.set_mark(array bool{liner}) -> None",
+      "description": "Set the mark flag of liner elements.",
+      "parameters": [
+        {
+          "name": "array bool{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "itasca.structure.linerarray.set_moment_plastic(array float{liner}) -> None",
+      "description": "Set the plastic moment capacity in the liner.",
+      "parameters": [
+        {
+          "name": "float{liner}",
+          "type": "array",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_stiffness",
+      "signature": "itasca.structure.linerarray.set_normal_stiffness()",
+      "description": "array float{liner,2} -> None. Set the normal coupling spring stiffness of the liner element for each side of the liner.",
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_strength",
+      "signature": "itasca.structure.linerarray.set_normal_strength(array float{liner}) -> None",
+      "description": "Set the normal coupling spring tensile strength for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_poisson",
+      "signature": "itasca.structure.linerarray.set_poisson(array float{liner}) -> None",
+      "description": "Set the Poisson’s ratio of the elements.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pressure",
+      "signature": "itasca.structure.linerarray.set_pressure(array float{liner}) -> None",
+      "description": "Set the uniform pressure acting on the liner elements. A positive value acts in the z-direction of the element local system.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "itasca.structure.linerarray.set_shear_cohesion()",
+      "description": "array float{liner,2} -> None. Set the shear coupling spring cohesion for each side of the liner element.",
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "itasca.structure.linerarray.set_shear_friction(array float{liner, 2}) -> None",
+      "description": "Set the shear coupling spring friction angle for each side of the liner elements.",
+      "parameters": [
+        {
+          "name": "array float{liner",
+          "required": true
+        },
+        {
+          "name": "2}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_residual",
+      "signature": "itasca.structure.linerarray.set_shear_residual()",
+      "description": "array float{liner,2} -> None. Set the shear coupling spring residual cohesion for each side of the liner elements.",
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "itasca.structure.linerarray.set_shear_stiffness()",
+      "description": "array float{liner,2} -> None. Set the shear coupling spring stiffness for each side of the liner elements.",
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_slide",
+      "signature": "itasca.structure.linerarray.set_slide(array bool{liner}) -> None",
+      "description": "Set the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "parameters": [
+        {
+          "name": "array bool{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "itasca.structure.linerarray.set_slide_tol(array float{liner}) -> None",
+      "description": "Set the (shear) coupling spring slide tolerance of the liner elements.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.linerarray.set_thermal_expansion(array double{liner}) -> None",
+      "description": "Set the thermal expansion coefficient of liner elements.",
+      "parameters": [
+        {
+          "name": "array double{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thickness",
+      "signature": "itasca.structure.linerarray.set_thickness(array float{liner}) -> None",
+      "description": "Set the element thickness.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.linerarray.set_young(array float{liner}) -> None",
+      "description": "Set the Youngs modulus of the elements.",
+      "parameters": [
+        {
+          "name": "array float{liner}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "itasca.structure.linerarray.shear_cohesion() -> array float{liner,2}",
+      "description": "Get a Numpy array of the shear coupling spring cohesion for each side of the liner element.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_dir",
+      "signature": "itasca.structure.linerarray.shear_dir() -> array float{liner,3,3}",
+      "description": "Get a Numpy array of the direction (unit vector in global system) in which the liner element is being loaded by the shear coupling spring at each node.",
+      "returns": {
+        "type": "array float{liner,3,3}"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "itasca.structure.linerarray.shear_disp() -> array float{liner,3}",
+      "description": "Get a Numpy array of the displacement magnitude in the shear coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(shear_dir\\) method.",
+      "returns": {
+        "type": "array float{liner,3}"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "itasca.structure.linerarray.shear_friction() -> array float{liner,2}",
+      "description": "Get a Numpy array of the shear coupling spring friction angle for each side of the liner elements.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_residual",
+      "signature": "itasca.structure.linerarray.shear_residual() -> array float{liner,2}",
+      "description": "Get a Numpy array of the shear coupling spring residual cohesion for each side of the liner elements.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_state",
+      "signature": "itasca.structure.linerarray.shear_state() -> (int, int, int, int, int, int)",
+      "description": "Get a Numpy array of the yield state of the coupling spring at each side of each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively. Side 1 and 2 of node 1 are given first.",
+      "returns": {
+        "type": "(int, int, int, int, int, int)"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "itasca.structure.linerarray.shear_stiffness() -> array float{liner,2}",
+      "description": "Get a Numpy array of the shear coupling spring stiffness for each side of the liner elements.",
+      "returns": {
+        "type": "array float{liner,2}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_stress",
+      "signature": "itasca.structure.linerarray.shear_stress() -> array float{liner,3}",
+      "description": "Get a Numpy array of the stress magnitude in the coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by the \\(shear_dir\\) method.",
+      "returns": {
+        "type": "array float{liner,3}"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "itasca.structure.linerarray.slide() -> array bool{liner}",
+      "description": "Get a Numpy array of the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "returns": {
+        "type": "array bool{liner}"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "itasca.structure.linerarray.slide_tol() -> array float{liner}",
+      "description": "Get a Numpy array of the (shear) coupling spring slide tolerance of the liner elements.",
+      "returns": {
+        "type": "array float{liner}"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "itasca.structure.linerarray.stress(location: int) -> stens3",
+      "description": "Get a Numpy array of the stresses at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Stresses are expressed in the global system. Note that compressive stresses are negative.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "stens3"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "stress_prin",
+      "signature": "itasca.structure.linerarray.stress_prin(location: int) -> vec3",
+      "description": "Get the resolved principal stress at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Returns a vector encoded as (minimum, intermediate, maximum). Note that compressive stresses are negative in FLAC3D.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec3"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "stress_valid",
+      "signature": "itasca.structure.linerarray.stress_valid() -> array bool{liner}",
+      "description": "Get a Numpy array of the stress validity flag for the element. True indicates that the stresses last calculated at the current depth factor are valid. Galse indicates that stresses have not been calculated, or that there has been a change that invalidates the last stresses calculated.",
+      "returns": {
+        "type": "array bool{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.linerarray.thermal_expansion() -> array double{liner}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of liner elements.",
+      "returns": {
+        "type": "array double{liner}"
+      }
+    },
+    {
+      "name": "thickness",
+      "signature": "itasca.structure.linerarray.thickness() -> array float{liner}",
+      "description": "Get a Numpy array of the element thickness.",
+      "returns": {
+        "type": "array float{liner}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.linerarray.type() -> array string{liner}",
+      "description": "Get a NumPy array of the type name of liner elements.",
+      "returns": {
+        "type": "array string{liner}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.linerarray.volume() -> array float{liner}",
+      "description": "Get a Numpy array of the element volume, or surface area times thickness.",
+      "returns": {
+        "type": "array float{liner}"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "itasca.structure.linerarray.ydir() -> array float{liner,3}",
+      "description": "Get a Numpy array of the y-axis of the liner elements local system.",
+      "returns": {
+        "type": "array float{liner,3}"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.linerarray.young() -> array float{liner}",
+      "description": "Get a Numpy array of the Youngs modulus of the elements. Modifying the value during cycling may be a danger.",
+      "returns": {
+        "type": "array float{liner}"
+      }
+    }
+  ]
+}

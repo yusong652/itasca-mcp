@@ -1,0 +1,594 @@
+{
+  "class": "Beam",
+  "description": "Beam object instance in itasca.structure.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.Beam.html",
+  "note": "Do not instantiate directly; use itasca.structure module functions.",
+  "method_groups": {
+    "area": "area, set_area",
+    "component": "component_id",
+    "connectivity": "connectivity",
+    "delete": "delete",
+    "density": "density, set_density",
+    "extra": "extra, set_extra",
+    "force": "force, force_nodal",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "length": "length",
+    "load": "load, set_load",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "moi": "moi, set_moi",
+    "moment": "moment, moment_plastic, moment_plastic_y, moment_plastic_z, set_moment_plastic, set_moment_plastic_y, set_moment_plastic_z",
+    "nodes": "nodes",
+    "poisson": "poisson, set_poisson",
+    "pos": "pos",
+    "prop": "prop, set_prop",
+    "thermal": "set_thermal_expansion, thermal_expansion",
+    "valid": "valid",
+    "volume": "volume",
+    "ydir": "ydir",
+    "young": "set_young, young"
+  },
+  "methods": [
+    {
+      "name": "area",
+      "signature": "beam.area() -> float",
+      "description": "Get the cross-section area of the element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "beam.component_id() -> int",
+      "description": "Get the Beam component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "connectivity",
+      "signature": "beam.connectivity(component: int) -> bool",
+      "description": "Get the index of the node with component-ID id in the element. A ValueError exception is raised if no node in that element matches.",
+      "parameters": [
+        {
+          "name": "component",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "beam.delete() -> None",
+      "description": "Delete this structural element.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "beam.density() -> float",
+      "description": "Get the density of this structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "beam.extra(slot: int) -> any",
+      "description": "Get the Beam extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "beam.force() -> (vec3, vec3)",
+      "description": "Get the force at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "beam.force_nodal() -> float",
+      "description": "Get the generalized nodal force acting at each node in the global system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "beam.group([slot: str or int]) -> str",
+      "description": "Get the Beam group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "beam.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Beam. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "beam.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Beam is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "beam.id() -> int",
+      "description": "Get the Beam structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "beam.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Beam is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "beam.length() -> float",
+      "description": "Get the length of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "load",
+      "signature": "beam.load() -> vec3",
+      "description": "Get the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "beam.local_system() -> Tens3",
+      "description": "Get local coordinate system of this element as a 3x3 tensor.",
+      "returns": {
+        "type": "Tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "beam.mark() -> bool",
+      "description": "Get the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "moi",
+      "signature": "beam.moi() -> vec3",
+      "description": "Get the moment of inertia of the beam. This is defined as the second moment of inertia with respect to the x-, y-, and z-axes.",
+      "returns": {
+        "type": "vec3"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "moment",
+      "signature": "beam.moment() -> (vec3, vec3)",
+      "description": "Get the moment at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "beam.moment_plastic() -> float",
+      "description": "Get the plastic moment capacity in the beam.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "moment_plastic_y",
+      "signature": "beam.moment_plastic_y() -> float",
+      "description": "Get the plastic moment capacity in Y in the beam.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "moment_plastic_z",
+      "signature": "beam.moment_plastic_z() -> float",
+      "description": "Get the plastic moment capacity in Z in the beam.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "nodes",
+      "signature": "beam.nodes() -> tuple of Structural element node objects",
+      "description": "Get a tuple containing the structural element nodes attached to this elemment.",
+      "returns": {
+        "type": "tuple of Structural element node objects"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "beam.poisson() -> float",
+      "description": "Get the Poisson’s ratio of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "beam.pos() -> vec3",
+      "description": "Get the position vector of the element, defined as the element centroid.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "beam.prop(property_name: str) -> any",
+      "description": "Get a property value of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_area",
+      "signature": "beam.set_area(float) -> None",
+      "description": "Set the cross-section area of the element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "beam.set_density(float) -> None",
+      "description": "Set the density of this structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "beam.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Beam extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "beam.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Beam group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "beam.set_load(vec3) -> None",
+      "description": "Set the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "beam.set_mark(bool) -> None",
+      "description": "Set the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moi",
+      "signature": "beam.set_moi(vec3) -> None",
+      "description": "Set the moment of inertia of the beam. This is defined as the second moment of inertia with respect to the x-, y-, and z-axes.",
+      "parameters": [
+        {
+          "name": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "beam.set_moment_plastic(float) -> None",
+      "description": "Set the plastic moment capacity in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic_y",
+      "signature": "beam.set_moment_plastic_y(float) -> None",
+      "description": "Set the plastic moment capacity in Y in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_moment_plastic_z",
+      "signature": "beam.set_moment_plastic_z(float) -> None",
+      "description": "Set the plastic moment capacity in Z in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_poisson",
+      "signature": "beam.set_poisson(float) -> None",
+      "description": "Set the Poisson’s ratio of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "beam.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this elmenent.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "beam.set_thermal_expansion(float) -> None",
+      "description": "Set the thermal expansion coefficient for the structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "beam.set_young(float) -> None",
+      "description": "Set the Youngs modulus of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "beam.thermal_expansion() -> float",
+      "description": "Get the thermal expansion coefficient for the structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "beam.valid() -> bool",
+      "description": "Returns True if this Beam is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "beam.volume() -> None",
+      "description": "Get the beam element volume, equal to the cross-sectional area times the length.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "beam.ydir() -> vec3",
+      "description": "Get the y-axis of the beam element local system.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "beam.young() -> float",
+      "description": "Get the Youngs modulus of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

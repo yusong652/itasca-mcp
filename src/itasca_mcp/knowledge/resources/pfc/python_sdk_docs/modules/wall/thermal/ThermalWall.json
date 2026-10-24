@@ -1,0 +1,350 @@
+{
+  "class": "ThermalWall",
+  "description": "ThermalWall object instance in itasca.wall.thermal.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.wall.thermal.ThermalWall.html",
+  "note": "Do not instantiate directly; use itasca.wall.thermal module functions.",
+  "method_groups": {
+    "contact": "contact_count",
+    "contacts": "contacts",
+    "extra": "extra, set_extra",
+    "facets": "facets",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "pos": "pos, pos_x, pos_y, pos_z, set_pos, set_pos_x, set_pos_y, set_pos_z",
+    "prop": "set_prop",
+    "temp": "set_temp",
+    "valid": "valid",
+    "wall": "wall"
+  },
+  "methods": [
+    {
+      "name": "contact_count",
+      "signature": "thermalwall.contact_count(all=False, type=None) -> int",
+      "description": "Get the number of contacts associated with this thermal wall. If the optional keyword argument type is given, the count is limited to the contact types specified. The optional type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the optional keyword argument all is True the count includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "contacts",
+      "signature": "thermalwall.contacts([piece, ]all=False, type=None) -> tuple of Contact objects",
+      "description": "Get a tuple of contacts associated with this wall. An optional argument can be included which is a piece object (a thermal ball, a thermal pebble or a thermal facet). If the optional keyword argument type is given, the returned list is limited to the contact types specified. The type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the (optional) keyword argument all is True the returned list includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "piece",
+          "required": true
+        },
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "tuple of Contact objects"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "thermalwall.extra(slot: int) -> any",
+      "description": "Get the thermal wall extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "facets",
+      "signature": "thermalwall.facets() -> Thermal facet iterator object",
+      "description": "Get the thermal facets of this thermal wall.",
+      "returns": {
+        "type": "Thermal facet iterator object"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "thermalwall.group([slot: str or int]) -> str",
+      "description": "Get the thermal wall group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "thermalwall.group_remove(group_name: str or int[, slot: str or int]) -> int",
+      "description": "Remove from the given group from the thermal wall. One argument of type string, giving the group name, is required. The return value is an integer which is the first slot in which the group name was found or -1 if not found.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "thermalwall.groups() -> tuple of strings",
+      "description": "Get a tuple of group names assigned to this thermal wall.",
+      "returns": {
+        "type": "tuple of strings"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "thermalwall.id() -> int",
+      "description": "Get the thermal wall id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "thermalwall.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the thermal wall is part of a given group. All group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "thermalwall.pos() -> vec",
+      "description": "Get the thermal wall location (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "thermalwall.pos_x() -> float",
+      "description": "Get the x-component of the thermal wall location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "thermalwall.pos_y() -> float",
+      "description": "Get the y-component of the thermal wall location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "thermalwall.pos_z() -> float",
+      "description": "Get the z-component of the thermal wall location.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "thermalwall.set_extra(slot: int, value: any) -> None",
+      "description": "Set the thermal wall extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "thermalwall.set_group([group_name: str or int[, slot: str or int]]) -> None",
+      "description": "Set the thermal wall group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos",
+      "signature": "thermalwall.set_pos(value: vec) -> None",
+      "description": "Set the thermal wall location (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_x",
+      "signature": "thermalwall.set_pos_x(value: float) -> None",
+      "description": "Set the x-component of the thermal wall location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_y",
+      "signature": "thermalwall.set_pos_y(value: float) -> None",
+      "description": "Set the y-component of the thermal wall location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_z",
+      "signature": "thermalwall.set_pos_z(value: float) -> None",
+      "description": "Set the z-component of the thermal wall location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_prop",
+      "signature": "thermalwall.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of all thermal facets.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_temp",
+      "signature": "thermalwall.set_temp(value: float) -> None",
+      "description": "Set the thermal wall facet temperatures of this wall.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "thermalwall.valid() -> bool",
+      "description": "Returns True if this thermal wall is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "wall",
+      "signature": "thermalwall.wall() -> Wall object",
+      "description": "Get the wall corresponding to this thermal wall.",
+      "returns": {
+        "type": "Wall object"
+      }
+    }
+  ]
+}

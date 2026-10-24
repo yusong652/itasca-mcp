@@ -185,16 +185,29 @@ async def test_browse_python_api_array_function_contract() -> None:
 
 @pytest.mark.asyncio
 async def test_browse_python_api_does_not_resolve_class_from_another_module() -> None:
-    # FLAC documents interface Node but not structure Node; the bare name must
-    # not hand back the interface docs for the structural-element class.
+    # FLAC documents a Node class in several modules (interface, structure,
+    # geometry); a bare name under a module that has none must not resolve.
     result = await mcp.call_tool(
         "itasca_browse_python_api",
-        {"api": "itasca.structure.node.Node.pos", "software": "flac"},
+        {"api": "itasca.zone.Node.pos", "software": "flac"},
     )
     payload = _parse_tool_payload(result)
 
     assert payload["ok"] is False
     assert payload["error"]["code"] == "invalid_path"
+
+    # Same-named classes resolve to their own module's docs.
+    structure = await mcp.call_tool(
+        "itasca_browse_python_api",
+        {"api": "itasca.structure.node.Node.pos", "software": "flac"},
+    )
+    interface = await mcp.call_tool(
+        "itasca_browse_python_api",
+        {"api": "itasca.interface.node.Node.pos", "software": "flac"},
+    )
+    structure_obj = _parse_tool_payload(structure)["data"]["entries"][0]["actual_object"]
+    interface_obj = _parse_tool_payload(interface)["data"]["entries"][0]["actual_object"]
+    assert structure_obj != interface_obj
 
 
 @pytest.mark.asyncio
@@ -214,7 +227,7 @@ async def test_browse_python_api_resolves_colliding_class_by_module() -> None:
 async def test_browse_python_api_fallback_path_is_a_documented_module() -> None:
     result = await mcp.call_tool(
         "itasca_browse_python_api",
-        {"api": "itasca.ball.thermal.ThermalBall.temp", "software": "pfc"},
+        {"api": "itasca.ball.nosuchmodule.ThermalBall.temp", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
 

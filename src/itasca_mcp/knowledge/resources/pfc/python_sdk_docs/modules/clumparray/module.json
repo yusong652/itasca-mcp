@@ -110,7 +110,8 @@
       },
       "notes": [
         "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
-        "This function is version-specific within the supported PFC 6.0/7.0/9.0 documentation set."
+        "This function is version-specific within the supported PFC 6.0/7.0/9.0 documentation set.",
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
       ]
     },
     {
@@ -281,7 +282,8 @@
       "notes": [
         "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
         "This function is version-specific within the supported PFC 6.0/7.0/9.0 documentation set.",
-        "The destination array must already have the correct shape and dtype."
+        "The destination array must already have the correct shape and dtype.",
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
       ]
     },
     {
@@ -1254,7 +1256,8 @@
       "notes": [
         "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature.",
         "This function is version-specific within the supported PFC 6.0/7.0/9.0 documentation set.",
-        "Setter functions modify model state immediately."
+        "Setter functions modify model state immediately.",
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
       ]
     },
     {
@@ -1727,6 +1730,74 @@
       "notes": [
         "Array APIs operate on all current objects of this type and return or accept NumPy arrays with the shape shown in the signature."
       ]
+    },
+    {
+      "name": "fill_rotation",
+      "signature": "itasca.clumparray.fill_rotation(data: array float{clump}) -> None",
+      "description": "Fill an existing array with the clump orientation. The array must be the correct shape.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{clump}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "rotation",
+      "signature": "itasca.clumparray.rotation() -> array float{clump}",
+      "description": "Get a numpy array of the clump orientation.",
+      "returns": {
+        "type": "array float{clump}"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "set_rotation",
+      "signature": "itasca.clumparray.set_rotation(data: array float{clump}) -> None",
+      "description": "Set the clump orientation from an array.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "array float{clump}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
     }
   ]
 }

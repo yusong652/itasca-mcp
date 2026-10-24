@@ -1,0 +1,540 @@
+{
+  "class": "Node",
+  "description": "Node object instance in itasca.structure.node.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.node.Node.html",
+  "note": "Do not instantiate directly; use itasca.structure.node module functions.",
+  "method_groups": {
+    "acc": "acc_global, acc_local",
+    "apply": "apply, apply_local, set_apply",
+    "component": "component_id",
+    "convergence": "convergence",
+    "damp": "damp_local, set_damp_local",
+    "disp": "disp_global, disp_local",
+    "extra": "extra, set_extra",
+    "fix": "fix, fix_local, set_fix_local",
+    "force": "force_unbal_global, force_unbal_local",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "links": "links",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "mass": "mass_added, mass_local, set_mass_added",
+    "pos": "pos, pos_reference",
+    "ratio": "ratio, ratio_target, set_ratio_target",
+    "resultant": "resultant",
+    "stiff": "stiff_local",
+    "surface": "set_surface_xdir, surface_system, surface_valid",
+    "temp": "set_temp_increment, temp_increment",
+    "valid": "valid",
+    "vel": "vel_global, vel_local"
+  },
+  "methods": [
+    {
+      "name": "acc_global",
+      "signature": "node.acc_global() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the acceleration of structure node expressed in a global coordinate system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "acc_local",
+      "signature": "node.acc_local() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the acceleration of structure node expressed in a local coordinate system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "apply",
+      "signature": "node.apply() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the translational and rotational applied force of the structure node expressed in the global coordinate system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "apply_local",
+      "signature": "node.apply_local() -> bool",
+      "description": "Get whether the coordinate system in which generalized applied forces are expressed is a local system.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "node.component_id() -> int",
+      "description": "Get the Node component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "convergence",
+      "signature": "node.convergence() -> float",
+      "description": "Returns the gridpoint convergence value, defined as the ratio of the currenct local force ratio (given by the \\(ratio\\) method), to the target force ratio (\\(ratio.target\\)). A value of 1 or less is therefore considered “converged”.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "damp_local",
+      "signature": "node.damp_local() -> float",
+      "description": "Get the local damping factor of the structure .",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "disp_global",
+      "signature": "node.disp_global() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the displacement of structure node expressed in a global system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "disp_local",
+      "signature": "node.disp_local() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the displacement of structure node expressed in a local system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "node.extra(slot: int) -> any",
+      "description": "Get the Node extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "fix",
+      "signature": "node.fix() -> tuple of int",
+      "description": "Get velocity-fixity flag expressed in the node-local system. Return values {1, 2, 3} denotes free, fixed, or slaved to target velocity, respectively. Slaved conditions arise from rigid attachment conditions; degrees-of-freedom that are slaved cannot be fixed.",
+      "returns": {
+        "type": "tuple of int"
+      }
+    },
+    {
+      "name": "fix_local",
+      "signature": "node.fix_local() -> bool",
+      "description": "Get the boolean flag for the local coordinate system fixity. True for fixed node-local system, False for free node-local system.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "force_unbal_global",
+      "signature": "node.force_unbal_global() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the unbalanced force of structure node expressed in a global system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "force_unbal_local",
+      "signature": "node.force_unbal_local() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the unbalanced force of structure node expressed in a local system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "node.group([slot: str or int]) -> str",
+      "description": "Get the Node group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "node.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Node. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "node.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Node is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "node.id() -> int",
+      "description": "Get the Node structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "node.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Node is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "links",
+      "signature": "node.links() -> tuple of Link objects",
+      "description": "Get the link objects associated with this node. One link is returned for each side. Returns None if no link is found.",
+      "returns": {
+        "type": "tuple of Link objects"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "node.local_system() -> tens3",
+      "description": "Get the local coordinate system of the structure node.",
+      "returns": {
+        "type": "tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "node.mark() -> bool",
+      "description": "Get the mark flag. Note that the SEL logic may modify this flag during command processing, cycling, and plotting.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "mass_added",
+      "signature": "node.mass_added() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the extra mass in addition to the inertial mass at each degree-of-freedom in the node-local system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "mass_local",
+      "signature": "node.mass_local() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the mass at each degree-of-freedom in the node-local system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "node.pos() -> vec3",
+      "description": "Get the current position of this structural element node.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "pos_reference",
+      "signature": "node.pos_reference() -> vec3",
+      "description": "Get the reference position of this structural element node.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "ratio",
+      "signature": "node.ratio() -> float",
+      "description": "Get the local gridpoint mechanical convergence ratio. This is the ratio of unbalanced force to force applied to the node.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "ratio_target",
+      "signature": "node.ratio_target() -> float",
+      "description": "Get the target mechanical force ratio in the node. The default value is 1e-4. A local force ratio (see the \\(ratio\\) method) below this value is considered converged. See also the \\(convergence\\) method.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "resultant",
+      "signature": "node.resultant() -> tuple of floats (Mx, My, Mxy, Nx, Ny, Nxy)",
+      "description": "Get stress resultants last calculated for the elements connected to this node. Note that the \\(Q_x\\) and \\(Q_{y1}\\) terms are not valid at nodes because they are constant over an element. Stress resultants are expressed in the node surface system; see the structure shell recover surface, structure geogrid recover surface, and structure liner recover surface commands.",
+      "returns": {
+        "type": "tuple of floats (Mx, My, Mxy, Nx, Ny, Nxy)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_apply",
+      "signature": "node.set_apply(comp: int, force: float) -> None",
+      "description": "Set a component of the translational and rotational applied force of the structure node expressed in the global coordinate system. Components 0, 1, and 2 are translational and 3,4 and 5 are rotational.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_damp_local",
+      "signature": "node.set_damp_local(float) -> None",
+      "description": "Set the local damping factor of the structure .",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "node.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Node extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_fix_local",
+      "signature": "node.set_fix_local(bool) -> None",
+      "description": "Set the boolean flag for the local coordinate system fixity. True for fixed node-local system, False for free node-local system.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "node.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Node group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "node.set_mark(bool) -> None",
+      "description": "Set the mark flag. Note that the SEL logic may modify this flag during command processing, cycling, and plotting.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mass_added",
+      "signature": "node.set_mass_added(comp: int, mass: float) -> (translational: vec3, rotational: vec3)",
+      "description": "Get the extra mass in addition to the inertial mass at each degree-of-freedom in the node-local system.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "mass",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "set_ratio_target",
+      "signature": "node.set_ratio_target(ratio: float) -> None",
+      "description": "Set the target mechanical force ratio in the node. The default value is 1e-4. A local force ratio (see the \\(ratio\\) method) below this value is considered converged. See also the \\(convergence\\) method.",
+      "parameters": [
+        {
+          "name": "ratio",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_surface_xdir",
+      "signature": "node.set_surface_xdir(orientation: vec3) -> bool",
+      "description": "Set the orientation of the surface system. surface system of the node such that the x-direction is aligned with the projection of the surface vector v onto the normal plane, which is defined by the z-direction. This operation can only be performed upon nodes that have a valid surface system (to ensure that the z-direction always corresponds with the average normal direction of at least one of the shell-type SELs using the node). A return value of \\(True\\) indicates success and \\(False\\) indicates failure.",
+      "parameters": [
+        {
+          "name": "orientation",
+          "type": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_temp_increment",
+      "signature": "node.set_temp_increment(dtemp: float) -> None",
+      "description": "Set the the temperature increment that will be applied to the structural node in the next timestep, causing elements connected to it to see changes in stress due to thermal expansion. This value is cleared to zero after every step when thermal expansion stresses are applied.",
+      "parameters": [
+        {
+          "name": "dtemp",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "stiff_local",
+      "signature": "node.stiff_local() -> tuple of float",
+      "description": "Get the stiffness of structure node expressed in a local system. A length 6 tuple is returned. The translational stiffnesses are first followed by the rotational stiffnesses.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "surface_system",
+      "signature": "node.surface_system() -> tens3",
+      "description": "Get the surface coordinate system of the structure node.",
+      "returns": {
+        "type": "tens3"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "surface_valid",
+      "signature": "node.surface_valid() -> bool",
+      "description": "Get a boolean flag for surface system validity; \\(True\\) if the surface system is valid, \\(False\\) if not. The surface system can be made valid by issuing a structure recovery command.",
+      "returns": {
+        "type": "bool"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "temp_increment",
+      "signature": "node.temp_increment() -> float",
+      "description": "Get the the temperature increment that will be applied to the structural node in the next timestep, causing elements connected to it to see changes in stress due to thermal expansion. This value is cleared to zero after every step when thermal expansion stresses are applied.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "node.valid() -> bool",
+      "description": "Returns True if this Node is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "vel_global",
+      "signature": "node.vel_global() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the velocity of a structure node expressed in a global system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "vel_local",
+      "signature": "node.vel_local() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the velocity of a structure node expressed in a local system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    }
+  ]
+}

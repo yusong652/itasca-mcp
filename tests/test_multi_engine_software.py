@@ -277,8 +277,10 @@ def test_3dec_python_proprietary_modules_isolated_from_pfc_flac() -> None:
     threedec = set(DocumentationLoader.load_index(software="3dec")["modules"])
     for sw in ("pfc", "flac"):
         other = set(DocumentationLoader.load_index(software=sw)["modules"])
-        # None of the 3DEC-only families leak into the other engines.
-        assert not ({"block", "flowknot", "flowplane", "structure", "dfn"} & other)
+        # None of the 3DEC-only families leak into the other engines. structure is
+        # shared with FLAC (its own structure command family) and dfn is the shared
+        # fracture kernel (_common fracture commands), so neither is 3DEC-only.
+        assert not ({"block", "flowknot", "flowplane"} & other)
     assert {"block", "flowknot", "flowplane", "structure", "dfn", "contact"} <= threedec
 
 
@@ -341,15 +343,19 @@ async def test_mpoint_query_command_finds_mpoint_create() -> None:
 
 @pytest.mark.asyncio
 async def test_mpoint_python_api_is_core_only_and_redirects() -> None:
-    """MPoint's Python index carries the shared core and nothing else.
+    """MPoint's Python index carries the shared kernel and none of FLAC's continuum API.
 
     itasca.zone and itasca.gridpoint run on the MPoint binary -- all 236
     documented functions are present -- but they are FLAC's continuum API.
+    fish / history / dfn back MPoint's own fish, history and fracture command
+    families, so they are documented from live MPoint introspection.
     """
     result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": None})
     data = _parse_tool_payload(result)["data"]
-    paths = {e.get("path") for e in data["entries"]}
-    assert paths == {"itasca"}
+    modules = {e.get("path") for e in data["entries"] if e.get("entry_type") == "module"}
+    assert "itasca" in modules
+    assert {p.split(".")[1] for p in modules if p != "itasca"} <= {"fish", "history", "dfn"}
+    assert not any(p.startswith(("itasca.zone", "itasca.gridpoint")) for p in modules)
 
     result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "itasca.zone stress"})
     hints = _parse_tool_payload(result)["data"]["summary"]["hints"]

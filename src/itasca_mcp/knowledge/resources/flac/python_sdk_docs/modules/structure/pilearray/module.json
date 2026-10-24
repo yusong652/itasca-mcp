@@ -1,0 +1,875 @@
+{
+  "module": "itasca.structure.pilearray",
+  "description": "Array interface for pile elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.pilearray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.pilearray.area() -> array float{pile}",
+      "description": "Get a Numpy array of the cross-section area of the pile elements.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "axial_yield",
+      "signature": "itasca.structure.pilearray.axial_yield() -> array float{pile}",
+      "description": "Get a Numpy array of the axial tensile yield strength (force units) of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.pilearray.component_id() -> array int{pile}",
+      "description": "Get a NumPy array of the ID of pile component id.",
+      "returns": {
+        "type": "array int{pile}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.pilearray.density() -> array double{pile}",
+      "description": "Get a NumPy array of the density of pile elements.",
+      "returns": {
+        "type": "array double{pile}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.pilearray.extra(slot: int) -> array float{pile} or float{pile,3}",
+      "description": "Get the pile extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{pile} or float{pile,3}"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "itasca.structure.pilearray.force() -> array float(pile,6)",
+      "description": "Get a Numpy array of the force at each end of the pile using the force-moment sign convention.",
+      "returns": {
+        "type": "array float(pile,6)"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.pilearray.force_nodal() -> array float(pile,12)",
+      "description": "Get a Numpy array of the generalized nodal force acting at each end in the global system. The end 1 translational and rotational components are given first.",
+      "returns": {
+        "type": "array float(pile,12)"
+      }
+    },
+    {
+      "name": "gap",
+      "signature": "itasca.structure.pilearray.gap() -> arrat float(pile,2,4)",
+      "description": "Get a Numpy array of the gap components in normal spring at each end of the pile element. The gap forms a rectangular shape in the pile cross-sectional plane, which is defined by the local yz-axes of the pile element node. The gap consists of four values denoting gap size in the positive and negative y- and z-directions. The components are the positive y-direction, negative y-direction, positive z-direction, and negative z-direction, respectively. The gap is always being tracked, but only affects behavior if the normal coupling spring gap-use flag function. The gap values for end 1 are given first.",
+      "returns": {
+        "type": "arrat float(pile,2,4)"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.pilearray.id() -> array int{pile}",
+      "description": "Get a NumPy array of the ID of pile element id.",
+      "returns": {
+        "type": "array int{pile}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.pilearray.in_group(group_name: str, slot=1) -> array bool{pile}",
+      "description": "Return pile group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "itasca.structure.pilearray.length() -> array float{pile}",
+      "description": "Get a Numpy array of the length of the pile elements.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "load",
+      "signature": "itasca.structure.pilearray.load() -> array float{pile,3}",
+      "description": "Get a Numpy array of the uniform applied distributed load acting on the pile elements in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "array float{pile,3}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.pilearray.local_system() -> array double{pile,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of pile elements.",
+      "returns": {
+        "type": "array double{pile,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.pilearray.mark() -> array bool{pile}",
+      "description": "Get a NumPy array of the mark flag of pile elements.",
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "moment",
+      "signature": "itasca.structure.pilearray.moment() -> float(pile,6)",
+      "description": "Get a Numpy array of the moment at each end of the pile using the force-moment sign convention.",
+      "returns": {
+        "type": "float(pile,6)"
+      }
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "itasca.structure.pilearray.moment_plastic() -> array float{pile}",
+      "description": "Get a Numpy array of the plastic moment capacity in the pile.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "moment_plastic_y",
+      "signature": "itasca.structure.pilearray.moment_plastic_y() -> array float{pile}",
+      "description": "Get a Numpy array of the plastic moment capacity in Y in the pile.",
+      "returns": {
+        "type": "array float{pile}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "moment_plastic_z",
+      "signature": "itasca.structure.pilearray.moment_plastic_z() -> array float{pile}",
+      "description": "Get a Numpy array of the plastic moment capacity in Z in the pile.",
+      "returns": {
+        "type": "array float{pile}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "normal_cohesion",
+      "signature": "itasca.structure.pilearray.normal_cohesion() -> array float{pile}",
+      "description": "Get a Numpy array of the normal coupling spring cohesive strength of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "normal_dir",
+      "signature": "itasca.structure.pilearray.normal_dir() -> array float{pile,2,3}",
+      "description": "Get a Numpy array of the global direction in which the pile element is being loaded by the coupling normal spring at each end.",
+      "returns": {
+        "type": "array float{pile,2,3}"
+      }
+    },
+    {
+      "name": "normal_disp",
+      "signature": "itasca.structure.pilearray.normal_disp() -> array float{pile,2}",
+      "description": "Get a Numpy array of the displacement in the coupling normal spring at each end of the pile element. Sign convention for normal spring is positive/negative, indicating separation/overlap.",
+      "returns": {
+        "type": "array float{pile,2}"
+      }
+    },
+    {
+      "name": "normal_friction",
+      "signature": "itasca.structure.pilearray.normal_friction() -> array float{pile}",
+      "description": "Get a Numpy array of the normal coupling spring friction angle of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "normal_gap",
+      "signature": "itasca.structure.pilearray.normal_gap() -> array bool{pile}",
+      "description": "Get a Numpy array of the normal coupling spring gap-use flag. True denotes gap is on, and False value denotes gap is off.",
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "normal_state",
+      "signature": "itasca.structure.pilearray.normal_state() -> array int{pile,2}",
+      "description": "Get a Numpy array of the yield state of the coupling normal spring at each end of the pile element. Return values 0, 1 and 2 denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "array int{pile,2}"
+      }
+    },
+    {
+      "name": "normal_stiffness",
+      "signature": "itasca.structure.pilearray.normal_stiffness() -> array float{pile}",
+      "description": "Get a Numpy array of the normal coupling spring stiffness of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "normal_stress",
+      "signature": "itasca.structure.pilearray.normal_stress() -> array float{pile,2}",
+      "description": "Get a Numpy array of the stress in the coupling normal spring at each end of the pile element. Sign convention for the normal spring is positive/negative, indicating separation/overlap.",
+      "returns": {
+        "type": "array float{pile,2}"
+      }
+    },
+    {
+      "name": "perimeter",
+      "signature": "itasca.structure.pilearray.perimeter() -> array float{pile}",
+      "description": "Get a Numpy array of the exposed perimeter of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "itasca.structure.pilearray.poisson() -> array float{pile}",
+      "description": "Get a Numpy array of the Poisson’s ratio of the pile elements.",
+      "returns": {
+        "type": "array float{pile}"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.pilearray.pos() -> array vec3{pile}",
+      "description": "Get a NumPy array of the current position of pile elements.",
+      "returns": {
+        "type": "array vec3{pile}"
+      }
+    },
+    {
+      "name": "rockbolt",
+      "signature": "itasca.structure.pilearray.rockbolt() -> array bool{pile}",
+      "description": "Get a Numpy array of a boolean flag of the rockbolt. True denotes the rockbolt flag is on, and False denotes the rockbolt flag is off.",
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "set_area",
+      "signature": "itasca.structure.pilearray.set_area(array float{pile}) -> None",
+      "description": "Set the cross-section area of the elements.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_axial_yield",
+      "signature": "itasca.structure.pilearray.set_axial_yield(array float{pile}) -> None",
+      "description": "Set the axial tensile yield strength (force units) of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.pilearray.set_density(array double{pile}) -> None",
+      "description": "Set the density of pile elements.",
+      "parameters": [
+        {
+          "name": "array double{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.pilearray.set_extra(slot: int, data: array float{pile} or float{pile, 3}) -> None",
+      "description": "Set the pile extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{pile} or float{pile",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.pilearray.set_group(membership: array bool{pile}, group_name: str, slot=1) -> None",
+      "description": "Set pile group from an array. Where membership True set the corresponding pile to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{pile}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "itasca.structure.pilearray.set_load(array float{pile, 3}) -> None",
+      "description": "Set the uniform applied distributed load acting on the pile elements in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "array float{pile",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.pilearray.set_mark(array bool{pile}) -> None",
+      "description": "Set the mark flag of pile elements.",
+      "parameters": [
+        {
+          "name": "array bool{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "itasca.structure.pilearray.set_moment_plastic(array float{pile}) -> None",
+      "description": "Set the plastic moment capacity in the pile.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic_y",
+      "signature": "itasca.structure.pilearray.set_moment_plastic_y(array float{pile}) -> None",
+      "description": "Set the plastic moment capacity in Y in the pile.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_moment_plastic_z",
+      "signature": "itasca.structure.pilearray.set_moment_plastic_z(array float{pile}) -> None",
+      "description": "Set the plastic moment capacity in Z in the pile.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_cohesion",
+      "signature": "itasca.structure.pilearray.set_normal_cohesion(array float{pile}) -> None",
+      "description": "Set the normal coupling spring cohesive strength of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_friction",
+      "signature": "itasca.structure.pilearray.set_normal_friction(array float{pile}) -> None",
+      "description": "Set the normal coupling spring friction angle of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_gap",
+      "signature": "itasca.structure.pilearray.set_normal_gap(array bool{pile}) -> None",
+      "description": "Set the normal coupling spring gap-use flag. True denotes gap is on, and False value denotes gap is off.",
+      "parameters": [
+        {
+          "name": "array bool{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_stiffness",
+      "signature": "itasca.structure.pilearray.set_normal_stiffness(array float{pile}) -> None",
+      "description": "Set the normal coupling spring stiffness of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_perimeter",
+      "signature": "itasca.structure.pilearray.set_perimeter(array float{pile}) -> None",
+      "description": "Set the exposed perimeter of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_poisson",
+      "signature": "itasca.structure.pilearray.set_poisson(array float{pile}) -> None",
+      "description": "Set the Poisson’s ratio of the pile elements.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_rockbolt",
+      "signature": "itasca.structure.pilearray.set_rockbolt(array bool{pile}) -> None",
+      "description": "Set a boolean flag of the rockbolt. True denotes the rockbolt flag is on, and False denotes the rockbolt flag is off.",
+      "parameters": [
+        {
+          "name": "array bool{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "itasca.structure.pilearray.set_shear_cohesion(array float{pile}) -> None",
+      "description": "Set the shear coupling spring cohesive strength of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_flag",
+      "signature": "itasca.structure.pilearray.set_shear_flag(array bool{pile}) -> None",
+      "description": "Set the shear direction incremental confining stress flag. True denotes the flag is on, False denotes the flag is off.",
+      "parameters": [
+        {
+          "name": "array bool{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "itasca.structure.pilearray.set_shear_friction(array float{pile}) -> None",
+      "description": "Set the shear coupling spring friction angle of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "itasca.structure.pilearray.set_shear_stiffness(float) -> None",
+      "description": "Set the shear coupling spring stiffness of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "itasca.structure.pilearray.set_slide(array bool{pile}) -> None",
+      "description": "Set a boolean flag of slide. True denotes the slide flag is on, and False denotes the slide flag is off.",
+      "parameters": [
+        {
+          "name": "array bool{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "itasca.structure.pilearray.set_slide_tol() -> array float{pile}",
+      "description": "Set the large-strain sliding tolerance of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "set_strain_failure",
+      "signature": "itasca.structure.pilearray.set_strain_failure(array float{pile}) -> None",
+      "description": "Set the tensile failure strain (non-dimensional) of the pile element.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_cohesion",
+      "signature": "itasca.structure.pilearray.set_table_cohesion(array str{pile}) -> None",
+      "description": "Set the shear direction cohesion strength table name for the pile element.",
+      "parameters": [
+        {
+          "name": "array str{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_factor",
+      "signature": "itasca.structure.pilearray.set_table_factor(array str{pile}) -> None",
+      "description": "Set the shear direction friction table name for the pile element.",
+      "parameters": [
+        {
+          "name": "array str{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_friction",
+      "signature": "itasca.structure.pilearray.set_table_friction(array str{pile}) -> None",
+      "description": "Set the shear direction incremental confining stress factor table name for the pile element.",
+      "parameters": [
+        {
+          "name": "array str{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.pilearray.set_thermal_expansion(array double{pile}) -> None",
+      "description": "Set the thermal expansion coefficient of pile elements.",
+      "parameters": [
+        {
+          "name": "array double{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.pilearray.set_young(array float{pile}) -> None",
+      "description": "Set the Youngs modulus of the pile elements.",
+      "parameters": [
+        {
+          "name": "array float{pile}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "itasca.structure.pilearray.shear_cohesion() -> array float{pile}",
+      "description": "Get a Numpy array of the shear coupling spring cohesive strength of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "shear_dir",
+      "signature": "itasca.structure.pilearray.shear_dir() -> array float{pile,2,3}",
+      "description": "Get a Numpy array of the global direction in which the pile element is being loaded by the coupling shear spring at each end.",
+      "returns": {
+        "type": "array float{pile,2,3}"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "itasca.structure.pilearray.shear_disp() -> array float{pile,2,3}",
+      "description": "Get a Numpy array of the displacement in coupling shear spring at each end of the pile element. Sign convention for shear spring is positive/negative with respect to the average axial direction of pile.",
+      "returns": {
+        "type": "array float{pile,2,3}"
+      }
+    },
+    {
+      "name": "shear_flag",
+      "signature": "itasca.structure.pilearray.shear_flag() -> array bool{pile}",
+      "description": "Get a Numpy array of the shear direction incremental confining stress flag. True denotes the flag is on, False denotes the flag is off.",
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "itasca.structure.pilearray.shear_friction() -> array float{pile}",
+      "description": "Get a Numpy array of the shear coupling spring friction angle of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "shear_state",
+      "signature": "itasca.structure.pilearray.shear_state() -> None",
+      "description": "Get a Numpy array of the yield state of the coupling shear spring at each end of the pile element. Return a values of 0, 1 and 2 denote never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "itasca.structure.pilearray.shear_stiffness() -> array float{pile}",
+      "description": "Get a Numpy array of the shear coupling spring stiffness of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "shear_stress",
+      "signature": "itasca.structure.pilearray.shear_stress() -> array float{pile,2}",
+      "description": "Get a Numpy array of the stress in coupling shear spring at each end of the pile element. Sign convention for shear spring is positive/negative with respect to the average axial direction of pile.",
+      "returns": {
+        "type": "array float{pile,2}"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "itasca.structure.pilearray.slide() -> array bool{pile}",
+      "description": "Get a Numpy array of a boolean flag of slide. True denotes the slide flag is on, and False denotes the slide flag is off.",
+      "returns": {
+        "type": "array bool{pile}"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "itasca.structure.pilearray.slide_tol() -> array float{pile}",
+      "description": "Get a Numpy array of the large-strain sliding tolerance of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "strain_failure",
+      "signature": "itasca.structure.pilearray.strain_failure() -> array float{pile}",
+      "description": "Get a Numpy array of the tensile failure strain (non-dimensional) of the pile element.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "stress_confining",
+      "signature": "itasca.structure.pilearray.stress_confining() -> array float{pile,2}",
+      "description": "Get a Numpy array of the confining stress at each end of the pile element. (Negative value is compression.) Stress acts in a plane perpendicular to the pile axis; confining stress is the average of the principal values in this plane.",
+      "returns": {
+        "type": "array float{pile,2}"
+      }
+    },
+    {
+      "name": "table_cohesion",
+      "signature": "itasca.structure.pilearray.table_cohesion() -> array str{pile}",
+      "description": "Get a Numpy array of the shear direction cohesion strength table name for the pile element.",
+      "returns": {
+        "type": "array str{pile}"
+      }
+    },
+    {
+      "name": "table_factor",
+      "signature": "itasca.structure.pilearray.table_factor() -> array str{pile}",
+      "description": "Get a Numpy array of the shear direction friction table name for the pile element.",
+      "returns": {
+        "type": "array str{pile}"
+      }
+    },
+    {
+      "name": "table_friction",
+      "signature": "itasca.structure.pilearray.table_friction() -> array str{pile}",
+      "description": "Get a Numpy array of the shear direction incremental confining stress factor table name for the pile element.",
+      "returns": {
+        "type": "array str{pile}"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.pilearray.thermal_expansion() -> array double{pile}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of pile elements.",
+      "returns": {
+        "type": "array double{pile}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.pilearray.type() -> array string{pile}",
+      "description": "Get a NumPy array of the type name of pile elements.",
+      "returns": {
+        "type": "array string{pile}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.pilearray.volume() -> array float{pile}",
+      "description": "Get a Numpy array of the pile elements volume, equal to the cross-sectional area times the length.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "itasca.structure.pilearray.ydir() -> array float{pile,3}",
+      "description": "Get a Numpy array of the y-axis of the pile elements local system.",
+      "returns": {
+        "type": "array float{pile,3}"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.pilearray.young() -> array float{pile}",
+      "description": "Get a Numpy array of the Youngs modulus of the pile elements.",
+      "returns": {
+        "type": "array float{pile}"
+      }
+    }
+  ]
+}

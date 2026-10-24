@@ -1,0 +1,324 @@
+{
+  "class": "DFN",
+  "description": "DFN object instance in itasca.dfn.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.dfn.DFN.html",
+  "note": "Do not instantiate directly; use itasca.dfn module functions.",
+  "method_groups": {
+    "center": "center_density",
+    "clone": "clone_fracture",
+    "contacts": "contacts",
+    "create": "create_fracture",
+    "delete": "delete",
+    "density": "density",
+    "dominance": "dominance, set_dominance",
+    "fracture": "fracture_count, fracture_near",
+    "fractures": "fractures, fractures_inbox",
+    "id": "id",
+    "name": "name",
+    "p10": "p10",
+    "percolation": "percolation",
+    "prop": "set_prop",
+    "template": "template",
+    "valid": "valid"
+  },
+  "methods": [
+    {
+      "name": "center_density",
+      "signature": "dfn.center_density(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture center density. The fracture center density is defined as the {P20 value in 2D; P30 value in 3D} as measured in the specified region. {P20 in 2D; P30 in 3D} is the number of fracture centers in the specified region per unit area (volume).",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "clone_fracture",
+      "signature": "dfn.clone_fracture(Fracture object) -> Fracture object",
+      "description": "Clone the fracture, creating a new one in the dfn. The fracturecan come from any dfn.",
+      "parameters": [
+        {
+          "name": "Fracture object",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "Fracture object"
+      }
+    },
+    {
+      "name": "contacts",
+      "signature": "dfn.contacts(all=False, type=None) -> tuple of Contact objects",
+      "description": "Get a tuple of contacts associated with the fractures in this dfn. The type keyword argument should be a Python type object (one of: itasca.BallBallContact, itasca.BallPebbleContact, itasca.PebblePebbleContact, itasca.BallFacetContact or itasca.PebbleFacetContact). If the (optional) keyword argument all is True the returned list includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "tuple of Contact objects"
+      }
+    },
+    {
+      "name": "create_fracture",
+      "signature": "dfn.create_fracture(pos=origin, size=0, dip=0, dipdir=0 (3D ONLY), id=0, vertices=array) -> Fracture object",
+      "description": "Create a fracture and addit to this dfn. In 3D a disk shaped fracture can be created where size is the fracture diameter, pos is the center of the fracture and dip/dipdir and the dip and dip direction in degrees, respectively.In 2D, a line segement fracture can be created where size is the fracture length, pos is the center and dip is the fracture dip in degrees. Otherwise one may specify a number of verticesfor {2 in 2D; 3 or more in 3D} that delineate the fracture vertices.",
+      "parameters": [
+        {
+          "name": "pos",
+          "required": false,
+          "default": "origin"
+        },
+        {
+          "name": "size",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "dip",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "dipdir",
+          "required": false,
+          "default": "0 (3D ONLY)"
+        },
+        {
+          "name": "id",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "vertices",
+          "required": false,
+          "default": "array"
+        }
+      ],
+      "returns": {
+        "type": "Fracture object"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "dfn.delete() -> None",
+      "description": "Delete this DFN.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "dfn.density(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture mass density. The fracture mass density is defined as the {P21 value in 2D; P32 value in 3D} as measured in the specified region. {P21 in 2D; P32 in 3D} is the cumulated fracture length (surface) in the specified region per unit area (volume).",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "dominance",
+      "signature": "dfn.dominance() -> int",
+      "description": "Get the dfn dominance.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "fracture_count",
+      "signature": "dfn.fracture_count() -> int",
+      "description": "Get the number of fractures in this dfn.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "fracture_near",
+      "signature": "dfn.fracture_near(point: vec, radius=0.0) -> Fracture object",
+      "description": "Find the closest fracture to a point. If the optional keyword argument radius is non-zero, only search within this radius.",
+      "parameters": [
+        {
+          "name": "point",
+          "type": "vec",
+          "required": true
+        },
+        {
+          "name": "radius",
+          "required": false,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Fracture object"
+      }
+    },
+    {
+      "name": "fractures",
+      "signature": "dfn.fractures() -> Fracture iterator object",
+      "description": "Get a fracture iterator object.",
+      "returns": {
+        "type": "Fracture iterator object"
+      }
+    },
+    {
+      "name": "fractures_inbox",
+      "signature": "dfn.fractures_inbox(lower_bound: vec, upper_bound: vec, intersect=True) -> Tuple of fracture objects",
+      "description": "Get a tuple of fractures with extents intersecting a box. The extent is the axis-aligned bounding box of the fracture. The if the optional keyword argument intersect is False only fractures entirely falling within the box are returned. Only fractures belonging to this dfn are are searched.",
+      "parameters": [
+        {
+          "name": "lower_bound",
+          "type": "vec",
+          "required": true
+        },
+        {
+          "name": "upper_bound",
+          "type": "vec",
+          "required": true
+        },
+        {
+          "name": "intersect",
+          "required": false,
+          "default": "True"
+        }
+      ],
+      "returns": {
+        "type": "Tuple of fracture objects"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "dfn.id() -> int",
+      "description": "Get the dfn id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "name",
+      "signature": "dfn.name() -> string",
+      "description": "Get the dfn name.",
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "p10",
+      "signature": "dfn.p10(pt1=origin, pt2=origin) -> float",
+      "description": "Get the P10, or the fracture density per unit length, along the line from pt1 to pt2.",
+      "parameters": [
+        {
+          "name": "pt1",
+          "required": false,
+          "default": "origin"
+        },
+        {
+          "name": "pt2",
+          "required": false,
+          "default": "origin"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "percolation",
+      "signature": "dfn.percolation(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture percolation. The fracture percolation is measured in the region and is defined as {the sum of the squared fracture lengths per unit area in 2D; the sum of pi^2 (area/pi)^(1.5) per unit volume, where area is the fracture area in 3D}.",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "set_dominance",
+      "signature": "dfn.set_dominance(value: int) -> None",
+      "description": "Set the dfn dominance.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "dfn.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of all fractures of this dfn.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "template",
+      "signature": "dfn.template() -> DFN Template object",
+      "description": "Get the template used to create this dfn.",
+      "returns": {
+        "type": "DFN Template object"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "dfn.valid() -> bool",
+      "description": "Returns True if this dfn is live.",
+      "returns": {
+        "type": "bool"
+      }
+    }
+  ]
+}

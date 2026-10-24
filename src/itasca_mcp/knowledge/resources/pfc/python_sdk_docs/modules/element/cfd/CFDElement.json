@@ -1,0 +1,664 @@
+{
+  "class": "CFDElement",
+  "description": "CFDElement object instance in itasca.element.cfd.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.element.cfd.CFDElement.html",
+  "note": "Do not instantiate directly; use itasca.element.cfd module functions.",
+  "method_groups": {
+    "adjacent": "adjacent_to_face",
+    "density": "density, set_density",
+    "drag": "drag_force, drag_force_x, drag_force_y, drag_force_z, set_drag_force, set_drag_force_x, set_drag_force_y, set_drag_force_z",
+    "extra": "extra, set_extra",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "node": "node_pos, node_pos_x, node_pos_y, node_pos_z",
+    "porosity": "porosity, set_porosity",
+    "pos": "pos, pos_x, pos_y, pos_z",
+    "pres": "pres_grad, pres_grad_x, pres_grad_y, pres_grad_z, set_pres_grad, set_pres_grad_x, set_pres_grad_y, set_pres_grad_z",
+    "pressure": "pressure, set_pressure",
+    "share": "share_a_face, share_a_node, share_an_edge",
+    "valid": "valid",
+    "vel": "set_vel, set_vel_x, set_vel_y, set_vel_z, vel, vel_x, vel_y, vel_z",
+    "viscosity": "set_viscosity, viscosity",
+    "vol": "vol"
+  },
+  "methods": [
+    {
+      "name": "adjacent_to_face",
+      "signature": "cfdelement.adjacent_to_face(index) -> CFD element object",
+      "description": "Get the element adjacent to the face with identifier index.",
+      "parameters": [
+        {
+          "name": "index",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "CFD element object"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "cfdelement.density() -> float",
+      "description": "Get the CFD element fluid density.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "drag_force",
+      "signature": "cfdelement.drag_force() -> vec",
+      "description": "Get the CFD element fluid drag force (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "drag_force_x",
+      "signature": "cfdelement.drag_force_x() -> float",
+      "description": "Get the x-component of the CFD element fluid drag force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "drag_force_y",
+      "signature": "cfdelement.drag_force_y() -> float",
+      "description": "Get the y-component of the CFD element fluid drag force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "drag_force_z",
+      "signature": "cfdelement.drag_force_z() -> float",
+      "description": "Get the z-component of the CFD element fluid drag force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "cfdelement.extra(slot: int) -> any",
+      "description": "Get the CFD element extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "cfdelement.group([slot: str or int]) -> str",
+      "description": "Get the CFD element group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "cfdelement.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the CFD element. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "cfdelement.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this CFD element is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "cfdelement.id() -> int",
+      "description": "Get the CFD element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "cfdelement.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the CFD element is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "node_pos",
+      "signature": "cfdelement.node_pos(index) -> vec",
+      "description": "Get the position of node with identifier index (vector).",
+      "parameters": [
+        {
+          "name": "index",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "node_pos_x",
+      "signature": "cfdelement.node_pos_x(index) -> float",
+      "description": "Get the x-component of the position of node with identifier index.",
+      "parameters": [
+        {
+          "name": "index",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "node_pos_y",
+      "signature": "cfdelement.node_pos_y(index) -> float",
+      "description": "Get the y-component of the position of node with identifier index.",
+      "parameters": [
+        {
+          "name": "index",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "node_pos_z",
+      "signature": "cfdelement.node_pos_z(index) -> float",
+      "description": "Get the z-component of the position of node with identifier index.",
+      "parameters": [
+        {
+          "name": "index",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "porosity",
+      "signature": "cfdelement.porosity() -> float",
+      "description": "Get the CFD element fluid porosity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "cfdelement.pos() -> vec",
+      "description": "Get the CFD element location (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "cfdelement.pos_x() -> float",
+      "description": "Get the x-component of the CFD element location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "cfdelement.pos_y() -> float",
+      "description": "Get the y-component of the CFD element location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "cfdelement.pos_z() -> float",
+      "description": "Get the z-component of the CFD element location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pres_grad",
+      "signature": "cfdelement.pres_grad() -> vec",
+      "description": "Get the CFD element fluid pressure gradient (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pres_grad_x",
+      "signature": "cfdelement.pres_grad_x() -> float",
+      "description": "Get the x-component of the CFD element fluid pressure gradient.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pres_grad_y",
+      "signature": "cfdelement.pres_grad_y() -> float",
+      "description": "Get the y-component of the CFD element fluid pressure gradient.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pres_grad_z",
+      "signature": "cfdelement.pres_grad_z() -> float",
+      "description": "Get the z-component of the CFD element fluid pressure gradient.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "cfdelement.pressure() -> float",
+      "description": "Get the CFD element fluid_pressure.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "cfdelement.set_density(value: float) -> None",
+      "description": "Set the CFD element fluid density.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_drag_force",
+      "signature": "cfdelement.set_drag_force(value: vec) -> None",
+      "description": "Set the CFD element fluid drag force (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_drag_force_x",
+      "signature": "cfdelement.set_drag_force_x(value: float) -> None",
+      "description": "Set the x-component of the CFD element fluid drag force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_drag_force_y",
+      "signature": "cfdelement.set_drag_force_y(value: float) -> None",
+      "description": "Set the y-component of the CFD element fluid drag force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_drag_force_z",
+      "signature": "cfdelement.set_drag_force_z(value: float) -> None",
+      "description": "Set the z-component of the CFD element fluid drag force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "cfdelement.set_extra(slot: int, value: any) -> None",
+      "description": "Set the CFD element extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "cfdelement.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the CFD element group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_porosity",
+      "signature": "cfdelement.set_porosity(value: float) -> None",
+      "description": "Set the CFD element fluid porosity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pres_grad",
+      "signature": "cfdelement.set_pres_grad(value: vec) -> None",
+      "description": "Set the CFD element fluid pressure gradient (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pres_grad_x",
+      "signature": "cfdelement.set_pres_grad_x(value: float) -> None",
+      "description": "Set the x-component of the CFD element fluid pressure gradient.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pres_grad_y",
+      "signature": "cfdelement.set_pres_grad_y(value: float) -> None",
+      "description": "Set the y-component of the CFD element fluid pressure gradient.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pres_grad_z",
+      "signature": "cfdelement.set_pres_grad_z(value: float) -> None",
+      "description": "Set the z-component of the CFD element fluid pressure gradient.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pressure",
+      "signature": "cfdelement.set_pressure(value: float) -> None",
+      "description": "Set the CFD element fluid_pressure.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_vel",
+      "signature": "cfdelement.set_vel(value: vec) -> None",
+      "description": "Set the CFD element fluid velocity (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_vel_x",
+      "signature": "cfdelement.set_vel_x(value: float) -> None",
+      "description": "Set the x-component of the CFD element fluid velocity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_vel_y",
+      "signature": "cfdelement.set_vel_y(value: float) -> None",
+      "description": "Set the y-component of the CFD element fluid velocity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_vel_z",
+      "signature": "cfdelement.set_vel_z(value: float) -> None",
+      "description": "Set the z-component of the CFD element fluid velocity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_viscosity",
+      "signature": "cfdelement.set_viscosity(value: float) -> None",
+      "description": "Set the CFD element fluid viscosity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "share_a_face",
+      "signature": "cfdelement.share_a_face() -> tuple of CFD element objects",
+      "description": "Get all elements that share a face with this element.",
+      "returns": {
+        "type": "tuple of CFD element objects"
+      }
+    },
+    {
+      "name": "share_a_node",
+      "signature": "cfdelement.share_a_node() -> tuple of CFD element objects",
+      "description": "Get all elements that share a node with this element.",
+      "returns": {
+        "type": "tuple of CFD element objects"
+      }
+    },
+    {
+      "name": "share_an_edge",
+      "signature": "cfdelement.share_an_edge() -> tuple of CFD element objects",
+      "description": "Get all elements that share an edge with this element.",
+      "returns": {
+        "type": "tuple of CFD element objects"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "cfdelement.valid() -> bool",
+      "description": "Returns True if this CFD element is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "vel",
+      "signature": "cfdelement.vel() -> vec",
+      "description": "Get the CFD element fluid velocity (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "vel_x",
+      "signature": "cfdelement.vel_x() -> float",
+      "description": "Get the x-component of the CFD element fluid velocity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "vel_y",
+      "signature": "cfdelement.vel_y() -> float",
+      "description": "Get the y-component of the CFD element fluid velocity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "vel_z",
+      "signature": "cfdelement.vel_z() -> float",
+      "description": "Get the z-component of the CFD element fluid velocity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "viscosity",
+      "signature": "cfdelement.viscosity() -> float",
+      "description": "Get the CFD element fluid viscosity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "vol",
+      "signature": "cfdelement.vol() -> float",
+      "description": "Get the CFD element volume.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

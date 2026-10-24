@@ -60,7 +60,8 @@
     ],
     "prop": [
       "prop",
-      "prop_set"
+      "prop_set",
+      "set_prop"
     ],
     "slip": [
       "slip",
@@ -93,6 +94,11 @@
       "vel_y_set",
       "vel_z",
       "vel_z_set"
+    ],
+    "other": [
+      "has_prop",
+      "length",
+      "props"
     ]
   },
   "methods": [
@@ -757,6 +763,93 @@
       "returns": {
         "type": "None"
       }
+    },
+    {
+      "name": "has_prop",
+      "signature": "node.has_prop(property_name: str) -> bool",
+      "description": "Returns True if the element has the given surface property.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only.",
+        "Exposed on FLAC3D 7.0 interface nodes but not usable there: every call raises ValueError('There was a problem with the property cast.'), whatever the arguments. Use prop() / prop_set(), which work. Removed in 9.0."
+      ]
+    },
+    {
+      "name": "length",
+      "signature": "node.length() -> float",
+      "description": "(2D only) Get the effective length of the interface node.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "2D builds only.",
+        "The effective length is assigned when the model cycles: it reads 0.0 before the first cycle. Measured on a 4-unit straight interface after one cycle: node lengths [1, 0.5, 1, 1, 0.5] (end nodes get half), summing to 4.0."
+      ]
+    },
+    {
+      "name": "props",
+      "signature": "node.props() -> dict {str: any}",
+      "description": "Get a dictionary of all the surface properties of this element.",
+      "returns": {
+        "type": "dict {str: any}"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only.",
+        "Exposed on FLAC3D 7.0 interface nodes but not usable there: every call raises ValueError('There was a problem with the property cast.'), whatever the arguments. Use prop() / prop_set(), which work. Removed in 9.0."
+      ]
+    },
+    {
+      "name": "set_prop",
+      "signature": "node.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only.",
+        "Exposed on FLAC3D 7.0 interface nodes but not usable there: every call raises ValueError('There was a problem with the property cast.'), whatever the arguments. Use prop() / prop_set(), which work. Removed in 9.0."
+      ]
     }
   ]
 }

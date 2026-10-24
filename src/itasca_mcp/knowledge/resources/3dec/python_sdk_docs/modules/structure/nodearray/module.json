@@ -1,0 +1,467 @@
+{
+  "module": "itasca.structure.nodearray",
+  "description": "Array interface for structural element nodes.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.nodearray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "acc_global",
+      "signature": "itasca.structure.nodearray.acc_global() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the acceleration of structure node expressed in a global coordinate system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "acc_local",
+      "signature": "itasca.structure.nodearray.acc_local() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the acceleration of structure node expressed in a local coordinate system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "apply",
+      "signature": "itasca.structure.nodearray.apply() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the translational and rotational applied force of the structure node expressed in the global coordinate system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "apply_local",
+      "signature": "itasca.structure.nodearray.apply_local() -> array bool{node}",
+      "description": "Get whether the coordinate system in which generalizedapplied forces are expressed is a local system.",
+      "returns": {
+        "type": "array bool{node}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.nodearray.component_id() -> array int{node}",
+      "description": "Get a NumPy array of the node component id.",
+      "returns": {
+        "type": "array int{node}"
+      }
+    },
+    {
+      "name": "convergence",
+      "signature": "itasca.structure.nodearray.convergence() -> array float{node}",
+      "description": "Returns a NumPy array of the node convergence value, defined as the ratio of the currenct local force ratio (given by the \\(ratio\\) method), to the target force ratio (\\(ratio.target\\)). A value of 1 or less is therefore considered “converged”.",
+      "returns": {
+        "type": "array float{node}"
+      }
+    },
+    {
+      "name": "damp_local",
+      "signature": "itasca.structure.nodearray.damp_local() -> array float{node}",
+      "description": "Get the local damping factor of the structure nodes.",
+      "returns": {
+        "type": "array float{node}"
+      }
+    },
+    {
+      "name": "disp_global",
+      "signature": "itasca.structure.nodearray.disp_global() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the displacement of structure node expressed in a global system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "disp_local",
+      "signature": "itasca.structure.nodearray.disp_local() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the displacement of structure node expressed in a local system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.nodearray.extra(slot: int) -> array float{node} or float{node,3}",
+      "description": "Get the node extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{node} or float{node,3}"
+      }
+    },
+    {
+      "name": "fix",
+      "signature": "itasca.structure.nodearray.fix() -> Array int{node}",
+      "description": "Get velocity-fixity flag expressed in the node-local system.Return values {1, 2, 3} denotes free, fixed, or slaved to target velocity, respectively.Slaved conditions arise from rigid attachment conditions; degrees-of-freedom that are slaved cannot be fixed.",
+      "returns": {
+        "type": "Array int{node}"
+      }
+    },
+    {
+      "name": "fix_local",
+      "signature": "itasca.structure.nodearray.fix_local() -> array bool{node}",
+      "description": "Get a Numpy array of the boolean flag for the local coordinate system fixity. True for fixed node-local system, False for free node-local system.",
+      "returns": {
+        "type": "array bool{node}"
+      }
+    },
+    {
+      "name": "force_unbal_global",
+      "signature": "itasca.structure.nodearray.force_unbal_global() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the unbalanced force of structure node expressed in a global system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "force_unbal_local",
+      "signature": "itasca.structure.nodearray.force_unbal_local() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the unbalanced force of structure node expressed in a local system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "ids",
+      "signature": "itasca.structure.nodearray.ids() -> array int{node}",
+      "description": "Get a NumPy array of the node structural element id.",
+      "returns": {
+        "type": "array int{node}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.nodearray.in_group(group_name: str, slot=1) -> array bool{node}",
+      "description": "Return node group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{node}"
+      }
+    },
+    {
+      "name": "links",
+      "signature": "itasca.structure.nodearray.links() -> array of Link objets ID",
+      "description": "Get the link objects associated with nodes.",
+      "returns": {
+        "type": "array of Link objets ID"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.nodearray.local_system() -> array tens3{node}",
+      "description": "Get the local coordinate system of the structure node.",
+      "returns": {
+        "type": "array tens3{node}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.nodearray.mark() -> array bool{node}",
+      "description": "Get the mark flag. Note that the SEL logic may modify this flag during command processing, cycling, and plotting.",
+      "returns": {
+        "type": "array bool{node}"
+      }
+    },
+    {
+      "name": "mass_added",
+      "signature": "itasca.structure.nodearray.mass_added() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the extra mass in addition to the inertial mass at each degree-of-freedom in the node-local system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "mass_local",
+      "signature": "itasca.structure.nodearray.mass_local() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the mass at each degree-of-freedom in the node-local system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.nodearray.pos() -> array vec3{node}",
+      "description": "Get a NumPy array of the current position of structural element nodes.",
+      "returns": {
+        "type": "array vec3{node}"
+      }
+    },
+    {
+      "name": "pos_reference",
+      "signature": "itasca.structure.nodearray.pos_reference() -> array vec3{node}",
+      "description": "Get a NumPy array of the reference position of structural element nodes.",
+      "returns": {
+        "type": "array vec3{node}"
+      }
+    },
+    {
+      "name": "ratio",
+      "signature": "itasca.structure.nodearray.ratio() -> array float{node}",
+      "description": "Get a NumPy array of the local gridpoint mechanical convergence ratio. This is the ratio of unbalanced force to force applied to the node.",
+      "returns": {
+        "type": "array float{node}"
+      }
+    },
+    {
+      "name": "ratio_target",
+      "signature": "itasca.structure.nodearray.ratio_target() -> array float{node}",
+      "description": "Get a NumPy array of the target mechanical force ratio in the node. The default value is 1e-4. A local force ratio (see the \\(ratio\\) method) below this value is considered converged. See also the \\(convergence\\) method.",
+      "returns": {
+        "type": "array float{node}"
+      }
+    },
+    {
+      "name": "resultant",
+      "signature": "itasca.structure.nodearray.resultant() -> array floats{node,6}",
+      "description": "Get a NumPy array of stress resultants (Mx, My, Mxy, Nx, Ny, Nxy) last calculated for the elements connected to nodes. Note that the \\(Q_x\\) and \\(Q_{y1}\\) terms are not valid at nodes because they are constant over an element. Stress resultants are expressed in the node surface system; see the structure shell recover surface, structure geogrid recover surface, and structure liner recover surface commands.",
+      "returns": {
+        "type": "array floats{node,6}"
+      }
+    },
+    {
+      "name": "set_apply",
+      "signature": "itasca.structure.nodearray.set_apply(comp: int, force: array float{node}) -> None",
+      "description": "Set a component of the translational and rotational applied force of the structure node expressed in the global coordinate system. Components 0, 1, and 2 are translational and 3,4 and 5 are rotational.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "array float{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_damp_local",
+      "signature": "itasca.structure.nodearray.set_damp_local(array float{node}) -> None",
+      "description": "Set the local damping factor of the structure nodes.",
+      "parameters": [
+        {
+          "name": "array float{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.nodearray.set_extra(slot: int, data: array float{node} or float{node, 3}) -> None",
+      "description": "Set the node extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{node} or float{node",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_fix_local",
+      "signature": "itasca.structure.nodearray.set_fix_local(array bool{node}) -> None",
+      "description": "Set the boolean flag for the local coordinate system fixity. True for fixed node-local system, False for free node-local system.",
+      "parameters": [
+        {
+          "name": "array bool{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.nodearray.set_group(membership: array bool{node}, group_name: str, slot=1) -> None",
+      "description": "Set node group from an array. Where membership True set the corresponding node to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{node}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.nodearray.set_mark(array bool{node}) -> None",
+      "description": "Set the mark flag. Note that the SEL logic may modify this flag during command processing, cycling, and plotting.",
+      "parameters": [
+        {
+          "name": "array bool{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mass_added",
+      "signature": "itasca.structure.nodearray.set_mass_added(comp: int, mass: float) -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the extra mass in addition to the inertial mass at each degree-of-freedom in the node-local system.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "mass",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "set_ratio_target",
+      "signature": "itasca.structure.nodearray.set_ratio_target(ratio: array float{node}) -> None",
+      "description": "Set the target mechanical force ratio in the node. The default value is 1e-4. A local force ratio (see the \\(ratio\\) method) below this value is considered converged. See also the \\(convergence\\) method.",
+      "parameters": [
+        {
+          "name": "ratio",
+          "type": "array float{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_surface_xdir",
+      "signature": "itasca.structure.nodearray.set_surface_xdir(orientation: array vec3{node}) -> bool",
+      "description": "Set the orientation of the surface system. surface system of the node such that the x-direction is aligned with the projection of the surface vector v onto the normal plane, which is defined by the z-direction. This operation can only be performed upon nodes that have a valid surface system (to ensure that the z-direction always corresponds with the average normal direction of at least one of the shell-type SELs using the node). A return value of \\(True\\) indicates success and \\(False\\) indicates failure.",
+      "parameters": [
+        {
+          "name": "orientation",
+          "type": "array vec3{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "set_temp_increment",
+      "signature": "itasca.structure.nodearray.set_temp_increment(dtemp: array float{node}) -> None",
+      "description": "Set the the temperature increment that will be applied to the structural node in the next timestep, causing elements connected to it to see changes in stress due to thermal expansion. This value is cleared to zero after every step when thermal expansion stresses are applied.",
+      "parameters": [
+        {
+          "name": "dtemp",
+          "type": "array float{node}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "stiff_local",
+      "signature": "itasca.structure.nodearray.stiff_local() -> tuple of float",
+      "description": "Get the stiffness of structure node expressed in a local system.A length 6 tuple is returned. The translational stiffnesses are first followed by the rotational stiffnesses.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "surface_system",
+      "signature": "itasca.structure.nodearray.surface_system() -> array tens3{node}",
+      "description": "Get the surface coordinate system of the structure node.",
+      "returns": {
+        "type": "array tens3{node}"
+      }
+    },
+    {
+      "name": "surface_valid",
+      "signature": "itasca.structure.nodearray.surface_valid() -> array bool{node}",
+      "description": "Get a boolean flag for surface system validity; \\(True\\) if the surface system is valid, \\(False\\) if not. The surface system can be made valid by issuing a structure recovery command.",
+      "returns": {
+        "type": "array bool{node}"
+      }
+    },
+    {
+      "name": "temp_increment",
+      "signature": "itasca.structure.nodearray.temp_increment() -> array float{node}",
+      "description": "Get a NumPy array of the the temperature increment that will be applied to the structural node in the next timestep, causing elements connected to it to see changes in stress due to thermal expansion. This value is cleared to zero after every step when thermal expansion stresses are applied.",
+      "returns": {
+        "type": "array float{node}"
+      }
+    },
+    {
+      "name": "vel_global",
+      "signature": "itasca.structure.nodearray.vel_global() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the velocity of a structure node expressed in a global system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    },
+    {
+      "name": "vel_local",
+      "signature": "itasca.structure.nodearray.vel_local() -> array (translational: vec3, rotational: vec3){node}",
+      "description": "Get a Numpy array of the velocity of a structure node expressed in a local system.",
+      "returns": {
+        "type": "array (translational: vec3, rotational: vec3){node}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+"""Python API added from the 2026-10-24 live console sweep (reconcile_python_api_live.py).
+
+Each family was missing from the corpus although the engine exposes it; the
+notes pinned here come from state-readback probes, not from the docstrings.
+"""
+
+import json
+
+import pytest
+
+from itasca_mcp.knowledge.python_api import APILoader
+from itasca_mcp.server import mcp
+
+
+def _payload(result) -> dict:
+    return json.loads(result.content[0].text)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("software", "api"),
+    [
+        ("flac", "itasca.structure.Beam.length"),
+        ("flac", "itasca.structure.beamarray.length"),
+        ("flac", "itasca.dfn.fracture.Fracture.dip"),
+        ("flac", "itasca.data.scalar.Scalar.value"),
+        ("flac", "itasca.geometry.Set.poly_count"),
+        ("flac", "itasca.history.get"),
+        ("pfc", "itasca.ball.thermal.ThermalBall.temp"),
+        ("pfc", "itasca.wall.thermal.facet.ThermalFacet.temp"),
+        ("pfc", "itasca.ball.cfd.CFDBall.force"),
+        ("pfc", "itasca.element.cfd.CFDElement.vel"),
+        ("pfc", "itasca.ballarray.rotation"),
+        ("mpoint", "itasca.fish.get"),
+        ("mpoint", "itasca.dfn.fracture.Fracture.dip"),
+        ("3dec", "itasca.structure.beamarray.length"),
+        ("3dec", "itasca.data.vector.Vector.value"),
+    ],
+)
+async def test_live_families_are_browsable(software: str, api: str) -> None:
+    result = await mcp.call_tool("itasca_browse_python_api", {"api": api, "software": software})
+    payload = _payload(result)
+
+    assert payload["ok"] is True, payload
+
+
+def test_flac_interface_dimension_and_version_entries() -> None:
+    node = {m["name"]: m for m in APILoader.load_object("Node", software="flac")["methods"]}
+
+    assert "2D builds only." in node["length"]["notes"]
+    assert any("reads 0.0 before the first cycle" in n for n in node["length"]["notes"])
+    assert node["has_prop"]["availability"] == {"versions": ["7.0"]}
+    assert any("not usable" in n for n in node["has_prop"]["notes"])
+
+
+def test_pfc_2d_rotation_is_documented_in_degrees_and_euler_is_3d_only() -> None:
+    funcs = {f["name"]: f for f in APILoader.load_module("ballarray", software="pfc")["functions"]}
+
+    assert "2D builds only." in funcs["rotation"]["notes"]
+    assert any("Angle in degrees" in n for n in funcs["rotation"]["notes"])
+    assert any("2D builds expose rotation" in n for n in funcs["euler"]["notes"])
+
+
+@pytest.mark.parametrize("software", ["pfc", "flac", "3dec", "mpoint", "massflow"])
+def test_fish_call_function_takes_a_tuple(software: str) -> None:
+    func = APILoader.load_function("fish", "call_function", software=software)
+
+    assert func is not None
+    assert [p["name"] for p in func["parameters"]] == ["func", "args"]
+    assert any("must be passed as a tuple" in n for n in func["notes"])
+
+
+def test_97_only_modules_are_marked() -> None:
+    module = APILoader.load_module("structure.beamarray", software="3dec")
+
+    assert module["availability"] == {"versions": ["9.0"]}
+    assert any("Present from 9.7" in n for n in module["notes"])
+
+
+def test_flac_7_attach_names_and_9_renames_are_both_marked() -> None:
+    attach = {m["name"]: m for m in APILoader.load_object("Attach", software="flac")["methods"]}
+
+    assert attach["master"]["availability"] == {"versions": ["7.0"]}
+    assert attach["leader"]["availability"] == {"versions": ["9.0"]}

@@ -1,0 +1,412 @@
+{
+  "module": "itasca.structure.beamarray",
+  "description": "Array interface for beam elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.beamarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.beamarray.area() -> array float{beam}",
+      "description": "Get a Numpy array of the cross-section area of the beam elements.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.beamarray.component_id() -> array int{beam}",
+      "description": "Get a NumPy array of the ID of beam component id.",
+      "returns": {
+        "type": "array int{beam}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.beamarray.density() -> array double{beam}",
+      "description": "Get a NumPy array of the density of beam elements.",
+      "returns": {
+        "type": "array double{beam}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.beamarray.extra(slot: int) -> array float{beam} or float{beam,3}",
+      "description": "Get the beam extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{beam} or float{beam,3}"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "itasca.structure.beamarray.force() -> array float(beam,6)",
+      "description": "Get a Numpy array of the force at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "array float(beam,6)"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.beamarray.force_nodal() -> array float(beam,12)",
+      "description": "Get a Numpy array of the generalized nodal force acting at each end in the global system. The end 1 translational and rotational components are given first.",
+      "returns": {
+        "type": "array float(beam,12)"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.beamarray.id() -> array int{beam}",
+      "description": "Get a NumPy array of the ID of beam element id.",
+      "returns": {
+        "type": "array int{beam}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.beamarray.in_group(group_name: str, slot=1) -> array bool{beam}",
+      "description": "Return beam group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{beam}"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "itasca.structure.beamarray.length() -> array float{beam}",
+      "description": "Get a Numpy array of the length of the beam elements.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "load",
+      "signature": "itasca.structure.beamarray.load() -> array float{beam,3}",
+      "description": "Get a Numpy array of the uniform applied distributed load acting on the beam elements in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "array float{beam,3}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.beamarray.local_system() -> array double{beam,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of beam elements.",
+      "returns": {
+        "type": "array double{beam,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.beamarray.mark() -> array bool{beam}",
+      "description": "Get a NumPy array of the mark flag of beam elements.",
+      "returns": {
+        "type": "array bool{beam}"
+      }
+    },
+    {
+      "name": "moment",
+      "signature": "itasca.structure.beamarray.moment() -> float(beam,6)",
+      "description": "Get a Numpy array of the moment at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "float(beam,6)"
+      }
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "itasca.structure.beamarray.moment_plastic() -> array float{beam}",
+      "description": "Get a Numpy array of the plastic moment capacity in the beam.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "moment_plastic_y",
+      "signature": "itasca.structure.beamarray.moment_plastic_y() -> array float{beam}",
+      "description": "Get a Numpy array of the plastic moment capacity in Y in the beam.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "moment_plastic_z",
+      "signature": "itasca.structure.beamarray.moment_plastic_z() -> array float{beam}",
+      "description": "Get a Numpy array of the plastic moment capacity in Z in the beam.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "itasca.structure.beamarray.poisson() -> array float{beam}",
+      "description": "Get a Numpy array of the Poisson’s ratio of the beam elements.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.beamarray.pos() -> array vec3{beam}",
+      "description": "Get a NumPy array of the current position of beam elements.",
+      "returns": {
+        "type": "array vec3{beam}"
+      }
+    },
+    {
+      "name": "set_area",
+      "signature": "itasca.structure.beamarray.set_area(array float{beam}) -> None",
+      "description": "Set the cross-section area of the elements.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.beamarray.set_density(array double{beam}) -> None",
+      "description": "Set the density of beam elements.",
+      "parameters": [
+        {
+          "name": "array double{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.beamarray.set_extra(slot: int, data: array float{beam} or float{beam, 3}) -> None",
+      "description": "Set the beam extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{beam} or float{beam",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.beamarray.set_group(membership: array bool{beam}, group_name: str, slot=1) -> None",
+      "description": "Set beam group from an array. Where membership True set the corresponding beam to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{beam}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "itasca.structure.beamarray.set_load(array float{beam, 3}) -> None",
+      "description": "Set the uniform applied distributed load acting on the beam elements in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "array float{beam",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.beamarray.set_mark(array bool{beam}) -> None",
+      "description": "Set the mark flag of beam elements.",
+      "parameters": [
+        {
+          "name": "array bool{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "itasca.structure.beamarray.set_moment_plastic(array float{beam}) -> None",
+      "description": "Set the plastic moment capacity in the beam.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic_y",
+      "signature": "itasca.structure.beamarray.set_moment_plastic_y(array float{beam}) -> None",
+      "description": "Set the plastic moment capacity in Y in the beam.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic_z",
+      "signature": "itasca.structure.beamarray.set_moment_plastic_z(array float{beam}) -> None",
+      "description": "Set the plastic moment capacity in Z in the beam.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_poisson",
+      "signature": "itasca.structure.beamarray.set_poisson(array float{beam}) -> None",
+      "description": "Set the Poisson’s ratio of the beam elements.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.beamarray.set_thermal_expansion(array double{beam}) -> None",
+      "description": "Set the thermal expansion coefficient of beam elements.",
+      "parameters": [
+        {
+          "name": "array double{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.beamarray.set_young(array float{beam}) -> None",
+      "description": "Set the Youngs modulus of the beam elements.",
+      "parameters": [
+        {
+          "name": "array float{beam}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.beamarray.thermal_expansion() -> array double{beam}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of beam elements.",
+      "returns": {
+        "type": "array double{beam}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.beamarray.type() -> array string{beam}",
+      "description": "Get a NumPy array of the type name of beam elements.",
+      "returns": {
+        "type": "array string{beam}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.beamarray.volume() -> array float{beam}",
+      "description": "Get a Numpy array of the beam elements volume, equal to the cross-sectional area times the length.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "itasca.structure.beamarray.ydir() -> array float{beam,3}",
+      "description": "Get a Numpy array of the y-axis of the beam elements local system.",
+      "returns": {
+        "type": "array float{beam,3}"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.beamarray.young() -> array float{beam}",
+      "description": "Get a Numpy array of the Youngs modulus of the beam elements.",
+      "returns": {
+        "type": "array float{beam}"
+      }
+    }
+  ]
+}

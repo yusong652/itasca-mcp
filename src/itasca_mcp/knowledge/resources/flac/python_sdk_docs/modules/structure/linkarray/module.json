@@ -1,0 +1,467 @@
+{
+  "module": "itasca.structure.linkarray",
+  "description": "Array interface for structural element links.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.linkarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "attach",
+      "signature": "itasca.structure.linkarray.attach() -> tuple of int",
+      "description": "Get the attached condition used by the link in each degree-of-freedom. The return value will be an integer with one of three values: 1 = free; 2 = rigid; and 3 = deformable. If the condition is deformable, see the \\(model\\) method (and associated methods) for details.",
+      "returns": {
+        "type": "tuple of int"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.linkarray.component_id() -> int",
+      "description": "Get the link component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.linkarray.extra(slot: int) -> array float{link} or float{link,3}",
+      "description": "Get the link extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{link} or float{link,3}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.linkarray.id() -> int",
+      "description": "Get the link structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.linkarray.in_group(group_name: str, slot=1) -> array bool{link}",
+      "description": "Return link group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{link}"
+      }
+    },
+    {
+      "name": "model",
+      "signature": "itasca.structure.linkarray.model(comp: int) -> tuple of str",
+      "description": "Get the name of the 1-D force-displacement model used in each degree-of-freedom. If the link attached condition is free or rigid, then this function will return None (see the \\(attach\\) method). The currently available models are \\(linear\\), \\(normal-yield\\), \\(shear-yield\\), and \\(pile-yield\\).",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "tuple of str"
+      }
+    },
+    {
+      "name": "model_area",
+      "signature": "itasca.structure.linkarray.model_area(comp: int) -> array of float",
+      "description": "Get the area associated with all degrees-of-freedom in the force-displacement model.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_compression",
+      "signature": "itasca.structure.linkarray.model_compression(comp: int) -> array of float",
+      "description": "Get the compressive yield force associated with the force-displacement model for all degrees-of-freedom.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_disp",
+      "signature": "itasca.structure.linkarray.model_disp(comp: int) -> array of float",
+      "description": "Get the relative displacement between the node and the target used by each 1-D force-displacement model. Note that displacements are with respect to the node-local coordinate system. The relative displacement is defined as the displacement of the link target minus the the displacement of the link host node in the node local coordinate system.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_force",
+      "signature": "itasca.structure.linkarray.model_force(comp: int) -> array of float",
+      "description": "Get the current force in each 1-D force-displacement model. The force is calculated by the 1-D force-displacement model in an incremental fashion from the incremental relative displacement of the link target and the host node (target minus node). See the \\(model_disp\\) method.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_gap",
+      "signature": "itasca.structure.linkarray.model_gap(comp: int) -> array of bool",
+      "description": "Get the flag indicating whether gap calculations are active in the 1-D force-displacement model for all degrees-of-freedom. See the \\(gap_neg\\) and \\(gap_pos\\) methods.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of bool"
+      }
+    },
+    {
+      "name": "model_gap_neg",
+      "signature": "itasca.structure.linkarray.model_gap_neg(comp: int) -> array of float",
+      "description": "Get the negative (compressive) gap component of each 1-D force-displacement model for each degree-of-freedom.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_gap_pos",
+      "signature": "itasca.structure.linkarray.model_gap_pos(comp: int) -> array of float",
+      "description": "Get the positive (tensile) gap component of each 1-D force-displacement model for each degree-of-freedom. This value will only affect force calculations if the gap-use flag is on; see the \\(model_gap\\) method. The relative displacement is defined as the displacement of the link target minus the displacement of the link host node in the node local coordinate system. See the \\(model_disp\\) method.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_stiffness",
+      "signature": "itasca.structure.linkarray.model_stiffness(comp: int) -> array of float",
+      "description": "Get the stiffness used by each 1-D force-displacement model for each degree-of-freedom.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_tension",
+      "signature": "itasca.structure.linkarray.model_tension(comp: int) -> array of float",
+      "description": "Get the tensile yield force associated with the force-displacement model for each degree-of-freedom. The tensile yield force is a limit to how positive the force in the link can be. Note that tension is defined relative to the node-local coordinate system, and, thus, depending on the coordinate systems involved, the definition of compression and tension may not match those used by the element connected to the host node. See the \\(model_force\\) method.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of float"
+      }
+    },
+    {
+      "name": "model_yield",
+      "signature": "itasca.structure.linkarray.model_yield(comp: int) -> array of int",
+      "description": "Get the yield state indicator in the 1-D force displacement model each degree-of-freedom. This is returned as an integer where 0 = never yielded, 1 = yielding now, and 2 = yielded in past.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array of int"
+      }
+    },
+    {
+      "name": "node",
+      "signature": "itasca.structure.linkarray.node() -> array of node ID",
+      "description": "Get the ID of nodes hosting the structural link.",
+      "returns": {
+        "type": "array of node ID"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.linkarray.set_extra(slot: int, data: array float{link} or float{link, 3}) -> None",
+      "description": "Set the link extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{link} or float{link",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.linkarray.set_group(membership: array bool{link}, group_name: str, slot=1) -> None",
+      "description": "Set link group from an array. Where membership True set the corresponding link to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{link}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_area",
+      "signature": "itasca.structure.linkarray.set_model_area(comp: int, area: array of float) -> None",
+      "description": "Set the area associated with one component of the degrees-of-freedom. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "area",
+          "type": "array of float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_compression",
+      "signature": "itasca.structure.linkarray.set_model_compression(comp: int, force: array of float) -> None",
+      "description": "Set the compressive yield force associated with the force-displacement model for a single degree-of-freedom. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "array of float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_gap",
+      "signature": "itasca.structure.linkarray.set_model_gap(comp: int, flag: array of bool) -> None",
+      "description": "Set the flag indicating whether gap calculations are active in the 1-D force-displacement model for a single degrees-of-freedom. See the \\(gap_neg\\) and \\(gap_pos\\) methods.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "flag",
+          "type": "array of bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_stiffness",
+      "signature": "itasca.structure.linkarray.set_model_stiffness(comp: int, force: array of float) -> None",
+      "description": "Set the stiffness used by each 1-D force-displacement model for each degree-of-freedom.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "array of float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_tension",
+      "signature": "itasca.structure.linkarray.set_model_tension(comp: int, force: array of float) -> None",
+      "description": "Set the tensile yield force associated with the force-displacement model for a singe degree-of-freedom. The tensile yield force is a limit to how positive the force in the link can be. Note that tension is defined relative to the node-local coordinate system, and, thus, depending on the coordinate systems involved, the definition of compression and tension may not match those used by the element connected to the host node. See the \\(model_force\\) method. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "array of float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "itasca.structure.linkarray.set_slide(flag:array of bool) -> None",
+      "description": "Set the large-strain sliding flag for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "parameters": [
+        {
+          "name": "flag",
+          "type": "array of bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "itasca.structure.linkarray.set_slide_tol(flag: array of bool) -> None",
+      "description": "Get the large-strain sliding tolerance for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "parameters": [
+        {
+          "name": "flag",
+          "type": "array of bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "side",
+      "signature": "itasca.structure.linkarray.side() -> array of int",
+      "description": "Get the side number of the link. Unless the host node of the link is attached to an embedded liner, this will always return 1. If the host node is part of an embedded liner, it may be 2, indicating the link is being used on side 2 of the liner.",
+      "returns": {
+        "type": "array of int"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "itasca.structure.linkarray.slide() -> array of bool",
+      "description": "Get the large-strain sliding flag for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "returns": {
+        "type": "array of bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "itasca.structure.linkarray.slide_tol() -> array of bool",
+      "description": "Get the large-strain sliding tolerance for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "returns": {
+        "type": "array of bool"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.linkarray.type() -> array of str",
+      "description": "Get the name of the link target type. A node-to-node link will return an \\(itasca.structure.node.Node\\) object. A node-to-zone link will return an \\(itasca.zone.Zone\\) object.",
+      "returns": {
+        "type": "array of str"
+      }
+    },
+    {
+      "name": "used_by",
+      "signature": "itasca.structure.linkarray.used_by() -> array of str",
+      "description": "Get the name of the type of structural element with which this link is associated. This only applies to node-to-zone links, otherwise the return is a null string. The type string will be one of \\(beam\\), \\(cable\\), \\(pile\\), \\(shell\\), \\(geogrid\\), or \\(liner\\). If the attach conditions and models assigned to the link are not compatible with those elements (generally because they have been changed), then an empty string is returned.",
+      "returns": {
+        "type": "array of str"
+      }
+    }
+  ]
+}

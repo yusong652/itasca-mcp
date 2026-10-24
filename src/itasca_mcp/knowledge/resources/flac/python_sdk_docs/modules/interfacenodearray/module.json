@@ -185,6 +185,11 @@
       ],
       "returns": {
         "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
       }
     },
     {
@@ -290,6 +295,50 @@
       "returns": {
         "type": "array float{nnode, dim}"
       }
+    },
+    {
+      "name": "length",
+      "signature": "itasca.interfacenodearray.length() -> array float{ninterface, nnode}",
+      "description": "(2D only) Get the effective length of the interface node.",
+      "returns": {
+        "type": "array float{ninterface, nnode}"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "2D builds only.",
+        "The effective length is assigned when the model cycles: it reads 0.0 before the first cycle. Measured on a 4-unit straight interface after one cycle: node lengths [1, 0.5, 1, 1, 0.5] (end nodes get half), summing to 4.0."
+      ]
+    },
+    {
+      "name": "prop_scalar_set",
+      "signature": "itasca.interfacenodearray.prop_scalar_set(prop_name: str, array) -> None",
+      "description": "Set the property `prop_name` of each interface node. The input array should be shape (nnodes,).",
+      "parameters": [
+        {
+          "name": "prop_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "array",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
     }
   ]
 }

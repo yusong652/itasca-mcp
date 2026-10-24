@@ -1,0 +1,1136 @@
+{
+  "class": "Liner",
+  "description": "Liner object instance in itasca.structure.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.Liner.html",
+  "note": "Do not instantiate directly; use itasca.structure module functions.",
+  "method_groups": {
+    "area": "area, set_area",
+    "beta": "beta",
+    "component": "component_id",
+    "connectivity": "connectivity",
+    "delete": "delete",
+    "density": "density, set_density",
+    "depth": "depth_factor",
+    "element": "element_type",
+    "embedded": "embedded",
+    "extra": "extra, set_extra",
+    "force": "force, force_nodal",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "length": "length",
+    "load": "load, set_load",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "moment": "moment, moment_plastic, set_moment_plastic",
+    "nodes": "nodes",
+    "normal": "normal_dir, normal_disp, normal_state, normal_stiffness, normal_strength, normal_stress, set_normal_stiffness, set_normal_strength",
+    "poisson": "poisson, set_poisson",
+    "pos": "pos",
+    "pressure": "pressure, set_pressure",
+    "prop": "prop, prop_anis, prop_ortho, prop_type, set_prop",
+    "resultant": "resultant, resultant_valid",
+    "shear": "set_shear_cohesion, set_shear_friction, set_shear_residual, set_shear_stiffness, shear_cohesion, shear_dir, shear_disp, shear_friction, shear_residual, shear_state, shear_stiffness, shear_stress",
+    "slide": "set_slide, set_slide_tol, slide, slide_tol",
+    "stress": "stress, stress_max, stress_prin, stress_valid",
+    "thermal": "set_thermal_expansion, thermal_expansion",
+    "thickness": "set_thickness, thickness",
+    "valid": "valid",
+    "volume": "volume",
+    "ydir": "ydir",
+    "young": "set_young, young"
+  },
+  "methods": [
+    {
+      "name": "area",
+      "signature": "liner.area() -> float",
+      "description": "Get surface area of the Liner element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "beta",
+      "signature": "liner.beta() -> float",
+      "description": "Get Liner system beta angle. This is defined as the angle between the element local system x-axis and the material system x-axis. In radians measured counter-clockwise from the element local x-axis.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "component_id",
+      "signature": "liner.component_id() -> int",
+      "description": "Get the Liner component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "connectivity",
+      "signature": "liner.connectivity(component: int) -> bool",
+      "description": "Get the index of the node with component-ID id in the element. A ValueError exception is raised if no node in that element matches.",
+      "parameters": [
+        {
+          "name": "component",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "liner.delete() -> None",
+      "description": "Delete this structural element.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "liner.density() -> float",
+      "description": "Get the density of this structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "depth_factor",
+      "signature": "liner.depth_factor() -> float",
+      "description": "Get the depth factor at which stresses have been recovered. The depth equals Ft/2 where t is the Liner element thickness. F values equal to +1.0 or -1.0 correspond to the outer/inner Liner surface. The outer surface is defined by the positive z-direction of the local Liner element system. F values of 0.0 corresponds to the Liner mid-surface. The depth factor can be modified with the \\(structure Liner recover stress\\) command.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "element_type",
+      "signature": "liner.element_type() -> str",
+      "description": "Get the name of the finite-element type used by this Liner element. The possible types for Liner elements are ‘cst’, ‘csth’, ‘dkt’, ‘dkt-cst’, and ‘dkt-csth’.",
+      "returns": {
+        "type": "str"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "embedded",
+      "signature": "liner.embedded() -> bool",
+      "description": "Get the embedded flag. True denotes that the liner element is embedded.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "liner.extra(slot: int) -> any",
+      "description": "Get the Liner extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "liner.force() -> (vec3, vec3)",
+      "description": "Get the force at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "force_nodal",
+      "signature": "liner.force_nodal() -> float",
+      "description": "Get the generalized nodal force acting at each node in the global system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "liner.group([slot: str or int]) -> str",
+      "description": "Get the Liner group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "liner.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Liner. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "liner.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Liner is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "liner.id() -> int",
+      "description": "Get the Liner structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "liner.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Liner is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "liner.length() -> float",
+      "description": "Get the length of the beam element.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "load",
+      "signature": "liner.load() -> vec3",
+      "description": "Get the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "vec3"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "local_system",
+      "signature": "liner.local_system() -> Tens3",
+      "description": "Get local coordinate system of this element as a 3x3 tensor.",
+      "returns": {
+        "type": "Tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "liner.mark() -> bool",
+      "description": "Get the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "moment",
+      "signature": "liner.moment() -> (vec3, vec3)",
+      "description": "Get the moment at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "liner.moment_plastic() -> float",
+      "description": "Get the plastic moment capacity in the beam.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "nodes",
+      "signature": "liner.nodes() -> tuple of Structural element node objects",
+      "description": "Get a tuple containing the structural element nodes attached to this elemment.",
+      "returns": {
+        "type": "tuple of Structural element node objects"
+      }
+    },
+    {
+      "name": "normal_dir",
+      "signature": "liner.normal_dir() -> (vec3, vec3, vec3)",
+      "description": "Get the direction (unit vector in global system) in which the liner element is being loaded by the normal coupling spring at each node.",
+      "returns": {
+        "type": "(vec3, vec3, vec3)"
+      }
+    },
+    {
+      "name": "normal_disp",
+      "signature": "liner.normal_disp() -> None",
+      "description": "Get the displacement magnitude in the normal coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(normal_dir\\) method.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "normal_state",
+      "signature": "liner.normal_state() -> (int, int, int, int)",
+      "description": "Get the yield state of the coupling spring at each side of each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively. Side 1 and 2 of node 1 are given first.",
+      "returns": {
+        "type": "(int, int, int, int)"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "normal_stiffness",
+      "signature": "liner.normal_stiffness() -> (float, float)",
+      "description": "Get the normal coupling spring stiffness of the liner element for each side of the liner.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "normal_strength",
+      "signature": "liner.normal_strength() -> (float, float)",
+      "description": "Get the normal coupling spring tensile strength for each side of the liner element.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "normal_stress",
+      "signature": "liner.normal_stress() -> (float, float, float)",
+      "description": "Get the stress magnitude in the normal coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(normal_dir\\) method.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "liner.poisson() -> float",
+      "description": "Get the Poisson’s ratio of the element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "liner.pos() -> vec3",
+      "description": "Get the position vector of the element, defined as the element centroid.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "liner.pressure() -> float",
+      "description": "Get the uniform pressure acting on the Liner. A positive value acts in the z-direction of the element local system.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop",
+      "signature": "liner.prop(property_name: str) -> any",
+      "description": "Get a property value of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "prop_anis",
+      "signature": "liner.prop_anis() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the anisotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have anisotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop_ortho",
+      "signature": "liner.prop_ortho() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the orthotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have orthotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop_type",
+      "signature": "liner.prop_type() -> str",
+      "description": "Get the material property type. Possible return values are ‘isotropic’, ‘orthotripc’, and ‘anisotropic’.",
+      "returns": {
+        "type": "str"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "resultant",
+      "signature": "liner.resultant(location: int) -> length 8 tuple of float",
+      "description": "Get stress resultants last calculated for the element at the index \\(location\\). A \\(location\\) value of 0 gives the resultant at the element centroid; \\(location\\) values 1, 2 and 3 give the resultant at the nodes. The components in the return value are: Mx, My, Mxy, Nx, Ny, Nxy, Qx and Qy. Note that stress resultants must be calculated with the \\(structure Liner recover\\) command. See also the \\(resultant_valid\\) method.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "length 8 tuple of float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "resultant_valid",
+      "signature": "liner.resultant_valid() -> bool",
+      "description": "Get stress resultant validity flag. True indicates that the stress resultant values are valid. False indicates that resultants have not been calculated or that there has been a change since they were last calculated that would invalidate the results.",
+      "returns": {
+        "type": "bool"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_area",
+      "signature": "liner.set_area(float) -> None",
+      "description": "Set the cross-section area of the element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_density",
+      "signature": "liner.set_density(float) -> None",
+      "description": "Set the density of this structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "liner.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Liner extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "liner.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Liner group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "liner.set_load(vec3) -> None",
+      "description": "Set the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_mark",
+      "signature": "liner.set_mark(bool) -> None",
+      "description": "Set the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "liner.set_moment_plastic(float) -> None",
+      "description": "Set the plastic moment capacity in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_stiffness",
+      "signature": "liner.set_normal_stiffness(float, float) -> None",
+      "description": "Set the normal coupling spring stiffness of the liner element for each side of the liner.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        },
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_strength",
+      "signature": "liner.set_normal_strength(float) -> None",
+      "description": "Set the normal coupling spring tensile strength for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_poisson",
+      "signature": "liner.set_poisson(float) -> None",
+      "description": "Set the Poisson's ratio of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_pressure",
+      "signature": "liner.set_pressure(float) -> None",
+      "description": "Set the uniform pressure acting on the Liner. A positive value acts in the z-direction of the element local system.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_prop",
+      "signature": "liner.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this elmenent.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "liner.set_shear_cohesion(float, float) -> None",
+      "description": "Set the shear coupling spring cohesion for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        },
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "liner.set_shear_friction(float, float) -> None",
+      "description": "Set the shear coupling spring friction angle for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        },
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_residual",
+      "signature": "liner.set_shear_residual(float, float) -> None",
+      "description": "Set the shear coupling spring residual cohesion for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        },
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "liner.set_shear_stiffness(float, float) -> None",
+      "description": "Set the shear coupling spring stiffness for each side of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        },
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_slide",
+      "signature": "liner.set_slide(bool) -> None",
+      "description": "Set the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "liner.set_slide_tol(float) -> None",
+      "description": "Set the (shear) coupling spring slide tolerance of the liner element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "liner.set_thermal_expansion(float) -> None",
+      "description": "Set the thermal expansion coefficient for the structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thickness",
+      "signature": "liner.set_thickness(float) -> None",
+      "description": "Set the element thickness.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_young",
+      "signature": "liner.set_young(float) -> None",
+      "description": "Set the Youngs modulus of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "liner.shear_cohesion() -> (float, float)",
+      "description": "Get the shear coupling spring cohesion for each side of the liner element.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_dir",
+      "signature": "liner.shear_dir() -> (vec3, vec3, vec3)",
+      "description": "Get the direction (unit vector in global system) in which the liner element is being loaded by the shear coupling spring at each node.",
+      "returns": {
+        "type": "(vec3, vec3, vec3)"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "liner.shear_disp() -> (float, float, float)",
+      "description": "Get the displacement magnitude in the shear coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by \\(shear_dir\\) method.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "liner.shear_friction() -> (float, float)",
+      "description": "Get the shear coupling spring friction angle for each side of the liner element.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_residual",
+      "signature": "liner.shear_residual() -> (float, float)",
+      "description": "Get the shear coupling spring residual cohesion for each side of the liner element.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_state",
+      "signature": "liner.shear_state() -> (int, int, int, int, int, int)",
+      "description": "Get the yield state of the coupling spring at each side of each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively. Side 1 and 2 of node 1 are given first.",
+      "returns": {
+        "type": "(int, int, int, int, int, int)"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "liner.shear_stiffness() -> (float, float)",
+      "description": "Get the shear coupling spring stiffness for each side of the liner element.",
+      "returns": {
+        "type": "(float, float)"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "shear_stress",
+      "signature": "liner.shear_stress() -> (float, float, float)",
+      "description": "Get the stress magnitude in the coupling spring at each node. The coupling spring lies in the tangent plane of the liner surface. The direction in which force is acting is given by the \\(shear_dir\\) method.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "liner.slide() -> bool",
+      "description": "Get the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "liner.slide_tol() -> float",
+      "description": "Get the (shear) coupling spring slide tolerance of the liner element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "liner.stress(location: int) -> stens3",
+      "description": "Get the Liner stresses at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Stresses are expressed in the global system. Note that compressive stresses are negative.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "stens3"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "stress_max",
+      "signature": "liner.stress_max() -> float",
+      "description": "Get the maximum stress of the element. This is the maximum principal stress of the fiber stress at depth +1 or -1, which is the combination of membrane and bending resultants.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "stress_prin",
+      "signature": "liner.stress_prin(location: int) -> vec3",
+      "description": "Get the resolved principal stress at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Returns a vector encoded as (minimum, intermediate, maximum). Note that compressive stresses are negative in FLAC3D.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec3"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "stress_valid",
+      "signature": "liner.stress_valid() -> bool",
+      "description": "Get the stress validity flag for the element. True indicates that the stresses last calculated at the current depth factor are valid. Galse indicates that stresses have not been calculated, or that there has been a change that invalidates the last stresses calculated.",
+      "returns": {
+        "type": "bool"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "liner.thermal_expansion() -> float",
+      "description": "Get the thermal expansion coefficient for the structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "thickness",
+      "signature": "liner.thickness() -> float",
+      "description": "Get the element thickness.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "valid",
+      "signature": "liner.valid() -> bool",
+      "description": "Returns True if this Liner is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "liner.volume() -> float",
+      "description": "Get the element volume, or surface area times thickness.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "liner.ydir() -> vec3",
+      "description": "Get the y-axis of the beam element local system.",
+      "returns": {
+        "type": "vec3"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "young",
+      "signature": "liner.young() -> float",
+      "description": "Get the Youngs modulus of the element. Modifying the value during cycling may be a danger.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}
