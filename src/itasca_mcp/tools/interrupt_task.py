@@ -17,7 +17,17 @@ def register(mcp: FastMCP) -> None:
     @mcp.tool()
     @with_context
     async def itasca_interrupt_task(task_id: TaskId) -> dict[str, Any]:
-        """Request graceful interruption of a running Itasca task."""
+        """Request interruption of a pending or running Itasca task.
+
+        Returns as soon as the request is accepted; it does not wait for
+        the task to stop. Confirm the stop and read the output produced
+        so far with itasca_check_task_status. Only the script stops; the
+        engine state is preserved, so you can inspect it with
+        itasca_execute_code or continue from it with a new
+        itasca_execute_task. Tasks already completed, failed or
+        interrupted return an error. If the task_id is unknown, find it
+        with itasca_list_tasks.
+        """
         try:
             client = await get_bridge_client()
             response = await client.interrupt_task(task_id)

@@ -182,7 +182,7 @@ SearchLimit = Annotated[
 TaskId = Annotated[
     str,
     AfterValidator(validate_non_empty_string),
-    Field(..., description="Task ID returned by itasca_execute_task"),
+    Field(..., description="Task ID returned by itasca_execute_task or listed by itasca_list_tasks"),
 ]
 
 ScriptPath = Annotated[
