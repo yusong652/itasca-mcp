@@ -45,6 +45,27 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.6] - 2026-10-24
+
+### Changed
+
+- **`itasca_list_tasks` and `itasca_interrupt_task` descriptions now state
+  their contract.** `itasca_list_tasks` says the list is newest first and
+  read-only, names the per-task fields (`task_id`, `status`, `description`,
+  `entry_script`, `start_time`, `end_time`, `elapsed_time`), notes that task
+  history is persisted in the engine working directory and survives GUI
+  restarts, and points to `itasca_check_task_status` for output and
+  `itasca_execute_task` for submission. `itasca_interrupt_task` says it
+  returns before the task stops, that the engine state is preserved so the
+  model can be inspected with `itasca_execute_code` or continued with a new
+  task, that terminal tasks return an error, and that an unknown `task_id`
+  can be found with `itasca_list_tasks`. The `task_id` parameter description
+  now mentions both sources.
+- **`itasca_list_tasks` response is slimmer**: `has_more` and
+  `displayed_count` are gone (both follow from `total_count`, the number of
+  returned tasks, and `skip_newest`), as is `source`, which the bridge never
+  populated. `total_count` and `tasks` are unchanged.
+
 ## [0.10.5] - 2026-10-23
 
 ### Changed
