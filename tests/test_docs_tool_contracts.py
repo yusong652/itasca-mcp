@@ -227,10 +227,24 @@ def test_every_searchable_python_api_path_is_browsable(software: str) -> None:
     from itasca_mcp.knowledge.python_api import APILoader
     from itasca_mcp.tools.browse_python_api import _parse_api_path
 
-    quick_ref = APILoader.load_index(software=software)["quick_ref"]
-    unresolved = [path for path in quick_ref if _parse_api_path(path, software)["type"] == "error"]
+    # Search results come from both the index and the keyword files.
+    paths = set(APILoader.load_index(software=software)["quick_ref"])
+    paths.update(p for apis in APILoader.load_all_keywords(software=software).values() for p in apis)
+    unresolved = sorted(path for path in paths if _parse_api_path(path, software)["type"] == "error")
 
     assert unresolved == []
+
+
+def test_pfc_facet_and_pebble_paths_match_live_modules() -> None:
+    # Live PFC has itasca.wall.facet.Facet / itasca.clump.pebble.Pebble;
+    # itasca.wall.Facet and itasca.clump.Pebble raise AttributeError.
+    from itasca_mcp.knowledge.python_api import APILoader
+
+    quick_ref = APILoader.load_index(software="pfc")["quick_ref"]
+
+    assert "itasca.wall.facet.Facet.pos" in quick_ref
+    assert "itasca.clump.pebble.Pebble.pos" in quick_ref
+    assert not any(p.startswith(("itasca.wall.Facet.", "itasca.clump.Pebble.")) for p in quick_ref)
 
 
 def test_corpus_does_not_reference_nonexistent_fish_get() -> None:

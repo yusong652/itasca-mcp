@@ -7,7 +7,6 @@ from pydantic import Field
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.python_api import APILoader
-from itasca_mcp.knowledge.python_api.types.mappings import CLASS_TO_MODULE
 from itasca_mcp.utils import SoftwareParam, normalize_software_value
 
 
@@ -195,10 +194,6 @@ def _resolve_object(module_path: str, object_name: str, objects: dict[str, Any])
             continue
         if object_name in (key.rsplit(".", 1)[-1], home[1]):
             return key
-
-    # Legacy paths still emitted by search results (e.g. itasca.wall.Facet).
-    if object_name in objects and CLASS_TO_MODULE.get(object_name) == module_key:
-        return object_name
 
     # Concrete contact types (BallBallContact, ...) live in the itasca root namespace.
     if module_key == "itasca" and _is_documented_object_type(object_name, objects):
