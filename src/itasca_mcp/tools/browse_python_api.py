@@ -7,6 +7,7 @@ from pydantic import Field
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.python_api import APILoader
+from itasca_mcp.knowledge.python_api.types.mappings import CLASS_TO_MODULE
 from itasca_mcp.utils import SoftwareParam, normalize_software_value
 
 
@@ -107,24 +108,13 @@ def _parse_api_path(api: str, software: str) -> dict[str, Any]:
         module_path = ".".join(module_parts)
         object_name = parts[object_index]
 
-        # Disambiguate classes whose bare name collides across sub-modules
-        # (e.g. itasca.block.zone.Zone vs itasca.flowplane.zone.Zone). When a
-        # module-qualified key exists in the index it wins over the bare name;
-        # otherwise behaviour is unchanged (engines without collisions never
-        # carry qualified keys, so this always falls back to the bare lookup).
-        qualified = f"{module_path}.{object_name}" if module_path else object_name
-        if qualified in objects:
-            actual_object_name = qualified
-        elif object_name in objects:
-            actual_object_name = object_name
-        else:
-            if not _is_documented_object_type(object_name, objects):
-                return {
-                    "type": "error",
-                    "error": f"Object '{object_name}' not found",
-                    "fallback_path": module_path,
-                }
-            actual_object_name = object_name
+        actual_object_name = _resolve_object(module_path, object_name, objects)
+        if actual_object_name is None:
+            return {
+                "type": "error",
+                "error": f"Object '{object_name}' not found in {module_path}",
+                "fallback_path": _nearest_module(module_parts, modules),
+            }
 
         if len(parts) == object_index + 1:
             return {
@@ -164,8 +154,57 @@ def _parse_api_path(api: str, software: str) -> dict[str, Any]:
     return {
         "type": "error",
         "error": f"Module path not found: {api}",
-        "fallback_path": ".".join(parts[:-1]) if len(parts) > 1 else "",
+        "fallback_path": _nearest_module(parts[:-1], modules),
     }
+
+
+def _nearest_module(parts: list[str], modules: dict[str, Any]) -> str:
+    """Longest prefix of `parts` that is a documented module (never an unknown path)."""
+    for length in range(len(parts), 1, -1):
+        candidate = ".".join(parts[:length])
+        if _path_to_index_key(candidate) in modules:
+            return candidate
+    return "itasca"
+
+
+def _object_home(object_info: dict[str, Any]) -> tuple[str, str] | None:
+    """(module index key, class name) an object's doc file lives under.
+
+    ``pfc/python_sdk_docs/modules/wall/facet/Facet.json`` -> ``("wall.facet", "Facet")``.
+    """
+    file_path = object_info.get("file") or ""
+    _, sep, rel = file_path.partition("/modules/")
+    if not sep:
+        return None
+    module_dir, _, file_name = rel.rpartition("/")
+    return module_dir.replace("/", "."), file_name.removesuffix(".json")
+
+
+def _resolve_object(module_path: str, object_name: str, objects: dict[str, Any]) -> str | None:
+    """Index key of the object documented at ``module_path.object_name``, or None.
+
+    The module path must match where the object is documented: a bare class name
+    alone is ambiguous across modules (FLAC interface Node vs structure Node,
+    clump Template vs rblock Template), and resolving it anyway returns another
+    module's documentation for an undocumented class.
+    """
+    module_key = _path_to_index_key(module_path)
+    for key, info in objects.items():
+        home = _object_home(info)
+        if home is None or home[0] != module_key:
+            continue
+        if object_name in (key.rsplit(".", 1)[-1], home[1]):
+            return key
+
+    # Legacy paths still emitted by search results (e.g. itasca.wall.Facet).
+    if object_name in objects and CLASS_TO_MODULE.get(object_name) == module_key:
+        return object_name
+
+    # Concrete contact types (BallBallContact, ...) live in the itasca root namespace.
+    if module_key == "itasca" and _is_documented_object_type(object_name, objects):
+        return object_name
+
+    return None
 
 
 def _path_to_index_key(full_path: str) -> str:
