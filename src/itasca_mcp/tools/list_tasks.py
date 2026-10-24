@@ -25,7 +25,20 @@ def register(mcp: FastMCP) -> None:
         skip_newest: SkipNewestTasks = 0,
         limit: TaskListLimit = 32,
     ) -> dict[str, Any]:
-        """List tracked Itasca tasks with pagination."""
+        """List tasks tracked by the bridge, newest first.
+
+        Read-only. Each entry carries task_id, status (pending / running /
+        completed / failed / interrupted), description, entry_script,
+        start_time, end_time and elapsed_time; total_count gives the size
+        of the full history for paging via skip_newest + limit.
+
+        Task history is persisted in the engine working directory and
+        survives GUI restarts. Use this to recover a task_id from an
+        earlier session, to see what is running or recently finished, or
+        as a cheap bridge-connectivity check. For a task's output and
+        result use itasca_check_task_status; to submit a script use
+        itasca_execute_task.
+        """
         try:
             client = await get_bridge_client()
             response = await client.list_tasks(
@@ -46,8 +59,6 @@ def register(mcp: FastMCP) -> None:
         tasks = response.get("data") or []
         pagination = response.get("pagination") or {}
         total_count = pagination.get("total_count", len(tasks))
-        displayed_count = pagination.get("displayed_count", len(tasks))
-        has_more = pagination.get("has_more", False)
 
         normalized_tasks: list[dict[str, Any]] = []
 
@@ -55,7 +66,6 @@ def register(mcp: FastMCP) -> None:
             normalized_task = {
                 "task_id": task.get("task_id"),
                 "status": task.get("status", "unknown"),
-                "source": task.get("source", "agent"),
                 "start_time": format_unix_timestamp(task.get("start_time")),
                 "end_time": format_unix_timestamp(task.get("end_time")),
                 "elapsed_time": format_elapsed_seconds(task.get("elapsed_time")),
@@ -67,8 +77,6 @@ def register(mcp: FastMCP) -> None:
         return build_ok(
             {
                 "total_count": total_count,
-                "displayed_count": displayed_count,
-                "has_more": has_more,
                 "tasks": normalized_tasks,
             }
         )

@@ -78,7 +78,6 @@ def _build_response(msg_type, req):
             {
                 "task_id": tid,
                 "status": t["status"],
-                "source": "agent",
                 "elapsed_time": "5.0s",
                 "entry_script": t["script_path"],
                 "description": t["description"],
@@ -374,7 +373,6 @@ async def test_list_tasks_with_tasks(mock_bridge, tmp_path):
         assert "entry_script" in task
         assert "start_time" in task
         assert "end_time" in task
-        assert "has_more" in data
 
 
 # ── itasca_execute_code ──────────────────────────────────────
