@@ -1,0 +1,97 @@
+{
+  "module": "itasca.fish",
+  "description": "Itasca FISH module.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.fish.html",
+  "functions": [
+    {
+      "name": "call_function",
+      "signature": "itasca.fish.call_function(func: str, args: tuple = ()) -> Any",
+      "description": "Call the FISH function func and return its result.",
+      "parameters": [
+        {
+          "name": "func",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "args",
+          "type": "tuple",
+          "required": false,
+          "default": "()"
+        }
+      ],
+      "returns": {
+        "type": "Any"
+      },
+      "notes": [
+        "Arguments must be passed as a tuple: call_function('twice', (4,)) returns 8, while call_function('twice', 4) raises ValueError('FISH function arguments must be given as a tuple.'). Measured on FLAC3D 9.7 (probe_families.py, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "get",
+      "signature": "itasca.fish.get(var: string) -> any",
+      "description": "Return value of the FISH variable var.",
+      "parameters": [
+        {
+          "name": "var",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "has",
+      "signature": "itasca.fish.has(var: string) -> Boolean",
+      "description": "Return True if the FISH variable var is defined, False otherwise.",
+      "parameters": [
+        {
+          "name": "var",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean"
+      }
+    },
+    {
+      "name": "is_function",
+      "signature": "itasca.fish.is_function(var: string) -> Boolean",
+      "description": "Return True if the FISH variable var is defined and is a function, False otherwise.",
+      "parameters": [
+        {
+          "name": "var",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean"
+      }
+    },
+    {
+      "name": "set",
+      "signature": "itasca.fish.set(var: string, value: any) -> None",
+      "description": "Set the FISH variable var to value. If no FISH variable with name var exists, then it is created.",
+      "parameters": [
+        {
+          "name": "var",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    }
+  ]
+}

@@ -1,0 +1,659 @@
+{
+  "class": "Cable",
+  "description": "Cable object instance in itasca.structure.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.Cable.html",
+  "note": "Do not instantiate directly; use itasca.structure module functions.",
+  "method_groups": {
+    "area": "area, set_area",
+    "component": "component_id",
+    "connectivity": "connectivity",
+    "delete": "delete",
+    "density": "density, set_density",
+    "extra": "extra, set_extra",
+    "force": "force_axial, force_nodal",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "grout": "grout_cohesion, grout_confining, grout_dir, grout_disp, grout_friction, grout_perimeter, grout_slip, grout_stiffness, grout_stress, set_grout_cohesion, set_grout_friction, set_grout_perimeter, set_grout_stiffness",
+    "id": "id",
+    "in": "in_group",
+    "length": "length",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "nodes": "nodes",
+    "pos": "pos",
+    "prop": "prop, set_prop",
+    "slide": "set_slide, set_slide_tol, slide, slide_tol",
+    "state": "state_compression, state_tension",
+    "stress": "stress_axial",
+    "thermal": "set_thermal_expansion, thermal_expansion",
+    "valid": "valid",
+    "volume": "volume",
+    "yield": "set_yield_compression, set_yield_tension, yield_compression, yield_tension",
+    "young": "set_young, young"
+  },
+  "methods": [
+    {
+      "name": "area",
+      "signature": "cable.area() -> float",
+      "description": "Get the cross-section area of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "cable.component_id() -> int",
+      "description": "Get the Cable component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "connectivity",
+      "signature": "cable.connectivity(component: int) -> bool",
+      "description": "Get the index of the node with component-ID id in the element. A ValueError exception is raised if no node in that element matches.",
+      "parameters": [
+        {
+          "name": "component",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "cable.delete() -> None",
+      "description": "Delete this structural element.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "cable.density() -> float",
+      "description": "Get the density of this structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "cable.extra(slot: int) -> any",
+      "description": "Get the Cable extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force_axial",
+      "signature": "cable.force_axial() -> float",
+      "description": "Get the average axial force of the element (positive: tension; negative: compression).",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "cable.force_nodal() -> float",
+      "description": "Get the generalized nodal force acting at each node in the global system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "cable.group([slot: str or int]) -> str",
+      "description": "Get the Cable group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "cable.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Cable. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "cable.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Cable is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "grout_cohesion",
+      "signature": "cable.grout_cohesion() -> float",
+      "description": "Get the grout cohesion.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "grout_confining",
+      "signature": "cable.grout_confining() -> (float, float)",
+      "description": "Get the confining stress acting on the grout at each end. Negative value indicates compression. The stress acts in a plane perpendicular to the cable axis; effective confining stress is the average of the principal values in this plane.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "grout_dir",
+      "signature": "cable.grout_dir() -> (vec3, vec3)",
+      "description": "Get the direction vector in which cable is being loaded by the coupling spring for each end.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "grout_disp",
+      "signature": "cable.grout_disp() -> (vec3, vec3)",
+      "description": "Get displacement in grout (shear coupling spring) at each end ; positive/negative with respect to the average axial direction of cable.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "grout_friction",
+      "signature": "cable.grout_friction() -> float",
+      "description": "Get the grout internal friction angle.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "grout_perimeter",
+      "signature": "cable.grout_perimeter() -> float",
+      "description": "Get the grout exposed perimeter.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "grout_slip",
+      "signature": "cable.grout_slip() -> (int, int)",
+      "description": "Get the slip state of grout (shear coupling spring) at each end. Return value {0, 1, 2} denotes never slipped, now slipping, or slipped in the past, respectively.",
+      "returns": {
+        "type": "(int, int)"
+      }
+    },
+    {
+      "name": "grout_stiffness",
+      "signature": "cable.grout_stiffness() -> float",
+      "description": "Get the grout stiffness.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "grout_stress",
+      "signature": "cable.grout_stress() -> (float, float)",
+      "description": "Get stress in grout (shear coupling spring) at each end; positive/negative with respect to average axial direction of cable.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "cable.id() -> int",
+      "description": "Get the Cable structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "cable.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Cable is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "cable.length() -> float",
+      "description": "Get the length of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "cable.local_system() -> Tens3",
+      "description": "Get local coordinate system of this element as a 3x3 tensor.",
+      "returns": {
+        "type": "Tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "cable.mark() -> bool",
+      "description": "Get the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "nodes",
+      "signature": "cable.nodes() -> tuple of Structural element node objects",
+      "description": "Get a tuple containing the structural element nodes attached to this elemment.",
+      "returns": {
+        "type": "tuple of Structural element node objects"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "cable.pos() -> vec3",
+      "description": "Get the position vector of the element, defined as the element centroid.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "cable.prop(property_name: str) -> any",
+      "description": "Get a property value of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_area",
+      "signature": "cable.set_area(float) -> None",
+      "description": "Set the cross-section area of the cable element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "cable.set_density(float) -> None",
+      "description": "Set the density of this structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "cable.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Cable extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "cable.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Cable group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_cohesion",
+      "signature": "cable.set_grout_cohesion(float) -> None",
+      "description": "Set the grout cohesion.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_friction",
+      "signature": "cable.set_grout_friction(float) -> None",
+      "description": "Set the grout internal friction angle.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_perimeter",
+      "signature": "cable.set_grout_perimeter(perimeter: float) -> None",
+      "description": "Set the grout exposed perimeter.",
+      "parameters": [
+        {
+          "name": "perimeter",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_stiffness",
+      "signature": "cable.set_grout_stiffness(float) -> None",
+      "description": "Set the grout stiffness.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "cable.set_mark(bool) -> None",
+      "description": "Set the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "cable.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this elmenent.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_slide",
+      "signature": "cable.set_slide(bool) -> None",
+      "description": "Set the boolean flag of the large-strain sliding. If True, slide is on; if False, slide is off.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "cable.set_slide_tol(bool) -> None",
+      "description": "Set the large-strain sliding tolerance of the cable element.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "cable.set_thermal_expansion(float) -> None",
+      "description": "Set the thermal expansion coefficient for the structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_yield_compression",
+      "signature": "cable.set_yield_compression(float) -> None",
+      "description": "Set the compression yield strength of the cable element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_yield_tension",
+      "signature": "cable.set_yield_tension(float) -> None",
+      "description": "Set the tension yield strength of the cable element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "cable.set_young(float) -> None",
+      "description": "Set the Youngs modulus of the cable element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "cable.slide() -> bool",
+      "description": "Get the boolean flag of the large-strain sliding. If True, slide is on; if False, slide is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "cable.slide_tol() -> float",
+      "description": "Get the large-strain sliding tolerance of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "state_compression",
+      "signature": "cable.state_compression() -> int",
+      "description": "Get the compression yield state of the cable element. The return value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "state_tension",
+      "signature": "cable.state_tension() -> int",
+      "description": "Get the tension yield state of cable element. The return value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "stress_axial",
+      "signature": "cable.stress_axial() -> float",
+      "description": "Get the average axial stress of the cable element (positive: tension; negative: compression.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "cable.thermal_expansion() -> float",
+      "description": "Get the thermal expansion coefficient for the structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "cable.valid() -> bool",
+      "description": "Returns True if this Cable is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "cable.volume() -> float",
+      "description": "Get the cable element volume, or the cross-sectional area times the length.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "yield_compression",
+      "signature": "cable.yield_compression() -> float",
+      "description": "Get the compression yield strength of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "yield_tension",
+      "signature": "cable.yield_tension() -> float",
+      "description": "Get the tension yield strength of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "cable.young() -> float",
+      "description": "Get the Youngs modulus of the cable element.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

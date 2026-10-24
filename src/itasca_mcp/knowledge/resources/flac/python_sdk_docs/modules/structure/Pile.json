@@ -1,0 +1,1052 @@
+{
+  "class": "Pile",
+  "description": "Pile object instance in itasca.structure.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.Pile.html",
+  "note": "Do not instantiate directly; use itasca.structure module functions.",
+  "method_groups": {
+    "area": "area, set_area",
+    "axial": "axial_yield, set_axial_yield",
+    "component": "component_id",
+    "connectivity": "connectivity",
+    "delete": "delete",
+    "density": "density, set_density",
+    "extra": "extra, set_extra",
+    "force": "force, force_nodal",
+    "gap": "gap",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "length": "length",
+    "load": "load, set_load",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "moi": "moi, set_moi",
+    "moment": "moment, moment_plastic, moment_plastic_y, moment_plastic_z, set_moment_plastic, set_moment_plastic_y, set_moment_plastic_z",
+    "nodes": "nodes",
+    "normal": "normal_cohesion, normal_dir, normal_disp, normal_friction, normal_gap, normal_state, normal_stiffness, normal_stress, set_normal_cohesion, set_normal_friction, set_normal_gap, set_normal_stiffness",
+    "perimeter": "perimeter, set_perimeter",
+    "poisson": "poisson, set_poisson",
+    "pos": "pos",
+    "prop": "prop, set_prop",
+    "rockbolt": "rockbolt, set_rockbolt",
+    "shear": "set_shear_cohesion, set_shear_flag, set_shear_friction, set_shear_stiffness, shear_cohesion, shear_dir, shear_disp, shear_flag, shear_friction, shear_state, shear_stiffness, shear_stress",
+    "slide": "set_slide, set_slide_tol, slide, slide_tol",
+    "strain": "set_strain_failure, strain_failure",
+    "stress": "stress_confining",
+    "table": "set_table_cohesion, set_table_factor, set_table_friction, table_cohesion, table_factor, table_friction",
+    "thermal": "set_thermal_expansion, thermal_expansion",
+    "valid": "valid",
+    "volume": "volume",
+    "ydir": "ydir",
+    "young": "set_young, young"
+  },
+  "methods": [
+    {
+      "name": "area",
+      "signature": "pile.area() -> float",
+      "description": "Get the cross-section area of the element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "axial_yield",
+      "signature": "pile.axial_yield() -> float",
+      "description": "Get the axial tensile yield strength (force units) of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "pile.component_id() -> int",
+      "description": "Get the Pile component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "connectivity",
+      "signature": "pile.connectivity(component: int) -> bool",
+      "description": "Get the index of the node with component-ID id in the element. A ValueError exception is raised if no node in that element matches.",
+      "parameters": [
+        {
+          "name": "component",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "pile.delete() -> None",
+      "description": "Delete this structural element.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "pile.density() -> float",
+      "description": "Get the density of this structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "pile.extra(slot: int) -> any",
+      "description": "Get the Pile extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force",
+      "signature": "pile.force() -> (vec3, vec3)",
+      "description": "Get the force at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "pile.force_nodal() -> float",
+      "description": "Get the generalized nodal force acting at each node in the global system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "gap",
+      "signature": "pile.gap() -> ((float, float, float, float), (float, float, float, float))",
+      "description": "Get the gap components in normal spring at each end of the pile element. The gap forms a rectangular shape in the pile cross-sectional plane, which is defined by the local yz-axes of the pile element node. The gap consists of four values denoting gap size in the positive and negative y- and z-directions. The components are the positive y-direction, negative y-direction, positive z-direction, and negative z-direction, respectively. The gap is always being tracked, but only affects behavior if the normal coupling spring gap-use flag function. The gap values for end 1 are given first.",
+      "returns": {
+        "type": "((float, float, float, float), (float, float, float, float))"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "pile.group([slot: str or int]) -> str",
+      "description": "Get the Pile group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "pile.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Pile. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "pile.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Pile is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "pile.id() -> int",
+      "description": "Get the Pile structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "pile.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Pile is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "pile.length() -> float",
+      "description": "Get the length of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "load",
+      "signature": "pile.load() -> vec3",
+      "description": "Get the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component of the return value will always be 0.0.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "pile.local_system() -> Tens3",
+      "description": "Get local coordinate system of this element as a 3x3 tensor.",
+      "returns": {
+        "type": "Tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "pile.mark() -> bool",
+      "description": "Get the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "moi",
+      "signature": "pile.moi() -> vec3",
+      "description": "Get the moment of inertia of the pile. This is defined as the second moment of inertia with respect to the x-, y-, and z-axes.",
+      "returns": {
+        "type": "vec3"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "moment",
+      "signature": "pile.moment() -> (vec3, vec3)",
+      "description": "Get the moment at each end of the beam using the force-moment sign convention.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "moment_plastic",
+      "signature": "pile.moment_plastic() -> float",
+      "description": "Get the plastic moment capacity in the beam.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "moment_plastic_y",
+      "signature": "pile.moment_plastic_y() -> float",
+      "description": "Get the plastic moment capacity in Y in the beam.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "moment_plastic_z",
+      "signature": "pile.moment_plastic_z() -> float",
+      "description": "Get the plastic moment capacity in Z in the beam.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "nodes",
+      "signature": "pile.nodes() -> tuple of Structural element node objects",
+      "description": "Get a tuple containing the structural element nodes attached to this elemment.",
+      "returns": {
+        "type": "tuple of Structural element node objects"
+      }
+    },
+    {
+      "name": "normal_cohesion",
+      "signature": "pile.normal_cohesion() -> float",
+      "description": "Get the normal coupling spring cohesive strength of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "normal_dir",
+      "signature": "pile.normal_dir() -> (vec3, vec3)",
+      "description": "Get the global direction in which the pile element is being loaded by the coupling normal spring at each end.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "normal_disp",
+      "signature": "pile.normal_disp() -> (float, float)",
+      "description": "Get the displacement in the coupling normal spring at each end of the pile element. Sign convention for normal spring is positive/negative, indicating separation/overlap.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "normal_friction",
+      "signature": "pile.normal_friction() -> float",
+      "description": "Get the normal coupling spring friction angle of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "normal_gap",
+      "signature": "pile.normal_gap() -> bool",
+      "description": "Get the normal coupling spring gap-use flag. True denotes gap is on, and False value denotes gap is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "normal_state",
+      "signature": "pile.normal_state() -> (int, int)",
+      "description": "Get the yield state of the coupling normal spring at each end of the pile element. Return values 0, 1 and 2 denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "(int, int)"
+      }
+    },
+    {
+      "name": "normal_stiffness",
+      "signature": "pile.normal_stiffness() -> float",
+      "description": "Get the normal coupling spring stiffness of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "normal_stress",
+      "signature": "pile.normal_stress() -> (float, float)",
+      "description": "Get the stress in the coupling normal spring at each end of the pile element. Sign convention for the normal spring is positive/negative, indicating separation/overlap.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "perimeter",
+      "signature": "pile.perimeter() -> float",
+      "description": "Get the exposed perimeter of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "pile.poisson() -> float",
+      "description": "Get the Poisson’s ratio of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "pile.pos() -> vec3",
+      "description": "Get the position vector of the element, defined as the element centroid.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "pile.prop(property_name: str) -> any",
+      "description": "Get a property value of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "rockbolt",
+      "signature": "pile.rockbolt() -> bool",
+      "description": "Get a boolean flag of the rockbolt. True denotes the rockbolt flag is on, and False denotes the rockbolt flag is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "set_area",
+      "signature": "pile.set_area(float) -> None",
+      "description": "Set the cross-section area of the element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_axial_yield",
+      "signature": "pile.set_axial_yield(float) -> None",
+      "description": "Set the axial tensile yield strength (force units) of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "pile.set_density(float) -> None",
+      "description": "Set the density of this structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "pile.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Pile extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "pile.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Pile group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_load",
+      "signature": "pile.set_load(vec3) -> None",
+      "description": "Set the uniform applied distributed load acting on the beam element in the local y- and z-directions. The x-component is ignored on assignment.",
+      "parameters": [
+        {
+          "name": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "pile.set_mark(bool) -> None",
+      "description": "Set the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moi",
+      "signature": "pile.set_moi(vec3) -> None",
+      "description": "Set the moment of inertia of the pile. This is defined as the second moment of inertia with respect to the x-, y-, and z-axes.",
+      "parameters": [
+        {
+          "name": "vec3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_moment_plastic",
+      "signature": "pile.set_moment_plastic(float) -> None",
+      "description": "Set the plastic moment capacity in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_moment_plastic_y",
+      "signature": "pile.set_moment_plastic_y(float) -> None",
+      "description": "Set the plastic moment capacity in Y in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_moment_plastic_z",
+      "signature": "pile.set_moment_plastic_z(float) -> None",
+      "description": "Set the plastic moment capacity in Z in the beam.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_normal_cohesion",
+      "signature": "pile.set_normal_cohesion(float) -> None",
+      "description": "Set the normal coupling spring cohesive strength of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_friction",
+      "signature": "pile.set_normal_friction(float) -> None",
+      "description": "Set the normal coupling spring friction angle of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_gap",
+      "signature": "pile.set_normal_gap(bool) -> None",
+      "description": "Set the normal coupling spring gap-use flag. True denotes gap is on, and False value denotes gap is off.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_stiffness",
+      "signature": "pile.set_normal_stiffness(float) -> None",
+      "description": "Set the normal coupling spring stiffness of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_perimeter",
+      "signature": "pile.set_perimeter(float) -> None",
+      "description": "Set the exposed perimeter of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_poisson",
+      "signature": "pile.set_poisson(float) -> None",
+      "description": "Set the Poisson’s ratio of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "pile.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this elmenent.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_rockbolt",
+      "signature": "pile.set_rockbolt(bool) -> None",
+      "description": "Set a boolean flag of the rockbolt. True denotes the rockbolt flag is on, and False denotes the rockbolt flag is off.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "pile.set_shear_cohesion(float) -> None",
+      "description": "Set the shear coupling spring cohesive strength of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_flag",
+      "signature": "pile.set_shear_flag(bool) -> None",
+      "description": "Set the shear direction incremental confining stress flag. True denotes the flag is on, False denotes the flag is off.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "pile.set_shear_friction(float) -> None",
+      "description": "Set the shear coupling spring friction angle of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "pile.set_shear_stiffness(float) -> None",
+      "description": "Set the shear coupling spring stiffness of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "pile.set_slide(bool) -> None",
+      "description": "Set a boolean flag of slide. True denotes the slide flag is on, and False denotes the slide flag is off.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "pile.set_slide_tol() -> float",
+      "description": "Set the large-strain sliding tolerance of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "set_strain_failure",
+      "signature": "pile.set_strain_failure(float) -> None",
+      "description": "Set the tensile failure strain (non-dimensional) of the pile element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_cohesion",
+      "signature": "pile.set_table_cohesion(str) -> None",
+      "description": "Set the shear direction cohesion strength table name for the pile element.",
+      "parameters": [
+        {
+          "name": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_factor",
+      "signature": "pile.set_table_factor(str) -> None",
+      "description": "Set the shear direction friction table name for the pile element.",
+      "parameters": [
+        {
+          "name": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_table_friction",
+      "signature": "pile.set_table_friction(str) -> None",
+      "description": "Set the shear direction incremental confining stress factor table name for the pile element.",
+      "parameters": [
+        {
+          "name": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "pile.set_thermal_expansion(float) -> None",
+      "description": "Set the thermal expansion coefficient for the structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "pile.set_young(float) -> None",
+      "description": "Set the Youngs modulus of the beam element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "pile.shear_cohesion() -> float",
+      "description": "Get the shear coupling spring cohesive strength of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_dir",
+      "signature": "pile.shear_dir() -> (vec3, vec3)",
+      "description": "Get the global direction in which the pile element is being loaded by the coupling shear spring at each end.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "pile.shear_disp() -> (vec3, vec3)",
+      "description": "Get the displacement in coupling shear spring at each end of the pile element. Sign convention for shear spring is positive/negative with respect to the average axial direction of pile.",
+      "returns": {
+        "type": "(vec3, vec3)"
+      }
+    },
+    {
+      "name": "shear_flag",
+      "signature": "pile.shear_flag() -> bool",
+      "description": "Get the shear direction incremental confining stress flag. True denotes the flag is on, False denotes the flag is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "pile.shear_friction() -> float",
+      "description": "Get the shear coupling spring friction angle of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_state",
+      "signature": "pile.shear_state() -> None",
+      "description": "Get the yield state of the coupling shear spring at each end of the pile element. Return a values of 0, 1 and 2 denote never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "pile.shear_stiffness() -> float",
+      "description": "Get the shear coupling spring stiffness of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_stress",
+      "signature": "pile.shear_stress() -> (float, float)",
+      "description": "Get the stress in coupling shear spring at each end of the pile element. Sign convention for shear spring is positive/negative with respect to the average axial direction of pile.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "pile.slide() -> bool",
+      "description": "Get a boolean flag of slide. True denotes the slide flag is on, and False denotes the slide flag is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "pile.slide_tol() -> float",
+      "description": "Get the large-strain sliding tolerance of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "strain_failure",
+      "signature": "pile.strain_failure() -> float",
+      "description": "Get the tensile failure strain (non-dimensional) of the pile element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "stress_confining",
+      "signature": "pile.stress_confining() -> (float, float)",
+      "description": "Get the confining stress at each end of the pile element. (Negative value is compression.) Stress acts in a plane perpendicular to the pile axis; confining stress is the average of the principal values in this plane.",
+      "returns": {
+        "type": "(float, float)"
+      }
+    },
+    {
+      "name": "table_cohesion",
+      "signature": "pile.table_cohesion() -> str",
+      "description": "Get the shear direction cohesion strength table name for the pile element.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "table_factor",
+      "signature": "pile.table_factor() -> str",
+      "description": "Get the shear direction friction table name for the pile element.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "table_friction",
+      "signature": "pile.table_friction() -> str",
+      "description": "Get the shear direction incremental confining stress factor table name for the pile element.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "pile.thermal_expansion() -> float",
+      "description": "Get the thermal expansion coefficient for the structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "pile.valid() -> bool",
+      "description": "Returns True if this Pile is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "pile.volume() -> None",
+      "description": "Get the beam element volume, equal to the cross-sectional area times the length.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "ydir",
+      "signature": "pile.ydir() -> vec3",
+      "description": "Get the y-axis of the beam element local system.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "pile.young() -> float",
+      "description": "Get the Youngs modulus of the beam element.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+{
+  "module": "itasca.structure.shellarray",
+  "description": "Array interface for shell elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.shellarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.shellarray.area() -> array float{shell}",
+      "description": "Get a Numpy array of surface area of the shell elements.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "beta",
+      "signature": "itasca.structure.shellarray.beta() -> array float{shell}",
+      "description": "Get a Numpy array of shell system beta angle. This is defined as the angle between the element local system x-axis and the material system x-axis. In radians measured counter-clockwise from the element local x-axis.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.shellarray.component_id() -> array int{shell}",
+      "description": "Get a NumPy array of the ID of shell component id.",
+      "returns": {
+        "type": "array int{shell}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.shellarray.density() -> array double{shell}",
+      "description": "Get a NumPy array of the density of shell elements.",
+      "returns": {
+        "type": "array double{shell}"
+      }
+    },
+    {
+      "name": "depth_factor",
+      "signature": "itasca.structure.shellarray.depth_factor() -> array float{shell}",
+      "description": "Get a Numpy array of the depth factor at which stresses have been recovered. The depth equals Ft/2 where t is the shell element thickness. F values equal to +1.0 or -1.0 correspond to the outer/inner shell surface. The outer surface is defined by the positive z-direction of the local shell element system. F values of 0.0 corresponds to the shell mid-surface. The depth factor can be modified with the \\(structure shell recover stress\\) command.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "element_type",
+      "signature": "itasca.structure.shellarray.element_type() -> array str{shell}",
+      "description": "Get a Numpy array of the name of the finite-element type used by the shell elements. The possible types for shell elements are ‘cst’, ‘csth’, ‘dkt’, ‘dkt-cst’, and ‘dkt-csth’.",
+      "returns": {
+        "type": "array str{shell}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.shellarray.extra(slot: int) -> array float{shell} or float{shell,3}",
+      "description": "Get the shell extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{shell} or float{shell,3}"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.shellarray.force_nodal() -> array float{shell,6,3}",
+      "description": "Get a Numpy array of the generalized nodal force acting on the shell at each node. The translational and rotational components of node 1 are given first.",
+      "returns": {
+        "type": "array float{shell,6,3}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.shellarray.id() -> array int{shell}",
+      "description": "Get a NumPy array of the ID of shell element id.",
+      "returns": {
+        "type": "array int{shell}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.shellarray.in_group(group_name: str, slot=1) -> array bool{shell}",
+      "description": "Return shell group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{shell}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.shellarray.local_system() -> array double{shell,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of shell elements.",
+      "returns": {
+        "type": "array double{shell,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.shellarray.mark() -> array bool{shell}",
+      "description": "Get a NumPy array of the mark flag of shell elements.",
+      "returns": {
+        "type": "array bool{shell}"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "itasca.structure.shellarray.poisson() -> array float{shell}",
+      "description": "Get a Numpy array of the Poisson’s ratio of the elements.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.shellarray.pos() -> array vec3{shell}",
+      "description": "Get a NumPy array of the current position of shell elements.",
+      "returns": {
+        "type": "array vec3{shell}"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "itasca.structure.shellarray.pressure() -> array float{shell}",
+      "description": "Get a Numpy array of the uniform pressure acting on the shell elements. A positive value acts in the z-direction of the element local system.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "prop_anis",
+      "signature": "itasca.structure.shellarray.prop_anis() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the anisotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have anisotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_ortho",
+      "signature": "itasca.structure.shellarray.prop_ortho() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the orthotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have orthotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_type",
+      "signature": "itasca.structure.shellarray.prop_type() -> array str{shell}",
+      "description": "Get a Numpy array of the material property type. Possible return values are ‘isotropic’, ‘orthotripc’, and ‘anisotropic’.",
+      "returns": {
+        "type": "array str{shell}"
+      }
+    },
+    {
+      "name": "resultant",
+      "signature": "itasca.structure.shellarray.resultant(location: int) -> length 8 tuple of array float{shell}",
+      "description": "Get a Numpy array of stress resultants last calculated for the element at the index \\(location\\). A \\(location\\) value of 0 gives the resultant at the element centroid; \\(location\\) values 1, 2 and 3 give the resultant at the nodes. The components in the return value are: Mx, My, Mxy, Nx, Ny, Nxy, Qx and Qy. Note that stress resultants must be calculated with the \\(structure shell recover\\) command. See also the \\(resultant_valid\\) method.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "length 8 tuple of array float{shell}"
+      }
+    },
+    {
+      "name": "resultant_valid",
+      "signature": "itasca.structure.shellarray.resultant_valid() -> array bool{shell}",
+      "description": "Get a Numpy array of of the stress resultant validity flag. True indicates that the stress resultant values are valid. False indicates that resultants have not been calculated or that there has been a change since they were last calculated that would invalidate the results.",
+      "returns": {
+        "type": "array bool{shell}"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.shellarray.set_density(array double{shell}) -> None",
+      "description": "Set the density of shell elements.",
+      "parameters": [
+        {
+          "name": "array double{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.shellarray.set_extra(slot: int, data: array float{shell} or float{shell, 3}) -> None",
+      "description": "Set the shell extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{shell} or float{shell",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.shellarray.set_group(membership: array bool{shell}, group_name: str, slot=1) -> None",
+      "description": "Set shell group from an array. Where membership True set the corresponding shell to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{shell}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.shellarray.set_mark(array bool{shell}) -> None",
+      "description": "Set the mark flag of shell elements.",
+      "parameters": [
+        {
+          "name": "array bool{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_poisson",
+      "signature": "itasca.structure.shellarray.set_poisson(array float{shell}) -> None",
+      "description": "Set the Poisson’s ratio of the elements.",
+      "parameters": [
+        {
+          "name": "array float{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pressure",
+      "signature": "itasca.structure.shellarray.set_pressure(array float{shell}) -> None",
+      "description": "Set the uniform pressure acting on the shell elements. A positive value acts in the z-direction of the element local system.",
+      "parameters": [
+        {
+          "name": "array float{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.shellarray.set_thermal_expansion(array double{shell}) -> None",
+      "description": "Set the thermal expansion coefficient of shell elements.",
+      "parameters": [
+        {
+          "name": "array double{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thickness",
+      "signature": "itasca.structure.shellarray.set_thickness(array float{shell}) -> None",
+      "description": "Set the element thickness.",
+      "parameters": [
+        {
+          "name": "array float{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.shellarray.set_young(array float{shell}) -> None",
+      "description": "Set the Youngs modulus of the elements.",
+      "parameters": [
+        {
+          "name": "array float{shell}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "itasca.structure.shellarray.stress(location: int) -> stens3",
+      "description": "Get a Numpy array of the stresses at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Stresses are expressed in the global system. Note that compressive stresses are negative.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "stens3"
+      }
+    },
+    {
+      "name": "stress_prin",
+      "signature": "itasca.structure.shellarray.stress_prin(location: int) -> vec3",
+      "description": "Get the resolved principal stress at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Returns a vector encoded as (minimum, intermediate, maximum). Note that compressive stresses are negative in FLAC3D.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "stress_valid",
+      "signature": "itasca.structure.shellarray.stress_valid() -> array bool{shell}",
+      "description": "Get a Numpy array of the stress validity flag for the element. True indicates that the stresses last calculated at the current depth factor are valid. Galse indicates that stresses have not been calculated, or that there has been a change that invalidates the last stresses calculated.",
+      "returns": {
+        "type": "array bool{shell}"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.shellarray.thermal_expansion() -> array double{shell}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of shell elements.",
+      "returns": {
+        "type": "array double{shell}"
+      }
+    },
+    {
+      "name": "thickness",
+      "signature": "itasca.structure.shellarray.thickness() -> array float{shell}",
+      "description": "Get a Numpy array of the element thickness.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.shellarray.type() -> array string{shell}",
+      "description": "Get a NumPy array of the type name of shell elements.",
+      "returns": {
+        "type": "array string{shell}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.shellarray.volume() -> array float{shell}",
+      "description": "Get a Numpy array of the element volume, or surface area times thickness.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.shellarray.young() -> array float{shell}",
+      "description": "Get a Numpy array of the Youngs modulus of the elements. Modifying the value during cycling may be a danger.",
+      "returns": {
+        "type": "array float{shell}"
+      }
+    }
+  ]
+}

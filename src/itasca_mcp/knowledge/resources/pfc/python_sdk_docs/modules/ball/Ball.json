@@ -26,7 +26,9 @@
       "set_euler",
       "set_euler_x",
       "set_euler_y",
-      "set_euler_z"
+      "set_euler_z",
+      "rotation",
+      "set_rotation"
     ],
     "displacement": [
       "disp",
@@ -283,7 +285,10 @@
       "returns": {
         "type": "vec",
         "description": "Euler angles (rx, ry, rz)"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_x",
@@ -292,7 +297,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about X axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_y",
@@ -301,7 +309,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about Y axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_z",
@@ -310,7 +321,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about Z axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler",
@@ -327,7 +341,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_x",
@@ -344,7 +361,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_y",
@@ -361,7 +381,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_z",
@@ -378,7 +401,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "disp",
@@ -1628,6 +1654,12 @@
       "returns": {
         "type": "bool",
         "description": "True if inside"
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
       }
     },
     {
@@ -1637,6 +1669,50 @@
       "returns": {
         "type": "tensor",
         "description": "Stress tensor"
+      }
+    },
+    {
+      "name": "rotation",
+      "signature": "ball.rotation() -> float",
+      "description": "Get the ball orientation.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "2D builds only.",
+        "Angle in degrees. It only advances with the spin when orientation tracking is on (model orientation-tracking on; off by default): with tracking off it keeps the last set value. Measured on PFC2D 7.0 (probe_families.py, 2026-10-24): spin 0.01 rad/s for 10 s reads 5.7296 (= 0.1 rad in degrees)."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "set_rotation",
+      "signature": "ball.set_rotation(value: float) -> None",
+      "description": "Set the ball orientation.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
       }
     }
   ]

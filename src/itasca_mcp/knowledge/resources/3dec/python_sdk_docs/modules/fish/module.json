@@ -6,23 +6,27 @@
   "functions": [
     {
       "name": "call_function",
-      "signature": "itasca.fish.call_function(func: string[, (tuple: any)]) -> Any",
-      "description": "Call FISH function func return result.",
+      "signature": "itasca.fish.call_function(func: str, args: tuple = ()) -> Any",
+      "description": "Call the FISH function func and return its result.",
       "parameters": [
         {
           "name": "func",
-          "type": "string",
+          "type": "str",
           "required": true
         },
         {
-          "name": "(tuple",
-          "type": "any)",
-          "required": true
+          "name": "args",
+          "type": "tuple",
+          "required": false,
+          "default": "()"
         }
       ],
       "returns": {
         "type": "Any"
-      }
+      },
+      "notes": [
+        "Arguments must be passed as a tuple: call_function('twice', (4,)) returns 8, while call_function('twice', 4) raises ValueError('FISH function arguments must be given as a tuple.'). Measured on FLAC3D 9.7 (probe_families.py, 2026-10-24)."
+      ]
     },
     {
       "name": "get",

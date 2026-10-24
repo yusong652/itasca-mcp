@@ -1,0 +1,705 @@
+{
+  "class": "Geogrid",
+  "description": "Geogrid object instance in itasca.structure.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.Geogrid.html",
+  "note": "Do not instantiate directly; use itasca.structure module functions.",
+  "notes": [
+    "3D builds only."
+  ],
+  "method_groups": {
+    "area": "area",
+    "beta": "beta",
+    "component": "component_id",
+    "connectivity": "connectivity",
+    "delete": "delete",
+    "density": "density, set_density",
+    "depth": "depth_factor",
+    "element": "element_type",
+    "extra": "extra, set_extra",
+    "force": "force_nodal",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "local": "local_system",
+    "mark": "mark, set_mark",
+    "nodes": "nodes",
+    "poisson": "poisson",
+    "pos": "pos",
+    "pressure": "pressure, set_pressure",
+    "prop": "prop, prop_anis, prop_ortho, prop_type, set_prop",
+    "resultant": "resultant, resultant_valid",
+    "shear": "set_shear_cohesion, set_shear_friction, set_shear_stiffness, shear_cohesion, shear_dir, shear_disp, shear_friction, shear_state, shear_stiffness, shear_stress",
+    "slide": "set_slide, set_slide_tol, slide, slide_tol",
+    "stress": "stress, stress_confining, stress_max, stress_prin, stress_valid",
+    "thermal": "set_thermal_expansion, thermal_expansion",
+    "thickness": "set_thickness, thickness",
+    "valid": "valid",
+    "volume": "volume",
+    "young": "young"
+  },
+  "methods": [
+    {
+      "name": "area",
+      "signature": "geogrid.area() -> float",
+      "description": "Get surface area of the Geogrid element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "beta",
+      "signature": "geogrid.beta() -> float",
+      "description": "Get Geogrid system beta angle. This is defined as the angle between the element local system x-axis and the material system x-axis. In radians measured counter-clockwise from the element local x-axis.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "geogrid.component_id() -> int",
+      "description": "Get the Geogrid component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "connectivity",
+      "signature": "geogrid.connectivity(component: int) -> bool",
+      "description": "Get the index of the node with component-ID id in the element. A ValueError exception is raised if no node in that element matches.",
+      "parameters": [
+        {
+          "name": "component",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "geogrid.delete() -> None",
+      "description": "Delete this structural element.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "geogrid.density() -> float",
+      "description": "Get the density of this structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "depth_factor",
+      "signature": "geogrid.depth_factor() -> float",
+      "description": "Get the depth factor at which stresses have been recovered. The depth equals Ft/2 where t is the Geogrid element thickness. F values equal to +1.0 or -1.0 correspond to the outer/inner Geogrid surface. The outer surface is defined by the positive z-direction of the local Geogrid element system. F values of 0.0 corresponds to the Geogrid mid-surface. The depth factor can be modified with the \\(structure Geogrid recover stress\\) command.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "element_type",
+      "signature": "geogrid.element_type() -> str",
+      "description": "Get the name of the finite-element type used by this Geogrid element. The possible types for Geogrid elements are ‘cst’, ‘csth’, ‘dkt’, ‘dkt-cst’, and ‘dkt-csth’.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "geogrid.extra(slot: int) -> any",
+      "description": "Get the Geogrid extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "geogrid.force_nodal() -> float",
+      "description": "Get the generalized nodal force acting at each node in the global system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "geogrid.group([slot: str or int]) -> str",
+      "description": "Get the Geogrid group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "geogrid.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Geogrid. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "geogrid.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Geogrid is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "geogrid.id() -> int",
+      "description": "Get the Geogrid structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "geogrid.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Geogrid is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "geogrid.local_system() -> Tens3",
+      "description": "Get local coordinate system of this element as a 3x3 tensor.",
+      "returns": {
+        "type": "Tens3"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "geogrid.mark() -> bool",
+      "description": "Get the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "nodes",
+      "signature": "geogrid.nodes() -> tuple of Structural element node objects",
+      "description": "Get a tuple containing the structural element nodes attached to this elemment.",
+      "returns": {
+        "type": "tuple of Structural element node objects"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "geogrid.poisson() -> float",
+      "description": "Get the Poisson’s ratio of the element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "geogrid.pos() -> vec3",
+      "description": "Get the position vector of the element, defined as the element centroid.",
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "geogrid.pressure() -> float",
+      "description": "Get the uniform pressure acting on the Geogrid. A positive value acts in the z-direction of the element local system.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "geogrid.prop(property_name: str) -> any",
+      "description": "Get a property value of this element.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "prop_anis",
+      "signature": "geogrid.prop_anis() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the anisotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have anisotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_ortho",
+      "signature": "geogrid.prop_ortho() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the orthotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have orthotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_type",
+      "signature": "geogrid.prop_type() -> str",
+      "description": "Get the material property type. Possible return values are ‘isotropic’, ‘orthotripc’, and ‘anisotropic’.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "resultant",
+      "signature": "geogrid.resultant(location: int) -> length 8 tuple of float",
+      "description": "Get stress resultants last calculated for the element at the index \\(location\\). A \\(location\\) value of 0 gives the resultant at the element centroid; \\(location\\) values 1, 2 and 3 give the resultant at the nodes. The components in the return value are: Mx, My, Mxy, Nx, Ny, Nxy, Qx and Qy. Note that stress resultants must be calculated with the \\(structure Geogrid recover\\) command. See also the \\(resultant_valid\\) method.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "length 8 tuple of float"
+      }
+    },
+    {
+      "name": "resultant_valid",
+      "signature": "geogrid.resultant_valid() -> bool",
+      "description": "Get stress resultant validity flag. True indicates that the stress resultant values are valid. False indicates that resultants have not been calculated or that there has been a change since they were last calculated that would invalidate the results.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "geogrid.set_density(float) -> None",
+      "description": "Set the density of this structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "geogrid.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Geogrid extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "geogrid.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Geogrid group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "geogrid.set_mark(bool) -> None",
+      "description": "Set the mark flag on the structural element. The structural element logic may modify this flag during command processing and cycling.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pressure",
+      "signature": "geogrid.set_pressure(float) -> None",
+      "description": "Set the uniform pressure acting on the Geogrid. A positive value acts in the z-direction of the element local system.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "geogrid.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a property of this elmenent.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+      ]
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "geogrid.set_shear_cohesion(float) -> None",
+      "description": "Set the (shear) coupling spring cohesion strength of the geogrid element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "geogrid.set_shear_friction(float) -> None",
+      "description": "Set the (shear) coupling spring friction angle of the geogrid element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "geogrid.set_shear_stiffness(float) -> None",
+      "description": "Set the (shear) coupling spring stiffness of the geogrid element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "geogrid.set_slide(bool) -> None",
+      "description": "Set the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "geogrid.set_slide_tol(float) -> None",
+      "description": "Set the (shear) coupling spring slide tolerance of the geogrid element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "geogrid.set_thermal_expansion(float) -> None",
+      "description": "Set the thermal expansion coefficient for the structural element.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thickness",
+      "signature": "geogrid.set_thickness(float) -> None",
+      "description": "Set the element thickness.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "geogrid.shear_cohesion() -> float",
+      "description": "Get the (shear) coupling spring cohesion strength of the geogrid element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_dir",
+      "signature": "geogrid.shear_dir() -> (vec3, vec3, vec3)",
+      "description": "Get the direction (unit vector in global system) in which the geogrid element is being loaded by the coupling spring at each node.",
+      "returns": {
+        "type": "(vec3, vec3, vec3)"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "geogrid.shear_disp() -> (float, float, float)",
+      "description": "Get the displacement magnitude in the coupling spring at each node. The coupling spring lies in the tangent plane of the geogrid surface.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "geogrid.shear_friction() -> float",
+      "description": "Get/set the (shear) coupling spring friction angle of the geogrid element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_state",
+      "signature": "geogrid.shear_state() -> (int, int, int)",
+      "description": "Get the yield state of the coupling spring at each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively.",
+      "returns": {
+        "type": "(int, int, int)"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "geogrid.shear_stiffness() -> float",
+      "description": "Get the (shear) coupling spring stiffness of the geogrid element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "shear_stress",
+      "signature": "geogrid.shear_stress() -> (float, float, float)",
+      "description": "Get the stress magnitude in coupling spring at each node. The coupling spring lies in the tangent plane of the geogrid surface. The direction in which force is acting is given by the \\(shear_dir\\) method.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "geogrid.slide() -> bool",
+      "description": "Get the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "geogrid.slide_tol() -> float",
+      "description": "Get the (shear) coupling spring slide tolerance of the geogrid element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "geogrid.stress(location: int) -> stens3",
+      "description": "Get the Geogrid stresses at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Stresses are expressed in the global system. Note that compressive stresses are negative.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "stens3"
+      }
+    },
+    {
+      "name": "stress_confining",
+      "signature": "geogrid.stress_confining() -> (float, float, float)",
+      "description": "Get the confining stress at each node. A negative value is compression. The confining stress is the stress component acting perpendicular to the geogrid surface.",
+      "returns": {
+        "type": "(float, float, float)"
+      }
+    },
+    {
+      "name": "stress_max",
+      "signature": "geogrid.stress_max() -> float",
+      "description": "Get the maximum stress of the element. This is the maximum principal stress of the fiber stress at depth +1 or -1, which is the combination of membrane and bending resultants.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress_prin",
+      "signature": "geogrid.stress_prin(location: int) -> vec3",
+      "description": "Get the resolved principal stress at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Returns a vector encoded as (minimum, intermediate, maximum). Note that compressive stresses are negative in FLAC3D.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "stress_valid",
+      "signature": "geogrid.stress_valid() -> bool",
+      "description": "Get the stress validity flag for the element. True indicates that the stresses last calculated at the current depth factor are valid. Galse indicates that stresses have not been calculated, or that there has been a change that invalidates the last stresses calculated.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "geogrid.thermal_expansion() -> float",
+      "description": "Get the thermal expansion coefficient for the structural element.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "thickness",
+      "signature": "geogrid.thickness() -> float",
+      "description": "Get the element thickness.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "geogrid.valid() -> bool",
+      "description": "Returns True if this Geogrid is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "geogrid.volume() -> float",
+      "description": "Get the element volume, or surface area times thickness.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "geogrid.young() -> float",
+      "description": "Get the Youngs modulus of the element. Modifying the value during cycling may be a danger.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

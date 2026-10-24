@@ -9,792 +9,1424 @@
       "signature": "wall.closed() -> bool",
       "description": "Get the wall closure status. A closed wall is one where all edges are shared.",
       "parameters": [],
-      "returns": {"type": "bool", "description": "True if wall is closed"}
+      "returns": {
+        "type": "bool",
+        "description": "True if wall is closed"
+      }
     },
     {
       "name": "contact_count",
       "signature": "wall.contact_count(all: bool = False, type: TypeObject = None) -> int",
       "description": "Get number of contacts associated with this Wall. If type is given, count is limited to specified contact types. If all is True, count includes virtual contacts.",
       "parameters": [
-        {"name": "all", "type": "bool", "required": false, "description": "If True, include virtual contacts"},
-        {"name": "type", "type": "TypeObject", "required": false, "description": "Contact type filter (itasca.BallBallContact, itasca.BallPebbleContact, etc.)"}
+        {
+          "name": "all",
+          "type": "bool",
+          "required": false,
+          "description": "If True, include virtual contacts"
+        },
+        {
+          "name": "type",
+          "type": "TypeObject",
+          "required": false,
+          "description": "Contact type filter (itasca.BallBallContact, itasca.BallPebbleContact, etc.)"
+        }
       ],
-      "returns": {"type": "int", "description": "Number of contacts"}
+      "returns": {
+        "type": "int",
+        "description": "Number of contacts"
+      }
     },
     {
       "name": "contacts",
       "signature": "wall.contacts(piece: object = None, all: bool = False, type: TypeObject = None) -> tuple of Contact",
       "description": "Get contacts associated with this Wall. Optional piece argument filters by Ball, Pebble or WallFacet. If type is given, list is limited to specified types. If all is True, includes virtual contacts.",
       "parameters": [
-        {"name": "piece", "type": "object", "required": false, "description": "Filter by piece (Ball, Pebble, or WallFacet)"},
-        {"name": "all", "type": "bool", "required": false, "description": "If True, include virtual contacts"},
-        {"name": "type", "type": "TypeObject", "required": false, "description": "Contact type filter"}
+        {
+          "name": "piece",
+          "type": "object",
+          "required": false,
+          "description": "Filter by piece (Ball, Pebble, or WallFacet)"
+        },
+        {
+          "name": "all",
+          "type": "bool",
+          "required": false,
+          "description": "If True, include virtual contacts"
+        },
+        {
+          "name": "type",
+          "type": "TypeObject",
+          "required": false,
+          "description": "Contact type filter"
+        }
       ],
-      "returns": {"type": "tuple of Contact", "description": "Tuple of Contact objects"}
+      "returns": {
+        "type": "tuple of Contact",
+        "description": "Tuple of Contact objects"
+      }
     },
     {
       "name": "convex",
       "signature": "wall.convex() -> bool",
       "description": "Get the convexity status. The wall must also be closed to be convex.",
       "parameters": [],
-      "returns": {"type": "bool", "description": "True if wall is convex"}
+      "returns": {
+        "type": "bool",
+        "description": "True if wall is convex"
+      }
     },
     {
       "name": "cutoff",
       "signature": "wall.cutoff() -> float",
       "description": "Get the cutoff angle. The cutoff angle is used during contact resolution to determine whether contact state information is propagated.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Cutoff angle"}
+      "returns": {
+        "type": "float",
+        "description": "Cutoff angle"
+      }
     },
     {
       "name": "delete",
       "signature": "wall.delete() -> None",
       "description": "Delete this wall.",
       "parameters": [],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "disp",
       "signature": "wall.disp() -> vec",
       "description": "Get the wall displacement.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Displacement vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Displacement vector"
+      }
     },
     {
       "name": "disp_x",
       "signature": "wall.disp_x() -> float",
       "description": "Get the x-component of the wall displacement.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of displacement"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of displacement"
+      }
     },
     {
       "name": "disp_y",
       "signature": "wall.disp_y() -> float",
       "description": "Get the y-component of the wall displacement.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of displacement"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of displacement"
+      }
     },
     {
       "name": "disp_z",
       "signature": "wall.disp_z() -> float",
       "description": "Get the z-component of the wall displacement.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of displacement"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of displacement"
+      }
     },
     {
       "name": "euler",
       "signature": "wall.euler() -> vec",
       "description": "Get the wall orientation.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Orientation as Euler angles"}
+      "returns": {
+        "type": "vec",
+        "description": "Orientation as Euler angles"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_x",
       "signature": "wall.euler_x() -> float",
       "description": "Get the x-component of the wall orientation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of orientation"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of orientation"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_y",
       "signature": "wall.euler_y() -> float",
       "description": "Get the y-component of the wall orientation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of orientation"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of orientation"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_z",
       "signature": "wall.euler_z() -> float",
       "description": "Get the z-component of the wall orientation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of orientation"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of orientation"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "extra",
       "signature": "wall.extra(slot: int) -> any",
       "description": "Get the wall extra data in the given slot.",
       "parameters": [
-        {"name": "slot", "type": "int", "required": true, "description": "Extra data slot index"}
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true,
+          "description": "Extra data slot index"
+        }
       ],
-      "returns": {"type": "any", "description": "Extra data value"}
+      "returns": {
+        "type": "any",
+        "description": "Extra data value"
+      }
     },
     {
       "name": "facets",
       "signature": "wall.facets() -> Facet iterator",
       "description": "Get the facets of the wall.",
       "parameters": [],
-      "returns": {"type": "Facet iterator", "description": "Iterator over wall facets"}
+      "returns": {
+        "type": "Facet iterator",
+        "description": "Iterator over wall facets"
+      }
     },
     {
       "name": "force_contact",
       "signature": "wall.force_contact() -> vec",
       "description": "Get the wall contact force.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Contact force vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Contact force vector"
+      }
     },
     {
       "name": "force_contact_x",
       "signature": "wall.force_contact_x() -> float",
       "description": "Get the x-component of the wall contact force.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of contact force"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of contact force"
+      }
     },
     {
       "name": "force_contact_y",
       "signature": "wall.force_contact_y() -> float",
       "description": "Get the y-component of the wall contact force.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of contact force"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of contact force"
+      }
     },
     {
       "name": "force_contact_z",
       "signature": "wall.force_contact_z() -> float",
       "description": "Get the z-component of the wall contact force.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of contact force"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of contact force"
+      }
     },
     {
       "name": "fragment",
       "signature": "wall.fragment() -> int",
       "description": "Get the wall fragment ID.",
       "parameters": [],
-      "returns": {"type": "int", "description": "Fragment ID"}
+      "returns": {
+        "type": "int",
+        "description": "Fragment ID"
+      }
     },
     {
       "name": "group",
       "signature": "wall.group(slot: str or int = None) -> str",
       "description": "Get the wall group name in a given slot.",
       "parameters": [
-        {"name": "slot", "type": "str or int", "required": false, "description": "Group slot identifier"}
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": false,
+          "description": "Group slot identifier"
+        }
       ],
-      "returns": {"type": "str", "description": "Group name"}
+      "returns": {
+        "type": "str",
+        "description": "Group name"
+      }
     },
     {
       "name": "group_remove",
       "signature": "wall.group_remove(group_name: str or int, slot: str or int = None) -> bool",
       "description": "Remove from the given group from all group slots of the wall.",
       "parameters": [
-        {"name": "group_name", "type": "str or int", "required": true, "description": "Group name to remove"},
-        {"name": "slot", "type": "str or int", "required": false, "description": "Specific slot to remove from"}
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true,
+          "description": "Group name to remove"
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": false,
+          "description": "Specific slot to remove from"
+        }
       ],
-      "returns": {"type": "bool", "description": "True if group was removed from any slot"}
+      "returns": {
+        "type": "bool",
+        "description": "True if group was removed from any slot"
+      }
     },
     {
       "name": "groups",
       "signature": "wall.groups() -> dict",
       "description": "Get a dictionary describing which groups this wall is part of. Keys are slot names, values are group names.",
       "parameters": [],
-      "returns": {"type": "dict {slot: group_name}", "description": "Dictionary of slot to group name mappings"}
+      "returns": {
+        "type": "dict {slot: group_name}",
+        "description": "Dictionary of slot to group name mappings"
+      }
     },
     {
       "name": "id",
       "signature": "wall.id() -> int",
       "description": "Get the wall id.",
       "parameters": [],
-      "returns": {"type": "int", "description": "Wall ID"}
+      "returns": {
+        "type": "int",
+        "description": "Wall ID"
+      }
     },
     {
       "name": "in_group",
       "signature": "wall.in_group(group_name: str or int, slot: str or int = None) -> bool",
       "description": "Test if the wall is part of a given group. If slot is given, only that slot is searched. Otherwise, all group slots are searched.",
       "parameters": [
-        {"name": "group_name", "type": "str or int", "required": true, "description": "Group name to check"},
-        {"name": "slot", "type": "str or int", "required": false, "description": "Specific slot to search"}
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true,
+          "description": "Group name to check"
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": false,
+          "description": "Specific slot to search"
+        }
       ],
-      "returns": {"type": "bool", "description": "True if wall is in the group"}
+      "returns": {
+        "type": "bool",
+        "description": "True if wall is in the group"
+      }
     },
     {
       "name": "inside",
       "signature": "wall.inside(point: vec) -> bool",
       "description": "Test whether a point is inside a wall. The wall must be closed.",
       "parameters": [
-        {"name": "point", "type": "vec", "required": true, "description": "Point to test"}
+        {
+          "name": "point",
+          "type": "vec",
+          "required": true,
+          "description": "Point to test"
+        }
       ],
-      "returns": {"type": "bool", "description": "True if point is inside the wall"}
+      "returns": {
+        "type": "bool",
+        "description": "True if point is inside the wall"
+      }
     },
     {
       "name": "moment_contact",
       "signature": "wall.moment_contact() -> vec",
       "description": "Get the wall contact moment.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Contact moment vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Contact moment vector"
+      }
     },
     {
       "name": "moment_contact_x",
       "signature": "wall.moment_contact_x() -> float",
       "description": "Get the x-component of the wall contact moment.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of contact moment"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of contact moment"
+      }
     },
     {
       "name": "moment_contact_y",
       "signature": "wall.moment_contact_y() -> float",
       "description": "Get the y-component of the wall contact moment.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of contact moment"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of contact moment"
+      }
     },
     {
       "name": "moment_contact_z",
       "signature": "wall.moment_contact_z() -> float",
       "description": "Get the z-component of the wall contact moment.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of contact moment"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of contact moment"
+      }
     },
     {
       "name": "name",
       "signature": "wall.name() -> str",
       "description": "Get the wall name. Once a wall has been created its name cannot be changed.",
       "parameters": [],
-      "returns": {"type": "str", "description": "Wall name"}
+      "returns": {
+        "type": "str",
+        "description": "Wall name"
+      }
     },
     {
       "name": "pos",
       "signature": "wall.pos() -> vec",
       "description": "Get the wall location.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Position vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Position vector"
+      }
     },
     {
       "name": "pos_x",
       "signature": "wall.pos_x() -> float",
       "description": "Get the x-component of the wall location.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "X-coordinate"
+      }
     },
     {
       "name": "pos_y",
       "signature": "wall.pos_y() -> float",
       "description": "Get the y-component of the wall location.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "Y-coordinate"
+      }
     },
     {
       "name": "pos_z",
       "signature": "wall.pos_z() -> float",
       "description": "Get the z-component of the wall location.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "Z-coordinate"
+      }
     },
     {
       "name": "rotation_center",
       "signature": "wall.rotation_center() -> vec",
       "description": "Get the wall center of rotation.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Rotation center vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Rotation center vector"
+      }
     },
     {
       "name": "rotation_center_x",
       "signature": "wall.rotation_center_x() -> float",
       "description": "Get the x-component of the wall center of rotation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of rotation center"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of rotation center"
+      }
     },
     {
       "name": "rotation_center_y",
       "signature": "wall.rotation_center_y() -> float",
       "description": "Get the y-component of the wall center of rotation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of rotation center"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of rotation center"
+      }
     },
     {
       "name": "rotation_center_z",
       "signature": "wall.rotation_center_z() -> float",
       "description": "Get the z-component of the wall center of rotation.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of rotation center"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of rotation center"
+      }
     },
     {
       "name": "servo_active",
       "signature": "wall.servo_active() -> bool",
       "description": "Get the wall servo activity status.",
       "parameters": [],
-      "returns": {"type": "bool", "description": "True if servo is active"}
+      "returns": {
+        "type": "bool",
+        "description": "True if servo is active"
+      }
     },
     {
       "name": "servo_force",
       "signature": "wall.servo_force() -> vec",
       "description": "Get the wall servo force.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Servo force vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Servo force vector"
+      }
     },
     {
       "name": "servo_gain",
       "signature": "wall.servo_gain() -> float",
       "description": "Get the wall servo gain.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Servo gain value"}
+      "returns": {
+        "type": "float",
+        "description": "Servo gain value"
+      }
     },
     {
       "name": "servo_gainfactor",
       "signature": "wall.servo_gainfactor() -> float",
       "description": "Get the wall servo gain relaxation factor.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Servo gain relaxation factor"}
+      "returns": {
+        "type": "float",
+        "description": "Servo gain relaxation factor"
+      }
     },
     {
       "name": "servo_gainupdate",
       "signature": "wall.servo_gainupdate() -> int",
       "description": "Get the wall servo gain update interval.",
       "parameters": [],
-      "returns": {"type": "int", "description": "Servo gain update interval"}
+      "returns": {
+        "type": "int",
+        "description": "Servo gain update interval"
+      }
     },
     {
       "name": "servo_set_active",
       "signature": "wall.servo_set_active(b: bool) -> None",
       "description": "Set the wall servo activity status.",
       "parameters": [
-        {"name": "b", "type": "bool", "required": true, "description": "Servo active state"}
+        {
+          "name": "b",
+          "type": "bool",
+          "required": true,
+          "description": "Servo active state"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "servo_set_force",
       "signature": "wall.servo_set_force(force: vec) -> None",
       "description": "Set the wall servo force.",
       "parameters": [
-        {"name": "force", "type": "vec", "required": true, "description": "Servo force vector"}
+        {
+          "name": "force",
+          "type": "vec",
+          "required": true,
+          "description": "Servo force vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "servo_set_gainfactor",
       "signature": "wall.servo_set_gainfactor(fac: float) -> None",
       "description": "Set the wall servo gain relaxation factor.",
       "parameters": [
-        {"name": "fac", "type": "float", "required": true, "description": "Gain relaxation factor"}
+        {
+          "name": "fac",
+          "type": "float",
+          "required": true,
+          "description": "Gain relaxation factor"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "servo_set_gainupdate",
       "signature": "wall.servo_set_gainupdate(i: int) -> None",
       "description": "Set the wall servo gain update interval.",
       "parameters": [
-        {"name": "i", "type": "int", "required": true, "description": "Gain update interval"}
+        {
+          "name": "i",
+          "type": "int",
+          "required": true,
+          "description": "Gain update interval"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "servo_set_vmax",
       "signature": "wall.servo_set_vmax(vmax: float) -> None",
       "description": "Set the wall servo cap velocity.",
       "parameters": [
-        {"name": "vmax", "type": "float", "required": true, "description": "Cap velocity"}
+        {
+          "name": "vmax",
+          "type": "float",
+          "required": true,
+          "description": "Cap velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "servo_vmax",
       "signature": "wall.servo_vmax() -> float",
       "description": "Get the wall servo cap velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Servo cap velocity"}
+      "returns": {
+        "type": "float",
+        "description": "Servo cap velocity"
+      }
     },
     {
       "name": "set_cutoff",
       "signature": "wall.set_cutoff(angle: float) -> None",
       "description": "Set the cutoff angle. The cutoff angle is used during contact resolution to determine whether contact state information is propagated.",
       "parameters": [
-        {"name": "angle", "type": "float", "required": true, "description": "Cutoff angle"}
+        {
+          "name": "angle",
+          "type": "float",
+          "required": true,
+          "description": "Cutoff angle"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_disp",
       "signature": "wall.set_disp(value: vec) -> None",
       "description": "Set the wall displacement.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Displacement vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Displacement vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_disp_x",
       "signature": "wall.set_disp_x(value: float) -> None",
       "description": "Set the x-component of the wall displacement.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of displacement"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of displacement"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_disp_y",
       "signature": "wall.set_disp_y(value: float) -> None",
       "description": "Set the y-component of the wall displacement.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of displacement"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of displacement"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_disp_z",
       "signature": "wall.set_disp_z(value: float) -> None",
       "description": "Set the z-component of the wall displacement.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of displacement"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of displacement"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_euler",
       "signature": "wall.set_euler(value: vec) -> None",
       "description": "Set the wall orientation.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Orientation as Euler angles"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Orientation as Euler angles"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_x",
       "signature": "wall.set_euler_x(value: float) -> None",
       "description": "Set the x-component of the wall orientation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of orientation"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of orientation"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_y",
       "signature": "wall.set_euler_y(value: float) -> None",
       "description": "Set the y-component of the wall orientation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of orientation"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of orientation"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_z",
       "signature": "wall.set_euler_z(value: float) -> None",
       "description": "Set the z-component of the wall orientation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of orientation"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of orientation"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_extra",
       "signature": "wall.set_extra(slot: int, value: any) -> None",
       "description": "Set the wall extra data in the given slot.",
       "parameters": [
-        {"name": "slot", "type": "int", "required": true, "description": "Extra data slot index"},
-        {"name": "value", "type": "any", "required": true, "description": "Value to set"}
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true,
+          "description": "Extra data slot index"
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true,
+          "description": "Value to set"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_force_contact",
       "signature": "wall.set_force_contact(value: vec) -> None",
       "description": "Set the wall contact force.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Contact force vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Contact force vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_force_contact_x",
       "signature": "wall.set_force_contact_x(value: float) -> None",
       "description": "Set the x-component of the wall contact force.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of contact force"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of contact force"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_force_contact_y",
       "signature": "wall.set_force_contact_y(value: float) -> None",
       "description": "Set the y-component of the wall contact force.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of contact force"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of contact force"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_force_contact_z",
       "signature": "wall.set_force_contact_z(value: float) -> None",
       "description": "Set the z-component of the wall contact force.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of contact force"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of contact force"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_fragment",
       "signature": "wall.set_fragment(id: int) -> None",
       "description": "Set wall fragment ID.",
       "parameters": [
-        {"name": "id", "type": "int", "required": true, "description": "Fragment ID"}
+        {
+          "name": "id",
+          "type": "int",
+          "required": true,
+          "description": "Fragment ID"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_group",
       "signature": "wall.set_group(group_name: str or int, slot: str or int = None) -> None",
       "description": "Set the wall group name in a given slot.",
       "parameters": [
-        {"name": "group_name", "type": "str or int", "required": true, "description": "Group name to set"},
-        {"name": "slot", "type": "str or int", "required": false, "description": "Slot to set group in"}
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true,
+          "description": "Group name to set"
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": false,
+          "description": "Slot to set group in"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moment_contact",
       "signature": "wall.set_moment_contact(value: vec) -> None",
       "description": "Set the wall contact moment.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Contact moment vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Contact moment vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moment_contact_x",
       "signature": "wall.set_moment_contact_x(value: float) -> None",
       "description": "Set the x-component of the wall contact moment.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of contact moment"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of contact moment"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moment_contact_y",
       "signature": "wall.set_moment_contact_y(value: float) -> None",
       "description": "Set the y-component of the wall contact moment.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of contact moment"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of contact moment"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moment_contact_z",
       "signature": "wall.set_moment_contact_z(value: float) -> None",
       "description": "Set the z-component of the wall contact moment.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of contact moment"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of contact moment"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_pos",
       "signature": "wall.set_pos(value: vec) -> None",
       "description": "Set the wall location.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Position vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Position vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_pos_x",
       "signature": "wall.set_pos_x(value: float) -> None",
       "description": "Set the x-component of the wall location.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-coordinate"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-coordinate"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_pos_y",
       "signature": "wall.set_pos_y(value: float) -> None",
       "description": "Set the y-component of the wall location.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-coordinate"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-coordinate"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_pos_z",
       "signature": "wall.set_pos_z(value: float) -> None",
       "description": "Set the z-component of the wall location.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-coordinate"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-coordinate"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_prop",
       "signature": "wall.set_prop(name: str, value: any) -> None",
       "description": "Set a property of all facets.",
       "parameters": [
-        {"name": "name", "type": "str", "required": true, "description": "Property name"},
-        {"name": "value", "type": "any", "required": true, "description": "Property value"}
+        {
+          "name": "name",
+          "type": "str",
+          "required": true,
+          "description": "Property name"
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true,
+          "description": "Property value"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_rotation_center",
       "signature": "wall.set_rotation_center(value: vec) -> None",
       "description": "Set the wall center of rotation.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Rotation center vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Rotation center vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_rotation_center_x",
       "signature": "wall.set_rotation_center_x(value: float) -> None",
       "description": "Set the x-component of the wall center of rotation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of rotation center"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of rotation center"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_rotation_center_y",
       "signature": "wall.set_rotation_center_y(value: float) -> None",
       "description": "Set the y-component of the wall center of rotation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of rotation center"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of rotation center"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_rotation_center_z",
       "signature": "wall.set_rotation_center_z(value: float) -> None",
       "description": "Set the z-component of the wall center of rotation.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of rotation center"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of rotation center"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_spin",
       "signature": "wall.set_spin(value: vec) -> None",
       "description": "Set the wall angular velocity.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Angular velocity vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Angular velocity vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_spin_x",
       "signature": "wall.set_spin_x(value: float) -> None",
       "description": "Set the x-component of the wall angular velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of angular velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of angular velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_spin_y",
       "signature": "wall.set_spin_y(value: float) -> None",
       "description": "Set the y-component of the wall angular velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of angular velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of angular velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_spin_z",
       "signature": "wall.set_spin_z(value: float) -> None",
       "description": "Set the z-component of the wall angular velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of angular velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of angular velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_vel",
       "signature": "wall.set_vel(value: vec) -> None",
       "description": "Set the wall velocity.",
       "parameters": [
-        {"name": "value", "type": "vec", "required": true, "description": "Velocity vector"}
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Velocity vector"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_vel_x",
       "signature": "wall.set_vel_x(value: float) -> None",
       "description": "Set the x-component of the wall velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "X-component of velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X-component of velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_vel_y",
       "signature": "wall.set_vel_y(value: float) -> None",
       "description": "Set the y-component of the wall velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Y-component of velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y-component of velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_vel_z",
       "signature": "wall.set_vel_z(value: float) -> None",
       "description": "Set the z-component of the wall velocity.",
       "parameters": [
-        {"name": "value", "type": "float", "required": true, "description": "Z-component of velocity"}
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z-component of velocity"
+        }
       ],
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "spin",
       "signature": "wall.spin() -> vec",
       "description": "Get the wall angular velocity.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Angular velocity vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Angular velocity vector"
+      }
     },
     {
       "name": "spin_x",
       "signature": "wall.spin_x() -> float",
       "description": "Get the x-component of the wall angular velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of angular velocity"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of angular velocity"
+      }
     },
     {
       "name": "spin_y",
       "signature": "wall.spin_y() -> float",
       "description": "Get the y-component of the wall angular velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of angular velocity"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of angular velocity"
+      }
     },
     {
       "name": "spin_z",
       "signature": "wall.spin_z() -> float",
       "description": "Get the z-component of the wall angular velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of angular velocity"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of angular velocity"
+      }
     },
     {
       "name": "valid",
       "signature": "wall.valid() -> bool",
       "description": "Returns True if this wall is live.",
       "parameters": [],
-      "returns": {"type": "bool", "description": "True if wall is live"}
+      "returns": {
+        "type": "bool",
+        "description": "True if wall is live"
+      }
     },
     {
       "name": "vel",
       "signature": "wall.vel() -> vec",
       "description": "Get the wall velocity.",
       "parameters": [],
-      "returns": {"type": "vec", "description": "Velocity vector"}
+      "returns": {
+        "type": "vec",
+        "description": "Velocity vector"
+      }
     },
     {
       "name": "vel_x",
       "signature": "wall.vel_x() -> float",
       "description": "Get the x-component of the wall velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "X-component of velocity"}
+      "returns": {
+        "type": "float",
+        "description": "X-component of velocity"
+      }
     },
     {
       "name": "vel_y",
       "signature": "wall.vel_y() -> float",
       "description": "Get the y-component of the wall velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Y-component of velocity"}
+      "returns": {
+        "type": "float",
+        "description": "Y-component of velocity"
+      }
     },
     {
       "name": "vel_z",
       "signature": "wall.vel_z() -> float",
       "description": "Get the z-component of the wall velocity.",
       "parameters": [],
-      "returns": {"type": "float", "description": "Z-component of velocity"}
+      "returns": {
+        "type": "float",
+        "description": "Z-component of velocity"
+      }
     },
     {
       "name": "vertices",
       "signature": "wall.vertices() -> Vertex iterator",
       "description": "Get the vertices of this wall.",
       "parameters": [],
-      "returns": {"type": "Vertex iterator", "description": "Iterator over wall vertices"}
+      "returns": {
+        "type": "Vertex iterator",
+        "description": "Iterator over wall vertices"
+      }
+    },
+    {
+      "name": "rotation",
+      "signature": "wall.rotation() -> float",
+      "description": "Get the wall orientation.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_rotation",
+      "signature": "wall.set_rotation(value: float) -> None",
+      "description": "Set the wall orientation.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ]
     }
   ]
 }

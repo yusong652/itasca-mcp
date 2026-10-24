@@ -1,0 +1,578 @@
+{
+  "module": "itasca.structure.geogridarray",
+  "description": "Array interface for geogrid elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.geogridarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+    "3D builds only."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.geogridarray.area() -> array float{geogrid}",
+      "description": "Get a Numpy array of surface area of the geogrid elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "beta",
+      "signature": "itasca.structure.geogridarray.beta() -> array float{geogrid}",
+      "description": "Get a Numpy array of geogrid system beta angle. This is defined as the angle between the element local system x-axis and the material system x-axis. In radians measured counter-clockwise from the element local x-axis.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.geogridarray.component_id() -> array int{geogrid}",
+      "description": "Get a NumPy array of the ID of geogrid component id.",
+      "returns": {
+        "type": "array int{geogrid}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.geogridarray.density() -> array double{geogrid}",
+      "description": "Get a NumPy array of the density of geogrid elements.",
+      "returns": {
+        "type": "array double{geogrid}"
+      }
+    },
+    {
+      "name": "depth_factor",
+      "signature": "itasca.structure.geogridarray.depth_factor() -> array float{geogrid}",
+      "description": "Get a Numpy array of the depth factor at which stresses have been recovered. The depth equals Ft/2 where t is the geogrid element thickness. F values equal to +1.0 or -1.0 correspond to the outer/inner geogrid surface. The outer surface is defined by the positive z-direction of the local geogrid element system. F values of 0.0 corresponds to the geogrid mid-surface. The depth factor can be modified with the \\(structure geogrid recover stress\\) command.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "element_type",
+      "signature": "itasca.structure.geogridarray.element_type() -> array str{geogrid}",
+      "description": "Get a Numpy array of the name of the finite-element type used by the geogrid elements. The possible types for geogrid elements are ‘cst’, ‘csth’, ‘dkt’, ‘dkt-cst’, and ‘dkt-csth’.",
+      "returns": {
+        "type": "array str{geogrid}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.geogridarray.extra(slot: int) -> array float{geogrid} or float{geogrid,3}",
+      "description": "Get the geogrid extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{geogrid} or float{geogrid,3}"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.geogridarray.force_nodal() -> array float{geogrid,6,3}",
+      "description": "Get a Numpy array of the generalized nodal force acting on the geogrid at each node. The translational and rotational components of node 1 are given first.",
+      "returns": {
+        "type": "array float{geogrid,6,3}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.geogridarray.id() -> array int{geogrid}",
+      "description": "Get a NumPy array of the ID of geogrid element id.",
+      "returns": {
+        "type": "array int{geogrid}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.geogridarray.in_group(group_name: str, slot=1) -> array bool{geogrid}",
+      "description": "Return geogrid group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{geogrid}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.geogridarray.local_system() -> array double{geogrid,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of geogrid elements.",
+      "returns": {
+        "type": "array double{geogrid,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.geogridarray.mark() -> array bool{geogrid}",
+      "description": "Get a NumPy array of the mark flag of geogrid elements.",
+      "returns": {
+        "type": "array bool{geogrid}"
+      }
+    },
+    {
+      "name": "poisson",
+      "signature": "itasca.structure.geogridarray.poisson() -> array float{geogrid}",
+      "description": "Get a Numpy array of the Poisson’s ratio of the elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.geogridarray.pos() -> array vec3{geogrid}",
+      "description": "Get a NumPy array of the current position of geogrid elements.",
+      "returns": {
+        "type": "array vec3{geogrid}"
+      }
+    },
+    {
+      "name": "pressure",
+      "signature": "itasca.structure.geogridarray.pressure() -> array float{geogrid}",
+      "description": "Get a Numpy array of the uniform pressure acting on the geogrid elements. A positive value acts in the z-direction of the element local system.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "prop_anis",
+      "signature": "itasca.structure.geogridarray.prop_anis() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the anisotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have anisotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_ortho",
+      "signature": "itasca.structure.geogridarray.prop_ortho() -> (membrane: tuple of float, bending: tuple of float)",
+      "description": "Get the orthotropic material properties. Material-stiffness coefficients c’11, c’12, c’13, c’22, c’23, c’33 are returned for both the membrane and bending stiffnesses in that order. If the element does not have orthotropic properties, zeros are returned.",
+      "returns": {
+        "type": "(membrane: tuple of float, bending: tuple of float)"
+      }
+    },
+    {
+      "name": "prop_type",
+      "signature": "itasca.structure.geogridarray.prop_type() -> array str{geogrid}",
+      "description": "Get a Numpy array of the material property type. Possible return values are ‘isotropic’, ‘orthotripc’, and ‘anisotropic’.",
+      "returns": {
+        "type": "array str{geogrid}"
+      }
+    },
+    {
+      "name": "resultant",
+      "signature": "itasca.structure.geogridarray.resultant(location: int) -> length 8 tuple of array float{geogrid}",
+      "description": "Get a Numpy array of stress resultants last calculated for the element at the index \\(location\\). A \\(location\\) value of 0 gives the resultant at the element centroid; \\(location\\) values 1, 2 and 3 give the resultant at the nodes. The components in the return value are: Mx, My, Mxy, Nx, Ny, Nxy, Qx and Qy. Note that stress resultants must be calculated with the \\(structure geogrid recover\\) command. See also the \\(resultant_valid\\) method.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "length 8 tuple of array float{geogrid}"
+      }
+    },
+    {
+      "name": "resultant_valid",
+      "signature": "itasca.structure.geogridarray.resultant_valid() -> array bool{geogrid}",
+      "description": "Get a Numpy array of of the stress resultant validity flag. True indicates that the stress resultant values are valid. False indicates that resultants have not been calculated or that there has been a change since they were last calculated that would invalidate the results.",
+      "returns": {
+        "type": "array bool{geogrid}"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.geogridarray.set_density(array double{geogrid}) -> None",
+      "description": "Set the density of geogrid elements.",
+      "parameters": [
+        {
+          "name": "array double{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.geogridarray.set_extra(slot: int, data: array float{geogrid} or float{geogrid, 3}) -> None",
+      "description": "Set the geogrid extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{geogrid} or float{geogrid",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.geogridarray.set_group(membership: array bool{geogrid}, group_name: str, slot=1) -> None",
+      "description": "Set geogrid group from an array. Where membership True set the corresponding geogrid to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{geogrid}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.geogridarray.set_mark(array bool{geogrid}) -> None",
+      "description": "Set the mark flag of geogrid elements.",
+      "parameters": [
+        {
+          "name": "array bool{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_poisson",
+      "signature": "itasca.structure.geogridarray.set_poisson(array float{geogrid}) -> None",
+      "description": "Set the Poisson’s ratio of the elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pressure",
+      "signature": "itasca.structure.geogridarray.set_pressure(array float{geogrid}) -> None",
+      "description": "Set the uniform pressure acting on the geogrid elements. A positive value acts in the z-direction of the element local system.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_cohesion",
+      "signature": "itasca.structure.geogridarray.set_shear_cohesion(array float{geogrid}) -> None",
+      "description": "Set the (shear) coupling spring cohesion strength of the geogrid elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_friction",
+      "signature": "itasca.structure.geogridarray.set_shear_friction(array float{geogrid}) -> None",
+      "description": "Set the (shear) coupling spring friction angle of the geogrid elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_shear_stiffness",
+      "signature": "itasca.structure.geogridarray.set_shear_stiffness(array float{geogrid}) -> None",
+      "description": "Set the (shear) coupling spring stiffness of the geogrid elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "itasca.structure.geogridarray.set_slide(array bool{geogrid}) -> None",
+      "description": "Set the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "parameters": [
+        {
+          "name": "array bool{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "itasca.structure.geogridarray.set_slide_tol(array float{geogrid}) -> None",
+      "description": "Set the (shear) coupling spring slide tolerance of the geogrid elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.geogridarray.set_thermal_expansion(array double{geogrid}) -> None",
+      "description": "Set the thermal expansion coefficient of geogrid elements.",
+      "parameters": [
+        {
+          "name": "array double{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thickness",
+      "signature": "itasca.structure.geogridarray.set_thickness(array float{geogrid}) -> None",
+      "description": "Set the element thickness.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.geogridarray.set_young(array float{geogrid}) -> None",
+      "description": "Set the Youngs modulus of the elements.",
+      "parameters": [
+        {
+          "name": "array float{geogrid}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "shear_cohesion",
+      "signature": "itasca.structure.geogridarray.shear_cohesion() -> array float{geogrid}",
+      "description": "Get a Numpy array of the (shear) coupling spring cohesion strength of the geogrid elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "shear_dir",
+      "signature": "itasca.structure.geogridarray.shear_dir() -> array float{geogrid,3,3}",
+      "description": "Get a Numpy array of the direction (unit vector in global system) in which the geogrid elements are being loaded by the coupling spring at each node.",
+      "returns": {
+        "type": "array float{geogrid,3,3}"
+      }
+    },
+    {
+      "name": "shear_disp",
+      "signature": "itasca.structure.geogridarray.shear_disp() -> array float{geogrid,3}",
+      "description": "Get a Numpy array of the displacement magnitude in the coupling spring at each node. The coupling spring lies in the tangent plane of the geogrid surface.",
+      "returns": {
+        "type": "array float{geogrid,3}"
+      }
+    },
+    {
+      "name": "shear_friction",
+      "signature": "itasca.structure.geogridarray.shear_friction() -> array float{geogrid}",
+      "description": "Get a Numpy array of/set the (shear) coupling spring friction angle of the geogrid elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "shear_state",
+      "signature": "itasca.structure.geogridarray.shear_state() -> array int{geogrid,3}",
+      "description": "Get a Numpy array of the yield state of the coupling spring at each node. Return values 1, 2 and 3 denotes never yielded, yielding now, or yielded in the past, respectively.",
+      "returns": {
+        "type": "array int{geogrid,3}"
+      }
+    },
+    {
+      "name": "shear_stiffness",
+      "signature": "itasca.structure.geogridarray.shear_stiffness() -> array float{geogrid}",
+      "description": "Get a Numpy array of the (shear) coupling spring stiffness of the geogrid elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "shear_stress",
+      "signature": "itasca.structure.geogridarray.shear_stress() -> array float{geogrid,3}",
+      "description": "Get a Numpy array of the stress magnitude in coupling spring at each node. The coupling spring lies in the tangent plane of the geogrid surface. The direction in which force is acting is given by the \\(shear_dir\\) method.",
+      "returns": {
+        "type": "array float{geogrid,3}"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "itasca.structure.geogridarray.slide() -> array bool{geogrid}",
+      "description": "Get a Numpy array of the large-strain sliding flag. A true value denotes that the large-strain sliding is on.",
+      "returns": {
+        "type": "array bool{geogrid}"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "itasca.structure.geogridarray.slide_tol() -> array float{geogrid}",
+      "description": "Get a Numpy array of the (shear) coupling spring slide tolerance of the geogrid elements.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "itasca.structure.geogridarray.stress(location: int) -> stens3",
+      "description": "Get a Numpy array of the stresses at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Stresses are expressed in the global system. Note that compressive stresses are negative.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "stens3"
+      }
+    },
+    {
+      "name": "stress_confining",
+      "signature": "itasca.structure.geogridarray.stress_confining() -> array float{geogrid,3}",
+      "description": "Get a Numpy array of the confining stress at each node. A negative value is compression. The confining stress is the stress component acting perpendicular to the geogrid surface.",
+      "returns": {
+        "type": "array float{geogrid,3}"
+      }
+    },
+    {
+      "name": "stress_prin",
+      "signature": "itasca.structure.geogridarray.stress_prin(location: int) -> vec3",
+      "description": "Get the resolved principal stress at the current depth factor at the index \\(location\\). A \\(location\\) value of 0 gives the stress at the element centroid; \\(location\\) values 1, 2 and 3 give the stress at the nodes. Returns a vector encoded as (minimum, intermediate, maximum). Note that compressive stresses are negative in FLAC3D.",
+      "parameters": [
+        {
+          "name": "location",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec3"
+      }
+    },
+    {
+      "name": "stress_valid",
+      "signature": "itasca.structure.geogridarray.stress_valid() -> array bool{geogrid}",
+      "description": "Get a Numpy array of the stress validity flag for the element. True indicates that the stresses last calculated at the current depth factor are valid. Galse indicates that stresses have not been calculated, or that there has been a change that invalidates the last stresses calculated.",
+      "returns": {
+        "type": "array bool{geogrid}"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.geogridarray.thermal_expansion() -> array double{geogrid}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of geogrid elements.",
+      "returns": {
+        "type": "array double{geogrid}"
+      }
+    },
+    {
+      "name": "thickness",
+      "signature": "itasca.structure.geogridarray.thickness() -> array float{geogrid}",
+      "description": "Get a Numpy array of the element thickness.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.geogridarray.type() -> array string{geogrid}",
+      "description": "Get a NumPy array of the type name of geogrid elements.",
+      "returns": {
+        "type": "array string{geogrid}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.geogridarray.volume() -> array float{geogrid}",
+      "description": "Get a Numpy array of the element volume, or surface area times thickness.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.geogridarray.young() -> array float{geogrid}",
+      "description": "Get a Numpy array of the Youngs modulus of the elements. Modifying the value during cycling may be a danger.",
+      "returns": {
+        "type": "array float{geogrid}"
+      }
+    }
+  ]
+}

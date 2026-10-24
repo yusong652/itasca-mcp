@@ -1,0 +1,486 @@
+{
+  "class": "ThermalClump",
+  "description": "ThermalClump object instance in itasca.clump.thermal.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.clump.thermal.ThermalClump.html",
+  "note": "Do not instantiate directly; use itasca.clump.thermal module functions.",
+  "method_groups": {
+    "clump": "clump",
+    "contact": "contact_count",
+    "contacts": "contacts",
+    "del": "del_temp, set_del_temp",
+    "expansion": "expansion, set_expansion",
+    "extra": "extra, set_extra",
+    "fix": "fix, set_fix",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "pebbles": "pebbles",
+    "pos": "pos, pos_x, pos_y, pos_z, set_pos, set_pos_x, set_pos_y, set_pos_z",
+    "power": "power_app, power_unbal, set_power_app",
+    "prop": "set_prop",
+    "specific": "set_specific_heat, specific_heat",
+    "temp": "set_temp, temp",
+    "valid": "valid"
+  },
+  "methods": [
+    {
+      "name": "clump",
+      "signature": "thermalclump.clump() -> Clump object",
+      "description": "Get the clump corresponding to this thermal clump.",
+      "returns": {
+        "type": "Clump object"
+      }
+    },
+    {
+      "name": "contact_count",
+      "signature": "thermalclump.contact_count(all=False, type=None) -> int",
+      "description": "Get the number of contacts associated with this thermal clump. If the optional keyword argument type is given, the count is limited to the contact types specified. The optional type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the optional keyword argument all is True the count includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "contacts",
+      "signature": "thermalclump.contacts([piece, ]all=False, type=None) -> tuple of Contact objects",
+      "description": "Get a tuple of contacts associated with this clump. An optional argument can be included which is a piece object (a thermal ball, a thermal pebble or a thermal facet). If the optional keyword argument type is given, the returned list is limited to the contact types specified. The type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the (optional) keyword argument all is True the returned list includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "piece",
+          "required": true
+        },
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "tuple of Contact objects"
+      }
+    },
+    {
+      "name": "del_temp",
+      "signature": "thermalclump.del_temp() -> float",
+      "description": "Get the thermal clump temperature increment.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "expansion",
+      "signature": "thermalclump.expansion() -> float",
+      "description": "Get the thermal clump expansion coefficient.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "thermalclump.extra(slot: int) -> any",
+      "description": "Get the thermal clump extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "fix",
+      "signature": "thermalclump.fix() -> bool",
+      "description": "Get the thermal clump fixity.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "thermalclump.group([slot: str or int]) -> str",
+      "description": "Get the thermal clump group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "thermalclump.group_remove(group_name: str or int[, slot: str or int]) -> int",
+      "description": "Remove from the given group from the thermal clump. One argument of type string, giving the group name, is required. The return value is an integer which is the first slot in which the group name was found or -1 if not found.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "thermalclump.groups() -> tuple of strings",
+      "description": "Get a tuple of group names assigned to this thermal clump.",
+      "returns": {
+        "type": "tuple of strings"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "thermalclump.id() -> int",
+      "description": "Get the thermal clump id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "thermalclump.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the thermal clump is part of a given group. All group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "pebbles",
+      "signature": "thermalclump.pebbles() -> Thermal pebble iterator object",
+      "description": "Get the thermal pebbles of this thermal clump.",
+      "returns": {
+        "type": "Thermal pebble iterator object"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "thermalclump.pos() -> vec",
+      "description": "Get the thermal clump location (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "thermalclump.pos_x() -> float",
+      "description": "Get the x-component of the thermal clump location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "thermalclump.pos_y() -> float",
+      "description": "Get the y-component of the thermal clump location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "thermalclump.pos_z() -> float",
+      "description": "Get the z-component of the thermal clump location.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "power_app",
+      "signature": "thermalclump.power_app() -> float",
+      "description": "Get the thermal clump applied power.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "power_unbal",
+      "signature": "thermalclump.power_unbal() -> float",
+      "description": "Get the thermal clump unbalanced power.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "set_del_temp",
+      "signature": "thermalclump.set_del_temp(value: float) -> None",
+      "description": "Set the thermal clump temperature increment.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_expansion",
+      "signature": "thermalclump.set_expansion(value: float) -> None",
+      "description": "Set the thermal clump expansion coefficient.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "thermalclump.set_extra(slot: int, value: any) -> None",
+      "description": "Set the thermal clump extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_fix",
+      "signature": "thermalclump.set_fix(value: bool) -> None",
+      "description": "Set the thermal clump fixity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "thermalclump.set_group([group_name: str or int[, slot: str or int]]) -> None",
+      "description": "Set the thermal clump group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos",
+      "signature": "thermalclump.set_pos(value: vec) -> None",
+      "description": "Set the thermal clump location (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_x",
+      "signature": "thermalclump.set_pos_x(value: float) -> None",
+      "description": "Set the x-component of the thermal clump location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_y",
+      "signature": "thermalclump.set_pos_y(value: float) -> None",
+      "description": "Set the y-component of the thermal clump location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_z",
+      "signature": "thermalclump.set_pos_z(value: float) -> None",
+      "description": "Set the z-component of the thermal clump location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_power_app",
+      "signature": "thermalclump.set_power_app(value: float) -> None",
+      "description": "Set the thermal clump applied power.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "thermalclump.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of all thermal pebbles.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_specific_heat",
+      "signature": "thermalclump.set_specific_heat(value: float) -> None",
+      "description": "Set the thermal clump specific heat.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_temp",
+      "signature": "thermalclump.set_temp(value: float) -> None",
+      "description": "Set the thermal clump temperature.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "specific_heat",
+      "signature": "thermalclump.specific_heat() -> float",
+      "description": "Get the thermal clump specific heat.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "temp",
+      "signature": "thermalclump.temp() -> float",
+      "description": "Get the thermal clump temperature.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "thermalclump.valid() -> bool",
+      "description": "Returns True if this thermal clump is live.",
+      "returns": {
+        "type": "bool"
+      }
+    }
+  ]
+}

@@ -1,0 +1,737 @@
+{
+  "class": "Fracture",
+  "description": "Fracture object instance in itasca.dfn.fracture.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.dfn.fracture.Fracture.html",
+  "note": "Do not instantiate directly; use itasca.dfn.fracture module functions.",
+  "method_groups": {
+    "aperture": "aperture, set_aperture",
+    "area": "area, set_area",
+    "contact": "contact_count",
+    "contacts": "contacts",
+    "decimate": "decimate",
+    "delete": "delete",
+    "dfn": "dfn",
+    "diameter": "diameter, set_diameter",
+    "dip": "dip, set_dip",
+    "dipdir": "dipdir, set_dipdir",
+    "extra": "extra, set_extra",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "has": "has_prop",
+    "id": "id",
+    "in": "in_group",
+    "intersections": "intersections",
+    "intersects": "intersects",
+    "isdisk": "isdisk",
+    "len": "len, set_len",
+    "normal": "normal, normal_x, normal_y, normal_z, set_normal, set_normal_x, set_normal_y, set_normal_z",
+    "point": "point_near",
+    "pos": "pos, pos_x, pos_y, pos_z, set_pos, set_pos_x, set_pos_y, set_pos_z",
+    "prop": "prop, set_prop",
+    "props": "props",
+    "valid": "valid",
+    "vertices": "vertices"
+  },
+  "methods": [
+    {
+      "name": "aperture",
+      "signature": "fracture.aperture() -> float",
+      "description": "Get the fracture aperture.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "area",
+      "signature": "fracture.area() -> float",
+      "description": "Get the fracture area.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "contact_count",
+      "signature": "fracture.contact_count(all=False, type=None) -> int",
+      "description": "Get the number of contacts associated with this fracture. If the optional keyword argument type is given, the count is limited to the contact types specified. The optional type keyword argument should be a Python type object (one of: itasca.BallBallContact, itasca.BallPebbleContact, itasca.PebblePebbleContact, itasca.BallFacetContact or itasca.PebbleFacetContact). If the optional keyword argument all is True the count includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "contacts",
+      "signature": "fracture.contacts(all=False, type=None) -> tuple of Contact objects",
+      "description": "Get a tuple of contacts associated with this fracture. If the optional keyword argument type is given, the returned list is limited to the contact types specified. The type keyword argument should be a Python type object (one of: itasca.BallBallContact, itasca.BallPebbleContact, itasca.PebblePebbleContact, itasca.BallFacetContact or itasca.PebbleFacetContact). If the (optional) keyword argument all is True the returned list includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "tuple of Contact objects"
+      }
+    },
+    {
+      "name": "decimate",
+      "signature": "fracture.decimate(int) -> tuple of vec",
+      "description": "Get a list of fracture vertex positions. If a disk shaped fracture then the last argument (default 20) is used to decimate the disk shape.",
+      "parameters": [
+        {
+          "name": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "tuple of vec"
+      },
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "delete",
+      "signature": "fracture.delete() -> None",
+      "description": "Delete this fracture.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "dfn",
+      "signature": "fracture.dfn() -> DFN object",
+      "description": "Get the dfn to which this fracture belongs.",
+      "returns": {
+        "type": "DFN object"
+      }
+    },
+    {
+      "name": "diameter",
+      "signature": "fracture.diameter() -> float",
+      "description": "Get the fracture diameter.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "dip",
+      "signature": "fracture.dip() -> float",
+      "description": "Get the fracture dip.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "dipdir",
+      "signature": "fracture.dipdir() -> float",
+      "description": "Get the fracture dip direction.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "extra",
+      "signature": "fracture.extra(slot: int) -> any",
+      "description": "Get the fracture extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "fracture.group([slot: str or int]) -> str",
+      "description": "Get the fracture group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "fracture.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the fracture. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "fracture.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this fracture is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "has_prop",
+      "signature": "fracture.has_prop(property_name: str) -> bool",
+      "description": "Returns True if the fracture has the given surface property.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "fracture.id() -> int",
+      "description": "Get the fracture id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "fracture.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the fracture is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "intersections",
+      "signature": "fracture.intersections(DFN object) -> tuple of Intersection objects",
+      "description": "Get the intersections with this fracture. An optional DFN object can be specified to limit the intersections to fractures belonging to that dfn.",
+      "parameters": [
+        {
+          "name": "DFN object",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "tuple of Intersection objects"
+      }
+    },
+    {
+      "name": "intersects",
+      "signature": "fracture.intersects(Fracture object) -> bool",
+      "description": "Get a boolean indicating the intersection status of the given fracture with this fracture.",
+      "parameters": [
+        {
+          "name": "Fracture object",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "isdisk",
+      "signature": "fracture.isdisk() -> bool",
+      "description": "Get the fracture disk status.",
+      "returns": {
+        "type": "bool"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "len",
+      "signature": "fracture.len() -> float",
+      "description": "Get the fracture length.",
+      "returns": {
+        "type": "float"
+      },
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "normal",
+      "signature": "fracture.normal() -> vec",
+      "description": "Get the fracture normal (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "normal_x",
+      "signature": "fracture.normal_x() -> float",
+      "description": "Get the x-component of the fracture normal.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "normal_y",
+      "signature": "fracture.normal_y() -> float",
+      "description": "Get the y-component of the fracture normal.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "normal_z",
+      "signature": "fracture.normal_z() -> float",
+      "description": "Get the z-component of the fracture normal.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "point_near",
+      "signature": "fracture.point_near(value: vec) -> vec",
+      "description": "Get the point on the fracture closest to the given point (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "fracture.pos() -> vec",
+      "description": "Get the fracture location (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "fracture.pos_x() -> float",
+      "description": "Get the x-component of the fracture location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "fracture.pos_y() -> float",
+      "description": "Get the y-component of the fracture location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "fracture.pos_z() -> float",
+      "description": "Get the z-component of the fracture location.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop",
+      "signature": "fracture.prop(property_name: str) -> any",
+      "description": "Get a surface property value of this fracture.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "props",
+      "signature": "fracture.props() -> dict {str: any}",
+      "description": "Get a dictionary of all the surface properties of this fracture.",
+      "returns": {
+        "type": "dict {str: any}"
+      }
+    },
+    {
+      "name": "set_aperture",
+      "signature": "fracture.set_aperture(value: float) -> None",
+      "description": "Set the fracture aperture.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_area",
+      "signature": "fracture.set_area(value: float) -> None",
+      "description": "Set the fracture area.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_diameter",
+      "signature": "fracture.set_diameter(value: float) -> None",
+      "description": "Set the fracture diameter.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_dip",
+      "signature": "fracture.set_dip(value: float) -> None",
+      "description": "Set the fracture dip.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_dipdir",
+      "signature": "fracture.set_dipdir(value: float) -> None",
+      "description": "Set the fracture dip direction.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "fracture.set_extra(slot: int, value: any) -> None",
+      "description": "Set the fracture extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "fracture.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the fracture group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_len",
+      "signature": "fracture.set_len(value: float) -> None",
+      "description": "Set the fracture length.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      },
+      "notes": [
+        "2D builds only."
+      ]
+    },
+    {
+      "name": "set_normal",
+      "signature": "fracture.set_normal(value: vec) -> None",
+      "description": "Set the fracture normal (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_x",
+      "signature": "fracture.set_normal_x(value: float) -> None",
+      "description": "Set the x-component of the fracture normal.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_y",
+      "signature": "fracture.set_normal_y(value: float) -> None",
+      "description": "Set the y-component of the fracture normal.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_normal_z",
+      "signature": "fracture.set_normal_z(value: float) -> None",
+      "description": "Set the z-component of the fracture normal.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_pos",
+      "signature": "fracture.set_pos(value: vec) -> None",
+      "description": "Set the fracture location (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_x",
+      "signature": "fracture.set_pos_x(value: float) -> None",
+      "description": "Set the x-component of the fracture location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_y",
+      "signature": "fracture.set_pos_y(value: float) -> None",
+      "description": "Set the y-component of the fracture location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_z",
+      "signature": "fracture.set_pos_z(value: float) -> None",
+      "description": "Set the z-component of the fracture location.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_prop",
+      "signature": "fracture.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of this fracture.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "fracture.valid() -> bool",
+      "description": "Returns True if this fracture is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "vertices",
+      "signature": "fracture.vertices() -> tuple of Vertex objects",
+      "description": "Get the vertices of this fracture.",
+      "returns": {
+        "type": "tuple of Vertex objects"
+      }
+    }
+  ]
+}

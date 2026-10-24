@@ -1,0 +1,142 @@
+{
+  "module": "itasca.dfn",
+  "description": "Functions and classes for working with Itasca DFNs.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.dfn.html",
+  "functions": [
+    {
+      "name": "center_density",
+      "signature": "itasca.dfn.center_density(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture center density. The fracture center density is defined as the {P20 value in 2D; P30 value in 3D} as measured in the specified region. {P20 in 2D; P30 in 3D} is the number of fracture centers in the specified region per unit area (volume). All fractures from all dfns are used in this calculation.",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "count",
+      "signature": "itasca.dfn.count() -> int",
+      "description": "Get the number of dfns.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "create",
+      "signature": "itasca.dfn.create(dfn_name=Empty) -> DFN object",
+      "description": "Create an empty dfn with optional name dfn_name.",
+      "parameters": [
+        {
+          "name": "dfn_name",
+          "required": false,
+          "default": "Empty"
+        }
+      ],
+      "returns": {
+        "type": "DFN object"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.dfn.density(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture mass density. The fracture mass density is defined as the {P21 value in 2D; P32 value in 3D} as measured in the specified region. {P21 in 2D; P32 in 3D} is the cumulated fracture length (surface) in the specified region per unit area (volume). All fractures from all dfns are used in this calculation.",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "find",
+      "signature": "itasca.dfn.find(id: int or name: str) -> DFN object",
+      "description": "Get the dfn object with the given ID number or name.",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "int or name: str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "DFN object"
+      }
+    },
+    {
+      "name": "list",
+      "signature": "itasca.dfn.list() -> DFN iterator object",
+      "description": "Get a dfn iterator object.",
+      "returns": {
+        "type": "DFN iterator object"
+      }
+    },
+    {
+      "name": "maxid",
+      "signature": "itasca.dfn.maxid() -> int",
+      "description": "Get the maximum dfn ID.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "p10",
+      "signature": "itasca.dfn.p10(pt1=origin, pt2=origin) -> float",
+      "description": "Get the P10, or the fracture density per unit length, along the line from pt1 to pt2. All fractures from all dfns are used in this calculation.",
+      "parameters": [
+        {
+          "name": "pt1",
+          "required": false,
+          "default": "origin"
+        },
+        {
+          "name": "pt2",
+          "required": false,
+          "default": "origin"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "percolation",
+      "signature": "itasca.dfn.percolation(lower=domain lower bound, upper=domain upper bound) -> float",
+      "description": "Get the fracture percolation. The fracture percolation is measured in the region and is defined as {the sum of the squared fracture lengths per unit area in 2D; the sum of pi^2 (area/pi)^(1.5) per unit volume, where area is the fracture area in 3D}.",
+      "parameters": [
+        {
+          "name": "lower",
+          "required": false,
+          "default": "domain lower bound"
+        },
+        {
+          "name": "upper",
+          "required": false,
+          "default": "domain upper bound"
+        }
+      ],
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

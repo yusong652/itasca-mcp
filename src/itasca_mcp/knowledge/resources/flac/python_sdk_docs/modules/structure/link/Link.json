@@ -1,0 +1,455 @@
+{
+  "class": "Link",
+  "description": "Link object instance in itasca.structure.link.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.link.Link.html",
+  "note": "Do not instantiate directly; use itasca.structure.link module functions.",
+  "method_groups": {
+    "attach": "attach",
+    "component": "component_id",
+    "delete": "delete",
+    "extra": "extra, set_extra",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "id": "id",
+    "in": "in_group",
+    "model": "model, model_area, model_compression, model_disp, model_force, model_gap, model_gap_neg, model_gap_pos, model_stiffness, model_tension, model_yield, set_model_area, set_model_compression, set_model_gap, set_model_stiffness, set_model_tension",
+    "node": "node",
+    "side": "side",
+    "slide": "set_slide, set_slide_tol, slide, slide_tol",
+    "target": "target",
+    "type": "type",
+    "used": "used_by",
+    "valid": "valid"
+  },
+  "methods": [
+    {
+      "name": "attach",
+      "signature": "link.attach() -> tuple of int",
+      "description": "Get the attached condition used by the link in each degree-of-freedom. The return value will be an integer with one of three values: 1 = free; 2 = rigid; and 3 = deformable. If the condition is deformable, see the \\(model\\) method (and associated methods) for details.",
+      "returns": {
+        "type": "tuple of int"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "link.component_id() -> int",
+      "description": "Get the Link component id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "delete",
+      "signature": "link.delete() -> None",
+      "description": "Delete this structural link.",
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "link.extra(slot: int) -> any",
+      "description": "Get the Link extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "link.group([slot: str or int]) -> str",
+      "description": "Get the Link group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "link.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the Link. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "link.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this Link is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "link.id() -> int",
+      "description": "Get the Link structural element id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "link.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the Link is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "model",
+      "signature": "link.model() -> tuple of str",
+      "description": "Get the name of the 1-D force-displacement model used in each degree-of-freedom. If the link attached condition is free or rigid, then this function will return None (see the \\(attach\\) method). The currently available models are \\(linear\\), \\(normal-yield\\), \\(shear-yield\\), and \\(pile-yield\\).",
+      "returns": {
+        "type": "tuple of str"
+      }
+    },
+    {
+      "name": "model_area",
+      "signature": "link.model_area() -> tuple of float",
+      "description": "Get the area associated with all degrees-of-freedom in the force-displacement model.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "model_compression",
+      "signature": "link.model_compression() -> tuple of float",
+      "description": "Get the compressive yield force associated with the force-displacement model for all degrees-of-freedom.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "model_disp",
+      "signature": "link.model_disp() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the relative displacement between the node and the target used by each 1-D force-displacement model. Note that displacements are with respect to the node-local coordinate system. The relative displacement is defined as the displacement of the link target minus the the displacement of the link host node in the node local coordinate system.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "model_force",
+      "signature": "link.model_force() -> (translational: vec3, rotational: vec3)",
+      "description": "Get the current force in each 1-D force-displacement model. The force is calculated by the 1-D force-displacement model in an incremental fashion from the incremental relative displacement of the link target and the host node (target minus node). See the \\(model_disp\\) method.",
+      "returns": {
+        "type": "(translational: vec3, rotational: vec3)"
+      }
+    },
+    {
+      "name": "model_gap",
+      "signature": "link.model_gap() -> tuple of bool",
+      "description": "Get the flag indicating whether gap calculations are active in the 1-D force-displacement model for all degrees-of-freedom. See the \\(gap_neg\\) and \\(gap_pos\\) methods.",
+      "returns": {
+        "type": "tuple of bool"
+      }
+    },
+    {
+      "name": "model_gap_neg",
+      "signature": "link.model_gap_neg() -> tuple of float",
+      "description": "Get the negative (compressive) gap component of each 1-D force-displacement model for each degree-of-freedom.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "model_gap_pos",
+      "signature": "link.model_gap_pos() -> tuple of float",
+      "description": "Get the positive (tensile) gap component of each 1-D force-displacement model for each degree-of-freedom. This value will only affect force calculations if the gap-use flag is on; see the \\(model_gap\\) method. The relative displacement is defined as the displacement of the link target minus the displacement of the link host node in the node local coordinate system. See the \\(model_disp\\) method.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "model_stiffness",
+      "signature": "link.model_stiffness() ->",
+      "description": "Get the stiffness used by each 1-D force-displacement model for each degree-of-freedom."
+    },
+    {
+      "name": "model_tension",
+      "signature": "link.model_tension() -> tuple of float",
+      "description": "Get the tensile yield force associated with the force-displacement model for each degree-of-freedom. The tensile yield force is a limit to how positive the force in the link can be. Note that tension is defined relative to the node-local coordinate system, and, thus, depending on the coordinate systems involved, the definition of compression and tension may not match those used by the element connected to the host node. See the \\(model_force\\) method.",
+      "returns": {
+        "type": "tuple of float"
+      }
+    },
+    {
+      "name": "model_yield",
+      "signature": "link.model_yield() -> tuple of int",
+      "description": "Get the yield state indicator in the 1-D force displacement model each degree-of-freedom. This is returned as an integer where 0 = never yielded, 1 = yielding now, and 2 = yielded in past.",
+      "returns": {
+        "type": "tuple of int"
+      }
+    },
+    {
+      "name": "node",
+      "signature": "link.node() -> Node object",
+      "description": "Get the node hosting the structural link.",
+      "returns": {
+        "type": "Node object"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "link.set_extra(slot: int, value: any) -> None",
+      "description": "Set the Link extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "link.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the Link group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_area",
+      "signature": "link.set_model_area(comp: int, area: value) -> None",
+      "description": "Set the area associated with one component of the degrees-of-freedom. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "area",
+          "type": "value",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_compression",
+      "signature": "link.set_model_compression(comp: int, force: value) -> None",
+      "description": "Set the compressive yield force associated with the force-displacement model for a single degree-of-freedom. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "value",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_gap",
+      "signature": "link.set_model_gap(comp: int, flag: bool) -> None",
+      "description": "Set the flag indicating whether gap calculations are active in the 1-D force-displacement model for a single degrees-of-freedom. See the \\(gap_neg\\) and \\(gap_pos\\) methods.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "flag",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_stiffness",
+      "signature": "link.set_model_stiffness(comp: int, force: float) -> None",
+      "description": "Set the stiffness used by each 1-D force-displacement model for each degree-of-freedom.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_model_tension",
+      "signature": "link.set_model_tension(comp: int, force: float) -> None",
+      "description": "Set the tensile yield force associated with the force-displacement model for a singe degree-of-freedom. The tensile yield force is a limit to how positive the force in the link can be. Note that tension is defined relative to the node-local coordinate system, and, thus, depending on the coordinate systems involved, the definition of compression and tension may not match those used by the element connected to the host node. See the \\(model_force\\) method. The integer component starts at zero and the translational components are first.",
+      "parameters": [
+        {
+          "name": "comp",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "force",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "link.set_slide(flag: bool) -> None",
+      "description": "Set the large-strain sliding flag for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "parameters": [
+        {
+          "name": "flag",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "link.set_slide_tol(flag: bool) -> None",
+      "description": "Get the large-strain sliding tolerance for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "parameters": [
+        {
+          "name": "flag",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "side",
+      "signature": "link.side() -> int",
+      "description": "Get the side number of the link. Unless the host node of the link is attached to an embedded liner, this will always return 1. If the host node is part of an embedded liner, it may be 2, indicating the link is being used on side 2 of the liner.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "link.slide() -> bool",
+      "description": "Get the large-strain sliding flag for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "link.slide_tol() -> bool",
+      "description": "Get the large-strain sliding tolerance for the link. This function only applies to node-to-zone links; it has no meaning for node-to-node links.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "target",
+      "signature": "link.target() -> Zone or Node object",
+      "description": "Get the target of this link. The return value is a Node object for a node-node link and a Zone object for a node-zone link.",
+      "returns": {
+        "type": "Zone or Node object"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "link.type() -> str",
+      "description": "Get the name of the link target type. A node-to-node link will return an \\(itasca.structure.node.Node\\) object. A node-to-zone link will return an \\(itasca.zone.Zone\\) object.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "used_by",
+      "signature": "link.used_by() -> str",
+      "description": "Get the name of the type of structural element with which this link is associated. This only applies to node-to-zone links, otherwise the return is a null string. The type string will be one of \\(beam\\), \\(cable\\), \\(pile\\), \\(shell\\), \\(geogrid\\), or \\(liner\\). If the attach conditions and models assigned to the link are not compatible with those elements (generally because they have been changed), then an empty string is returned.",
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "link.valid() -> bool",
+      "description": "Returns True if this Link is live.",
+      "returns": {
+        "type": "bool"
+      }
+    }
+  ]
+}

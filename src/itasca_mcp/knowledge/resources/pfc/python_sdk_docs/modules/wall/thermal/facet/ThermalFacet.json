@@ -1,0 +1,325 @@
+{
+  "class": "ThermalFacet",
+  "description": "ThermalFacet object instance in itasca.wall.thermal.facet.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.wall.thermal.facet.ThermalFacet.html",
+  "note": "Do not instantiate directly; use itasca.wall.thermal.facet module functions.",
+  "method_groups": {
+    "contact": "contact_count",
+    "contacts": "contacts",
+    "extra": "extra, set_extra",
+    "facet": "facet",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "has": "has_prop",
+    "id": "id",
+    "in": "in_group",
+    "pos": "pos, pos_x, pos_y, pos_z",
+    "prop": "prop, set_prop",
+    "props": "props",
+    "temp": "set_temp, temp",
+    "valid": "valid",
+    "wall": "wall"
+  },
+  "methods": [
+    {
+      "name": "contact_count",
+      "signature": "thermalfacet.contact_count(all=False, type=None) -> int",
+      "description": "Get the number of contacts associated with this thermal pebble. If the optional keyword argument type is given, the count is limited to the contact types specified. The optional type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the optional keyword argument all is True the count includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "contacts",
+      "signature": "thermalfacet.contacts([piece, ]all=False, type=None) -> tuple of Contact objects",
+      "description": "Get a tuple of contacts associated with this thermal pebble. An optional argument can be included which is a piece object (a thermal ball, a thermal pebble or a thermal facet). If the optional keyword argument type is given, the returned list is limited to the contact types specified. The type keyword argument should be a Python type object (one of: itasca.BallBallThermalContact, itasca.BallPebbleThermalContact, itasca.PebblePebbleThermalContact, itasca.BallFacetThermalContact or itasca.PebbleFacetThermalContact). If the (optional) keyword argument all is True the returned list includes virtual contacts.",
+      "parameters": [
+        {
+          "name": "piece",
+          "required": true
+        },
+        {
+          "name": "all",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "returns": {
+        "type": "tuple of Contact objects"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "thermalfacet.extra(slot: int) -> any",
+      "description": "Get the thermal facet extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "facet",
+      "signature": "thermalfacet.facet() -> Pebble object",
+      "description": "Get the pebble corresponding to this thermal pebble.",
+      "returns": {
+        "type": "Pebble object"
+      }
+    },
+    {
+      "name": "group",
+      "signature": "thermalfacet.group([slot: int]) -> str",
+      "description": "Get the thermal facet group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "thermalfacet.group_remove(group_name: str) -> int",
+      "description": "Remove from the given group from the thermal facet. One argument of type string, giving the group name, is required. The return value is an integer which is the first slot in which the group name was found or -1 if not found.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "thermalfacet.groups() -> tuple of strings",
+      "description": "Get a tuple of group names assigned to this thermal facet.",
+      "returns": {
+        "type": "tuple of strings"
+      }
+    },
+    {
+      "name": "has_prop",
+      "signature": "thermalfacet.has_prop(property_name: str) -> bool",
+      "description": "Returns True if the thermal facet has the given surface property.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "thermalfacet.id() -> int",
+      "description": "Get the thermal facet id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "thermalfacet.in_group(group_name: str) -> bool",
+      "description": "Test if the thermal facet is part of a given group. All group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "thermalfacet.pos() -> vec",
+      "description": "Get the thermal facet location (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "thermalfacet.pos_x() -> float",
+      "description": "Get the x-component of the thermal facet location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "thermalfacet.pos_y() -> float",
+      "description": "Get the y-component of the thermal facet location.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "thermalfacet.pos_z() -> float",
+      "description": "Get the z-component of the thermal facet location.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "prop",
+      "signature": "thermalfacet.prop(property_name: str) -> any",
+      "description": "Get a surface property value of this thermal facet.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "props",
+      "signature": "thermalfacet.props() -> dict {str: any}",
+      "description": "Get a dictionary of all the surface properties of this thermal facet.",
+      "returns": {
+        "type": "dict {str: any}"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "thermalfacet.set_extra(slot: int, value: any) -> None",
+      "description": "Set the thermal facet extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "thermalfacet.set_group([group_name: str[, slot: int]]) -> None",
+      "description": "Set the thermal facet group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "thermalfacet.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of this thermal facet.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_temp",
+      "signature": "thermalfacet.set_temp(value: float) -> None",
+      "description": "Set the thermal facet temperature.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "temp",
+      "signature": "thermalfacet.temp() -> float",
+      "description": "Get the thermal facet temperature.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "thermalfacet.valid() -> bool",
+      "description": "Returns True if this thermal facet is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "wall",
+      "signature": "thermalfacet.wall() -> Thermal clump object",
+      "description": "Get the thermal clump corresponding to this pebble.",
+      "returns": {
+        "type": "Thermal clump object"
+      }
+    }
+  ]
+}

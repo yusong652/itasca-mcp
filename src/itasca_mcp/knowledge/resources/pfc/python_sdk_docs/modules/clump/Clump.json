@@ -147,7 +147,8 @@
       "template_euler_x",
       "template_euler_y",
       "template_euler_z",
-      "template_scale"
+      "template_scale",
+      "template_rotation"
     ],
     "operations": [
       "calculate",
@@ -168,7 +169,9 @@
       "set_extra",
       "fragment",
       "set_fragment",
-      "inside"
+      "inside",
+      "rotation",
+      "set_rotation"
     ]
   },
   "methods": [
@@ -310,7 +313,10 @@
       "returns": {
         "type": "vec",
         "description": "Euler angles (rx, ry, rz)"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_x",
@@ -319,7 +325,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about X axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_y",
@@ -328,7 +337,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about Y axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "euler_z",
@@ -337,7 +349,10 @@
       "returns": {
         "type": "float",
         "description": "Rotation about Z axis"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler",
@@ -354,7 +369,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_x",
@@ -371,7 +389,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_y",
@@ -388,7 +409,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "set_euler_z",
@@ -405,7 +429,10 @@
       "returns": {
         "type": "None",
         "description": "No return value"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "disp",
@@ -1722,7 +1749,10 @@
       "returns": {
         "type": "vec",
         "description": "Template relative orientation"
-      }
+      },
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "template_euler_x",
@@ -1731,7 +1761,10 @@
         "type": "float",
         "description": "X template Euler angle"
       },
-      "description": "Get X-component of template orientation"
+      "description": "Get X-component of template orientation",
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "template_euler_y",
@@ -1740,7 +1773,10 @@
         "type": "float",
         "description": "Y template Euler angle"
       },
-      "description": "Get Y-component of template orientation"
+      "description": "Get Y-component of template orientation",
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "template_euler_z",
@@ -1749,7 +1785,10 @@
         "type": "float",
         "description": "Z template Euler angle"
       },
-      "description": "Get Z-component of template orientation"
+      "description": "Get Z-component of template orientation",
+      "notes": [
+        "3D builds only; 2D builds expose rotation / set_rotation instead."
+      ]
     },
     {
       "name": "template_scale",
@@ -1989,6 +2028,73 @@
       "returns": {
         "type": "bool",
         "description": "True if point inside clump"
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "rotation",
+      "signature": "clump.rotation() -> float",
+      "description": "Get the clump orientation.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "set_rotation",
+      "signature": "clump.set_rotation(value: float) -> None",
+      "description": "Set the clump orientation.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "template_rotation",
+      "signature": "clump.template_rotation() -> float",
+      "description": "Get the clump template relative orientation.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "2D builds only."
+      ],
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0",
+          "9.0"
+        ]
       }
     }
   ]

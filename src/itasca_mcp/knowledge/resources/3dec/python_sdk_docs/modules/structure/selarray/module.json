@@ -1,0 +1,206 @@
+{
+  "module": "itasca.structure.selarray",
+  "description": "Array interface for structural element.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.selarray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.selarray.component_id() -> array int{Structure}",
+      "description": "Get a NumPy array of the ID of Structure component id.",
+      "returns": {
+        "type": "array int{Structure}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.selarray.density() -> array double{Structure}",
+      "description": "Get a NumPy array of the density of Structure elements.",
+      "returns": {
+        "type": "array double{Structure}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.selarray.extra(slot: int) -> array float{Structure} or float{Structure,3}",
+      "description": "Get the Structure extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{Structure} or float{Structure,3}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.selarray.id() -> array int{Structure}",
+      "description": "Get a NumPy array of the ID of Structure element id.",
+      "returns": {
+        "type": "array int{Structure}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.selarray.in_group(group_name: str, slot=1) -> array bool{Structure}",
+      "description": "Return Structure group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{Structure}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.selarray.local_system() -> array double{Structure,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of Structure elements.",
+      "returns": {
+        "type": "array double{Structure,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.selarray.mark() -> array bool{Structure}",
+      "description": "Get a NumPy array of the mark flag of Structure elements.",
+      "returns": {
+        "type": "array bool{Structure}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.selarray.pos() -> array vec3{Structure}",
+      "description": "Get a NumPy array of the current position of Structure elements.",
+      "returns": {
+        "type": "array vec3{Structure}"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.selarray.set_density(array double{Structure}) -> None",
+      "description": "Set the density of Structure elements.",
+      "parameters": [
+        {
+          "name": "array double{Structure}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.selarray.set_extra(slot: int, data: array float{Structure} or float{Structure, 3}) -> None",
+      "description": "Set the Structure extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{Structure} or float{Structure",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.selarray.set_group(membership: array bool{Structure}, group_name: str, slot=1) -> None",
+      "description": "Set Structure group from an array. Where membership True set the corresponding Structure to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{Structure}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.selarray.set_mark(array bool{Structure}) -> None",
+      "description": "Set the mark flag of Structure elements.",
+      "parameters": [
+        {
+          "name": "array bool{Structure}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.selarray.set_thermal_expansion(array double{Structure}) -> None",
+      "description": "Set the thermal expansion coefficient of Structure elements.",
+      "parameters": [
+        {
+          "name": "array double{Structure}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.selarray.thermal_expansion() -> array double{Structure}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of Structure elements.",
+      "returns": {
+        "type": "array double{Structure}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.selarray.type() -> array string{Structure}",
+      "description": "Get a NumPy array of the type name of Structure elements.",
+      "returns": {
+        "type": "array string{Structure}"
+      }
+    }
+  ]
+}

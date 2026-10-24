@@ -1,0 +1,522 @@
+{
+  "module": "itasca.structure.cablearray",
+  "description": "Array interface for cable elements.",
+  "import_statement": "import itasca",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.structure.cablearray.html",
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "notes": [
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24)."
+  ],
+  "functions": [
+    {
+      "name": "area",
+      "signature": "itasca.structure.cablearray.area() -> array float{cable}",
+      "description": "Get a Numpy array of the cross-section area of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "component_id",
+      "signature": "itasca.structure.cablearray.component_id() -> array int{cable}",
+      "description": "Get a NumPy array of the ID of cable component id.",
+      "returns": {
+        "type": "array int{cable}"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "itasca.structure.cablearray.density() -> array double{cable}",
+      "description": "Get a NumPy array of the density of cable elements.",
+      "returns": {
+        "type": "array double{cable}"
+      }
+    },
+    {
+      "name": "extra",
+      "signature": "itasca.structure.cablearray.extra(slot: int) -> array float{cable} or float{cable,3}",
+      "description": "Get the cable extra data in the given slot as an array. Extra variables accessed by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "array float{cable} or float{cable,3}"
+      }
+    },
+    {
+      "name": "force_axial",
+      "signature": "itasca.structure.cablearray.force_axial() -> array float{cable}",
+      "description": "Get a Numpy array of the average axial force of the element (positive: tension; negative: compression).",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "force_nodal",
+      "signature": "itasca.structure.cablearray.force_nodal() -> array float{cable,4,3}",
+      "description": "Get the generalized nodal force acting at each end. The translational and rotational components of node 1 are given first.",
+      "returns": {
+        "type": "array float{cable,4,3}"
+      }
+    },
+    {
+      "name": "grout_cohesion",
+      "signature": "itasca.structure.cablearray.grout_cohesion() -> array float{cable}",
+      "description": "Get a Numpy array of the grout cohesion.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "grout_confining",
+      "signature": "itasca.structure.cablearray.grout_confining() -> array float{cable,2}",
+      "description": "Get the confining stress acting on the grout at each end. Negative value indicates compression. The stress acts in a plane perpendicular to the cable axis; effective confining stress is the average of the principal values in this plane.",
+      "returns": {
+        "type": "array float{cable,2}"
+      }
+    },
+    {
+      "name": "grout_dir",
+      "signature": "itasca.structure.cablearray.grout_dir() -> array float{cable,2,3}",
+      "description": "Get the direction vector in which cable is being loaded by the coupling spring for each end.",
+      "returns": {
+        "type": "array float{cable,2,3}"
+      }
+    },
+    {
+      "name": "grout_disp",
+      "signature": "itasca.structure.cablearray.grout_disp() -> array float{cable,2,3}",
+      "description": "Get displacement in grout (shear coupling spring) at each end ; positive/negative with respect to the average axial direction of cable.",
+      "returns": {
+        "type": "array float{cable,2,3}"
+      }
+    },
+    {
+      "name": "grout_friction",
+      "signature": "itasca.structure.cablearray.grout_friction() -> array float{cable}",
+      "description": "Get a Numpy array of the grout internal friction angle.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "grout_perimeter",
+      "signature": "itasca.structure.cablearray.grout_perimeter() -> array float{cable}",
+      "description": "Get a Numpy array of the grout exposed perimeter.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "grout_slip",
+      "signature": "itasca.structure.cablearray.grout_slip() -> array int{cable,2}",
+      "description": "Get the slip state of grout (shear coupling spring) at each end. Return value {0, 1, 2} denotes never slipped, now slipping, or slipped in the past, respectively.",
+      "returns": {
+        "type": "array int{cable,2}"
+      }
+    },
+    {
+      "name": "grout_stiffness",
+      "signature": "itasca.structure.cablearray.grout_stiffness() -> array float{cable}",
+      "description": "Get a Numpy array of the grout stiffness.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "grout_stress",
+      "signature": "itasca.structure.cablearray.grout_stress() -> array float{cable,2}",
+      "description": "Get stress in grout (shear coupling spring) at each end; positive/negative with respect to average axial direction of cable.",
+      "returns": {
+        "type": "array float{cable,2}"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "itasca.structure.cablearray.id() -> array int{cable}",
+      "description": "Get a NumPy array of the ID of cable element id.",
+      "returns": {
+        "type": "array int{cable}"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "itasca.structure.cablearray.in_group(group_name: str, slot=1) -> array bool{cable}",
+      "description": "Return cable group membership as a Boolean array.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "array bool{cable}"
+      }
+    },
+    {
+      "name": "length",
+      "signature": "itasca.structure.cablearray.length() -> array float{cable}",
+      "description": "Get a Numpy array of the length of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "local_system",
+      "signature": "itasca.structure.cablearray.local_system() -> array double{cable,3,3}",
+      "description": "Get a NumPy array of the local coordinate system of cable elements.",
+      "returns": {
+        "type": "array double{cable,3,3}"
+      }
+    },
+    {
+      "name": "mark",
+      "signature": "itasca.structure.cablearray.mark() -> array bool{cable}",
+      "description": "Get a NumPy array of the mark flag of cable elements.",
+      "returns": {
+        "type": "array bool{cable}"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "itasca.structure.cablearray.pos() -> array vec3{cable}",
+      "description": "Get a NumPy array of the current position of cable elements.",
+      "returns": {
+        "type": "array vec3{cable}"
+      }
+    },
+    {
+      "name": "set_area",
+      "signature": "itasca.structure.cablearray.set_area(array float{cable}) -> None",
+      "description": "Set the cross-section area of the cable element.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "itasca.structure.cablearray.set_density(array double{cable}) -> None",
+      "description": "Set the density of cable elements.",
+      "parameters": [
+        {
+          "name": "array double{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_extra",
+      "signature": "itasca.structure.cablearray.set_extra(slot: int, data: array float{cable} or float{cable, 3}) -> None",
+      "description": "Set the cable extra data in the given slot with an array. Extra variables set by array must be of type float or vec.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "array float{cable} or float{cable",
+          "required": true
+        },
+        {
+          "name": "3}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_group",
+      "signature": "itasca.structure.cablearray.set_group(membership: array bool{cable}, group_name: str, slot=1) -> None",
+      "description": "Set cable group from an array. Where membership True set the corresponding cable to be a member of group group_name in the given slot.",
+      "parameters": [
+        {
+          "name": "membership",
+          "type": "array bool{cable}",
+          "required": true
+        },
+        {
+          "name": "group_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "required": false,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_cohesion",
+      "signature": "itasca.structure.cablearray.set_grout_cohesion(array float{cable}) -> None",
+      "description": "Set the grout cohesion.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_friction",
+      "signature": "itasca.structure.cablearray.set_grout_friction(array float{cable}) -> None",
+      "description": "Set the grout internal friction angle.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_perimeter",
+      "signature": "itasca.structure.cablearray.set_grout_perimeter(array float{cable}) -> None",
+      "description": "Set the grout exposed perimeter.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_grout_stiffness",
+      "signature": "itasca.structure.cablearray.set_grout_stiffness(array float{cable}) -> None",
+      "description": "Set the grout stiffness.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mark",
+      "signature": "itasca.structure.cablearray.set_mark(array bool{cable}) -> None",
+      "description": "Set the mark flag of cable elements.",
+      "parameters": [
+        {
+          "name": "array bool{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide",
+      "signature": "itasca.structure.cablearray.set_slide(array bool{cable}) -> None",
+      "description": "Set the boolean flag of the large-strain sliding. If True, slide is on; if False, slide is off.",
+      "parameters": [
+        {
+          "name": "array bool{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_slide_tol",
+      "signature": "itasca.structure.cablearray.set_slide_tol(array bool{cable}) -> None",
+      "description": "Set the large-strain sliding tolerance of the cable element.",
+      "parameters": [
+        {
+          "name": "array bool{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_thermal_expansion",
+      "signature": "itasca.structure.cablearray.set_thermal_expansion(array double{cable}) -> None",
+      "description": "Set the thermal expansion coefficient of cable elements.",
+      "parameters": [
+        {
+          "name": "array double{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_yield_compression",
+      "signature": "itasca.structure.cablearray.set_yield_compression(array float{cable}) -> None",
+      "description": "Set the compression yield strength of the cable element.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_yield_tension",
+      "signature": "itasca.structure.cablearray.set_yield_tension(array float{cable}) -> None",
+      "description": "Set the tension yield strength of the cable element.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_young",
+      "signature": "itasca.structure.cablearray.set_young(array float{cable}) -> None",
+      "description": "Set the Youngs modulus of the cable element.",
+      "parameters": [
+        {
+          "name": "array float{cable}",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "slide",
+      "signature": "itasca.structure.cablearray.slide() -> bool",
+      "description": "Get the boolean flag of the large-strain sliding. If True, slide is on; if False, slide is off.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "slide_tol",
+      "signature": "itasca.structure.cablearray.slide_tol() -> array float{cable}",
+      "description": "Get a Numpy array of the large-strain sliding tolerance of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "state_compression",
+      "signature": "itasca.structure.cablearray.state_compression() -> array int{cable}",
+      "description": "Get a Numpy array of the compression yield state of the cable element. The return value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "array int{cable}"
+      }
+    },
+    {
+      "name": "state_tension",
+      "signature": "itasca.structure.cablearray.state_tension() -> array int{cable}",
+      "description": "Get a Numpy array of the tension yield state of cable element. The return value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively.",
+      "returns": {
+        "type": "array int{cable}"
+      }
+    },
+    {
+      "name": "stress_axial",
+      "signature": "itasca.structure.cablearray.stress_axial() -> array float{cable}",
+      "description": "Get a Numpy array of the average axial stress of the cable element (positive: tension; negative: compression.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "thermal_expansion",
+      "signature": "itasca.structure.cablearray.thermal_expansion() -> array double{cable}",
+      "description": "Get a NumPy array of the thermal expansion coefficient of cable elements.",
+      "returns": {
+        "type": "array double{cable}"
+      }
+    },
+    {
+      "name": "type",
+      "signature": "itasca.structure.cablearray.type() -> array string{cable}",
+      "description": "Get a NumPy array of the type name of cable elements.",
+      "returns": {
+        "type": "array string{cable}"
+      }
+    },
+    {
+      "name": "volume",
+      "signature": "itasca.structure.cablearray.volume() -> array float{cable}",
+      "description": "Get a Numpy array of the cable element volume, or the cross-sectional area times the length.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "yield_compression",
+      "signature": "itasca.structure.cablearray.yield_compression() -> array float{cable}",
+      "description": "Get a Numpy array of the compression yield strength of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "yield_tension",
+      "signature": "itasca.structure.cablearray.yield_tension() -> array float{cable}",
+      "description": "Get a Numpy array of the tension yield strength of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    },
+    {
+      "name": "young",
+      "signature": "itasca.structure.cablearray.young() -> array float{cable}",
+      "description": "Get a Numpy array of the Youngs modulus of the cable element.",
+      "returns": {
+        "type": "array float{cable}"
+      }
+    }
+  ]
+}
