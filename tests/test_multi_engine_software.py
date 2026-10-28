@@ -343,18 +343,20 @@ async def test_mpoint_query_command_finds_mpoint_create() -> None:
 
 @pytest.mark.asyncio
 async def test_mpoint_python_api_is_core_only_and_redirects() -> None:
-    """MPoint's Python index carries the shared kernel and none of FLAC's continuum API.
+    """MPoint's Python index carries its own families and none of FLAC's continuum API.
 
     itasca.zone and itasca.gridpoint run on the MPoint binary -- all 236
     documented functions are present -- but they are FLAC's continuum API.
-    fish / history / dfn back MPoint's own fish, history and fracture command
-    families, so they are documented from live MPoint introspection.
+    itasca.mpoint (9.8) is MPoint's own; fish / history / dfn / table back its
+    fish, history, fracture and table command families, so they are documented
+    from live MPoint introspection.
     """
     result = await mcp.call_tool("itasca_browse_python_api", {"software": "mpoint", "api": None})
     data = _parse_tool_payload(result)["data"]
     modules = {e.get("path") for e in data["entries"] if e.get("entry_type") == "module"}
     assert "itasca" in modules
-    assert {p.split(".")[1] for p in modules if p != "itasca"} <= {"fish", "history", "dfn"}
+    assert {p.split(".")[1] for p in modules if p != "itasca"} <= {"fish", "history", "dfn", "mpoint", "table"}
+    assert "itasca.mpoint" in modules
     assert not any(p.startswith(("itasca.zone", "itasca.gridpoint")) for p in modules)
 
     result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "itasca.zone stress"})
@@ -363,24 +365,24 @@ async def test_mpoint_python_api_is_core_only_and_redirects() -> None:
 
 
 @pytest.mark.asyncio
-async def test_mpoint_python_query_warns_material_points_are_fish_only() -> None:
+async def test_mpoint_python_query_points_material_points_at_itasca_mpoint() -> None:
     """The single most likely thing for a new MPoint user to get wrong.
 
-    Material points have no Python binding, but a query about them still returns
-    plausible-looking fuzzy matches (interface nodes, attach points), so the hint
-    has to reach the user alongside results rather than instead of them.
+    A query about material points also returns plausible-looking fuzzy matches
+    (interface nodes, attach points), so the hint naming itasca.mpoint has to
+    reach the user alongside results rather than instead of them.
     """
     result = await mcp.call_tool("itasca_query_python_api", {"software": "mpoint", "query": "material point position"})
     data = _parse_tool_payload(result)["data"]
     assert data["entries"], "fuzzy matches are expected here -- that is the point"
     hints = data["summary"]["hints"]
-    assert any("FISH" in h for h in hints)
+    assert any("itasca.mpoint" in h for h in hints)
 
     result = await mcp.call_tool(
         "itasca_query_python_api", {"software": "mpoint", "query": "how do I get mpoint velocities"}
     )
     hints = _parse_tool_payload(result)["data"]["summary"]["hints"]
-    assert any("no itasca.mpoint module" in h.lower() for h in hints)
+    assert any("itasca.mpoint.mpmpointarray" in h for h in hints)
 
 
 @pytest.mark.asyncio
