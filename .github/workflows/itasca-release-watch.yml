@@ -1,0 +1,48 @@
+name: Itasca release watch
+
+# Weekly check of the Itasca v9 subscription release notes. When the page lists
+# revisions the checked-in snapshot does not have, an issue is opened with the
+# notes (items that mention scripting, commands, docs, save/restore or crashes
+# first). The snapshot is refreshed by whoever follows the issue up, in the PR
+# that does the corpus or bridge work:
+#   uv run python scripts/releases/itasca_release_watch.py --update
+# Until then the same revisions stay reported; the issue is reused, not
+# duplicated.
+
+on:
+  schedule:
+    - cron: "17 2 * * 1" # Mondays 02:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8.1.0
+      - name: Fetch and diff the release notes
+        run: >
+          uv run --no-project python scripts/releases/itasca_release_watch.py
+          --json /tmp/new.json --markdown /tmp/report.md
+      - name: Open or refresh the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          count=$(python3 -c "import json; print(len(json.load(open('/tmp/new.json'))['new']))")
+          latest=$(python3 -c "import json; print(json.load(open('/tmp/new.json'))['latest']['version'])")
+          echo "new revisions: $count (latest $latest)"
+          if [ "$count" = "0" ]; then exit 0; fi
+          newest=$(python3 -c "import json; print(json.load(open('/tmp/new.json'))['new'][0]['revision'])")
+          title="Itasca release notes: revision $newest ($latest)"
+          existing=$(gh issue list --state open --label release-watch --search "\"$title\" in:title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file /tmp/report.md
+            echo "refreshed issue #$existing"
+          else
+            gh label create release-watch --description "New Itasca release notes to follow up" --color 0E8A16 2>/dev/null || true
+            gh issue create --title "$title" --label release-watch --body-file /tmp/report.md
+          fi

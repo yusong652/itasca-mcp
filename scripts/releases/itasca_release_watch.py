@@ -18,6 +18,10 @@ Usage:
     uv run python scripts/releases/itasca_release_watch.py --update   # report and refresh the snapshot
     uv run python scripts/releases/itasca_release_watch.py --since 50 # print revisions newer than 50
 
+The scheduled workflow (.github/workflows/itasca-release-watch.yml) runs it
+weekly with --json and --markdown and opens an issue when there is anything
+new; the snapshot is refreshed by whoever follows the issue up.
+
 Only stdlib is used so the script runs anywhere the repo is checked out.
 """
 
@@ -165,11 +169,40 @@ def print_revision(rev: dict[str, object]) -> None:
             print(f"   {mark} {product}{item['text']}")
 
 
+def markdown_report(latest: dict[str, str], new: list[dict[str, object]]) -> str:
+    """The new revisions as an issue body: marked items first, then everything by section."""
+    lines = [f"Latest installer: **{latest['version']}** ({latest['released']}), source: {PAGE_URL}", ""]
+    for rev in new:
+        sections = rev["sections"]  # type: ignore[index]
+        flagged = [i for items in sections.values() for i in items if i.get("watch")]  # type: ignore[union-attr]
+        lines.append(f"## Revision {rev['revision']} ({rev['date']})")
+        lines.append("")
+        if flagged:
+            lines.append("**Mentions scripting, commands, docs, save/restore or crashes:**")
+            lines.append("")
+            for item in flagged:
+                product = f"**{item['product']}** " if item.get("product") else ""
+                lines.append(f"- {product}{item['text']}")
+            lines.append("")
+        for heading, items in sections.items():  # type: ignore[union-attr]
+            lines.append(f"<details><summary>{heading} ({len(items)})</summary>")
+            lines.append("")
+            for item in items:
+                product = f"**{item['product']}** " if item.get("product") else ""
+                lines.append(f"- {product}{item['text']}")
+            lines.append("")
+            lines.append("</details>")
+            lines.append("")
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--update", action="store_true", help="rewrite the snapshot after reporting")
     parser.add_argument("--since", type=int, help="print every revision newer than this number, ignoring the snapshot")
     parser.add_argument("--all", action="store_true", help="print every revision on the page")
+    parser.add_argument("--json", type=Path, metavar="PATH", help="write {latest, new} for automation")
+    parser.add_argument("--markdown", type=Path, metavar="PATH", help="write the new revisions as an issue body")
     args = parser.parse_args()
 
     page = fetch()
@@ -202,6 +235,13 @@ def main() -> int:
         )
         for rev in new:
             print_revision(rev)
+
+    if args.json:
+        args.json.write_text(
+            json.dumps({"latest": latest, "new": new}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+    if args.markdown:
+        args.markdown.write_text(markdown_report(latest, new), encoding="utf-8")
 
     if args.update:
         SNAPSHOT.write_text(
