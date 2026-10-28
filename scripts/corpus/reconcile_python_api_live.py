@@ -229,6 +229,45 @@ OVERRIDES: dict[str, dict[str, Any]] = {
 }
 
 
+# Misspellings in the engine's own docstrings and Sphinx pages (9.8 itasca.mpoint). They
+# are repeated verbatim into the corpus by the passes above; BM25 matches whole words,
+# so "veolcity" never answers a "velocity" query. Applied to description and signature
+# of every entry, every engine; idempotent.
+TEXT_FIXES = {
+    "veolcity": "velocity",
+    "appliad": "applied",
+    "unbalance force": "unbalanced force",
+    "mpoint mpoint ": "mpoint ",
+    "mesh point mesh point ": "mesh point ",
+}
+
+
+def apply_text_fixes() -> list[str]:
+    fixed = []
+    for doc_path in sorted(RESOURCES.glob("*/python_sdk_docs/modules/**/*.json")):
+        if doc_path.name == "keywords.json":
+            continue
+        doc = json.loads(doc_path.read_text(encoding="utf-8"))
+        changed = False
+        for e in doc.get("functions", []) + doc.get("methods", []):
+            if not isinstance(e, dict):
+                continue
+            for field in ("description", "signature"):
+                text = e.get(field)
+                if not isinstance(text, str):
+                    continue
+                new = text
+                for wrong, right in TEXT_FIXES.items():
+                    new = new.replace(wrong, right)
+                if new != text:
+                    e[field] = new
+                    changed = True
+        if changed:
+            _write(doc_path, doc)
+            fixed.append(str(doc_path.relative_to(RESOURCES)))
+    return fixed
+
+
 def apply_overrides() -> list[str]:
     patched = []
     for path, fields in OVERRIDES.items():
@@ -583,6 +622,10 @@ def main() -> None:
         for m in removed:
             print(f"      {m}")
     patched = apply_overrides()
+    fixed = apply_text_fixes()
+    print(f"== docstring misspellings fixed in: {len(fixed)} files")
+    for f in fixed:
+        print(f"   {f}")
     print(f"== overrides applied: {len(patched)}")
     for p in patched:
         print(f"   {p}")
