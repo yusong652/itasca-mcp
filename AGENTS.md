@@ -127,6 +127,12 @@ uv run pytest tests/test_tool_contracts.py
   - `tests/test_phase2_tools.py`
   - `tests/test_tool_contracts.py`
 Mock bridge based tests are preferred for deterministic CI.
+- Add a test only where a regression would be silent and costly: tool
+  envelopes, loader/resolution logic, parser output shape. Do not add one for
+  every change. Corpus data edits (a note on an entry, an availability marker,
+  a removed member marked as removed) and "the removed thing is still removed"
+  checks are not worth a test; the live reconcile/verification run is the
+  evidence, and the commit message records it.
 
 ## Documentation Sources
 

@@ -46,6 +46,7 @@ SPHINX_ROOTS = [
 ]
 SRC_BASE = "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc"
 SWEEP_DATE = "2026-10-24"
+ABSENT_97_NOTE = f"Absent from 9.7 builds (live introspection, {SWEEP_DATE})."
 
 SHARED = ("data", "fish", "geometry", "history", "dfn")
 ENGINES: dict[str, dict[str, Any]] = {
@@ -191,6 +192,8 @@ class Live:
         builds = {s[1] for s in seen}
         if labels == ["9.0"] and builds == {"9.7"} and any(b[1] == "9.0" for b in self.builds):
             notes.append(f"Present from 9.7; absent from 9.0 builds (live introspection, {SWEEP_DATE}).")
+        if "9.0" in builds and "9.7" not in builds and any(b[1] == "9.7" for b in self.builds):
+            notes.append(ABSENT_97_NOTE)
         dims = {s[2] for s in seen}
         if len({b[2] for b in self.builds}) > 1 and len(dims) == 1:
             notes.append(f"{next(iter(dims))} builds only.")
@@ -457,11 +460,17 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
                     e["notes"] = e.get("notes", []) + [note]
                     marked.append(f"{prefix}.{e['name']} note")
                     changed = True
-            if "availability" in e or any(k.startswith("available_in") for k in e):
-                continue
             if not live.has(f"{prefix}.{e['name']}"):
                 continue
-            marker, _ = live.availability(f"{prefix}.{e['name']}")
+            marker, notes = live.availability(f"{prefix}.{e['name']}")
+            # A member the 9.0 builds expose but 9.7 dropped shares the "9.0" label
+            # with 9.7, so no availability marker can say it; the note does.
+            if ABSENT_97_NOTE in notes and ABSENT_97_NOTE not in e.get("notes", []):
+                e["notes"] = e.get("notes", []) + [ABSENT_97_NOTE]
+                marked.append(f"{prefix}.{e['name']} absent from 9.7")
+                changed = True
+            if "availability" in e or any(k.startswith("available_in") for k in e):
+                continue
             if marker and marker != live.availability(prefix)[0]:
                 e["availability"] = marker
                 marked.append(f"{prefix}.{e['name']} {marker['versions']}")
