@@ -46,7 +46,11 @@ SPHINX_ROOTS = [
 ]
 SRC_BASE = "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc"
 SWEEP_DATE = "2026-10-24"
+PRESENT_97_NOTE = f"Present from 9.7; absent from 9.0 builds (live introspection, {SWEEP_DATE})."
 ABSENT_97_NOTE = f"Absent from 9.7 builds (live introspection, {SWEEP_DATE})."
+# The 9.0 and 9.7 builds share the "9.0" availability label, so neither case can be
+# an availability marker; these notes carry it.
+NOTES_97 = (PRESENT_97_NOTE, ABSENT_97_NOTE)
 
 SHARED = ("data", "fish", "geometry", "history", "dfn")
 ENGINES: dict[str, dict[str, Any]] = {
@@ -191,7 +195,7 @@ class Live:
         notes = []
         builds = {s[1] for s in seen}
         if labels == ["9.0"] and builds == {"9.7"} and any(b[1] == "9.0" for b in self.builds):
-            notes.append(f"Present from 9.7; absent from 9.0 builds (live introspection, {SWEEP_DATE}).")
+            notes.append(PRESENT_97_NOTE)
         if "9.0" in builds and "9.7" not in builds and any(b[1] == "9.7" for b in self.builds):
             notes.append(ABSENT_97_NOTE)
         dims = {s[2] for s in seen}
@@ -442,6 +446,14 @@ def _group_list(value: Any) -> list[str]:
     return [s.strip() for s in str(value).split(",") if s.strip()]
 
 
+def _add_97_notes(entry: dict[str, Any], notes: list[str]) -> bool:
+    """Attach whichever 9.7 note the live sweep calls for; True if one was missing."""
+    missing = [n for n in notes if n in NOTES_97 and n not in entry.get("notes", [])]
+    if missing:
+        entry["notes"] = entry.get("notes", []) + missing
+    return bool(missing)
+
+
 def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> tuple[list[str], list[str]]:
     """Passes B and C over the engine's existing module/object docs."""
     added, marked = [], []
@@ -463,13 +475,13 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
             if not live.has(f"{prefix}.{e['name']}"):
                 continue
             marker, notes = live.availability(f"{prefix}.{e['name']}")
-            # A member the 9.0 builds expose but 9.7 dropped shares the "9.0" label
-            # with 9.7, so no availability marker can say it; the note does.
-            if ABSENT_97_NOTE in notes and ABSENT_97_NOTE not in e.get("notes", []):
-                e["notes"] = e.get("notes", []) + [ABSENT_97_NOTE]
-                marked.append(f"{prefix}.{e['name']} absent from 9.7")
+            # What the enclosing module or class already says is not repeated per member.
+            notes = [n for n in notes if n not in live.availability(prefix)[1]]
+            if _add_97_notes(e, notes):
+                marked.append(f"{prefix}.{e['name']} 9.7 note")
                 changed = True
-            if "availability" in e or any(k.startswith("available_in") for k in e):
+            # Legacy available_in_* flags are read by nothing; they do not count as a marker.
+            if "availability" in e:
                 continue
             if marker and marker != live.availability(prefix)[0]:
                 e["availability"] = marker
@@ -491,6 +503,19 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
             index["quick_ref"][f"{prefix}.{name}"] = f"{path.relative_to(RESOURCES).as_posix()}#{name}"
             added.append(f"{prefix}.{name}")
             changed = True
+        if list_key == "functions":
+            mod_key = prefix[len("itasca.") :]
+            mod_marker, mod_notes = live.availability(prefix)
+            if _add_97_notes(doc, mod_notes):
+                marked.append(f"{prefix} 9.7 note")
+                changed = True
+            if "availability" not in doc and mod_marker:
+                doc["availability"] = mod_marker
+                marked.append(f"{prefix} {mod_marker['versions']}")
+                changed = True
+            if "availability" in doc and index["modules"][mod_key].get("availability") != doc["availability"]:
+                index["modules"][mod_key]["availability"] = doc["availability"]
+                changed = True
         if changed:
             new_names = [n for n in live.members(prefix) if n not in names]
             if list_key == "methods" and new_names and isinstance(doc.get("method_groups"), dict):
