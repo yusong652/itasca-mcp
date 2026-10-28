@@ -45,6 +45,61 @@ section exists.
 
 ## [Unreleased]
 
+## [0.10.7] - 2026-10-28
+
+### Added
+
+- **`itasca_mcp_bridge.stop()` and `status()`** (bridge 0.6.5, delivered by
+  self-upgrade). `stop()` takes the bridge down and leaves the engine as
+  before `start()`; `status()` reports version, port and whether the engine
+  is busy, with the task id when it is.
+
+### Fixed
+
+- **Save files no longer carry the bridge's cycle callbacks** (bridge
+  0.6.5). A `.sav` written while the bridge ran named
+  `_mcp_bridge_interrupt_check` and `_mcp_bridge_executor_callback` in the
+  engine's callback table, so restoring it in a session without the bridge
+  printed "Trying to call the Python function ... but this function is not
+  defined" and, on PFC 6.0, crashed on the first cycle. Saves made through
+  the bridge are now clean; an older save restores cleanly after a
+  restore-and-save with the bridge running.
+- **`itasca.fish_get()` no longer appears in command docs.** The `model
+  display` Python alternative in every engine's command index told agents to
+  call a function no engine build exposes; it now says `itasca.fish.get()`.
+- **Facet and Pebble search results point at real paths.** `itasca.wall.Facet`
+  and `itasca.clump.Pebble` exist on no PFC build; index entries and search
+  hits now read `itasca.wall.facet.Facet` and `itasca.clump.pebble.Pebble`.
+- **`itasca_browse_python_api` resolves objects by module path.** A bare
+  class name shared across modules (`Node`, `Template`) returned the wrong
+  module's doc; `itasca.structure.node.Node` now gives the structural node,
+  and an undocumented path falls back to its documented parent module.
+- **`itasca.fish.call_function` is documented with its real signature**
+  (`func`, `args` tuple) on every engine; the Sphinx form had parsed into two
+  bogus required parameters.
+
+### Documentation
+
+- **Python API families the engines expose but the corpus lacked**, taken
+  from a sweep of 20 console builds (PFC/FLAC/3DEC/MPoint, 6.0-9.7, 2D and
+  3D): FLAC `structure` (Beam, Cable, Geogrid, Liner, Pile, Shell, Link,
+  Node and the 9.7 arrays), `dfn`, `fish`, `history`, `data`, `geometry`;
+  PFC ball/clump/wall `thermal`, `cfd`, `element.cfd`, `dfn`, `fish`,
+  `history`, `geometry`; MPoint `dfn`, `fish`, `history`; 3DEC 9.7 structure
+  arrays, `data`, `geometry`. 2D-only members (FLAC interface `length`, PFC
+  `rotation`) and 7.0-only names (`Attach.master`/`slave`) are marked, with
+  probe-measured notes where the docstrings are silent (interface length
+  reads 0 before the first cycle; FLAC3D 7.0 `Node.has_prop` raises).
+- **9.0 and 9.7 builds are told apart.** Members only 9.7 exposes carry
+  "Present from 9.7"; the seven FLAC zone-family members 9.7 dropped
+  (`Zone.fluid_model`, `zone.thermal_ratio`, `Gridpoint.set_biot_modulus`,
+  ...) carry "Absent from 9.7 builds"; 7.0-only 3DEC structure members
+  (`moi`, `stress_max`) carry a 7.0 marker. Verified live on FLAC3D 9.7,
+  PFC3D 9.7 and 3DEC 9.0.
+- **PFC search paths no build resolves are gone** (`itasca.cfdarray.in_group`
+  / `set_group`, a `clump generate` command string), along with two stray
+  `measure` files nothing indexed.
+
 ## [0.10.6] - 2026-10-24
 
 ### Changed
