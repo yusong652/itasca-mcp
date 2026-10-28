@@ -45,14 +45,17 @@ SPHINX_ROOTS = [
     Path("C:/Program Files/Itasca/ItascaSoftware900") / DOC_SUFFIX,
 ]
 SRC_BASE = "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc"
-SWEEP_DATE = "2026-10-24"
-PRESENT_97_NOTE = f"Present from 9.7; absent from 9.0 builds (live introspection, {SWEEP_DATE})."
-ABSENT_97_NOTE = f"Absent from 9.7 builds (live introspection, {SWEEP_DATE})."
-# The 9.0 and 9.7 builds share the "9.0" availability label, so neither case can be
-# an availability marker; these notes carry it.
-NOTES_97 = (PRESENT_97_NOTE, ABSENT_97_NOTE)
+SWEEP_DATE = "2026-10-28"
+# The "9.0" label stands for the current official 9.x release, 9.8 (2026-10-26). The
+# 9.0 and 9.7 point builds are no longer a reference: dumps tagged 900/97 are ignored.
+LABEL_BUILDS = {"6.0": {"6.0"}, "7.0": {"7.0"}, "9.0": {"9.8"}}
+# Notes an earlier sweep wrote while 9.7 was tracked as a build of its own; stripped.
+LEGACY_97_NOTES = (
+    "Present from 9.7; absent from 9.0 builds (live introspection, 2026-10-24).",
+    "Absent from 9.7 builds (live introspection, 2026-10-24).",
+)
 
-SHARED = ("data", "fish", "geometry", "history", "dfn")
+SHARED = ("data", "fish", "geometry", "history", "dfn", "table")
 ENGINES: dict[str, dict[str, Any]] = {
     "flac": {
         "dump_prefixes": ("flac2d", "flac3d"),
@@ -67,7 +70,7 @@ ENGINES: dict[str, dict[str, Any]] = {
     "mpoint": {
         "dump_prefixes": ("mpoint",),
         "versions": ["9.0"],
-        "families": SHARED,
+        "families": SHARED + ("mpoint",),
     },
     "pfc": {
         "dump_prefixes": ("pfc",),
@@ -120,9 +123,15 @@ VERIFIED_NOTES: dict[tuple[str, str], list[str]] = {
 
 def build_version(tag: str) -> tuple[str, str]:
     """``flac2d97`` -> (corpus version label "9.0", build "9.7")."""
-    num = re.search(r"(600|700|900|97)$", tag)
+    num = re.search(r"(600|700|900|97|98)$", tag)
     assert num, tag
-    return {"600": ("6.0", "6.0"), "700": ("7.0", "7.0"), "900": ("9.0", "9.0"), "97": ("9.0", "9.7")}[num.group(1)]
+    return {
+        "600": ("6.0", "6.0"),
+        "700": ("7.0", "7.0"),
+        "900": ("9.0", "9.0"),
+        "97": ("9.0", "9.7"),
+        "98": ("9.0", "9.8"),
+    }[num.group(1)]
 
 
 def dimension(tag: str) -> str:
@@ -146,7 +155,7 @@ class Live:
             if not tag.startswith(cfg["dump_prefixes"]):
                 continue
             label, build = build_version(tag)
-            if label not in self.versions:
+            if label not in self.versions or build not in LABEL_BUILDS[label]:
                 continue
             key = (label, build, dimension(tag))
             self.builds.add(key)
@@ -193,11 +202,6 @@ class Live:
         seen = self.seen.get(path, set())
         labels = sorted({s[0] for s in seen})
         notes = []
-        builds = {s[1] for s in seen}
-        if labels == ["9.0"] and builds == {"9.7"} and any(b[1] == "9.0" for b in self.builds):
-            notes.append(PRESENT_97_NOTE)
-        if "9.0" in builds and "9.7" not in builds and any(b[1] == "9.7" for b in self.builds):
-            notes.append(ABSENT_97_NOTE)
         dims = {s[2] for s in seen}
         if len({b[2] for b in self.builds}) > 1 and len(dims) == 1:
             notes.append(f"{next(iter(dims))} builds only.")
@@ -446,17 +450,24 @@ def _group_list(value: Any) -> list[str]:
     return [s.strip() for s in str(value).split(",") if s.strip()]
 
 
-def _add_97_notes(entry: dict[str, Any], notes: list[str]) -> bool:
-    """Attach whichever 9.7 note the live sweep calls for; True if one was missing."""
-    missing = [n for n in notes if n in NOTES_97 and n not in entry.get("notes", [])]
-    if missing:
-        entry["notes"] = entry.get("notes", []) + missing
-    return bool(missing)
+def _strip_legacy_notes(entry: dict[str, Any]) -> bool:
+    """Drop the 9.7-era notes; True if any was present."""
+    notes = entry.get("notes")
+    if not notes:
+        return False
+    kept = [n for n in notes if n not in LEGACY_97_NOTES]
+    if len(kept) == len(notes):
+        return False
+    if kept:
+        entry["notes"] = kept
+    else:
+        del entry["notes"]
+    return True
 
 
 def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> tuple[list[str], list[str]]:
-    """Passes B and C over the engine's existing module/object docs."""
-    added, marked = [], []
+    """Passes B, C and D over the engine's existing module/object docs."""
+    added, marked, removed = [], [], []
     for prefix, path, list_key, sig_prefix in _doc_targets(engine, index):
         if not path.exists() or not live.has(prefix):
             continue
@@ -464,6 +475,7 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
         entries = doc.setdefault(list_key, [])
         names = {e.get("name") for e in entries if isinstance(e, dict)}
         changed = False
+        dropped: list[str] = []
         for e in entries:
             if not isinstance(e, dict):
                 continue
@@ -472,13 +484,18 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
                     e["notes"] = e.get("notes", []) + [note]
                     marked.append(f"{prefix}.{e['name']} note")
                     changed = True
+            if _strip_legacy_notes(e):
+                marked.append(f"{prefix}.{e['name']} 9.7 note stripped")
+                changed = True
             if not live.has(f"{prefix}.{e['name']}"):
+                dropped.append(f"{prefix}.{e['name']}")
                 continue
-            marker, notes = live.availability(f"{prefix}.{e['name']}")
-            # What the enclosing module or class already says is not repeated per member.
-            notes = [n for n in notes if n not in live.availability(prefix)[1]]
-            if _add_97_notes(e, notes):
-                marked.append(f"{prefix}.{e['name']} 9.7 note")
+            marker, _ = live.availability(f"{prefix}.{e['name']}")
+            # A marker from the 9.7-era sweep may name a label the entry is no longer
+            # seen in; recompute it from the builds that count now.
+            if "availability" in e and marker is not None and e["availability"] != marker:
+                e["availability"] = marker
+                marked.append(f"{prefix}.{e['name']} {marker['versions']} (was stale)")
                 changed = True
             # Legacy available_in_* flags are read by nothing; they do not count as a marker.
             if "availability" in e:
@@ -503,11 +520,23 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
             index["quick_ref"][f"{prefix}.{name}"] = f"{path.relative_to(RESOURCES).as_posix()}#{name}"
             added.append(f"{prefix}.{name}")
             changed = True
+        if dropped:
+            # Documented but exposed by no build that counts (9.7-only, or dropped by 9.8).
+            doc[list_key] = [e for e in entries if not (isinstance(e, dict) and f"{prefix}.{e['name']}" in dropped)]
+            entries = doc[list_key]
+            for d in dropped:
+                index["quick_ref"].pop(d, None)
+            removed.extend(dropped)
+            changed = True
         if list_key == "functions":
             mod_key = prefix[len("itasca.") :]
-            mod_marker, mod_notes = live.availability(prefix)
-            if _add_97_notes(doc, mod_notes):
-                marked.append(f"{prefix} 9.7 note")
+            mod_marker, _ = live.availability(prefix)
+            if _strip_legacy_notes(doc):
+                marked.append(f"{prefix} 9.7 note stripped")
+                changed = True
+            if "availability" in doc and mod_marker is not None and doc["availability"] != mod_marker:
+                doc["availability"] = mod_marker
+                marked.append(f"{prefix} {mod_marker['versions']} (was stale)")
                 changed = True
             if "availability" not in doc and mod_marker:
                 doc["availability"] = mod_marker
@@ -524,7 +553,7 @@ def add_members_and_markers(engine: str, live: Live, index: dict[str, Any]) -> t
             if list_key == "functions":
                 mod_key = prefix[len("itasca.") :]
                 index["modules"][mod_key]["functions"] = [e["name"] for e in entries if isinstance(e, dict)]
-    return added, marked
+    return added, marked, removed
 
 
 def main() -> None:
@@ -537,7 +566,7 @@ def main() -> None:
         index_path = RESOURCES / engine / "python_sdk_docs" / "index.json"
         index = json.loads(index_path.read_text(encoding="utf-8"))
         modules = add_modules(engine, live, index)
-        members, markers = add_members_and_markers(engine, live, index)
+        members, markers, removed = add_members_and_markers(engine, live, index)
         # Existing keys keep their order (no churn); new keys are appended as added.
         index_path.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", "utf-8")
         print(f"== {engine}: builds {sorted(live.builds)}")
@@ -549,6 +578,9 @@ def main() -> None:
             print(f"      {m}")
         print(f"   C. availability markers added: {len(markers)}")
         for m in markers:
+            print(f"      {m}")
+        print(f"   D. members removed (exposed by no build that counts): {len(removed)}")
+        for m in removed:
             print(f"      {m}")
     patched = apply_overrides()
     print(f"== overrides applied: {len(patched)}")

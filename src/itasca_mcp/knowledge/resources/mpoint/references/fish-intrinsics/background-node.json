@@ -2,7 +2,7 @@
   "name": "background-node",
   "dimension": "3D",
   "full_name": "Background-Grid Node FISH Intrinsics",
-  "description": "FISH access to the background-grid nodes -- the fixed computational mesh the material points move through. Like material points, these have no Python binding.",
+  "description": "FISH access to the background-grid nodes -- the fixed computational mesh the material points move through. From 9.8 these are also exposed to Python as itasca.mpoint.node (MeshPoint objects, meshpointarray).",
   "notes": [
     "Background-node intrinsics take two different kinds of first argument and the engine will not convert between them. pos / vel / id / group / isgroup / force.unbal / mass.mult take a node POINTER (MESHPOINT_pnt, from mpoint.node.find or mpoint.node.list). disp / pp / stress take a POSITION (vec3) and interpolate the field there. Verified by executing both the correct and the swapped form: mpoint.node.vel(<vec3>) and mpoint.node.pp(<ptr>) both fail. (state)",
     "The grid spans the whole 'model domain extent', not the material-point bounding box, and is built lazily at 'mpoint import' time. mpoint.node.pos of the first node is the domain corner. Keep the domain tight. (state)",

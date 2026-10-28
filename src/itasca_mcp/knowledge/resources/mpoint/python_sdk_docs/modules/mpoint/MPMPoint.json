@@ -1,0 +1,808 @@
+{
+  "class": "MPMPoint",
+  "description": "MPMPoint object instance in itasca.mpoint.",
+  "source_url": "https://docs.itascacg.com/itasca900/common/docproject/source/manual/scripting/python/doc/itasca.mpoint.MPMPoint.html",
+  "note": "Do not instantiate directly; use itasca.mpoint module functions.",
+  "method_groups": {
+    "deformation": "deformation",
+    "density": "density, set_density",
+    "disp": "disp, disp_x, disp_y, disp_z, set_disp, set_disp_x, set_disp_y, set_disp_z",
+    "extra": "extra, set_extra",
+    "force": "force_app, force_app_x, force_app_y, force_app_z, force_unbal, force_unbal_x, force_unbal_y, force_unbal_z, set_force_app, set_force_app_x, set_force_app_y, set_force_app_z",
+    "group": "group, group_remove, set_group",
+    "groups": "groups",
+    "has": "has_prop",
+    "id": "id",
+    "in": "in_group",
+    "index": "index",
+    "mass": "mass, set_mass",
+    "pos": "pos, pos_x, pos_y, pos_z, set_pos, set_pos_x, set_pos_y, set_pos_z",
+    "pp": "pp, pp_fix, set_pp, set_pp_fix",
+    "prop": "prop, set_prop",
+    "props": "props",
+    "strain": "set_strain, strain",
+    "stress": "set_stress, stress",
+    "valid": "valid",
+    "velocity": "set_velocity, set_velocity_x, set_velocity_y, set_velocity_z, velocity, velocity_x, velocity_y, velocity_z",
+    "vol": "vol"
+  },
+  "methods": [
+    {
+      "name": "deformation",
+      "signature": "mpmpoint.deformation() -> float",
+      "description": "Get the mpoint deformation scalar.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "density",
+      "signature": "mpmpoint.density() -> float",
+      "description": "Get the mpoint density.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "disp",
+      "signature": "mpmpoint.disp() -> vec",
+      "description": "Get the mpoint mpoint displacement (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "disp_x",
+      "signature": "mpmpoint.disp_x() -> float",
+      "description": "Get the x-component of the mpoint mpoint displacement.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "disp_y",
+      "signature": "mpmpoint.disp_y() -> float",
+      "description": "Get the y-component of the mpoint mpoint displacement.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "disp_z",
+      "signature": "mpmpoint.disp_z() -> float",
+      "description": "Get the z-component of the mpoint mpoint displacement.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "extra",
+      "signature": "mpmpoint.extra(slot: int) -> any",
+      "description": "Get the mpoint extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "force_app",
+      "signature": "mpmpoint.force_app() -> vec",
+      "description": "Get the mpoint mpoint appliad force (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "force_app_x",
+      "signature": "mpmpoint.force_app_x() -> float",
+      "description": "Get the x-component of the mpoint mpoint appliad force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "force_app_y",
+      "signature": "mpmpoint.force_app_y() -> float",
+      "description": "Get the y-component of the mpoint mpoint appliad force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "force_app_z",
+      "signature": "mpmpoint.force_app_z() -> float",
+      "description": "Get the z-component of the mpoint mpoint appliad force.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "force_unbal",
+      "signature": "mpmpoint.force_unbal() -> vec",
+      "description": "Get the mpoint mpoint unbalance force (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "force_unbal_x",
+      "signature": "mpmpoint.force_unbal_x() -> float",
+      "description": "Get the x-component of the mpoint mpoint unbalance force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "force_unbal_y",
+      "signature": "mpmpoint.force_unbal_y() -> float",
+      "description": "Get the y-component of the mpoint mpoint unbalance force.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "force_unbal_z",
+      "signature": "mpmpoint.force_unbal_z() -> float",
+      "description": "Get the z-component of the mpoint mpoint unbalance force.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "group",
+      "signature": "mpmpoint.group([slot: str or int]) -> str",
+      "description": "Get the mpoint group name in a given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "str"
+      }
+    },
+    {
+      "name": "group_remove",
+      "signature": "mpmpoint.group_remove(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Remove from the given group from all group slots of the mpoint. One argument of type string, giving the group name, is required. The return value is a bool which is True if the group was removed from any slot, otherwise False.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "groups",
+      "signature": "mpmpoint.groups() -> {slot: group_name}",
+      "description": "Get a dictionary describing which groups this mpoint is part of. The keys of the dictionary are the slot names and the values are the group names.",
+      "returns": {
+        "type": "{slot: group_name}"
+      }
+    },
+    {
+      "name": "has_prop",
+      "signature": "mpmpoint.has_prop(property_name: str) -> bool",
+      "description": "Returns True if the mpoint has the given surface property.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "id",
+      "signature": "mpmpoint.id() -> int",
+      "description": "Get the mpoint id.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "in_group",
+      "signature": "mpmpoint.in_group(group_name: str or int[, slot: str or int]) -> bool",
+      "description": "Test if the mpoint is part of a given group. If the optional argument slot is given, only that slot is searched. Otherwise, all group slots are searched.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "index",
+      "signature": "mpmpoint.index() -> int",
+      "description": "Get the mpoint index.",
+      "returns": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "mass",
+      "signature": "mpmpoint.mass() -> float",
+      "description": "Get the mpoint mass.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos",
+      "signature": "mpmpoint.pos() -> vec",
+      "description": "Get the mpoint mpoint position (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "pos_x",
+      "signature": "mpmpoint.pos_x() -> float",
+      "description": "Get the x-component of the mpoint mpoint position.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_y",
+      "signature": "mpmpoint.pos_y() -> float",
+      "description": "Get the y-component of the mpoint mpoint position.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pos_z",
+      "signature": "mpmpoint.pos_z() -> float",
+      "description": "Get the z-component of the mpoint mpoint position.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "pp",
+      "signature": "mpmpoint.pp() -> float",
+      "description": "Get the mpoint pore pressure.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "pp_fix",
+      "signature": "mpmpoint.pp_fix() -> bool",
+      "description": "Get the mpoint pore pressure fix status.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "prop",
+      "signature": "mpmpoint.prop(property_name: str) -> any",
+      "description": "Get a surface property value of this mpoint.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "any"
+      }
+    },
+    {
+      "name": "props",
+      "signature": "mpmpoint.props() -> dict {str: any}",
+      "description": "Get a dictionary of all the surface properties of this mpoint.",
+      "returns": {
+        "type": "dict {str: any}"
+      }
+    },
+    {
+      "name": "set_density",
+      "signature": "mpmpoint.set_density(float) -> void",
+      "description": "Set the mpoint density.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_disp",
+      "signature": "mpmpoint.set_disp(value: vec) -> None",
+      "description": "Set the mpoint mpoint displacement (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_disp_x",
+      "signature": "mpmpoint.set_disp_x(value: float) -> None",
+      "description": "Set the x-component of the mpoint mpoint displacement.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_disp_y",
+      "signature": "mpmpoint.set_disp_y(value: float) -> None",
+      "description": "Set the y-component of the mpoint mpoint displacement.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_disp_z",
+      "signature": "mpmpoint.set_disp_z(value: float) -> None",
+      "description": "Set the z-component of the mpoint mpoint displacement.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_extra",
+      "signature": "mpmpoint.set_extra(slot: int, value: any) -> None",
+      "description": "Set the mpoint extra data in the given slot.",
+      "parameters": [
+        {
+          "name": "slot",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_force_app",
+      "signature": "mpmpoint.set_force_app(value: vec) -> None",
+      "description": "Set the mpoint mpoint appliad force (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_force_app_x",
+      "signature": "mpmpoint.set_force_app_x(value: float) -> None",
+      "description": "Set the x-component of the mpoint mpoint appliad force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_force_app_y",
+      "signature": "mpmpoint.set_force_app_y(value: float) -> None",
+      "description": "Set the y-component of the mpoint mpoint appliad force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_force_app_z",
+      "signature": "mpmpoint.set_force_app_z(value: float) -> None",
+      "description": "Set the z-component of the mpoint mpoint appliad force.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_group",
+      "signature": "mpmpoint.set_group(group_name: str or int[, slot: str or int]) -> None",
+      "description": "Set the mpoint group name in a given slot.",
+      "parameters": [
+        {
+          "name": "group_name",
+          "type": "str or int",
+          "required": true
+        },
+        {
+          "name": "slot",
+          "type": "str or int",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_mass",
+      "signature": "mpmpoint.set_mass(float) -> void",
+      "description": "Set the mpoint mass.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_pos",
+      "signature": "mpmpoint.set_pos(value: vec) -> None",
+      "description": "Set the mpoint mpoint position (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_x",
+      "signature": "mpmpoint.set_pos_x(value: float) -> None",
+      "description": "Set the x-component of the mpoint mpoint position.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_y",
+      "signature": "mpmpoint.set_pos_y(value: float) -> None",
+      "description": "Set the y-component of the mpoint mpoint position.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_pos_z",
+      "signature": "mpmpoint.set_pos_z(value: float) -> None",
+      "description": "Set the z-component of the mpoint mpoint position.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "set_pp",
+      "signature": "mpmpoint.set_pp(float) -> void",
+      "description": "Set the mpoint pore pressure.",
+      "parameters": [
+        {
+          "name": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_pp_fix",
+      "signature": "mpmpoint.set_pp_fix(bool) -> void",
+      "description": "Set the mpoint pore pressure fix status.",
+      "parameters": [
+        {
+          "name": "bool",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "set_prop",
+      "signature": "mpmpoint.set_prop(property_name: str, value: any) -> None",
+      "description": "Set a surface property of this mpoint.",
+      "parameters": [
+        {
+          "name": "property_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "any",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_strain",
+      "signature": "mpmpoint.set_strain(strain: stens3) -> None",
+      "description": "Set the strain tensor. The tensor components must be provided in the order xx,yy,zz,xy,yz,xz.",
+      "parameters": [
+        {
+          "name": "strain",
+          "type": "stens3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_stress",
+      "signature": "mpmpoint.set_stress(stress: stens3) -> None",
+      "description": "Set the stress tensor. The tensor components must be provided in the order xx,yy,zz,xy,yz,xz.",
+      "parameters": [
+        {
+          "name": "stress",
+          "type": "stens3",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_velocity",
+      "signature": "mpmpoint.set_velocity(value: vec) -> None",
+      "description": "Set the mpoint mpoint veolcity (vector).",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_velocity_x",
+      "signature": "mpmpoint.set_velocity_x(value: float) -> None",
+      "description": "Set the x-component of the mpoint mpoint veolcity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_velocity_y",
+      "signature": "mpmpoint.set_velocity_y(value: float) -> None",
+      "description": "Set the y-component of the mpoint mpoint veolcity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      }
+    },
+    {
+      "name": "set_velocity_z",
+      "signature": "mpmpoint.set_velocity_z(value: float) -> None",
+      "description": "Set the z-component of the mpoint mpoint veolcity.",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "returns": {
+        "type": "None"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "strain",
+      "signature": "mpmpoint.strain() -> stens3",
+      "description": "Get the strain tensor. The symmetric tensor components are used (xx,yy,zz,xy,yz,xz).",
+      "returns": {
+        "type": "stens3"
+      }
+    },
+    {
+      "name": "stress",
+      "signature": "mpmpoint.stress() -> stens3",
+      "description": "Get the stress tensor. The symmetric tensor components are used (xx,yy,zz,xy,yz,xz).",
+      "returns": {
+        "type": "stens3"
+      }
+    },
+    {
+      "name": "valid",
+      "signature": "mpmpoint.valid() -> bool",
+      "description": "Returns True if this mpoint is live.",
+      "returns": {
+        "type": "bool"
+      }
+    },
+    {
+      "name": "velocity",
+      "signature": "mpmpoint.velocity() -> vec",
+      "description": "Get the mpoint mpoint veolcity (vector).",
+      "returns": {
+        "type": "vec"
+      }
+    },
+    {
+      "name": "velocity_x",
+      "signature": "mpmpoint.velocity_x() -> float",
+      "description": "Get the x-component of the mpoint mpoint veolcity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "velocity_y",
+      "signature": "mpmpoint.velocity_y() -> float",
+      "description": "Get the y-component of the mpoint mpoint veolcity.",
+      "returns": {
+        "type": "float"
+      }
+    },
+    {
+      "name": "velocity_z",
+      "signature": "mpmpoint.velocity_z() -> float",
+      "description": "Get the z-component of the mpoint mpoint veolcity.",
+      "returns": {
+        "type": "float"
+      },
+      "notes": [
+        "3D builds only."
+      ]
+    },
+    {
+      "name": "vol",
+      "signature": "mpmpoint.vol() -> float",
+      "description": "Get the volume of a mpoint.",
+      "returns": {
+        "type": "float"
+      }
+    }
+  ]
+}

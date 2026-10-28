@@ -1,4 +1,4 @@
-"""Python API added from the 2026-10-24 live console sweep (reconcile_python_api_live.py).
+"""Python API added from the live console sweeps (reconcile_python_api_live.py; 2026-10-24 and the 9.8 sweep of 2026-10-28).
 
 Each family was missing from the corpus although the engine exposes it; the
 notes pinned here come from state-readback probes, not from the docstrings.
@@ -35,6 +35,11 @@ def _payload(result) -> dict:
         ("mpoint", "itasca.dfn.fracture.Fracture.dip"),
         ("3dec", "itasca.structure.beamarray.length"),
         ("3dec", "itasca.data.vector.Vector.value"),
+        ("mpoint", "itasca.mpoint.MPMPoint.stress"),
+        ("mpoint", "itasca.mpoint.mpmpointarray.pos"),
+        ("mpoint", "itasca.mpoint.node.MeshPoint.velocity"),
+        ("flac", "itasca.table.Table.value"),
+        ("flac", "itasca.zonearray.face_normal"),
     ],
 )
 async def test_live_families_are_browsable(software: str, api: str) -> None:
@@ -70,11 +75,12 @@ def test_fish_call_function_takes_a_tuple(software: str) -> None:
     assert any("must be passed as a tuple" in n for n in func["notes"])
 
 
-def test_97_only_modules_are_marked() -> None:
+def test_9x_only_modules_carry_the_9_marker_and_no_point_release_note() -> None:
+    # The "9.0" label stands for the current 9.x release (9.8); point builds are not tracked.
     module = APILoader.load_module("structure.beamarray", software="3dec")
 
     assert module["availability"] == {"versions": ["9.0"]}
-    assert any("Present from 9.7" in n for n in module["notes"])
+    assert not any("9.7" in n for n in module.get("notes", []))
 
 
 def test_flac_7_attach_names_and_9_renames_are_both_marked() -> None:

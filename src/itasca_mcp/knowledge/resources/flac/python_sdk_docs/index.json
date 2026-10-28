@@ -156,7 +156,6 @@
         "set_flow",
         "set_fluid_load",
         "set_fluid_modulus",
-        "set_fluid_tension",
         "set_fluid_unbal",
         "set_force_app",
         "set_force_load",
@@ -298,7 +297,14 @@
         "work_elastic_shear",
         "work_elastic_vol",
         "work_plastic_shear",
-        "work_plastic_vol"
+        "work_plastic_vol",
+        "face_extra",
+        "face_group",
+        "face_in_group",
+        "face_normal",
+        "face_position",
+        "set_face_extra",
+        "set_face_group"
       ]
     },
     "interface.element": {
@@ -1121,6 +1127,23 @@
           "9.0"
         ]
       }
+    },
+    "table": {
+      "description": "Functions and classes for working with tables.",
+      "file": "flac/python_sdk_docs/modules/table/module.json",
+      "functions": [
+        "create",
+        "dict",
+        "find",
+        "get",
+        "list",
+        "map"
+      ],
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
   },
   "objects": {
@@ -1819,6 +1842,25 @@
         "valid": "valid",
         "vel": "vel_global, vel_local"
       }
+    },
+    "Table": {
+      "description": "Table object instance in itasca.table.",
+      "file": "flac/python_sdk_docs/modules/table/Table.json",
+      "note": "Do not instantiate directly; use itasca.table module functions.",
+      "method_groups": {
+        "add": "add",
+        "clear": "clear",
+        "id": "id",
+        "insert": "insert",
+        "label": "label, set_label",
+        "name": "name",
+        "size": "size",
+        "slope": "slope_at",
+        "sort": "sort",
+        "value": "set_value, value, value_at",
+        "x": "set_x, x",
+        "y": "set_y, y"
+      }
     }
   },
   "quick_ref": {
@@ -2377,7 +2419,6 @@
     "itasca.gridpointarray.in_group": "flac/python_sdk_docs/modules/gridpointarray/module.json#in_group",
     "itasca.gridpointarray.set_fluid_load": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_fluid_load",
     "itasca.gridpointarray.set_fluid_modulus": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_fluid_modulus",
-    "itasca.gridpointarray.set_fluid_tension": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_fluid_tension",
     "itasca.gridpointarray.set_fluid_unbal": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_fluid_unbal",
     "itasca.gridpointarray.set_force_load": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_force_load",
     "itasca.gridpointarray.set_group": "flac/python_sdk_docs/modules/gridpointarray/module.json#set_group",
@@ -3624,7 +3665,38 @@
     "itasca.attach.Attach.master": "flac/python_sdk_docs/modules/attach/Attach.json#master",
     "itasca.attach.Attach.master_face": "flac/python_sdk_docs/modules/attach/Attach.json#master_face",
     "itasca.attach.Attach.master_zone": "flac/python_sdk_docs/modules/attach/Attach.json#master_zone",
-    "itasca.attach.Attach.slave": "flac/python_sdk_docs/modules/attach/Attach.json#slave"
+    "itasca.attach.Attach.slave": "flac/python_sdk_docs/modules/attach/Attach.json#slave",
+    "itasca.table.create": "flac/python_sdk_docs/modules/table/module.json#create",
+    "itasca.table.dict": "flac/python_sdk_docs/modules/table/module.json#dict",
+    "itasca.table.find": "flac/python_sdk_docs/modules/table/module.json#find",
+    "itasca.table.get": "flac/python_sdk_docs/modules/table/module.json#get",
+    "itasca.table.list": "flac/python_sdk_docs/modules/table/module.json#list",
+    "itasca.table.map": "flac/python_sdk_docs/modules/table/module.json#map",
+    "itasca.table.Table.add": "flac/python_sdk_docs/modules/table/Table.json#add",
+    "itasca.table.Table.clear": "flac/python_sdk_docs/modules/table/Table.json#clear",
+    "itasca.table.Table.id": "flac/python_sdk_docs/modules/table/Table.json#id",
+    "itasca.table.Table.insert": "flac/python_sdk_docs/modules/table/Table.json#insert",
+    "itasca.table.Table.label": "flac/python_sdk_docs/modules/table/Table.json#label",
+    "itasca.table.Table.name": "flac/python_sdk_docs/modules/table/Table.json#name",
+    "itasca.table.Table.set_label": "flac/python_sdk_docs/modules/table/Table.json#set_label",
+    "itasca.table.Table.set_value": "flac/python_sdk_docs/modules/table/Table.json#set_value",
+    "itasca.table.Table.set_x": "flac/python_sdk_docs/modules/table/Table.json#set_x",
+    "itasca.table.Table.set_y": "flac/python_sdk_docs/modules/table/Table.json#set_y",
+    "itasca.table.Table.size": "flac/python_sdk_docs/modules/table/Table.json#size",
+    "itasca.table.Table.slope_at": "flac/python_sdk_docs/modules/table/Table.json#slope_at",
+    "itasca.table.Table.sort": "flac/python_sdk_docs/modules/table/Table.json#sort",
+    "itasca.table.Table.value": "flac/python_sdk_docs/modules/table/Table.json#value",
+    "itasca.table.Table.value_at": "flac/python_sdk_docs/modules/table/Table.json#value_at",
+    "itasca.table.Table.x": "flac/python_sdk_docs/modules/table/Table.json#x",
+    "itasca.table.Table.y": "flac/python_sdk_docs/modules/table/Table.json#y",
+    "itasca.zonearray.face_extra": "flac/python_sdk_docs/modules/zonearray/module.json#face_extra",
+    "itasca.zonearray.face_group": "flac/python_sdk_docs/modules/zonearray/module.json#face_group",
+    "itasca.zonearray.face_in_group": "flac/python_sdk_docs/modules/zonearray/module.json#face_in_group",
+    "itasca.zonearray.face_normal": "flac/python_sdk_docs/modules/zonearray/module.json#face_normal",
+    "itasca.zonearray.face_position": "flac/python_sdk_docs/modules/zonearray/module.json#face_position",
+    "itasca.zonearray.set_face_extra": "flac/python_sdk_docs/modules/zonearray/module.json#set_face_extra",
+    "itasca.zonearray.set_face_group": "flac/python_sdk_docs/modules/zonearray/module.json#set_face_group",
+    "itasca.zone.Zone.face_positions": "flac/python_sdk_docs/modules/zone/Zone.json#face_positions"
   },
   "fallback_hints": {
     "model solve": "For solving to equilibrium, use itasca.command('model solve'). Python SDK has itasca.cycle() for fixed cycles only.",
