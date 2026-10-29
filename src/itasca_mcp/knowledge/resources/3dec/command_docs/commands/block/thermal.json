@@ -35,8 +35,8 @@
         },
         {
           "name": "analytical",
-          "syntax": "analytical",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+          "syntax": "analytical [<b>] {substep <i> | tolerance <f> | conductivity <f> | diffusivity <f> {solve time <f>}}",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal. Options: substep <i>: Set the number of mechanical steps to execute between analytic thermal solutions.; tolerance <f>: Set a tolerance for thermal calculations. This tolerance can be thought of as a source radius. If temperatures are calculated at a point closer than f to a gridpoint, the distance from the gridpoint is taken as f . This is necessary because the analytical solution for the temperature due to a point source approaches infinity as the distance from the source approaches zero. (The default is f = 0.1.); conductivity <f>: Set the thermal conductivity used in the analytical solution.; diffusivity <f> {solve time <f>}: Set the thermal diffusivity used in the analytical solution. Solve the analytical solution to a time of f . Options: solve time <f>"
         },
         {
           "name": "convection",
@@ -45,8 +45,8 @@
         },
         {
           "name": "grid",
-          "syntax": "grid",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+          "syntax": "grid [{point-1 <v> | point-2 <v> | point-3 <v> {remove} | source <i> | strength <f> | n12 <f> | n23 <f> | time-start <a>}]",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal. Options: point-1 <v>: Specify the top left corner of the grid.; point-2 <v>: Specify the top right corner of the grid.; point-3 <v> {remove}: Specify the bottom right corner of the grid. Options: remove: Remove all grid sources; source <i>: Specify the source number. This is a reference to the source defined with the block thermal source command.; strength <f>: Specify the strength of each point source.; n12 <f>: Set the number of points across the grid from left to right.; n23 <f>: Set the number of point across the grid from top to bottom.; time-start <a>: Set the start time."
         },
         {
           "name": "implicit",
@@ -60,13 +60,13 @@
         },
         {
           "name": "line",
-          "syntax": "line",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+          "syntax": "line {point-1 <v> | point-2 <v> {remove} | source <i> | strength <f> | n12 <f> | time-start <atn>}",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal. Options: point-1 <v>: Set the line start point.; point-2 <v> {remove}: Set the line end point. Options: remove: Remove all line sources.; source <i>: Set the source number. This is a reference to the source defined with the block thermal source command.; strength <f>: Set the strength.; n12 <f>: Set the number of points on the line.; time-start <atn>: Set the start time. If not specified, start time is zero by default."
         },
         {
           "name": "list",
-          "syntax": "list",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+          "syntax": "list [{apply | heat}]",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal. Options: apply: List blocks with applied thermal conditions.; heat: List heat source data (only available with thermal option – see Thermal Option )."
         },
         {
           "name": "mass-scale",
@@ -80,8 +80,8 @@
         },
         {
           "name": "source",
-          "syntax": "source",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
+          "syntax": "source <i> {component <i> {fraction <f> | decay <f>} | number-components <i>} ...",
+          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal. Options: component <i> {fraction <f> | decay <f>}: Specify the component of heat source. Options: fraction <f>: Specify the fraction of the initial source strength produced by each component.; decay <f>: Specify the decay constants of the components.; number-components <i>: Set the number of components making up the source."
         },
         {
           "name": "symmetry-planes",
@@ -158,31 +158,6 @@
           "name": "symmetry-planes",
           "syntax": "symmetry-planes [<fx>] [<fy>] [<fz>]",
           "description": "This command is used to define thermal symmetry planes. For example, the plane defined by \\(y\\) = 0 is a symmetry plane if the command block thermal symmetry-planes fy is issued. Symmetry planes are used to represent adiabatic boundaries."
-        },
-        {
-          "name": "analytical",
-          "syntax": "analytical",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
-        },
-        {
-          "name": "grid",
-          "syntax": "grid",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
-        },
-        {
-          "name": "line",
-          "syntax": "line",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
-        },
-        {
-          "name": "source",
-          "syntax": "source",
-          "description": "Enumerated by live 3DEC 9.7.47 with model configure thermal; absent from the previous corpus list."
         }
       ],
       "examples": [],

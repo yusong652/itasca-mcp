@@ -30,8 +30,8 @@
         },
         {
           "name": "cmodel",
-          "syntax": "cmodel keyword <range>",
-          "description": "Associates a thermal constitutive model with specified zones in the grid. It also allows querying of properties and states of constitutive models."
+          "syntax": "cmodel {assign {advection-conduction | anisotropic | hydration | isotropic | null} | list} [range]",
+          "description": "Associates a thermal constitutive model with specified zones in the grid. It also allows querying of properties and states of constitutive models. Options: assign {advection-conduction | anisotropic | hydration | isotropic | null}: assigns a thermal model to all zones in the range . This keyword may only be given if the model is configured for thermal calculations (see model configure fluid and Mathematical Model Description ). Options: advection-conduction: Assign advection-conduction model.; anisotropic: Assign thermal anisotropic model.; hydration: Assign thermal hydration model.; isotropic: Assign thermal isotropic model.; null: Assign thermally null model.; list: List the available thermal constitutive models and their properties."
         },
         {
           "name": "cmodel-assign",
@@ -74,7 +74,8 @@
         },
         {
           "name": "list",
-          "syntax": "list keyword"
+          "syntax": "list {information | property keyword [range]}",
+          "description": "Options: information: List general information about the zone specific thermal calculation settings.; property keyword [range]"
         },
         {
           "name": "list-information",
@@ -93,7 +94,7 @@
         {
           "name": "property-distribution",
           "syntax": "property-distribution s akeyword <range>",
-          "description": "Assigns a single property name to the thermal constitutive models of all zones in the range. The property value may be varied in space by using the following optional keyword values."
+          "description": "Assigns a single property name to the thermal constitutive models of all zones in the range. The property value may be varied in space by using the following optional keyword values. Options: add: Add a to the property value. This keyword only applies to float type property values.; deviation-gaussian <f>: A Gaussian distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; deviation-uniform <f>: A uniform distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; gradient <v>[origin <v>]: Apply a gradient to the property value. This keyword only applies to float type property values.; multiply: Multiply the property value by a .; vary <v>: Apply a linear variation to the property value. This keyword only applies to float type property values."
         },
         {
           "name": "property-distribution-add",
@@ -158,7 +159,7 @@
         {
           "name": "implicit",
           "syntax": "implicit <b>",
-          "description": "Turn implicit thermal mode on or off. When on, the thermal solver advances temperature using an implicit timestep (set manually) rather than the explicit conduction timestep. Default off."
+          "description": "Turn implicit thermal mode on or off. When on, the thermal solver advances temperature using an implicit timestep (set manually) rather than the explicit conduction timestep. Default off. Options: solver-jacobi: Use the iterative Jacobi solver based on the local matrix formulation (see Implicit Formulation ). Note that specifying a timestep that is too large can cause the Jacobi solver to fail to converge. If this keyword is specified and the solver diverges, the system will exit with an error message. The benefit of using the Jacobi solver compared to other solvers is that it is usually faster for small implicit timesteps (<< the divergence timestep).; solver-direct [{preserve [keyword]}]: Use the direct solver similar to matrix inversion (see Advanced implicit solvers ). This highly efficient solver is able to handle small to medium size models (< 50-100K zones) and it is unconditionally stable for any timestep. Before this solver is called, the global right-hand-side (RHS) vector and global coefficient matrix (M) are formed for the whole model to incorporate contributions from all relevant gridpoints. Then the solver solves a system of linear equations for unknown global vector of temperature changes. The following keyword is available. Options: preserve [keyword]: Specify to preserve the global heat coefficients matrix and only update its diagonal containing timestep-dependent terms. In general, the global matrix M must be re-created each time the implicit solver is called as model parameters, such as geometry, physical properties, implicit timestep, etc., may change. However, if the model parameters do not change during the simulation but user wishes to specify a different implicit timestep (e.g., to gradually increase it every certain number of steps), only the diagonal terms of the global matrix must be updated, which is very efficient. To stop this procedure and form a new global heat coefficients matrix, the command zone thermal implicit has to be issued (this resets implicit solvers settings); solver-pcg [{tolerance | iterations-limit | preserve}]: Use the preconditioned conjugate gradient iterative solver (see Advanced implicit solvers ). This highly efficient solver is able to handle very large models and it is unconditionally stable for any timestep due to a special technique of matching desired solution accuracy to the number of iterations required to reach this accuracy. Before the solver is called, the global right-hand-side (RHS) vector and heat coefficients matrix (M) are created for the whole model to incorporate contributions from all relevant gridpoints. Then the solver analyses matrix properties (eigenvalues, condition number) and determines the required number of iterations, after which the iterative solution procedure starts. The following keywords are available. Options: tolerance: Specify error tolerance (solution accuracy) that will determine when to stop iterations. The default tolerance value is 1.e-6.; iterations-limit: Specify a limit on the number of iterations. By default, the number of iterations is determined based on the analysis of the global matrix properties, such as min/max eigenvalues and the the condition number. This analysis is usually done rather fast, and it assures that the system can be solved to reach the desired solution accuracy. Specifying a limit on the number of iterations skips the global matrix analysis, which may decrease overall solution time, but the risk of this is that the number of iterations specified may be insufficient to reach the desired accuracy. The pcg solver has general limit of 1000 on the number of iterations.; preserve: Specify to preserve the global heat coefficients matrix and only update its diagonal containing timestep-dependent terms. For a detailed description, see the same option above (for the solver-direct keyword)."
         },
         {
           "name": "time-total",

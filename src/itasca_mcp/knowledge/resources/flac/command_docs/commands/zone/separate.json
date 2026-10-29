@@ -16,8 +16,8 @@
       "keywords": [
         {
           "name": "by-face",
-          "syntax": "by-face <range>",
-          "description": "Selects internal faces in the range, and separates the gridpoints on either side to make it a new internal surface. New faces get a copy of the original face group assignments."
+          "syntax": "by-face [range] {clear-attach | new-side {origin <v> | group <s> [slot <s>]}}",
+          "description": "Selects internal faces in the range, and separates the gridpoints on either side to make it a new internal surface. New faces get a copy of the original face group assignments. Options: clear-attach: By default, an error occurs if any gridpoint that has an attach condition associated with it is found among those to be separated. However, if the clear-attach keyword is supplied, then the separation of gridpoints will occur regardless. In addition, FLAC3D will remove any attach conditions connected to gridpoints affected.; new-side {origin <v> | group <s>[slot <s>]}: Options: origin <v>: Specify a location in space used to determine which side is assigned to the new group. If the vector from the origin to the face centroid is in the opposite direction then the group name is assigned. This check is made to the first valid face encountered, and the side is kept consistent from then on. By default, the origin is (0,0,0).; group <s>[slot <s>]: Newly created faces will be assigned the group name name in the specified slot. The default slot, which is used if slot s is not supplied, is named Default. FLAC3D determines which face will be new and which one will be old by using the origin keyword. Use of the group logic is described in Groups ."
         },
         {
           "name": "by-face-clear-attach",
@@ -40,8 +40,8 @@
         },
         {
           "name": "by-zone",
-          "syntax": "by-zone keyword...",
-          "description": "This version separates zone regions. All grid points connected to zones in range-1 that are also connected to zones in range-2 will be assigned new grid points that are only connected to the zones in range-1."
+          "syntax": "by-zone {clear-attach | range-1 [keyword ...] | range-2 [keyword ...]} ...",
+          "description": "This version separates zone regions. All grid points connected to zones in range-1 that are also connected to zones in range-2 will be assigned new grid points that are only connected to the zones in range-1. Options: clear-attach: By default, an error occurs if any gridpoint that has an attach condition associated with it is found among those to be separated. However, if the clear-attach keyword is supplied, then the separation of gridpoints will occur regardless. In addition, FLAC3D will remove any attach conditions connected to gridpoints affected.; range-1 [keyword ...]: Specifies the range used to select zones that will be separated. Any grid points connected to zones in this range that are also connected to zones in range-2 will be separated.; range-2 [keyword ...]: Specifies the zones that will trigger a separation. If left as the default value (all zones included) then the entire boundary of the set of zones in range-1 will be separated."
         },
         {
           "name": "by-zone-clear-attach",
