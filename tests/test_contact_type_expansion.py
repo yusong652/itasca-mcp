@@ -4,17 +4,17 @@ import json
 
 import pytest
 
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
 from itasca_mcp.knowledge.python_api.types.contact import THERMAL_CONTACT_METHODS, ContactTypeResolver
 from itasca_mcp.server import mcp
 
 
 def setup_function() -> None:
-    DocumentationLoader.clear_cache()
+    PythonAPILoader.clear_cache()
 
 
 def test_thermal_contact_methods_are_expanded_without_mechanical_force_methods() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
     quick_ref = index["quick_ref"]
 
     assert "itasca.BallBallThermalContact.gap" in quick_ref
@@ -26,13 +26,13 @@ def test_thermal_contact_methods_are_expanded_without_mechanical_force_methods()
 
 
 def test_thermal_contact_loader_rejects_force_methods() -> None:
-    assert DocumentationLoader.load_api_doc("itasca.BallBallThermalContact.gap", software="pfc") is not None
-    assert DocumentationLoader.load_api_doc("itasca.BallBallThermalContact.force_normal", software="pfc") is None
-    assert DocumentationLoader.load_method("BallBallThermalContact", "force_normal", software="pfc") is None
+    assert PythonAPILoader.load_api_doc("itasca.BallBallThermalContact.gap", software="pfc") is not None
+    assert PythonAPILoader.load_api_doc("itasca.BallBallThermalContact.force_normal", software="pfc") is None
+    assert PythonAPILoader.load_method("BallBallThermalContact", "force_normal", software="pfc") is None
 
 
 def test_thermal_contact_object_is_filtered_to_verified_methods() -> None:
-    doc = DocumentationLoader.load_object("BallBallThermalContact", software="pfc")
+    doc = PythonAPILoader.load_object("BallBallThermalContact", software="pfc")
 
     assert doc is not None
     method_names = {method["name"] for method in doc["methods"]}
@@ -43,17 +43,17 @@ def test_thermal_contact_object_is_filtered_to_verified_methods() -> None:
 
 
 def test_vertex_facet_contact_is_version_gated_to_pfc_9() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
 
     assert "itasca.VertexFacetContact.force_normal" in index["quick_ref"]
 
-    doc = DocumentationLoader.load_api_doc("itasca.VertexFacetContact.force_normal", software="pfc")
+    doc = PythonAPILoader.load_api_doc("itasca.VertexFacetContact.force_normal", software="pfc")
     assert doc is not None
     assert doc["availability"]["versions"] == ["9.0"]
 
 
 def test_contact_resolver_does_not_match_unrelated_object_methods() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
 
     assert ContactTypeResolver.resolve("BallBallContact.gap", index["quick_ref"]) is not None
     assert ContactTypeResolver.resolve("BallBallContact.radius", index["quick_ref"]) is None

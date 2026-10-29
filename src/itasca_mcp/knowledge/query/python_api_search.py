@@ -14,13 +14,13 @@ Features:
 
 from typing import Any
 
-from itasca_mcp.knowledge.adapters.api_adapter import APIDocumentAdapter
+from itasca_mcp.knowledge.adapters.python_api_adapter import PythonAPIDocumentAdapter
 from itasca_mcp.knowledge.models.search_result import SearchResult
 from itasca_mcp.knowledge.search.engines.bm25_engine import BM25SearchEngine
 from itasca_mcp.knowledge.search.postprocessing import consolidate_component_apis, consolidate_contact_apis
 
 
-class APISearch:
+class PythonAPISearch:
     """Python SDK API search interface.
 
     This class provides a high-level API for searching Itasca Python SDK
@@ -49,29 +49,29 @@ class APISearch:
 
     Usage:
         >>> # Natural language search
-        >>> results = APISearch.search("ball create", top_k=5)
+        >>> results = PythonAPISearch.search("ball create", top_k=5)
         >>> results[0].document.title
         "itasca.ball.create"
 
         >>> # API path search (handled by tokenizer + name boost)
-        >>> results = APISearch.search("Ball.vel", top_k=5)
+        >>> results = PythonAPISearch.search("Ball.vel", top_k=5)
         >>> results[0].document.title
         "itasca.ball.Ball.vel"
 
         >>> # Contact type search
-        >>> results = APISearch.search("contact gap", top_k=5)
+        >>> results = PythonAPISearch.search("contact gap", top_k=5)
         >>> any("Contact" in r.document.title for r in results)
         True
 
         >>> # With category filter
-        >>> results = APISearch.search(
+        >>> results = PythonAPISearch.search(
         ...     "position",
         ...     top_k=10,
         ...     category="ball"
         ... )
 
         >>> # Abbreviations (partial matching)
-        >>> results = APISearch.search("pos")  # Matches "position"
+        >>> results = PythonAPISearch.search("pos")  # Matches "position"
     """
 
     @classmethod
@@ -105,22 +105,22 @@ class APISearch:
 
         Example:
             >>> # Natural language query
-            >>> results = APISearch.search("ball position")
+            >>> results = PythonAPISearch.search("ball position")
             >>> results[0].document.name
             "itasca.ball.Ball.pos"
 
             >>> # API path query (handled by tokenizer)
-            >>> results = APISearch.search("Ball.vel")
+            >>> results = PythonAPISearch.search("Ball.vel")
             >>> results[0].document.name
             "itasca.ball.Ball.vel"
 
             >>> # Contact type query
-            >>> results = APISearch.search("BallBallContact.gap")
+            >>> results = PythonAPISearch.search("BallBallContact.gap")
             >>> "Contact" in results[0].document.name
             True
 
             >>> # With filters
-            >>> results = APISearch.search(
+            >>> results = PythonAPISearch.search(
             ...     "velocity",
             ...     category="ball",
             ...     min_score=5.0
@@ -129,7 +129,7 @@ class APISearch:
         # Create and build BM25 search engine (no caching)
         # Each search builds a fresh index (~240ms overhead)
         # This ensures consistency and avoids stale cache issues in development
-        engine = BM25SearchEngine(document_loader=lambda: APIDocumentAdapter.load_all(software=software))
+        engine = BM25SearchEngine(document_loader=lambda: PythonAPIDocumentAdapter.load_all(software=software))
         engine.build()
 
         # Build filter dictionary

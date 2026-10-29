@@ -25,7 +25,7 @@ from itasca_mcp.knowledge.config import (
 )
 
 
-class DocumentationLoader:
+class PythonAPILoader:
     """Loads and caches SDK documentation data.
 
     This class provides static methods for loading various documentation
@@ -53,7 +53,7 @@ class DocumentationLoader:
             FileNotFoundError: If index.json doesn't exist
 
         Example:
-            >>> index = DocumentationLoader.load_index()
+            >>> index = PythonAPILoader.load_index()
             >>> quick_ref = index["quick_ref"]
             >>> "itasca.ball.create" in quick_ref
             True
@@ -68,10 +68,10 @@ class DocumentationLoader:
             index = json.load(f)
 
         # Expand Contact.* entries to all Contact type variants
-        index = DocumentationLoader._expand_contact_types(index)
+        index = PythonAPILoader._expand_contact_types(index)
 
         # Expand object methods to full official paths
-        index = DocumentationLoader._expand_object_methods(index)
+        index = PythonAPILoader._expand_object_methods(index)
 
         return index
 
@@ -95,7 +95,7 @@ class DocumentationLoader:
             Dict mapping keywords to list of API names
 
         Example:
-            >>> keywords = DocumentationLoader.load_all_keywords()
+            >>> keywords = PythonAPILoader.load_all_keywords()
             >>> keywords["create ball"]
             ["itasca.ball.create"]
             >>> keywords["normal vector"]  # Merged from multiple modules
@@ -111,15 +111,15 @@ class DocumentationLoader:
         if itasca_keywords_path.exists():
             with open(itasca_keywords_path, encoding="utf-8") as f:
                 data = json.load(f)
-                DocumentationLoader._merge_keywords(all_keywords, data.get("keywords", {}))
+                PythonAPILoader._merge_keywords(all_keywords, data.get("keywords", {}))
 
         # Load keywords from all sub-modules (recursive)
         modules_dir = python_docs_root(software) / "modules"
         if modules_dir.exists():
-            DocumentationLoader._load_keywords_recursive(modules_dir, all_keywords)
+            PythonAPILoader._load_keywords_recursive(modules_dir, all_keywords)
 
         # Expand Contact.* entries to all Contact type variants
-        all_keywords = DocumentationLoader._expand_contact_keywords(all_keywords)
+        all_keywords = PythonAPILoader._expand_contact_keywords(all_keywords)
 
         # Convert defaultdict back to regular dict for return
         return dict(all_keywords)
@@ -157,23 +157,23 @@ class DocumentationLoader:
             Returns None if API not found.
 
         Example:
-            >>> doc = DocumentationLoader.load_api_doc("itasca.ball.create")
+            >>> doc = PythonAPILoader.load_api_doc("itasca.ball.create")
             >>> doc["signature"]
             "itasca.ball.create(radius, pos=None)"
 
-            >>> doc = DocumentationLoader.load_api_doc("itasca.ball")
+            >>> doc = PythonAPILoader.load_api_doc("itasca.ball")
             >>> doc["type"]
             "module"
             >>> len(doc["available_functions"])
             9
         """
-        index = DocumentationLoader.load_index(software=software)
+        index = PythonAPILoader.load_index(software=software)
 
         # Try 1: Get file reference from quick_ref (functions/methods)
         ref = index["quick_ref"].get(api_name)
         if not ref:
             # Try 2: Check if it's a module name
-            module_doc = DocumentationLoader._load_module_doc(api_name, index)
+            module_doc = PythonAPILoader._load_module_doc(api_name, index)
             if module_doc:
                 return module_doc
             # Not found in either quick_ref or modules
@@ -196,7 +196,7 @@ class DocumentationLoader:
         if "methods" in doc:
             for method in doc["methods"]:
                 if method["name"] == anchor:
-                    return DocumentationLoader._decorate_contact_method(api_name, cast(dict[str, Any], method))
+                    return PythonAPILoader._decorate_contact_method(api_name, cast(dict[str, Any], method))
         elif "functions" in doc:
             for func in doc["functions"]:
                 if func["name"] == anchor:
@@ -475,10 +475,10 @@ class DocumentationLoader:
                 if keywords_file.exists():
                     with open(keywords_file, encoding="utf-8") as f:
                         data = json.load(f)
-                        DocumentationLoader._merge_keywords(all_keywords, data.get("keywords", {}))
+                        PythonAPILoader._merge_keywords(all_keywords, data.get("keywords", {}))
 
                 # Recursively process subdirectories
-                DocumentationLoader._load_keywords_recursive(item, all_keywords)
+                PythonAPILoader._load_keywords_recursive(item, all_keywords)
 
     @staticmethod
     def load_module(module_key: str, *, software: str) -> dict[str, Any] | None:
@@ -496,13 +496,13 @@ class DocumentationLoader:
             Returns None if module not found.
 
         Example:
-            >>> doc = DocumentationLoader.load_module("ball")
+            >>> doc = PythonAPILoader.load_module("ball")
             >>> doc["module"]
             "itasca.ball"
             >>> len(doc["functions"])
             9
         """
-        index = DocumentationLoader.load_index(software=software)
+        index = PythonAPILoader.load_index(software=software)
         modules = index.get("modules", {})
 
         if module_key not in modules:
@@ -552,11 +552,11 @@ class DocumentationLoader:
             Returns None if function not found.
 
         Example:
-            >>> doc = DocumentationLoader.load_function("ball", "create")
+            >>> doc = PythonAPILoader.load_function("ball", "create")
             >>> doc["signature"]
             "itasca.ball.create(radius: float, centroid: vec, id: int = None) -> Ball"
         """
-        module_doc = DocumentationLoader.load_module(module_key, software=software)
+        module_doc = PythonAPILoader.load_module(module_key, software=software)
         if not module_doc:
             return None
 
@@ -585,13 +585,13 @@ class DocumentationLoader:
             Returns None if object not found.
 
         Example:
-            >>> doc = DocumentationLoader.load_object("Ball")
+            >>> doc = PythonAPILoader.load_object("Ball")
             >>> doc["class"]
             "Ball"
             >>> "position" in doc["method_groups"]
             True
         """
-        index = DocumentationLoader.load_index(software=software)
+        index = PythonAPILoader.load_index(software=software)
         objects = index.get("objects", {})
 
         concrete_contact_type = None
@@ -612,7 +612,7 @@ class DocumentationLoader:
             # Return basic info from index
             object_doc = cast(dict[str, Any], deepcopy(object_info))
             if concrete_contact_type:
-                object_doc = DocumentationLoader._filter_contact_object_doc(object_doc, concrete_contact_type)
+                object_doc = PythonAPILoader._filter_contact_object_doc(object_doc, concrete_contact_type)
             return object_doc
 
         # Load full object documentation
@@ -620,13 +620,13 @@ class DocumentationLoader:
         if not doc_path.exists():
             object_doc = cast(dict[str, Any], deepcopy(object_info))
             if concrete_contact_type:
-                object_doc = DocumentationLoader._filter_contact_object_doc(object_doc, concrete_contact_type)
+                object_doc = PythonAPILoader._filter_contact_object_doc(object_doc, concrete_contact_type)
             return object_doc
 
         with open(doc_path, encoding="utf-8") as f:
             object_doc = cast(dict[str, Any], json.load(f))
             if concrete_contact_type:
-                object_doc = DocumentationLoader._filter_contact_object_doc(object_doc, concrete_contact_type)
+                object_doc = PythonAPILoader._filter_contact_object_doc(object_doc, concrete_contact_type)
             return object_doc
 
     @staticmethod
@@ -648,18 +648,18 @@ class DocumentationLoader:
             Returns None if method not found.
 
         Example:
-            >>> doc = DocumentationLoader.load_method("Ball", "pos")
+            >>> doc = PythonAPILoader.load_method("Ball", "pos")
             >>> doc["signature"]
             "ball.pos() -> vec"
         """
-        object_doc = DocumentationLoader.load_object(object_name, software=software)
+        object_doc = PythonAPILoader.load_object(object_name, software=software)
         if not object_doc:
             return None
 
         methods = object_doc.get("methods", [])
         for method in methods:
             if isinstance(method, dict) and method.get("name") == method_name:
-                return DocumentationLoader._decorate_contact_method(object_name, method)
+                return PythonAPILoader._decorate_contact_method(object_name, method)
 
         return None
 
@@ -705,7 +705,7 @@ class DocumentationLoader:
                     continue
                 method_name = method.get("name", "")
                 if contact_type_supports_method(contact_type, method_name):
-                    methods.append(DocumentationLoader._decorate_contact_method(contact_type, method))
+                    methods.append(PythonAPILoader._decorate_contact_method(contact_type, method))
             filtered["methods"] = methods
 
         if "method_groups" in filtered:
@@ -727,5 +727,5 @@ class DocumentationLoader:
 
         Useful for testing or when documentation files are updated.
         """
-        DocumentationLoader.load_index.cache_clear()
-        DocumentationLoader.load_all_keywords.cache_clear()
+        PythonAPILoader.load_index.cache_clear()
+        PythonAPILoader.load_all_keywords.cache_clear()

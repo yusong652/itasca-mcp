@@ -15,8 +15,8 @@ import pytest
 from itasca_mcp.knowledge.commands.loader import CommandLoader
 from itasca_mcp.knowledge.config import SUPPORTED_SOFTWARE, normalize_software
 from itasca_mcp.knowledge.fish import FishLoader
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
-from itasca_mcp.knowledge.query import APISearch, CommandSearch
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
+from itasca_mcp.knowledge.query import CommandSearch, PythonAPISearch
 from itasca_mcp.knowledge.references.loader import ReferenceLoader
 from itasca_mcp.server import mcp
 
@@ -117,9 +117,9 @@ def test_shared_model_solve_resolves_for_all_engines() -> None:
 
 def test_shared_itasca_module_resolves_for_all_engines() -> None:
     for sw in SUPPORTED_SOFTWARE:
-        index = DocumentationLoader.load_index(software=sw)
+        index = PythonAPILoader.load_index(software=sw)
         assert "itasca" in index["modules"]
-        doc = DocumentationLoader.load_module("itasca", software=sw)
+        doc = PythonAPILoader.load_module("itasca", software=sw)
         assert doc is not None
         assert any(f["name"] == "command" for f in doc["functions"])
 
@@ -139,7 +139,7 @@ def test_command_families_are_engine_isolated() -> None:
 def test_search_is_engine_scoped() -> None:
     flac_hit = CommandSearch.search("zone create", top_k=3, software="flac")
     assert flac_hit and flac_hit[0].document.name == "zone create"
-    api_hit = APISearch.search("zone gridpoint", top_k=3, software="flac")
+    api_hit = PythonAPISearch.search("zone gridpoint", top_k=3, software="flac")
     assert api_hit and "zone" in api_hit[0].document.name.lower() or "gridpoint" in api_hit[0].document.name.lower()
 
 
@@ -206,24 +206,24 @@ async def test_3dec_python_api_exposes_itasca_core() -> None:
 
 def test_3dec_block_module_and_class_resolve() -> None:
     # Module function.
-    find = DocumentationLoader.load_api_doc("itasca.block.find", software="3dec")
+    find = PythonAPILoader.load_api_doc("itasca.block.find", software="3dec")
     assert find is not None
     assert find["signature"].startswith("itasca.block.find(")
     # Class method via its full official path.
-    vol = DocumentationLoader.load_api_doc("itasca.block.Block.vol", software="3dec")
+    vol = PythonAPILoader.load_api_doc("itasca.block.Block.vol", software="3dec")
     assert vol is not None
     assert vol["signature"] == "block.vol() -> float"
 
 
 def test_3dec_block_submodule_class_resolves() -> None:
     # Sub-namespace class (itasca.block.subcontact.Subcontact) resolves end to end.
-    fs = DocumentationLoader.load_api_doc("itasca.block.subcontact.Subcontact.force_shear", software="3dec")
+    fs = PythonAPILoader.load_api_doc("itasca.block.subcontact.Subcontact.force_shear", software="3dec")
     assert fs is not None
     assert "force_shear" in fs["signature"]
 
 
 def test_3dec_block_objects_registered_in_index() -> None:
-    index = DocumentationLoader.load_index(software="3dec")
+    index = PythonAPILoader.load_index(software="3dec")
     assert "block" in index["modules"]
     assert "Block" in index["objects"]
     # The Block module exposes exactly the six confirmed namespace functions.
@@ -240,28 +240,28 @@ def test_3dec_block_objects_registered_in_index() -> None:
 def test_3dec_python_block_family_is_engine_isolated() -> None:
     # block family is 3DEC-only: it must not appear in PFC/FLAC python indices.
     for sw in ("pfc", "flac"):
-        assert "block" not in DocumentationLoader.load_index(software=sw)["modules"]
+        assert "block" not in PythonAPILoader.load_index(software=sw)["modules"]
 
 
 def test_3dec_python_search_finds_block_method() -> None:
     # API-path style query (a documented use case) ranks the exact method first.
-    hits = APISearch.search("Block.vol", top_k=5, software="3dec")
+    hits = PythonAPISearch.search("Block.vol", top_k=5, software="3dec")
     assert hits and hits[0].document.name == "itasca.block.Block.vol"
 
 
 def test_3dec_structure_exposes_all_element_classes() -> None:
     # itasca.structure carries six element classes directly (no PFC/FLAC analogue).
-    index = DocumentationLoader.load_index(software="3dec")
+    index = PythonAPILoader.load_index(software="3dec")
     for cls in ("Beam", "Cable", "Geogrid", "Liner", "Pile", "Shell"):
         assert cls in index["objects"], cls
-    pile = DocumentationLoader.load_api_doc("itasca.structure.Pile.force", software="3dec")
+    pile = PythonAPILoader.load_api_doc("itasca.structure.Pile.force", software="3dec")
     assert pile is not None and pile["signature"].startswith("pile.force(")
 
 
 def test_3dec_dfn_and_flow_modules_resolve() -> None:
-    frac = DocumentationLoader.load_api_doc("itasca.dfn.DFN.create_fracture", software="3dec")
+    frac = PythonAPILoader.load_api_doc("itasca.dfn.DFN.create_fracture", software="3dec")
     assert frac is not None
-    fk = DocumentationLoader.load_api_doc("itasca.flowknot.find", software="3dec")
+    fk = PythonAPILoader.load_api_doc("itasca.flowknot.find", software="3dec")
     assert fk is not None and fk["signature"].startswith("itasca.flowknot.find(")
 
 
@@ -269,22 +269,22 @@ def test_3dec_colliding_class_names_disambiguate_by_full_path() -> None:
     # Zone exists in both block.zone and flowplane.zone; Vertex in flowplane.vertex
     # and dfn.vertex; Contact in contact and block.contact. The shallower/earlier
     # one keeps the bare object key, the other is registered under its full path.
-    index = DocumentationLoader.load_index(software="3dec")
+    index = PythonAPILoader.load_index(software="3dec")
     objects = index["objects"]
     assert "Zone" in objects and "itasca.flowplane.zone.Zone" in objects
     assert "Vertex" in objects and "itasca.flowplane.vertex.Vertex" in objects
     # Bare Zone resolves to the block.zone variant; the flowplane variant is reachable
     # under its full path. Both keep correct, distinct method docs.
-    bare = DocumentationLoader.load_object("Zone", software="3dec")
-    flow = DocumentationLoader.load_object("itasca.flowplane.zone.Zone", software="3dec")
+    bare = PythonAPILoader.load_object("Zone", software="3dec")
+    flow = PythonAPILoader.load_object("itasca.flowplane.zone.Zone", software="3dec")
     assert bare is not None and "block.zone" in bare["note"]
     assert flow is not None and "flowplane.zone" in flow["note"]
 
 
 def test_3dec_python_proprietary_modules_isolated_from_pfc_flac() -> None:
-    threedec = set(DocumentationLoader.load_index(software="3dec")["modules"])
+    threedec = set(PythonAPILoader.load_index(software="3dec")["modules"])
     for sw in ("pfc", "flac"):
-        other = set(DocumentationLoader.load_index(software=sw)["modules"])
+        other = set(PythonAPILoader.load_index(software=sw)["modules"])
         # None of the 3DEC-only families leak into the other engines. structure is
         # shared with FLAC (its own structure command family) and dfn is the shared
         # fracture kernel (_common fracture commands), so neither is 3DEC-only.
@@ -1096,9 +1096,9 @@ async def test_massflow_python_api_exposes_itasca_core() -> None:
 def test_massflow_python_says_model_objects_are_fish_only() -> None:
     """itasca on the massflow binary has no model-object module — say so where a
     user browsing the Python API will read it."""
-    index = DocumentationLoader.load_index(software="massflow")
+    index = PythonAPILoader.load_index(software="massflow")
     assert "no MassFlow Python module" in index["description"]
-    fish = DocumentationLoader.load_module("fish", software="massflow")
+    fish = PythonAPILoader.load_module("fish", software="massflow")
     assert fish is not None
     assert "source='fish'" in fish["description"]
 
@@ -1155,7 +1155,7 @@ def test_massflow_constitutive_models_scoped_to_coupled_analysis() -> None:
 def test_massflow_python_exposes_kernel_modules_only() -> None:
     # MassFlow has no proprietary Python package; itasca is flat and exposes only
     # the generic 9.0-kernel sub-modules (contact/history/fish) beyond the core.
-    index = DocumentationLoader.load_index(software="massflow")
+    index = PythonAPILoader.load_index(software="massflow")
     mods = set(index["modules"])
     assert {"itasca", "contact", "history", "fish"} <= mods
     # No zone-family / other-engine / fabricated 'massflow' python modules.
@@ -1163,15 +1163,15 @@ def test_massflow_python_exposes_kernel_modules_only() -> None:
 
 
 def test_massflow_python_contact_module_resolves() -> None:
-    doc = DocumentationLoader.load_api_doc("itasca.contact.find", software="massflow")
+    doc = PythonAPILoader.load_api_doc("itasca.contact.find", software="massflow")
     assert doc is not None
     assert doc["signature"].startswith("itasca.contact.find(")
     # Generic kernel module: identical content to the same 3DEC module.
-    assert doc == DocumentationLoader.load_api_doc("itasca.contact.find", software="3dec")
+    assert doc == PythonAPILoader.load_api_doc("itasca.contact.find", software="3dec")
 
 
 def test_massflow_python_search_finds_fish_intrinsic_api() -> None:
-    hits = APISearch.search("call fish function", top_k=5, software="massflow")
+    hits = PythonAPISearch.search("call fish function", top_k=5, software="massflow")
     assert hits and any("fish" in h.document.name.lower() for h in hits)
 
 

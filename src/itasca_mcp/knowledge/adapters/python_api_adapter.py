@@ -1,17 +1,17 @@
 """Python API document adapter for Itasca documentation search system.
 
-This module converts Python SDK API documentation from the DocumentationLoader
+This module converts Python SDK API documentation from the PythonAPILoader
 format into unified SearchDocument models for search.
 """
 
 from itasca_mcp.knowledge.models.document import DocumentType, SearchDocument
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
 
 
-class APIDocumentAdapter:
+class PythonAPIDocumentAdapter:
     """Adapter for Python API documentation.
 
-    Converts Python SDK API data from DocumentationLoader into unified
+    Converts Python SDK API data from PythonAPILoader into unified
     SearchDocument format. This enables:
     - Independent search for Python APIs
     - Consistent interface with command search
@@ -24,7 +24,7 @@ class APIDocumentAdapter:
 
     Usage:
         >>> # Load all API documents
-        >>> documents = APIDocumentAdapter.load_all()
+        >>> documents = PythonAPIDocumentAdapter.load_all()
         >>> len(documents)
         100  # Approximate count
 
@@ -45,10 +45,10 @@ class APIDocumentAdapter:
 
         Note:
             This loads function/method APIs only, not module-level docs.
-            Module queries are handled separately by DocumentationLoader.
+            Module queries are handled separately by PythonAPILoader.
 
         Example:
-            >>> docs = APIDocumentAdapter.load_all()
+            >>> docs = PythonAPIDocumentAdapter.load_all()
             >>> api_doc = docs[0]
             >>> api_doc.name
             'itasca.ball.create'
@@ -56,14 +56,14 @@ class APIDocumentAdapter:
             'itasca.ball.create(radius, pos=None)'
         """
         documents = []
-        index = DocumentationLoader.load_index(software=software)
+        index = PythonAPILoader.load_index(software=software)
         quick_ref = index.get("quick_ref", {})
-        all_keywords = DocumentationLoader.load_all_keywords(software=software)
+        all_keywords = PythonAPILoader.load_all_keywords(software=software)
 
         # Iterate through all API entries in quick_ref
         for api_name, file_ref in quick_ref.items():
             # Load the API documentation
-            api_doc = DocumentationLoader.load_api_doc(api_name, software=software)
+            api_doc = PythonAPILoader.load_api_doc(api_name, software=software)
 
             if not api_doc:
                 continue
@@ -77,7 +77,7 @@ class APIDocumentAdapter:
             # - "itasca.ball.create" → category = "itasca.ball"
             # - "itasca.ball.Ball.vel" → category = "itasca.ball"
             # - "itasca.BallBallContact.gap" → category = "itasca.contact"
-            category = APIDocumentAdapter._extract_category(api_name)
+            category = PythonAPIDocumentAdapter._extract_category(api_name)
 
             # Build description from API doc
             description = api_doc.get("description", "")
@@ -127,11 +127,11 @@ class APIDocumentAdapter:
             Category string (e.g., "itasca.ball", "itasca.contact")
 
         Examples:
-            >>> APIDocumentAdapter._extract_category("itasca.ball.create")
+            >>> PythonAPIDocumentAdapter._extract_category("itasca.ball.create")
             'itasca.ball'
-            >>> APIDocumentAdapter._extract_category("itasca.ball.Ball.vel")
+            >>> PythonAPIDocumentAdapter._extract_category("itasca.ball.Ball.vel")
             'itasca.ball'
-            >>> APIDocumentAdapter._extract_category("itasca.BallBallContact.gap")
+            >>> PythonAPIDocumentAdapter._extract_category("itasca.BallBallContact.gap")
             'itasca.contact'
         """
         # Import contact types for mapping
@@ -180,19 +180,19 @@ class APIDocumentAdapter:
             SearchDocument instance or None if not found
 
         Example:
-            >>> doc = APIDocumentAdapter.load_by_id("itasca.ball.create")
+            >>> doc = PythonAPIDocumentAdapter.load_by_id("itasca.ball.create")
             >>> doc.title
             'itasca.ball.create'
             >>> doc.syntax
             'itasca.ball.create(radius, pos=None)'
         """
-        api_doc = DocumentationLoader.load_api_doc(doc_id, software=software)
+        api_doc = PythonAPILoader.load_api_doc(doc_id, software=software)
 
         if not api_doc or api_doc.get("type") == "module":
             return None
 
         # Extract category
-        category = APIDocumentAdapter._extract_category(doc_id)
+        category = PythonAPIDocumentAdapter._extract_category(doc_id)
 
         # Build description
         description = api_doc.get("description", "")
@@ -202,7 +202,7 @@ class APIDocumentAdapter:
             description += f"\n\nParameters: {', '.join(param_names)}"
 
         # Get keywords
-        all_keywords = DocumentationLoader.load_all_keywords(software=software)
+        all_keywords = PythonAPILoader.load_all_keywords(software=software)
         keywords = []
         for keyword, api_list in all_keywords.items():
             if doc_id in api_list:

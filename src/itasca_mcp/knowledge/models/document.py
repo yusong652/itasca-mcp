@@ -21,7 +21,7 @@ class DocumentType(Enum):
 
     Search Strategy:
     - COMMAND + MODEL_PROPERTY: Unified search via CommandSearch
-    - PYTHON_API: Independent search via APISearch
+    - PYTHON_API: Independent search via PythonAPISearch
     """
 
     COMMAND = "command"

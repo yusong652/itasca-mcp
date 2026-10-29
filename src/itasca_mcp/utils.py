@@ -147,34 +147,6 @@ def validate_task_description(value: str) -> str:
     return stripped
 
 
-# Search query for commands
-SearchQuery = Annotated[
-    str,
-    AfterValidator(validate_non_empty_string),
-    Field(
-        ...,
-        min_length=1,
-        description=(
-            "Search keywords for Itasca commands. Examples: 'ball create', "
-            "'contact property', 'model solve'. Case-insensitive."
-        ),
-    ),
-]
-
-# Python API search query
-PythonAPISearchQuery = Annotated[
-    str,
-    AfterValidator(validate_non_empty_string),
-    Field(
-        ...,
-        min_length=1,
-        description=(
-            "Search keywords for Itasca Python SDK API. Examples: 'ball pos', "
-            "'contact force', 'model solve'. Case-insensitive."
-        ),
-    ),
-]
-
 # Software / engine selector (required, no default — itasca-mcp must not bias to one engine)
 SoftwareParam = Annotated[
     Software,

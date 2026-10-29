@@ -47,7 +47,7 @@ class SearchResult:
 
 
 @dataclass
-class APIDocumentation:
+class PythonAPIDocumentation:
     """Structured API documentation.
 
     This model represents the complete documentation for a Itasca Python SDK API,

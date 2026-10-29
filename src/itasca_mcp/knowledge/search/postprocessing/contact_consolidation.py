@@ -55,10 +55,10 @@ def consolidate_contact_apis(results: list[SearchResult]) -> list[SearchResult]:
                ]
 
     Usage:
-        >>> from itasca_mcp.knowledge.query import APISearch
+        >>> from itasca_mcp.knowledge.query import PythonAPISearch
         >>> from itasca_mcp.knowledge.search.postprocessing import consolidate_contact_apis
         >>>
-        >>> results = APISearch.search("contact model", top_k=20)
+        >>> results = PythonAPISearch.search("contact model", top_k=20)
         >>> len(results)
         20  # May contain many Contact type duplicates
         >>>

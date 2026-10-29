@@ -8,7 +8,7 @@ import json
 
 import pytest
 
-from itasca_mcp.knowledge.python_api import APILoader
+from itasca_mcp.knowledge.python_api import PythonAPILoader
 from itasca_mcp.server import mcp
 
 
@@ -50,7 +50,7 @@ async def test_live_families_are_browsable(software: str, api: str) -> None:
 
 
 def test_flac_interface_dimension_and_version_entries() -> None:
-    node = {m["name"]: m for m in APILoader.load_object("Node", software="flac")["methods"]}
+    node = {m["name"]: m for m in PythonAPILoader.load_object("Node", software="flac")["methods"]}
 
     assert "2D builds only." in node["length"]["notes"]
     assert any("reads 0.0 before the first cycle" in n for n in node["length"]["notes"])
@@ -59,7 +59,7 @@ def test_flac_interface_dimension_and_version_entries() -> None:
 
 
 def test_pfc_2d_rotation_is_documented_in_degrees_and_euler_is_3d_only() -> None:
-    funcs = {f["name"]: f for f in APILoader.load_module("ballarray", software="pfc")["functions"]}
+    funcs = {f["name"]: f for f in PythonAPILoader.load_module("ballarray", software="pfc")["functions"]}
 
     assert "2D builds only." in funcs["rotation"]["notes"]
     assert any("Angle in degrees" in n for n in funcs["rotation"]["notes"])
@@ -68,7 +68,7 @@ def test_pfc_2d_rotation_is_documented_in_degrees_and_euler_is_3d_only() -> None
 
 @pytest.mark.parametrize("software", ["pfc", "flac", "3dec", "mpoint", "massflow"])
 def test_fish_call_function_takes_a_tuple(software: str) -> None:
-    func = APILoader.load_function("fish", "call_function", software=software)
+    func = PythonAPILoader.load_function("fish", "call_function", software=software)
 
     assert func is not None
     assert [p["name"] for p in func["parameters"]] == ["func", "args"]
@@ -77,14 +77,14 @@ def test_fish_call_function_takes_a_tuple(software: str) -> None:
 
 def test_9x_only_modules_carry_the_9_marker_and_no_point_release_note() -> None:
     # The "9.0" label stands for the current 9.x release (9.8); point builds are not tracked.
-    module = APILoader.load_module("structure.beamarray", software="3dec")
+    module = PythonAPILoader.load_module("structure.beamarray", software="3dec")
 
     assert module["availability"] == {"versions": ["9.0"]}
     assert not any("9.7" in n for n in module.get("notes", []))
 
 
 def test_flac_7_attach_names_and_9_renames_are_both_marked() -> None:
-    attach = {m["name"]: m for m in APILoader.load_object("Attach", software="flac")["methods"]}
+    attach = {m["name"]: m for m in PythonAPILoader.load_object("Attach", software="flac")["methods"]}
 
     assert attach["master"]["availability"] == {"versions": ["7.0"]}
     assert attach["leader"]["availability"] == {"versions": ["9.0"]}

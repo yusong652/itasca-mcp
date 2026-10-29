@@ -9,7 +9,7 @@ merely mention the keyword in a short description.
 
 import pytest
 
-from itasca_mcp.knowledge.query import APISearch, CommandSearch
+from itasca_mcp.knowledge.query import CommandSearch, PythonAPISearch
 from itasca_mcp.knowledge.search.keyword_matcher import word_match_quality
 from itasca_mcp.knowledge.search.scoring.bm25_scorer import BM25Scorer
 
@@ -154,4 +154,4 @@ def test_partial_matching_direction() -> None:
 
 
 def test_nonsense_query_yields_no_api_results() -> None:
-    assert APISearch.search("definitelynonexistentkeyword", top_k=5, software="pfc") == []
+    assert PythonAPISearch.search("definitelynonexistentkeyword", top_k=5, software="pfc") == []

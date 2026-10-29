@@ -9,8 +9,8 @@ from __future__ import annotations
 from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
-from itasca_mcp.knowledge.python_api import APIDocFormatter, APILoader, DocumentationLoader
-from itasca_mcp.knowledge.query import APISearch
+from itasca_mcp.knowledge.python_api import PythonAPIFormatter, PythonAPILoader
+from itasca_mcp.knowledge.query import PythonAPISearch
 
 
 def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
@@ -75,7 +75,7 @@ def _parse_api_path(api: str, software: str) -> dict[str, Any]:
         }
 
     parts = api.split(".")
-    index = APILoader.load_index(software=software)
+    index = PythonAPILoader.load_index(software=software)
     modules = index.get("modules", {})
     objects = index.get("objects", {})
 
@@ -216,7 +216,7 @@ def _extract_function_names(functions: list[Any]) -> list[str]:
 
 
 def _browse_root(software: str) -> dict[str, Any]:
-    index = APILoader.load_index(software=software)
+    index = PythonAPILoader.load_index(software=software)
     modules = index.get("modules", {})
     objects = index.get("objects", {})
 
@@ -259,7 +259,7 @@ def _browse_root(software: str) -> dict[str, Any]:
 
 def _browse_module(module_path: str, software: str) -> dict[str, Any]:
     index_key = _path_to_index_key(module_path)
-    module_data = APILoader.load_module(index_key, software=software)
+    module_data = PythonAPILoader.load_module(index_key, software=software)
 
     if not module_data:
         return {
@@ -272,7 +272,7 @@ def _browse_module(module_path: str, software: str) -> dict[str, Any]:
             "input": {"module_path": module_path, "software": software},
         }
 
-    index = APILoader.load_index(software=software)
+    index = PythonAPILoader.load_index(software=software)
     objects = index.get("objects", {})
     related_objects = []
     for obj_name, obj_data in objects.items():
@@ -298,10 +298,10 @@ def _browse_module(module_path: str, software: str) -> dict[str, Any]:
 
 def _browse_function(module_path: str, func_name: str, software: str) -> dict[str, Any]:
     index_key = _path_to_index_key(module_path)
-    func_doc = APILoader.load_function(index_key, func_name, software=software)
+    func_doc = PythonAPILoader.load_function(index_key, func_name, software=software)
 
     if not func_doc:
-        module_data = APILoader.load_module(index_key, software=software) or {}
+        module_data = PythonAPILoader.load_module(index_key, software=software) or {}
         available_functions = _extract_function_names(module_data.get("functions", []))
         return {
             "source": "python_api",
@@ -331,11 +331,11 @@ def _browse_function(module_path: str, func_name: str, software: str) -> dict[st
 def _browse_object(
     module_path: str, object_name: str, display_name: str | None = None, *, software: str
 ) -> dict[str, Any]:
-    object_doc = APILoader.load_object(object_name, software=software)
+    object_doc = PythonAPILoader.load_object(object_name, software=software)
     shown_name = display_name or object_name
 
     if not object_doc:
-        index = APILoader.load_index(software=software)
+        index = PythonAPILoader.load_index(software=software)
         available_objects = sorted(index.get("objects", {}).keys())
         return {
             "source": "python_api",
@@ -371,11 +371,11 @@ def _browse_method(
     *,
     software: str,
 ) -> dict[str, Any]:
-    method_doc = APILoader.load_method(object_name, method_name, software=software)
+    method_doc = PythonAPILoader.load_method(object_name, method_name, software=software)
     shown_name = display_name or object_name
 
     if not method_doc:
-        object_doc = APILoader.load_object(object_name, software=software) or {}
+        object_doc = PythonAPILoader.load_object(object_name, software=software) or {}
         method_names = _extract_function_names(object_doc.get("methods", []))
         return {
             "source": "python_api",
@@ -414,7 +414,7 @@ def _browse_with_fallback(parsed: dict[str, Any], requested_api: str, software: 
     error_msg = parsed.get("error", "Unknown error")
     fallback_path = parsed.get("fallback_path", "")
 
-    index = APILoader.load_index(software=software)
+    index = PythonAPILoader.load_index(software=software)
     modules = index.get("modules", {})
     available_modules = sorted(_format_module_path(module_key) for module_key in modules)
 
@@ -449,7 +449,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
     The SDK corpus is a single 9.8 baseline, so ``version`` does not filter here.
     """
     del version
-    matches = APISearch.search(query, top_k=limit, software=software)
+    matches = PythonAPISearch.search(query, top_k=limit, software=software)
     entries: list[dict[str, Any]] = []
     for result in matches:
         api_path = result.document.name
@@ -457,7 +457,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
             {
                 "path": api_path,
                 "api_path": api_path,
-                "signature": APIDocFormatter.format_signature(api_path, result.document.metadata, software=software),
+                "signature": PythonAPIFormatter.format_signature(api_path, result.document.metadata, software=software),
                 "category": result.document.category,
                 "description": result.document.description,
                 "score": round(result.score, 2),
@@ -472,7 +472,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
     # results -- just misleading ones. Suppressing the hint exactly when the
     # search looks successful is the wrong way round.
     extras: dict[str, Any] = {}
-    index = DocumentationLoader.load_index(software=software)
+    index = PythonAPILoader.load_index(software=software)
     hints = [msg for key, msg in index.get("fallback_hints", {}).items() if key in query.lower()]
     if hints:
         extras["hints"] = hints

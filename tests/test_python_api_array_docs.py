@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from itasca_mcp.knowledge.config import python_docs_root, resolve
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
 
 ARRAY_MODULES = {
     "ballarray",
@@ -33,22 +33,22 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def setup_function() -> None:
-    DocumentationLoader.clear_cache()
+    PythonAPILoader.clear_cache()
 
 
 def test_array_modules_load_from_index() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
 
     for module in ARRAY_MODULES:
         assert module in index["modules"]
-        doc = DocumentationLoader.load_module(module, software="pfc")
+        doc = PythonAPILoader.load_module(module, software="pfc")
         assert doc is not None
         assert doc["module"] == f"itasca.{module}"
         assert any(func["name"] == "pos" for func in doc["functions"])
 
 
 def test_ballarray_full_module_doc_loads_without_truncation_at_loader_layer() -> None:
-    doc = DocumentationLoader.load_module("ballarray", software="pfc")
+    doc = PythonAPILoader.load_module("ballarray", software="pfc")
 
     assert doc is not None
     function_names = {func["name"] for func in doc["functions"]}
@@ -57,7 +57,7 @@ def test_ballarray_full_module_doc_loads_without_truncation_at_loader_layer() ->
 
 
 def test_array_quick_refs_resolve_to_existing_functions() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
 
     for api_path, ref in index["quick_ref"].items():
         if not any(api_path.startswith(f"itasca.{module}.") for module in ARRAY_MODULES):
@@ -73,7 +73,7 @@ def test_array_quick_refs_resolve_to_existing_functions() -> None:
 
 
 def test_array_keywords_point_to_quick_ref_entries() -> None:
-    index = DocumentationLoader.load_index(software="pfc")
+    index = PythonAPILoader.load_index(software="pfc")
     quick_ref = index["quick_ref"]
 
     for module in ARRAY_MODULES:
@@ -94,7 +94,7 @@ VERSION_GATED = {
 
 def test_array_modules_advertise_all_three_versions() -> None:
     for module in ARRAY_MODULES:
-        doc = DocumentationLoader.load_module(module, software="pfc")
+        doc = PythonAPILoader.load_module(module, software="pfc")
         assert doc is not None
         for func in doc["functions"]:
             expected = VERSION_GATED.get((module, func["name"]), ["6.0", "7.0", "9.0"])

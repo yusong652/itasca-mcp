@@ -22,9 +22,6 @@ RESOURCES_DIR = Path(__file__).parent / "resources"
 # itasca-mcp must not silently bias toward one product.
 SUPPORTED_SOFTWARE = ("pfc", "flac", "3dec", "mpoint", "massflow")
 
-# Maximum number of API matches to return from keyword search.
-SDK_SEARCH_TOP_N = 3
-
 
 def normalize_software(software: str) -> str:
     """Validate/normalize a required software selector.

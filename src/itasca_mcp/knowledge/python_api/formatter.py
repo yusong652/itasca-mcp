@@ -11,11 +11,11 @@ LLM-friendly markdown format. It handles:
 
 from typing import Any
 
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
 from itasca_mcp.knowledge.python_api.types.mappings import CLASS_TO_MODULE
 
 
-class APIDocFormatter:
+class PythonAPIFormatter:
     """Formats API documentation as LLM-friendly markdown.
 
     This class provides static methods for formatting API documentation
@@ -66,7 +66,7 @@ class APIDocFormatter:
         # Build modules list
         module_lines = []
         for key, data in modules.items():
-            full_path = APIDocFormatter._index_key_to_path(key)
+            full_path = PythonAPIFormatter._index_key_to_path(key)
             func_count = len(data.get("functions", []))
             desc = data.get("description", "")
             if len(desc) > 50:
@@ -242,13 +242,13 @@ class APIDocFormatter:
             empty list otherwise.
 
         Example:
-            >>> APIDocFormatter._detect_component_methods("Ball", "vel")
+            >>> PythonAPIFormatter._detect_component_methods("Ball", "vel")
             ['x', 'y', 'z']  # If vel_x, vel_y, vel_z exist
-            >>> APIDocFormatter._detect_component_methods("Ball", "id")
+            >>> PythonAPIFormatter._detect_component_methods("Ball", "id")
             []  # No component methods for id()
         """
         try:
-            object_doc = DocumentationLoader.load_object(object_name, software=software)
+            object_doc = PythonAPILoader.load_object(object_name, software=software)
             if not object_doc:
                 return []
 
@@ -308,16 +308,16 @@ class APIDocFormatter:
             Returns None if API not found
 
         Example:
-            >>> APIDocFormatter.format_signature("Ball.vel")
+            >>> PythonAPIFormatter.format_signature("Ball.vel")
             "`ball.vel() -> vec` - Get ball velocity vector"
 
-            >>> APIDocFormatter.format_signature(
+            >>> PythonAPIFormatter.format_signature(
             ...     "itasca.BallBallContact.force_global",
             ...     {"all_contact_types": ["BallBallContact", "BallFacetContact", ...]}
             ... )
             "`contact.force_global() -> vec` - Get contact force (supports: BallBallContact, BallFacetContact, ...)"
         """
-        api_doc = DocumentationLoader.load_api_doc(api_name, software=software)
+        api_doc = PythonAPILoader.load_api_doc(api_name, software=software)
         if not api_doc:
             return None
 
@@ -359,7 +359,7 @@ class APIDocFormatter:
         - Best practices and notes
 
         Args:
-            api_doc: Documentation dict from DocumentationLoader.load_api_doc()
+            api_doc: Documentation dict from PythonAPILoader.load_api_doc()
             api_name: API name (e.g., "Ball.vel", "itasca.ball.create")
             metadata: Optional metadata dict (for Contact type info, etc.)
 
@@ -385,7 +385,7 @@ class APIDocFormatter:
         lines = []
 
         # Generate official API path for display
-        display_path = APIDocFormatter._get_display_path(api_name, metadata)
+        display_path = PythonAPIFormatter._get_display_path(api_name, metadata)
 
         # Header
         lines.append(f"# {display_path}")
@@ -653,7 +653,7 @@ class APIDocFormatter:
         # Detect if this method has component alternatives (_x, _y, _z)
         # Use actual_object_name if provided (for Contact type aliases)
         lookup_name = actual_object_name or object_name
-        components = APIDocFormatter._detect_component_methods(lookup_name, name, software=software)
+        components = PythonAPIFormatter._detect_component_methods(lookup_name, name, software=software)
         if components:
             component_list = ", ".join([f"`{name}_{c}()`" for c in components])
             lines.append(f"Component Access: {component_list}")
