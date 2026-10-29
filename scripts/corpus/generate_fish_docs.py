@@ -41,11 +41,14 @@ ITASCA = Path("C:/Program Files/Itasca")
 # --- live tables ("name | signature" console logs, name lists, or name->sig json)
 LIVE: dict[str, dict[str, Path]] = {
     "pfc": {
-        "6.0": WORK / "pfc_fish_intrinsics_60.txt",  # names only (PFC3D 6.00, clean)
-        "7.0": WORK / "pfc_fish_sigs_70.json",  # PFC3D 7.00 (unified)
+        "6.0": WORK / "pfc60_fish_intrinsics.log",  # PFC3D 6.00 (clean; columnar table, see read_live)
+        "7.0": WORK / "pfc70_fish_intrinsics.log",  # PFC3D 7.00 (unified)
         "9.0": WORK / "pfc98_fish_intrinsics.log",  # PFC3D 9.8 (unified)
     },
-    "flac": {"9.0": WORK / "flac98_fish_intrinsics.log"},  # FLAC3D 9.8 (unified)
+    "flac": {
+        "7.0": WORK / "flac70_fish_intrinsics.log",  # FLAC3D 7.00 (unified: identical to PFC 7.00's table)
+        "9.0": WORK / "flac98_fish_intrinsics.log",  # FLAC3D 9.8 (unified)
+    },
     "3dec": {
         "7.0": WORK / "fish_intrinsics_3dec70.txt",  # 3DEC 7.00 (clean)
         "9.0": WORK / "3dec98_fish_intrinsics.log",  # 3DEC 9.8 (clean)
@@ -95,7 +98,7 @@ FAMILIES: dict[str, list[str]] = {
     # contact/fragment are documented under common/ but only PFC can model with them.
     "pfc": ["ball", "brick", "cfd", "clump", "contact", "element", "fragment", "inlet", "measure", "rblock", "wall"],
     "flac": ["attach", "gp", "interface", "zone"],
-    "3dec": ["block", "fblock", "feblock", "flowknot", "flowplane"],
+    "3dec": ["block", "fblock", "feblock", "flowknot", "flowplane", "sel"],  # sel: 7.0-only legacy SEL
     "mpoint": ["mpoint"],
     "massflow": ["massflow"],
 }
@@ -105,6 +108,7 @@ EXCLUDED: dict[str, str] = {
     "system": "OS/process utilities; outside modelling scope (same policy as itasca.util)",
     "sketch": "FISH face of the FLAC GUI sketch tool; interactive-only",
     "building_blocks": "FISH face of the FLAC GUI building-blocks tool; interactive-only",
+    "extrude": "FISH face of the FLAC 7.0 extruder GUI tool (sketch in 9.x); interactive-only",
 }
 
 ROW = re.compile(r"^\s*([A-Za-z_][\w.]*)\s*\|\s*(.+?)\s*$")
@@ -115,12 +119,45 @@ SETTER_ONLY = re.compile(r"^(?P<name>[A-Za-z_][\w.]*)(?:\((?P<args>.*)\))?\s*(?:
 SUFFIX = re.compile(r"\)\s*\((?P<note>[^()]*)\)\s*$")
 
 
+_TYPE_60 = {"v3": "vec3", "v2": "vec2"}
+
+
+def read_columnar_60(text: str) -> dict[str, str | None]:
+    """PFC 6.0 prints a fixed-width table (Plugin / Name / Return / Arg / Write / Arguments).
+
+    Rebuild the 7.0+ style ``ret := name(args) [:= ret]`` so every version shares
+    one signature grammar; 6.0's shorter type names (v3, ball) are kept except
+    v3/v2, which are spelled vec3/vec2 everywhere else.
+    """
+    lines = text.splitlines()
+    header = next(i for i, line in enumerate(lines) if line.startswith("Plugin") and "Arguments" in line)
+    cols = {key: lines[header].index(key) for key in ("Name", "Return", "Arg", "Write", "Arguments")}
+    rows: dict[str, str | None] = {}
+    for line in lines[header + 2 :]:
+        if not line.strip() or line.startswith(("pfc3d>", "*")):
+            continue
+        name = line[cols["Name"] : cols["Return"]].strip()
+        if not re.fullmatch(r"[A-Za-z_][\w.]*", name):
+            continue
+        ret = line[cols["Return"] : cols["Arg"]].strip()
+        ret = "/".join(_TYPE_60.get(t, t) for t in ret.split("/")) if ret else "any"
+        write = line[cols["Write"] : cols["Arguments"]].strip() == "Yes"
+        args = line[cols["Arguments"] :].strip()
+        sig = f"{ret} := {name}({args})"
+        if write:
+            sig += f" := {ret}"
+        rows.setdefault(name, sig)
+    return rows
+
+
 def read_live(path: Path) -> dict[str, str | None]:
     """name -> signature (None when the source lists names only)."""
     if path.suffix == ".json":
         return dict(json.loads(path.read_text(encoding="utf-8")).items())
     rows: dict[str, str | None] = {}
     text = path.read_text(encoding="utf-8", errors="replace")
+    if "Plugin Name" in text:  # PFC 6.0 columnar table
+        return read_columnar_60(text)
     if "|" not in text:  # bare name list
         return {line.strip(): None for line in text.splitlines() if line.strip()}
     for line in text.splitlines():
@@ -218,20 +255,21 @@ def load_family_hints() -> dict[str, str]:
 VERIFICATION = {
     "pfc": (
         "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of PFC3D 9.8 (3772 rows, unified "
-        "kernel table), PFC3D 7.00 (3793) and PFC3D 6.00 (1542, names only; this standalone-product table also "
-        "decides which kernel namespaces PFC exposes). Anchors: exe64/doc/out_fish.txt of 9.8/7.0/6.0. contact.* "
+        "kernel table), PFC3D 7.00 (3793, unified) and PFC3D 6.00 (1542; a columnar Name/Return/Arg/Write table "
+        "rebuilt into the 7.0+ signature grammar; this standalone-product table also decides which kernel "
+        "namespaces PFC exposes). Anchors: exe64/doc/out_fish.txt of 9.8/7.0/6.0. contact.* "
         "and fragment.* are documented under common/ but assigned to PFC (3DEC lacks them; FLAC cannot model with "
         "them). creep/dynamic/fluid process namespaces are FLAC-side and are not listed for PFC."
     ),
     "flac": (
         "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of FLAC3D 9.8 (3951 rows, unified "
-        "kernel table). 7.0 availability is from the static FLAC3D700 out_fish.txt (no live 7.0 dump yet). FLAC is "
-        "the kernel's home product, so every kernel namespace is listed."
+        "kernel table) and FLAC3D 7.00 (3793 rows, also unified and identical to PFC3D 7.00's table). Neither "
+        "table is clean, so FLAC lists every kernel namespace (it is the kernel's home product)."
     ),
     "3dec": (
         "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of 3DEC 9.8 (1681 rows; 3DEC's table "
-        "is clean - no PFC/FLAC families - so it also decides kernel membership) and 3DEC 7.00 (1970 rows). "
-        "Anchors from the 9.8/7.0 out_fish.txt."
+        "is clean - no PFC/FLAC families - so it also decides kernel membership) and 3DEC 7.00 (1970 rows, also "
+        "clean; carries the 7.0-only sel.* legacy structural-element family). Anchors from the 9.8/7.0 out_fish.txt."
     ),
     "mpoint": (
         "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of MPoint 9.8 (3772 rows - the same "
@@ -282,7 +320,7 @@ def main() -> None:
                     entry["sigs"].setdefault(version, normalize_sig(sig))
 
     def versions_for(entry: dict[str, Any], ns: str, engine: str | None) -> dict[str, bool]:
-        """Availability per corpus version from live evidence (FLAC 7.0 falls back to the static 7.0 table).
+        """Availability per corpus version from live evidence only.
 
         ``engine=None`` gives the kernel's union view across every engine and version.
         """
@@ -290,12 +328,9 @@ def main() -> None:
         seen = entry["seen"]
         for v in ALL_VERSIONS if engine is None else ENGINE_VERSIONS[engine]:
             if ns in KERNEL:
-                ok = any(v in s for s in seen.values())
+                out[v] = any(v in s for s in seen.values())
             else:
-                ok = v in seen.get(engine, set())
-            if not ok and engine == "flac" and v == "7.0":
-                ok = entry["name"] in static["7.0"]
-            out[v] = ok
+                out[v] = v in seen.get(engine, set())
         return out
 
     written: dict[str, Path] = {}
@@ -309,6 +344,9 @@ def main() -> None:
             sig = entry["sigs"].get("9.0") or entry["sigs"].get("7.0")
             st = static["9.0"].get(name) or static["7.0"].get(name) or static["6.0"].get(name)
             rec: dict[str, Any] = {"name": name}
+            if not sig and entry["sigs"].get("6.0"):
+                sig = entry["sigs"]["6.0"]  # 6.0-only name: signature rebuilt from the 6.0 columnar table
+                rec["signature_source"] = "6.0"
             if not sig and st and st["signature"]:
                 sig = st["signature"]  # names the live tables list without a signature (6.0 name list)
                 rec["signature_source"] = "static"
@@ -365,9 +403,9 @@ def main() -> None:
                 "available": {v: avail.get(v, 0) for v in versions},
             }
         excluded = {}
-        unified = live["massflow"]["9.0"] if engine == "massflow" else live["pfc"]["9.0"]
+        seen_names = {name for rows in live[engine].values() for name in rows}
         for ns, reason in EXCLUDED.items():
-            n = sum(1 for k in unified if k.split(".")[0] == ns)
+            n = sum(1 for k in seen_names if k.split(".")[0] == ns)
             if n:
                 excluded[ns] = {"count": n, "reason": reason}
         index = {
