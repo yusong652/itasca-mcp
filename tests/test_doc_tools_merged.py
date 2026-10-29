@@ -180,6 +180,19 @@ async def test_query_all_sources_tags_entries() -> None:
 
 
 @pytest.mark.asyncio
+async def test_command_hits_summarise_in_description() -> None:
+    """Command hits carry 'description' like the other trees, a whole first sentence ('etc.)' is no end)."""
+    data = _payload(await mcp.call_tool("itasca_query_doc", {"software": "flac", "query": "create brick zones"}))[
+        "data"
+    ]
+    hit = next(e for e in data["entries"] if e["path"] == "zone create")
+    assert "short_description" not in hit
+    assert hit["description"] == (
+        "Create 3D zone-filled primitive shapes ( brick , cylinder , etc.) with a predefined grid pattern."
+    )
+
+
+@pytest.mark.asyncio
 async def test_query_no_results_hints() -> None:
     data = _payload(await mcp.call_tool("itasca_query_doc", {"software": "pfc", "query": "zzzqqq", "source": "fish"}))[
         "data"
