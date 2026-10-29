@@ -6,7 +6,6 @@ for the ``commands`` source of itasca_browse_doc / itasca_query_doc.
 
 from __future__ import annotations
 
-import re
 from functools import partial
 from itertools import chain
 from typing import Any
@@ -14,31 +13,25 @@ from typing import Any
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
 from itasca_mcp.knowledge.query import CommandSearch
-from itasca_mcp.tools.docs._common import compact_field, omit_entry_fields, omit_largest, trim_to_response
+from itasca_mcp.tools.docs._common import (
+    compact_field,
+    first_sentence,
+    omit_entry_fields,
+    omit_largest,
+    trim_to_response,
+)
 from itasca_mcp.utils import (
     normalize_input,
 )
 
 # A sentence ends at '.', '!' or '?' followed by a capital: 'etc.)' and 'e.g. ball' do not.
-_SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
-
-
-_SUMMARY_MAX = 240
 _LISTING_SUMMARY_MAX = 80  # what a category too large for one response cuts summaries to
-
-
-def _first_sentence(text: str | None, limit: int = _SUMMARY_MAX) -> str:
-    """The one-line summary listings and search hits show for a command."""
-    sentence = _SENTENCE_END.split(" ".join((text or "").split()), maxsplit=1)[0]
-    if len(sentence) > limit:
-        sentence = sentence[:limit].rsplit(" ", 1)[0] + " ..."
-    return sentence
 
 
 def _shorten_descriptions(entries: list[dict[str, Any]]) -> None:
     for entry in entries:
         if entry.get("description"):
-            entry["description"] = _first_sentence(entry["description"], _LISTING_SUMMARY_MAX)
+            entry["description"] = first_sentence(entry["description"], _LISTING_SUMMARY_MAX)
 
 
 def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
@@ -156,7 +149,7 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
         command_items.append(
             {
                 "name": cmd.get("name", ""),
-                "description": _first_sentence(cmd_doc.get("description")),
+                "description": first_sentence(cmd_doc.get("description")),
                 "syntax": cmd_doc.get("syntax"),
                 "python_available": bool(cmd.get("python_available", False)),
             }
@@ -350,7 +343,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
                 "name": result.document.name,
                 "category": result.document.category,
                 "syntax": result.document.syntax,
-                "description": _first_sentence(result.document.description),
+                "description": first_sentence(result.document.description),
                 "score": round(result.score, 2),
                 "rank": result.rank,
                 "version": metadata.get("version", version),

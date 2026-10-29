@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable, Collection, Iterable, Iterator
 from functools import partial
 from typing import Any
@@ -21,6 +22,17 @@ VERSION_DESCRIPTION = (
     "commands, fish and reference entries by availability; python_api is a single 9.8 baseline "
     "whose docs carry their own availability notes."
 )
+
+_SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
+SUMMARY_MAX = 240
+
+
+def first_sentence(text: str | None, limit: int = SUMMARY_MAX) -> str:
+    """The one-line summary listings and search hits show for an entry."""
+    sentence = _SENTENCE_END.split(" ".join((text or "").split()), maxsplit=1)[0]
+    if len(sentence) > limit:
+        sentence = sentence[:limit].rsplit(" ", 1)[0] + " ..."
+    return sentence
 
 
 def resolve_doc_version(software: str, version: CommandDocVersion | str) -> tuple[str | None, dict[str, Any] | None]:

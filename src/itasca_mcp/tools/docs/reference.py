@@ -12,7 +12,7 @@ from typing import Any, cast
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.query.reference_search import ReferenceSearch
 from itasca_mcp.knowledge.references import ReferenceLoader
-from itasca_mcp.tools.docs._common import compact_field, omit_largest, trim_to_response
+from itasca_mcp.tools.docs._common import compact_field, first_sentence, omit_largest, trim_to_response
 from itasca_mcp.utils import (
     normalize_input,
 )
@@ -88,9 +88,15 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
     raw_items = ReferenceLoader.get_item_list(category, version, software=software)
     items = []
     for item in raw_items:
+        description = item.get("description", "")
+        if not description:
+            # range-elements indexes carry only a truncated short_description; the
+            # element's own file has the full text.
+            doc = ReferenceLoader.load_item_doc(category, item.get("name", ""), software=software) or {}
+            description = first_sentence(doc.get("description") or item.get("short_description", ""))
         entry: dict[str, Any] = {
             "name": item.get("name", ""),
-            "description": item.get("description", ""),
+            "description": description,
         }
         if "full_name" in item:
             entry["full_name"] = item["full_name"]
