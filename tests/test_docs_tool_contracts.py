@@ -180,7 +180,15 @@ async def test_browse_command_heading_lists_its_commands() -> None:
     )
     assert body["ok"] is True
     assert body["data"]["entries"][0]["command"] == "building-blocks block create"
-    assert body["data"]["entries"][0]["category"] == "body"
+    assert body["data"]["entries"][0]["category"] == "building-blocks"
+
+    root = _parse_tool_payload(await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "flac"}))
+    names = {entry["name"] for entry in root["data"]["entries"]}
+    assert {"building-blocks", "sketch", "model domain", "zone"} <= names and "body" not in names
+    old = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "flac", "version": "7.0"})
+    )
+    assert "extrude" in {entry["name"] for entry in old["data"]["entries"]}
 
     # 'block merge-start' is one hyphenated command, not a 'merge' group.
     hyphenated = _parse_tool_payload(

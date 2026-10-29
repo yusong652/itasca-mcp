@@ -161,6 +161,26 @@ def _category_key(word: str, software: str, version: str) -> str:
     return next((c.category for c in _commands(software, version) if c.name.split()[0] == word), word)
 
 
+def _engine_word(category: str, software: str, version: str) -> str:
+    """What the engine calls a category: 'building-blocks' for the index key 'body',
+    'model domain' for 'domain', 'extrude' for extruder at 7.0 and 'sketch' at 9.0.
+
+    Read off the version's command names as the words they all start with (at most two,
+    always leaving a word to the command itself); a category with fewer than two commands
+    falls back to its index prefix.
+    """
+    names = [command.name.split() for command in _commands(software, version) if command.category == category]
+    if len(names) < 2:
+        return _command_prefix(category, software)
+    shared: list[str] = []
+    for i in range(2):
+        heads = {words[i] for words in names if len(words) > i + 1}
+        if len(heads) != 1 or len(heads) != len({words[i] for words in names}):
+            break
+        shared.append(heads.pop())
+    return " ".join(shared) or _command_prefix(category, software)
+
+
 def _group_counts(commands: list[_Command]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for command in commands:
@@ -203,7 +223,7 @@ def _browse_root(version: str, software: str) -> dict[str, Any]:
         total_commands += command_count
         category_items.append(
             {
-                "name": category_name,
+                "name": _engine_word(category_name, software, version),
                 "description": category_data.get("description", ""),
                 "command_count": command_count,
             }
@@ -236,7 +256,7 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
                 "message": f"Category '{category}' not found.",
             },
             "input": {"category": category, "version": version, "software": software},
-            "available_categories": sorted(categories.keys()),
+            "available_categories": sorted(_engine_word(key, software, version) for key in categories),
         }
 
     commands = [command for command in _commands(software, version) if command.category == category]
@@ -245,7 +265,8 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
     if groups:
         # 'block contact' is a heading over 22 commands, not a command: browse it as a level of its own.
         summary["groups"] = groups
-    return _listing_payload(category, [command.listing() for command in commands], summary, version, software)
+    items = [command.listing() for command in commands]
+    return _listing_payload(_engine_word(category, software, version), items, summary, version, software)
 
 
 def _browse_group(group: str, version: str, software: str) -> dict[str, Any] | None:
@@ -253,9 +274,8 @@ def _browse_group(group: str, version: str, software: str) -> dict[str, Any] | N
     commands = [command for command in _commands(software, version) if command.group == group]
     if not commands:
         return None
-    return _listing_payload(
-        commands[0].category, [command.listing() for command in commands], {"group": group}, version, software
-    )
+    category = _engine_word(commands[0].category, software, version)
+    return _listing_payload(category, [command.listing() for command in commands], {"group": group}, version, software)
 
 
 def _browse_command(category: str, command_name: str, version: str, software: str) -> dict[str, Any]:
@@ -332,7 +352,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
         action="browse",
         entries=[
             {
-                "category": category,
+                "category": _engine_word(category, software, version),
                 "command": name,
                 "version": version,
                 "doc": cmd_doc,
