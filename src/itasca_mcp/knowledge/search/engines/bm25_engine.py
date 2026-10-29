@@ -149,6 +149,8 @@ class BM25SearchEngine(BaseSearchEngine):
         if filters:
             search_results = self._apply_filters(search_results, filters)
 
+        _promote_exact_names(search_results, query)
+
         # Sort by score (descending); ranks are 1-based positions in that order
         search_results.sort(key=lambda r: r.score, reverse=True)
         for rank, result in enumerate(search_results, start=1):
@@ -218,3 +220,27 @@ class BM25SearchEngine(BaseSearchEngine):
             >>> engine.set_field_weights(weight_name=0.5, weight_desc=0.25, weight_kw=0.25)
         """
         BM25Scorer.set_parameters(weight_name=weight_name, weight_desc=weight_desc, weight_kw=weight_kw)
+
+
+def _promote_exact_names(results: list[SearchResult], query: str) -> None:
+    """Put documents whose name *is* the query ahead of every partial match.
+
+    Token scoring cannot do this on its own: 'in_group' loses 'in' as a stopword and
+    'contact_count' scores the shorter itasca.contact.count higher, so the method the
+    query spells out ranks below near-namesakes. A query equal to a document's title,
+    or to its last dotted/space-separated segments ('in_group', 'Ball.in_group',
+    'create'), lifts it by the best score in the list.
+    """
+    key = " ".join(query.lower().split())
+    exact = [r for r in results if _names_match(r.document.title, key) or _names_match(r.document.name, key)]
+    if not exact:
+        return
+    top = max(r.score for r in results)
+    for result in exact:
+        result.score += top
+        result.match_info = {**(result.match_info or {}), "exact_name": True}
+
+
+def _names_match(name: str, key: str) -> bool:
+    name = name.lower()
+    return name == key or name.endswith(("." + key, " " + key))

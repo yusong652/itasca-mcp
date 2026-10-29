@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from collections import Counter
 from typing import Any, cast
 
@@ -71,11 +72,14 @@ def register(mcp: FastMCP) -> None:
 
 
 def _search_all(software: str, query: str, limit: int, version: str) -> dict[str, Any]:
-    """Merge the four trees: scores are normalised per tree (each tree's best hit = 1.0).
+    """Merge the four trees: per-tree normalised score, weighted by how much of the query the hit's name spells.
 
-    BM25 scores are not comparable across indexes, so the merge ranks hits by how
-    strong they are within their own tree. The practical effect is that each tree's
-    top hit lands near the front, which is the side-by-side view this mode exists for.
+    BM25 scores are not comparable across indexes, so each tree's best hit is 1.0 and every
+    tree's top hit lands near the front - the side-by-side view this mode exists for. Those
+    1.0s tie, though, and a tie used to go to whichever tree was searched first, so a weak
+    command outranked the FISH intrinsic the query named ('version code major' put
+    geometry refine above version.code.major). The share of query words found in the hit's
+    own path breaks that tie, and a path that is the query outright goes first.
     """
     merged: list[dict[str, Any]] = []
     hints: list[str] = []
@@ -86,14 +90,15 @@ def _search_all(software: str, query: str, limit: int, version: str) -> dict[str
         best = max((float(e.get("score") or 0.0) for e in entries), default=0.0) or 1.0
         for entry in entries:
             entry["source"] = src
-            entry["_norm"] = float(entry.get("score") or 0.0) / best
+            norm = float(entry.get("score") or 0.0) / best
+            entry["_rank_key"] = norm * (1.0 + _name_coverage(query, _path_of(entry))) + _exact_bonus(query, entry)
             merged.append(entry)
 
-    merged.sort(key=lambda e: e["_norm"], reverse=True)
+    merged.sort(key=lambda e: e["_rank_key"], reverse=True)
     merged = merged[:limit]
     for rank, entry in enumerate(merged, start=1):
         entry["rank"] = rank
-        entry.pop("_norm", None)
+        entry.pop("_rank_key", None)
 
     summary: dict[str, Any] = {
         "count": len(merged),
@@ -109,3 +114,41 @@ def _search_all(software: str, query: str, limit: int, version: str) -> dict[str
             "No tree matched; try fewer or more generic keywords, or browse a tree from its top.",
         ]
     return build_docs_data(source="all", action="query", entries=merged, summary=summary)
+
+
+_WORDS = re.compile(r"[a-z0-9]+")
+
+
+def _path_of(entry: dict[str, Any]) -> str:
+    return str(entry.get("path") or entry.get("name") or "")
+
+
+def _name_coverage(query: str, path: str) -> float:
+    """Share of the query's words found in the hit's own path (0.0-1.0).
+
+    A word counts when it and a path token of 3+ characters are prefixes of one another,
+    so abbreviated names still match spelled-out queries ('position' / pos, 'balls' / ball).
+    """
+    words = set(_WORDS.findall(query.lower()))
+    if not words:
+        return 0.0
+    tokens = set(_WORDS.findall(path.lower()))
+    stems = [t for t in tokens if len(t) >= 3]
+    covered = {
+        w for w in words if w in tokens or (len(w) >= 3 and any(w.startswith(t) or t.startswith(w) for t in stems))
+    }
+    return len(covered) / len(words)
+
+
+def _exact_bonus(query: str, entry: dict[str, Any]) -> float:
+    """1.0 when the hit's path is the query, or ends with it and the query is itself a name.
+
+    A bare word ('fragment') ends many paths (Ball.fragment, Wall.fragment...); letting it
+    count would bury the command or namespace the word usually means.
+    """
+    key = " ".join(query.lower().split())
+    path = _path_of(entry).lower()
+    if path == key:
+        return 1.0
+    looks_like_name = any(sep in key for sep in "._ ")
+    return 1.0 if looks_like_name and path.endswith(("." + key, " " + key)) else 0.0

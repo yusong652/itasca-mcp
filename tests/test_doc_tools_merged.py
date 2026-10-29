@@ -196,3 +196,44 @@ def test_fish_loader_tree_shape() -> None:
     assert FishLoader.get("ball.pos", software="pfc")["namespace"] == "ball"
     assert FishLoader.get("math.sqrt", software="3dec")["scope"] == "common"
     assert not FishLoader.is_node("ball", software="3dec")
+
+
+async def _top_paths(query: str, source: str | None = None, limit: int = 5) -> list[str]:
+    args = {"software": "pfc", "query": query, "limit": limit}
+    if source:
+        args["source"] = source
+    data = _payload(await mcp.call_tool("itasca_query_doc", args))["data"]
+    return [e["path"] for e in data["entries"]]
+
+
+@pytest.mark.asyncio
+async def test_query_names_win_over_per_tree_ties() -> None:
+    """Each tree's best hit normalises to 1.0; the hit whose name the query spells must win the tie."""
+    assert (await _top_paths("version code major"))[0] == "version.code.major"
+    assert (await _top_paths("contact.force.normal"))[0] == "contact.force.normal"
+    assert (await _top_paths("ball position"))[0] != "table position"
+    # a bare word still means the command, not every method that happens to end with it
+    assert (await _top_paths("fragment"))[0] == "fragment compute"
+
+
+@pytest.mark.asyncio
+async def test_query_exact_python_name_with_stopword_or_short_rival() -> None:
+    """'in' is a stopword and itasca.contact.count outscores Ball.contact_count on tokens alone."""
+    assert (await _top_paths("itasca.ball.Ball.in_group", "python_api"))[0] == "itasca.ball.Ball.in_group"
+    assert (await _top_paths("Ball.contact_count", "python_api"))[0] == "itasca.ball.Ball.contact_count"
+    assert all(p.endswith(".in_group") for p in await _top_paths("in_group", "python_api", limit=3))
+
+
+@pytest.mark.asyncio
+async def test_fish_entries_carry_manual_descriptions() -> None:
+    """FISH names are abbreviations; the manual's one-liner is what prose queries match."""
+    data = _payload(
+        await mcp.call_tool("itasca_browse_doc", {"software": "pfc", "source": "fish", "path": "tensor.prin"})
+    )["data"]
+    assert "principal" in data["entries"][0]["description"]
+    assert "tensor.prin" in await _top_paths("principal values tensor")
+
+
+def test_fish_suggestions_rank_by_closeness() -> None:
+    assert FishLoader.suggest("ball.position", software="pfc")[0] == "ball.pos"
+    assert FishLoader.suggest("tensor.principal", software="pfc")[:2] == ["tensor", "tensor.prin"]

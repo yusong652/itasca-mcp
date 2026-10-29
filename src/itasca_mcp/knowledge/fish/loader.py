@@ -15,6 +15,7 @@ engine's index decides whether it lists them.
 from __future__ import annotations
 
 import json
+from difflib import SequenceMatcher
 from functools import lru_cache
 from typing import Any, cast
 
@@ -146,15 +147,23 @@ class FishLoader:
 
     @staticmethod
     def suggest(name: str, *, software: str, limit: int = 8) -> list[str]:
-        """Names sharing the longest known prefix with ``name``; for not-found errors."""
+        """Names under the longest known prefix of ``name``, closest to the unmatched part first.
+
+        For not-found errors: 'ball.position' suggests ball.pos before ball.axis.
+        """
         parts = name.split(".")
         while parts:
             prefix = ".".join(parts)
             if FishLoader.is_node(prefix, software=software):
+                typed = name[len(prefix) :].lstrip(".").split(".")[0]
                 kids = FishLoader.children(prefix, software=software)
+                if typed:
+                    kids = sorted(kids, key=lambda kid: _closeness(kid.rsplit(".", 1)[-1], typed), reverse=True)
                 return ([prefix] if FishLoader.get(prefix, software=software) else []) + kids[:limit]
             parts.pop()
-        return [ns["name"] for ns in FishLoader.namespaces(software=software)][:limit]
+        typed = name.split(".")[0]
+        namespaces = [ns["name"] for ns in FishLoader.namespaces(software=software)]
+        return sorted(namespaces, key=lambda ns: _closeness(ns, typed), reverse=True)[:limit]
 
     @staticmethod
     def clear_cache() -> None:
@@ -162,3 +171,9 @@ class FishLoader:
         FishLoader._load_file.cache_clear()
         FishLoader.entries.cache_clear()
         FishLoader._children.cache_clear()
+
+
+def _closeness(candidate: str, typed: str) -> float:
+    """Similarity of a name segment to what was typed; a shared prefix ('pos'/'position') ranks first."""
+    shared_prefix = candidate.startswith(typed) or typed.startswith(candidate)
+    return float(shared_prefix) + SequenceMatcher(None, candidate, typed).ratio()
