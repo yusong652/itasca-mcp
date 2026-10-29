@@ -111,7 +111,6 @@ class FishDocumentAdapter:
                         "settable": entry.get("settable"),
                         "versions": entry.get("versions", {}),
                         "doc": entry.get("doc"),
-                        "python_equivalent": entry.get("python_equivalent"),
                         "scope": entry.get("scope"),
                     },
                 )

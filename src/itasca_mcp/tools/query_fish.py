@@ -25,7 +25,6 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
                 "settable": meta.get("settable"),
                 "available_in": [v for v, ok in (meta.get("versions") or {}).items() if ok],
                 "doc": meta.get("doc"),
-                "python_equivalent": meta.get("python_equivalent"),
                 "score": round(result.score, 2),
                 "rank": result.rank,
             }

@@ -5,7 +5,10 @@ FISH intrinsics form a purely lexical tree (``ball`` -> ``ball.pos`` ->
 which names exist and what their signatures are, and the official
 ``out_fish.txt`` (shipped under ``exe64/doc``) contributes the HTML anchor and
 the 2D/3D marker. This script merges both into flat per-namespace files; the
-loader rebuilds the tree from the dotted names.
+loader rebuilds the tree from the dotted names. Entries deliberately carry no
+Python "equivalent": a name-rule mapping cannot be verified at the state level
+and a wrong equivalence is worse than none; the cross-source query shows FISH
+and Python hits side by side instead.
 
 Layout (RESOURCES-root-relative file pointers, like the command/python index):
 
@@ -371,7 +374,6 @@ def main() -> None:
                 rec["family"] = hints[name]
             if name in descriptions:
                 rec["description"] = descriptions[name]
-            rec["python_equivalent"] = None
             entries.append(rec)
         target_dir = RES / ("_common" if scope == "common" else scope) / "fish_docs"
         target_dir.mkdir(parents=True, exist_ok=True)

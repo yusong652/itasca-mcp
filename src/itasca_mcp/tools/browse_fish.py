@@ -25,7 +25,6 @@ _ENTRY_FIELDS = (
     "note",
     "family",
     "doc",
-    "python_equivalent",
     "namespace",
     "scope",
 )
