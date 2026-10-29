@@ -6,18 +6,20 @@ for the ``reference`` source of itasca_browse_doc / itasca_query_doc.
 
 from __future__ import annotations
 
+from itertools import chain
 from typing import Any, cast
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.query.reference_search import ReferenceSearch
 from itasca_mcp.knowledge.references import ReferenceLoader
+from itasca_mcp.tools.docs._common import compact_field, omit_largest, trim_to_response
 from itasca_mcp.utils import (
     normalize_input,
 )
 
 
 def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
-    """'' -> categories; 'contact-models' -> items; 'contact-models linear' -> doc; 3 parts -> sub-item."""
+    """'' -> categories; 'contact-models' -> items; 'contact-models linear' -> doc; 3 parts -> sub-item or section."""
     topic_str = normalize_input(path, lowercase=True)
     if not topic_str:
         return build_ok(_browse_references_root(version, software))
@@ -194,11 +196,93 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
     summary: dict[str, Any] = {"count": 1, "version": version}
     if isinstance(item_doc.get("availability"), dict):
         summary["available_in"] = [v for v, ok in item_doc["availability"].items() if ok]
-    return build_docs_data(
+    payload = build_docs_data(
         source="reference",
         action="browse",
         entries=[entry],
         summary=summary,
+    )
+    doc = payload["entries"][0]["doc"]  # model_dump copy: safe to trim
+    trim_to_response(
+        payload,
+        chain(
+            omit_largest(doc, keep=_ITEM_CORE_FIELDS),
+            compact_field(doc, "property_groups", _property_keywords),
+            omit_largest(doc, keep=_ITEM_IDENTITY_FIELDS),
+        ),
+        hint=(
+            f"Trimmed to fit one response: browse '{category} {item} <name>' for an omitted section or one property."
+        ),
+    )
+    return payload
+
+
+# Fields every item page keeps when trimmed; the rest (workflows, callback events...) are extra sections.
+_ITEM_IDENTITY_FIELDS = (
+    "name",
+    "model",
+    "full_name",
+    "category",
+    "category_name",
+    "description",
+    "syntax",
+    "availability",
+    "property_groups",
+    "parameters",
+)
+_ITEM_CORE_FIELDS = (*_ITEM_IDENTITY_FIELDS, "alt_syntax", "dimension", "usage", "examples", "notes")
+
+
+def _property_keywords(groups: list[Any]) -> list[Any]:
+    return [
+        {**group, "properties": [p.get("keyword") for p in group.get("properties", []) if isinstance(p, dict)]}
+        if isinstance(group, dict)
+        else group
+        for group in groups
+    ]
+
+
+def _properties(item_doc: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        prop
+        for group in item_doc.get("property_groups") or []
+        if isinstance(group, dict)
+        for prop in group.get("properties", [])
+        if isinstance(prop, dict)
+    ]
+
+
+def _browse_item_part(category: str, item: str, part: str, version: str, software: str) -> dict[str, Any]:
+    """One section ('callback_events') or property ('pb_ten') of a single-file item doc."""
+    item_payload = _browse_item(category, item, version, software)
+    if "error" in item_payload:  # unknown category/item or unavailable in this version
+        return item_payload
+    item_doc = ReferenceLoader.load_item_doc(category, item, software=software) or {}
+
+    entry: dict[str, Any] = {"category": category, "item": item}
+    prop = next((p for p in _properties(item_doc) if str(p.get("keyword", "")).lower() == part), None)
+    if part in item_doc:
+        entry["section"] = part
+        entry["content"] = item_doc[part]
+    elif prop is not None:
+        entry["property"] = prop
+    else:
+        return {
+            "source": "reference",
+            "action": "browse",
+            "error": {
+                "code": "section_not_found",
+                "message": f"'{category} {item}' has no section or property '{part}'.",
+            },
+            "input": {"category": category, "item": item, "part": part, "version": version, "software": software},
+            "available_sections": sorted(item_doc),
+            "available_properties": [p.get("keyword") for p in _properties(item_doc)],
+        }
+    return build_docs_data(
+        source="reference",
+        action="browse",
+        entries=[entry],
+        summary={"count": 1, "version": version},
     )
 
 
@@ -224,21 +308,7 @@ def _browse_sub_item(category: str, item: str, sub_item: str, version: str, soft
         }
 
     if not ReferenceLoader.is_directory_item(category, item, software=software):
-        return {
-            "source": "reference",
-            "action": "browse",
-            "error": {
-                "code": "no_sub_items",
-                "message": f"Item '{item}' in '{category}' does not have sub-items.",
-            },
-            "input": {
-                "category": category,
-                "item": item,
-                "sub_item": sub_item,
-                "version": version,
-                "software": software,
-            },
-        }
+        return _browse_item_part(category, item, sub_item, version, software)
 
     sub_doc = ReferenceLoader.load_sub_item_doc(category, item, sub_item, software=software)
     if not sub_doc:

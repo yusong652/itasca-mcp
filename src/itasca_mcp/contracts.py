@@ -94,6 +94,15 @@ def _enforce_size(envelope: dict[str, Any], max_chars: int = MAX_RESPONSE_CHARS)
     return envelope
 
 
+def fits_response(data: Any, margin: int = 512) -> bool:
+    """True when a success envelope around ``data`` stays clear of the size that blanks it.
+
+    ``_enforce_size`` replaces ``data`` wholesale past ``2 * MAX_RESPONSE_CHARS``; documentation
+    pages trim themselves below that first. ``margin`` leaves room for summary fields added later.
+    """
+    return len(json.dumps({"ok": True, "data": data}, ensure_ascii=False)) <= MAX_RESPONSE_CHARS * 2 - margin
+
+
 def build_ok(data: Any) -> dict[str, Any]:
     """Build, validate, and size-enforce a success envelope."""
     envelope = ToolEnvelope(ok=True, data=data).model_dump(exclude_none=True)

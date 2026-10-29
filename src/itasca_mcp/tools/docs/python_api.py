@@ -6,11 +6,13 @@ for the ``python_api`` source of itasca_browse_doc / itasca_query_doc.
 
 from __future__ import annotations
 
+from itertools import chain
 from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.python_api import PythonAPIFormatter, PythonAPILoader
 from itasca_mcp.knowledge.query import PythonAPISearch
+from itasca_mcp.tools.docs._common import compact_field, omit_entry_fields, omit_largest, trim_to_response
 
 
 def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
@@ -244,7 +246,7 @@ def _browse_root(software: str) -> dict[str, Any]:
         )
 
     entries = module_items + object_items
-    return build_docs_data(
+    payload = build_docs_data(
         source="python_api",
         action="browse",
         entries=entries,
@@ -255,6 +257,12 @@ def _browse_root(software: str) -> dict[str, Any]:
             "software": software,
         },
     )
+    trim_to_response(
+        payload,
+        omit_entry_fields(payload["entries"], "file", "types", "description"),
+        hint="Trimmed to fit one response: browse a module or object path for its full entry.",
+    )
+    return payload
 
 
 def _browse_module(module_path: str, software: str) -> dict[str, Any]:
@@ -348,7 +356,7 @@ def _browse_object(
             "available_objects": available_objects,
         }
 
-    return build_docs_data(
+    payload = build_docs_data(
         source="python_api",
         action="browse",
         entries=[
@@ -361,6 +369,28 @@ def _browse_object(
         ],
         summary={"count": 1},
     )
+    doc = payload["entries"][0]["doc"]  # model_dump copy: safe to trim
+    trim_to_response(
+        payload,
+        chain(
+            compact_field(doc, "methods", _method_signatures),
+            omit_largest(doc, keep=_OBJECT_CORE_FIELDS),
+            compact_field(doc, "methods", _extract_function_names),
+        ),
+        hint=(
+            f"Trimmed to fit one response: browse '{module_path}.{shown_name}.<name>' "
+            "for one method's full doc or an omitted section."
+        ),
+    )
+    return payload
+
+
+# Fields every object page keeps when trimmed; the rest (usage examples, see-also...) are extra sections.
+_OBJECT_CORE_FIELDS = ("class", "description", "note", "namespace", "instantiation", "method_groups", "methods")
+
+
+def _method_signatures(methods: list[Any]) -> list[Any]:
+    return [{"name": m.get("name"), "signature": m.get("signature")} if isinstance(m, dict) else m for m in methods]
 
 
 def _browse_method(
@@ -376,6 +406,22 @@ def _browse_method(
 
     if not method_doc:
         object_doc = PythonAPILoader.load_object(object_name, software=software) or {}
+        if method_name in object_doc and method_name not in ("class", "methods"):
+            # An object-page section a trimmed page left out, e.g. 'itasca.measure.Measure.usage_examples'
+            return build_docs_data(
+                source="python_api",
+                action="browse",
+                entries=[
+                    {
+                        "module_path": module_path,
+                        "object": shown_name,
+                        "actual_object": object_name,
+                        "section": method_name,
+                        "content": object_doc[method_name],
+                    }
+                ],
+                summary={"count": 1},
+            )
         method_names = _extract_function_names(object_doc.get("methods", []))
         return {
             "source": "python_api",

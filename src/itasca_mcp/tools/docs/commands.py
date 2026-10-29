@@ -6,11 +6,13 @@ for the ``commands`` source of itasca_browse_doc / itasca_query_doc.
 
 from __future__ import annotations
 
+from itertools import chain
 from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
 from itasca_mcp.knowledge.query import CommandSearch
+from itasca_mcp.tools.docs._common import compact_field, omit_entry_fields, omit_largest, trim_to_response
 from itasca_mcp.utils import (
     normalize_input,
 )
@@ -27,7 +29,32 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         payload = _browse_category(parts[0], version, software)
     else:
         payload = _browse_command(parts[0], " ".join(parts[1:]), version, software)
+        # 'measure create troubleshooting' / 'measure create position': one section or keyword
+        if len(parts) > 2 and payload.get("error", {}).get("code") == "command_not_found":
+            payload = _browse_command_part(parts[0], " ".join(parts[1:-1]), parts[-1], version, software) or payload
     return _wrap_payload(payload)
+
+
+# Fields every command page keeps when trimmed; the rest are per-command extra sections.
+_COMMAND_CORE_FIELDS = (
+    "command",
+    "category",
+    "syntax",
+    "description",
+    "keywords",
+    "examples",
+    "notes",
+    "versions",
+    "available",
+    "python_sdk_alternative",
+    "figure_reference",
+)
+_COMMAND_IDENTITY_FIELDS = ("command", "category", "syntax", "description", "keywords")
+
+
+def _keyword_name(keyword: dict[str, Any]) -> str:
+    """Path form of a keyword: 'kwd:bond_break' is addressed as 'bond_break'."""
+    return str(keyword.get("name", "")).lower().removeprefix("kwd:")
 
 
 def _iter_available_category_commands(
@@ -112,7 +139,7 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
             }
         )
 
-    return build_docs_data(
+    payload = build_docs_data(
         source="commands",
         action="browse",
         entries=command_items,
@@ -124,6 +151,12 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
             "software": software,
         },
     )
+    trim_to_response(
+        payload,
+        omit_entry_fields(payload["entries"], "syntax", "python_available", "short_description"),
+        hint=f"Trimmed to fit one response: browse '{category} <command>' for a command's syntax and description.",
+    )
+    return payload
 
 
 def _browse_command(category: str, command_name: str, version: str, software: str) -> dict[str, Any]:
@@ -192,7 +225,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
             "available_versions": cmd_doc.get("versions", []),
         }
 
-    return build_docs_data(
+    payload = build_docs_data(
         source="commands",
         action="browse",
         entries=[
@@ -203,6 +236,64 @@ def _browse_command(category: str, command_name: str, version: str, software: st
                 "doc": cmd_doc,
             }
         ],
+        summary={"count": 1, "version": version, "software": software},
+    )
+    doc = payload["entries"][0]["doc"]  # model_dump copy: safe to trim
+    trim_to_response(
+        payload,
+        chain(
+            omit_largest(doc, keep=_COMMAND_CORE_FIELDS),
+            compact_field(
+                doc,
+                "keywords",
+                lambda keywords: [{"name": k.get("name"), "syntax": k.get("syntax")} for k in keywords],
+            ),
+            omit_largest(doc, keep=_COMMAND_IDENTITY_FIELDS),
+        ),
+        hint=f"Trimmed to fit one response: browse '{category} {command_name} <name>' for an omitted section or one keyword.",
+    )
+    return payload
+
+
+def _browse_command_part(
+    category: str, command_name: str, part: str, version: str, software: str
+) -> dict[str, Any] | None:
+    """One section ('troubleshooting') or keyword ('position') of a command doc; None if no such command."""
+    try:
+        cmd_doc = CommandLoader.load_command_doc(category, command_name, version, software=software)
+        if not cmd_doc and " " in command_name:
+            cmd_doc = CommandLoader.load_command_doc(
+                category, command_name.replace(" ", "-"), version, software=software
+            )
+    except KeyError:
+        return None
+    if not cmd_doc or cmd_doc.get("available") is False:
+        return None
+
+    entry: dict[str, Any] = {"category": category, "command": command_name, "version": version}
+    keywords = [k for k in cmd_doc.get("keywords") or [] if isinstance(k, dict)]
+    if part in cmd_doc and part not in _COMMAND_IDENTITY_FIELDS:
+        entry["section"] = part
+        entry["content"] = cmd_doc[part]
+    else:
+        keyword = next((k for k in keywords if _keyword_name(k) == part.removeprefix("kwd:")), None)
+        if keyword is None:
+            return {
+                "source": "commands",
+                "action": "browse",
+                "error": {
+                    "code": "section_not_found",
+                    "message": f"'{category} {command_name}' has no section or keyword '{part}'.",
+                },
+                "input": {"category": category, "command": command_name, "part": part, "version": version},
+                "available_sections": [key for key in cmd_doc if key not in _COMMAND_IDENTITY_FIELDS],
+                "available_keywords": [_keyword_name(k) for k in keywords],
+            }
+        entry["keyword"] = keyword
+    return build_docs_data(
+        source="commands",
+        action="browse",
+        entries=[entry],
         summary={"count": 1, "version": version, "software": software},
     )
 

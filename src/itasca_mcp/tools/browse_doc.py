@@ -26,12 +26,15 @@ _BROWSERS = {
 
 PATH_DESCRIPTION = (
     "Path inside the selected tree; omit for the top level.\n"
-    "- commands: space-separated ('ball' lists ball commands, 'ball create' is the full doc)\n"
+    "- commands: space-separated ('ball' lists ball commands, 'ball create' is the full doc, "
+    "'ball create radius' one keyword or section)\n"
     "- python_api: dotted from itasca ('itasca.ball', 'itasca.ball.create', 'itasca.ball.Ball.pos')\n"
     "- fish: dotted intrinsic name ('ball' lists the namespace, 'ball.pos' shows its signature "
     "plus ball.pos.x/y/z)\n"
     "- reference: 'category item sub' ('contact-models linear', 'range-elements cylinder', "
-    "'plot-items zone contour')"
+    "'plot-items zone contour', 'contact-models linearpbond pb_ten' one property or section)\n"
+    "A page too large for one response leaves parts out (summary.omitted_sections / "
+    "summary.compacted); summary.hint gives the path to read them."
 )
 
 

@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import json
+from collections.abc import Callable, Collection, Iterable, Iterator
+from functools import partial
 from typing import Any
 
-from itasca_mcp.contracts import build_error
+from itasca_mcp.contracts import build_error, fits_response
 from itasca_mcp.utils import (
     CommandDocVersion,
     effective_doc_version,
@@ -31,6 +34,62 @@ def resolve_doc_version(software: str, version: CommandDocVersion | str) -> tupl
             details={"input": {"software": software, "version": value}},
         )
     return value, None
+
+
+# (kind, field, apply): kind is "omit" (field dropped) or "compact" (field shortened).
+Reduction = tuple[str, str, Callable[[], None]]
+
+
+def trim_to_response(payload: dict[str, Any], reductions: Iterable[Reduction], hint: str) -> bool:
+    """Apply ``reductions`` in order until ``payload`` fits one response; report them in its summary.
+
+    A page that fits is left untouched. The caller's reductions must only rebind fields on
+    copies, never mutate loader data, and whatever they drop must stay reachable by a deeper
+    path, which ``hint`` names.
+    """
+    omitted: list[str] = []
+    compacted: list[str] = []
+    for kind, field, apply in reductions:
+        if fits_response(payload):
+            break
+        apply()
+        (omitted if kind == "omit" else compacted).append(field)
+    if not (omitted or compacted):
+        return False
+    summary = payload.setdefault("summary", {})
+    if omitted:
+        summary["omitted_sections"] = omitted
+    if compacted:
+        summary["compacted"] = compacted
+    summary["hint"] = hint
+    return True
+
+
+def omit_largest(doc: dict[str, Any], keep: Collection[str]) -> Iterator[Reduction]:
+    """Reductions dropping ``doc``'s fields outside ``keep``, largest first.
+
+    Lazy: sized when first consumed, so it sees what earlier reductions already removed.
+    """
+    sizes = {key: len(json.dumps(value, ensure_ascii=False)) for key, value in doc.items() if key not in keep}
+    for key in sorted(sizes, key=sizes.__getitem__, reverse=True):
+        yield ("omit", key, partial(doc.pop, key))
+
+
+def compact_field(doc: dict[str, Any], field: str, shorten: Callable[[Any], Any]) -> Iterator[Reduction]:
+    """A reduction replacing ``doc[field]`` with ``shorten(doc[field])``; none when the field is absent."""
+    if field in doc:
+        yield ("compact", field, lambda: doc.__setitem__(field, shorten(doc[field])))
+
+
+def omit_entry_fields(entries: list[dict[str, Any]], *fields: str) -> Iterator[Reduction]:
+    """Reductions dropping each named field from every entry of a listing, in the order given."""
+    for field in fields:
+        yield ("omit", field, partial(_pop_from_each, entries, field))
+
+
+def _pop_from_each(entries: list[dict[str, Any]], field: str) -> None:
+    for entry in entries:
+        entry.pop(field, None)
 
 
 def stamp_summary(envelope: dict[str, Any], *, software: str, version: str) -> dict[str, Any]:
