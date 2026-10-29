@@ -128,6 +128,18 @@ def _parse_param(raw: str) -> dict[str, Any]:
     return out
 
 
+def mark_bracketed_optional(signature: str, params: list[dict[str, Any]]) -> None:
+    """Params the signature writes inside [...] ('group([slot: str or int])') are optional.
+
+    Neither the Sphinx sig-param markup nor a split on commas sees the brackets, so
+    such params came out ``required: true``.
+    """
+    for p in params:
+        name = p.get("name")
+        if name and p.get("required") and re.search(r"\[[^\]]*\b" + re.escape(name) + r"\b", signature):
+            p["required"] = False
+
+
 def _parse_sig_block(block: str) -> dict[str, Any] | None:
     """Parse one ``<dl class="py function|method">`` block into an entry dict."""
     dt = re.search(r"<dt[^>]*>(.*?)</dt>", block, re.S)
@@ -148,6 +160,7 @@ def _parse_sig_block(block: str) -> dict[str, Any] | None:
     # object."); drop it so signatures/return types match the FLAC corpus style.
     if full.endswith("."):
         full = full[:-1].rstrip()
+    mark_bracketed_optional(full, params)
     ret = ""
     if "->" in full:
         ret = full.split("->", 1)[1].strip()
