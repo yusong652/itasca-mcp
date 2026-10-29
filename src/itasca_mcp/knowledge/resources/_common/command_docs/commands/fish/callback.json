@@ -71,7 +71,15 @@
         {
           "name": "process",
           "syntax": "process <keyword>",
-          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (creep, dynamic, fluid, mechanical, thermal)."
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (cfd, creep, dynamic, fluid, mechanical, thermal)."
+        },
+        {
+          "name": "kwd:all_slip_change",
+          "syntax": "all_slip_change",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the name is accepted by both parsers (PFC3D 7.00.161, 9.8.54).",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ball_create",
@@ -140,7 +148,23 @@
         {
           "name": "kwd:bond_break",
           "syntax": "bond_break",
-          "description": "Contact bond break event.",
+          "description": "Contact bond break event. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). Remove it with 'remove <sym> event bond_break': a bare 'remove <sym>' leaves it firing (PFC3D 7.00).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:broken",
+          "syntax": "broken",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the name is accepted by both parsers (PFC3D 7.00.161, 9.8.54).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_after_received",
+          "syntax": "cfd_after_received",
+          "description": "After CFD velocities have been received. The 7.0 and 9.8 manuals spell it cfd_after_receive; the parser's name is cfd_after_received in both, and the shorter spelling is accepted as a prefix.",
           "engines": [
             "pfc"
           ]
@@ -149,14 +173,6 @@
           "name": "kwd:cfd_after_update",
           "syntax": "cfd_after_update",
           "description": "After CFD porosities have been updated.",
-          "engines": [
-            "pfc"
-          ]
-        },
-        {
-          "name": "kwd:cfd_after_receive",
-          "syntax": "cfd_after_receive",
-          "description": "After CFD velocities have been received.",
           "engines": [
             "pfc"
           ]
@@ -597,7 +613,9 @@
         "fish callback add on_done event solve_complete"
       ],
       "notes": [
-        "Event names follow the PFC 7.0 manual; 'fish callback add <sym> event ?' prints the ones this engine accepts."
+        "'fish callback add <sym> event ?' prints the event names this engine accepts and registers nothing.",
+        "interval and process follow a cycle position only. After 'event <s>' they raise 'Unused extra parameter', but the callback has already been registered: remove it before retrying.",
+        "Verified on PFC3D 7.00.161 (2026-10-29): add/remove grammar, process values (the manual omits cfd) and the event names; all_slip_change, broken and cfd_after_received are parser names the 7.0 manual does not list."
       ]
     },
     "9.0": {
@@ -632,7 +650,7 @@
         {
           "name": "kwd:all_slip_change",
           "syntax": "all_slip_change",
-          "description": "Contact model event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the name is accepted by both parsers (PFC3D 7.00.161, 9.8.54).",
           "engines": [
             "pfc"
           ]
@@ -720,7 +738,7 @@
         {
           "name": "kwd:bond_break",
           "syntax": "bond_break",
-          "description": "Contact bond break event. For the Subspring Network Model, this event corresponds to a sub-contact bond breaking. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). On PFC 9.8 'remove' (bare or 'event bond_break') leaves a bond_break registration listed and firing; to stop it, guard the function body with a global flag.",
+          "description": "Contact bond break event. For the Subspring Network Model, this event corresponds to a sub-contact bond breaking. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). A bare 'remove <sym>' does not remove a bond_break registration (PFC3D 7.00: it kept firing). On PFC 9.8 the explicit 'remove <sym> event bond_break' did not either (still listed, still firing), while 7.0 honours it; to stop it on 9.8, guard the function body with a global flag.",
           "engines": [
             "pfc"
           ]
@@ -736,7 +754,7 @@
         {
           "name": "kwd:broken",
           "syntax": "broken",
-          "description": "Contact model event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the name is accepted by both parsers (PFC3D 7.00.161, 9.8.54).",
           "engines": [
             "pfc"
           ]
@@ -744,7 +762,7 @@
         {
           "name": "kwd:cfd_after_received",
           "syntax": "cfd_after_received",
-          "description": "After CFD velocities have been received. Named cfd_after_receive in the 9.8 manual and in 7.0.",
+          "description": "After CFD velocities have been received. The 7.0 and 9.8 manuals spell it cfd_after_receive; the parser's name is cfd_after_received in both, and the shorter spelling is accepted as a prefix.",
           "engines": [
             "pfc"
           ]
