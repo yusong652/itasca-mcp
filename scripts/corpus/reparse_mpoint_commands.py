@@ -37,6 +37,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from html.parser import HTMLParser
 from pathlib import Path
 
 MPM_DOC = Path("C:/Program Files/Itasca/Itasca Software Subscription/exe64/doc/mpm")
@@ -50,6 +51,59 @@ def text_of(fragment: str) -> str:
     """Flatten markup. Tags become nothing, not spaces: the MPM pages wrap every
     single character in its own <span>, so inserting spaces shreds every word."""
     return " ".join(html.unescape(re.sub(r"<[^>]+>", "", fragment)).split())
+
+
+class _SyntaxLabel(HTMLParser):
+    """Render a syntax <dt> fragment as corpus syntax.
+
+    text_of() is wrong for syntax lines. On the MPM pages a placeholder is
+    <span class="varint">i</span>, not the literal text '<i>' the PFC pages use, so
+    flattening the markup drops its brackets ('mpoint extra i a'). An optional group is
+    a literal '<' ... '>' pair inside <span class="cmdopt">, and the opening bracket is
+    glued to the next tag ('<<a href=...>range</a>>'), so a tag-stripping regex eats it
+    together with the tag and leaves 'range>'. This parser emits <i> for a var span and
+    [...] for a cmdopt span, which is the bracket convention the rest of the corpus uses.
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.frames: list[tuple[str | None, list[str]]] = [(None, [])]
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "span":
+            return
+        cls = dict(attrs).get("class") or ""
+        kind = "var" if cls.startswith("var") else "opt" if cls == "cmdopt" else None
+        self.frames.append((kind, []))
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag != "span" or len(self.frames) == 1:
+            return
+        kind, parts = self.frames.pop()
+        text = "".join(parts)
+        if kind == "var":
+            text = f" <{text.strip()}> "
+        elif kind == "opt":
+            text = f" [{text.strip()}] "
+        self.frames[-1][1].append(text)
+
+    def handle_data(self, data: str) -> None:
+        if data.strip() in ("<", ">") and any(kind == "opt" for kind, _ in self.frames):
+            return  # the literal brackets of an optional group; [...] stands in for them
+        self.frames[-1][1].append(data)
+
+    def label(self) -> str:
+        while len(self.frames) > 1:  # unclosed spans: flush as plain text
+            _, parts = self.frames.pop()
+            self.frames[-1][1].append("".join(parts))
+        text = " ".join(html.unescape("".join(self.frames[0][1])).split())
+        return re.sub(r"\[\s+", "[", re.sub(r"\s+\]", "]", text))
+
+
+def label_of(fragment: str) -> str:
+    parser = _SyntaxLabel()
+    parser.feed(fragment)
+    return parser.label()
 
 
 def description_after(source: str, dt_end: int) -> str:
@@ -74,7 +128,7 @@ def parse_page(path: Path) -> dict | None:
 
     for m in DT_RE.finditer(source):
         kind, ident, body = m.group(1), m.group(2), m.group(3)
-        label = text_of(body)
+        label = label_of(body)
         if kind == "command":
             command_id = ident
             command_name = ident.replace(".", " ")
