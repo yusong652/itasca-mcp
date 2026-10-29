@@ -1,8 +1,7 @@
-"""FISH intrinsic browsing: the ``source='fish'`` tree of ``itasca_browse_doc``.
+"""FISH intrinsic documentation: browse the dotted tree, search by keywords.
 
-FISH intrinsics are a lexical tree. ``ball`` is a namespace, ``ball.pos`` is a
-function that is also the parent of ``ball.pos.x/y/z``; browsing a node shows
-the node itself (when it is a function) followed by its direct children.
+Exposes ``browse(software, path, version)`` and ``search(software, query, limit, version)``
+for the ``fish`` source of itasca_browse_doc / itasca_query_doc.
 """
 
 from __future__ import annotations
@@ -11,6 +10,7 @@ from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.fish import FishLoader
+from itasca_mcp.knowledge.query import FishSearch
 from itasca_mcp.utils import normalize_input
 
 _ENTRY_FIELDS = (
@@ -131,3 +131,37 @@ def _namespace_versions(prefix: str, software: str) -> list[str]:
             versions.update(FishLoader.available_in(entry))
         stack.extend(FishLoader.children(node, software=software))
     return sorted(versions)
+
+
+def search(software: str, query: str, limit: int, version: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Return ``(entries, summary extras)``; entries carry ``path`` for ``itasca_browse_doc``."""
+    results = FishSearch.search(query, top_k=limit, software=software, version=version)
+    entries: list[dict[str, Any]] = []
+    for result in results:
+        doc = result.document
+        meta = doc.metadata or {}
+        entries.append(
+            {
+                "path": doc.name,
+                "name": doc.name,
+                "signature": doc.syntax,
+                "namespace": doc.category,
+                "returns": meta.get("returns"),
+                "settable": meta.get("settable"),
+                "available_in": [v for v, ok in (meta.get("versions") or {}).items() if ok],
+                "doc": meta.get("doc"),
+                "score": round(result.score, 2),
+                "rank": result.rank,
+            }
+        )
+
+    extras: dict[str, Any] = {}
+    if not entries:
+        extras["hints"] = [
+            "FISH names are dotted: try the namespace alone (ball, zone, block, math) or a fragment (pos, vel).",
+            "Browse with source='fish' and no path to list the namespaces this engine exposes.",
+        ]
+        extras["available_namespaces"] = [
+            ns["name"] for ns in FishLoader.namespaces(software=software, version=version)
+        ]
+    return entries, extras

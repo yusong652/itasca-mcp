@@ -7,11 +7,8 @@ from typing import Any
 from fastmcp import FastMCP
 from pydantic import Field
 
-from itasca_mcp.tools._docs_common import VERSION_DESCRIPTION, resolve_doc_version, stamp_summary
-from itasca_mcp.tools.browse_commands import browse as browse_commands_tree
-from itasca_mcp.tools.browse_fish import browse as browse_fish_tree
-from itasca_mcp.tools.browse_python_api import browse as browse_python_api_tree
-from itasca_mcp.tools.browse_reference import browse as browse_reference_tree
+from itasca_mcp.tools.docs import commands, fish, python_api, reference
+from itasca_mcp.tools.docs._common import VERSION_DESCRIPTION, resolve_doc_version, stamp_summary
 from itasca_mcp.utils import (
     CommandDocVersion,
     DocSourceParam,
@@ -21,10 +18,10 @@ from itasca_mcp.utils import (
 )
 
 _BROWSERS = {
-    "commands": browse_commands_tree,
-    "python_api": browse_python_api_tree,
-    "fish": browse_fish_tree,
-    "reference": browse_reference_tree,
+    "commands": commands.browse,
+    "python_api": python_api.browse,
+    "fish": fish.browse,
+    "reference": reference.browse,
 }
 
 PATH_DESCRIPTION = (

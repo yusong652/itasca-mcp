@@ -9,11 +9,8 @@ from fastmcp import FastMCP
 from pydantic import Field
 
 from itasca_mcp.contracts import DocsSource, build_docs_data, build_ok
-from itasca_mcp.tools._docs_common import VERSION_DESCRIPTION, resolve_doc_version
-from itasca_mcp.tools.query_command import search as search_commands
-from itasca_mcp.tools.query_fish import search as search_fish
-from itasca_mcp.tools.query_python_api import search as search_python_api
-from itasca_mcp.tools.query_reference import search as search_reference
+from itasca_mcp.tools.docs import commands, fish, python_api, reference
+from itasca_mcp.tools.docs._common import VERSION_DESCRIPTION, resolve_doc_version
 from itasca_mcp.utils import (
     CommandDocVersion,
     DocQuery,
@@ -25,10 +22,10 @@ from itasca_mcp.utils import (
 )
 
 _SEARCHERS = {
-    "commands": search_commands,
-    "python_api": search_python_api,
-    "fish": search_fish,
-    "reference": search_reference,
+    "commands": commands.search,
+    "python_api": python_api.search,
+    "fish": fish.search,
+    "reference": reference.search,
 }
 
 SOURCE_DESCRIPTION = (

@@ -1,9 +1,16 @@
-"""Itasca Command Browse Tool - Navigate and retrieve command documentation."""
+"""Itasca command documentation: browse by path, search by keywords.
+
+Exposes ``browse(software, path, version)`` and ``search(software, query, limit, version)``
+for the ``commands`` source of itasca_browse_doc / itasca_query_doc.
+"""
+
+from __future__ import annotations
 
 from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
+from itasca_mcp.knowledge.query import CommandSearch
 from itasca_mcp.utils import (
     normalize_input,
 )
@@ -211,3 +218,33 @@ def _wrap_payload(payload: dict[str, Any]) -> dict[str, Any]:
             details=details or None,
         )
     return build_ok(payload)
+
+
+def search(software: str, query: str, limit: int, version: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Return ``(entries, summary extras)``; entries carry ``path`` for ``itasca_browse_doc``."""
+    results = CommandSearch.search_commands_only(query, top_k=limit, version=version, software=software)
+    matches: list[dict[str, Any]] = []
+    for result in results:
+        metadata = result.document.metadata or {}
+        matches.append(
+            {
+                "path": result.document.title,
+                "name": result.document.name,
+                "category": result.document.category,
+                "syntax": result.document.syntax,
+                "short_description": metadata.get("short_description"),
+                "score": round(result.score, 2),
+                "rank": result.rank,
+                "version": metadata.get("version", version),
+            }
+        )
+
+    extras: dict[str, Any] = {}
+    if not matches:
+        extras["hints"] = [
+            "Try broader keywords (for example: create, property, solve).",
+            "Try category + action (for example: ball create, contact property).",
+        ]
+        categories = CommandLoader.load_index(software=software).get("categories", {})
+        extras["available_categories"] = sorted(categories.keys())
+    return matches, extras

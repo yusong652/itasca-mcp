@@ -242,7 +242,7 @@ async def test_browse_python_api_fallback_path_is_a_documented_module() -> None:
 @pytest.mark.parametrize("software", ["pfc", "flac", "3dec", "mpoint", "massflow"])
 def test_every_searchable_python_api_path_is_browsable(software: str) -> None:
     from itasca_mcp.knowledge.python_api import APILoader
-    from itasca_mcp.tools.browse_python_api import _parse_api_path
+    from itasca_mcp.tools.docs.python_api import _parse_api_path
 
     # Search results come from both the index and the keyword files.
     paths = set(APILoader.load_index(software=software)["quick_ref"])
