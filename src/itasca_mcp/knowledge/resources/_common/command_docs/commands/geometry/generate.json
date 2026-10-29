@@ -20,44 +20,44 @@
           "description": "Generate a closed box. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a circle in 2D. Position of the center of the disk that is the origin, by default. Radius of the disk that is 1.0, by default. Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <v2> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a circle in 2D. Options: position <v2>: Position of the center of the disk that is the origin, by default.; radius <frad>: Radius of the disk that is 1.0, by default.; resolution <fres>: Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1. Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ...",
+          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero.; height <fheight>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1.; radius <fradbot>[<fradtop>]: Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cylinder in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a cylinder in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created.; height <fheight>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a disk in 3D. Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0. Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0. Position of the center of the disk that is the origin, by default. Radius of the disk that is 1.0, by default. Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "disk",
+          "syntax": "disk {dip <fdip> | ddir <fddir> | position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a disk in 3D. Options: dip <fdip>: Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0.; ddir <fddir>: Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0.; position <v3>: Position of the center of the disk that is the origin, by default.; radius <frad>: Radius of the disk that is 1.0, by default.; resolution <fres>: Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: The direction and length to extrude from the given edges. The default value is (0,0,1). The number of segments to divide the extruded direction into. The default value is 1."
+          "name": "from-edges",
+          "syntax": "from-edges {extrude <v> | segments <i>} ... [range]",
+          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: Options: extrude <v>: The direction and length to extrude from the given edges. The default value is (0,0,1).; segments <i>: The number of segments to divide the extruded direction into. The default value is 1."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Internal as well as external faces will be considered. Specifies that the null state of the fluid constitutive model will be considered in determining a surface. Assigns the group name to all polygons created. Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well. If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone. By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations. Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
+          "name": "from-faces",
+          "syntax": "from-faces {internal | fluid | group <s> [slot <slot>] | mechanical | or | split-nonplanar <b> | thermal} ... [range]",
+          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Options: internal: Internal as well as external faces will be considered.; fluid: Specifies that the null state of the fluid constitutive model will be considered in determining a surface.; group <s>[slot <slot>]: Assigns the group name to all polygons created.; mechanical: Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well.; or: If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone.; split-nonplanar <b>: By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations.; thermal: Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
         },
         {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Group . If the slot keyword is not specified, then the group name is assigned to the slot Default . Set the group slot slot to s . By default, the slot Default is assigned."
+          "name": "group",
+          "syntax": "group <s> {slot <slot>} ...",
+          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Group . If the slot keyword is not specified, then the group name is assigned to the slot Default . Options: slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin, by default. Radius of the sphere that is 1.0, by default. Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <v3>: Position of the sphere centroid that is the origin, by default.; radius <frad>: Radius of the sphere that is 1.0, by default.; resolution <fres>: Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         }
       ],
       "examples": []
@@ -72,39 +72,39 @@
           "description": "Generate a closed box. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <f>",
-          "description": "Generate a circle in 2D. Center of the circle. Radius of the circle. Resolution of the edges of the circle. By default, f = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <v> | radius <f> | resolution <f>} ...",
+          "description": "Generate a circle in 2D. Options: position <v>: Center of the circle.; radius <f>: Radius of the circle.; resolution <f>: Resolution of the edges of the circle. By default, f = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1. Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ...",
+          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero.; height <fheight>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1.; radius <fradbot>[<fradtop>]: Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cylinder in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a cylinder in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created.; height <fheight>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a disk in 3D. Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0. Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0. Position of the center of the disk that is the origin, by default. Radius of the disk that is 1.0, by default. Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "disk",
+          "syntax": "disk {dip <fdip> | ddir <fddir> | position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a disk in 3D. Options: dip <fdip>: Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0.; ddir <fddir>: Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0.; position <v3>: Position of the center of the disk that is the origin, by default.; radius <frad>: Radius of the disk that is 1.0, by default.; resolution <fres>: Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: The direction and length to extrude from the given edges. The default value is (0,0,1). The number of segments to divide the extruded direction into. The default value is 1."
+          "name": "from-edges",
+          "syntax": "from-edges {extrude <v> | segments <i>} ... [range]",
+          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: Options: extrude <v>: The direction and length to extrude from the given edges. The default value is (0,0,1).; segments <i>: The number of segments to divide the extruded direction into. The default value is 1."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Internal as well as external faces will be considered. Specifies that the null state of the fluid constitutive model will be considered in determining a surface. Assigns the group name to all polygons created. Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well. If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone. By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations. Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
+          "name": "from-faces",
+          "syntax": "from-faces {internal | fluid | group <s> [slot <slot>] | mechanical | or | split-nonplanar <b> | thermal} ... [range]",
+          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Options: internal: Internal as well as external faces will be considered.; fluid: Specifies that the null state of the fluid constitutive model will be considered in determining a surface.; group <s>[slot <slot>]: Assigns the group name to all polygons created.; mechanical: Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well.; or: If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone.; split-nonplanar <b>: By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations.; thermal: Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
         },
         {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Groups . If the slot keyword is not specified, then the group name is assigned to the slot Default . Set the group slot slot to s . By default, the slot Default is assigned."
+          "name": "group",
+          "syntax": "group <s> {slot <slot>} ...",
+          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Groups . If the slot keyword is not specified, then the group name is assigned to the slot Default . Options: slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
         },
         {
           "name": "set",
@@ -112,9 +112,9 @@
           "description": "Specify the geometry set."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin, by default. Radius of the sphere that is 1.0, by default. Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <v3>: Position of the sphere centroid that is the origin, by default.; radius <frad>: Radius of the sphere that is 1.0, by default.; resolution <fres>: Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         }
       ],
       "examples": []
@@ -129,39 +129,39 @@
           "description": "Generate a closed box. If fxmin and fxmax are specified alone, then the box is a cube with equal sides."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <f>",
-          "description": "Generate a circle in 2D. Center of the circle. Radius of the circle. Resolution of the edges of the circle. By default, f = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <v> | radius <f> | resolution <f>} ... 2D only",
+          "description": "Generate a circle in 2D. Options: position <v>: Center of the circle.; radius <f>: Radius of the circle.; resolution <f>: Resolution of the edges of the circle. By default, f = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1. Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ... 3D only",
+          "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero.; height <fheight>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1.; radius <fradbot>[<fradtop>]: Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a cylinder in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a cylinder in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, both caps are created.; height <fheight>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fheight = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a disk in 3D. Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0. Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0. Position of the center of the disk that is the origin, by default. Radius of the disk that is 1.0, by default. Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "disk",
+          "syntax": "disk {dip <fdip> | ddir <fddir> | position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a disk in 3D. Options: dip <fdip>: Dip angle of the disk in degrees in the range [0,90]. Dip is the angle from the dip direction projected on the xy-plane to the disk surface measured in the negative z-direction. By default, fdip = 0.; ddir <fddir>: Dip direction of the disk in degrees, as measured in a clockwise fashion from the positive y-axis in the range [0,360]. By default, fddir = 0.; position <v3>: Position of the center of the disk that is the origin, by default.; radius <frad>: Radius of the disk that is 1.0, by default.; resolution <fres>: Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: The direction and length to extrude from the given edges. The default value is (0,0,1). The number of segments to divide the extruded direction into. The default value is 1."
+          "name": "from-edges",
+          "syntax": "from-edges {extrude <v> | segments <i>} ... [range]",
+          "description": "Generate polygons by extruding from all edges in the range. The edges must be in the same set. All edges matching the range given are selected. The following keywords are available: Options: extrude <v>: The direction and length to extrude from the given edges. The default value is (0,0,1).; segments <i>: The number of segments to divide the extruded direction into. The default value is 1."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Internal as well as external faces will be considered. Specifies that the null state of the fluid constitutive model will be considered in determining a surface. Assigns the group name to all polygons created. Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well. If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone. By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations. Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
+          "name": "from-faces",
+          "syntax": "from-faces {internal | fluid | group <s> [slot <slot>] | mechanical | or | split-nonplanar <b> | thermal} ... [range] FLAC3D-specific",
+          "description": "Generate polygons from the list of all zone faces in the range. By default only mechanical surface faces are considered. The following keywords are available: Options: internal: Internal as well as external faces will be considered.; fluid: Specifies that the null state of the fluid constitutive model will be considered in determining a surface.; group <s>[slot <slot>]: Assigns the group name to all polygons created.; mechanical: Specifies that the null state of the mechanical constitutive model will be considered in determining a surface. This is the default state. If thermal or fluid is specified then mechanical will be removed unless it is specified as well.; or: If more than one instance of mechanical , thermal , or fluid are given then the default behavior is to require that all of them be null for it to be considered a null zone. If this keyword is given then if any of then are null it will be considered a null zone.; split-nonplanar <b>: By default, quadrilateral faces that are non-planar are split into two triangular polygons. By setting split-nonplanar to false , the polygons will remain non-planar quadrilaterals. Be aware that non-planar polygons can cause errors when performing geometry operations.; thermal: Specifies that the null state of the thermal constitutive model will be considered in determining a surface."
         },
         {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Groups . If the slot keyword is not specified, then the group name is assigned to the slot Default . Set the group slot slot to s . By default, the slot Default is assigned."
+          "name": "group",
+          "syntax": "group <s> {slot <slot>} ...",
+          "description": "Specify that the created polygons are given the group name s . Use of the group logic is described in Groups . If the slot keyword is not specified, then the group name is assigned to the slot Default . Options: slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
         },
         {
           "name": "set",
@@ -169,9 +169,9 @@
           "description": "Specify the geometry set."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin, by default. Radius of the sphere that is 1.0, by default. Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <v3> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a closed sphere in 3D. The sphere is generated by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <v3>: Position of the sphere centroid that is the origin, by default.; radius <frad>: Radius of the sphere that is 1.0, by default.; resolution <fres>: Resolution of the edges. The number of edges is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         }
       ],
       "examples": []

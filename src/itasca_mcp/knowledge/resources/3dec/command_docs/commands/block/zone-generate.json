@@ -20,9 +20,9 @@
           "description": "Invokes a different zoning scheme where the gridpoints on the surface of a block are not forced to match the gridpoints of neighboring blocks. This keyword is to be used only if changing the edge lengths of zones fails to succeed in zoning a block. The gridpoints of the neighboring blocks are adjusted to match after the gridpoints are created."
         },
         {
-          "name": "distance",
-          "syntax": "distance <f>",
-          "description": "Generate a radially graded mesh from point v . If center is inside a block, a uniform mesh with edge length of edgelength-center f will be generated. Set the edge length at the center point to f . Set the edge length at distance to f . Set a distance f from the center point at which edgelength-distance will be used."
+          "name": "center",
+          "syntax": "center <v> {edgelength-center <f> | edgelength-distance <f> | distance <f>} ...",
+          "description": "Generate a radially graded mesh from point v . If center is inside a block, a uniform mesh with edge length of edgelength-center f will be generated. Options: edgelength-center <f>: Set the edge length at the center point to f .; edgelength-distance <f>: Set the edge length at distance to f .; distance <f>: Set a distance f from the center point at which edgelength-distance will be used."
         },
         {
           "name": "check",
@@ -55,9 +55,9 @@
           "description": "Perform gridpoint matching for previously zoned blocks."
         },
         {
-          "name": "ratio-multiply",
-          "syntax": "ratio-multiply <f>",
-          "description": "Generate a grid of hexahedral zones in cubic, six-sided polyhedra. (Each hex zone consists of 2 sets of five overlapping tetrahedral zones.) This is referred to as mixed discretization, and greatly improves the solution when plastic deformations occur. Note: This technique works only with regular six-sided polyhedra, and it is used to make the zone overlays geometrically compatible. The keyword single quad indicates that each six-sided block will be divided into five non-overlapping tetrahedra. Control the way discretization is done. i1 , i2 , and i3 are the numbers of zones generated along three local directions (as shown in Figure 1.2): i1 is the number of zones along the direction of the shortest edge length; i2 is the number of zones along the intermediate edge length; and i3 is the number of zones along the longest edge length. The maximum number of subdivisions in each axis is 200. Allow the zone size to be automatically graded across the block. Unfortunately, it works in local block coordinates, so it is only useful if you only have one block in the model. If there are multiple blocks in the model, each block will be graded from its lower left corner."
+          "name": "hexahedra",
+          "syntax": "hexahedra {divisions <i1> <i2> <i3> | ratio-multiply <f>}",
+          "description": "Generate a grid of hexahedral zones in cubic, six-sided polyhedra. (Each hex zone consists of 2 sets of five overlapping tetrahedral zones.) This is referred to as mixed discretization, and greatly improves the solution when plastic deformations occur. Note: This technique works only with regular six-sided polyhedra, and it is used to make the zone overlays geometrically compatible. The keyword single quad indicates that each six-sided block will be divided into five non-overlapping tetrahedra. Options: divisions <i1><i2><i3>: Control the way discretization is done. i1 , i2 , and i3 are the numbers of zones generated along three local directions (as shown in Figure 1.2): i1 is the number of zones along the direction of the shortest edge length; i2 is the number of zones along the intermediate edge length; and i3 is the number of zones along the longest edge length. The maximum number of subdivisions in each axis is 200.; ratio-multiply <f>: Allow the zone size to be automatically graded across the block. Unfortunately, it works in local block coordinates, so it is only useful if you only have one block in the model. If there are multiple blocks in the model, each block will be graded from its lower left corner."
         },
         {
           "name": "high-order-tetra",
@@ -122,9 +122,9 @@
       "syntax": "block zone generate keyword [range]",
       "keywords": [
         {
-          "name": "distance",
-          "syntax": "distance <f>",
-          "description": "Generate a radially graded mesh from point v . If center is inside a block, a uniform mesh with edge length of edgelength-center f will be generated. Set the edge length at the center point to f . Set the edge length at distance to f . Set a distance f from the center point at which edgelength-distance will be used."
+          "name": "center",
+          "syntax": "center <v> {edgelength-center <f> | edgelength-distance <f> | distance <f>} ...",
+          "description": "Generate a radially graded mesh from point v . If center is inside a block, a uniform mesh with edge length of edgelength-center f will be generated. Options: edgelength-center <f>: Set the edge length at the center point to f .; edgelength-distance <f>: Set the edge length at distance to f .; distance <f>: Set a distance f from the center point at which edgelength-distance will be used."
         },
         {
           "name": "edgelength",
@@ -147,9 +147,9 @@
           "description": "Limit the interior gridpoint spacing algorithm to zones with fewer than i gridpoints. The spacing algorithm is designed to evenly space interior gridpoints. This process can be very slow for blocks with a large number of zones, and is probably not necessary. This command allows the user to skip the spacing algorithm for these blocks."
         },
         {
-          "name": "ratio-multiply",
-          "syntax": "ratio-multiply <f>",
-          "description": "Generate a grid of hexahedral zones in cubic, six-sided polyhedra. (Each hex zone consists of 2 sets of five overlapping tetrahedral zones.) This is referred to as mixed discretization, and greatly improves the solution when plastic deformations occur. Note: This technique works only with regular six-sided polyhedra, and it is used to make the zone overlays geometrically compatible. The keyword single quad indicates that each six-sided block will be divided into five non-overlapping tetrahedra. Control the way discretization is done. i1 , i2 , and i3 are the numbers of zones generated along three local directions (as shown in Figure 1.2): i1 is the number of zones along the direction of the shortest edge length; i2 is the number of zones along the intermediate edge length; and i3 is the number of zones along the longest edge length. The maximum number of subdivisions in each axis is 200. Allow the zone size to be automatically graded across the block. Unfortunately, it works in local block coordinates, so it is only useful if you only have one block in the model. If there are multiple blocks in the model, each block will be graded from its lower left corner."
+          "name": "hexahedra",
+          "syntax": "hexahedra {divisions <i1> <i2> <i3> | ratio-multiply <f>}",
+          "description": "Generate a grid of hexahedral zones in cubic, six-sided polyhedra. (Each hex zone consists of 2 sets of five overlapping tetrahedral zones.) This is referred to as mixed discretization, and greatly improves the solution when plastic deformations occur. Note: This technique works only with regular six-sided polyhedra, and it is used to make the zone overlays geometrically compatible. The keyword single quad indicates that each six-sided block will be divided into five non-overlapping tetrahedra. Options: divisions <i1><i2><i3>: Control the way discretization is done. i1 , i2 , and i3 are the numbers of zones generated along three local directions (as shown in Figure 1.2): i1 is the number of zones along the direction of the shortest edge length; i2 is the number of zones along the intermediate edge length; and i3 is the number of zones along the longest edge length. The maximum number of subdivisions in each axis is 200.; ratio-multiply <f>: Allow the zone size to be automatically graded across the block. Unfortunately, it works in local block coordinates, so it is only useful if you only have one block in the model. If there are multiple blocks in the model, each block will be graded from its lower left corner."
         },
         {
           "name": "verbose",
@@ -157,9 +157,9 @@
           "description": "Provide additional information to be printed during the zone generation process. Set off to turn off verbose. The default is on ."
         },
         {
-          "name": "edge-length",
-          "syntax": "edge-length <f>",
-          "description": "Allow the rezoning of blocks after cycling. This keyword is designed to address problems with backfilling nulled blocks. Often, the zones have collapsed in these blocks due to distortion. This new keyword may help in those cases. The stresses in the new zones will be 0.0. Set the edge length of rezoned blocks to f ."
+          "name": "rezone",
+          "syntax": "rezone {edge-length <f>}",
+          "description": "Allow the rezoning of blocks after cycling. This keyword is designed to address problems with backfilling nulled blocks. Often, the zones have collapsed in these blocks due to distortion. This new keyword may help in those cases. The stresses in the new zones will be 0.0. Options: edge-length <f>: Set the edge length of rezoned blocks to f ."
         },
         {
           "name": "alternate",

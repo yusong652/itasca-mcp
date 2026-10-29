@@ -869,34 +869,34 @@
           "description": "Clamp sampled velocity values at +/- f."
         },
         {
-          "name": "polynomial",
-          "syntax": "polynomial [tolerance <f>] 3D Only",
-          "description": "Use polynomial interpolation between gridpoints (with optional tolerance)."
+          "name": "kwd:method",
+          "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>] 3D Only}",
+          "description": "Specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assume values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: Use a volume-weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: Use a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>] 3D Only: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degeneracy. The default value is 1e-7 ."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal <b>",
-          "description": "Restrict sampling to the thermal sub-system."
+          "name": "kwd:null",
+          "syntax": "null [{fluid <b> | mechanical <b> | thermal <b>}]",
+          "description": "Specify the criteria used to ignore zone values. By default, mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
         },
         {
-          "name": "tensor",
-          "syntax": "tensor",
-          "description": "Treat the quantity as a tensor when computing the scalar projection (used with magnitude/component sub-selection)."
+          "name": "kwd:type",
+          "syntax": "type {scalar | vector | tensor}",
+          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows specifying which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: A scalar float type. This is the default.; vector: A vector type.; tensor: A tensor type."
         },
         {
-          "name": "zone",
-          "syntax": "zone",
-          "description": "Source the sample from the containing zone (centroid average)."
+          "name": "kwd:source",
+          "syntax": "source {gridpoint | zone}",
+          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
         },
         {
-          "name": "magnitude",
-          "syntax": "magnitude",
-          "description": "Reduce a vector or tensor quantity to its magnitude."
+          "name": "kwd:component",
+          "syntax": "component {x | y | z 3D Only | magnitude}",
+          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Options: x: \\(x\\) -component of the vector.; y: \\(y\\) -component of the vector.; z 3D Only: \\(z\\) -component of the vector.; magnitude: Vector magnitude."
         },
         {
-          "name": "zz",
-          "syntax": "zz",
-          "description": "Select the zz tensor component (shorthand used by the tensor projection block)."
+          "name": "kwd:quantity",
+          "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz 3D Only | yy | yz 3D Only | zz}",
+          "description": "Select which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Intermediate principal stress.; maximum: The maximum (most positive) value of principal stress. Note that in FLAC compressive stresses are negative .; mean: The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: The minimum (most negative) principal stress. Note that in FLAC compressive stresses are negative .; norm: The norm of the strain rate; see the equation in Zone Field Data Names; octahedral: Octahedral stress; see the equation in Zone Field Data Names .; shear-maximum: Maximum shear stress.; total-measure: Distance of tensor value to the origin in principal space.; volumetric: Volumetric change, or trace.; von-mises: Von Mises measure; see the equation in Zone Field Data Names .; xx: xx -component of the tensor.; xy: xy -component of the tensor.; xz 3D Only: xz -component of the tensor.; yy: yy -component of the tensor.; yz 3D Only: yz -component of the tensor.; zz: zz -component of the tensor."
         },
         {
           "name": "balloon",
