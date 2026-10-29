@@ -242,5 +242,8 @@ def _promote_exact_names(results: list[SearchResult], query: str) -> None:
 
 
 def _names_match(name: str, key: str) -> bool:
-    name = name.lower()
+    # A command's hyphen is typed as a space as often as not ('block face apply remove'
+    # for 'block face apply-remove'), so the hyphen does not decide an exact name.
+    name = name.lower().replace("-", " ")
+    key = key.replace("-", " ")
     return name == key or name.endswith(("." + key, " " + key))

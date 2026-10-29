@@ -26,9 +26,9 @@ _BROWSERS = {
 
 PATH_DESCRIPTION = (
     "Path inside the selected tree; omit for the top level.\n"
-    "- commands: space-separated ('ball' lists ball commands, 'ball create' is the full doc, "
-    "'ball create radius' one keyword or section; a word group such as 'block contact' or "
-    "'structure beam' lists its commands, summary.groups names them)\n"
+    "- commands: the command as the engine spells it ('ball' lists ball commands, 'ball create' "
+    "is the full doc, 'ball create radius' one keyword or section; a heading such as "
+    "'block contact' or 'structure beam' lists its commands, summary.groups names them)\n"
     "- python_api: dotted from itasca ('itasca.ball', 'itasca.ball.create', 'itasca.ball.Ball.pos')\n"
     "- fish: dotted intrinsic name ('ball' lists the namespace, 'ball.pos' shows its signature "
     "plus ball.pos.x/y/z)\n"

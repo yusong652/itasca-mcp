@@ -6,12 +6,14 @@ for the ``commands`` source of itasca_browse_doc / itasca_query_doc.
 
 from __future__ import annotations
 
-from functools import partial
+from dataclasses import dataclass
+from functools import lru_cache, partial
 from itertools import chain
 from typing import Any
 
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
+from itasca_mcp.knowledge.commands.naming import full_name, group_of
 from itasca_mcp.knowledge.query import CommandSearch
 from itasca_mcp.tools.docs._common import (
     compact_field,
@@ -41,13 +43,28 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         return build_ok(_browse_root(version, software))
 
     parts = cmd.split()
+    category = _category_key(parts[0], software)
     if len(parts) == 1:
-        payload = _browse_category(parts[0], version, software)
-    else:
-        payload = _browse_command(parts[0], " ".join(parts[1:]), version, software)
-        # 'measure create troubleshooting' / 'measure create position': one section or keyword
-        if len(parts) > 2 and payload.get("error", {}).get("code") == "command_not_found":
-            payload = _browse_command_part(parts[0], " ".join(parts[1:-1]), parts[-1], version, software) or payload
+        return _wrap_payload(_browse_category(category, version, software))
+
+    # Names are the engine's spelling, so resolve the whole path against them first:
+    # a command ('block contact apply'), a heading ('block contact'), or a command
+    # plus one section or keyword ('measure create troubleshooting', 'measure create position').
+    by_name = {command.name: command for command in _commands(software, version)}
+    if command := by_name.get(cmd):
+        return _wrap_payload(_browse_command(command.category, command.key, version, software))
+    if (payload := _browse_group(cmd, version, software)) is not None:
+        return _wrap_payload(payload)
+    if (command := by_name.get(" ".join(parts[:-1]))) is not None:
+        payload = _browse_command_part(command.category, command.key, parts[-1], version, software)
+        if payload is not None:
+            return _wrap_payload(payload)
+
+    # Not an engine spelling: the corpus key form ('block contact-apply') or a command the
+    # version does not have, which _browse_command reports as such.
+    payload = _browse_command(category, " ".join(parts[1:]), version, software)
+    if len(parts) > 2 and payload.get("error", {}).get("code") == "command_not_found":
+        payload = _browse_command_part(category, " ".join(parts[1:-1]), parts[-1], version, software) or payload
     return _wrap_payload(payload)
 
 
@@ -73,60 +90,78 @@ def _keyword_name(keyword: dict[str, Any]) -> str:
     return str(keyword.get("name", "")).lower().removeprefix("kwd:")
 
 
-def _iter_available_category_commands(
-    category: str, version: str, software: str
-) -> list[tuple[dict[str, Any], dict[str, Any]]]:
-    """Return commands that are available in the requested version."""
-    index = CommandLoader.load_index(software=software)
-    category_data = index.get("categories", {}).get(category, {})
-    available: list[tuple[dict[str, Any], dict[str, Any]]] = []
+@dataclass(frozen=True)
+class _Command:
+    """One command available in a version: its corpus key and the engine's spelling of it."""
 
-    for cmd_meta in category_data.get("commands", []):
-        # KeyError = command doc has no entry for this version (e.g. FLAC 9.0-only
-        # commands omit the 7.0 key); treat as not available in this version.
-        try:
-            cmd_doc = CommandLoader.load_command_doc(category, cmd_meta.get("name", ""), version, software=software)
-        except KeyError:
-            continue
-        if cmd_doc and cmd_doc.get("available") is not False:
-            available.append((cmd_meta, cmd_doc))
+    category: str
+    key: str  # file key under the category directory, e.g. 'contact-apply'
+    name: str  # what the engine accepts, e.g. 'block contact apply'
+    syntax: str | None
+    description: str
+    python_available: bool
 
-    return available
+    @property
+    def group(self) -> str | None:
+        return group_of(self.name)
 
-
-def _group_of(name: str, syntax: str | None) -> str | None:
-    """Engine word group a command belongs to, or None.
-
-    JSON file names write the engine's spaces as dashes, so 'contact-generate-subcontacts'
-    cannot say on its own that 'block contact generate-subcontacts' is a 'contact' command
-    while 'block merge-start' is one hyphenated word. The syntax keeps the engine's spelling:
-    the first dash stands for a space exactly when the syntax's second word is the first segment.
-    """
-    head, dash, _ = name.partition("-")
-    words = (syntax or "").lower().split()
-    if dash and len(words) > 1 and words[1] == head:
-        return head
-    return None
-
-
-def _command_items(available: list[tuple[dict[str, Any], dict[str, Any]]]) -> list[dict[str, Any]]:
-    return [
-        {
-            "name": cmd.get("name", ""),
-            "description": first_sentence(cmd_doc.get("description")),
-            "syntax": cmd_doc.get("syntax"),
-            "python_available": bool(cmd.get("python_available", False)),
+    def listing(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "description": first_sentence(self.description),
+            "syntax": self.syntax,
+            "python_available": self.python_available,
         }
-        for cmd, cmd_doc in available
-    ]
 
 
-def _group_counts(items: list[dict[str, Any]]) -> dict[str, int]:
+def _command_prefix(category: str, software: str) -> str:
+    """The word the engine puts first: 'building-blocks' for the FLAC category keyed 'body'."""
+    category_data = CommandLoader.load_index(software=software).get("categories", {}).get(category, {})
+    return str(category_data.get("command_prefix") or category)
+
+
+@lru_cache(maxsize=32)
+def _commands(software: str, version: str) -> tuple[_Command, ...]:
+    """Every command available in this version, in index order."""
+    rows: list[_Command] = []
+    for category, category_data in CommandLoader.load_index(software=software).get("categories", {}).items():
+        prefix = _command_prefix(category, software)
+        for cmd_meta in category_data.get("commands", []):
+            key = str(cmd_meta.get("name", ""))
+            # KeyError = command doc has no entry for this version (e.g. FLAC 9.0-only
+            # commands omit the 7.0 key); treat as not available in this version.
+            try:
+                cmd_doc = CommandLoader.load_command_doc(category, key, version, software=software)
+            except KeyError:
+                continue
+            if not cmd_doc or cmd_doc.get("available") is False:
+                continue
+            rows.append(
+                _Command(
+                    category=category,
+                    key=key,
+                    name=full_name(prefix, key, cmd_doc),
+                    syntax=cmd_doc.get("syntax"),
+                    description=str(cmd_doc.get("description") or ""),
+                    python_available=bool(cmd_meta.get("python_available", False)),
+                )
+            )
+    return tuple(rows)
+
+
+def _category_key(word: str, software: str) -> str:
+    """Index key for a category word: 'building-blocks' and 'body' both reach the FLAC body category."""
+    categories = CommandLoader.load_index(software=software).get("categories", {})
+    if word in categories:
+        return word
+    return next((key for key, data in categories.items() if data.get("command_prefix") == word), word)
+
+
+def _group_counts(commands: list[_Command]) -> dict[str, int]:
     counts: dict[str, int] = {}
-    for item in items:
-        group = _group_of(item["name"], item.get("syntax"))
-        if group:
-            counts[group] = counts.get(group, 0) + 1
+    for command in commands:
+        if command.group:
+            counts[command.group] = counts.get(command.group, 0) + 1
     return dict(sorted(counts.items()))
 
 
@@ -146,7 +181,7 @@ def _listing_payload(
             [("compact", "description", partial(_shorten_descriptions, payload["entries"]))],
             omit_entry_fields(payload["entries"], "description"),
         ),
-        hint=f"Trimmed to fit one response: browse '{category} <command>' for a command's syntax and description.",
+        hint="Trimmed to fit one response: browse an entry's name for the command's syntax and description.",
     )
     return payload
 
@@ -155,12 +190,12 @@ def _browse_root(version: str, software: str) -> dict[str, Any]:
     """Level 0: Return overview of all command categories."""
     index = CommandLoader.load_index(software=software)
     categories = index.get("categories", {})
+    commands = _commands(software, version)
     category_items: list[dict[str, Any]] = []
     total_commands = 0
 
     for category_name, category_data in categories.items():
-        available_commands = _iter_available_category_commands(category_name, version, software)
-        command_count = len(available_commands)
+        command_count = sum(1 for command in commands if command.category == category_name)
         total_commands += command_count
         category_items.append(
             {
@@ -200,25 +235,23 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
             "available_categories": sorted(categories.keys()),
         }
 
-    command_items = _command_items(_iter_available_category_commands(category, version, software))
+    commands = [command for command in _commands(software, version) if command.category == category]
     summary: dict[str, Any] = {"description": categories[category].get("description", "")}
-    groups = _group_counts(command_items)
+    groups = _group_counts(commands)
     if groups:
-        # 'block contact' is a word group of 23 commands, not a command: browse it as a level of its own.
+        # 'block contact' is a heading over 22 commands, not a command: browse it as a level of its own.
         summary["groups"] = groups
-    return _listing_payload(category, command_items, summary, version, software)
+    return _listing_payload(category, [command.listing() for command in commands], summary, version, software)
 
 
-def _browse_group(category: str, group: str, version: str, software: str) -> dict[str, Any] | None:
-    """Level 1.5: the commands the engine spells '<category> <group> ...'; None if no such group."""
-    items = [
-        item
-        for item in _command_items(_iter_available_category_commands(category, version, software))
-        if _group_of(item["name"], item.get("syntax")) == group
-    ]
-    if not items:
+def _browse_group(group: str, version: str, software: str) -> dict[str, Any] | None:
+    """Level 1.5: the commands under one manual heading, 'block contact ...'; None if no such group."""
+    commands = [command for command in _commands(software, version) if command.group == group]
+    if not commands:
         return None
-    return _listing_payload(category, items, {"group": group}, version, software)
+    return _listing_payload(
+        commands[0].category, [command.listing() for command in commands], {"group": group}, version, software
+    )
 
 
 def _browse_command(category: str, command_name: str, version: str, software: str) -> dict[str, Any]:
@@ -260,11 +293,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
                 "available_categories": sorted(categories.keys()),
             }
 
-        group_payload = _browse_group(category, command_name, version, software)
-        if group_payload is not None:
-            return group_payload
-
-        items = _command_items(_iter_available_category_commands(category, version, software))
+        commands = [command for command in _commands(software, version) if command.category == category]
         not_found: dict[str, Any] = {
             "source": "commands",
             "action": "browse",
@@ -273,9 +302,9 @@ def _browse_command(category: str, command_name: str, version: str, software: st
                 "message": f"Command '{command_name}' not found in '{category}'.",
             },
             "input": {"category": category, "command": command_name, "version": version, "software": software},
-            "available_commands": [item["name"] for item in items],
+            "available_commands": [command.name for command in commands],
         }
-        groups = _group_counts(items)
+        groups = _group_counts(commands)
         if groups:
             not_found["groups"] = groups
         return not_found
@@ -292,13 +321,15 @@ def _browse_command(category: str, command_name: str, version: str, software: st
             "available_versions": cmd_doc.get("versions", []),
         }
 
+    key = command_name if " " not in command_name else command_name.replace(" ", "-")
+    name = full_name(_command_prefix(category, software), key, cmd_doc)
     payload = build_docs_data(
         source="commands",
         action="browse",
         entries=[
             {
                 "category": category,
-                "command": command_name,
+                "command": name,
                 "version": version,
                 "doc": cmd_doc,
             }
@@ -317,7 +348,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
             ),
             omit_largest(doc, keep=_COMMAND_IDENTITY_FIELDS),
         ),
-        hint=f"Trimmed to fit one response: browse '{category} {command_name} <name>' for an omitted section or one keyword.",
+        hint=f"Trimmed to fit one response: browse '{name} <name>' for an omitted section or one keyword.",
     )
     return payload
 

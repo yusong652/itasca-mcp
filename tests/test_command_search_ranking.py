@@ -69,7 +69,7 @@ def test_exact_name_queries_still_rank_first(query: str) -> None:
         ("zone export", "zone export", "flac"),
         ("mpoint initialize", "mpoint initialize", "mpoint"),
         # ... but a query with more words is not hijacked by the shorter name
-        ("block face apply remove", "block face-apply-remove", "3dec"),
+        ("block face apply remove", "block face apply-remove", "3dec"),
         ("block create", "block create", "3dec"),
         ("mpoint create", "mpoint create", "mpoint"),
     ],
@@ -99,7 +99,7 @@ def test_initialize_stress_keeps_both_setters_on_top(query: str, software: str) 
         ("zone history displacement", "zone history", "flac"),
         # 3DEC block family
         ("block velocity", "block initialize", "3dec"),
-        ("block mohr-coulomb", "block zone-cmodel", "3dec"),
+        ("block mohr-coulomb", "block zone cmodel", "3dec"),
         ("block cohesion", "block property", "3dec"),
         ("block history displacement", "block history", "3dec"),
         # keyword names of commands without curated search_keywords
@@ -126,7 +126,7 @@ def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expec
         ("mpoint cohesion", "mpoint property"),
         # recorded quantities
         ("mpoint history displacement", "mpoint history"),
-        ("node history", "mpoint node-history"),
+        ("node history", "mpoint node history"),
     ],
 )
 def test_mpoint_keyword_vocabulary_queries_rank_owner_first(query: str, expected: str) -> None:

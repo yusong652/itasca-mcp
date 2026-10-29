@@ -83,7 +83,10 @@ def test_trimmed_command_page_keeps_its_parts_reachable() -> None:
     event = commands.browse("pfc", "fish callback bond_break", "9.0")["data"]["entries"][0]["keyword"]
     assert event["name"] == "kwd:bond_break"
     # a real three-word command still wins over the section lookup
-    assert commands.browse("flac", "structure beam apply", "9.0")["data"]["entries"][0]["command"] == "beam apply"
+    assert (
+        commands.browse("flac", "structure beam apply", "9.0")["data"]["entries"][0]["command"]
+        == "structure beam apply"
+    )
 
     missing = commands.browse("pfc", "measure create bogus", "9.0")
     assert missing["error"]["code"] == "section_not_found"

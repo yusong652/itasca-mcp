@@ -93,7 +93,7 @@ async def test_browse_commands_accepts_mixed_case_paths() -> None:
     assert payload["ok"] is True
     assert data["summary"]["count"] == 1
     assert data["entries"][0]["category"] == "ball"
-    assert data["entries"][0]["command"] == "create"
+    assert data["entries"][0]["command"] == "ball create"
 
 
 @pytest.mark.asyncio
@@ -108,7 +108,8 @@ async def test_browse_category_filters_unavailable_commands_by_version() -> None
 
     assert payload["ok"] is True
     assert data["summary"]["version"] == "6.0"
-    assert "accumulate-stress" not in names
+    assert "ball create" in names
+    assert "ball accumulate-stress" not in names
 
 
 @pytest.mark.asyncio
@@ -122,28 +123,38 @@ async def test_browse_command_not_found_suggestions_are_version_filtered() -> No
 
     assert payload["ok"] is False
     assert payload["error"]["code"] == "command_not_found"
-    assert "accumulate-stress" not in details["available_commands"]
+    assert "ball create" in details["available_commands"]
+    assert "ball accumulate-stress" not in details["available_commands"]
 
 
 @pytest.mark.parametrize(
-    ("name", "syntax", "group"),
+    ("prefix", "key", "command", "name", "group"),
     [
-        ("contact-generate-subcontacts", "block contact generate-subcontacts keyword", "contact"),
-        ("merge-start", "block merge-start", None),
-        ("block-create", "building-blocks block create keyword", "block"),
-        ("cmat-proximity", "contact cmat [<sprocess>] proximity <fd>", "cmat"),
-        ("apply-group", "contact [<sprocess>] apply-group [keyword] [range]", None),
-        ("create", "ball create keyword", None),
+        # the doc's command field spells the key: trusted
+        ("block", "contact-generate-subcontacts", "block contact generate-subcontacts", None, "block contact"),
+        ("block", "merge-start", "block merge-start", None, None),
+        ("building-blocks", "block-create", "building-blocks block create", None, "building-blocks block"),
+        ("ball", "create", "ball create", None, None),
+        # a manual's own respelling of the key's separators is kept
+        ("model", "large-strain", "model largestrain", None, None),
+        # the command field dropped the category word, added a word, or is missing: fall back to the key
+        ("contact", "cmat-add", "cmat add", "contact cmat-add", None),
+        ("zone", "geometry-update", "zone geometry update-interval", "zone geometry-update", None),
+        ("model", "solve", "", "model solve", None),
     ],
 )
-def test_command_group_follows_engine_spelling(name: str, syntax: str, group: str | None) -> None:
-    from itasca_mcp.tools.docs.commands import _group_of
+def test_command_full_name_follows_engine_spelling(
+    prefix: str, key: str, command: str, name: str | None, group: str | None
+) -> None:
+    from itasca_mcp.knowledge.commands.naming import full_name, group_of
 
-    assert _group_of(name, syntax) == group
+    resolved = full_name(prefix, key, {"command": command})
+    assert resolved == (name or command)
+    assert group_of(resolved) == group
 
 
 @pytest.mark.asyncio
-async def test_browse_command_word_group_lists_its_commands() -> None:
+async def test_browse_command_heading_lists_its_commands() -> None:
     result = await mcp.call_tool(
         "itasca_browse_doc", {"source": "commands", "path": "block contact", "software": "3dec"}
     )
@@ -151,14 +162,25 @@ async def test_browse_command_word_group_lists_its_commands() -> None:
     data = payload["data"]
 
     assert payload["ok"] is True
-    assert data["summary"]["group"] == "contact"
+    assert data["summary"]["group"] == "block contact"
     assert data["summary"]["count"] >= 20
+    assert all(entry["name"].startswith("block contact ") for entry in data["entries"])
     assert all(entry["syntax"].startswith("block contact ") for entry in data["entries"])
 
     category = _parse_tool_payload(
         await mcp.call_tool("itasca_browse_doc", {"source": "commands", "path": "block", "software": "3dec"})
     )
-    assert category["data"]["summary"]["groups"]["contact"] == data["summary"]["count"]
+    assert category["data"]["summary"]["groups"]["block contact"] == data["summary"]["count"]
+
+    # The engine word reaches a category whose index key differs, and a search hit's path browses.
+    body = _parse_tool_payload(
+        await mcp.call_tool(
+            "itasca_browse_doc", {"source": "commands", "path": "building-blocks block create", "software": "flac"}
+        )
+    )
+    assert body["ok"] is True
+    assert body["data"]["entries"][0]["command"] == "building-blocks block create"
+    assert body["data"]["entries"][0]["category"] == "body"
 
     # 'block merge-start' is one hyphenated command, not a 'merge' group.
     hyphenated = _parse_tool_payload(

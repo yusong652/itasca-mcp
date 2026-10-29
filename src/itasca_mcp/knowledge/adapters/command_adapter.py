@@ -9,6 +9,7 @@ Note: Model properties are handled separately via itasca_browse_doc(source='refe
 from typing import Any
 
 from itasca_mcp.knowledge.commands.loader import CommandLoader
+from itasca_mcp.knowledge.commands.naming import full_name
 from itasca_mcp.knowledge.models import DocumentType, SearchDocument
 
 
@@ -59,10 +60,12 @@ class CommandDocumentAdapter:
         """
         documents = []
         all_commands = CommandLoader.get_all_commands(software=software)
+        categories = CommandLoader.load_index(software=software).get("categories", {})
 
         for cmd_meta in all_commands:
             category = cmd_meta["category"]
             cmd_name = cmd_meta["name"]
+            prefix = categories.get(category, {}).get("command_prefix") or category
 
             # Load full command documentation. A KeyError means this command's
             # doc has no entry for the requested version (some engines, e.g. FLAC,
@@ -75,11 +78,13 @@ class CommandDocumentAdapter:
             if not cmd_doc or cmd_doc.get("available") is False:
                 continue
 
-            # Convert to SearchDocument
+            # name and title are the engine's spelling ('block contact apply'), so a search
+            # hit's path is something itasca_browse_doc resolves and the engine accepts.
+            name = full_name(prefix, cmd_name, cmd_doc)
             doc = SearchDocument(
-                name=f"{category} {cmd_name}",
+                name=name,
                 doc_type=DocumentType.COMMAND,
-                title=cmd_doc.get("command", f"{category} {cmd_name}"),
+                title=name,
                 description=cmd_doc.get("description", ""),
                 keywords=cmd_doc.get("search_keywords", []),
                 category=category,
@@ -129,10 +134,12 @@ class CommandDocumentAdapter:
         if not cmd_doc or cmd_doc.get("available") is False:
             return None
 
+        prefix = CommandLoader.load_index(software=software)["categories"].get(category, {}).get("command_prefix")
+        name = full_name(prefix or category, cmd_name, cmd_doc)
         return SearchDocument(
-            name=doc_id,
+            name=name,
             doc_type=DocumentType.COMMAND,
-            title=cmd_doc.get("command", doc_id),
+            title=name,
             description=cmd_doc.get("description", ""),
             keywords=cmd_doc.get("search_keywords", []),
             category=category,
