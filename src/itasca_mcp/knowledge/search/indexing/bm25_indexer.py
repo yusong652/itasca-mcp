@@ -114,8 +114,9 @@ class BM25Indexer:
             for term in set(name_tokens):
                 self.name_term_doc_freq[term] = self.name_term_doc_freq.get(term, 0) + 1
 
-            # 2. Index description field
-            desc_tokens = self.tokenizer.tokenize(doc.description)
+            # 2. Index description field (plus any metadata index_terms, e.g. keyword names)
+            extra = " ".join(doc.metadata.get("index_terms", []))
+            desc_tokens = self.tokenizer.tokenize(f"{doc.description} {extra}" if extra else doc.description)
             self.desc_documents[doc_id] = desc_tokens
             self.desc_term_freq[doc_id] = dict(Counter(desc_tokens))
             for term in set(desc_tokens):

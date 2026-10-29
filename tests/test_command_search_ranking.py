@@ -102,6 +102,9 @@ def test_initialize_stress_keeps_both_setters_on_top(query: str, software: str) 
         ("block mohr-coulomb", "block zone-cmodel", "3dec"),
         ("block cohesion", "block property", "3dec"),
         ("block history displacement", "block history", "3dec"),
+        # keyword names of commands without curated search_keywords
+        ("damping", "block mechanical", "3dec"),
+        ("rayleigh damping", "block mechanical", "3dec"),
     ],
 )
 def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expected: str, software: str) -> None:

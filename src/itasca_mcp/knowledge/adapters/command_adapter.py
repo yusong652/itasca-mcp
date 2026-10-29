@@ -6,8 +6,24 @@ into unified SearchDocument models for search.
 Note: Model properties are handled separately via itasca_browse_doc(source='reference') tool.
 """
 
+from typing import Any
+
 from itasca_mcp.knowledge.commands.loader import CommandLoader
 from itasca_mcp.knowledge.models import DocumentType, SearchDocument
+
+
+def _keyword_names(cmd_doc: dict[str, Any], name: str) -> list[str]:
+    """Keyword names to index as extra description terms, for uncurated commands.
+
+    Many files (most of 3DEC) carry only the command words as search_keywords, so a
+    keyword like 'damping' (block mechanical) was unreachable by search. Commands
+    with a curated list are left alone, and the names go in the low-weight
+    description field: otherwise a short command that happens to share one word
+    ('clump tolerance' for 'velocity') outranks the command that owns it.
+    """
+    if not set(cmd_doc.get("search_keywords", [])) <= set(name.replace("-", " ").split()):
+        return []
+    return [kw["name"].removeprefix("kwd:") for kw in cmd_doc.get("keywords", []) if kw.get("name")]
 
 
 class CommandDocumentAdapter:
@@ -74,6 +90,7 @@ class CommandDocumentAdapter:
                     "file": cmd_meta.get("file"),
                     "short_description": cmd_meta.get("short_description", ""),
                     "version": version,
+                    "index_terms": _keyword_names(cmd_doc, f"{category} {cmd_name}"),
                 },
             )
             documents.append(doc)
@@ -124,5 +141,6 @@ class CommandDocumentAdapter:
             metadata={
                 "python_available": cmd_doc.get("python_sdk_alternative", {}).get("available", False),
                 "version": version,
+                "index_terms": _keyword_names(cmd_doc, doc_id),
             },
         )
