@@ -1844,7 +1844,12 @@ def test_range_elements_engine_specific_locals_preserved() -> None:
 def test_3dec_range_elements_registered() -> None:
     cats = ReferenceLoader.load_index(software="3dec").get("categories", {})
     assert "range-elements" in cats
-    assert len(ReferenceLoader.load_category_index("range-elements", software="3dec")["elements"]) == 22
+    names = {e["name"] for e in ReferenceLoader.load_category_index("range-elements", software="3dec")["elements"]}
+    assert len(names) == 52
+    # 3DEC-only elements the 9.8 'range ?' prompt lists; every one resolves to a file.
+    for name in ("joint-set", "jmodel", "deformable", "excavated", "group-intersection"):
+        assert name in names
+        assert ReferenceLoader.load_item_doc("range-elements", name, software="3dec") is not None
 
 
 # --- 3DEC FISH intrinsics (engine-specific, from the clean 3DEC live tables) --

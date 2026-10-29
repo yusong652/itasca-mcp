@@ -38,10 +38,16 @@ class ReferenceDocumentAdapter:
                 if not name:
                     continue
                 path = f"{category} {name}"
+                own = _text(item.get("description"))
+                if not own:
+                    # range-elements indexes carry no description; the element's file does.
+                    own = _text(
+                        (ReferenceLoader.load_item_doc(category, name, software=software) or {}).get("description")
+                    )
                 description = " ".join(
                     part
                     for part in (
-                        _text(item.get("description")),
+                        own,
                         _text(item.get("full_name")),
                         _text(item.get("common_use")),
                     )
