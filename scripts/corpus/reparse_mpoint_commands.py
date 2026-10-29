@@ -115,7 +115,10 @@ def description_after(source: str, dt_end: int) -> str:
     nested = re.compile(r"<dl\b", re.S).search(source, start)
     close = re.compile(r"</dd>", re.S).search(source, start)
     end = min(x.start() for x in (nested, close) if x) if (nested or close) else start
-    return text_of(source[start:end])
+    text = text_of(source[start:end])
+    # The page opens the <dd> with a 'Primary keywords: a b c' rubric before the
+    # prose; the keyword list is not the description.
+    return re.sub(r"^Primary keywords:(?:\s+[a-z][\w-]*)+\s+(?=[A-Z])", "", text)
 
 
 def parse_page(path: Path) -> dict | None:
