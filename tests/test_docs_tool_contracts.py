@@ -125,6 +125,49 @@ async def test_browse_command_not_found_suggestions_are_version_filtered() -> No
     assert "accumulate-stress" not in details["available_commands"]
 
 
+@pytest.mark.parametrize(
+    ("name", "syntax", "group"),
+    [
+        ("contact-generate-subcontacts", "block contact generate-subcontacts keyword", "contact"),
+        ("merge-start", "block merge-start", None),
+        ("block-create", "building-blocks block create keyword", "block"),
+        ("cmat-proximity", "contact cmat [<sprocess>] proximity <fd>", "cmat"),
+        ("apply-group", "contact [<sprocess>] apply-group [keyword] [range]", None),
+        ("create", "ball create keyword", None),
+    ],
+)
+def test_command_group_follows_engine_spelling(name: str, syntax: str, group: str | None) -> None:
+    from itasca_mcp.tools.docs.commands import _group_of
+
+    assert _group_of(name, syntax) == group
+
+
+@pytest.mark.asyncio
+async def test_browse_command_word_group_lists_its_commands() -> None:
+    result = await mcp.call_tool(
+        "itasca_browse_doc", {"source": "commands", "path": "block contact", "software": "3dec"}
+    )
+    payload = _parse_tool_payload(result)
+    data = payload["data"]
+
+    assert payload["ok"] is True
+    assert data["summary"]["group"] == "contact"
+    assert data["summary"]["count"] >= 20
+    assert all(entry["syntax"].startswith("block contact ") for entry in data["entries"])
+
+    category = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "commands", "path": "block", "software": "3dec"})
+    )
+    assert category["data"]["summary"]["groups"]["contact"] == data["summary"]["count"]
+
+    # 'block merge-start' is one hyphenated command, not a 'merge' group.
+    hyphenated = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "commands", "path": "block merge", "software": "3dec"})
+    )
+    assert hyphenated["ok"] is False
+    assert hyphenated["error"]["code"] == "command_not_found"
+
+
 @pytest.mark.asyncio
 async def test_query_command_versioned_contract() -> None:
     result = await mcp.call_tool(
