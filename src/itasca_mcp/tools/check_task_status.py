@@ -10,6 +10,7 @@ from itasca_mcp.contracts import build_ok
 from itasca_mcp.formatting import (
     build_bridge_error,
     build_operation_error,
+    engine_error_action,
     format_elapsed_seconds,
     format_unix_timestamp,
     paginate_output,
@@ -117,5 +118,8 @@ def register(mcp: FastMCP) -> None:
             result["result"] = data["result"]
         if data.get("error"):
             result["error"] = data["error"]
+            action = engine_error_action(str(data["error"]))
+            if action:
+                result["action"] = action
 
         return build_ok(result)

@@ -102,6 +102,25 @@ def _summarize_bridge_error(exc: Exception) -> str:
     return text.splitlines()[0]
 
 
+# The engine raises "Unused extra parameter" only after running the command on
+# what it parsed before that token, so a misspelled keyword ahead of `range`
+# has already applied the command to the whole model (FLAC3D 9.8: zone
+# initialize, zone gridpoint fix, zone cmodel assign, zone face apply).
+_PARTIAL_EXECUTION_MARK = "Unused extra parameter"
+_PARTIAL_EXECUTION_ACTION = (
+    "The engine ran the command on everything before the unused token before raising this error: "
+    "a misspelled keyword ahead of 'range' has applied it to the whole model. "
+    "Check the model state before retrying."
+)
+
+
+def engine_error_action(text: str | None) -> str | None:
+    """Advice for an engine error whose command still took effect, else None."""
+    if text and _PARTIAL_EXECUTION_MARK in text:
+        return _PARTIAL_EXECUTION_ACTION
+    return None
+
+
 def build_bridge_error(exc: Exception, *, task_id: str | None = None) -> dict[str, Any]:
     """Build a unified error envelope for bridge connectivity failures."""
     cfg = get_bridge_config()
