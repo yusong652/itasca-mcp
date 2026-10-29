@@ -81,21 +81,19 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
             item["children"] = len(grandchildren)
         entries.append(item)
 
-    return build_ok(
-        build_docs_data(
-            source="fish",
-            action="browse",
-            entries=entries,
-            summary={
-                "count": len(entries),
-                "path": node,
-                "is_function": self_available,
-                "child_count": len(children),
-                "version": version,
-                "software": software,
-            },
-        )
-    )
+    summary: dict[str, Any] = {
+        "count": len(entries),
+        "path": node,
+        "is_function": self_available,
+        "child_count": len(children),
+        "version": version,
+        "software": software,
+    }
+    if "." not in node:
+        notes = FishLoader.namespace_notes(node, software=software)
+        if notes:
+            summary["notes"] = notes
+    return build_ok(build_docs_data(source="fish", action="browse", entries=entries, summary=summary))
 
 
 def _browse_root(software: str, version: str) -> dict[str, Any]:

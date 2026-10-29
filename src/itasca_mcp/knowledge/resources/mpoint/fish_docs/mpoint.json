@@ -2068,5 +2068,19 @@
       "family": "geometry & motion",
       "python_equivalent": null
     }
-  ]
+  ],
+  "notes": {
+    "background-node": [
+      "Background-node intrinsics take two different kinds of first argument and the engine will not convert between them. pos / vel / id / group / isgroup / force.unbal / mass.mult take a node POINTER (MESHPOINT_pnt, from mpoint.node.find or mpoint.node.list). disp / pp / stress take a POSITION (vec3) and interpolate the field there. Verified by executing both the correct and the swapped form: mpoint.node.vel(<vec3>) and mpoint.node.pp(<ptr>) both fail. (state)",
+      "The grid spans the whole 'model domain extent', not the material-point bounding box, and is built lazily at 'mpoint import' time. mpoint.node.pos of the first node is the domain corner. Keep the domain tight. (state)",
+      "mpoint.node.spacing() reports the value set by 'mpoint node spacing'.",
+      "mpoint.node.mass.mult is undocumented -- no doc page and no entry in out_fish.txt -- but the engine exposes it and it returns 1.0 on an untouched grid. (state)"
+    ],
+    "material-point": [
+      "Material points are not exposed to the Python API. itasca.* reports a count of zero after 'mpoint import from-zones' even though the points exist -- use these intrinsics.",
+      "Iterate with 'loop foreach local mp mpoint.list' rather than assuming contiguous IDs.",
+      "An intrinsic whose signature ends in ':= <type>' can be assigned to, not just read (for example mpoint.vel(mp) = vector(0,0,0)).",
+      "Properties are constitutive-model-specific: mpoint.prop(mp,'young') works only if the assigned model has that property. See references/constitutive-models."
+    ]
+  }
 }

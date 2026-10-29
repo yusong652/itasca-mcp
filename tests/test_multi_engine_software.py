@@ -14,6 +14,7 @@ import pytest
 
 from itasca_mcp.knowledge.commands.loader import CommandLoader
 from itasca_mcp.knowledge.config import SUPPORTED_SOFTWARE, normalize_software
+from itasca_mcp.knowledge.fish import FishLoader
 from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
 from itasca_mcp.knowledge.query import APISearch, CommandSearch
 from itasca_mcp.knowledge.references.loader import ReferenceLoader
@@ -519,33 +520,18 @@ def test_mpoint_command_keywords_match_the_installed_index() -> None:
 
 
 def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:
-    """FISH is the only scripted access to material points, so this set must be whole.
+    """FISH was the only scripted access to material points before 9.8, so this set must be whole.
 
-    Captured from `fish list intrinsics` on live MPoint3D 9.7: 100 mpoint.*
-    intrinsics. The previous corpus listed 55 names and no signatures -- none of
-    them wrong, but mpoint.create/delete and every per-component accessor were
-    missing.
+    Live MPoint 9.8 lists 115 mpoint.* intrinsics (the 9.7 dump had 100); every one
+    ships with a signature in the fish_docs corpus.
     """
-    from itasca_mcp.knowledge.config import RESOURCES_DIR
-
-    root = RESOURCES_DIR / "mpoint/references/fish-intrinsics"
-    names: set[str] = set()
-    for stem, expected in (("material-point", 61), ("background-node", 39)):
-        doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
-        found = [i for fam in doc["intrinsic_families"] for i in fam["intrinsics"]]
-        assert len(found) == expected == doc["intrinsic_count"]
-        for intrinsic in found:
-            assert intrinsic["signature"].startswith(
-                ("flt", "int", "vec3", "bool", "str", "any", "ten", "list", "map", "MPM", "MESHPOINT", "mpm")
-            )
-            names.add(intrinsic["name"])
-
-    assert len(names) == 100
-    # the ones the old corpus was missing entirely
-    assert {"mpoint.create", "mpoint.delete", "mpoint.stress.zz", "mpoint.node.mass.mult"} <= names
+    entries = {n: e for n, e in FishLoader.entries(software="mpoint").items() if n.startswith("mpoint.")}
+    assert len(entries) >= 100
+    assert all(e["signature"] for e in entries.values())
+    assert {"mpoint.create", "mpoint.delete", "mpoint.stress.zz", "mpoint.node.mass.mult"} <= set(entries)
     # background-node argument-kind split must be stated, not left to be guessed
-    node = json.loads((root / "background-node.json").read_text(encoding="utf-8"))
-    assert any("POINTER" in n and "POSITION" in n for n in node["notes"])
+    notes = FishLoader.namespace_notes("mpoint", software="mpoint")
+    assert any("POINTER" in n and "POSITION" in n for n in notes["background-node"])
 
 
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
@@ -613,8 +599,7 @@ def test_mpoint_fish_intrinsics_lose_only_vector_z_in_2d() -> None:
     is meaningful there -- which is why the drop is 8 and not 8 plus the tensor
     components.
     """
-    cat = ReferenceLoader.load_category_index("fish-intrinsics", software="mpoint")
-    dd = cat["dimension_differences"]
+    dd = FishLoader.load_index(software="mpoint")["dimension_differences"]
     assert dd["mpoint3d_count"] == 100
     assert dd["mpoint2d_count"] == 92
     assert dd["mpoint2d_only"] == []
@@ -969,18 +954,11 @@ def test_common_fish_range_element_is_not_quoted() -> None:
 
 
 def test_mpoint_fish_intrinsics_engine_specific() -> None:
-    cats = ReferenceLoader.load_index(software="mpoint").get("categories", {})
-    assert "fish-intrinsics" in cats
-    cat = ReferenceLoader.load_category_index("fish-intrinsics", software="mpoint")
-    names = {i["name"] for i in cat["items"]}
+    names = set(FishLoader.entries(software="mpoint"))
     # MPoint's FISH is built around material points + background-grid nodes.
-    assert names == {"material-point", "background-node"}
-    mp = ReferenceLoader.load_item_doc("fish-intrinsics", "material-point", software="mpoint")
-    names = {i["name"] for fam in mp["intrinsic_families"] for i in fam["intrinsics"]}
     assert "mpoint.stress" in names and "mpoint.mech.ratio.max" in names
-    node = ReferenceLoader.load_item_doc("fish-intrinsics", "background-node", software="mpoint")
-    node_names = {i["name"] for fam in node["intrinsic_families"] for i in fam["intrinsics"]}
-    assert "mpoint.node.force.unbal" in node_names
+    assert "mpoint.node.force.unbal" in names
+    assert not any(n.startswith(("ball.", "zone.", "block.")) for n in names)
 
 
 def test_mpoint_boundary_conditions_use_mpoint_syntax() -> None:
@@ -1122,7 +1100,7 @@ def test_massflow_python_says_model_objects_are_fish_only() -> None:
     assert "no MassFlow Python module" in index["description"]
     fish = DocumentationLoader.load_module("fish", software="massflow")
     assert fish is not None
-    assert "fish-intrinsics" in fish["description"]
+    assert "source='fish'" in fish["description"]
 
 
 def test_massflow_clean_is_documented_as_required_before_compute() -> None:
@@ -1360,47 +1338,30 @@ def test_massflow_range_additions_do_not_leak_into_other_engines() -> None:
 
 def test_massflow_fish_intrinsics_cover_the_live_set() -> None:
     """FISH is MassFlow's only scripted access — the corpus had no reference at all."""
-    cats = ReferenceLoader.load_index(software="massflow").get("categories", {})
-    assert "fish-intrinsics" in cats
-    items = {i["name"]: i for i in ReferenceLoader.get_item_list("fish-intrinsics", software="massflow")}
-    assert set(items) == {
-        "mineblock",
-        "marker",
-        "drawpoint",
-        "extracted-marker",
-        "draw-period",
-        "model",
-    }
-    assert sum(i["intrinsic_count"] for i in items.values()) == 175
+    names = {n for n in FishLoader.entries(software="massflow") if n.startswith("massflow.")}
+    assert len(names) == 175
+    assert {"massflow.mineblock.containing", "massflow.marker.moved-day", "massflow.drawperiod.find"} <= names
 
 
 def test_massflow_fish_marks_undocumented_intrinsics() -> None:
-    """81 of the 175 have no page; the whole drawperiod family is one of them."""
-    doc = ReferenceLoader.load_item_doc("fish-intrinsics", "draw-period", software="massflow")
-    assert doc is not None
-    assert doc["undocumented_count"] == doc["intrinsic_count"] == 14
-    assert all(i.get("documented") is False for i in doc["intrinsics"])
-    # An intrinsic with a page carries its description instead.
-    mb = ReferenceLoader.load_item_doc("fish-intrinsics", "mineblock", software="massflow")
-    containing = next(i for i in mb["intrinsics"] if i["name"] == "massflow.mineblock.containing")
-    assert "description" in containing and "documented" not in containing
+    """The drawperiod family has no manual page; mineblock.containing has one and a description."""
+    entries = FishLoader.entries(software="massflow")
+    drawperiod = [e for n, e in entries.items() if n.startswith("massflow.drawperiod.")]
+    assert len(drawperiod) == 14
+    assert all(e["doc"] is None for e in drawperiod)
+    containing = entries["massflow.mineblock.containing"]
+    assert containing["doc"] and containing.get("description")
 
 
 def test_massflow_fish_lists_retired_names_as_renames() -> None:
     """Two documented names are gone from the binary; neither is offered as usable."""
-    index = ReferenceLoader.load_category_index("fish-intrinsics", software="massflow")
-    assert index is not None
+    index = FishLoader.load_index(software="massflow")
     retired = {r["name"]: r["replacement"] for r in index["retired"]}
     assert retired == {
         "massflow.mass.extracted": "massflow.mass.total",
         "massflow.mineblock.friction": "massflow.mineblock.fric",
     }
-    all_names = {
-        i["name"]
-        for item in ReferenceLoader.get_item_list("fish-intrinsics", software="massflow")
-        for i in ReferenceLoader.load_item_doc("fish-intrinsics", item["name"], software="massflow")["intrinsics"]
-    }
-    assert not (all_names & set(retired))
+    assert not (set(FishLoader.entries(software="massflow")) & set(retired))
 
 
 def test_massflow_file_formats_cover_inputs_and_outputs() -> None:
@@ -1886,31 +1847,17 @@ def test_3dec_range_elements_registered() -> None:
     assert len(ReferenceLoader.load_category_index("range-elements", software="3dec")["elements"]) == 22
 
 
-# --- 3DEC FISH intrinsics (engine-specific, authored not borrowed) ----------
-# FLAC's fish-intrinsics are zone/structure-specific, so 3DEC's are authored
-# around blocks/joints/zones/flow (validated against the real 9.0 FISH docs).
+# --- 3DEC FISH intrinsics (engine-specific, from the clean 3DEC live tables) --
 
 
-def test_3dec_fish_intrinsics_category() -> None:
-    cat = ReferenceLoader.load_category_index("fish-intrinsics", software="3dec")
-    assert cat is not None
-    assert {i["name"] for i in cat["items"]} == {"block-and-joints", "block-zone-gridpoint", "fluid-flow"}
-
-
-def test_3dec_fish_intrinsics_item_lists_real_families() -> None:
-    item = ReferenceLoader.load_item_doc("fish-intrinsics", "block-and-joints", software="3dec")
-    assert item is not None
-    examples = {ex for fam in item["intrinsic_families"] for ex in fam["examples"]}
-    # 3DEC joint behavior lives on sub-contacts.
-    assert "block.subcontact.model" in examples
-    assert "block.subcontact.force.shear" in examples
-
-
-def test_3dec_fish_intrinsics_is_engine_local_not_flac() -> None:
-    # 3DEC's set is its own (block/joint/flow), not FLAC's (zone/gridpoint/structure).
-    flac = ReferenceLoader.load_category_index("fish-intrinsics", software="flac")
-    flac_names = {i["name"] for i in flac["items"]}
-    assert "block-and-joints" not in flac_names
+def test_3dec_fish_intrinsics_are_engine_local() -> None:
+    # 3DEC's FISH is block/joint/flow plus the 7.0-only sel.* legacy SEL family, not FLAC's zone/gridpoint.
+    namespaces = FishLoader.load_index(software="3dec")["namespaces"]
+    assert {"block", "flowplane", "flowknot", "sel"} <= set(namespaces)
+    assert namespaces["sel"]["available"] == {"7.0": 256, "9.0": 0}
+    assert "zone" not in namespaces and "ball" not in namespaces
+    assert "block.subcontact.model" in FishLoader.entries(software="3dec")
+    assert "block" not in FishLoader.load_index(software="flac")["namespaces"]
 
 
 def test_3dec_initial_conditions_uses_block_syntax() -> None:
@@ -1997,13 +1944,12 @@ def test_3dec_histories_and_results_sampling_is_engine_specific() -> None:
     assert "zone history" not in cmds
 
 
-def test_3dec_now_has_ten_reference_categories() -> None:
+def test_3dec_has_nine_reference_categories() -> None:
     cats = set(ReferenceLoader.load_index(software="3dec").get("categories", {}))
     assert {
         "joint-models",
         "constitutive-models",
         "range-elements",
-        "fish-intrinsics",
         "initial-conditions",
         "boundary-conditions",
         "geometry-data-table",

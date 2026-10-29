@@ -136,6 +136,15 @@ class FishLoader:
         return out
 
     @staticmethod
+    def namespace_notes(namespace: str, *, software: str) -> dict[str, list[str]]:
+        """Curated usage notes a namespace file carries (grouped by topic); empty when none."""
+        meta = FishLoader.load_index(software=software).get("namespaces", {}).get(namespace)
+        if not meta:
+            return {}
+        notes = FishLoader._load_file(meta["file"]).get("notes")
+        return dict(notes) if isinstance(notes, dict) else {}
+
+    @staticmethod
     def suggest(name: str, *, software: str, limit: int = 8) -> list[str]:
         """Names sharing the longest known prefix with ``name``; for not-found errors."""
         parts = name.split(".")

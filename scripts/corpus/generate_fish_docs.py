@@ -111,11 +111,15 @@ EXCLUDED: dict[str, str] = {
     "extrude": "FISH face of the FLAC 7.0 extruder GUI tool (sketch in 9.x); interactive-only",
 }
 
-ROW = re.compile(r"^\s*([A-Za-z_][\w.]*)\s*\|\s*(.+?)\s*$")
+# Names are dotted identifiers; a few carry a hyphen (massflow.marker.moved-day, block.lf-next).
+ROW = re.compile(r"^\s*([A-Za-z_][\w.-]*)\s*\|\s*(.+?)\s*$")
 GETTER = re.compile(
-    r"^(?P<ret>[^=]+?)\s*(?::=|=)\s*(?P<name>[A-Za-z_][\w.]*)(?:\((?P<args>.*)\))?(?:\s*(?::=|=)\s*(?P<set>.+?))?\s*$"
+    r"^(?P<ret>[^=]+?)\s*(?::=|=)\s*(?P<name>[A-Za-z_][\w.-]*)(?:\((?P<args>.*)\))?(?:\s*(?::=|=)\s*(?P<set>.+?))?\s*$"
 )
-SETTER_ONLY = re.compile(r"^(?P<name>[A-Za-z_][\w.]*)(?:\((?P<args>.*)\))?\s*(?::=|=)\s*(?P<set>.+?)\s*$")
+SETTER_ONLY = re.compile(r"^(?P<name>[A-Za-z_][\w.-]*)(?:\((?P<args>.*)\))?\s*(?::=|=)\s*(?P<set>.+?)\s*$")
+# Curated leftovers of the retired references/fish-intrinsics category: family labels,
+# the MassFlow page descriptions, retired-name renames, MPoint 2D differences, item notes.
+HINTS_FILE = Path(__file__).with_name("fish_family_hints.json")
 SUFFIX = re.compile(r"\)\s*\((?P<note>[^()]*)\)\s*$")
 
 
@@ -137,7 +141,7 @@ def read_columnar_60(text: str) -> dict[str, str | None]:
         if not line.strip() or line.startswith(("pfc3d>", "*")):
             continue
         name = line[cols["Name"] : cols["Return"]].strip()
-        if not re.fullmatch(r"[A-Za-z_][\w.]*", name):
+        if not re.fullmatch(r"[A-Za-z_][\w.-]*", name):
             continue
         ret = line[cols["Return"] : cols["Arg"]].strip()
         ret = "/".join(_TYPE_60.get(t, t) for t in ret.split("/")) if ret else "any"
@@ -236,20 +240,12 @@ def parse_signature(name: str, sig: str) -> dict[str, Any]:
     raise ValueError(f"unparsed signature for {name}: {sig!r}")
 
 
-def load_family_hints() -> dict[str, str]:
-    """name -> curated family label from the legacy references/fish-intrinsics files."""
-    hints: dict[str, str] = {}
-    for f in RES.glob("*/references/fish-intrinsics/*.json"):
-        if f.name == "index.json":
-            continue
-        d = json.loads(f.read_text(encoding="utf-8"))
-        for fam in d.get("intrinsic_families") or d.get("families") or []:
-            label = fam.get("family") or fam.get("name")
-            for ex in fam.get("examples") or fam.get("intrinsics") or []:
-                n = ex["name"] if isinstance(ex, dict) else ex
-                if label and isinstance(n, str):
-                    hints.setdefault(n, label)
-    return hints
+def load_hints() -> dict[str, Any]:
+    """The frozen curated data (see HINTS_FILE); every section is optional."""
+    data: dict[str, Any] = json.loads(HINTS_FILE.read_text(encoding="utf-8"))
+    for key in ("family_by_name", "description_by_name", "engine_index_extras", "namespace_notes"):
+        data.setdefault(key, {})
+    return data
 
 
 VERIFICATION = {
@@ -286,7 +282,9 @@ VERIFICATION = {
 def main() -> None:
     live = {e: {v: read_live(p) for v, p in vs.items()} for e, vs in LIVE.items()}
     static = {v: read_static(p) for v, p in STATIC.items()}
-    hints = load_family_hints()
+    curated = load_hints()
+    hints: dict[str, str] = curated["family_by_name"]
+    descriptions: dict[str, str] = curated["description_by_name"]
 
     # Which engine lists which namespace (kernel membership from clean tables).
     engine_ns: dict[str, dict[str, str]] = {}  # engine -> ns -> scope
@@ -369,6 +367,8 @@ def main() -> None:
                 rec["doc"] = None
             if name in hints:
                 rec["family"] = hints[name]
+            if name in descriptions:
+                rec["description"] = descriptions[name]
             rec["python_equivalent"] = None
             entries.append(rec)
         target_dir = RES / ("_common" if scope == "common" else scope) / "fish_docs"
@@ -382,6 +382,8 @@ def main() -> None:
             "undocumented": sum(1 for e in entries if e["doc"] is None),
             "entries": entries,
         }
+        if ns in curated["namespace_notes"]:
+            payload["notes"] = curated["namespace_notes"][ns]
         path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         written[ns] = path
 
@@ -420,6 +422,7 @@ def main() -> None:
             "kernel_verified": kernel_verified[engine],
             "namespaces": namespaces,
             "excluded_namespaces": excluded,
+            **curated["engine_index_extras"].get(engine, {}),
             "verification": VERIFICATION[engine],
         }
         out = RES / engine / "fish_docs" / "index.json"
