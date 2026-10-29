@@ -184,7 +184,12 @@ async def test_browse_command_heading_lists_its_commands() -> None:
 
     root = _parse_tool_payload(await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "flac"}))
     names = {entry["name"] for entry in root["data"]["entries"]}
-    assert {"building-blocks", "sketch", "model domain", "zone"} <= names and "body" not in names
+    assert {"building-blocks", "sketch", "zone"} <= names and not names & {"body", "extruder", "domain"}
+    # 'model domain ...' is a heading under model, not a category of its own
+    model = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "flac", "path": "model"})
+    )
+    assert model["data"]["summary"]["groups"]["model domain"] == 3
     old = _parse_tool_payload(
         await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "flac", "version": "7.0"})
     )

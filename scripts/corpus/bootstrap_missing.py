@@ -204,6 +204,9 @@ SCOPE_CONFIG: dict[str, dict[str, Any]] = {
         },
         "file_prefix": "cmd_domain.",
         "stems": None,
+        # 'model domain <x>' commands: filed under model as domain-<x>.json
+        "json_scope": "model",
+        "json_prefix": "domain-",
     },
 }
 
@@ -300,13 +303,16 @@ def process_scope(scope: str, config: dict[str, Any]) -> tuple[int, int]:
         # Manual list: stems are already JSON keys (no dots).
         pairs = [(s, s) for s in declared_stems]
 
-    scope_dir = COMMANDS_DIR / scope
+    json_scope: str = config.get("json_scope", scope)
+    json_prefix: str = config.get("json_prefix", "")
+    scope_dir = COMMANDS_DIR / json_scope
     scope_dir.mkdir(parents=True, exist_ok=True)
 
     created = 0
     skipped = 0
 
     for json_key, raw_stem in pairs:
+        json_key = json_prefix + json_key
         target = scope_dir / f"{json_key}.json"
         if target.exists():
             print(f"  [SKIP] exists: {target.name}")
@@ -317,7 +323,7 @@ def process_scope(scope: str, config: dict[str, Any]) -> tuple[int, int]:
         for version, html_dir in html_dirs.items():
             html_paths[version] = html_dir / f"{file_prefix}{raw_stem}.html"
 
-        doc = make_skeleton(scope, json_key, html_paths)
+        doc = make_skeleton(json_scope, json_key, html_paths)
         target.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
         kw_count = len(doc["versions"].get("7.0", {}).get("keywords", []) or [])

@@ -896,51 +896,6 @@
         }
       ]
     },
-    "domain": {
-      "full_name": "Domain Commands",
-      "description": "Commands for configuring the model domain — the bounding box, boundary conditions (rigid/destroy/periodic/reflect), and strain-rate for periodic-cell simulations.",
-      "command_prefix": "domain",
-      "python_module": null,
-      "doc_url": "https://docs.itascacg.com/pfc700/pfc/docproject/source/manual/domain/domain.html",
-      "related_categories": [
-        "model",
-        "ball",
-        "wall"
-      ],
-      "notes": [
-        "Domain must be configured before generating particles ('model domain extent ...')",
-        "'model domain condition' sets per-face boundary behavior (destroy, periodic, reflect, stop)",
-        "'model domain strain-rate' drives periodic-cell deformation for representative-volume-element (REV) studies",
-        "All domain commands live under 'model domain'; a bare top-level 'domain' command does not exist (live-verified on 7.00)",
-        "Live 6.00 legacy shortcuts: bare 'domain condition|extent|strain-rate' parses in addition to 'model domain ...' (a hidden alias absent from the top-level command enum); the bare-domain enum also lists per-component strain-rate-xx..zz and tolerance. Bare 'cycle <n>' and 'solve' also parse on 6.00, and 'list'/'print' are 6.0 top-level commands. None of the other model subcommands (clean/save/restore/gravity/calm/random/title/configure/new) have bare forms on 6.00."
-      ],
-      "commands": [
-        {
-          "name": "condition",
-          "file": "pfc/command_docs/commands/domain/condition.json",
-          "short_description": "Set the domain boundary conditions",
-          "syntax": "model domain condition <sx>[<sy><sz>] <sz>",
-          "python_available": false,
-          "python_alternative": ""
-        },
-        {
-          "name": "extent",
-          "file": "pfc/command_docs/commands/domain/extent.json",
-          "short_description": "Specify the locations of the sides of the domain",
-          "syntax": "model domain extent <fxl><fxu>[<fyl><fyu><fzl><fzu>]",
-          "python_available": false,
-          "python_alternative": ""
-        },
-        {
-          "name": "strain-rate",
-          "file": "pfc/command_docs/commands/domain/strain-rate.json",
-          "short_description": "Specify the domain strain rate",
-          "syntax": "model domain strain-rate <v>",
-          "python_available": false,
-          "python_alternative": ""
-        }
-      ]
-    },
     "fish": {
       "full_name": "FISH Commands",
       "description": "Commands controlling the FISH embedded scripting language: function definition, callbacks, debugging, tracing, and runtime configuration.",
@@ -1989,7 +1944,12 @@
         "'model cycle' is equivalent to itasca.cycle() in Python",
         "Model state can be saved/restored for checkpointing",
         "Domain settings must be configured before generating objects",
-        "Use 'model solve' with ratio criteria for automatic convergence"
+        "Use 'model solve' with ratio criteria for automatic convergence",
+        "Domain must be configured before generating particles ('model domain extent ...')",
+        "'model domain condition' sets per-face boundary behavior (destroy, periodic, reflect, stop)",
+        "'model domain strain-rate' drives periodic-cell deformation for representative-volume-element (REV) studies",
+        "All domain commands live under 'model domain'; a bare top-level 'domain' command does not exist (live-verified on 7.00)",
+        "Live 6.00 legacy shortcuts: bare 'domain condition|extent|strain-rate' parses in addition to 'model domain ...' (a hidden alias absent from the top-level command enum); the bare-domain enum also lists per-component strain-rate-xx..zz and tolerance. Bare 'cycle <n>' and 'solve' also parse on 6.00, and 'list'/'print' are 6.0 top-level commands. None of the other model subcommands (clean/save/restore/gravity/calm/random/title/configure/new) have bare forms on 6.00."
       ],
       "commands": [
         {
@@ -2054,6 +2014,30 @@
           "short_description": "Specify the domain boundaries and conditions",
           "syntax": "model domain keyword",
           "python_available": true,
+          "python_alternative": ""
+        },
+        {
+          "name": "domain-condition",
+          "file": "pfc/command_docs/commands/model/domain-condition.json",
+          "short_description": "Set the domain boundary conditions",
+          "syntax": "model domain condition <sx>[<sy><sz>] <sz>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "domain-extent",
+          "file": "pfc/command_docs/commands/model/domain-extent.json",
+          "short_description": "Specify the locations of the sides of the domain",
+          "syntax": "model domain extent <fxl><fxu>[<fyl><fyu><fzl><fzu>]",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "domain-strain-rate",
+          "file": "pfc/command_docs/commands/model/domain-strain-rate.json",
+          "short_description": "Specify the domain strain rate",
+          "syntax": "model domain strain-rate <v>",
+          "python_available": false,
           "python_alternative": ""
         },
         {
@@ -3456,8 +3440,7 @@
       "model",
       "contact",
       "program",
-      "project",
-      "domain"
+      "project"
     ],
     "analysis_commands": [
       "fragment",

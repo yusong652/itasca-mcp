@@ -329,20 +329,6 @@ CATEGORY_METADATA: dict[str, dict[str, Any]] = {
             "Plot items can color/size objects by data values stored in these containers",
         ],
     },
-    "domain": {
-        "full_name": "Domain Commands",
-        "description": "Commands for configuring the model domain — the bounding box, boundary conditions (rigid/destroy/periodic/reflect), and strain-rate for periodic-cell simulations.",
-        "command_prefix": "domain",
-        "python_module": None,
-        "doc_url": "https://docs.itascacg.com/pfc700/pfc/docproject/source/manual/domain/domain.html",
-        "related_categories": ["model", "ball", "wall"],
-        "notes": [
-            "Domain must be configured before generating particles ('model domain extent ...')",
-            "'domain condition' sets per-face boundary behavior (rigid, destroy, periodic, reflect)",
-            "'domain strain-rate' drives periodic-cell deformation for representative-volume-element (REV) studies",
-            "Most domain configuration is done via 'model domain' shortcuts; standalone 'domain' commands are lower-level overrides",
-        ],
-    },
 }
 
 # Python SDK alternatives (command-level, kept in index for quick reference)
@@ -394,7 +380,7 @@ PYTHON_SDK_ALTERNATIVES: dict[str, dict[str, Any]] = {
 # Command patterns metadata
 COMMAND_PATTERNS: dict[str, list[str]] = {
     "object_commands": ["ball", "wall", "clump", "measure", "brick", "rblock"],
-    "system_commands": ["model", "contact", "program", "project", "domain"],
+    "system_commands": ["model", "contact", "program", "project"],
     "analysis_commands": ["fragment", "measure", "history", "trace"],
     "geometry_commands": ["geometry", "fracture"],
     "data_commands": ["table", "data", "group"],

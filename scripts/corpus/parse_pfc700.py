@@ -66,6 +66,15 @@ CATEGORY_CONFIG = {
         "json_to_html": {
             "large-strain": "largestrain",
         },
+        # 'model domain condition' is filed as model/domain-condition.json; its page
+        # lives in the kernel's domain manual as cmd_domain.condition.html
+        "also": [
+            {
+                "html_dir": PFC700_DOC / "common/kernel/doc/manual/domain_manual/command_reference/cmd_domain",
+                "file_prefix": "cmd_domain.",
+                "key_prefix": "domain-",
+            }
+        ],
     },
     "program": {
         "html_dir": PFC700_DOC / "common/kernel/doc/manual/program/commands",
@@ -132,11 +141,6 @@ CATEGORY_CONFIG = {
         "file_prefix": "cmd_data.",
         "dt_id_prefix": "kwd:",
     },
-    "domain": {
-        "html_dir": PFC700_DOC / "common/kernel/doc/manual/domain_manual/command_reference/cmd_domain",
-        "file_prefix": "cmd_domain.",
-        "dt_id_prefix": "kwd:",
-    },
 }
 
 
@@ -173,6 +177,12 @@ def build_html_map(category: str, config: dict) -> dict:
     mapping = {}
     prefixes = [config["file_prefix"]]
     prefixes += config.get("extra_prefixes", [])
+
+    for extra in config.get("also", []):
+        for html_file in extra["html_dir"].glob("*.html"):
+            if html_file.stem.startswith(extra["file_prefix"]):
+                sub = html_file.stem[len(extra["file_prefix"]) :].replace(".", "-")
+                mapping[extra["key_prefix"] + sub] = html_file
 
     for html_file in html_dir.glob("*.html"):
         name = html_file.stem
