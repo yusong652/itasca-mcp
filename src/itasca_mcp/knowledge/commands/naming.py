@@ -14,17 +14,15 @@ from typing import Any
 def full_name(prefix: str, key: str, cmd_doc: dict[str, Any]) -> str:
     """'block contact apply' for key 'contact-apply' under prefix 'block'.
 
-    The doc's ``command`` field is trusted when, separators aside, it ends with the key and
-    has at least one word in front of it: it may spell the key's dashes as spaces, or as
-    nothing ('model largestrain' where a manual writes it so), but it may not drop the
-    category word ('cmat add') or add words ('zone geometry update-interval' for
-    'geometry-update'). Otherwise the name falls back to ``'<prefix> <key>'``, dashes kept.
+    The doc's ``command`` field is the name: the manual's page title, corrected where a live
+    run disagreed ('wall conveyor' for the file keyed velocity-conveyor, 'rblock results' for
+    result.json), and it may stand without the category word ('inlet create' is filed under
+    brick but is its own command). The key is not checked against it; a scan of the corpus
+    against the manual page stems is what keeps the field honest. Only a block without the
+    field falls back to ``'<prefix> <key>'``, dashes kept.
     """
-    spoken = str(cmd_doc.get("command") or "").lower().split()
-    flat = key.replace("-", "")
-    if any("".join(spoken[i:]).replace("-", "") == flat for i in range(1, len(spoken))):
-        return " ".join(spoken)
-    return f"{prefix} {key}"
+    spoken = " ".join(str(cmd_doc.get("command") or "").lower().split())
+    return spoken or f"{prefix} {key}"
 
 
 def group_of(name: str) -> str | None:

@@ -135,11 +135,11 @@ async def test_browse_command_not_found_suggestions_are_version_filtered() -> No
         ("block", "merge-start", "block merge-start", None, None),
         ("building-blocks", "block-create", "building-blocks block create", None, "building-blocks block"),
         ("ball", "create", "ball create", None, None),
-        # a manual's own respelling of the key's separators is kept
-        ("model", "large-strain", "model largestrain", None, None),
-        # the command field dropped the category word, added a word, or is missing: fall back to the key
-        ("contact", "cmat-add", "cmat add", "contact cmat-add", None),
-        ("zone", "geometry-update", "zone geometry update-interval", "zone geometry-update", None),
+        # the field wins over the key: a live spelling, or a command filed under a category
+        # whose word it does not carry
+        ("wall", "velocity-conveyor", "wall conveyor", None, None),
+        ("brick", "inlet-create", "inlet create", None, None),
+        # no field: fall back to the key
         ("model", "solve", "", "model solve", None),
     ],
 )

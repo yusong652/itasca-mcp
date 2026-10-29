@@ -43,7 +43,7 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         return build_ok(_browse_root(version, software))
 
     parts = cmd.split()
-    category = _category_key(parts[0], software)
+    category = _category_key(parts[0], software, version)
     if len(parts) == 1:
         return _wrap_payload(_browse_category(category, version, software))
 
@@ -149,12 +149,16 @@ def _commands(software: str, version: str) -> tuple[_Command, ...]:
     return tuple(rows)
 
 
-def _category_key(word: str, software: str) -> str:
-    """Index key for a category word: 'building-blocks' and 'body' both reach the FLAC body category."""
+def _category_key(word: str, software: str, version: str) -> str:
+    """Index key for a category word: 'building-blocks' and 'body' both reach the FLAC body
+    category, and 'extrude' reaches extruder at 7.0 where the engine word was not yet 'sketch'."""
     categories = CommandLoader.load_index(software=software).get("categories", {})
     if word in categories:
         return word
-    return next((key for key, data in categories.items() if data.get("command_prefix") == word), word)
+    by_prefix: str | None = next((key for key, data in categories.items() if data.get("command_prefix") == word), None)
+    if by_prefix:
+        return by_prefix
+    return next((c.category for c in _commands(software, version) if c.name.split()[0] == word), word)
 
 
 def _group_counts(commands: list[_Command]) -> dict[str, int]:
