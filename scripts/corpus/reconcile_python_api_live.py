@@ -60,7 +60,7 @@ ENGINES: dict[str, dict[str, Any]] = {
     "flac": {
         "dump_prefixes": ("flac2d", "flac3d"),
         "versions": ["7.0", "9.0"],
-        "families": SHARED + ("zone", "gridpoint", "attach", "interface", "structure", "vertexarray"),
+        "families": SHARED + ("zone", "gridpoint", "attach", "interface", "structure"),
     },
     "3dec": {
         "dump_prefixes": ("3dec",),
