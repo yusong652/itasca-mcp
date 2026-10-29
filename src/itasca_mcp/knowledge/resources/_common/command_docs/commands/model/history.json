@@ -25,7 +25,7 @@
   ],
   "python_sdk_alternative": {
     "available": false,
-    "workaround": "itasca.command('model history mechanical ratio-average') - Python SDK does not provide direct history creation. For monitoring in Python, manually compute and store values in loops:\n\n# Example: track metrics over cycles\nhistory_data = []\nfor _ in range(100):\n    itasca.cycle(100)\n    # itasca.cycle() returns current cycle number\n    history_data.append({'cycle': itasca.cycle(), 'time': itasca.mech_age(), ...})"
+    "workaround": "itasca.command(\"model history name 'r' mechanical ratio-average\") creates the history (there is no Python call for that); itasca.history.get('r') then returns it as an (n, 2) numpy array of step and value, refreshed as cycling continues. itasca.cycle() and itasca.mech_age() read the current cycle count and mechanical time; itasca.cycle() takes no argument. Checked on 3DEC 9.8.54 (2026-10-29)."
   },
   "versions": {
     "7.0": {

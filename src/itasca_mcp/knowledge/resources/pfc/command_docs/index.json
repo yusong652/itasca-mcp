@@ -2102,7 +2102,7 @@
           "short_description": "Create a history of a model quantity",
           "syntax": "model history [name <s>] keyword",
           "python_available": false,
-          "python_alternative": "itasca.command('model history mechanical ratio-average') - Python SDK does not provide direct history creation. For monitoring in Python, manually compute and store values in loops:\n\n# Example: track metrics over cycles\nhistory_data = []\nfor _ in range(100):\n    itasca.cycle(100)\n    # itasca.cycle() returns current cycle number\n    history_data.append({'cycle': itasca.cycle(), 'time': itasca.mech_age(), ...})"
+          "python_alternative": "itasca.command(\"model history name 'r' mechanical ratio-average\") creates the history (there is no Python call for that); itasca.history.get('r') then returns it as an (n, 2) numpy array of step and value, refreshed as cycling continues. itasca.cycle() and itasca.mech_age() read the current cycle count and mechanical time; itasca.cycle() takes no argument. Checked on 3DEC 9.8.54 (2026-10-29)."
         },
         {
           "name": "large-strain",
@@ -2198,7 +2198,7 @@
           "short_description": "Solve to a specified limit",
           "syntax": "model solve keyword ...",
           "python_available": false,
-          "python_alternative": "itasca.command('model solve ratio 1e-5') - Python SDK does not provide direct solve() function. For custom solve loops in Python, manually compute equilibrium metrics:\n\nimport math\ndef vec_mag(v): return math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)\n\nwhile True:\n    itasca.cycle(100)\n    # Compute unbalanced force ratio manually:\n    unbal_sum = sum(vec_mag(b.force_unbal()) for b in itasca.ball.list())\n    contact_sum = sum(vec_mag(b.force_contact()) for b in itasca.ball.list())\n    ratio = unbal_sum / contact_sum if contact_sum > 0 else 0\n    if ratio < 1e-5:\n        break\n\nNote: Prefer 'model solve' command for standard equilibrium. Custom loops require manual force ratio calculations."
+          "python_alternative": "itasca.command('model solve ratio 1e-5'): the Python SDK has no solve function. For a stopping rule of your own, cycle in chunks and read the solve ratio through FISH; itasca.cycle() only returns the cycle count and takes no argument:\n\nwhile True:\n    itasca.command('model cycle 100')\n    itasca.command(\"[global _ratio = mech.solve('ratio')]\")\n    if itasca.fish.get('_ratio') < 1e-5:\n        break\n\nChecked on 3DEC 9.8.54 (2026-10-29)."
         },
         {
           "name": "step",

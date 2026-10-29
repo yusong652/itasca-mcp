@@ -36,7 +36,7 @@
   ],
   "python_sdk_alternative": {
     "available": false,
-    "workaround": "itasca.command('model solve ratio 1e-5') - Python SDK does not provide direct solve() function. For custom solve loops in Python, manually compute equilibrium metrics:\n\nimport math\ndef vec_mag(v): return math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)\n\nwhile True:\n    itasca.cycle(100)\n    # Compute unbalanced force ratio manually:\n    unbal_sum = sum(vec_mag(b.force_unbal()) for b in itasca.ball.list())\n    contact_sum = sum(vec_mag(b.force_contact()) for b in itasca.ball.list())\n    ratio = unbal_sum / contact_sum if contact_sum > 0 else 0\n    if ratio < 1e-5:\n        break\n\nNote: Prefer 'model solve' command for standard equilibrium. Custom loops require manual force ratio calculations."
+    "workaround": "itasca.command('model solve ratio 1e-5'): the Python SDK has no solve function. For a stopping rule of your own, cycle in chunks and read the solve ratio through FISH; itasca.cycle() only returns the cycle count and takes no argument:\n\nwhile True:\n    itasca.command('model cycle 100')\n    itasca.command(\"[global _ratio = mech.solve('ratio')]\")\n    if itasca.fish.get('_ratio') < 1e-5:\n        break\n\nChecked on 3DEC 9.8.54 (2026-10-29)."
   },
   "versions": {
     "7.0": {
@@ -223,8 +223,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",
@@ -415,8 +415,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",
@@ -612,8 +612,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",
