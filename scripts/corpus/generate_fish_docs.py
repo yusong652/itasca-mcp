@@ -245,7 +245,12 @@ def parse_signature(name: str, sig: str) -> dict[str, Any]:
 
 
 DT_ANCHOR = 'id="function:{name}"'
-FIRST_PARA = re.compile(r"<dd>\s*<p>(.*?)</p>", re.S)
+# The entry's own <dd> ends where the next signature or the page section starts. Inside it, a
+# 3D<->2D note box may come first and the Returns/Arguments field list always comes last; the
+# description is the first <p> (or <dt> of a plain list, clump.fix) outside both.
+ENTRY_END = re.compile(r'<dt class="sig sig-object|</section>')
+ADMONITION = re.compile(r'<div class="[^"]*admonition[^"]*">.*?</div>', re.S)
+FIRST_PARA = re.compile(r"<(p|dt)>(.*?)</\1>", re.S)
 MAX_DESCRIPTION = 240
 
 
@@ -261,10 +266,16 @@ def manual_description(doc_root: Path, doc: str) -> str | None:
     start = text.find(f'id="{anchor}"') if anchor else -1
     if start < 0:
         return None
-    m = FIRST_PARA.search(text, start)
+    dd = text.find("<dd>", start)
+    if dd < 0 or text.startswith("</dd>", dd + len("<dd>")):  # .y/.z rows share the .x text
+        return None
+    end = ENTRY_END.search(text, dd)
+    body = text[dd + len("<dd>") : end.start() if end else len(text)]
+    body = ADMONITION.sub("", body).split('<dl class="field-list', 1)[0]
+    m = FIRST_PARA.search(body)
     if not m:
         return None
-    plain = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).replace("\\(", "").replace("\\)", "")
+    plain = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).replace("\\(", "").replace("\\)", "")
     plain = " ".join(plain.split())
     if len(plain) > MAX_DESCRIPTION:  # keep the first sentence of a long paragraph
         plain = plain.split(". ")[0].rstrip(".") + "."
