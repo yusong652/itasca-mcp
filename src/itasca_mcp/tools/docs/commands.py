@@ -229,6 +229,7 @@ def _browse_root(version: str, software: str) -> dict[str, Any]:
             }
         )
 
+    category_items.sort(key=lambda item: item["name"])
     return build_docs_data(
         source="commands",
         action="browse",
