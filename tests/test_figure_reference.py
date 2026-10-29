@@ -10,7 +10,7 @@ doc and adds a structured `figure_reference` flag with two independent signals:
   figure (the "do not guess" sub-signal).
 
 These tests guard the detection/assembly logic, the manifest shape, idempotency,
-and end-to-end surfacing through the loader (the `itasca_browse_commands` path).
+and end-to-end surfacing through the loader (the `itasca_browse_doc` commands path).
 """
 
 import importlib.util

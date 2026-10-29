@@ -17,7 +17,7 @@ def _parse_tool_payload(result) -> dict:
 
 @pytest.mark.asyncio
 async def test_browse_commands_root_contract() -> None:
-    result = await mcp.call_tool("itasca_browse_commands", {"software": "pfc"})
+    result = await mcp.call_tool("itasca_browse_doc", {"source": "commands", "software": "pfc"})
     payload = _parse_tool_payload(result)
     data = payload["data"]
 
@@ -28,14 +28,14 @@ async def test_browse_commands_root_contract() -> None:
     assert isinstance(data["entries"], list)
     assert data["summary"]["count"] >= 1
     assert data["summary"]["total_commands"] >= 1
-    assert data["summary"]["version"] == "7.0"
+    assert data["summary"]["version"] == "9.0"
 
 
 @pytest.mark.asyncio
 async def test_browse_commands_not_found_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_commands",
-        {"command": "ball not_a_real_command", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "commands", "path": "ball not_a_real_command", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
 
@@ -51,8 +51,8 @@ async def test_browse_commands_not_found_contract() -> None:
 @pytest.mark.asyncio
 async def test_query_command_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_query_command",
-        {"query": "ball create", "limit": 5, "software": "pfc"},
+        "itasca_query_doc",
+        {"source": "commands", "query": "ball create", "limit": 5, "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -61,7 +61,7 @@ async def test_query_command_contract() -> None:
     assert data["source"] == "commands"
     assert data["action"] == "query"
     assert data["summary"]["count"] >= 1
-    assert data["summary"]["version"] == "7.0"
+    assert data["summary"]["version"] == "9.0"
     assert isinstance(data["entries"], list)
     assert len(data["entries"]) >= 1
 
@@ -69,8 +69,8 @@ async def test_query_command_contract() -> None:
 @pytest.mark.asyncio
 async def test_browse_commands_versioned_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_commands",
-        {"command": "brick assemble", "version": "6.0", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "commands", "path": "brick assemble", "version": "6.0", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -84,8 +84,8 @@ async def test_browse_commands_versioned_contract() -> None:
 @pytest.mark.asyncio
 async def test_browse_commands_accepts_mixed_case_paths() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_commands",
-        {"command": "Ball Create", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "commands", "path": "Ball Create", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -99,8 +99,8 @@ async def test_browse_commands_accepts_mixed_case_paths() -> None:
 @pytest.mark.asyncio
 async def test_browse_category_filters_unavailable_commands_by_version() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_commands",
-        {"command": "ball", "version": "6.0", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "commands", "path": "ball", "version": "6.0", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -114,8 +114,8 @@ async def test_browse_category_filters_unavailable_commands_by_version() -> None
 @pytest.mark.asyncio
 async def test_browse_command_not_found_suggestions_are_version_filtered() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_commands",
-        {"command": "ball not_a_real_command", "version": "6.0", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "commands", "path": "ball not_a_real_command", "version": "6.0", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     details = payload["error"].get("details") or {}
@@ -128,8 +128,8 @@ async def test_browse_command_not_found_suggestions_are_version_filtered() -> No
 @pytest.mark.asyncio
 async def test_query_command_versioned_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_query_command",
-        {"query": "brick assemble", "limit": 5, "version": "6.0", "software": "pfc"},
+        "itasca_query_doc",
+        {"source": "commands", "query": "brick assemble", "limit": 5, "version": "6.0", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -142,7 +142,7 @@ async def test_query_command_versioned_contract() -> None:
 
 @pytest.mark.asyncio
 async def test_browse_python_api_root_contract() -> None:
-    result = await mcp.call_tool("itasca_browse_python_api", {"software": "pfc"})
+    result = await mcp.call_tool("itasca_browse_doc", {"source": "python_api", "software": "pfc"})
     payload = _parse_tool_payload(result)
     data = payload["data"]
 
@@ -156,7 +156,9 @@ async def test_browse_python_api_root_contract() -> None:
 
 @pytest.mark.asyncio
 async def test_browse_python_api_array_module_contract() -> None:
-    result = await mcp.call_tool("itasca_browse_python_api", {"api": "itasca.ballarray", "software": "pfc"})
+    result = await mcp.call_tool(
+        "itasca_browse_doc", {"source": "python_api", "path": "itasca.ballarray", "software": "pfc"}
+    )
     payload = _parse_tool_payload(result)
     data = payload["data"]
 
@@ -171,7 +173,9 @@ async def test_browse_python_api_array_module_contract() -> None:
 
 @pytest.mark.asyncio
 async def test_browse_python_api_array_function_contract() -> None:
-    result = await mcp.call_tool("itasca_browse_python_api", {"api": "itasca.ballarray.pos", "software": "pfc"})
+    result = await mcp.call_tool(
+        "itasca_browse_doc", {"source": "python_api", "path": "itasca.ballarray.pos", "software": "pfc"}
+    )
     payload = _parse_tool_payload(result)
     data = payload["data"]
 
@@ -188,8 +192,8 @@ async def test_browse_python_api_does_not_resolve_class_from_another_module() ->
     # FLAC documents a Node class in several modules (interface, structure,
     # geometry); a bare name under a module that has none must not resolve.
     result = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.zone.Node.pos", "software": "flac"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.zone.Node.pos", "software": "flac"},
     )
     payload = _parse_tool_payload(result)
 
@@ -198,12 +202,12 @@ async def test_browse_python_api_does_not_resolve_class_from_another_module() ->
 
     # Same-named classes resolve to their own module's docs.
     structure = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.structure.node.Node.pos", "software": "flac"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.structure.node.Node.pos", "software": "flac"},
     )
     interface = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.interface.node.Node.pos", "software": "flac"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.interface.node.Node.pos", "software": "flac"},
     )
     structure_obj = _parse_tool_payload(structure)["data"]["entries"][0]["actual_object"]
     interface_obj = _parse_tool_payload(interface)["data"]["entries"][0]["actual_object"]
@@ -214,8 +218,8 @@ async def test_browse_python_api_does_not_resolve_class_from_another_module() ->
 async def test_browse_python_api_resolves_colliding_class_by_module() -> None:
     # Live PFC exposes both clump.template.Template and rblock.template.Template.
     result = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.rblock.template.Template", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.rblock.template.Template", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
 
@@ -226,8 +230,8 @@ async def test_browse_python_api_resolves_colliding_class_by_module() -> None:
 @pytest.mark.asyncio
 async def test_browse_python_api_fallback_path_is_a_documented_module() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.ball.nosuchmodule.ThermalBall.temp", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.ball.nosuchmodule.ThermalBall.temp", "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
 
@@ -273,8 +277,8 @@ def test_corpus_does_not_reference_nonexistent_fish_get() -> None:
 @pytest.mark.asyncio
 async def test_query_python_api_array_position_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_query_python_api",
-        {"query": "array position", "limit": 10, "software": "pfc"},
+        "itasca_query_doc",
+        {"source": "python_api", "query": "array position", "limit": 10, "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -286,8 +290,8 @@ async def test_query_python_api_array_position_contract() -> None:
 @pytest.mark.asyncio
 async def test_query_python_api_no_results_contract() -> None:
     result = await mcp.call_tool(
-        "itasca_query_python_api",
-        {"query": "definitelynonexistentkeyword", "limit": 5, "software": "pfc"},
+        "itasca_query_doc",
+        {"source": "python_api", "query": "definitelynonexistentkeyword", "limit": 5, "software": "pfc"},
     )
     payload = _parse_tool_payload(result)
     data = payload["data"]
@@ -301,7 +305,7 @@ async def test_query_python_api_no_results_contract() -> None:
 
 @pytest.mark.asyncio
 async def test_browse_reference_root_contract() -> None:
-    result = await mcp.call_tool("itasca_browse_reference", {"software": "pfc"})
+    result = await mcp.call_tool("itasca_browse_doc", {"source": "reference", "software": "pfc"})
     payload = _parse_tool_payload(result)
     data = payload["data"]
 

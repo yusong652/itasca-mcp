@@ -2,87 +2,25 @@
 
 from typing import Any
 
-from fastmcp import FastMCP
-from pydantic import Field
-
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.commands import CommandLoader
 from itasca_mcp.utils import (
-    CommandDocVersion,
-    SoftwareParam,
-    effective_doc_version,
-    normalize_command_doc_version,
     normalize_input,
-    normalize_software_value,
-    supported_doc_versions,
 )
 
 
-def register(mcp: FastMCP) -> None:
-    """Register itasca_browse_commands tool with the MCP server."""
+def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
+    """'' -> categories; 'ball' -> ball commands; 'ball create' -> the full command doc."""
+    cmd = normalize_input(path, lowercase=True)
+    if not cmd:
+        return build_ok(_browse_root(version, software))
 
-    @mcp.tool()
-    def itasca_browse_commands(
-        software: SoftwareParam,
-        command: str | None = Field(
-            None,
-            description=(
-                "Itasca command to browse (space-separated, matching Itasca command syntax). Examples:\n"
-                "- None or '': List all command categories\n"
-                "- 'ball': List all ball commands\n"
-                "- 'ball create': Get ball create documentation\n"
-                "- 'contact': List all contact commands\n"
-                "- 'contact property': Get contact property command documentation"
-            ),
-        ),
-        version: CommandDocVersion = Field(
-            CommandDocVersion.V7_0,
-            description=(
-                "Documentation version to browse. Defaults to 7.0 for multi-version engines "
-                "(PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0, 3DEC: 7.0/9.0); 9.0-only engines "
-                "(MPoint, MassFlow) always resolve at 9.0."
-            ),
-        ),
-    ) -> dict[str, Any]:
-        """Browse Itasca command documentation by path (like glob + cat).
-
-        Navigation levels:
-        - No command: All command categories overview
-        - Category only (e.g., "ball"): List commands in category
-        - Full command (e.g., "ball create"): Full documentation
-
-        When to use:
-        - You know the command category or exact command
-        - You want to explore available commands
-
-        Related tools:
-        - itasca_query_command: Search commands by keywords (when path unknown)
-        - itasca_browse_reference: Browse reference docs (e.g., "contact-models linear")
-        """
-        cmd = normalize_input(command, lowercase=True)
-        sw = normalize_software_value(software)
-        version_value = effective_doc_version(sw, normalize_command_doc_version(version))
-
-        supported = supported_doc_versions(sw)
-        if version_value not in supported:
-            return build_error(
-                code="unsupported_version",
-                message=f"{sw} documentation covers versions: {', '.join(sorted(supported))}.",
-                details={"input": {"software": sw, "version": version_value}},
-            )
-
-        if not cmd:
-            return build_ok(_browse_root(version_value, sw))
-
-        parts = cmd.split()
-
-        if len(parts) == 1:
-            payload = _browse_category(parts[0], version_value, sw)
-        else:
-            category = parts[0]
-            command_name = " ".join(parts[1:])
-            payload = _browse_command(category, command_name, version_value, sw)
-        return _wrap_payload(payload)
+    parts = cmd.split()
+    if len(parts) == 1:
+        payload = _browse_category(parts[0], version, software)
+    else:
+        payload = _browse_command(parts[0], " ".join(parts[1:]), version, software)
+    return _wrap_payload(payload)
 
 
 def _iter_available_category_commands(

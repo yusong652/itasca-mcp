@@ -1,24 +1,18 @@
 """Itasca MCP tool implementations."""
 
 from . import (
-    browse_commands,
-    browse_python_api,
-    browse_reference,
+    browse_doc,
     check_task_status,
     execute_code,
     execute_task,
     interrupt_task,
     list_tasks,
-    query_command,
-    query_python_api,
+    query_doc,
 )
 
 __all__ = [
-    "browse_commands",
-    "browse_python_api",
-    "browse_reference",
-    "query_command",
-    "query_python_api",
+    "browse_doc",
+    "query_doc",
     "execute_task",
     "check_task_status",
     "list_tasks",

@@ -27,7 +27,7 @@ class CommandFormatter:
         """Prepend error message to fallback content.
 
         Used when a requested path doesn't exist but we can show the parent level.
-        Format matches itasca_browse_python_api for consistency.
+        Format matches itasca_browse_doc(source='python_api') for consistency.
 
         Args:
             error_msg: Error message describing what wasn't found

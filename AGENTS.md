@@ -19,7 +19,8 @@ The legacy `pfc-mcp-bridge` PyPI package (last release `bridge-v0.3.3`) is depre
 
 ### MCP side (`src/itasca_mcp`)
 
-- Exposes documentation tools and execution tools through FastMCP
+- Exposes two documentation tools (`itasca_browse_doc` / `itasca_query_doc`, trees selected by
+  `source`) and five execution tools through FastMCP
 - Communicates with bridge via HTTP client (`itasca_mcp.bridge.client`)
 - Returns a unified tool envelope: `ok`, `data`, `error`
 - Dual execution model: synchronous REPL (`itasca_execute_code`) for quick queries, script-first async (`itasca_execute_task` + `itasca_check_task_status`) for long-running simulations
@@ -86,7 +87,7 @@ uv run pytest tests/test_tool_contracts.py
    - Do not require duplicate presentation fields (for example, `display`) when they mirror structured data.
    - Let clients render human-facing formatting from structured fields.
    - Documentation tools must keep `data` consistent as:
-     - `source`: `"commands" | "python_api" | "reference"`
+     - `source`: `"commands" | "python_api" | "fish" | "reference"` (`"all"` for a cross-source query)
      - `action`: `"browse" | "query"`
      - `entries`: `list[object]`
      - `summary`: `object` (counts/hints/context)
@@ -136,11 +137,13 @@ Mock bridge based tests are preferred for deterministic CI.
 
 ## Documentation Sources
 
-PFC searchable docs live under:
+Searchable docs live under `src/itasca_mcp/knowledge/resources/{_common,<engine>}/`:
 
-- `src/itasca_mcp/knowledge/resources/command_docs/`
-- `src/itasca_mcp/knowledge/resources/python_sdk_docs/`
-- `src/itasca_mcp/knowledge/resources/references/`
+- `command_docs/` - command syntax per version
+- `python_sdk_docs/` - Python SDK modules/objects
+- `fish_docs/` - FISH intrinsic trees, one JSON per namespace (regenerate with
+  `scripts/corpus/generate_fish_docs.py`; kernel namespaces live in `_common`)
+- `references/` - model properties, range elements, plot items
 
 When changing schema/content shape, verify browse/query tool behavior remains consistent.
 

@@ -2,101 +2,28 @@
 
 from typing import Any, cast
 
-from fastmcp import FastMCP
-from pydantic import Field
-
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.references import ReferenceLoader
 from itasca_mcp.utils import (
-    CommandDocVersion,
-    SoftwareParam,
-    effective_doc_version,
-    normalize_command_doc_version,
     normalize_input,
-    normalize_software_value,
-    supported_doc_versions,
 )
 
 
-def register(mcp: FastMCP) -> None:
-    """Register itasca_browse_reference tool with the MCP server."""
+def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
+    """'' -> categories; 'contact-models' -> items; 'contact-models linear' -> doc; 3 parts -> sub-item."""
+    topic_str = normalize_input(path, lowercase=True)
+    if not topic_str:
+        return build_ok(_browse_references_root(version, software))
 
-    @mcp.tool()
-    def itasca_browse_reference(
-        software: SoftwareParam,
-        topic: str | None = Field(
-            None,
-            description=(
-                "Reference topic to browse (space-separated path). Categories vary by engine — "
-                "call with no topic first to discover them. Examples (by engine):\n"
-                "- None or '': List all reference categories for the chosen engine\n"
-                "- PFC 'contact-models' / 'contact-models linear': contact model + its properties\n"
-                "- FLAC 'constitutive-models' / 'constitutive-models mohr-coulomb': zone model + properties\n"
-                "- 3DEC 'joint-models' / 'joint-models mohr': joint (sub-contact) model + properties\n"
-                "- 'range-elements' / 'range-elements cylinder': range filter syntax (all engines)\n"
-                "- 'plot-items' / 'plot-items <type>' / 'plot-items <type> <sub>': plot item keywords"
-            ),
-        ),
-        version: CommandDocVersion = Field(
-            CommandDocVersion.V7_0,
-            description=(
-                "Documentation version (PFC: 6.0/7.0/9.0, FLAC: 7.0/9.0). Only gates "
-                "version-specific items (e.g. PFC contact models by availability). "
-                "range-elements, plot-items, and the FLAC/3DEC reference sets are "
-                "version-agnostic, so the value is ignored for them. "
-                "9.0-only engines (MPoint, MassFlow) always resolve at 9.0."
-            ),
-        ),
-    ) -> dict[str, Any]:
-        """Browse ITASCA reference documentation (syntax elements, model properties).
-
-        Works across engines via the required ``software`` selector (pfc/flac/3dec).
-        References are language elements used within commands, not standalone commands.
-
-        Navigation levels:
-        - No topic: All reference categories for the engine
-        - Category (e.g., "constitutive-models"): List items in category
-        - Full path (e.g., "constitutive-models mohr-coulomb"): Full documentation
-        - Sub-item path (e.g., "plot-items zone contour"): Sub-item details
-
-        When to use:
-        - Need material/contact/joint model property names (kn, ks, fric, cohesion, friction, ...)
-        - Need range filtering syntax (position, cylinder, group, id)
-        - Need plot item configuration (contour, label, color-by, cut, transparency, legend)
-        - Setting up model-assignment commands (e.g. "... cmodel assign ... property ...")
-        - Using range filters in any command
-        - Configuring "plot item create" commands
-
-        Related tools:
-        - itasca_browse_commands: Command syntax (e.g., "zone create")
-        - itasca_query_command: Search commands by keywords
-        """
-        topic_str = normalize_input(topic, lowercase=True)
-        sw = normalize_software_value(software)
-        version_value = effective_doc_version(sw, normalize_command_doc_version(version))
-
-        supported = supported_doc_versions(sw)
-        if version_value not in supported:
-            return build_error(
-                code="unsupported_version",
-                message=f"{sw} documentation covers versions: {', '.join(sorted(supported))}.",
-                details={"input": {"software": sw, "version": version_value}},
-            )
-
-        if not topic_str:
-            return build_ok(_browse_references_root(version_value, sw))
-
-        parts = topic_str.split()
-        category = parts[0]
-
-        if len(parts) == 1:
-            payload = _browse_category(category, version_value, sw)
-        elif len(parts) == 2:
-            payload = _browse_item(category, parts[1], version_value, sw)
-        else:
-            # 3+ parts: category + item + sub-item (remaining parts joined)
-            payload = _browse_sub_item(category, parts[1], " ".join(parts[2:]), version_value, sw)
-        return _wrap_payload(payload)
+    parts = topic_str.split()
+    category = parts[0]
+    if len(parts) == 1:
+        payload = _browse_category(category, version, software)
+    elif len(parts) == 2:
+        payload = _browse_item(category, parts[1], version, software)
+    else:
+        payload = _browse_sub_item(category, parts[1], " ".join(parts[2:]), version, software)
+    return _wrap_payload(payload)
 
 
 def _browse_references_root(version: str, software: str) -> dict[str, Any]:
@@ -248,7 +175,7 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
                 "count": 1,
                 "sub_item_count": len(sub_items),
                 "version": version,
-                "hint": f"Use itasca_browse_reference('{category} {item} <sub_item>') for details",
+                "hint": f"Browse '{category} {item} <sub_item>' (source='reference') for details",
             },
         )
 

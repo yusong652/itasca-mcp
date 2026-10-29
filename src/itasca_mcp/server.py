@@ -12,16 +12,13 @@ from fastmcp import FastMCP
 from itasca_mcp import __version__
 from itasca_mcp.bridge import close_bridge_client
 from itasca_mcp.tools import (
-    browse_commands,
-    browse_python_api,
-    browse_reference,
+    browse_doc,
     check_task_status,
     execute_code,
     execute_task,
     interrupt_task,
     list_tasks,
-    query_command,
-    query_python_api,
+    query_doc,
 )
 
 mcp = FastMCP(
@@ -32,6 +29,10 @@ mcp = FastMCP(
         "engine via the required 'software' parameter) and for executing simulation "
         "tasks and managing runs through an itasca-mcp-bridge service running inside "
         "the Itasca engine GUI, or in a console build started unattended.\n\n"
+        "Documentation is four trees behind two tools: itasca_browse_doc walks one tree "
+        "by path (source = commands, python_api, fish or reference) and itasca_query_doc "
+        "searches by keywords, across all trees unless a source is given. Version "
+        "defaults to 9.0; pass 6.0/7.0 for older PFC, FLAC or 3DEC installs.\n\n"
         "Execution tool responses may carry _context: what happened in the engine "
         "GUI since the previous call (user_console: what the user typed; gui: plots "
         "and data files opened or switched to, by the user or your own code). It is "
@@ -42,11 +43,8 @@ mcp = FastMCP(
 logger = logging.getLogger("itasca-mcp.server")
 
 # Register documentation tools
-browse_commands.register(mcp)
-browse_python_api.register(mcp)
-browse_reference.register(mcp)
-query_command.register(mcp)
-query_python_api.register(mcp)
+browse_doc.register(mcp)
+query_doc.register(mcp)
 
 # Register execution tools
 execute_task.register(mcp)

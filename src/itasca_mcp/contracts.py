@@ -44,10 +44,13 @@ class ToolEnvelope(BaseModel):
         return self
 
 
+DocsSource = Literal["commands", "python_api", "fish", "reference", "all"]
+
+
 class DocsData(BaseModel):
     """Unified inner `data` schema for documentation tools."""
 
-    source: Literal["commands", "python_api", "reference"]
+    source: DocsSource
     action: Literal["browse", "query"]
     entries: list[dict[str, Any]]
     summary: dict[str, Any] = Field(default_factory=dict)
@@ -114,7 +117,7 @@ def build_error(
 
 def build_docs_data(
     *,
-    source: Literal["commands", "python_api", "reference"],
+    source: Literal["commands", "python_api", "fish", "reference", "all"],
     action: Literal["browse", "query"],
     entries: list[dict[str, Any]],
     summary: dict[str, Any] | None = None,

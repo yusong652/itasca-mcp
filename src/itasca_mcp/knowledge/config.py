@@ -61,3 +61,11 @@ def python_keywords_path(software: str) -> Path:
 
 def references_root(software: str) -> Path:
     return RESOURCES_DIR / software / "references"
+
+
+def fish_index_path(software: str) -> Path:
+    return RESOURCES_DIR / software / "fish_docs" / "index.json"
+
+
+def fish_docs_root(software: str) -> Path:
+    return RESOURCES_DIR / software / "fish_docs"

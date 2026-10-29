@@ -3,7 +3,7 @@
 This module converts Itasca command documentation from the CommandLoader format
 into unified SearchDocument models for search.
 
-Note: Model properties are handled separately via itasca_browse_reference tool.
+Note: Model properties are handled separately via itasca_browse_doc(source='reference') tool.
 """
 
 from itasca_mcp.knowledge.commands.loader import CommandLoader
@@ -18,7 +18,7 @@ class CommandDocumentAdapter:
     - Consistent interface for search engines
     - Separation of data loading and search logic
 
-    Note: For contact model properties, use itasca_browse_reference tool directly.
+    Note: For contact model properties, use itasca_browse_doc(source='reference') tool directly.
 
     Usage:
         >>> documents = CommandDocumentAdapter.load_commands()

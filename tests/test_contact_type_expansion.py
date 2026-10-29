@@ -62,8 +62,8 @@ def test_contact_resolver_does_not_match_unrelated_object_methods() -> None:
 @pytest.mark.asyncio
 async def test_browse_python_api_reports_missing_thermal_force_method() -> None:
     result = await mcp.call_tool(
-        "itasca_browse_python_api",
-        {"api": "itasca.BallBallThermalContact.force_normal", "software": "pfc"},
+        "itasca_browse_doc",
+        {"source": "python_api", "path": "itasca.BallBallThermalContact.force_normal", "software": "pfc"},
     )
 
     assert result is not None

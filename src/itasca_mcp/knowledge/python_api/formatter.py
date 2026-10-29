@@ -527,7 +527,7 @@ class APIDocFormatter:
         Example output:
             **Python SDK**: Not available for this operation
 
-            **Next Step**: Use itasca_query_command tool to search for Itasca commands instead
+            **Next Step**: Use itasca_query_doc(source='commands') tool to search for Itasca commands instead
         """
         hint_text = f"\nNote: {hints[0]}" if hints else ""
 

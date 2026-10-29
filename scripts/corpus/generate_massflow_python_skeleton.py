@@ -1,8 +1,8 @@
 """Generate the MassFlow Python SDK skeleton index.
 
 MassFlow's engine-specific Python modules are hand-authored docs deferred to a
-later pass. For now we ship a minimal skeleton so itasca_query_python_api /
-itasca_browse_python_api answer software="massflow" without erroring: it exposes
+later pass. For now we ship a minimal skeleton so itasca_query_doc(source='python_api') /
+itasca_browse_doc(source='python_api') answer software="massflow" without erroring: it exposes
 only the shared `itasca` core module, which already lives once in _common/ and
 is reused verbatim (same as FLAC/3DEC/MPoint skeletons do).
 

@@ -9,7 +9,7 @@ meaning) -- is therefore missing from the text.
 This pass annotates every affected command doc with a structured
 `figure_reference` flag so the gap is visible to agents at query time (it flows
 untouched through `CommandLoader._resolve_versioned_doc` into the `doc` payload of
-`itasca_browse_commands`).
+`itasca_browse_doc(source='commands')`).
 
 Two independent signals, deliberately kept separate:
 

@@ -2,79 +2,55 @@
 
 from typing import Any
 
-from fastmcp import FastMCP
-from pydantic import Field
-
 from itasca_mcp.contracts import build_docs_data, build_error, build_ok
 from itasca_mcp.knowledge.python_api import APILoader
-from itasca_mcp.utils import SoftwareParam, normalize_software_value
 
 
-def register(mcp: FastMCP) -> None:
-    """Register itasca_browse_python_api tool with the MCP server."""
+def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
+    """'' -> modules and objects; then module, function, object or method docs by dotted path.
 
-    @mcp.tool()
-    def itasca_browse_python_api(
-        software: SoftwareParam,
-        api: str | None = Field(
-            None,
-            description=(
-                "Itasca Python API path to browse (dot-separated, starting from itasca). Examples:\n"
-                "- None or '': Root overview - all modules and objects\n"
-                "- 'itasca': Core module functions (command, cycle, gravity, etc.)\n"
-                "- 'itasca.ball': Ball module functions (create, find, list, etc.)\n"
-                "- 'itasca.ball.create': Specific function documentation\n"
-                "- 'itasca.ball.Ball': Ball object method groups\n"
-                "- 'itasca.ball.Ball.pos': Specific method documentation\n"
-                "- 'itasca.wall.facet': Nested submodule\n"
-                "- 'itasca.wall.facet.Facet': Facet object in wall.facet module"
-            ),
-        ),
-    ) -> dict[str, Any]:
-        """Browse Itasca Python SDK documentation by path (like glob + cat)."""
-        normalized = _normalize_api_path(api)
-        sw = normalize_software_value(software)
+    ``version`` is accepted for a uniform browse signature; the Python SDK corpus is a
+    single 9.8 baseline whose entries carry their own availability notes.
+    """
+    del version
+    normalized = _normalize_api_path(path)
+    sw = software
 
-        if not normalized:
-            return build_ok(_browse_root(sw))
+    if not normalized:
+        return build_ok(_browse_root(sw))
 
-        if normalized == "itasca":
-            return _wrap_payload(_browse_module("itasca", sw))
+    if normalized == "itasca":
+        return _wrap_payload(_browse_module("itasca", sw))
 
-        parsed = _parse_api_path(normalized, sw)
+    parsed = _parse_api_path(normalized, sw)
 
-        if parsed["type"] == "error":
-            return _wrap_payload(_browse_with_fallback(parsed, normalized, sw))
+    if parsed["type"] == "error":
+        return _wrap_payload(_browse_with_fallback(parsed, normalized, sw))
 
-        if parsed["type"] == "module":
-            payload = _browse_module(parsed["module_path"], sw)
-            return _wrap_payload(payload)
-        if parsed["type"] == "function":
-            payload = _browse_function(parsed["module_path"], parsed["name"], sw)
-            return _wrap_payload(payload)
-        if parsed["type"] == "object":
-            payload = _browse_object(
-                parsed["module_path"],
-                parsed["name"],
-                parsed.get("display_name"),
-                software=sw,
-            )
-            return _wrap_payload(payload)
-        if parsed["type"] == "method":
-            payload = _browse_method(
+    if parsed["type"] == "module":
+        return _wrap_payload(_browse_module(parsed["module_path"], sw))
+    if parsed["type"] == "function":
+        return _wrap_payload(_browse_function(parsed["module_path"], parsed["name"], sw))
+    if parsed["type"] == "object":
+        return _wrap_payload(
+            _browse_object(parsed["module_path"], parsed["name"], parsed.get("display_name"), software=sw)
+        )
+    if parsed["type"] == "method":
+        return _wrap_payload(
+            _browse_method(
                 parsed["module_path"],
                 parsed["object_name"],
                 parsed["name"],
                 parsed.get("display_name"),
                 software=sw,
             )
-            return _wrap_payload(payload)
-
-        return build_error(
-            code="unknown_parse_type",
-            message=f"Unknown parse result type: {parsed['type']}",
-            details={"path": normalized},
         )
+
+    return build_error(
+        code="unknown_parse_type",
+        message=f"Unknown parse result type: {parsed['type']}",
+        details={"path": normalized},
+    )
 
 
 def _normalize_api_path(api: str | None) -> str:

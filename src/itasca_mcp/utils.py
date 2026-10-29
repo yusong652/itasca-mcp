@@ -59,6 +59,22 @@ class Software(str, Enum):
     MASSFLOW = "massflow"
 
 
+class DocSource(str, Enum):
+    """Documentation trees served by itasca_browse_doc / itasca_query_doc."""
+
+    COMMANDS = "commands"
+    PYTHON_API = "python_api"
+    FISH = "fish"
+    REFERENCE = "reference"
+
+
+def normalize_doc_source(value: "DocSource | str") -> str:
+    """Return the plain lowercase string value for a doc-source enum/string."""
+    if isinstance(value, DocSource):
+        return value.value
+    return str(value).strip().lower()
+
+
 def normalize_software_value(value: "Software | str") -> str:
     """Return the plain lowercase string value for a software enum/string."""
     if isinstance(value, Software):
@@ -165,6 +181,32 @@ SoftwareParam = Annotated[
     Field(
         ...,
         description="ITASCA engine to query: 'pfc', 'flac', '3dec', 'mpoint', or 'massflow'. Required — there is no default engine.",
+    ),
+]
+
+# Documentation tree selector for itasca_browse_doc (required there; optional on itasca_query_doc)
+DocSourceParam = Annotated[
+    DocSource,
+    Field(
+        ...,
+        description=(
+            "Documentation tree: 'commands' (Itasca command syntax), 'python_api' (itasca Python SDK), "
+            "'fish' (FISH intrinsic functions), 'reference' (model properties, range elements, plot items)."
+        ),
+    ),
+]
+
+# Keyword query for itasca_query_doc
+DocQuery = Annotated[
+    str,
+    AfterValidator(validate_non_empty_string),
+    Field(
+        ...,
+        min_length=1,
+        description=(
+            "Search keywords or a name fragment. Examples: 'ball create', 'contact force', "
+            "'ball.pos', 'mohr-coulomb', 'zone pore pressure'. Case-insensitive."
+        ),
     ),
 ]
 

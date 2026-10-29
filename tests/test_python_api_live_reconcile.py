@@ -43,7 +43,7 @@ def _payload(result) -> dict:
     ],
 )
 async def test_live_families_are_browsable(software: str, api: str) -> None:
-    result = await mcp.call_tool("itasca_browse_python_api", {"api": api, "software": software})
+    result = await mcp.call_tool("itasca_browse_doc", {"source": "python_api", "path": api, "software": software})
     payload = _payload(result)
 
     assert payload["ok"] is True, payload
