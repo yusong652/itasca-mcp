@@ -24,6 +24,7 @@ from itasca_mcp.tools.docs._common import (
 )
 from itasca_mcp.utils import (
     normalize_input,
+    supported_doc_versions,
 )
 
 # A sentence ends at '.', '!' or '?' followed by a capital: 'etc.)' and 'e.g. ball' do not.
@@ -220,6 +221,9 @@ def _browse_root(version: str, software: str) -> dict[str, Any]:
 
     for category_name, category_data in categories.items():
         command_count = sum(1 for command in commands if command.category == category_name)
+        if not command_count:
+            # e.g. 3DEC 'sel' is 7.0-only: a category empty in this version is not offered
+            continue
         total_commands += command_count
         category_items.append(
             {
@@ -261,6 +265,22 @@ def _browse_category(category: str, version: str, software: str) -> dict[str, An
         }
 
     commands = [command for command in _commands(software, version) if command.category == category]
+    if not commands:
+        available_versions = [
+            v
+            for v in sorted(supported_doc_versions(software))
+            if any(c.category == category for c in _commands(software, v))
+        ]
+        return {
+            "source": "commands",
+            "action": "browse",
+            "error": {
+                "code": "category_unavailable_for_version",
+                "message": f"Category '{category}' has no commands in {software} {version}.",
+            },
+            "input": {"category": category, "version": version, "software": software},
+            "available_versions": available_versions,
+        }
     summary: dict[str, Any] = {"description": categories[category].get("description", "")}
     groups = _group_counts(commands)
     if groups:
