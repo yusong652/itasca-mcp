@@ -52,6 +52,7 @@ ABBREVIATIONS: dict[str, tuple[str, ...]] = {
     "inc": ("increment",),
     "tot": ("total",),
     "fos": ("factor", "safety"),
+    "comp": ("component",),
 }
 
 
