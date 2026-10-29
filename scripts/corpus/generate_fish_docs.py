@@ -53,7 +53,7 @@ LIVE: dict[str, dict[str, Path]] = {
         "7.0": WORK / "fish_intrinsics_3dec70.txt",  # 3DEC 7.00 (clean)
         "9.0": WORK / "3dec98_fish_intrinsics.log",  # 3DEC 9.8 (clean)
     },
-    "massflow": {"9.0": WORK / "massflow_fish_intrinsics.log"},  # MassFlow 9.7 (clean)
+    "massflow": {"9.0": WORK / "massflow98_fish_intrinsics.log"},  # MassFlow 9.8 (clean)
     # MPoint 9.8 (unified: identical to PFC's table, so it cannot decide kernel membership)
     "mpoint": {"9.0": WORK / "mpoint98_fish_intrinsics.log"},
 }
@@ -273,8 +273,10 @@ VERIFICATION = {
         "kernel membership mirrors FLAC). Anchors from the 9.8 out_fish.txt."
     ),
     "massflow": (
-        "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of MassFlow 9.7 (1323 rows, clean "
-        "table; decides kernel membership). Anchors from the 9.8 out_fish.txt."
+        "Generated 2026-10-29. Names/signatures: live 'fish list intrinsics' of MassFlow 9.8 (1326 rows, clean "
+        "table; decides kernel membership). The massflow.* set (175 names) and its signatures are identical to "
+        "the MassFlow 9.7 table; the 9.8 binary still exposes no itasca.massflow Python module. Anchors from the "
+        "9.8 out_fish.txt."
     ),
 }
 
