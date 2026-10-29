@@ -141,7 +141,10 @@ class BM25Scorer:
         #   words another command's name answers, so it earns less than that
         #   command. Query tokens include stems, which deflates coverage the
         #   same way for every document, so ranking is unaffected.
-        elif document.doc_type == DocumentType.COMMAND:
+        # FISH names get it too: 'struct node disp' must reach
+        # struct.node.disp.local, whose last segment is no query word, ahead of
+        # interface.node.disp, which ends in one but misses 'struct'.
+        elif document.doc_type in (DocumentType.COMMAND, DocumentType.FISH):
             name_tokens = set(self.indexer.get_field_tokens(doc_id, field="name"))
             shared = len(name_tokens & query_set)
             if shared:
