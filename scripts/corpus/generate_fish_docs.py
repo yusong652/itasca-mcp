@@ -33,6 +33,7 @@ import html
 import json
 import re
 from collections import Counter, defaultdict
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -243,10 +244,39 @@ def parse_signature(name: str, sig: str) -> dict[str, Any]:
     raise ValueError(f"unparsed signature for {name}: {sig!r}")
 
 
+DT_ANCHOR = 'id="function:{name}"'
+FIRST_PARA = re.compile(r"<dd>\s*<p>(.*?)</p>", re.S)
+MAX_DESCRIPTION = 240
+
+
+@cache
+def _manual_page(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
+
+
+def manual_description(doc_root: Path, doc: str) -> str | None:
+    """First paragraph under the intrinsic's anchor on its manual page ('Create a ball.')."""
+    page, _, anchor = doc.partition("#")
+    text = _manual_page(doc_root / page)
+    start = text.find(f'id="{anchor}"') if anchor else -1
+    if start < 0:
+        return None
+    m = FIRST_PARA.search(text, start)
+    if not m:
+        return None
+    plain = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).replace("\\(", "").replace("\\)", "")
+    plain = " ".join(plain.split())
+    if len(plain) > MAX_DESCRIPTION:  # keep the first sentence of a long paragraph
+        plain = plain.split(". ")[0].rstrip(".") + "."
+    if len(plain) > MAX_DESCRIPTION:  # a first sentence that is itself too long
+        plain = plain[:MAX_DESCRIPTION].rsplit(" ", 1)[0] + " ..."
+    return plain or None
+
+
 def load_hints() -> dict[str, Any]:
     """The frozen curated data (see HINTS_FILE); every section is optional."""
     data: dict[str, Any] = json.loads(HINTS_FILE.read_text(encoding="utf-8"))
-    for key in ("family_by_name", "description_by_name", "engine_index_extras", "namespace_notes"):
+    for key in ("family_by_name", "description_by_name", "engine_index_extras", "namespace_notes", "signature_fixes"):
         data.setdefault(key, {})
     return data
 
@@ -290,6 +320,8 @@ def main() -> None:
     curated = load_hints()
     hints: dict[str, str] = curated["family_by_name"]
     descriptions: dict[str, str] = curated["description_by_name"]
+    # Live-table signatures the manual and a live call contradict: {name: {signature, note}}.
+    signature_fixes: dict[str, dict[str, str]] = curated["signature_fixes"]
 
     # Which engine lists which namespace (kernel membership from clean tables).
     engine_ns: dict[str, dict[str, str]] = {}  # engine -> ns -> scope
@@ -345,7 +377,8 @@ def main() -> None:
         for name in sorted(table):
             entry = table[name]
             sig = entry["sigs"].get("9.0") or entry["sigs"].get("7.0")
-            st = static["9.0"].get(name) or static["7.0"].get(name) or static["6.0"].get(name)
+            st_version = next((v for v in ("9.0", "7.0", "6.0") if name in static[v]), None)
+            st = static[st_version][name] if st_version else None
             rec: dict[str, Any] = {"name": name}
             if not sig and entry["sigs"].get("6.0"):
                 sig = entry["sigs"]["6.0"]  # 6.0-only name: signature rebuilt from the 6.0 columnar table
@@ -353,6 +386,9 @@ def main() -> None:
             if not sig and st and st["signature"]:
                 sig = st["signature"]  # names the live tables list without a signature (6.0 name list)
                 rec["signature_source"] = "static"
+            if name in signature_fixes:
+                sig = signature_fixes[name]["signature"]
+                rec["signature_source"] = "manual"
             if sig:
                 rec["signature"] = sig
                 rec.update(parse_signature(name, sig))
@@ -374,6 +410,12 @@ def main() -> None:
                 rec["family"] = hints[name]
             if name in descriptions:
                 rec["description"] = descriptions[name]
+            elif st and st_version:
+                described = manual_description(STATIC[st_version].parent, st["doc"])
+                if described:
+                    rec["description"] = described
+            if name in signature_fixes:
+                rec["note"] = signature_fixes[name]["note"]
             entries.append(rec)
         target_dir = RES / ("_common" if scope == "common" else scope) / "fish_docs"
         target_dir.mkdir(parents=True, exist_ok=True)

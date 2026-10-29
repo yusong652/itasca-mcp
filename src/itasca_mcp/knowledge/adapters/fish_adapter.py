@@ -88,6 +88,8 @@ class FishDocumentAdapter:
             # their ``ball_pnt`` tokens repeat the name and let ``ball.zone.ball.ball``
             # outrank ``ball.pos`` on a "ball position" query.
             bits: list[str] = []
+            if entry.get("description"):  # the manual's one-liner: lets prose queries reach abbreviated names
+                bits.append(entry["description"])
             if entry.get("family"):
                 bits.append(entry["family"])
             if entry.get("settable"):
@@ -112,6 +114,7 @@ class FishDocumentAdapter:
                         "versions": entry.get("versions", {}),
                         "doc": entry.get("doc"),
                         "scope": entry.get("scope"),
+                        "description": entry.get("description"),
                     },
                 )
             )

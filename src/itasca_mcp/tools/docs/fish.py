@@ -16,6 +16,7 @@ from itasca_mcp.utils import normalize_input
 _ENTRY_FIELDS = (
     "name",
     "signature",
+    "description",
     "signature_7.0",
     "signature_source",
     "returns",
@@ -145,6 +146,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
                 "path": doc.name,
                 "name": doc.name,
                 "signature": doc.syntax,
+                "description": meta.get("description"),
                 "namespace": doc.category,
                 "returns": meta.get("returns"),
                 "settable": meta.get("settable"),
