@@ -169,7 +169,26 @@ class CommandLoader:
         if raw_doc is None:
             return None
 
-        return CommandLoader._resolve_versioned_doc(raw_doc, version, supported_doc_versions(software))
+        resolved = CommandLoader._resolve_versioned_doc(raw_doc, version, supported_doc_versions(software))
+        return CommandLoader._scope_keywords(resolved, software)
+
+    @staticmethod
+    def _scope_keywords(doc: dict[str, Any], software: str) -> dict[str, Any]:
+        """Keep only the keywords a shared doc tags for this engine.
+
+        A ``_common`` doc lists every product's variants (``fish callback`` names zone,
+        block and ball events alike); a keyword carrying ``"engines": [...]`` is served
+        to those engines only, untagged keywords to all.
+        """
+        keywords = doc.get("keywords")
+        if not isinstance(keywords, list) or not any(isinstance(k, dict) and "engines" in k for k in keywords):
+            return doc
+        scoped = [
+            {key: value for key, value in k.items() if key != "engines"} if isinstance(k, dict) else k
+            for k in keywords
+            if not (isinstance(k, dict) and software not in k.get("engines", [software]))
+        ]
+        return {**doc, "keywords": scoped}
 
     @staticmethod
     def get_all_commands(*, software: str) -> list[dict[str, Any]]:

@@ -1957,3 +1957,23 @@ def test_3dec_has_nine_reference_categories() -> None:
         "plot-items",
         "histories-and-results",
     } <= cats
+
+
+def test_shared_doc_keywords_scoped_by_engines_tag() -> None:
+    """A ``_common`` doc's ``engines``-tagged keywords reach only those engines (fish callback events)."""
+
+    def events(software: str) -> set[str]:
+        doc = CommandLoader.load_command_doc("fish", "callback", "9.0", software=software)
+        assert doc is not None
+        assert all("engines" not in k for k in doc["keywords"])  # the tag is routing, not content
+        return {k["name"] for k in doc["keywords"] if k["name"].startswith("kwd:")}
+
+    pfc, flac, three_dec = events("pfc"), events("flac"), events("3dec")
+    assert "kwd:bond_break" in pfc and "kwd:zone_eom" not in pfc and "kwd:block_create" not in pfc
+    assert "kwd:zone_eom" in flac and "kwd:ball_create" not in flac
+    assert "kwd:block_create" in three_dec and "kwd:ball_create" not in three_dec
+    assert "kwd:solve_complete" in pfc & flac & three_dec & events("mpoint") & events("massflow")
+    # untagged keywords are shared
+    assert {"add", "remove"} <= {
+        k["name"] for k in CommandLoader.load_command_doc("fish", "callback", "9.0", software="flac")["keywords"]
+    }
