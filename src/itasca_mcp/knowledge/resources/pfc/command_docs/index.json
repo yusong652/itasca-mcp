@@ -240,7 +240,7 @@
           "name": "inlet-create",
           "file": "pfc/command_docs/commands/brick/inlet-create.json",
           "short_description": "Create an inlet with the specified ID",
-          "syntax": "inlet create id <i> keyword",
+          "syntax": "inlet create id <i> keyword ...",
           "python_available": false,
           "python_alternative": "Use itasca.command('brick inlet create ...') via command interface"
         },
@@ -248,7 +248,7 @@
           "name": "inlet-modify",
           "file": "pfc/command_docs/commands/brick/inlet-modify.json",
           "short_description": "Modify the properties of an existing inlet identified by ID",
-          "syntax": "inlet modify id <i> keyword",
+          "syntax": "inlet modify id <i> keyword ...",
           "python_available": false,
           "python_alternative": "Use itasca.command('brick inlet modify ...') via command interface"
         },
@@ -407,7 +407,7 @@
           "name": "order",
           "file": "pfc/command_docs/commands/clump/order.json",
           "short_description": "Set the rotational EOM (Equations of Motion) order for clumps (3D ONLY)",
-          "syntax": "clump order <i>",
+          "syntax": "clump order <i> 3D ONLY",
           "python_available": false,
           "python_alternative": "itasca.command('clump order <i>') - no direct Python SDK method to set rotational EOM order"
         },
@@ -614,7 +614,7 @@
           "name": "history",
           "file": "pfc/command_docs/commands/contact/history.json",
           "short_description": "Add a contact history",
-          "syntax": "contact history [id <id>] <s> keyword ...",
+          "syntax": "contact history [name <sname>] <stype> keyword",
           "python_available": false,
           "python_alternative": ""
         },
@@ -662,7 +662,7 @@
           "name": "property",
           "file": "pfc/command_docs/commands/contact/property.json",
           "short_description": "Assign contact properties to existing contacts",
-          "syntax": "contact property keyword ... [inheritance <b>] ...",
+          "syntax": "contact property keyword ... [inheritance <b>] [range]",
           "python_available": true,
           "python_alternative": ""
         }
@@ -935,7 +935,7 @@
           "name": "callback",
           "file": "_common/command_docs/commands/fish/callback.json",
           "short_description": "Add/remove functions to be executed in response to callback events",
-          "syntax": "fish callback keyword",
+          "syntax": "fish callback {add | remove} <sym> ...",
           "python_available": false,
           "python_alternative": ""
         },
@@ -1196,7 +1196,7 @@
           "name": "intersections-scanline",
           "file": "_common/command_docs/commands/fracture/intersections-scanline.json",
           "short_description": "Create intersections corresponding to scanline mapping",
-          "syntax": "fracture intersections scanline keyword [range]",
+          "syntax": "fracture intersections scanline keyword [range] 3D only",
           "python_available": false,
           "python_alternative": ""
         },
@@ -1894,7 +1894,7 @@
           "name": "modify",
           "file": "pfc/command_docs/commands/measure/modify.json",
           "short_description": "Modify measurement region attributes",
-          "syntax": "measure modify keyword ...",
+          "syntax": "measure modify id <i> keyword ...",
           "python_available": true,
           "python_alternative": ""
         }
@@ -2020,7 +2020,7 @@
           "name": "domain-condition",
           "file": "pfc/command_docs/commands/model/domain-condition.json",
           "short_description": "Set the domain boundary conditions",
-          "syntax": "model domain condition <sx> [<sy> <sz>] <sz>",
+          "syntax": "model domain condition <sx> [<sy> <sz>] (<sz> 3D only)",
           "python_available": false,
           "python_alternative": ""
         },
@@ -2887,14 +2887,6 @@
           "python_alternative": "Use itasca.command('rblock import ...') via command interface"
         },
         {
-          "name": "initialize",
-          "file": "pfc/command_docs/commands/rblock/initialize.json",
-          "short_description": "Set initial state variables (stress, displacement, velocity) for rblocks",
-          "syntax": "rblock initialize keyword ... [range]",
-          "python_available": false,
-          "python_alternative": "Use itasca.command('rblock initialize ...') via command interface"
-        },
-        {
           "name": "list",
           "file": "pfc/command_docs/commands/rblock/list.json",
           "short_description": "List rblock properties and state information to the console or a file",
@@ -3224,7 +3216,7 @@
           "name": "active-sides",
           "file": "pfc/command_docs/commands/wall/active-sides.json",
           "short_description": "Specify which side(s) of facets are active",
-          "syntax": "wall active-sides keyword [range]",
+          "syntax": "wall activeside keyword [range]",
           "python_available": true,
           "python_alternative": "Facet.set_active(code) - codes: 0=both, 1=top (normal dir), -1=bottom, 2=neither. Requires iteration over facets"
         },
@@ -3376,7 +3368,7 @@
           "name": "velocity-conveyor",
           "file": "pfc/command_docs/commands/wall/velocity-conveyor.json",
           "short_description": "Assign a rotational conveyor velocity to facets",
-          "syntax": "wall velocity-conveyor keyword ... [range...]",
+          "syntax": "wall conveyor keyword ... [range...]",
           "python_available": true,
           "python_alternative": "Facet.set_conveyor(vec) or Facet.set_conveyor_x/y/z(float) - requires manual calculation of tangential velocities and iteration: for w in itasca.wall.list(): for f in w.facets(): v_tangent = omega_cross_r; f.set_conveyor(v_tangent). For automatic calculation, use itasca.command('wall velocity-conveyor ...')"
         }

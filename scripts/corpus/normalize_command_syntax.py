@@ -101,7 +101,7 @@ def normalize_syntax(s: str, *, angle_optional: bool = False) -> str:
     if angle_optional:
         s = _angle_groups_to_brackets(s)
         s = BARE_PLACEHOLDER.sub(lambda m: f"<{m.group(1)}>" + (" ..." if m.group(2) else ""), s)
-    s = re.sub(r"([>\]])(?=[A-Za-z\[<]|\.\.\.)", r"\1 ", s)
+    s = re.sub(r"([>\]])(?=[A-Za-z\[<]|\.\.\.|[23]D)", r"\1 ", s)
     s = re.sub(r"\[\s+", "[", s)
     s = re.sub(r"\s+\]", "]", s)
     return re.sub(r"\s+", " ", s).strip()

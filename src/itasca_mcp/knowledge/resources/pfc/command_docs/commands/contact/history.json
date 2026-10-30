@@ -8,7 +8,9 @@
     "position"
   ],
   "description": "Add a contact history. A history is a floating point variable that can be sampled and stored during a model run. The optional id directly following history creates a history with the specified ID. If not specified, then the next available history ID is used. The s value identifies the contact type (i.e., ball-ball , ball-pebble , ball-facet , or pebble-facet ). Following one of the keywords given below, either 1) a position vector or 2) an additional id keyword must be given to define the specific contact. See the contact history command for details regarding the manipulation of histories. Quantities that can be recorded include contact force (normal, shear, and local components), moment on either end, gap, and position. Live 9.7 grammar: the FIRST slot is the contact-type pair (ball-ball ball-facet ball-pebble pebble-facet pebble-pebble rblock-rblock), then the quantity (live set: extra force[-x/y/z] force-local-x/y/z force-normal force-shear gap moment-on1/on2 [-x/y/z, -local-x/y/z] position-x/y/z), then a REQUIRED object selector (id/position). Several official spellings are stale - see the per-keyword notes.",
-  "notes": [],
+  "notes": [
+    "'[contacthistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+  ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": ""
@@ -186,7 +188,7 @@
         {
           "name": "localforce-x",
           "syntax": "localforce-x [contacthistoryblock]",
-          "description": "STALE SPELLING - not in the live 9.7 enumeration; the live keyword is 'force-local-x'. Contact gap. The \\(x\\) -component of the contact force in the contact coordinate system."
+          "description": "STALE SPELLING - not in the live 9.7 enumeration; the live keyword is 'force-local-x'. The \\(x\\) -component of the contact force in the contact coordinate system."
         },
         {
           "name": "localforce-y",
@@ -430,8 +432,8 @@
         },
         {
           "name": "gap",
-          "syntax": "gap",
-          "description": "Contact gap. (Listed by PFC3D 9.7; not on the manual page.)"
+          "syntax": "gap [contacthistoryblock]",
+          "description": "Contact gap."
         },
         {
           "name": "extra",
@@ -584,8 +586,8 @@
         },
         {
           "name": "gap",
-          "syntax": "gap",
-          "description": "Contact gap. (Listed by PFC3D 9.7; not on the manual page.)"
+          "syntax": "gap [contacthistoryblock]",
+          "description": "Contact gap."
         },
         {
           "name": "extra",

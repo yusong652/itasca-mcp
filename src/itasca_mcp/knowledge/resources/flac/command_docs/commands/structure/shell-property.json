@@ -98,8 +98,66 @@
           "name": "thickness",
           "syntax": "thickness <f>",
           "description": "thickness"
+        },
+        {
+          "name": "young",
+          "syntax": "young <f>",
+          "description": ""
+        },
+        {
+          "name": "poisson",
+          "syntax": "poisson <f>",
+          "description": "Poisson’s ratio, \\(\\nu\\)"
+        },
+        {
+          "name": "material-x",
+          "syntax": "material-x <v>",
+          "description": "material-x vector whose projection onto the shell surface defines the \\(x'\\) -axis of the material coordinate system. The material coordinate system, \\(xʹyʹzʹ,\\) satisfies the following conditions: 1) \\(xʹ\\) is the projection of the given vector onto the shell surface; 2) \\(zʹ\\) is normal to the surface and aligned with the \\(z\\) -axis of the element coordinate system; and 3) \\(yʹ\\) = \\(zʹ\\) × \\(xʹ\\) . The material coordinate system moves with the shell surface during large-strain updates, which means that the relative orientations of this system and the element local system do not change (the angle \\(β\\) in this figure does not change). If the material-x vector is not specified, then the \\(xʹ\\) -axis will be aligned with the \\(x\\) -axis of the shell element local coordinate system. The material coordinate system can be displayed with the Shell , Geogrid and Liner plot items by choosing the System:Material attribute."
+        },
+        {
+          "name": "ortho-bend-constants",
+          "syntax": "ortho-bend-constants <f1> <f2> <f3> <f4>",
+          "description": "orthotropic bending elastic constants \\(\\{ {c_{11}^b}', {c_{12}^b}', {c_{22}^b}', {c_{33}^b}' \\}\\) [F/L 2 ] which define the bending material-stiffness matrix \\(\\big[ {\\mathbf{E}_b}' \\big]\\) in the material directions \\(x'y'z'\\) . The material directions should also be specified with the material-x property."
+        },
+        {
+          "name": "ortho-bend-thickness",
+          "syntax": "ortho-bend-thickness <f>",
+          "description": "orthotropic bending thickness \\(t_b\\) . If this property is not specified, then \\(t_b = t\\) (where \\(t\\) is the thickness specified via the structure shell property thickness (or liner/geogrid) command). The value of \\(t_b\\) should be specified after setting \\(t\\) ."
+        },
+        {
+          "name": "ortho-memb-constants",
+          "syntax": "ortho-memb-constants <f1> <f2> <f3> <f4>",
+          "description": "orthotropic membrane elastic constants \\(\\{ {c_{11}^m}', {c_{12}^m}', {c_{22}^m}', {c_{33}^m}' \\}\\) [F/L 2 ] which define the membrane material-stiffness matrix \\(\\big[ {\\mathbf{E}_m}' \\big]\\) in the material directions \\(x'y'z'\\) . The material directions should also be specified with the material-x property."
+        },
+        {
+          "name": "ortho-memb-thickness",
+          "syntax": "ortho-memb-thickness <f>",
+          "description": "orthotropic membrane thickness \\(t_m\\) . If this property is not specified, then \\(t_m = t\\) (where \\(t\\) is the thickness specified via the structure shell property thickness (or liner/geogrid) command). The value of \\(t_m\\) should be specified after setting \\(t\\) ."
+        },
+        {
+          "name": "aniso-bend-constants",
+          "syntax": "aniso-bend-constants <f1> <f2> <f3> <f4> <f5> <f6>",
+          "description": "anisotropic bending elastic constants \\(\\{ {c_{11}^b}', {c_{12}^b}', {c_{13}^b}', {c_{22}^b}', {c_{23}^b}', {c_{33}^b}' \\}\\) [F/L 2 ] which define the bending material-stiffness matrix \\(\\big[ {\\mathbf{E}_b}' \\big]\\) in the material directions \\(x'y'z'\\) . The material directions should also be specified with the material-x property."
+        },
+        {
+          "name": "aniso-bend-thickness",
+          "syntax": "aniso-bend-thickness <f>",
+          "description": "anisotropic bending thickness \\(t_b\\) . If this property is not specified, then \\(t_b = t\\) (where \\(t\\) is the thickness specified via the structure shell property thickness (or liner/geogrid) command). The value of \\(t_b\\) should be specified after setting \\(t\\) ."
+        },
+        {
+          "name": "aniso-memb-constants",
+          "syntax": "aniso-memb-constants <f1> <f2> <f3> <f4> <f5> <f6>",
+          "description": "anisotropic membrane elastic constants \\(\\{ {c_{11}^m}', {c_{12}^m}', {c_{13}^m}', {c_{22}^m}', {c_{23}^m}', {c_{33}^m}' \\}\\) [F/L 2 ] which define the membrane material-stiffness matrix \\(\\big[ {\\mathbf{E}_m}' \\big]\\) in the material directions \\(x'y'z'\\) . The material directions should also be specified with the material-x property."
+        },
+        {
+          "name": "aniso-memb-thickness",
+          "syntax": "aniso-memb-thickness <f>",
+          "description": "anisotropic membrane thickness \\(t_m\\) . If this property is not specified, then \\(t_m = t\\) (where \\(t\\) is the thickness specified via the structure shell property thickness (or liner/geogrid) command). The value of \\(t_m\\) should be specified after setting \\(t\\) ."
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "young, poisson, material-x and the ortho-*/aniso-* constants sit under the {elastic} heading of the 9.0 manual page (the isotropic / orthotropic / anisotropic material options); they are keywords of this command, not a separate command."
+  ]
 }

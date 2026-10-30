@@ -57,13 +57,11 @@
           "name": "<model property>",
           "syntax": "<property-name> <value>",
           "description": "All other property names depend on the constitutive model assigned to the zones in the range - there is no fixed keyword list. See the constitutive-models reference (itasca_browse_doc(source='reference', path='constitutive-models <model>')) for each model's verified property set. Matching is case-insensitive and supports unambiguous prefix abbreviation; canonical names are listed in the reference. Verified against FLAC3D 9.7."
-        },
-        {
-          "name": "(discovery trick)",
-          "syntax": "zone property <bogus-token> 1",
-          "description": "A wrong property name fails with an enumeration of every property name valid for the models currently assigned in the range (including density and range) - the fastest way to discover a model's property set live. Setting a state variable fails with 'Property <name> of model <Model> is read-only'. Verified against FLAC3D 9.7."
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "Discovering a model's property names: 'zone property <wrong-name> 1' fails with an enumeration of every property valid for the models assigned in the range (FLAC3D 9.7). Setting a state variable fails with 'Property <name> of model <Model> is read-only'."
+  ]
 }
