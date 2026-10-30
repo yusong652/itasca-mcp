@@ -474,9 +474,9 @@ def test_flac_zone_owns_the_wad_joint_family() -> None:
     zone = CommandLoader.load_index(software="flac")["categories"]["zone"]
     names = {c["name"] for c in zone["commands"]}
     assert len([n for n in names if n.startswith("joint-")]) >= 10
-    assert {"gp", "convergence-norm", "export-data", "import-data"} <= names
+    assert {"convergence-norm", "export-data", "import-data"} <= names
     # every one of these states how it was established, since none were probed on FLAC3D
-    for stem in ("joint-configure", "gp", "convergence-norm"):
+    for stem in ("joint-configure", "convergence-norm"):
         doc = json.loads((RESOURCES_DIR / f"flac/command_docs/commands/zone/{stem}.json").read_text(encoding="utf-8"))
         assert any("MPoint3D 9.7" in n for n in doc["notes"])
 

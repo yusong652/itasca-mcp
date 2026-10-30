@@ -76,39 +76,9 @@ LIVE_ONLY = {
             LIVE_NOTE,
         ],
     },
-    "gp": {
-        "command": "zone gp",
-        "syntax": "zone gp [keyword] [range]",
-        "description": (
-            "Alias for 'zone gridpoint'. Enumerates an identical keyword set and behaves "
-            "identically; see the 'zone gridpoint' entries for the documented syntax."
-        ),
-        "keywords": [
-            {"name": k, "syntax": k, "description": f"See 'zone gridpoint {k}'."}
-            for k in [
-                "create",
-                "fix",
-                "force-reaction",
-                "force-reaction-x",
-                "force-reaction-y",
-                "force-reaction-z",
-                "free",
-                "group",
-                "import",
-                "initialize",
-                "list",
-                "merge",
-                "pore-pressure",
-                "system",
-            ]
-        ],
-        "notes": [
-            "Undocumented: no page in any installed doc tree and no entry in out_commands.txt.",
-            "Established as an exact alias by comparing enumerations: 'zone gp ?' and "
-            "'zone gridpoint ?' return the same 14 keywords. (syntax)",
-            LIVE_NOTE,
-        ],
-    },
+    # 'zone gp' (alias of 'zone gridpoint', same 14 keywords) is a note on the zone
+    # category in the FLAC index, not a command file: an alias listed as a command
+    # reads as a second command.
     "convergence-norm": {
         "command": "zone convergence-norm",
         "syntax": "zone convergence-norm keyword",

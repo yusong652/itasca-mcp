@@ -3569,7 +3569,8 @@
         "Gridpoint conditions (fix/initialize) are addressed via 'zone gridpoint ...' (Python: itasca.gridpoint)",
         "Coupled physics live under zone subkeywords: 'zone fluid', 'zone thermal', 'zone dynamic', 'zone creep'",
         "Use 'model solve' / 'model cycle' to step; 'zone relax' / 'zone initialize-stresses' for stress initialization",
-        "The 'zone joint' subcommands are documented in the installed 'wad' (wall-and-discontinuity) doc tree rather than under flac3d/, which is why they were missing until 2026-09. 'zone gp', 'convergence-norm', 'export-data' and 'import-data' appear in no doc tree at all and were found by live enumeration -- each file records how it was established."
+        "The 'zone joint' subcommands are documented in the installed 'wad' (wall-and-discontinuity) doc tree rather than under flac3d/. 'convergence-norm', 'export-data' and 'import-data' appear in no doc tree and were found by live enumeration; each file records how it was established.",
+        "'zone gp' is an undocumented alias of 'zone gridpoint': 'zone gp ?' and 'zone gridpoint ?' list the same 14 keywords (probed on the shared 9.0 zone kernel of MPoint3D 9.7, not on a FLAC3D binary). It is not listed as a command; read the 'zone gridpoint' entries."
       ],
       "commands": [
         {
@@ -3794,13 +3795,6 @@
           "file": "flac/command_docs/commands/zone/geometry-update.json",
           "short_description": "Set a specific interval of steps at which to update zone geometry and property changes in large s...",
           "syntax": "zone geometry-update <i>",
-          "python_available": false
-        },
-        {
-          "name": "gp",
-          "file": "flac/command_docs/commands/zone/gp.json",
-          "short_description": "Alias for 'zone gridpoint'",
-          "syntax": "zone gp [keyword] [range]",
           "python_available": false
         },
         {
