@@ -1847,7 +1847,7 @@ def test_3dec_range_elements_registered() -> None:
     cats = ReferenceLoader.load_index(software="3dec").get("categories", {})
     assert "range-elements" in cats
     names = {e["name"] for e in ReferenceLoader.load_category_index("range-elements", software="3dec")["elements"]}
-    assert len(names) == 52
+    assert len(names) == 53  # 52 from the 2026-10 rebuild + structure-type (listed by the 3DEC 9.8 and 7.0 range ?)
     # 3DEC-only elements the 9.8 'range ?' prompt lists; every one resolves to a file.
     for name in ("joint-set", "jmodel", "deformable", "excavated", "group-intersection"):
         assert name in names
