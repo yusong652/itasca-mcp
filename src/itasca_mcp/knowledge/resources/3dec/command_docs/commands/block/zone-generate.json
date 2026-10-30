@@ -5,7 +5,7 @@
     "zone",
     "generate"
   ],
-  "description": "Set zoning conditions for deformable blocks. The duplicate 'edge-length' spelling previously in this file is rejected by live 3DEC 9.7.47; the engine accepts only 'edgelength'. With a range, 3DEC 9.8.54 only marks the blocks deformable and defers meshing ('mesh generation is performed after last GEN command'; no zones exist yet). Do not run 'block contact generate-subcontacts' in that state: it crashed the engine twice.",
+  "description": "Set zoning conditions for deformable blocks. The edge-length keyword is spelled edgelength (3DEC 9.7.47 rejects 'edge-length'). With a range, 3DEC 9.8.54 only marks the blocks deformable and defers meshing ('mesh generation is performed after last GEN command'; no zones exist yet). Do not run 'block contact generate-subcontacts' in that state: it crashed the engine twice.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -87,22 +87,22 @@
         {
           "name": "divisions",
           "syntax": "divisions <i1> <i2> <i3>",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; absent from the previous corpus list."
+          "description": "Number of hexahedral zones along the three directions. The manual documents this only as the sub-option of hexahedra; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         },
         {
           "name": "edgelength-center",
-          "syntax": "edgelength-center keyword ...",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance from a center point."
+          "syntax": "edgelength-center <f>",
+          "description": "Edge length at the center point of a radially graded mesh. The manual documents this only as the sub-option of center; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         },
         {
           "name": "edgelength-distance",
-          "syntax": "edgelength-distance keyword ...",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance."
+          "syntax": "edgelength-distance <f>",
+          "description": "Edge length at the distance given by distance <f> from the center point of a radially graded mesh. The manual documents this only as the sub-option of center; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         },
         {
           "name": "rezone",
           "syntax": "rezone {edge-length <f>}",
-          "description": "Engine-enumerated by live 3DEC 9.7.47. Options: edge-length <f>: Set the edge length of rezoned blocks to f ."
+          "description": "Allow the rezoning of blocks after cycling. This keyword is designed to address problems with backfilling nulled blocks. Often, the zones have collapsed in these blocks due to distortion. This new keyword may help in those cases. The stresses in the new zones will be 0.0. Options: edge-length <f>: Set the edge length of rezoned blocks to f ."
         }
       ],
       "examples": []
@@ -184,20 +184,23 @@
         {
           "name": "divisions",
           "syntax": "divisions <i1> <i2> <i3>",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; absent from the previous corpus list."
+          "description": "Number of hexahedral zones along the three directions. The manual documents this only as the sub-option of hexahedra; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         },
         {
           "name": "edgelength-center",
-          "syntax": "edgelength-center keyword ...",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance from a center point."
+          "syntax": "edgelength-center <f>",
+          "description": "Edge length at the center point of a radially graded mesh. The manual documents this only as the sub-option of center; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         },
         {
           "name": "edgelength-distance",
-          "syntax": "edgelength-distance keyword ...",
-          "description": "Engine-enumerated by live 3DEC 9.7.47; graded zoning by distance."
+          "syntax": "edgelength-distance <f>",
+          "description": "Edge length at the distance given by distance <f> from the center point of a radially graded mesh. The manual documents this only as the sub-option of center; 'block zone generate ?' on 3DEC 9.7.47 also lists it as a direct keyword."
         }
       ],
       "examples": []
     }
-  }
+  },
+  "notes": [
+    "rezone's sub-option is written edge-length in the 7.0 and 9.0 manuals while the top-level keyword is edgelength; the sub-option spelling has not been checked against a live engine."
+  ]
 }
