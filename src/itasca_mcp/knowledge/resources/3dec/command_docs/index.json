@@ -176,7 +176,7 @@
         {
           "name": "contact-safe-delete",
           "file": "3dec/command_docs/commands/block/contact-safe-delete.json",
-          "short_description": "Toggle safe deletion behaviour for block contacts",
+          "short_description": "Toggle safe deletion behaviour for block contacts; takes a single boolean",
           "syntax": "block contact safe-delete <b>",
           "python_available": false
         },
@@ -213,6 +213,13 @@
           "file": "3dec/command_docs/commands/block/create.json",
           "short_description": "Create a block",
           "syntax": "block create keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "creep",
+          "file": "3dec/command_docs/commands/block/creep.json",
+          "short_description": "Creep-process setting for blocks",
+          "syntax": "block creep momentum-conservation <b>",
           "python_available": false
         },
         {
@@ -346,6 +353,13 @@
           "file": "3dec/command_docs/commands/block/generate.json",
           "short_description": "Generate an assembly of blocks",
           "syntax": "block generate keyword",
+          "python_available": false
+        },
+        {
+          "name": "geometry-test",
+          "file": "3dec/command_docs/commands/block/geometry-test.json",
+          "short_description": "Run the block geometry check",
+          "syntax": "block geometry-test",
           "python_available": false
         },
         {
@@ -521,6 +535,13 @@
           "file": "3dec/command_docs/commands/block/skip-join-update.json",
           "short_description": "Set to on to prevent 3DEC from updating the list of joined contacts at cycle time",
           "syntax": "block skip-join-update <b> [range]",
+          "python_available": false
+        },
+        {
+          "name": "structure",
+          "file": "3dec/command_docs/commands/block/structure.json",
+          "short_description": "Accepted with no keywords, no range and no visible output",
+          "syntax": "block structure",
           "python_available": false
         },
         {
@@ -1020,7 +1041,7 @@
         {
           "name": "hybrid-property",
           "file": "3dec/command_docs/commands/sel/hybrid-property.json",
-          "short_description": "Set cross-sectional area, \\(A\\) ",
+          "short_description": "Assign property values to hybrid bolt property number i",
           "syntax": "sel hybrid property <i> keyword ...",
           "python_available": false
         },
@@ -1991,7 +2012,9 @@
         "'model cycle' is equivalent to itasca.cycle() in Python",
         "Model state can be saved/restored for checkpointing",
         "Domain settings must be configured before generating objects",
-        "Use 'model solve' with ratio criteria for automatic convergence"
+        "Use 'model solve' with ratio criteria for automatic convergence",
+        "Configure the domain extent before domain-dependent workflows ('model domain extent ...')",
+        "Most domain configuration is done via 'model domain' shortcuts; standalone 'domain' commands are lower-level overrides"
       ],
       "commands": [
         {
@@ -2358,6 +2381,7 @@
         "program quit / exit / stop terminate execution; rarely used from MCP workflows",
         "program threads controls multi-threaded solve parallelism"
       ],
+      "description": "Program-level commands controlling the 3DEC executable: license, threads, working directory, logging, encryption, undo, system shell, and lifecycle (quit/exit/stop/return/continue).",
       "commands": [
         {
           "name": "automatic-model-save",
@@ -2555,8 +2579,7 @@
           "syntax": "program warning <b>",
           "python_available": false
         }
-      ],
-      "description": "Program-level commands controlling the 3DEC executable: license, threads, working directory, logging, encryption, undo, system shell, and lifecycle (quit/exit/stop/return/continue)."
+      ]
     },
     "project": {
       "full_name": "Project Commands",
@@ -2571,6 +2594,7 @@
         "project execute runs a data file in the project context",
         "Mostly a GUI-oriented concept; scripted workflows usually skip projects and use 'model save'/'model restore' directly"
       ],
+      "description": "Commands for managing 3DEC project containers — bundles of model save states, data files, and plugins maintained by the GUI project view.",
       "commands": [
         {
           "name": "execute",
@@ -2614,8 +2638,7 @@
           "syntax": "project save-plugins <b>",
           "python_available": false
         }
-      ],
-      "description": "Commands for managing 3DEC project containers — bundles of model save states, data files, and plugins maintained by the GUI project view."
+      ]
     },
     "table": {
       "full_name": "Table Commands",

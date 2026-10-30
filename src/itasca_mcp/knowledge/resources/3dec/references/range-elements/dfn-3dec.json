@@ -2,10 +2,10 @@
   "name": "dfn-3dec",
   "category": "3dec_specific",
   "category_name": "3DEC-Specific Elements",
-  "syntax": "dfn-3dec <s> keyword ...",
-  "description": "Select faces, contacts or subcontacts created by the discrete fracture network named s. Objects are selected only if they lie on a DFN fracture; other objects are selected through their associated contact or subcontact.",
+  "syntax": "dfn-3dec <s> [<s> ...]",
+  "description": "Select contacts and subcontacts created by the discrete fracture network named s; several names may follow and are OR-ed. The manual also lists faces, but on 3DEC 9.8.54 the element does not filter faces or zones (every face and zone passes); use fracture-id for face-level selection.",
   "notes": [
-    "Manual text; not live-checked (needs a DFN)."
+    "Live 3DEC 9.8.54 (two deterministic fractures cut with 'block cut dfn', 4 blocks, 6 contacts, 80 faces, 47 zones): dfn-3dec 'd1' selected the 2 face-face contacts of fracture 1 and their subcontacts; 'd2' the 2 face-face contacts of fracture 2 plus the 2 edge-edge contacts on the intersection line (those went to the second cut); 'd1' 'd2' all 6. 'block face group ... range dfn-3dec' tagged 80/80 faces and 'block zone group ...' 47/47 zones, outer faces included, so the manual's 'selects faces' does not hold there."
   ],
   "search_keywords": [
     "dfn-3dec",

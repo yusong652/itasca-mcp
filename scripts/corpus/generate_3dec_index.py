@@ -121,6 +121,11 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
         if not common_cmds:
             continue
         meta = {k: v for k, v in info.items() if k != "commands"}
+        # The FLAC index blurbs name their own product; the commands are the
+        # shared kernel, so the engine name is the only thing to swap.
+        for key in ("description", "notes"):
+            if key in meta:
+                meta[key] = json.loads(json.dumps(meta[key]).replace("FLAC3D", "3DEC"))
         meta["commands"] = common_cmds
         out[name] = meta
     return out
