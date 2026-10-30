@@ -117,7 +117,7 @@ def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expec
         # `mpoint initialize` is MPoint's attribute setter (no `mpoint attribute`)
         ("mpoint velocity", "mpoint initialize"),
         ("mpoint density", "mpoint initialize"),
-        ("mpoint pore pressure", "mpoint initialize"),
+        ("mpoint pore pressure", "mpoint pore-pressure"),
         ("mpoint stress", "mpoint initialize"),
         # constitutive model names belong to `mpoint cmodel`, property names to `mpoint property`
         ("mpoint mohr-coulomb", "mpoint cmodel"),

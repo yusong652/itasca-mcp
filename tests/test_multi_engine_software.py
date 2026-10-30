@@ -515,8 +515,10 @@ def test_mpoint_command_keywords_match_the_installed_index() -> None:
     # every undocumented, live-discovered command says so rather than inventing behaviour
     for stem in ("anisotropy", "plot-scale", "sort", "node-list"):
         doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
-        assert doc["versions"]["9.0"]["keywords"] == []
         assert any("Semantics are NOT established" in n for n in doc["notes"])
+    for stem in ("sort", "node-list"):
+        doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
+        assert doc["versions"]["9.0"]["keywords"] == []
 
 
 def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:

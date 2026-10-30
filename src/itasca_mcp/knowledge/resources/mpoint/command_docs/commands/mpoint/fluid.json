@@ -2,10 +2,9 @@
   "category": "mpoint",
   "search_keywords": [
     "mpoint",
-    "fluid",
-    "property"
+    "fluid"
   ],
-  "description": "Set parameters for a groundwater fluid flow analysis. Settings include property. These commands are only available after a model configure fluid-flow command.",
+  "description": "Set parameters for a groundwater analysis. Currently only undrained analysis is supported (change in pore pressure with mechanical changes). There are currently no fluid flow calculations performed.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -22,17 +21,17 @@
         {
           "name": "kwd:information",
           "syntax": "information",
-          "description": "Output current configuration settings and status information for the fluid model."
+          "description": "Output current configuration settings and status information for the fluid model (this is the default if no keyword is given)."
         },
         {
           "name": "kwd:property",
           "syntax": "property [keyword] [range]",
-          "description": "Output the values of the specified fluid property in all zones in the range. Enter no keyword to see a list of all possible fluid properties."
+          "description": "Output the values of the specified fluid property in all material points in the range. Enter no keyword to see a list of all possible fluid properties."
         },
         {
           "name": "property",
           "syntax": "property keyword ... [range]",
-          "description": "Assign fluid properties for all zones in the range. Any number of name-value pairs may be assigned. The type of the value given must match the type expected by the property s."
+          "description": "Assign fluid properties for all material points in the range. Any number of name-value pairs may be assigned. The type of the value given must match the type expected by the property s."
         },
         {
           "name": "kwd:biot-coefficient",
@@ -47,27 +46,32 @@
         {
           "name": "kwd:fluid-density",
           "syntax": "fluid-density <f>",
-          "description": "Specifies the fluid density for this zone. The default value is 0. In SI this value has units \\([Kg/m^3]\\)."
+          "description": "Specifies the fluid density for this mpoint. The default value is 0. In SI this value has units \\([Kg/m^3]\\). Note that the specified fluid density is only used to compute pore pressures with the mpoint pore-pressure command. This does not change the density of the volume represented by the material point. It is up to the user to specify different wet densities and dry densities above and below the water table."
         },
         {
           "name": "kwd:fluid-modulus",
           "syntax": "fluid-modulus <f>",
-          "description": "Specify the fluid modulus in a zone. If the biot-coefficient is 1, this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0. In SI this value has units \\([Pa]\\)."
+          "description": "Specify the fluid modulus in material points. If the biot-coefficient is 1, this is related to the fluid-modulus by \\(M = K_w/n\\) where \\(M\\) is the Biot modulus, \\(K_w\\) is the fluid modulus, and \\(n\\) is the porosity. The default value is 0. In SI this value has units \\([Pa]\\)."
         },
         {
           "name": "kwd:fluid-tension",
           "syntax": "fluid-tension <f>",
-          "description": "Mpoint fluid tension limit (f = -1e15 by default). This is the minimal (most tensile) pore pressure that can occur due to volumetric changes. Entry should be negative."
+          "description": "MPoint fluid tension limit (f = -1e15 by default). This is the minimal (most tensile) pore pressure that can occur. Entry should be negative or zero."
         },
         {
           "name": "kwd:mobility-coefficient",
           "syntax": "mobility-coefficient <f>",
-          "description": "Specifies an isotropic mobility coefficient for the zone. This is defined as the hydraulic conductivity divided by the unit weight of water. Or the intrinsic permeability of the medium (in \\(m^2\\)) divided by the dynamic viscosity. The mobility coefficient must be non zero for fluid calculations to be performed. The default value is 0. In SI this value has units \\([m^2/Pa.s]\\)."
+          "description": "Specifies an isotropic mobility coefficient for the zone. This is defined as the hydraulic conductivity divided by the unit weight of water. Or the intrinsic permeability of the medium (in \\(m^2\\)) divided by the dynamic viscosity. The mobility coefficient must be non zero for fluid calculations to be performed. The default value is 0. In SI this value has units \\([m^2/Pa.s]\\). Not on the 9.8 manual page or in the installed command index, but MPoint3D 9.8.54 still accepts `mpoint fluid property mobility-coefficient <f>` (unknown names are rejected with 'Fluid property ... not found')."
         },
         {
           "name": "kwd:porosity",
           "syntax": "porosity <f>",
-          "description": "Specifies the porosity of the zone, \\(n\\). The default value is 0.5. This value is unitless."
+          "description": "Specifies the porosity of the material points, \\(n\\). The default value is 0.5. This value is unitless."
+        },
+        {
+          "name": "pore-pressure-generation",
+          "syntax": "pore-pressure-generation <b>",
+          "description": "Specifies whether the material point will generate pore-pressure changes due to volumetric strain - or two way fluid coupling. By default this value is off."
         }
       ],
       "examples": []

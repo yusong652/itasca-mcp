@@ -29,7 +29,11 @@ Names are cross-checked against ``out_commands.txt`` (the installed command
 index) and any disagreement is reported.
 
 Usage:
-    uv run python scripts/corpus/reparse_mpoint_commands.py [--write]
+    uv run python scripts/corpus/reparse_mpoint_commands.py [--write] [--only stem,stem,...]
+
+``--only`` restricts the write to the named file stems (``apply,node-fix``). The
+corpus carries live-verified fixes the pages do not have, so a blanket rewrite
+after a manual version bump would undo them; name the pages that changed instead.
 """
 
 import html
@@ -177,6 +181,9 @@ def official_keywords() -> dict[str, set[str]]:
 
 def main() -> None:
     write = "--write" in sys.argv
+    only: set[str] | None = None
+    if "--only" in sys.argv:
+        only = set(sys.argv[sys.argv.index("--only") + 1].split(","))
     official = official_keywords()
     changed = 0
     mismatches = 0
@@ -187,6 +194,8 @@ def main() -> None:
             continue
         command = parsed["command"]
         stem = command.replace("mpoint node ", "node-").replace("mpoint ", "")
+        if only is not None and stem not in only:
+            continue
         target = COMMANDS_DIR / f"{stem}.json"
         if not target.exists():
             print(f"  [NEW]  {stem}.json  ({command})")

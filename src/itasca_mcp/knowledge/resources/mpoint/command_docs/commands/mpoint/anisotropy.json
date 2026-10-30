@@ -4,10 +4,10 @@
     "mpoint",
     "anisotropy"
   ],
-  "description": "Undocumented, argument-less. Running it prints a single marker line '*** Mpoint-Anisotropy-1 ***' and produces no other observable output.",
+  "description": "Set the anisotropy search parameters (radius, tolerance). Not in the 9.8 manual; `mpoint anisotropy ?` on MPoint3D 9.8.54 lists the keywords radius and tolerance and prints a marker line '*** Mpoint-Anisotropy-1 ***'. What the parameters control is not documented.",
   "notes": [
     "Live-discovered on MPoint3D 9.7 (2026-09-14): 'mpoint ?' enumerates it, but it has no page in the MPM doc tree and no entry in the installed command index (out_commands.txt).",
-    "Semantics are NOT established. The command takes no arguments (any trailing token is rejected as 'Unused extra parameter') and no keyword table is exposed. It is documented here only so that a command met in someone else's script can be looked up -- do not infer behaviour from the name.",
+    "Semantics are NOT established. On 9.7 the command took no arguments; on MPoint3D 9.8.54 `mpoint anisotropy ?` lists radius (float >= 0) and tolerance (float in [0, 1]), still with no page in the MPM doc tree. It is documented here only so that a command met in someone else's script can be looked up -- do not infer behaviour from the name.",
     "The marker-style output suggests an internal or diagnostic command rather than a modelling one. (state: ran it on a 512-point model; no change observed in point count, positions or node count.)"
   ],
   "python_sdk_alternative": {
@@ -16,8 +16,19 @@
   "versions": {
     "9.0": {
       "command": "mpoint anisotropy",
-      "syntax": "mpoint anisotropy",
-      "keywords": [],
+      "syntax": "mpoint anisotropy keyword ...",
+      "keywords": [
+        {
+          "name": "radius",
+          "syntax": "radius <f>",
+          "description": "A floating point value >= 0 (the engine's own token description)."
+        },
+        {
+          "name": "tolerance",
+          "syntax": "tolerance <f>",
+          "description": "A floating point value between 0 and 1 (the engine's own token description)."
+        }
+      ],
       "examples": []
     }
   }
