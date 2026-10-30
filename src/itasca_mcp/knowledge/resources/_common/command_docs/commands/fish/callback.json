@@ -27,7 +27,7 @@
         {
           "name": "remove",
           "syntax": "remove <sym> [<f> | event <s>]",
-          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found."
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
         },
         {
           "name": "interval",
@@ -353,7 +353,7 @@
         {
           "name": "remove",
           "syntax": "remove <sym> [<f> | event <s>]",
-          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found."
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
         },
         {
           "name": "interval",
@@ -936,7 +936,7 @@
         {
           "name": "remove",
           "syntax": "remove <sym> [<f> | event <s>]",
-          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found."
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
         },
         {
           "name": "interval",
@@ -1058,7 +1058,7 @@
         {
           "name": "kwd:bond_break",
           "syntax": "bond_break",
-          "description": "Contact bond break event. For the Subspring Network Model, this event corresponds to a sub-contact bond breaking. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). A bare 'remove <sym>' does not remove a bond_break registration (PFC3D 6.00 and 7.00: it kept firing). On PFC 9.8 the explicit 'remove <sym> event bond_break' did not either (still listed, still firing), while 6.0 and 7.0 honour it; to stop it on 9.8, guard the function body with a global flag.",
+          "description": "Contact bond break event. For the Subspring Network Model, this event corresponds to a sub-contact bond breaking. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). A bare 'remove <sym>' does not remove a bond_break registration: on PFC3D 6.00, 7.00 and 9.8.54 the function kept firing and 'fish list callbacks' still listed it. The explicit 'remove <sym> event bond_break' does remove it on all three (clean 9.8.54 harness: 0 breaks counted after the explicit remove, 64 in the control and after the bare remove).",
           "engines": [
             "pfc"
           ]
