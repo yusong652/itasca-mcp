@@ -29,7 +29,8 @@
         "plane",
         "polygon",
         "rectangle",
-        "ellipse"
+        "ellipse",
+        "circle"
       ]
     },
     "attribute": {
@@ -39,7 +40,12 @@
         "id",
         "id-list",
         "group",
-        "named-range"
+        "named-range",
+        "component-id",
+        "component-id-list",
+        "displacement",
+        "velocity",
+        "volume"
       ]
     },
     "user_defined": {
@@ -65,6 +71,15 @@
       "description": "Modify behavior of entire range phrase",
       "elements": [
         "union"
+      ]
+    },
+    "logical": {
+      "name": "Logical Elements",
+      "description": "Select by GUI selection / visibility state",
+      "elements": [
+        "selected",
+        "deselected",
+        "use-hidden"
       ]
     }
   },
@@ -139,6 +154,12 @@
       "category": "geometric"
     },
     {
+      "name": "circle",
+      "file": "_common/references/range-elements/circle.json",
+      "short_description": "Select objects within a circular region (2D only)....",
+      "category": "geometric"
+    },
+    {
       "name": "id",
       "file": "_common/references/range-elements/id.json",
       "short_description": "Select by ID range. Single value for exact match, ...",
@@ -160,6 +181,36 @@
       "name": "named-range",
       "file": "_common/references/range-elements/named-range.json",
       "short_description": "Reference a previously created named range (via 'm...",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id",
+      "file": "_common/references/range-elements/component-id.json",
+      "short_description": "For most objects, this is the same as the id range...",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id-list",
+      "file": "_common/references/range-elements/component-id-list.json",
+      "short_description": "For most objects, this is the same as the id-list ...",
+      "category": "attribute"
+    },
+    {
+      "name": "displacement",
+      "file": "_common/references/range-elements/displacement.json",
+      "short_description": "Select an object with displacement between the spe...",
+      "category": "attribute"
+    },
+    {
+      "name": "velocity",
+      "file": "_common/references/range-elements/velocity.json",
+      "short_description": "Select an object with a velocity between the speci...",
+      "category": "attribute"
+    },
+    {
+      "name": "volume",
+      "file": "_common/references/range-elements/volume.json",
+      "short_description": "Select an object with a volume between the specifi...",
       "category": "attribute"
     },
     {
@@ -203,6 +254,24 @@
       "file": "_common/references/range-elements/union.json",
       "short_description": "Change from intersection (AND) to union (OR) logic...",
       "category": "phrase_modifiers"
+    },
+    {
+      "name": "selected",
+      "file": "_common/references/range-elements/selected.json",
+      "short_description": "Include selected objects. This causes the range to...",
+      "category": "logical"
+    },
+    {
+      "name": "deselected",
+      "file": "_common/references/range-elements/deselected.json",
+      "short_description": "Include not selected objects. This causes the rang...",
+      "category": "logical"
+    },
+    {
+      "name": "use-hidden",
+      "file": "_common/references/range-elements/use-hidden.json",
+      "short_description": "Include hidden objects. By default, an object that...",
+      "category": "logical"
     }
   ],
   "common_patterns": [
@@ -230,7 +299,9 @@
   "notes": [
     "Multiple range elements create intersection (AND) by default",
     "Use 'union' keyword for OR logic",
-    "Unspecified range affects all objects of target type"
+    "Unspecified range affects all objects of target type",
+    "A token the range parser does not know fails the command before anything runs on MPoint3D 9.8.54 ('Bad conversion of parameter (nosuch)'), as on PFC; FLAC3D 9.8.54 instead ends the range and runs the command.",
+    "The 9.x parser lists every engine's range elements (bmaterial / cmodel / jmodel / structure-type / wall / ...); only elements verified to select material points are referenced here. project-range, set, geometry-distance and geometry-space parse but were not exercised on material points."
   ],
   "related_commands": [
     "model range create",
@@ -339,6 +410,10 @@
   },
   "mpoint_additional_elements": [
     {
+      "name": "(status)",
+      "description": "The elements below are now referenced in this index (2026-10-31) after re-checking on MPoint3D 9.8.54; the text records the original 9.7 verification."
+    },
+    {
       "name": "volume",
       "syntax": "volume <low> <high>",
       "description": "Filter by material-point volume. Verified discriminating: 0..0.05 matched 0 points, 0.06..0.07 matched all 216, 0.07..1 matched 0, on a lattice whose point volume is exactly 0.4^3 = 0.064."
@@ -392,5 +467,87 @@
       "verified": "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
     }
   },
-  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention."
+  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
+  "live_enumeration_mpoint3d_98": {
+    "description": "Range-element keyword set listed by 'mpoint group ... range ?' on MPoint3D 9.8.54 (2026-10-31, after 'mpoint node spacing' and a 216-point lattice): 66 tokens, identical to PFC3D 9.8.54. Every element referenced by this index is in it.",
+    "tokens": [
+      "annulus",
+      "aspect-ratio",
+      "bmaterial",
+      "by",
+      "cmodel",
+      "component-id",
+      "component-id-list",
+      "concave",
+      "contact",
+      "cylinder",
+      "deformable",
+      "deselected",
+      "dfn",
+      "dfn-3dec",
+      "displacement",
+      "edge-length",
+      "ellipse",
+      "excavated",
+      "extent",
+      "extra",
+      "extra-list",
+      "face-area",
+      "fid",
+      "fidlist",
+      "fish",
+      "fracture-id",
+      "geometry-distance",
+      "geometry-space",
+      "group",
+      "group-intersection",
+      "id",
+      "id-list",
+      "index-list",
+      "interface",
+      "jmaterial",
+      "jmodel",
+      "joint-set",
+      "leader-id",
+      "mintersection",
+      "name",
+      "named-range",
+      "not",
+      "orientation",
+      "plane",
+      "polygon",
+      "position",
+      "position-x",
+      "position-y",
+      "position-z",
+      "project-range",
+      "radius",
+      "rectangle",
+      "region",
+      "remove",
+      "rintersection",
+      "seed",
+      "selected",
+      "set",
+      "sphere",
+      "sregion",
+      "state",
+      "structure-type",
+      "surface",
+      "union",
+      "use-hidden",
+      "velocity",
+      "volume",
+      "wall"
+    ],
+    "verified_state": {
+      "component-id": "'component-id 1 3' -> 3 of 216 points",
+      "component-id-list": "'component-id-list 1 5 10' -> 3 points",
+      "use-hidden": "'use-hidden position-x 0 10' -> 108 (nothing hidden)",
+      "volume": "'volume 0.06 0.07' -> all 216 (point volume 0.064), as on 9.7",
+      "selected / deselected": "0 / 216 with nothing selected in the GUI",
+      "radius": "'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
+      "circle": "rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)"
+    }
+  }
 }
