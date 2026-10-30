@@ -5,7 +5,7 @@
     "zone",
     "generate"
   ],
-  "description": "Set zoning conditions for deformable blocks. The edge-length keyword is spelled edgelength (3DEC 9.7.47 rejects 'edge-length'). With a range, 3DEC 9.8.54 only marks the blocks deformable and defers meshing ('mesh generation is performed after last GEN command'; no zones exist yet). Do not run 'block contact generate-subcontacts' in that state: it crashed the engine twice.",
+  "description": "Set zoning conditions for deformable blocks. The edge-length keyword is spelled edgelength (3DEC 9.7.47 rejects 'edge-length'). With a range, 3DEC 9.8.54 only records the edge length for those blocks ('mesh generation is performed after last GEN command'; 'block list information' still says Rigid and no zones exist). The mesh is built by the first 'block zone generate' whose coverage completes every block in the model, ranged or not; blocks left outside every range keep the whole model unmeshed. So a range sets a per-block edge length, it does not mesh part of a model: cycling in the deferred state treats all blocks as rigid ('No contact stiffness defined for RIGID blocks'), 'block hide' before the command does not exclude the hidden blocks from the coverage check, and 'block contact generate-subcontacts' in that state crashes the engine (see that command).",
   "python_sdk_alternative": {
     "available": false
   },
@@ -201,6 +201,7 @@
     }
   },
   "notes": [
-    "rezone: the 7.0 and 9.0 manuals print an edge-length <f> sub-option under it; 3DEC 9.8.54 has none ('block zone generate rezone ?' lists the command's own keywords, edgelength spelled without a hyphen). The 7.0 block keeps the manual text; 7.0 was not re-checked."
+    "rezone: the 7.0 and 9.0 manuals print an edge-length <f> sub-option under it; 3DEC 9.8.54 has none ('block zone generate rezone ?' lists the command's own keywords, edgelength spelled without a hyphen). The 7.0 block keeps the manual text; 7.0 was not re-checked.",
+    "Rigid/deformable mixes cannot be built through a ranged 'block zone generate' on 3DEC 9.8.54: generating subcontacts first makes the blocks rigid for good ('cannot change block to deformable after INSITU or face triangulation', no crash), and generating them in the deferred state crashes."
   ]
 }
