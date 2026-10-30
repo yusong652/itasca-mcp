@@ -26,7 +26,7 @@
       "keywords": [
         {
           "name": "active",
-          "syntax": "active b"
+          "syntax": "active <b>"
         },
         {
           "name": "cmodel",
@@ -69,7 +69,7 @@
         },
         {
           "name": "implicit",
-          "syntax": "implicit b",
+          "syntax": "implicit <b>",
           "description": "Turns implicit mode on or off. By default implicit mode is off. Implicit mode requires a manually specified timestep. Note that specifying a timestep that is too large can cause the iterative matrix solver to fail to converge. (see Implicit Formulation)"
         },
         {
@@ -84,16 +84,16 @@
         },
         {
           "name": "list-property",
-          "syntax": "property keyword <range>"
+          "syntax": "property keyword [range]"
         },
         {
           "name": "property",
-          "syntax": "property keyword <range>",
+          "syntax": "property keyword [range]",
           "description": "Assigns properties for the thermal constitutive models of all zones in the range. Any number of name value pairs may be assigned. Any constitutive model that has a matching property name will be assigned the value. Live-verified property sets per thermal constitutive model (FLAC3D 9.7 error enumeration, 2026-08-14): the assignable models are active | inactive | linear | advection-conduction | hydration ('zone thermal cmodel assign' enumeration; NOTE 'assign active' reports 'Thermal model linear assigned' — active is the reactivation alias of linear, and the official 'Anisotropic/Isotropic Heat Conduction' page names have no separate cmodel keyword: isotropic conduction is 'linear' with scalar 'conductivity', anisotropic conduction is 'linear' with 'conductivity-tensor'). Properties — linear/active/inactive: conductivity, conductivity-tensor, expansion, specific-heat. advection-conduction adds: conductivity-effective, conductivity-effective-tensor, conductivity-fluid, density-fluid, expansion-fluid, gradient, gradient-x/-y/-z, specific-discharge, specific-discharge-x/-y/-z, specific-heat-effective, specific-heat-fluid, temperature-reference, update-interval. hydration: activation-energy, age-concrete-effective, conductivity, conductivity-tensor, constant-conductivity-1, constant-conductivity-dLdA, constant-conductivity-dLdT, constant-energy-1, constant-energy-2, constant-energy-dE, constant-energy-dT, constant-energy-halftime, constant-gas, constant-heat-1, constant-heat-dCdA, constant-heat-dCdT, constant-jonasson-b, constant-jonasson-t1, density-cement, expansion, flag-law, hydration-binding-maximum, hydration-grade, hydration-grade-maximum, hydration-rate, hydration-temperature-maximum, specific-heat, temperature-reference, time-hydration."
         },
         {
           "name": "property-distribution",
-          "syntax": "property-distribution s akeyword <range>",
+          "syntax": "property-distribution <s> akeyword [range]",
           "description": "Assigns a single property name to the thermal constitutive models of all zones in the range. The property value may be varied in space by using the following optional keyword values. Options: add: Add a to the property value. This keyword only applies to float type property values.; deviation-gaussian <f>: A Gaussian distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; deviation-uniform <f>: A uniform distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; gradient <v>[origin <v>]: Apply a gradient to the property value. This keyword only applies to float type property values.; multiply: Multiply the property value by a .; vary <v>: Apply a linear variation to the property value. This keyword only applies to float type property values."
         },
         {
@@ -103,17 +103,17 @@
         },
         {
           "name": "property-distribution-deviation-gaussian",
-          "syntax": "deviation-gaussian f",
+          "syntax": "deviation-gaussian <f>",
           "description": "A Gaussian distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f. This keyword only applies to float type property values."
         },
         {
           "name": "property-distribution-deviation-uniform",
-          "syntax": "deviation-uniform f",
+          "syntax": "deviation-uniform <f>",
           "description": "A uniform distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f. This keyword only applies to float type property values."
         },
         {
           "name": "property-distribution-gradient",
-          "syntax": "gradient v <origin v >",
+          "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a gradient to the property value. This keyword only applies to float type property values."
         },
         {
@@ -123,17 +123,17 @@
         },
         {
           "name": "property-distribution-vary",
-          "syntax": "vary v",
+          "syntax": "vary <v>",
           "description": "Apply a linear variation to the property value. This keyword only applies to float type property values."
         },
         {
           "name": "time-total",
-          "syntax": "time-total f",
+          "syntax": "time-total <f>",
           "description": "Specifies the accumulated zone thermal time, defined as the sum of all the timesteps over which zone thermal is active. Once set, thermal time will continue to accumulate with subsequent cycles."
         },
         {
           "name": "zone-based-temperature",
-          "syntax": "zone-based-temperature b",
+          "syntax": "zone-based-temperature <b>",
           "description": "Turns zone-based temperatures on and off. By default temperatures are calculated and stored at gridpoints, and the zone temperature is the average gridpoint value. When this is turned on, the zone temperature is stored in the zone and the gridpoint temperatures are ignored. Temperatures must be set manually using the zone.temp FISH intrinsic."
         }
       ],
@@ -173,12 +173,12 @@
         },
         {
           "name": "cmodel",
-          "syntax": "cmodel keyword <range>",
+          "syntax": "cmodel keyword [range]",
           "description": "Assign, query, or list the thermal constitutive model for zones in the range. Sub-keywords: assign, list, plus the five model name shortcuts (null, isotropic, anisotropic, advection-conduction, hydration)."
         },
         {
           "name": "cmodel-assign",
-          "syntax": "assign keyword <range>",
+          "syntax": "assign keyword [range]",
           "description": "Assign the named thermal constitutive model to all zones in the range."
         },
         {
@@ -223,17 +223,17 @@
         },
         {
           "name": "list-property",
-          "syntax": "property <prop> <range>",
+          "syntax": "property <prop> [range]",
           "description": "List the value of the named thermal property for zones in the range."
         },
         {
           "name": "property",
-          "syntax": "property <prop> <f> <range>",
+          "syntax": "property <prop> <f> [range]",
           "description": "Set a thermal material property. The property name must match a property of the currently-assigned thermal constitutive model (see zone thermal cmodel list for the full list per model)."
         },
         {
           "name": "property-distribution",
-          "syntax": "property-distribution <prop> <f> <distribution-block> <range>",
+          "syntax": "property-distribution <prop> <f> <distribution-block> [range]",
           "description": "Set a thermal material property with an optional spatial distribution. Same property names as property; the optional distribution-block sub-keyword controls how the base value is varied: add, deviation-gaussian, deviation-uniform, gradient, multiply, vary."
         },
         {
@@ -253,7 +253,7 @@
         },
         {
           "name": "property-distribution-gradient",
-          "syntax": "gradient <v> <origin <v>>",
+          "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a linear gradient v to the property value (optionally referenced to the supplied origin)."
         },
         {
@@ -308,7 +308,7 @@
         },
         {
           "name": "analytical-source-point",
-          "syntax": "point <v>...",
+          "syntax": "point <v> ...",
           "description": "Add a point heat source at each supplied position v."
         },
         {
@@ -348,7 +348,7 @@
         },
         {
           "name": "analytical-source-delete",
-          "syntax": "delete <range>",
+          "syntax": "delete [range]",
           "description": "Delete analytical sources matching the range (or all sources if no range supplied)."
         }
       ]

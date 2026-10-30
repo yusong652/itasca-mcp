@@ -12,27 +12,27 @@
   "versions": {
     "7.0": {
       "command": "zone face hide",
-      "syntax": "zone face hide <keyword...> <range>",
+      "syntax": "zone face hide [keyword ...] [range]",
       "description": "Hide or un-hide zone faces in the range.",
       "keywords": [
         {
           "name": "on/off",
-          "syntax": "b",
+          "syntax": "<b>",
           "description": "If present, sets whether zone faces will be hidden (on) or un-hidden (off). The default value if not specified is on. NOTE: 'adummy' was a crawler placeholder; the real first token is an optional boolean (on/off). The engine's first-token enumeration here is the full range-element keyword set (active, annulus, cylinder, group, position-*, ...) because the range follows directly - see the range-elements reference. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
         },
         {
           "name": "group",
-          "syntax": "group s keyword",
+          "syntax": "group <s> keyword",
           "description": "Specifies that only zone faces that are in the specified groups will be affected. Use of the group logic is described in Groups. This keyword is incompatible with the keywords id and skin. Note that by default, zones connected to faces will also be checked for a match. So a face will be considered to match group Fred either if it has been assigned to group Fred directly, or if either of the possible zones it is connected to has been assigned that group. A range phrase cannot be given if this keyword is used. The following additional keywords are available to determine the group designation will be used: Options: and <s>: Specify that the zone faces selected need to be both in the original group and group s in order to be modified. This is incompatible with the or keyword and the slot keyword. Any number of groups can be combined via multiple and keywords.; or <s>: Specify that the zone faces selected can be in the original group or group s , and both will be modified. This is incompatible with the and keyword. Any number of groups can be combined via multiple or keywords.; only: Specify that the list of on or more groups specified must define all the groups assigned to the zone face. If there are any additional groups, they will not be modified.; by <s>: Specify whether the group check will be made by face or by zone . If specified then only group assignments for that object specifically will be considered. By default a face will be selected either if it has that group assignment directly, or if a zone it is connected to has that group assignment.; matches <i>: Objects that by default participate in a hierarchy may match a given group more than once. For example, zone face may match a group if they have been assigned that group directly, or are connected to a zone that has that group assignment. So for a given group, a zone face might find a match from 0 to 2 times. The match keyword allows you to specify how many matches are required for each group provided. The default value is 1.; slot <s>: By default, a group will match if the face has that group assigned in any slot. The slot keyword allows you to specify which slot to look in specifically, ignoring all the others."
         },
         {
           "name": "group-and",
-          "syntax": "and s",
+          "syntax": "and <s>",
           "description": "Specify that the zone faces selected need to be both in the original group and group s in order to be modified. This is incompatible with the or keyword and the slot keyword. Any number of groups can be combined via multiple and keywords."
         },
         {
           "name": "group-or",
-          "syntax": "or s",
+          "syntax": "or <s>",
           "description": "Specify that the zone faces selected can be in the original group or group s, and both will be modified. This is incompatible with the and keyword. Any number of groups can be combined via multiple or keywords."
         },
         {
@@ -42,17 +42,17 @@
         },
         {
           "name": "group-by",
-          "syntax": "by s",
+          "syntax": "by <s>",
           "description": "Specify whether the group check will be made by face or by zone. If specified then only group assignments for that object specifically will be considered. By default a face will be selected either if it has that group assignment directly, or if a zone it is connected to has that group assignment."
         },
         {
           "name": "group-matches",
-          "syntax": "matches i",
+          "syntax": "matches <i>",
           "description": "Objects that by default participate in a hierarchy may match a given group more than once. For example, zone face may match a group if they have been assigned that group directly, or are connected to a zone that has that group assignment. So for a given group, a zone face might find a match from 0 to 2 times. The match keyword allows you to specify how many matches are required for each group provided. The default value is 1."
         },
         {
           "name": "group-slot",
-          "syntax": "slot s",
+          "syntax": "slot <s>",
           "description": "By default, a group will match if the face has that group assigned in any slot. The slot keyword allows you to specify which slot to look in specifically, ignoring all the others."
         },
         {
@@ -67,7 +67,7 @@
         },
         {
           "name": "only-grouped",
-          "syntax": "only-grouped s <slot s >",
+          "syntax": "only-grouped <s> [slot <s>]",
           "description": "Specifies that only the set of faces that have had group names assigned should be considered. Other filter options are allowed. If an option slot is specified, then only the set of faces with group assignments in that particular slot will be considered."
         },
         {
@@ -77,17 +77,17 @@
         },
         {
           "name": "skin-start",
-          "syntax": "start v",
+          "syntax": "start <v>",
           "description": "Defines the starting point of the ray used. By default this value is (0,0,0)."
         },
         {
           "name": "skin-direction",
-          "syntax": "direction v",
+          "syntax": "direction <v>",
           "description": "Defines the direction taken from the starting point. By default this value is (0,0,1)."
         },
         {
           "name": "skin-break-angle",
-          "syntax": "break-angle f",
+          "syntax": "break-angle <f>",
           "description": "Defines the angle between faces necessary to break continuity. By default this angle is 45 degrees. This means that if the faces connect at an angle greater than 45 degrees, they are not considered to be part of the same contiguous group."
         },
         {
@@ -127,7 +127,7 @@
         },
         {
           "name": "id",
-          "syntax": "id <iz>side <is>...",
+          "syntax": "id <iz> side <is> ...",
           "description": "Specifies that a single zone face will be affected. This face is identified by the zone ID number iz and the side number is . This keyword is incompatible with the keywords group and skin . A range phrase cannot be given if this keyword is used."
         },
         {

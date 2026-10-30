@@ -10,6 +10,19 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 
+try:
+    from normalize_command_syntax import normalize_syntax as _normalize_command_syntax
+except ModuleNotFoundError:  # loaded by file path (tests) or as a package
+    import importlib.util as _ilu
+
+    _spec = _ilu.spec_from_file_location(
+        "normalize_command_syntax", Path(__file__).with_name("normalize_command_syntax.py")
+    )
+    assert _spec is not None and _spec.loader is not None
+    _module = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_module)
+    _normalize_command_syntax = _module.normalize_syntax
+
 # ---------------------------------------------------------------------------
 # Path configuration
 # ---------------------------------------------------------------------------
@@ -509,8 +522,13 @@ def parse_html_file(html_path: Path) -> dict:
 
 
 def normalize_syntax(s: str) -> str:
-    """Normalize whitespace in syntax string for comparison."""
-    return re.sub(r"\s+", " ", s).strip()
+    """Whitespace-normalize a syntax string and apply the corpus bracket rules.
+
+    The span-by-span assembly above loses the space between adjacent placeholders
+    ('<i><a>[range]'); normalize_command_syntax.normalize_syntax puts it back and
+    collapses doubled block markers, so freshly parsed strings match the corpus.
+    """
+    return _normalize_command_syntax(re.sub(r"\s+", " ", s).strip())
 
 
 # ---------------------------------------------------------------------------

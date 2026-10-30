@@ -12,28 +12,28 @@
   "versions": {
     "7.0": {
       "command": "zone interface node",
-      "syntax": "zone interface <s > node keyword <range>",
+      "syntax": "zone interface <s> node keyword [range]",
       "description": "Configure interface nodes.",
       "keywords": [
         {
           "name": "displacement-shear",
-          "syntax": "displacement-shear v",
+          "syntax": "displacement-shear <v>",
           "description": "Overwrites the shear displacement vector for all interface nodes in the range. The value will be constrained to be perpendicular to the interface normal direction."
         },
         {
           "name": "displacement-small",
-          "syntax": "displacement-small f",
-          "description": "Interfaces operating in small-strain mode derive their forces from a comparison of \u201cvirtual positions\u201d of the two interacting faces, where a \u201cvirtual position\u201d of a point is the original coordinate of the point plus the accumulated displacement (displacement-small) to date. If one contacting object is removed (e.g., backfill within a tunnel), and another substituted (e.g., a liner is installed) using the same interface, then large initial stresses may appear because the two sides of the interface appear to interpenetrate (because the virtual position of the old object has changed with respect to the specified position of the new object)."
+          "syntax": "displacement-small <f>",
+          "description": "Interfaces operating in small-strain mode derive their forces from a comparison of “virtual positions” of the two interacting faces, where a “virtual position” of a point is the original coordinate of the point plus the accumulated displacement (displacement-small) to date. If one contacting object is removed (e.g., backfill within a tunnel), and another substituted (e.g., a liner is installed) using the same interface, then large initial stresses may appear because the two sides of the interface appear to interpenetrate (because the virtual position of the old object has changed with respect to the specified position of the new object)."
         },
         {
           "name": "extra",
-          "syntax": "extra i a[interfacenodeblock]",
+          "syntax": "extra <i> a[interfacenodeblock]",
           "description": "Set the extra interface node variable value for array index i."
         },
         {
           "name": "group",
-          "syntax": "group s <keyword>",
-          "description": "Add group name s to the interface nodes in the range. Use of the group logic is described in Groups. This command may take the form zone interface node \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name. Options: remove: Remove s from interface nodes. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
+          "syntax": "group <s> [keyword]",
+          "description": "Add group name s to the interface nodes in the range. Use of the group logic is described in Groups. This command may take the form zone interface node \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. Options: remove: Remove s from interface nodes. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
         },
         {
           "name": "group-remove",
@@ -42,12 +42,12 @@
         },
         {
           "name": "group-slot",
-          "syntax": "slot s",
+          "syntax": "slot <s>",
           "description": "Assign the group to the slot named s. The default slot name is Default."
         },
         {
           "name": "history",
-          "syntax": "history <name sn >keyword",
+          "syntax": "history [name sn] keyword",
           "description": "Interface variables can be sampled for interface s at the interface node specified. See the zone history command. Note that this command does not take a following range. The following keywords are defined: Options: displacement-normal {id <i>[name <s>] | position <v>}: normal displacement (positive values indicate increased penetration). Options: id <i>[name <s>]: Indicates the history should be taken at interface node ID i in interface s . If a specific interface was not indicated then an interface name must be specified following.; position <v>: Indicates the history should be taken at the node closest to position v among the nodes of interface s . If a specific interface was not indicated than the nearest node on any interface will be found.; displacement-shear {id <i>[name <s>] | position <v>}: shear displacement magnitude Options: id <i>[name <s>]: Indicates the history should be taken at interface node ID i in interface s . If a specific interface was not indicated then an interface name must be specified following.; position <v>: Indicates the history should be taken at the node closest to position v among the nodes of interface s . If a specific interface was not indicated than the nearest node on any interface will be found.; stress-normal {id <i>[name <s>] | position <v>}: normal stress (Compressive stresses are positive) Options: id <i>[name <s>]: Indicates the history should be taken at interface node ID i in interface s . If a specific interface was not indicated then an interface name must be specified following.; position <v>: Indicates the history should be taken at the node closest to position v among the nodes of interface s . If a specific interface was not indicated than the nearest node on any interface will be found.; stress-shear {id <i>[name <s>] | position <v>}: shear stress magnitude Options: id <i>[name <s>]: Indicates the history should be taken at interface node ID i in interface s . If a specific interface was not indicated then an interface name must be specified following.; position <v>: Indicates the history should be taken at the node closest to position v among the nodes of interface s . If a specific interface was not indicated than the nearest node on any interface will be found."
         },
         {
@@ -57,12 +57,12 @@
         },
         {
           "name": "history-displacement-normal-id",
-          "syntax": "id i <name s >",
+          "syntax": "id <i> [name <s>]",
           "description": "Indicates the history should be taken at interface node ID i in interface s. If a specific interface was not indicated then an interface name must be specified following."
         },
         {
           "name": "history-displacement-normal-position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Indicates the history should be taken at the node closest to position v among the nodes of interface s. If a specific interface was not indicated than the nearest node on any interface will be found."
         },
         {
@@ -72,12 +72,12 @@
         },
         {
           "name": "history-displacement-shear-id",
-          "syntax": "id i <name s >",
+          "syntax": "id <i> [name <s>]",
           "description": "Indicates the history should be taken at interface node ID i in interface s. If a specific interface was not indicated then an interface name must be specified following."
         },
         {
           "name": "history-displacement-shear-position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Indicates the history should be taken at the node closest to position v among the nodes of interface s. If a specific interface was not indicated than the nearest node on any interface will be found."
         },
         {
@@ -87,12 +87,12 @@
         },
         {
           "name": "history-stress-normal-id",
-          "syntax": "id i <name s >",
+          "syntax": "id <i> [name <s>]",
           "description": "Indicates the history should be taken at interface node ID i in interface s. If a specific interface was not indicated then an interface name must be specified following."
         },
         {
           "name": "history-stress-normal-position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Indicates the history should be taken at the node closest to position v among the nodes of interface s. If a specific interface was not indicated than the nearest node on any interface will be found."
         },
         {
@@ -102,12 +102,12 @@
         },
         {
           "name": "history-stress-shear-id",
-          "syntax": "id i <name s >",
+          "syntax": "id <i> [name <s>]",
           "description": "Indicates the history should be taken at interface node ID i in interface s. If a specific interface was not indicated then an interface name must be specified following."
         },
         {
           "name": "history-stress-shear-position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Indicates the history should be taken at the node closest to position v among the nodes of interface s. If a specific interface was not indicated than the nearest node on any interface will be found."
         },
         {
@@ -127,7 +127,7 @@
         },
         {
           "name": "list-extra",
-          "syntax": "extra i",
+          "syntax": "extra <i>",
           "description": "The values stored in extra index i of the interface nodes."
         },
         {
@@ -222,12 +222,12 @@
         },
         {
           "name": "stress-shear",
-          "syntax": "stress-shear v [interfacenodeblock]",
+          "syntax": "stress-shear <v> [interfacenodeblock]",
           "description": "sets the incremental shear stress v for all interface nodes in the range."
         },
         {
           "name": "stress-normal-increment",
-          "syntax": "stress-normal-increment f [interfacenodeblock]",
+          "syntax": "stress-normal-increment <f> [interfacenodeblock]",
           "description": "Sets the normal stress increment to f for all interface nodes in the range. Note that compressive stresses are positive. The normal stress increment is added to the normal stress calculated from interface penetration."
         },
         {
@@ -237,17 +237,17 @@
         },
         {
           "name": "property-bonded-slip",
-          "syntax": "bonded-slip b",
+          "syntax": "bonded-slip <b>",
           "description": "Slip is allowed, or not allowed, for a bonded interface segment. Default is off (i.e., slip is not allowed if bond is intact). This is only applicable if a bonded interface is specified (tension is set)."
         },
         {
           "name": "property-cohesion",
-          "syntax": "cohesion f [interfacenodeblock]",
+          "syntax": "cohesion <f> [interfacenodeblock]",
           "description": "cohesion [stress]"
         },
         {
           "name": "property-cohesion-residual",
-          "syntax": "cohesion-residual f [interfacenodeblock]",
+          "syntax": "cohesion-residual <f> [interfacenodeblock]",
           "description": "residual cohesion [stress]. If a value greater than of equal to zero is specified, this value is assigned to cohesion after frictional shear failure. Default is -1.0."
         },
         {
@@ -257,42 +257,42 @@
         },
         {
           "name": "property-friction",
-          "syntax": "friction f [interfacenodeblock]",
+          "syntax": "friction <f> [interfacenodeblock]",
           "description": "friction angle [degrees]"
         },
         {
           "name": "property-friction-residual",
-          "syntax": "friction-residual f [interfacenodeblock]",
+          "syntax": "friction-residual <f> [interfacenodeblock]",
           "description": "residual friction angle [degrees]. If a value greater than of equal to zero is specified, this value is assigned to friction after frictional shear failure. Default is -1.0."
         },
         {
           "name": "property-shear-bond-ratio",
-          "syntax": "shear-bond-ratio f [interfacenodeblock]",
+          "syntax": "shear-bond-ratio <f> [interfacenodeblock]",
           "description": "The shear bond strength is set to sbr times the normal bond strength (tension). Note that giving sbratio alone does not cause a bond to be established; the tensile bond strength must also be set. The default value for sbratio is 100 (i.e., shear bond is 100 times tensile bond). This is only applicable if a bonded interface is specified (tension is set)."
         },
         {
           "name": "property-stiffness-normal",
-          "syntax": "stiffness-normal f [interfacenodeblock]",
+          "syntax": "stiffness-normal <f> [interfacenodeblock]",
           "description": "normal stiffness [stress/displacement]"
         },
         {
           "name": "property-stiffness-shear",
-          "syntax": "stiffness-shear f [interfacenodeblock]",
+          "syntax": "stiffness-shear <f> [interfacenodeblock]",
           "description": "shear stiffness [stress/displacement]"
         },
         {
           "name": "property-tension",
-          "syntax": "tension f [interfacenodeblock]",
+          "syntax": "tension <f> [interfacenodeblock]",
           "description": "tensile strength [stress]"
         },
         {
           "name": "property-tension-residual",
-          "syntax": "tension-residual f [interfacenodeblock]",
+          "syntax": "tension-residual <f> [interfacenodeblock]",
           "description": "residual tensile strength [stress]. If a value greater than of equal to zero is specified, this value is assigned to tension after frictional shear failure. Default is -1.0."
         },
         {
           "name": "update",
-          "syntax": "update b <range>",
+          "syntax": "update <b> [range]",
           "description": "This command prevents the search for new contacts after movement occurs on an interface. The same contacts are preserved, whatever the magnitude of displacement. Use with caution, because physically unrealistic behavior can result if displacements are large. The default behavior is on, which allows normal searching for new and broken contacts."
         },
         {
@@ -302,7 +302,7 @@
         },
         {
           "name": "gradient",
-          "syntax": "gradient v <origin v >",
+          "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a gradient to the scalar-value provided."
         },
         {
@@ -312,7 +312,7 @@
         },
         {
           "name": "vary",
-          "syntax": "vary v",
+          "syntax": "vary <v>",
           "description": "Apply a linear variation to the scalar-value provided."
         }
       ],
@@ -338,7 +338,7 @@
         {
           "name": "displacement-small",
           "syntax": "displacement-small <f>",
-          "description": "Interfaces operating in small-strain mode derive their forces from a comparison of \u201cvirtual positions\u201d of the two interacting faces, where a \u201cvirtual position\u201d of a point is the original coordinate of the point plus the accumulated displacement ( displacement-small ) to date. If one contacting object is removed (e.g., backfill within a tunnel), and another substituted (e.g., a liner is installed) using the same interface, then large initial stresses may appear because the two sides of the interface appear to interpenetrate (because the virtual position of the old object has changed with respect to the specified position of the new object). The stored displacements associated with a particular interface s may be multiplied by a factor f , using the keyword displacement-small . Normally, this factor will be zero, thus restoring the virtual positions of the faces comprising the interface \u201chost\u201d to their original locations. In this case, a new interacting object will not cause initial stresses to be generated when its coordinates match the original coordinates of the interface host faces. However, it is possible to give f a nonzero value, in order to simulate an initial lack-of-fit between the two contacting objects. The command changes the virtual positions in the interface, and in the two faces that are in contact. However, for a newly created interface, the \u201ctarget\u201d face is not found until cycling has begun. Therefore, for all positions to be reset, at least one cycle should be executed before giving the command if the target (i.e., the face without the interface elements) has some existing deformation."
+          "description": "Interfaces operating in small-strain mode derive their forces from a comparison of “virtual positions” of the two interacting faces, where a “virtual position” of a point is the original coordinate of the point plus the accumulated displacement ( displacement-small ) to date. If one contacting object is removed (e.g., backfill within a tunnel), and another substituted (e.g., a liner is installed) using the same interface, then large initial stresses may appear because the two sides of the interface appear to interpenetrate (because the virtual position of the old object has changed with respect to the specified position of the new object). The stored displacements associated with a particular interface s may be multiplied by a factor f , using the keyword displacement-small . Normally, this factor will be zero, thus restoring the virtual positions of the faces comprising the interface “host” to their original locations. In this case, a new interacting object will not cause initial stresses to be generated when its coordinates match the original coordinates of the interface host faces. However, it is possible to give f a nonzero value, in order to simulate an initial lack-of-fit between the two contacting objects. The command changes the virtual positions in the interface, and in the two faces that are in contact. However, for a newly created interface, the “target” face is not found until cycling has begun. Therefore, for all positions to be reset, at least one cycle should be executed before giving the command if the target (i.e., the face without the interface elements) has some existing deformation."
         },
         {
           "name": "extra",
@@ -348,7 +348,7 @@
         {
           "name": "group",
           "syntax": "group <s> [{remove | slot <s>}]",
-          "description": "Add group name s to the interface nodes in the range. Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The following optional keywords are available: Options: remove: Remove s from interface nodes. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
+          "description": "Add group name s to the interface nodes in the range. Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The following optional keywords are available: Options: remove: Remove s from interface nodes. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
         },
         {
           "name": "history",
@@ -393,7 +393,7 @@
         {
           "name": "gradient",
           "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command \u2014 which may not produce the intended result."
+          "description": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command — which may not produce the intended result."
         },
         {
           "name": "multiply",

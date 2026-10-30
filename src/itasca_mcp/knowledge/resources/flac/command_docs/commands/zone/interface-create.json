@@ -12,47 +12,47 @@
   "versions": {
     "7.0": {
       "command": "zone interface create",
-      "syntax": "zone interface <s > create keyword...",
+      "syntax": "zone interface <s> create keyword...",
       "description": "Create nodes or elements on interface s. If the interface name is not given then the command operates on all interfaces.",
       "keywords": [
         {
           "name": "by-face",
-          "syntax": "by-face <keyword...> <range>",
-          "description": "Interface elements are created on all surface zone faces that are within the specified range. An error will occur if interface elements from that interface already exist on the selected faces. Options: break-angle <f>: When interface elements are applied to faces, by default nodes at shared corners are shared. If the angle between the interface elements (or zone faces) is greater than this angle then duplicate nodes will be created at the same point. This behaves better because two different nodes using two different normal vectors will be in action at a corner. The default break angle is 30 degrees. The angle is input in degrees.; break-slot <s>: In addition to the break-angle and merge-nodes keywords the user may indicate a slot to detect when interface nodes should not be shared across elements. If the break-slot keyword is used interface nodes are not shared if the face or zone groups that host the interface elements are different in the slot indicated. Note that Any may be specified indicating that any difference in group assignments will indicate that nodes should not be shared.; group <s>[slot <slot>]: The newly created interface will be assigned group the s . Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name. Note that interface nodes and elements participate in a group hierarchy \u2013 so nodes and elements can be selected using the group name assigned to the interface. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The slot keyword may be used to specify a slot to use for the new group. The default slot is Default . Note that by default a group string that matches the interface name will be assigned in slot Default .; merge-nodes <b>: If set to false , this causes each face to have separate interface nodes created on each corner. So a typical quadrilateral surface will have four separate interface nodes at the same surface. This has advantages and disadvantages. Advantages are that sharp corners are handled automatically so separate interfaces do not have to be created. Another is The increased interface node density gives more reliable results under large-strain motion (especially along edges). Disadvantages are that the computational overhead is about 4x larger, and because each node is calculating penetration independently (and will in general choose different target faces) the normal penetration tends to be discontinuous. On average this tends to work out, but plots of penetration and dependent quantities (normal stress, shear stress if at the friction limit, etc.) will be much less smooth. The default value is true .; separate [{new-side-origin <v> | new-side-group <s> | clear-attach}]: If the optional separate keyword is used, then internal zone faces are selected by the range. The list of selected faces is then automatically separated (as with zone separate ) and interface elements placed on one side. The following keywords are available following the separate keyword: Options: new-side-origin <v>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with face normal vectors pointing toward v . If not specified, the value used will be the origin (0,0,0).; new-side-group <s>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with zones belonging to the specified group. This overwrites New-Side-Origin .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default an existing attach condition causes an error."
+          "syntax": "by-face [keyword ...] [range]",
+          "description": "Interface elements are created on all surface zone faces that are within the specified range. An error will occur if interface elements from that interface already exist on the selected faces. Options: break-angle <f>: When interface elements are applied to faces, by default nodes at shared corners are shared. If the angle between the interface elements (or zone faces) is greater than this angle then duplicate nodes will be created at the same point. This behaves better because two different nodes using two different normal vectors will be in action at a corner. The default break angle is 30 degrees. The angle is input in degrees.; break-slot <s>: In addition to the break-angle and merge-nodes keywords the user may indicate a slot to detect when interface nodes should not be shared across elements. If the break-slot keyword is used interface nodes are not shared if the face or zone groups that host the interface elements are different in the slot indicated. Note that Any may be specified indicating that any difference in group assignments will indicate that nodes should not be shared.; group <s>[slot <slot>]: The newly created interface will be assigned group the s . Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. Note that interface nodes and elements participate in a group hierarchy – so nodes and elements can be selected using the group name assigned to the interface. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The slot keyword may be used to specify a slot to use for the new group. The default slot is Default . Note that by default a group string that matches the interface name will be assigned in slot Default .; merge-nodes <b>: If set to false , this causes each face to have separate interface nodes created on each corner. So a typical quadrilateral surface will have four separate interface nodes at the same surface. This has advantages and disadvantages. Advantages are that sharp corners are handled automatically so separate interfaces do not have to be created. Another is The increased interface node density gives more reliable results under large-strain motion (especially along edges). Disadvantages are that the computational overhead is about 4x larger, and because each node is calculating penetration independently (and will in general choose different target faces) the normal penetration tends to be discontinuous. On average this tends to work out, but plots of penetration and dependent quantities (normal stress, shear stress if at the friction limit, etc.) will be much less smooth. The default value is true .; separate [{new-side-origin <v> | new-side-group <s> | clear-attach}]: If the optional separate keyword is used, then internal zone faces are selected by the range. The list of selected faces is then automatically separated (as with zone separate ) and interface elements placed on one side. The following keywords are available following the separate keyword: Options: new-side-origin <v>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with face normal vectors pointing toward v . If not specified, the value used will be the origin (0,0,0).; new-side-group <s>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with zones belonging to the specified group. This overwrites New-Side-Origin .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default an existing attach condition causes an error."
         },
         {
           "name": "by-face-break-angle",
-          "syntax": "break-angle f",
+          "syntax": "break-angle <f>",
           "description": "When interface elements are applied to faces, by default nodes at shared corners are shared. If the angle between the interface elements (or zone faces) is greater than this angle then duplicate nodes will be created at the same point. This behaves better because two different nodes using two different normal vectors will be in action at a corner."
         },
         {
           "name": "by-face-break-slot",
-          "syntax": "break-slot s",
+          "syntax": "break-slot <s>",
           "description": "In addition to the break-angle and merge-nodes keywords the user may indicate a slot to detect when interface nodes should not be shared across elements. If the break-slot keyword is used interface nodes are not shared if the face or zone groups that host the interface elements are different in the slot indicated."
         },
         {
           "name": "by-face-group",
-          "syntax": "group s <slot slot >",
-          "description": "The newly created interface will be assigned group the s. Use of the group logic is described in Groups. This command may take the form zone interface node \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name."
+          "syntax": "group <s> [slot slot]",
+          "description": "The newly created interface will be assigned group the s. Use of the group logic is described in Groups. This command may take the form zone interface node \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name."
         },
         {
           "name": "by-face-merge-nodes",
-          "syntax": "merge-nodes b",
+          "syntax": "merge-nodes <b>",
           "description": "If set to false, this causes each face to have separate interface nodes created on each corner. So a typical quadrilateral surface will have four separate interface nodes at the same surface. This has advantages and disadvantages."
         },
         {
           "name": "by-face-separate",
-          "syntax": "separate <keyword>",
+          "syntax": "separate [keyword]",
           "description": "If the optional separate keyword is used, then internal zone faces are selected by the range. The list of selected faces is then automatically separated (as with zone separate) and interface elements placed on one side. The following keywords are available following the separate keyword:"
         },
         {
           "name": "by-face-separate-new-side-origin",
-          "syntax": "new-side-origin v",
+          "syntax": "new-side-origin <v>",
           "description": "Specifies which side of the separate faces the interfaces are placed on. It chooses the side with face normal vectors pointing toward v. If not specified, the value used will be the origin (0,0,0)."
         },
         {
           "name": "by-face-separate-new-side-group",
-          "syntax": "new-side-group s",
+          "syntax": "new-side-group <s>",
           "description": "Specifies which side of the separate faces the interfaces are placed on. It chooses the side with zones belonging to the specified group. This overwrites New-Side-Origin."
         },
         {
@@ -62,27 +62,27 @@
         },
         {
           "name": "element",
-          "syntax": "element point i keyword...",
+          "syntax": "element point <i> keyword...",
           "description": "Create a triangular interface element by specifying three points. Three vertices point 1, point 2,and point 3 must be specified following the element keyword. Each point can be created and located in space using the position keyword, or an existing interface node with ID i may be specified. The interface element that is created is not attached to a grid face even if the location corresponds to that of the face. The element is fixed in space. The active side of the element is defined by walking around the edge of the element, from point 1 to point 2 to point 3; the active side is up when walking in a clockwise direction."
         },
         {
           "name": "element-node",
-          "syntax": "node i",
+          "syntax": "node <i>",
           "description": "Identify the point with a previously created interface node with ID i."
         },
         {
           "name": "element-position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Identify the point with a new interface node created at position v."
         },
         {
           "name": "node",
-          "syntax": "node v",
+          "syntax": "node <v>",
           "description": "This creates an interface node at position v. If a node already exists at the selected location, an error is reported. The created node is fixed in space."
         },
         {
           "name": "name",
-          "syntax": "name <s >",
+          "syntax": "name <s>",
           "description": "Interface name. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
         }
       ],
@@ -103,7 +103,7 @@
         {
           "name": "by-face",
           "syntax": "by-face [{break-angle <f> | break-slot <s> | group <s> [slot <slot>] | merge-nodes <b> | separate [{new-side-origin <v> | new-side-group <s> | clear-attach}]} ...] [range]",
-          "description": "Interface elements are created on all surface zone faces that are within the specified range. An error will occur if interface elements from that interface already exist on the selected faces. Options: break-angle <f>: When interface elements are applied to faces, by default nodes at shared corners are shared. If the angle between the interface elements (or zone faces) is greater than this angle then duplicate nodes will be created at the same point. This behaves better because two different nodes using two different normal vectors will be in action at a corner. The default break angle is 30 degrees. The angle is input in degrees.; break-slot <s>: In addition to the break-angle and merge-nodes keywords the user may indicate a slot to detect when interface nodes should not be shared across elements. If the break-slot keyword is used interface nodes are not shared if the face or zone groups that host the interface elements are different in the slot indicated. Note that Any may be specified indicating that any difference in group assignments will indicate that nodes should not be shared.; group <s>[slot <slot>]: The newly created interface will be assigned group the s . Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name. Note that interface nodes and elements participate in a group hierarchy \u2013 so nodes and elements can be selected using the group name assigned to the interface. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The slot keyword may be used to specify a slot to use for the new group. The default slot is Default . Note that by default a group string that matches the interface name will be assigned in slot Default .; merge-nodes <b>: If set to false , this causes each face to have separate interface nodes created on each corner. So a typical quadrilateral surface will have four separate interface nodes at the same surface. This has advantages and disadvantages. Advantages are that sharp corners are handled automatically so separate interfaces do not have to be created. Another is The increased interface node density gives more reliable results under large-strain motion (especially along edges). Disadvantages are that the computational overhead is much larger (about 4x in FLAC3D), and because each node is calculating penetration independently (and will in general choose different target faces) the normal penetration tends to be discontinuous. On average this tends to work out, but plots of penetration and dependent quantities (normal stress, shear stress if at the friction limit, etc.) will be much less smooth. The default value is true .; separate [{new-side-origin <v> | new-side-group <s> | clear-attach}]: If the optional separate keyword is used, then internal zone faces are selected by the range. The list of selected faces is then automatically separated (as with zone separate ) and interface elements placed on one side. The following keywords are available following the separate keyword: Options: new-side-origin <v>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with face normal vectors pointing toward v . If not specified, the value used will be the origin (0,0,0) in 3D or (0,0) in 2D.; new-side-group <s>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with zones belonging to the specified group. This overwrites New-Side-Origin .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default an existing attach condition causes an error."
+          "description": "Interface elements are created on all surface zone faces that are within the specified range. An error will occur if interface elements from that interface already exist on the selected faces. Options: break-angle <f>: When interface elements are applied to faces, by default nodes at shared corners are shared. If the angle between the interface elements (or zone faces) is greater than this angle then duplicate nodes will be created at the same point. This behaves better because two different nodes using two different normal vectors will be in action at a corner. The default break angle is 30 degrees. The angle is input in degrees.; break-slot <s>: In addition to the break-angle and merge-nodes keywords the user may indicate a slot to detect when interface nodes should not be shared across elements. If the break-slot keyword is used interface nodes are not shared if the face or zone groups that host the interface elements are different in the slot indicated. Note that Any may be specified indicating that any difference in group assignments will indicate that nodes should not be shared.; group <s>[slot <slot>]: The newly created interface will be assigned group the s . Use of the group logic is described in Groups . This command may take the form zone interface node \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. Note that interface nodes and elements participate in a group hierarchy – so nodes and elements can be selected using the group name assigned to the interface. An interface node may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The slot keyword may be used to specify a slot to use for the new group. The default slot is Default . Note that by default a group string that matches the interface name will be assigned in slot Default .; merge-nodes <b>: If set to false , this causes each face to have separate interface nodes created on each corner. So a typical quadrilateral surface will have four separate interface nodes at the same surface. This has advantages and disadvantages. Advantages are that sharp corners are handled automatically so separate interfaces do not have to be created. Another is The increased interface node density gives more reliable results under large-strain motion (especially along edges). Disadvantages are that the computational overhead is much larger (about 4x in FLAC3D), and because each node is calculating penetration independently (and will in general choose different target faces) the normal penetration tends to be discontinuous. On average this tends to work out, but plots of penetration and dependent quantities (normal stress, shear stress if at the friction limit, etc.) will be much less smooth. The default value is true .; separate [{new-side-origin <v> | new-side-group <s> | clear-attach}]: If the optional separate keyword is used, then internal zone faces are selected by the range. The list of selected faces is then automatically separated (as with zone separate ) and interface elements placed on one side. The following keywords are available following the separate keyword: Options: new-side-origin <v>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with face normal vectors pointing toward v . If not specified, the value used will be the origin (0,0,0) in 3D or (0,0) in 2D.; new-side-group <s>: Specifies which side of the separate faces the interfaces are placed on. It chooses the side with zones belonging to the specified group. This overwrites New-Side-Origin .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default an existing attach condition causes an error."
         },
         {
           "name": "element",
@@ -117,7 +117,7 @@
         },
         {
           "name": "name",
-          "syntax": "name <s >",
+          "syntax": "name <s>",
           "description": "Interface name. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
         }
       ]

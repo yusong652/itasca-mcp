@@ -15,7 +15,7 @@
       "keywords": [
         {
           "name": "brick",
-          "syntax": "brick <f1><f2>[<f3><f4>[<f5><f6>]]",
+          "syntax": "brick <f1> <f2> [<f3> <f4> [<f5> <f6>]]",
           "description": "Create a regular six-sided “brick-shaped” region can be created with the brick keyword. The region extends in the \\(x\\) direction from f1 to f2 , and similarly if \\(y\\) and \\(z\\) extents are optionally supplied. The \\(y\\) and \\(z\\) extents are set equal to \\(x\\) if not supplied."
         },
         {
@@ -25,12 +25,12 @@
         },
         {
           "name": "face-group",
-          "syntax": "face-group <s1>[slot <s2>]",
+          "syntax": "face-group <s1> [slot <s2>]",
           "description": "Sub-keyword of polyhedron, not a first-slot keyword (live 3DEC 9.7.47 rejects it at the first slot). Define a polyhedron by specifying its sides. Multiple face keywords must be used in this command to define all sides of single polyhedron. Note that the line continuation symbol (…) may be used without limit — but do not continue a line from within a vector that defines a vertex. Define a face of the polyhedron. Three to n vertices must be entered per face, in clockwise order (looking at the block face from outside the block). Optionally, blocks derived from a face are assigned to joint-set i . Optionally, blocks derived from a face are assigned to face-group s1 in slot s2 ."
         },
         {
           "name": "group",
-          "syntax": "group <s1>[slot <s2>]",
+          "syntax": "group <s1> [slot <s2>]",
           "description": "The block is assigned to group s1 when group is used. Group s1 is assigned to slot s2 if the optional slot keyword follows; it is assigned to the slot named Default if not. Use of the group logic is described in the i Group section."
         },
         {
@@ -40,7 +40,7 @@
         },
         {
           "name": "tetrahedron",
-          "syntax": "tetrahedron <v1><v2><v3><v4>[joint-set <i1><i2><i3><i4>]",
+          "syntax": "tetrahedron <v1> <v2> <v3> <v4> [joint-set <i1> <i2> <i3> <i4>]",
           "description": "Create a tetrahedral block from four specified vertices. The vertices can be given in any order. This command provides a simpler method for creating 4-sided blocks as compared to polyhedron face commands. Specify joint-set id using joint-set i ."
         },
         {
@@ -60,12 +60,12 @@
         },
         {
           "name": "polyhedron",
-          "syntax": "polyhedron face <v>... [joint-set <i>] [face-group <s1> [slot <s2>]] ...",
+          "syntax": "polyhedron face <v> ... [joint-set <i>] [face-group <s1> [slot <s2>]] ...",
           "description": "Define a block by specifying its faces. Three to n vertices per face keyword, in clockwise order looking at the face from outside the block. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
         },
         {
           "name": "prism",
-          "syntax": "prism face-1 <v>... face-2 <v>... | table-1 <s> table-2 <s> axis <v> [nonplanar <b>]",
+          "syntax": "prism face-1 <v> ... face-2 <v> ... | table-1 <s> table-2 <s> axis <v> [nonplanar <b>]",
           "description": "Create a prism-shaped block from two faces, both planar and convex unless nonplanar is true. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration. Options: face-1 <v1><v2><v3>...: Define the first face with n vertices, in either a clockwise or counterclockwise order.; face-2 <v1><v2><v3>...: Define the second face with the same number of vertices as in face-1 , and specified in the same order.; axis <v1><v2>: Specify a line that defines the orientation axis of the prism (used with table-1 and table-2 only).; table-1 <s1>: Use table s1 to create the first face.; table-2 <s2>: Use table s2 to create the second face.; nonplanar <b>: Allow the specified planes to be non-planar if set true ; default is false ."
         },
         {
@@ -82,7 +82,7 @@
       "keywords": [
         {
           "name": "brick",
-          "syntax": "brick <f1><f2>[<f3><f4>[<f5><f6>]]",
+          "syntax": "brick <f1> <f2> [<f3> <f4> [<f5> <f6>]]",
           "description": "Create a regular six-sided “brick-shaped” region can be created with the brick keyword. The region extends in the \\(x\\) direction from f1 to f2 , and similarly if \\(y\\) and \\(z\\) extents are optionally supplied. The \\(y\\) and \\(z\\) extents are set equal to \\(x\\) if not supplied."
         },
         {
@@ -92,22 +92,22 @@
         },
         {
           "name": "polyhedron",
-          "syntax": "polyhedron {face [joint-set <i>] [face-group <s1> [slot <s2>]] <v1> <v2> <v3>...}",
+          "syntax": "polyhedron {face [joint-set <i>] [face-group <s1> [slot <s2>]] <v1> <v2> <v3> ...}",
           "description": "Define a polyhedron by specifying its sides. Multiple face keywords must be used in this command to define all sides of single polyhedron. Note that the line continuation symbol (…) may be used without limit — but do not continue a line from within a vector that defines a vertex. Options: face [joint-set <i>] [face-group <s1>[slot <s2>]] <v1><v2><v3>...: Define a face of the polyhedron. Three to n vertices must be entered per face, in clockwise order (looking at the block face from outside the block). Blocks derived from a face are assigned to joint-set i if supplied. Similarly, blocks derived from a face are assigned to face-group s1 if supplied. Define a block by specifying its faces. Three to n vertices per face keyword, in clockwise order looking at the face from outside the block. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
         },
         {
           "name": "group",
-          "syntax": "group <s1>[slot <s2>]",
+          "syntax": "group <s1> [slot <s2>]",
           "description": "The block is assigned to group s1 when group is used. Group s1 is assigned to slot s2 if the optional slot keyword follows; it is assigned to the slot named Default if not. Use of the group logic is described in the i Group section."
         },
         {
           "name": "prism",
-          "syntax": "prism {face-1 <v1> <v2> <v3>... | face-2 <v1> <v2> <v3>... | axis <v1> <v2> | table-1 <s1> | table-2 <s2> | nonplanar <b>} ...",
+          "syntax": "prism {face-1 <v1> <v2> <v3> ... | face-2 <v1> <v2> <v3> ... | axis <v1> <v2> | table-1 <s1> | table-2 <s2> | nonplanar <b>} ...",
           "description": "Create a prism-shaped block from two faces, both of which must be planar and convex unless nonplanar is set to true . Specify faces using either face-1 and face-2 or the combination of table-1 , table-2 , and axis . Options: face-1 <v1><v2><v3>...: Define the first face with n vertices, in either a clockwise or counterclockwise order.; face-2 <v1><v2><v3>...: Define the second face with the same number of vertices as in face-1 , and specified in the same order.; axis <v1><v2>: Specify a line that defines the orientation axis of the prism (used with table-1 and table-2 only).; table-1 <s1>: Use table s1 to create the first face.; table-2 <s2>: Use table s2 to create the second face.; nonplanar <b>: Allow the specified planes to be non-planar if set true ; default is false . Create a prism-shaped block from two faces, both planar and convex unless nonplanar is true. Verified as a first-slot keyword by live 3DEC 9.7.47 enumeration."
         },
         {
           "name": "tetrahedron",
-          "syntax": "tetrahedron <v1><v2><v3><v4>[joint-set <i1><i2><i3><i4>]",
+          "syntax": "tetrahedron <v1> <v2> <v3> <v4> [joint-set <i1> <i2> <i3> <i4>]",
           "description": "Create a tetrahedral block from four specified vertices. The vertices can be given in any order. This command provides a simpler method for creating 4-sided blocks as compared to polyhedron face commands. Specify joint-set id using joint-set i ."
         },
         {
