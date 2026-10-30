@@ -853,7 +853,9 @@ def test_item_list_is_not_shadowed_by_a_sibling_list() -> None:
     assert {i["name"] for i in items} >= {"mohr-coulomb", "null", "imass"}
     assert "density" not in {i.get("name") for i in items}
     # the other category shapes still resolve
-    assert len(ReferenceLoader.get_item_list("range-elements", None, software="mpoint")) == 22
+    assert (
+        len(ReferenceLoader.get_item_list("range-elements", None, software="mpoint")) == 31
+    )  # 22 + the 9 elements verified on material points (2026-10-31)
     assert len(ReferenceLoader.get_item_list("joint-models", None, software="3dec")) == 9
     assert len(ReferenceLoader.get_item_list("contact-models", None, software="pfc")) == 26
 
