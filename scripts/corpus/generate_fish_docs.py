@@ -284,6 +284,42 @@ def manual_description(doc_root: Path, doc: str) -> str | None:
     return plain or None
 
 
+# The manual anchors one page section per intrinsic and documents the vector and
+# tensor components on the .x / .xx entry only, so ball.pos.y, zone.stress.xy and
+# their kind reach here without a description. Their meaning is the sibling's with
+# the component letter swapped; derive it when the sibling text names the component.
+_COMPONENT_WORDS = (
+    "{c}-component",
+    "{c}-value",
+    r"\({c}\)",
+    "{c} component",
+    "{c}-direction",
+    "{c} direction",
+    "{c}-coordinate",
+)
+
+
+def derive_component_descriptions(entries: list[dict[str, Any]]) -> None:
+    by_name = {e["name"]: e for e in entries}
+    for e in entries:
+        if e.get("description"):
+            continue
+        head, _, comp = e["name"].rpartition(".")
+        base = "x" if comp in ("y", "z") else "xx" if comp in ("xy", "xz", "yy", "yz", "zz", "yx", "zx", "zy") else None
+        if base is None:
+            continue
+        sibling = by_name.get(f"{head}.{base}", {}).get("description")
+        if not sibling:
+            continue
+        words = [w.format(c=base) for w in _COMPONENT_WORDS]
+        if not any(w in sibling for w in words):
+            continue
+        text = sibling
+        for w in words:
+            text = text.replace(w, w.replace(base, comp))
+        e["description"] = text
+
+
 def load_hints() -> dict[str, Any]:
     """The frozen curated data (see HINTS_FILE); every section is optional."""
     data: dict[str, Any] = json.loads(HINTS_FILE.read_text(encoding="utf-8"))
@@ -428,6 +464,7 @@ def main() -> None:
             if name in signature_fixes:
                 rec["note"] = signature_fixes[name]["note"]
             entries.append(rec)
+        derive_component_descriptions(entries)
         target_dir = RES / ("_common" if scope == "common" else scope) / "fish_docs"
         target_dir.mkdir(parents=True, exist_ok=True)
         path = target_dir / FILE_NAME_OVERRIDES.get(ns, f"{ns}.json")
