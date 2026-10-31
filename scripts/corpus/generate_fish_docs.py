@@ -95,8 +95,8 @@ ENGINE_VERSIONS = {
 KERNEL = [
     "accumulator", "array", "boolean", "cluster", "code", "comp", "creep", "data", "dfn", "domain",
     "dynamic", "false", "file", "float", "fluid", "fracture", "geom", "global", "group", "index", "int",
-    "io", "list", "map", "math", "matrix", "mech", "memory", "null", "range", "string", "struct",
-    "structure", "table", "tensor", "thermal", "time", "true", "type", "vector", "version",
+    "io", "list", "mail", "map", "math", "matrix", "mech", "memory", "null", "range", "socket", "string", "struct",
+    "structure", "system", "table", "tensor", "thermal", "time", "true", "type", "vector", "version",
 ]  # fmt: skip
 FAMILIES: dict[str, list[str]] = {
     # contact/fragment are documented under common/ but only PFC can model with them.
@@ -114,9 +114,6 @@ FAMILIES: dict[str, list[str]] = {
     "massflow": ["massflow"],
 }
 EXCLUDED: dict[str, str] = {
-    "mail": "e-mail utilities; outside modelling scope (same policy as itasca.util)",
-    "socket": "raw socket utilities; outside modelling scope (same policy as itasca.util)",
-    "system": "OS/process utilities; outside modelling scope (same policy as itasca.util)",
     "extrude": "FISH face of the FLAC 7.0 extruder GUI tool (sketch in 9.x); interactive-only",
 }
 
