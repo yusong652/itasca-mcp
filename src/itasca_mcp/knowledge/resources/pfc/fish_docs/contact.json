@@ -1045,7 +1045,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the full-update flag of the contact. Undocumented: the 9.8 manual page exists but is empty."
+      "description": "Get/set the full-update flag of the contact. Undocumented: the 9.8 manual page exists but is empty, and on PFC3D 9.8.54 it read 0 on an inactive ball-ball contact and assigning true left it 0."
     },
     {
       "name": "contact.gap",
@@ -2515,5 +2515,10 @@
       "dimension": "3D",
       "description": "Get the z-component of the contact velocity vector."
     }
-  ]
+  ],
+  "notes": {
+    "fluid-flow pieces": [
+      "The *.fluid.* intrinsics address the fluid pieces that exist once 'model configure fluid-flow' is set: on PFC3D 9.8.54 two balls and a six-wall box gave ball.fluid.num 2, wall.fluid.num 6 and wall.fluid.facet.num 12, each fluid piece pointing back at its mechanical piece (ball.fluid.ball.mech, wall.fluid.wall, wall.fluid.facet.facet). There is a 'wall fluid' command family (attribute, extra, group, initialize, list, property) but no 'ball fluid' one; none of the fluid intrinsics has a manual page, so their descriptions are inferred from signatures."
+    ]
+  }
 }

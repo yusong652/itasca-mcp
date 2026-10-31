@@ -1881,7 +1881,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the maximum search distance used by the block.field.get functions when looking up data at a position."
+      "description": "Get/set the largest distance from the query position to the nearest data point (gridpoint or zone) for which the block.field.get functions return a value; farther positions return 0. Default 0.001 (3DEC 9.8.54): a point 0.2 outside the model read 0 until dist.max was raised to 0.5, and a point 7 units away needed 100."
     },
     {
       "name": "block.field.effective",
@@ -3212,7 +3212,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the force increment at the block gridpoint, or one of its components."
+      "description": "Get/set the force-increment vector stored at the block gridpoint, or one of its components. On 3DEC 9.8.54 it stayed zero through cycling with gravity and applied forces, and a value set from FISH survived a cycle unchanged; what consumes it is undocumented."
     },
     {
       "name": "block.gp.force.inc.x",
@@ -5043,7 +5043,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Undocumented in the 9.8 manual; returns a float. The name suggests the unbalanced force magnitude tracked by model solve."
+      "description": "Get the total force magnitude that normalises the average unbalanced-force ratio during model solve: block.solfob / block.solfmag equals block.mech.ratio.avg (checked on 3DEC 9.8.54 after 21 and 221 cycles)."
     },
     {
       "name": "block.solfob",
@@ -5056,7 +5056,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Undocumented in the 9.8 manual; returns a float. The name suggests the force objective tracked by model solve."
+      "description": "Get the total out-of-balance force used by model solve as the numerator of the average force ratio: block.solfob / block.solfmag equals block.mech.ratio.avg (checked on 3DEC 9.8.54). It is not the sum of block.gp.force.unbal magnitudes."
     },
     {
       "name": "block.subcontact.apini",

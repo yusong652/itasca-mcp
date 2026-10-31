@@ -28,7 +28,7 @@
       },
       "doc": null,
       "family": "kinematics",
-      "description": "Get/set the orientation of the ball in axis-angle form, or one of its components. The value accumulates the rotation each cycle."
+      "description": "Get/set the orientation of the ball in axis-angle form, or one of its components. It is tracked only with model orientation-tracking on: a ball spinning at 1 rad/s about z reached (0,0,0.1) after 0.1 s and kept accumulating from a value set in FISH (PFC3D 9.8.54; it stayed zero with tracking off)."
     },
     {
       "name": "ball.axis.angle.x",
@@ -46,7 +46,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the x-component of the axis-angle orientation of the ball."
+      "description": "Get/set the x-component of the axis-angle orientation of the ball (tracked only with model orientation-tracking on)."
     },
     {
       "name": "ball.axis.angle.y",
@@ -64,7 +64,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the y-component of the axis-angle orientation of the ball."
+      "description": "Get/set the y-component of the axis-angle orientation of the ball (tracked only with model orientation-tracking on)."
     },
     {
       "name": "ball.axis.angle.z",
@@ -82,7 +82,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the z-component of the axis-angle orientation of the ball."
+      "description": "Get/set the z-component of the axis-angle orientation of the ball (tracked only with model orientation-tracking on)."
     },
     {
       "name": "ball.cfd.ball",
@@ -3385,5 +3385,10 @@
       "doc": "common/docproject/source/manual/coupling/schemes/ballzone/fish/ballzone_utilities/fish_ball.zone.gp.typeid.html#function:ball.zone.gp.typeid",
       "description": "Get the ball-zone coupled gridpoint type number. The typeid can be used to uniquely identify ball-zone coupled gridpoint FISH pointers from any other type of FISH pointer."
     }
-  ]
+  ],
+  "notes": {
+    "fluid-flow pieces": [
+      "The *.fluid.* intrinsics address the fluid pieces that exist once 'model configure fluid-flow' is set: on PFC3D 9.8.54 two balls and a six-wall box gave ball.fluid.num 2, wall.fluid.num 6 and wall.fluid.facet.num 12, each fluid piece pointing back at its mechanical piece (ball.fluid.ball.mech, wall.fluid.wall, wall.fluid.facet.facet). There is a 'wall fluid' command family (attribute, extra, group, initialize, list, property) but no 'ball fluid' one; none of the fluid intrinsics has a manual page, so their descriptions are inferred from signatures."
+    ]
+  }
 }

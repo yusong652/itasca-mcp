@@ -53,7 +53,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the orientation of the wall in axis-angle form, or one of its components. The value accumulates the rotation each cycle."
+      "description": "Get/set the orientation of the wall in axis-angle form, or one of its components. It is tracked only with model orientation-tracking on: a ball spinning at 1 rad/s about z reached (0,0,0.1) after 0.1 s and kept accumulating from a value set in FISH (PFC3D 9.8.54; it stayed zero with tracking off)."
     },
     {
       "name": "wall.axis.angle.x",
@@ -71,7 +71,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the x-component of the axis-angle orientation of the wall."
+      "description": "Get/set the x-component of the axis-angle orientation of the wall (tracked only with model orientation-tracking on)."
     },
     {
       "name": "wall.axis.angle.y",
@@ -89,7 +89,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the y-component of the axis-angle orientation of the wall."
+      "description": "Get/set the y-component of the axis-angle orientation of the wall (tracked only with model orientation-tracking on)."
     },
     {
       "name": "wall.axis.angle.z",
@@ -107,7 +107,7 @@
         "9.0": true
       },
       "doc": null,
-      "description": "Get/set the z-component of the axis-angle orientation of the wall."
+      "description": "Get/set the z-component of the axis-angle orientation of the wall (tracked only with model orientation-tracking on)."
     },
     {
       "name": "wall.closed",
@@ -3126,7 +3126,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get/set whether the servo on the wall is active."
+      "description": "Get/set whether the servo on the wall is active ('wall servo activate')."
     },
     {
       "name": "wall.servo.force",
@@ -3149,7 +3149,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get/set the servo target force of the wall, or one of its components."
+      "description": "Get/set the servo target force of the wall ('wall servo force'), or one of its components."
     },
     {
       "name": "wall.servo.force.x",
@@ -3222,7 +3222,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get the current servo gain of the wall."
+      "description": "Get the current servo gain of the wall. It is computed during cycling from the wall's contact stiffness (0 until the servo has cycled with contacts; 30.3 after 20 cycles in a one-ball test on PFC3D 9.8.54)."
     },
     {
       "name": "wall.servo.gainfactor",
@@ -3241,7 +3241,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get/set the servo gain factor of the wall."
+      "description": "Get/set the servo gain factor of the wall ('wall servo gain-factor')."
     },
     {
       "name": "wall.servo.gainupdate",
@@ -3260,7 +3260,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get/set the number of cycles between servo gain updates for the wall."
+      "description": "Get/set the number of cycles between servo gain updates for the wall ('wall servo gain-update')."
     },
     {
       "name": "wall.servo.vmax",
@@ -3279,7 +3279,7 @@
       },
       "doc": null,
       "family": "servo control",
-      "description": "Get/set the maximum servo velocity of the wall."
+      "description": "Get/set the maximum servo velocity of the wall ('wall servo velocity-max'); the wall moves at this speed while the target force is far off."
     },
     {
       "name": "wall.spin",
@@ -4813,5 +4813,10 @@
       "family": "vertices",
       "description": "Get the vertices of a wall. Use the loop foreach construct to iterate through the list."
     }
-  ]
+  ],
+  "notes": {
+    "fluid-flow pieces": [
+      "The *.fluid.* intrinsics address the fluid pieces that exist once 'model configure fluid-flow' is set: on PFC3D 9.8.54 two balls and a six-wall box gave ball.fluid.num 2, wall.fluid.num 6 and wall.fluid.facet.num 12, each fluid piece pointing back at its mechanical piece (ball.fluid.ball.mech, wall.fluid.wall, wall.fluid.facet.facet). There is a 'wall fluid' command family (attribute, extra, group, initialize, list, property) but no 'ball fluid' one; none of the fluid intrinsics has a manual page, so their descriptions are inferred from signatures."
+    ]
+  }
 }
