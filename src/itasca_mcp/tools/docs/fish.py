@@ -33,7 +33,8 @@ _ENTRY_FIELDS = (
 
 def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
     """'' -> namespaces; 'ball' -> children; 'ball.pos' -> its signature plus ball.pos.x/y/z."""
-    node = normalize_input(path, lowercase=True)
+    # Drop empty dotted segments ('ball.pos.' -> 'ball.pos') the way python_api browse does.
+    node = ".".join(part for part in normalize_input(path, lowercase=True).split(".") if part)
     if not node:
         return build_ok(_browse_root(software, version))
 
