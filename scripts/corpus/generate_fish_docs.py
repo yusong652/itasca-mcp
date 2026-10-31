@@ -323,7 +323,14 @@ def derive_component_descriptions(entries: list[dict[str, Any]]) -> None:
 def load_hints() -> dict[str, Any]:
     """The frozen curated data (see HINTS_FILE); every section is optional."""
     data: dict[str, Any] = json.loads(HINTS_FILE.read_text(encoding="utf-8"))
-    for key in ("family_by_name", "description_by_name", "engine_index_extras", "namespace_notes", "signature_fixes"):
+    for key in (
+        "family_by_name",
+        "description_by_name",
+        "inferred_description_by_name",
+        "engine_index_extras",
+        "namespace_notes",
+        "signature_fixes",
+    ):
         data.setdefault(key, {})
     return data
 
@@ -366,7 +373,8 @@ def main() -> None:
     static = {v: read_static(p) for v, p in STATIC.items()}
     curated = load_hints()
     hints: dict[str, str] = curated["family_by_name"]
-    descriptions: dict[str, str] = curated["description_by_name"]
+    # Page text (description_by_name) over text inferred for names that have no page.
+    descriptions: dict[str, str] = {**curated["inferred_description_by_name"], **curated["description_by_name"]}
     # Live-table signatures the manual and a live call contradict: {name: {signature, note}}.
     signature_fixes: dict[str, dict[str, str]] = curated["signature_fixes"]
 
