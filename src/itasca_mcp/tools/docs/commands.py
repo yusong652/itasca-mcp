@@ -475,10 +475,26 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
 
     extras: dict[str, Any] = {}
     if not matches:
+        examples = ", ".join(_example_commands(software, version))
         extras["hints"] = [
             "Try broader keywords (for example: create, property, solve).",
-            "Try category + action (for example: ball create, contact property).",
+            f"Try category + action (for example: {examples}).",
         ]
         categories = CommandLoader.load_index(software=software).get("categories", {})
         extras["available_categories"] = sorted(categories.keys())
     return matches, extras
+
+
+_EXAMPLE_CATEGORY = {"pfc": "ball", "flac": "zone", "3dec": "block", "mpoint": "mpoint", "massflow": "massflow"}
+
+
+def _example_commands(software: str, version: str) -> list[str]:
+    """Two real commands on the engine's main object: 'ball create, ball generate' on PFC, 'zone ...' on FLAC."""
+    commands = _commands(software, version)
+    category = _EXAMPLE_CATEGORY.get(software)
+    own = sorted((c for c in commands if c.category == category), key=lambda c: c.group is not None)
+    names = [c.name for c in own] or [c.name for c in commands]
+    if not names:
+        return ["model new", "model solve"]
+    picked = [n for n in names if n.rsplit(" ", 1)[-1] in ("create", "generate", "list", "property")]
+    return (picked or names)[:2]
