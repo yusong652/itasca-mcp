@@ -104,6 +104,7 @@ FAMILIES: dict[str, list[str]] = {
     "flac": [
         "attach",
         "building_blocks",
+        "extrude",
         "gp",
         "interface",
         "sketch",
@@ -113,9 +114,7 @@ FAMILIES: dict[str, list[str]] = {
     "mpoint": ["mpoint"],
     "massflow": ["massflow"],
 }
-EXCLUDED: dict[str, str] = {
-    "extrude": "FISH face of the FLAC 7.0 extruder GUI tool (sketch in 9.x); interactive-only",
-}
+EXCLUDED: dict[str, str] = {}
 
 # Names are dotted identifiers; a few carry a hyphen (massflow.marker.moved-day, block.lf-next).
 ROW = re.compile(r"^\s*([A-Za-z_][\w.-]*)\s*\|\s*(.+?)\s*$")

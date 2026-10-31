@@ -52,7 +52,7 @@ async def test_browse_fish_root_contract() -> None:
     assert {"ball", "wall", "contact", "math", "list"} <= names
     assert "block" not in names and "zone" not in names  # other engines' families stay out
     assert all({"name", "scope", "count"} <= set(e) for e in data["entries"])
-    assert "extrude" in data["summary"]["excluded_namespaces"]  # the 7.0 extruder GUI face stays out
+    assert not data["summary"].get("excluded_namespaces")  # every live namespace is now served
     assert data["summary"]["count"] == len(data["entries"])
 
 
