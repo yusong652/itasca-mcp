@@ -427,3 +427,21 @@ async def test_browse_python_api_tolerates_empty_dotted_segments(path: str) -> N
     assert payload["ok"] is True
     assert payload["data"]["source"] == "python_api"
     assert payload["data"]["action"] == "browse"
+
+
+@pytest.mark.asyncio
+async def test_query_reference_finds_a_model_property_by_its_keyword() -> None:
+    # Properties live in property_groups, not sub_items; each gets its own document
+    # named by its browse path so an exact keyword such as 'pb_ten' ranks first.
+    payload = _parse_tool_payload(
+        await mcp.call_tool("itasca_query_doc", {"software": "pfc", "query": "pb_ten", "source": "reference"})
+    )
+    top = payload["data"]["entries"][0]
+
+    assert payload["ok"] is True
+    assert top["path"] == "contact-models linearpbond pb_ten"
+    assert top["property"] == "pb_ten"
+
+    merged = _parse_tool_payload(await mcp.call_tool("itasca_query_doc", {"software": "pfc", "query": "pb_ten"}))
+    assert merged["data"]["entries"][0]["path"] == "contact-models linearpbond pb_ten"
+    assert merged["data"]["entries"][0]["source"] == "reference"
