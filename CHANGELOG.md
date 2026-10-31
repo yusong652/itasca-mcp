@@ -45,6 +45,32 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-11-01
+
+### Added
+
+- **Model properties are searchable.** `itasca_query_doc` on the reference
+  tree (and the cross-source query) now returns a model property by its own
+  keyword: `pb_ten` ranks `contact-models linearpbond pb_ten` first, and
+  `kn` or `fric` lists every model that carries the property, each hit a
+  path `itasca_browse_doc` serves and tagged with `property`. Covers the
+  PFC contact models, the shared constitutive models, the 3DEC joint models,
+  the FLAC / 3DEC structural properties and the FLAC interface doc. Before,
+  properties had no search document of their own and the corpus's
+  `search_keywords` were never indexed, so `pb_ten` surfaced
+  `data tensor delete`.
+
+### Fixed
+
+- `itasca_browse_doc` with `source="python_api"` no longer fails on a path
+  with an empty dotted segment (`itasca.`, `itasca.ball.`, `itasca..ball`);
+  the segment is dropped and the path resolves as if it were absent. The
+  failure escaped the tool envelope as a bare `string index out of range`.
+- A command's `versions` list, and the `available_versions` in the
+  `command_unavailable_for_version` error, no longer include a version whose
+  corpus entry is marked unavailable. Browsing `ball accumulate-stress` at
+  PFC 6.0 reported the command missing while listing 6.0 as available.
+
 ## [0.11.0] - 2026-10-31
 
 ### Added
