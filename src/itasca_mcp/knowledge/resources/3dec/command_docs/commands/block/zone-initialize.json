@@ -20,7 +20,7 @@
       "keywords": [
         {
           "name": "extra",
-          "syntax": "extra <i><a>[zoneinitializeoptions]",
+          "syntax": "extra <i> <a> [zoneinitializeoptions]",
           "description": "extra variable for array index i"
         },
         {
@@ -30,32 +30,32 @@
         },
         {
           "name": "stress-xx",
-          "syntax": "stress-xx <f>[zoneinitializeoptions]",
+          "syntax": "stress-xx <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(xx\\) -stress (total)."
         },
         {
           "name": "stress-xy",
-          "syntax": "stress-xy <f>[zoneinitializeoptions]",
+          "syntax": "stress-xy <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(xy\\) -stress (total)."
         },
         {
           "name": "stress-xz",
-          "syntax": "stress-xz <f>[zoneinitializeoptions]",
+          "syntax": "stress-xz <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(xz\\) -stress (total)"
         },
         {
           "name": "stress-yy",
-          "syntax": "stress-yy <f>[zoneinitializeoptions]",
+          "syntax": "stress-yy <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(yy\\) -stress (total)"
         },
         {
           "name": "stress-yz",
-          "syntax": "stress-yz <f>[zoneinitializeoptions]",
+          "syntax": "stress-yz <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(yz\\) -stress (total)"
         },
         {
           "name": "stress-zz",
-          "syntax": "stress-zz <f>[zoneinitializeoptions]",
+          "syntax": "stress-zz <f> [zoneinitializeoptions]",
           "description": "Initialize zone \\(zz\\) -stress (total)"
         },
         {
@@ -65,7 +65,7 @@
         },
         {
           "name": "gradient",
-          "syntax": "gradient <v>[origin <v>]",
+          "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a gradient to the scalar-value provided."
         },
         {
@@ -85,8 +85,8 @@
         },
         {
           "name": "stress-principal",
-          "syntax": "stress-principal keyword ...",
-          "description": "Initialize stresses via principal values and directions. First-slot keyword verified by live 3DEC 9.7.47 enumeration."
+          "syntax": "stress-principal [{direction-intermediate <v> [zoneinitializeoptions] | direction-maximum <v> [zoneinitializeoptions] | direction-minimum <v> [zoneinitializeoptions] | intermediate <f> [zoneinitializeoptions] | maximum <f> [zoneinitializeoptions] | minimum <f> [zoneinitializeoptions]} ...]",
+          "description": "Initialize stresses via principal values and directions. First-slot keyword verified by live 3DEC 9.7.47 enumeration. Options: direction-intermediate <v>[zoneinitializeoptions]: Direction of intermediate principal stress.; direction-maximum <v>[zoneinitializeoptions]: Direction of maximum principal stress.; direction-minimum <v>[zoneinitializeoptions]: Direction of minimum principal stress.; intermediate <f>[zoneinitializeoptions]: Intermediate principal stress magnitude.; maximum <f>[zoneinitializeoptions]: Maximum (most postitive) principal stress.; minimum <f>[zoneinitializeoptions]: Minimum (most negative) principal stress."
         }
       ],
       "examples": []
@@ -101,14 +101,14 @@
           "description": "The plasticity indicators for tetrahedrons are set to i . Normally the value of i used is 0 in order to reset the failure indicators."
         },
         {
-          "name": "zz",
-          "syntax": "zz <f>",
-          "description": "xx -component of stress xy -component of stress xz -component of stress yy -component of stress yz -component of stress zz -component of stress"
+          "name": "stress",
+          "syntax": "stress [{xx <f> | xy <f> | xz <f> | yy <f> | yz <f> | zz <f>} ...]",
+          "description": "Initialize the full stress tensor (xx yy zz xy xz yz). First-slot keyword verified by live 3DEC 9.7.47 enumeration. Options: xx <f>: xx -component of stress; xy <f>: xy -component of stress; xz <f>: xz -component of stress; yy <f>: yy -component of stress; yz <f>: yz -component of stress; zz <f>: zz -component of stress"
         },
         {
-          "name": "minimum",
-          "syntax": "minimum <f>",
-          "description": "Direction of intermediate principal stress. Direction of maximum principal stress. Direction of minimum principal stress. Intermediate principal stress magnitude. Maximum (most postitive) principal stress. Minimum (most negative) principal stress."
+          "name": "stress-principal",
+          "syntax": "stress-principal [{direction-intermediate <v> | direction-maximum <v> | direction-minimum <v> | intermediate <f> | maximum <f> | minimum <f>} ...]",
+          "description": "Initialize stresses via principal values and directions. First-slot keyword verified by live 3DEC 9.7.47 enumeration. Options: direction-intermediate <v>: Direction of intermediate principal stress.; direction-maximum <v>: Direction of maximum principal stress.; direction-minimum <v>: Direction of minimum principal stress.; intermediate <f>: Intermediate principal stress magnitude.; maximum <f>: Maximum (most postitive) principal stress.; minimum <f>: Minimum (most negative) principal stress."
         },
         {
           "name": "stress-xx",
@@ -147,7 +147,7 @@
         },
         {
           "name": "gradient",
-          "syntax": "gradient <v>[origin <v>]",
+          "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a gradient to the scalar-value provided."
         },
         {
@@ -162,21 +162,14 @@
         },
         {
           "name": "extra",
-          "syntax": "extra <i><a>[zoneinitializeoptions]",
+          "syntax": "extra <i> <a> [zoneinitializeoptions]",
           "description": "extra variable for array index i"
-        },
-        {
-          "name": "stress",
-          "syntax": "stress <f1> <f2> <f3> <f4> <f5> <f6> [modifier ...]",
-          "description": "Initialize the full stress tensor (xx yy zz xy xz yz). First-slot keyword verified by live 3DEC 9.7.47 enumeration."
-        },
-        {
-          "name": "stress-principal",
-          "syntax": "stress-principal keyword ...",
-          "description": "Initialize stresses via principal values and directions. First-slot keyword verified by live 3DEC 9.7.47 enumeration."
         }
       ],
       "examples": []
     }
-  }
+  },
+  "notes": [
+    "'[zoneinitializeoptions]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (state, add, gradient, multiply, vary, stress)."
+  ]
 }

@@ -1,0 +1,57 @@
+{
+  "category": "sketch",
+  "search_keywords": [
+    "segment",
+    "node",
+    "transform",
+    "sketch",
+    "segment-node"
+  ],
+  "description": "Transform segment-nodes. The geometric transformation may be a translation and/or scaling. If combined, the operations are performed in the order: scale translate . The scale operation is always performed with respect to origin . All nodes are transformed if < range > is not supplied.",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "available": false,
+      "reason": "Not listed in the official FLAC3D 7.0 contents command index.",
+      "source_urls": [
+        "https://docs.itascacg.com/flac3d700/contents.html"
+      ],
+      "target_version": "7.0",
+      "note": "The 2D sketch 'segment'/'segment-node' objects are new in the 9.x sketch workflow; in 7.0 the equivalent 2D geometry is built with 'extrude point' and 'extrude edge' commands.",
+      "command": "extrude segment-node transform"
+    },
+    "9.0": {
+      "command": "sketch segment-node transform",
+      "syntax": "sketch segment-node transform keyword [range]",
+      "keywords": [
+        {
+          "name": "tolerance-merge",
+          "syntax": "tolerance-merge <f> [range]",
+          "description": "Set the merge tolerance. When supplied, this will be used as a tolerance for merging nodes."
+        },
+        {
+          "name": "origin",
+          "syntax": "origin <v3>",
+          "description": "Set the origin (node center) of the transformation v3 (3D vector in local ( \\(u,v,w\\) ) system)."
+        },
+        {
+          "name": "scale",
+          "syntax": "scale <f1> [<f2>]",
+          "description": "Scale the nodes; f1 = scale factor along the the horizontal coordinate, f2 = scale factor along the vertical coordinate."
+        },
+        {
+          "name": "translate",
+          "syntax": "translate <v3>",
+          "description": "Translate nodes. nodes are moved by v3 (3D vector in local ( \\(u,v,w\\) ) system)."
+        },
+        {
+          "name": "control-point",
+          "syntax": "control-point <b>",
+          "description": "Move/freeze control points. When true (the default), control points are moved when the points they are associated with are moved. Control points will be “frozen” when false ."
+        }
+      ]
+    }
+  }
+}

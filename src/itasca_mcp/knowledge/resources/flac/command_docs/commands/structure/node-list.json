@@ -12,13 +12,13 @@
   "versions": {
     "7.0": {
       "command": "structure node list",
-      "syntax": "structure node list keyword <range>",
+      "syntax": "structure node list keyword [range]",
       "description": "Show information about structural element nodes in the range.",
       "keywords": [
         {
           "name": "apply",
-          "syntax": "apply <keyword>",
-          "description": "list values of applied conditions on the node. One of the following keywords can be supplied to specify which apply condition is listed."
+          "syntax": "apply [{force | moment}]",
+          "description": "list values of applied conditions on the node. One of the following keywords can be supplied to specify which apply condition is listed. Options: force: applied force on the node in the local system. This is the default if no keyword is specified.; moment: applied moments on the node in the local system"
         },
         {
           "name": "apply-force",
@@ -42,8 +42,8 @@
         },
         {
           "name": "displacement",
-          "syntax": "displacement <keyword>",
-          "description": "list both the translation and rotational (angular) displacements of the node. The following keywords, if present, allow the selection of the coordinate system these are displayed in:"
+          "syntax": "displacement [{global | local}]",
+          "description": "list both the translation and rotational (angular) displacements of the node. The following keywords, if present, allow the selection of the coordinate system these are displayed in: Options: global: displays values in the global coordinate system; local: displays values in the local coordinate system; this is the default if not specified"
         },
         {
           "name": "displacement-global",
@@ -82,8 +82,8 @@
         },
         {
           "name": "position",
-          "syntax": "position <keyword>",
-          "description": "position of the nodes in the range. There are two different position values possible; the following keywords (if present) allow you to select which position is displayed. By default, the reference position is used."
+          "syntax": "position [{current | reference}]",
+          "description": "position of the nodes in the range. There are two different position values possible; the following keywords (if present) allow you to select which position is displayed. By default, the reference position is used. Options: current: the current position of the node, which is updated from the starting (or reference) position even in small strain mode; reference: the reference position of the node, which is updated only in large-strain mode. In small-strain mode, this is the starting location of the node and does not change."
         },
         {
           "name": "position-current",
@@ -111,7 +111,7 @@
         },
         {
           "name": "velocity",
-          "syntax": "velocity <keyword>",
+          "syntax": "velocity [keyword]",
           "description": "translational and rotational (angular) velocities are in terms of the global or nodal local (default) coordinate systems. The following keywords, if present, allow the selection of the coordinate system these are displayed in:"
         },
         {
@@ -141,8 +141,8 @@
       "keywords": [
         {
           "name": "acceleration",
-          "syntax": "acceleration",
-          "description": "List translational and rotational acceleration at each node (node-local frame)."
+          "syntax": "acceleration [{global | local}]",
+          "description": "List translational and rotational acceleration at each node (node-local frame). Options: global: values are expressed in the global system; local: values are expressed in the node-local system. This is the default if no keyword is specified."
         },
         {
           "name": "apply",
@@ -161,8 +161,8 @@
         },
         {
           "name": "displacement",
-          "syntax": "displacement",
-          "description": "List translational and rotational displacement at each node (node-local frame)."
+          "syntax": "displacement [{global | local}]",
+          "description": "List translational and rotational displacement at each node (node-local frame). Options: global: values are expressed in the global system; local: values are expressed in the node-local system. This is the default if no keyword is specified."
         },
         {
           "name": "fix-local",
@@ -186,8 +186,8 @@
         },
         {
           "name": "position",
-          "syntax": "position",
-          "description": "List node positions (reference configuration, global frame), plus hidden/selected flags."
+          "syntax": "position [{current | reference}]",
+          "description": "List node positions (reference configuration, global frame), plus hidden/selected flags. Options: current: current position of the node, which is updated from the starting (or reference) position even in small-strain mode; reference: reference position of the node, which is updated only in large-strain mode. In small-strain mode, this is the initial location of the node and does not change. The reference position corresponds to the nodal position at the time that the stiffness matrices of all finite elements that use the node were formed."
         },
         {
           "name": "ratio-target",
@@ -211,13 +211,13 @@
         },
         {
           "name": "unbalanced-force",
-          "syntax": "unbalanced-force",
-          "description": "List the out-of-balance force and moment at each node (node-local frame)."
+          "syntax": "unbalanced-force {global | local}",
+          "description": "List the out-of-balance force and moment at each node (node-local frame). Options: global: values are expressed in the global system; local: values are expressed in the node-local system. This is the default if no keyword is specified."
         },
         {
           "name": "velocity",
-          "syntax": "velocity",
-          "description": "List translational and rotational velocity at each node (node-local frame)."
+          "syntax": "velocity [{global | local}]",
+          "description": "List translational and rotational velocity at each node (node-local frame). Options: global: values are expressed in the global system; local: values are expressed in the node-local system. This is the default if no keyword is specified."
         },
         {
           "name": "group",

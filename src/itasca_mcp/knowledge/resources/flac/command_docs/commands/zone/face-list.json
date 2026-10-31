@@ -12,13 +12,13 @@
   "versions": {
     "7.0": {
       "command": "zone face list",
-      "syntax": "zone face list keyword <range>",
+      "syntax": "zone face list keyword [range]",
       "description": "List information about zone faces.",
       "keywords": [
         {
           "name": "apply",
-          "syntax": "apply <keyword>",
-          "description": "Values and types of applied conditions at zone faces are listed. If the optional keyword is omitted, conditions is used as the default."
+          "syntax": "apply [{conditions | items | items-gridpoints}]",
+          "description": "Values and types of applied conditions at zone faces are listed. If the optional keyword is omitted, conditions is used as the default. Options: conditions: List the apply conditions that have been created on faces. This does not list each condition on each face, rather it lists the separate apply conditions that have been created. For example the command zone face apply stress-normal would create one entry no matter how many individual faces were involved. The range phrase is not used for this keyword.; items: Display the conditions that are being applied to each face in the range.; items-gridpoints: Displays a list of conditions that are being applied to each gridpoint in the range, caused by conditions applied to connected faces. The range phrase for this keyword applies to the list of all gridpoints."
         },
         {
           "name": "apply-conditions",
@@ -60,9 +60,9 @@
       "syntax": "zone face list keyword [range]",
       "keywords": [
         {
-          "name": "apply-items-gridpoints",
-          "syntax": "items-gridpoints",
-          "description": "Values and types of applied conditions at zone faces are listed. If the optional keyword is omitted, conditions is used as the default. List the apply conditions that have been created on faces. This does not list each condition on each face, rather it lists the separate apply conditions that have been created. For example the command zone face apply stress-normal would create one entry no matter how many individual faces were involved. The range phrase is not used for this keyword. Display the conditions that are being applied to each face in the range. Displays a list of conditions that are being applied to each gridpoint in the range, caused by conditions applied to connected faces. The range phrase for this keyword applies to the list of all gridpoints."
+          "name": "apply",
+          "syntax": "apply [{conditions | items | items-gridpoints}]",
+          "description": "Values and types of applied conditions at zone faces are listed. If the optional keyword is omitted, conditions is used as the default. Options: conditions: List the apply conditions that have been created on faces. This does not list each condition on each face, rather it lists the separate apply conditions that have been created. For example the command zone face apply stress-normal would create one entry no matter how many individual faces were involved. The range phrase is not used for this keyword.; items: Display the conditions that are being applied to each face in the range.; items-gridpoints: Displays a list of conditions that are being applied to each gridpoint in the range, caused by conditions applied to connected faces. The range phrase for this keyword applies to the list of all gridpoints. list the apply conditions assigned to faces in the range"
         },
         {
           "name": "groups",
@@ -73,11 +73,6 @@
           "name": "information",
           "syntax": "information",
           "description": "For each face in the range, lists the gridpoint ids that it is connected to, the zones on either side, the hide and select status, and any group assignments that exist."
-        },
-        {
-          "name": "apply",
-          "syntax": "apply",
-          "description": "list the apply conditions assigned to faces in the range"
         }
       ]
     }

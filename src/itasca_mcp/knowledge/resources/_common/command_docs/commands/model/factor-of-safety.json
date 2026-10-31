@@ -21,7 +21,7 @@
         },
         {
           "name": "bracket",
-          "syntax": "bracket <f1><f2>",
+          "syntax": "bracket <f1> <f2>",
           "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
         },
         {
@@ -40,9 +40,9 @@
           "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "interface",
+          "syntax": "interface {include <s> | exclude <s>}",
+          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
           "name": "list",
@@ -85,9 +85,9 @@
           "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 200,000 ."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "zone",
+          "syntax": "zone {include <s> | exclude <s>}",
+          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         }
       ],
       "examples": []
@@ -102,13 +102,13 @@
           "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "block-zone",
+          "syntax": "block-zone {include <s> | exclude <s>}",
+          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
           "name": "bracket",
-          "syntax": "bracket <f1><f2>",
+          "syntax": "bracket <f1> <f2>",
           "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
         },
         {
@@ -132,14 +132,14 @@
           "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "interface",
+          "syntax": "interface {include <s> | exclude <s>}",
+          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which joint properties to change during analysis. The user may include or exclude specific joint properties from the list. By default the list of properties being included is scohesion and sfriction . Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "joint",
+          "syntax": "joint {include <s> | exclude <s>}",
+          "description": "Specify which joint properties to change during analysis. The user may include or exclude specific joint properties from the list. By default the list of properties being included is scohesion and sfriction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
           "name": "list",
@@ -182,9 +182,9 @@
           "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 ."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "zone",
+          "syntax": "zone {include <s> | exclude <s>}",
+          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         }
       ]
     },
@@ -198,13 +198,13 @@
           "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "block-zone",
+          "syntax": "block-zone {include <s> | exclude <s>} 3DEC",
+          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
           "name": "bracket",
-          "syntax": "bracket <f1><f2>",
+          "syntax": "bracket <f1> <f2>",
           "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
         },
         {
@@ -228,14 +228,14 @@
           "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. All interfaces properties are excluded by default. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "interface",
+          "syntax": "interface FLAC {include <s> | exclude <s>}",
+          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. All interfaces properties are excluded by default. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which joint properties to change during analysis. This refers for zone joints in FLAC2D and FLAC3D or joints in 3DEC . The user may include or exclude specific joint properties from the list. By default, in 3DEC the list of properties being included is cohesion and friction . By default, in FLAC2D and FLAC3D all zone joint properties are excluded . Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "joint",
+          "syntax": "joint {include <s> | exclude <s>}",
+          "description": "Specify which joint properties to change during analysis. This refers for zone joints in FLAC2D and FLAC3D or joints in 3DEC . The user may include or exclude specific joint properties from the list. By default, in 3DEC the list of properties being included is cohesion and friction . By default, in FLAC2D and FLAC3D all zone joint properties are excluded . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
           "name": "list",
@@ -278,14 +278,14 @@
           "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 ."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "zone",
+          "syntax": "zone {include <s> | exclude <s>} FLAC3D",
+          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         },
         {
-          "name": "exclude",
-          "syntax": "exclude <s>",
-          "description": "Specify which zone-joint properties to change during analysis. The user may include or exclude specific interface properties from the list. All zone-joint properties are excluded by default. To include or exclude more than one property, repeat the keyword, e.g. model factor-of-safety zone-joint include 'friction' include 'cohesion' Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed. Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+          "name": "zone-joint",
+          "syntax": "zone-joint {include <s> | exclude <s>} FLAC",
+          "description": "Specify which zone-joint properties to change during analysis. The user may include or exclude specific interface properties from the list. All zone-joint properties are excluded by default. To include or exclude more than one property, repeat the keyword, e.g. model factor-of-safety zone-joint include 'friction' include 'cohesion' Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
         }
       ],
       "examples": []

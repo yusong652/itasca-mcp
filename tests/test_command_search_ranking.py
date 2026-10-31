@@ -9,7 +9,7 @@ merely mention the keyword in a short description.
 
 import pytest
 
-from itasca_mcp.knowledge.query import APISearch, CommandSearch
+from itasca_mcp.knowledge.query import CommandSearch, PythonAPISearch
 from itasca_mcp.knowledge.search.keyword_matcher import word_match_quality
 from itasca_mcp.knowledge.search.scoring.bm25_scorer import BM25Scorer
 
@@ -69,7 +69,7 @@ def test_exact_name_queries_still_rank_first(query: str) -> None:
         ("zone export", "zone export", "flac"),
         ("mpoint initialize", "mpoint initialize", "mpoint"),
         # ... but a query with more words is not hijacked by the shorter name
-        ("block face apply remove", "block face-apply-remove", "3dec"),
+        ("block face apply remove", "block face apply-remove", "3dec"),
         ("block create", "block create", "3dec"),
         ("mpoint create", "mpoint create", "mpoint"),
     ],
@@ -99,9 +99,12 @@ def test_initialize_stress_keeps_both_setters_on_top(query: str, software: str) 
         ("zone history displacement", "zone history", "flac"),
         # 3DEC block family
         ("block velocity", "block initialize", "3dec"),
-        ("block mohr-coulomb", "block zone-cmodel", "3dec"),
+        ("block mohr-coulomb", "block zone cmodel", "3dec"),
         ("block cohesion", "block property", "3dec"),
         ("block history displacement", "block history", "3dec"),
+        # keyword names of commands without curated search_keywords
+        ("damping", "block mechanical", "3dec"),
+        ("rayleigh damping", "block mechanical", "3dec"),
     ],
 )
 def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expected: str, software: str) -> None:
@@ -114,7 +117,7 @@ def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expec
         # `mpoint initialize` is MPoint's attribute setter (no `mpoint attribute`)
         ("mpoint velocity", "mpoint initialize"),
         ("mpoint density", "mpoint initialize"),
-        ("mpoint pore pressure", "mpoint initialize"),
+        ("mpoint pore pressure", "mpoint pore-pressure"),
         ("mpoint stress", "mpoint initialize"),
         # constitutive model names belong to `mpoint cmodel`, property names to `mpoint property`
         ("mpoint mohr-coulomb", "mpoint cmodel"),
@@ -123,7 +126,7 @@ def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expec
         ("mpoint cohesion", "mpoint property"),
         # recorded quantities
         ("mpoint history displacement", "mpoint history"),
-        ("node history", "mpoint node-history"),
+        ("node history", "mpoint node history"),
     ],
 )
 def test_mpoint_keyword_vocabulary_queries_rank_owner_first(query: str, expected: str) -> None:
@@ -154,4 +157,25 @@ def test_partial_matching_direction() -> None:
 
 
 def test_nonsense_query_yields_no_api_results() -> None:
-    assert APISearch.search("definitelynonexistentkeyword", top_k=5, software="pfc") == []
+    assert PythonAPISearch.search("definitelynonexistentkeyword", top_k=5, software="pfc") == []
+
+
+@pytest.mark.parametrize(
+    ("query", "expected", "software"),
+    [
+        # An engine message pasted as the query lands on the page that quotes it, not on
+        # the command whose name carries the rarest word.
+        ("Default contact stiffness not set", "block contact material-table", "3dec"),
+        (
+            "cannot change block to deformable after INSITU or face triangulation",
+            "block contact generate-subcontacts",
+            "3dec",
+        ),
+        # A command name quoted inside a sibling's description is a cross-reference, not a
+        # quotation: the sibling does not overtake the command the query names.
+        ("zone face apply stress", "zone face apply", "flac"),
+        ("block zone generate edgelength", "block zone generate", "3dec"),
+    ],
+)
+def test_quoted_engine_text_ranks_quoting_page_first(query: str, expected: str, software: str) -> None:
+    assert _top(query, software=software, version="9.0")[0] == expected

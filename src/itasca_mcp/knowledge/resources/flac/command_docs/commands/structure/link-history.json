@@ -18,7 +18,7 @@
   "versions": {
     "7.0": {
       "command": "structure link history",
-      "syntax": "structure link history <name s > keyword",
+      "syntax": "structure link history [name <s>] keyword",
       "description": "Samples relative displacement or force from a single degree-of-freedom in a structural element link.",
       "keywords": [
         {
@@ -83,22 +83,22 @@
         },
         {
           "name": "component-id",
-          "syntax": "component-id i",
+          "syntax": "component-id <i>",
           "description": "the particular link is identified by the component ID number. If this keyword is used position should not be used."
         },
         {
           "name": "position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "the particular link is identified by (v) coordinates (the nearest node is taken). If this keyword is used, component-id should not be used."
         },
         {
           "name": "side",
-          "syntax": "side i",
+          "syntax": "side <i>",
           "description": "specifies which side of the node indicated in position should be used to find the link. By default, side 1 is used."
         },
         {
           "name": "name",
-          "syntax": "name <s >",
+          "syntax": "name <s>",
           "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
         }
       ],
@@ -209,5 +209,8 @@
       ],
       "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
     }
-  }
+  },
+  "notes": [
+    "'[linkhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, position, side, name)."
+  ]
 }

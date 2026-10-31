@@ -5,15 +5,15 @@
     "group",
     "zone"
   ],
-  "description": "Adds a group name s to zone faces included in the optional range . Use of the group logic is described in Groups . This command may take the form zone face group \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name.",
+  "description": "Adds a group name s to zone faces included in the optional range . Use of the group logic is described in Groups . This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "7.0": {
       "command": "zone face group",
-      "syntax": "zone face group s keyword... <range>",
-      "description": "Adds a group name s to zone faces included in the optional range. Use of the group logic is described in Groups. This command may take the form zone face group \"slotname = groupname\" \u2014 quotation marks required, spaces at equals sign ignored \u2014 where slotname is the slot assignment and groupname is the group name.",
+      "syntax": "zone face group <s> keyword... [range]",
+      "description": "Adds a group name s to zone faces included in the optional range. Use of the group logic is described in Groups. This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
       "keywords": [
         {
           "name": "fluid",
@@ -42,7 +42,7 @@
         },
         {
           "name": "slot",
-          "syntax": "slot s",
+          "syntax": "slot <s>",
           "description": "The group is assigned to the slot named s. If not supplied, the group is assigned to the default slot, which is the one named default."
         },
         {
@@ -63,7 +63,7 @@
     },
     "9.0": {
       "command": "zone face group",
-      "syntax": "zone face group <s>keyword ... [range]",
+      "syntax": "zone face group <s> keyword ... [range]",
       "keywords": [
         {
           "name": "internal",
@@ -81,9 +81,9 @@
           "description": "The group is assigned to the slot named s . If not supplied, the group is assigned to the default slot, which is the one named default ."
         },
         {
-          "name": "surface-thermal",
-          "syntax": "thermal",
-          "description": "If specified, then the range looks only at surface faces. Zones with a non-null fluid model are scanned to determine the surface faces. Zones with a non-null mechanical model are scanned to determine the surface faces. By default, if more than one mechanical , thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model. Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified."
+          "name": "surface",
+          "syntax": "surface {fluid | mechanical | or | thermal}",
+          "description": "If specified, then the range looks only at surface faces. Options: fluid: Zones with a non-null fluid model are scanned to determine the surface faces.; mechanical: Zones with a non-null mechanical model are scanned to determine the surface faces.; or: By default, if more than one mechanical , thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model.; thermal: Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified."
         }
       ]
     }

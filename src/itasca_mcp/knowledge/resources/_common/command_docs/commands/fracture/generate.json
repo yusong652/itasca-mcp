@@ -15,9 +15,9 @@
       "syntax": "fracture generate keyword",
       "keywords": [
         {
-          "name": "geometry",
-          "syntax": "geometry <s1>[<s2>]",
-          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge. Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
+          "name": "connectivity-threshold",
+          "syntax": "connectivity-threshold {box <fxl> <fxu> <fyl> <fyu> <fzl> <fzu> | geometry <s1> [<s2>]}",
+          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Options: box <fxl><fxu><fyl><fyu><fzl><fzu>: Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge.; geometry <s1>[<s2>]: Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
         },
         {
           "name": "dfn",
@@ -31,7 +31,7 @@
         },
         {
           "name": "fish-stop",
-          "syntax": "fish-stop <s>a...a",
+          "syntax": "fish-stop <s> <a1> ... <an>",
           "description": "Generation is terminated if the FISH function s , with arguments \\(a_{1}...a_{n}\\) , returns a nonzero integer."
         },
         {
@@ -41,7 +41,7 @@
         },
         {
           "name": "generation-box",
-          "syntax": "generation-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>",
+          "syntax": "generation-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
           "description": "Generate fractures with positions (i.e., centers) within this rectangular generation region. By default, the generation-box is set to the model domain extent."
         },
         {
@@ -51,13 +51,13 @@
         },
         {
           "name": "modify",
-          "syntax": "modify <s>a...a",
+          "syntax": "modify <s> <a1> ... <an>",
           "description": "The FISH function s is called after each fracture is generated. The first argument of s is filled with the fracture pointer; this FISH function must take at least one argument. Additional arguments can be specified as \\(a_{1}...a_{n}\\) . The FISH function can be used to access and/or change the fracture parameters. If the function returns the “remove” string, the fracture is deleted and removed from the generation process."
         },
         {
-          "name": "geometry",
-          "syntax": "geometry <s>",
-          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword. Specify the location of the ending of the scanline. Cannot be given with the geometry keyword. Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
+          "name": "p10",
+          "syntax": "p10 <f> {begin <v> | end <v> | geometry <s>}",
+          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Options: begin <v>: Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword.; end <v>: Specify the location of the ending of the scanline. Cannot be given with the geometry keyword.; geometry <s>: Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
         },
         {
           "name": "percolation",
@@ -71,7 +71,7 @@
         },
         {
           "name": "tolerance-box",
-          "syntax": "tolerance-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>",
+          "syntax": "tolerance-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
           "description": "The tolerance box is used to truncate fractures. This box may be larger or smaller than the generation box, but cannot exceed the model domain extent. It is used for density or percolation calculations if one of these conditions represents the specified termination criteria. The generation box ( generation-box ) (or the model domain, if the generation box exceeds it) is used if the tolerance box is not specified."
         }
       ],
@@ -82,9 +82,9 @@
       "syntax": "fracture generate keyword ...",
       "keywords": [
         {
-          "name": "geometry",
-          "syntax": "geometry <s1>[<s2>]",
-          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge. Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
+          "name": "connectivity-threshold",
+          "syntax": "connectivity-threshold {box <fxl> <fxu> <fyl> <fyu> <fzl> <fzu> | geometry <s1> [<s2>]}",
+          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Options: box <fxl><fxu><fyl><fyu><fzl><fzu>: Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge.; geometry <s1>[<s2>]: Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
         },
         {
           "name": "dfn",
@@ -98,7 +98,7 @@
         },
         {
           "name": "fish-stop",
-          "syntax": "fish-stop <s><a><1><...a><n>",
+          "syntax": "fish-stop <s> <a1> ... <an>",
           "description": "Generation is terminated if the FISH function s , with arguments \\(a_{1}...a_{n}\\) , returns a nonzero integer."
         },
         {
@@ -108,7 +108,7 @@
         },
         {
           "name": "generation-box",
-          "syntax": "generation-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>",
+          "syntax": "generation-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
           "description": "Generate fractures with positions (i.e., centers) within this rectangular generation region. By default, the generation-box is set to the model domain extent."
         },
         {
@@ -118,13 +118,13 @@
         },
         {
           "name": "modify",
-          "syntax": "modify <s><a><1><...a><n>",
+          "syntax": "modify <s> <a1> ... <an>",
           "description": "The FISH function s is called after each fracture is generated. The first argument of s is filled with the fracture pointer; this FISH function must take at least one argument. Additional arguments can be specified as \\(a_{1}...a_{n}\\) . The FISH function can be used to access and/or change the fracture parameters. If the function returns the “remove” string, the fracture is deleted and removed from the generation process."
         },
         {
-          "name": "geometry",
-          "syntax": "geometry <s>",
-          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword. Specify the location of the ending of the scanline. Cannot be given with the geometry keyword. Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
+          "name": "p10",
+          "syntax": "p10 <f> {begin <v> | end <v> | geometry <s>} ...",
+          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Options: begin <v>: Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword.; end <v>: Specify the location of the ending of the scanline. Cannot be given with the geometry keyword.; geometry <s>: Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
         },
         {
           "name": "percolation",
@@ -138,7 +138,7 @@
         },
         {
           "name": "tolerance-box",
-          "syntax": "tolerance-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>",
+          "syntax": "tolerance-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
           "description": "The tolerance box is used to truncate fractures. This box may be larger or smaller than the generation box, but cannot exceed the model domain extent. It is used for density or percolation calculations if one of these conditions represents the specified termination criteria. The generation box ( generation-box ) (or the model domain, if the generation box exceeds it) is used if the tolerance box is not specified."
         }
       ],
@@ -149,9 +149,9 @@
       "syntax": "fracture generate keyword ...",
       "keywords": [
         {
-          "name": "geometry",
-          "syntax": "geometry <s1>[<s2>]",
-          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge. Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
+          "name": "connectivity-threshold",
+          "syntax": "connectivity-threshold {box <fxl> <fxu> <fyl> <fyu> <fzl> <fzu> z-components are 3D only | geometry <s1> [<s2>]}",
+          "description": "Generation terminates at the connectivity threshold (i.e., the instant one can traverse all dimensions of a spatial region via fracture intersections). Options: box <fxl><fxu><fyl><fyu><fzl><fzu>z-components are 3D only: Generation terminates the instant one can traverse fracture intersections from each edge of the specified box to each other edge.; geometry <s1>[<s2>]: Generation terminates when the DFN is connected to all {edges in 2D; polygons in 3D} of the geometry set s1 . If s2 is given, generation terminates when the DFN connects at least one {edge in 2D; polygon in 3D} of the geometry set s1 to at least one {edge in 2D; polygon in 3D} of the geometry set s2 ."
         },
         {
           "name": "dfn",
@@ -165,7 +165,7 @@
         },
         {
           "name": "fish-stop",
-          "syntax": "fish-stop <s><a><1><...a><n>",
+          "syntax": "fish-stop <s> <a1> ... <an>",
           "description": "Generation is terminated if the FISH function s , with arguments \\(a_{1}...a_{n}\\) , returns a nonzero integer."
         },
         {
@@ -175,7 +175,7 @@
         },
         {
           "name": "generation-box",
-          "syntax": "generation-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>z-components are 3D only",
+          "syntax": "generation-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> z-components are 3D only",
           "description": "Generate fractures with positions (i.e., centers) within this rectangular generation region. By default, the generation-box is set to the model domain extent."
         },
         {
@@ -185,13 +185,13 @@
         },
         {
           "name": "modify",
-          "syntax": "modify <s><a><1><...a><n>",
+          "syntax": "modify <s> <a1> ... <an>",
           "description": "The FISH function s is called after each fracture is generated. The first argument of s is filled with the fracture pointer; this FISH function must take at least one argument. Additional arguments can be specified as \\(a_{1}...a_{n}\\) . The FISH function can be used to access and/or change the fracture parameters. If the function returns the “remove” string, the fracture is deleted and removed from the generation process."
         },
         {
-          "name": "geometry",
-          "syntax": "geometry <s>",
-          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword. Specify the location of the ending of the scanline. Cannot be given with the geometry keyword. Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
+          "name": "p10",
+          "syntax": "p10 <f> {begin <v> | end <v> | geometry <s>} ...",
+          "description": "Generation terminates when P10 measured along either a specified scanline (using the begin and end ) or a number of scanlines (using the geometry keyword) for the first time. Options: begin <v>: Specify the location of the beginning of the scanline. Cannot be given with the geometry keyword.; end <v>: Specify the location of the ending of the scanline. Cannot be given with the geometry keyword.; geometry <s>: Specify that the scanlines come from the edges in a geometry set. Generation terminates when the average P10 measured along the set of scanlines defined by the geometry set edges reaches or exceeds f for the first time. Cannot be used with the begin and end keyword."
         },
         {
           "name": "percolation",
@@ -205,7 +205,7 @@
         },
         {
           "name": "tolerance-box",
-          "syntax": "tolerance-box <fxmin><fxmax><fymin><fymax><fzmin><fzmax>z-components are 3D only",
+          "syntax": "tolerance-box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> z-components are 3D only",
           "description": "The tolerance box is used to truncate fractures. This box may be larger or smaller than the generation box, but cannot exceed the model domain extent. It is used for density or percolation calculations if one of these conditions represents the specified termination criteria. The generation box ( generation-box ) (or the model domain, if the generation box exceeds it) is used if the tolerance box is not specified."
         }
       ],

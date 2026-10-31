@@ -21,7 +21,7 @@
   "versions": {
     "7.0": {
       "command": "structure node history",
-      "syntax": "structure node history <name s > keyword",
+      "syntax": "structure node history [name <s>] keyword",
       "description": "Samples nodal responses. These include displacement, velocity, position, and out-of-balance force.",
       "keywords": [
         {
@@ -131,7 +131,7 @@
         },
         {
           "name": "component-id",
-          "syntax": "component-id i",
+          "syntax": "component-id <i>",
           "description": "the particular node is identified by the component ID number. If this keyword is used, position should not be used."
         },
         {
@@ -141,7 +141,7 @@
         },
         {
           "name": "position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "the particular node is identified by (v) coordinates (the nearest node is taken). If this keyword is used, component-id should not be used."
         },
         {
@@ -176,7 +176,7 @@
         },
         {
           "name": "name",
-          "syntax": "name <s >",
+          "syntax": "name <s>",
           "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
         }
       ],
@@ -367,5 +367,8 @@
       ],
       "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
     }
-  }
+  },
+  "notes": [
+    "'[nodehistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, local, position, acceleration-x, acceleration-y, acceleration-z, acceleration-rotational-x, acceleration-rotational-y, acceleration-rotational-z, name)."
+  ]
 }

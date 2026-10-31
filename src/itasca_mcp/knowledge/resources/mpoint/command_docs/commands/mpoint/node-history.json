@@ -6,14 +6,14 @@
     "history",
     "velocity"
   ],
-  "description": "Primary keywords: velocity Adds a history of a background node value. Quantities that can be recorded include velocity. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional id keyword followed by an integer id, or 2) an additional position keyword followed by a position vector v must be given to specify the node whose attribute will be recorded.",
+  "description": "Adds a history of a background node value. Quantities that can be recorded include velocity. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional id keyword followed by an integer id, or 2) an additional position keyword followed by a position vector v must be given to specify the node whose attribute will be recorded.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint node history",
-      "syntax": "mpoint node history name sid > keyword ...",
+      "syntax": "mpoint node history [name <sid>] keyword ...",
       "keywords": [
         {
           "name": "velocity",
@@ -47,22 +47,22 @@
         },
         {
           "name": "kwd:id",
-          "syntax": "id i",
+          "syntax": "id <i>",
           "description": "Record the history of background node with ID i."
         },
         {
           "name": "kwd:index",
-          "syntax": "index i",
+          "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra), this specifies the index that should be used."
         },
         {
           "name": "kwd:log",
-          "syntax": "log b",
+          "syntax": "log <b>",
           "description": "If on, the returned number is the base 10 log of the absolute value of the original value. The default is off."
         },
         {
           "name": "kwd:position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Record the history of background node either containing or closest to position v."
         },
         {
@@ -173,5 +173,8 @@
       ],
       "examples": []
     }
-  }
+  },
+  "notes": [
+    "Hidden keyword: `mpoint node ?` on MPoint3D 9.8.54 does not list history, but `mpoint node history ?` answers with name and velocity, and the 9.8 manual has no page for it."
+  ]
 }

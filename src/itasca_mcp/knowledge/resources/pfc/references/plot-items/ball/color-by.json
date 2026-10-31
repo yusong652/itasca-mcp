@@ -24,7 +24,7 @@
         "moment-applied",
         "moment-unbalanced"
       ],
-      "notes": "Defaults to magnitude. Append 'color-options scaled ramp rainbow minimum automatic maximum automatic' for rainbow scale."
+      "notes": "Defaults to magnitude. For a rainbow scale add 'color-options scaled ramp rainbow minimum automatic maximum automatic', never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by)."
     },
     {
       "keyword": "color-by numeric-attribute",
@@ -40,15 +40,15 @@
         "density",
         "mass"
       ],
-      "notes": "Append 'color-options scaled ramp rainbow minimum automatic maximum automatic' for rainbow scale"
+      "notes": "For a rainbow scale add 'color-options scaled ramp rainbow minimum automatic maximum automatic', never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by)."
     },
     {
       "keyword": "color-by text-attribute",
       "description": "Color by a text/categorical attribute",
       "syntax": "color-by text-attribute \"<name>\"",
       "examples": [
-        "color-by text-attribute \"id\" color-options named maximum-names 1000000 name-controls true",
-        "color-by text-attribute \"group\" 'Any' color-options named maximum-names 1000000 name-controls true"
+        "color-by text-attribute \"id\" color-options named maximum-names 1000000 name-controls true legend active on",
+        "color-by text-attribute \"group\" 'Any' color-options named maximum-names 1000000 name-controls true legend active on"
       ],
       "available_attributes": [
         "id",
@@ -67,6 +67,6 @@
     }
   ],
   "notes": [
-    "PFC3D 9.7 behavior change (Batch P1): the attribute-name slot is a free-form String - create accepts ANY name silently (no error at create or export), so typos cannot be caught from the CLI. The attribute lists here are verified on PFC2D 7.00 (which rejected invalid names at create). Live 9.7 mode grammar confirmed: {numeric,tensor,text,vector} x {attribute,property} plus add-* overlay variants."
+    "PFC3D 9.7: the attribute-name slot is a free-form String - create accepts ANY name silently (no error at create or export), so typos cannot be caught from the CLI. The attribute lists here are verified on PFC2D 7.00 (which rejected invalid names at create). Live 9.7 mode grammar confirmed: {numeric,tensor,text,vector} x {attribute,property} plus add-* overlay variants."
   ]
 }

@@ -688,8 +688,8 @@ def main() -> None:
             },
             "notes": [
                 "References are syntax elements used within commands, not standalone commands",
-                "Use itasca_browse_commands (software='mpoint') for command syntax",
-                "Use itasca_browse_reference (software='mpoint') for reference documentation",
+                "Use itasca_browse_doc(source='commands', software='mpoint') for command syntax",
+                "Use itasca_browse_doc(source='reference', software='mpoint') for reference documentation",
             ],
         }
     top.setdefault("categories", {})["plot-items"] = {

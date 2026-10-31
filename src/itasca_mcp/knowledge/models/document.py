@@ -17,15 +17,18 @@ class DocumentType(Enum):
     - COMMAND: Itasca command documentation (e.g., "ball create", "contact property")
     - MODEL_PROPERTY: Contact model property documentation (e.g., "linear", "hertz")
     - PYTHON_API: Python SDK API documentation (e.g., "itasca.ball.create")
+    - FISH: FISH intrinsic functions (e.g., "ball.pos", "math.sqrt")
 
     Search Strategy:
     - COMMAND + MODEL_PROPERTY: Unified search via CommandSearch
-    - PYTHON_API: Independent search via APISearch
+    - PYTHON_API: Independent search via PythonAPISearch
     """
 
     COMMAND = "command"
     MODEL_PROPERTY = "model_property"
     PYTHON_API = "python_api"
+    FISH = "fish"
+    REFERENCE = "reference"
 
 
 @dataclass

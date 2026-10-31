@@ -25,7 +25,7 @@
   ],
   "python_sdk_alternative": {
     "available": false,
-    "workaround": "itasca.command('model history mechanical ratio-average') - Python SDK does not provide direct history creation. For monitoring in Python, manually compute and store values in loops:\n\n# Example: track metrics over cycles\nhistory_data = []\nfor _ in range(100):\n    itasca.cycle(100)\n    # itasca.cycle() returns current cycle number\n    history_data.append({'cycle': itasca.cycle(), 'time': itasca.mech_age(), ...})"
+    "workaround": "itasca.command(\"model history name 'r' mechanical ratio-average\") creates the history (there is no Python call for that); itasca.history.get('r') then returns it as an (n, 2) numpy array of step and value, refreshed as cycling continues. itasca.cycle() and itasca.mech_age() read the current cycle count and mechanical time; itasca.cycle() takes no argument. Checked on 3DEC 9.8.54 (2026-10-29)."
   },
   "versions": {
     "7.0": {
@@ -33,9 +33,9 @@
       "syntax": "model history [name <s>] keyword",
       "keywords": [
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the creep process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "creep",
+          "syntax": "creep {cycles-total | time-total}",
+          "description": "Values associated with the creep process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
           "name": "damping",
@@ -43,29 +43,29 @@
           "description": "Value of global damping parameter ( 3DEC )"
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the dynamic process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles-total | time-total}",
+          "description": "Values associated with the dynamic process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "total-stored",
-          "syntax": "total-stored",
-          "description": "Values associated with energy quantities in 3DEC . The kinetic energy value in 3DEC . The potential energy value in 3DEC . The block strain in 3DEC . The excavated block strain in 3DEC . The fill strain value in 3DEC . The plastic strain value in 3DEC . The excavated block volume in 3DEC . The boundary load in 3DEC . The boundary viscous force in 3DEC . The mass damping value in 3DEC . The joint friction value in 3DEC . The joint strain value in 3DEC . The joint compressive strain value in 3DEC . The joint strain excavated value in 3DEC . The joint strain shear value in 3DEC . The joint strain tensile value in 3DEC . The excavated strain value in 3DEC . The total strain value in 3DEC (joints + zones). The total released energy value in 3DEC . The stored energy value in 3DEC ."
+          "name": "energy",
+          "syntax": "energy {block-kinetic | block-potential | block-strain | block-strain-excavated | block-strain-fill | block-strain-plastic | block-volume-excavated | boundary-load | boundary-viscous | damp-mass | joint-friction | joint-strain | joint-strain-compressive | joint-strain-excavated | joint-strain-shear | joint-strain-tensile | strain-excavated | strain-total | total-released | total-stored}",
+          "description": "Values associated with energy quantities in 3DEC . Options: block-kinetic: The kinetic energy value in 3DEC .; block-potential: The potential energy value in 3DEC .; block-strain: The block strain in 3DEC .; block-strain-excavated: The excavated block strain in 3DEC .; block-strain-fill: The fill strain value in 3DEC .; block-strain-plastic: The plastic strain value in 3DEC .; block-volume-excavated: The excavated block volume in 3DEC .; boundary-load: The boundary load in 3DEC .; boundary-viscous: The boundary viscous force in 3DEC .; damp-mass: The mass damping value in 3DEC .; joint-friction: The joint friction value in 3DEC .; joint-strain: The joint strain value in 3DEC .; joint-strain-compressive: The joint compressive strain value in 3DEC .; joint-strain-excavated: The joint strain excavated value in 3DEC .; joint-strain-shear: The joint strain shear value in 3DEC .; joint-strain-tensile: The joint strain tensile value in 3DEC .; strain-excavated: The excavated strain value in 3DEC .; strain-total: The total strain value in 3DEC (joints + zones).; total-released: The total released energy value in 3DEC .; total-stored: The stored energy value in 3DEC ."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the fluid process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "fluid",
+          "syntax": "fluid {cycles-total | time-total}",
+          "description": "Values associated with the fluid process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "unbalanced-maximum",
-          "syntax": "unbalanced-maximum",
-          "description": "Values associated with the mechanical process. The current mechanical value of convergence (see model solve mechanical convergence ). The total number of mechanical cycles. (Deprecated; use cycles-total .) The number of cycles this process has taken in this model solve command. The total number of cycles accumulated while this process is active. The value of an energy partition in PFC . Adhesive energy stored contacts. Body based work energy. Wall based work energy. Local damping energy of bodies. Viscous dashpot energy stored in contacts. Kinetic energy of bodies. Parallel bond strain energy stored in contacts. Rolling resistance slip energy stored in contacts. Rolling resistance strain energy stored in contacts. Slip energy stored in contacts. Strain energy stored in contacts. The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!! The value of the average force ratio. See the definition of ratios in ref-equilibrium-. The value of the local force ratio. See the definition of ratios in ref-equilibrium-. The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-. The accumulated time this process has done in this model solve command. The total accumulated time while this process is active. The maximum unbalanced force in any object."
+          "name": "mechanical",
+          "syntax": "mechanical {convergence | cycle | cycles | cycles-total | energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain} | ratio | ratio-average | ratio-local | ratio-maximum | time | time-total | unbalanced-maximum}",
+          "description": "Values associated with the mechanical process. Options: convergence: The current mechanical value of convergence (see model solve mechanical convergence ).; cycle: The total number of mechanical cycles. (Deprecated; use cycles-total .); cycles: The number of cycles this process has taken in this model solve command.; cycles-total: The total number of cycles accumulated while this process is active.; energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain}: The value of an energy partition in PFC . Options: energy-adhesive: Adhesive energy stored contacts.; energy-body: Body based work energy.; energy-boundary: Wall based work energy.; energy-damp: Local damping energy of bodies.; energy-dashpot: Viscous dashpot energy stored in contacts.; energy-kinetic: Kinetic energy of bodies.; energy-pbstrain: Parallel bond strain energy stored in contacts.; energy-rrslip: Rolling resistance slip energy stored in contacts.; energy-rrstrain: Rolling resistance strain energy stored in contacts.; energy-slip: Slip energy stored in contacts.; energy-strain: Strain energy stored in contacts.; ratio: The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!!; ratio-average: The value of the average force ratio. See the definition of ratios in ref-equilibrium-.; ratio-local: The value of the local force ratio. See the definition of ratios in ref-equilibrium-.; ratio-maximum: The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-.; time: The accumulated time this process has done in this model solve command.; time-total: The total accumulated time while this process is active.; unbalanced-maximum: The maximum unbalanced force in any object."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the thermal process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "thermal",
+          "syntax": "thermal {cycles-total | time-total}",
+          "description": "Values associated with the thermal process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
           "name": "timestep",
@@ -133,29 +133,29 @@
       "syntax": "model history [name <s>] keyword",
       "keywords": [
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the creep process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "creep",
+          "syntax": "creep {cycles-total | time-total}",
+          "description": "Values associated with the creep process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the dynamic process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles-total | time-total}",
+          "description": "Values associated with the dynamic process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the fluid process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "fluid",
+          "syntax": "fluid {cycles-total | time-total}",
+          "description": "Values associated with the fluid process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "unbalanced-average",
-          "syntax": "unbalanced-average",
-          "description": "Values associated with the fluid process. The total number of cycles accumulated while this process is active. The value of an energy partition in PFC . Adhesive energy stored contacts. Body based work energy. Wall based work energy. Local damping energy of bodies. Viscous dashpot energy stored in contacts. Kinetic energy of bodies. Parallel bond strain energy stored in contacts. Rolling resistance slip energy stored in contacts. Rolling resistance strain energy stored in contacts. Slip energy stored in contacts. Strain energy stored in contacts. The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!! The value of the average force ratio. See the definition of ratios in ref-equilibrium-. The value of the local force ratio. See the definition of ratios in ref-equilibrium-. The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-. The total accumulated time while this process is active. The maximum unbalanced force in any object. The average unbalanced force over all objects."
+          "name": "mechanical",
+          "syntax": "mechanical {cycles-total | energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain} | ratio | ratio-average | ratio-local | ratio-maximum | time-total | unbalanced-maximum | unbalanced-average}",
+          "description": "Values associated with the fluid process. Options: cycles-total: The total number of cycles accumulated while this process is active.; energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain}: The value of an energy partition in PFC . Options: energy-adhesive: Adhesive energy stored contacts.; energy-body: Body based work energy.; energy-boundary: Wall based work energy.; energy-damp: Local damping energy of bodies.; energy-dashpot: Viscous dashpot energy stored in contacts.; energy-kinetic: Kinetic energy of bodies.; energy-pbstrain: Parallel bond strain energy stored in contacts.; energy-rrslip: Rolling resistance slip energy stored in contacts.; energy-rrstrain: Rolling resistance strain energy stored in contacts.; energy-slip: Slip energy stored in contacts.; energy-strain: Strain energy stored in contacts.; ratio: The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!!; ratio-average: The value of the average force ratio. See the definition of ratios in ref-equilibrium-.; ratio-local: The value of the local force ratio. See the definition of ratios in ref-equilibrium-.; ratio-maximum: The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-.; time-total: The total accumulated time while this process is active.; unbalanced-maximum: The maximum unbalanced force in any object.; unbalanced-average: The average unbalanced force over all objects."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the thermal process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "thermal",
+          "syntax": "thermal {cycles-total | time-total}",
+          "description": "Values associated with the thermal process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
           "name": "timestep",
@@ -223,9 +223,9 @@
       "syntax": "model history [name <s>] keyword",
       "keywords": [
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the creep process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "creep",
+          "syntax": "creep {cycles-total | time-total}",
+          "description": "Values associated with the creep process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
           "name": "damping",
@@ -233,29 +233,29 @@
           "description": "Value of global damping parameter ( 3DEC )"
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the dynamic process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles-total | time-total}",
+          "description": "Values associated with the dynamic process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "total-stored",
-          "syntax": "total-stored",
-          "description": "Values associated with energy quantities in 3DEC . The kinetic energy value in 3DEC . The potential energy value in 3DEC . The block strain in 3DEC . The excavated block strain in 3DEC . The fill strain value in 3DEC . The plastic strain value in 3DEC . The excavated block volume in 3DEC . The boundary load in 3DEC . The boundary viscous force in 3DEC . The mass damping value in 3DEC . The joint friction value in 3DEC . The joint strain value in 3DEC . The joint compressive strain value in 3DEC . The joint strain excavated value in 3DEC . The joint strain shear value in 3DEC . The joint strain tensile value in 3DEC . The excavated strain value in 3DEC . The total strain value in 3DEC (joints + zones). The total released energy value in 3DEC . The stored energy value in 3DEC ."
+          "name": "energy",
+          "syntax": "energy {block-kinetic | block-potential | block-strain | block-strain-excavated | block-strain-fill | block-strain-plastic | block-volume-excavated | boundary-load | boundary-viscous | damp-mass | joint-friction | joint-strain | joint-strain-compressive | joint-strain-excavated | joint-strain-shear | joint-strain-tensile | strain-excavated | strain-total | total-released | total-stored}",
+          "description": "Values associated with energy quantities in 3DEC . Options: block-kinetic: The kinetic energy value in 3DEC .; block-potential: The potential energy value in 3DEC .; block-strain: The block strain in 3DEC .; block-strain-excavated: The excavated block strain in 3DEC .; block-strain-fill: The fill strain value in 3DEC .; block-strain-plastic: The plastic strain value in 3DEC .; block-volume-excavated: The excavated block volume in 3DEC .; boundary-load: The boundary load in 3DEC .; boundary-viscous: The boundary viscous force in 3DEC .; damp-mass: The mass damping value in 3DEC .; joint-friction: The joint friction value in 3DEC .; joint-strain: The joint strain value in 3DEC .; joint-strain-compressive: The joint compressive strain value in 3DEC .; joint-strain-excavated: The joint strain excavated value in 3DEC .; joint-strain-shear: The joint strain shear value in 3DEC .; joint-strain-tensile: The joint strain tensile value in 3DEC .; strain-excavated: The excavated strain value in 3DEC .; strain-total: The total strain value in 3DEC (joints + zones).; total-released: The total released energy value in 3DEC .; total-stored: The stored energy value in 3DEC ."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the fluid process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "fluid",
+          "syntax": "fluid {cycles-total | time-total}",
+          "description": "Values associated with the fluid process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
-          "name": "unbalanced-maximum",
-          "syntax": "unbalanced-maximum",
-          "description": "Values associated with the mechanical process. The current mechanical value of convergence (see model solve mechanical convergence ). The total number of mechanical cycles. (Deprecated; use cycles-total .) The number of cycles this process has taken in this model solve command. The total number of cycles accumulated while this process is active. The value of an energy partition in PFC . Adhesive energy stored contacts. Body based work energy. Wall based work energy. Local damping energy of bodies. Viscous dashpot energy stored in contacts. Kinetic energy of bodies. Parallel bond strain energy stored in contacts. Rolling resistance slip energy stored in contacts. Rolling resistance strain energy stored in contacts. Slip energy stored in contacts. Strain energy stored in contacts. The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!! The value of the average force ratio. See the definition of ratios in ref-equilibrium-. The value of the local force ratio. See the definition of ratios in ref-equilibrium-. The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-. The accumulated time this process has done in this model solve command. The total accumulated time while this process is active. The maximum unbalanced force in any object."
+          "name": "mechanical",
+          "syntax": "mechanical {convergence | cycle | cycles | cycles-total | energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain} | ratio | ratio-average | ratio-local | ratio-maximum | time | time-total | unbalanced-maximum}",
+          "description": "Values associated with the mechanical process. Options: convergence: The current mechanical value of convergence (see model solve mechanical convergence ).; cycle: The total number of mechanical cycles. (Deprecated; use cycles-total .); cycles: The number of cycles this process has taken in this model solve command.; cycles-total: The total number of cycles accumulated while this process is active.; energy {energy-adhesive | energy-body | energy-boundary | energy-damp | energy-dashpot | energy-kinetic | energy-pbstrain | energy-rrslip | energy-rrstrain | energy-slip | energy-strain}: The value of an energy partition in PFC . Options: energy-adhesive: Adhesive energy stored contacts.; energy-body: Body based work energy.; energy-boundary: Wall based work energy.; energy-damp: Local damping energy of bodies.; energy-dashpot: Viscous dashpot energy stored in contacts.; energy-kinetic: Kinetic energy of bodies.; energy-pbstrain: Parallel bond strain energy stored in contacts.; energy-rrslip: Rolling resistance slip energy stored in contacts.; energy-rrstrain: Rolling resistance strain energy stored in contacts.; energy-slip: Slip energy stored in contacts.; energy-strain: Strain energy stored in contacts.; ratio: The value of the ratio currently being used. See the definition of ratios in ref-equilibrium-. this and and next three need to be checked with DR closer to release!!!!; ratio-average: The value of the average force ratio. See the definition of ratios in ref-equilibrium-.; ratio-local: The value of the local force ratio. See the definition of ratios in ref-equilibrium-.; ratio-maximum: The value of the maximum force ratio. See the definition of ratios in ref-equilibrium-.; time: The accumulated time this process has done in this model solve command.; time-total: The total accumulated time while this process is active.; unbalanced-maximum: The maximum unbalanced force in any object."
         },
         {
-          "name": "time-total",
-          "syntax": "time-total",
-          "description": "Values associated with the thermal process. The total number of cycles accumulated while this process is active. The total accumulated time while this process is active."
+          "name": "thermal",
+          "syntax": "thermal {cycles-total | time-total}",
+          "description": "Values associated with the thermal process. Options: cycles-total: The total number of cycles accumulated while this process is active.; time-total: The total accumulated time while this process is active."
         },
         {
           "name": "timestep",

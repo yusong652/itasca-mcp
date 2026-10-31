@@ -59,6 +59,22 @@ class Software(str, Enum):
     MASSFLOW = "massflow"
 
 
+class DocSource(str, Enum):
+    """Documentation trees served by itasca_browse_doc / itasca_query_doc."""
+
+    COMMANDS = "commands"
+    PYTHON_API = "python_api"
+    FISH = "fish"
+    REFERENCE = "reference"
+
+
+def normalize_doc_source(value: "DocSource | str") -> str:
+    """Return the plain lowercase string value for a doc-source enum/string."""
+    if isinstance(value, DocSource):
+        return value.value
+    return str(value).strip().lower()
+
+
 def normalize_software_value(value: "Software | str") -> str:
     """Return the plain lowercase string value for a software enum/string."""
     if isinstance(value, Software):
@@ -131,40 +147,38 @@ def validate_task_description(value: str) -> str:
     return stripped
 
 
-# Search query for commands
-SearchQuery = Annotated[
-    str,
-    AfterValidator(validate_non_empty_string),
-    Field(
-        ...,
-        min_length=1,
-        description=(
-            "Search keywords for Itasca commands. Examples: 'ball create', "
-            "'contact property', 'model solve'. Case-insensitive."
-        ),
-    ),
-]
-
-# Python API search query
-PythonAPISearchQuery = Annotated[
-    str,
-    AfterValidator(validate_non_empty_string),
-    Field(
-        ...,
-        min_length=1,
-        description=(
-            "Search keywords for Itasca Python SDK API. Examples: 'ball pos', "
-            "'contact force', 'model solve'. Case-insensitive."
-        ),
-    ),
-]
-
 # Software / engine selector (required, no default — itasca-mcp must not bias to one engine)
 SoftwareParam = Annotated[
     Software,
     Field(
         ...,
         description="ITASCA engine to query: 'pfc', 'flac', '3dec', 'mpoint', or 'massflow'. Required — there is no default engine.",
+    ),
+]
+
+# Documentation tree selector for itasca_browse_doc (required there; optional on itasca_query_doc)
+DocSourceParam = Annotated[
+    DocSource,
+    Field(
+        ...,
+        description=(
+            "Documentation tree: 'commands' (Itasca command syntax), 'python_api' (itasca Python SDK), "
+            "'fish' (FISH intrinsic functions), 'reference' (model properties, range elements, plot items)."
+        ),
+    ),
+]
+
+# Keyword query for itasca_query_doc
+DocQuery = Annotated[
+    str,
+    AfterValidator(validate_non_empty_string),
+    Field(
+        ...,
+        min_length=1,
+        description=(
+            "Search keywords or a name fragment. Examples: 'ball create', 'contact force', "
+            "'ball.pos', 'mohr-coulomb', 'zone pore pressure'. Case-insensitive."
+        ),
     ),
 ]
 

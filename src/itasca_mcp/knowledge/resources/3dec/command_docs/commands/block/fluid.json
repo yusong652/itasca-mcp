@@ -48,14 +48,14 @@
           "description": "Specify the \\(z\\) value used in hydraulic head plots."
         },
         {
-          "name": "relaxation",
-          "syntax": "relaxation <f>",
-          "description": "Specify settings for fast flow calculation. Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .) Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
+          "name": "fast-flow",
+          "syntax": "fast-flow {active <b> | relaxation <f>} ...",
+          "description": "Specify settings for fast flow calculation. Options: active <b>: Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .); relaxation <f>: Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
         },
         {
-          "name": "density-minimum",
-          "syntax": "density-minimum <f>",
-          "description": "Specify settings for gas flow calculation. Turn controls for gas-flow logic on / off . Define “a” factor for gas flow. Specify the minimum bulk modulus for gas flow. Specify the gas constant for gas flow. Specify the minimum density for gas flow."
+          "name": "gas",
+          "syntax": "gas {active <b> | alpha <f> | bulk-minimum <f> | constant <f> | density-minimum <f>} ...",
+          "description": "Specify settings for gas flow calculation. Options: active <b>: Turn controls for gas-flow logic on / off .; alpha <f>: Define “a” factor for gas flow.; bulk-minimum <f>: Specify the minimum bulk modulus for gas flow.; constant <f>: Specify the gas constant for gas flow.; density-minimum <f>: Specify the minimum density for gas flow."
         },
         {
           "name": "jointflow-substep",
@@ -73,14 +73,14 @@
           "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
         },
         {
-          "name": "viscosity",
-          "syntax": "viscosity <f>",
-          "description": "Specify fluid properties used for fluid flow calculations. Set the bulk modulus of the fluid in the joints and the matrix. Set the bulk modulus of the fluid in the matrix. Set the cohesion of the fluid for non-Newtonian flow. Set the density of the fluid. Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1. Set fluid heat-transfer coefficient. Set fluid-specific heat. Set fluid-thermal conductivity. Set the fluid viscosity."
+          "name": "property",
+          "syntax": "property {bulk <f> | bulk-matrix <f> | cohesion <f> | density <f> | f-factor <f> | heat-transfer-coefficient <f> | specific-heat <f> | thermal-conductivity <f> | viscosity <f>} ...",
+          "description": "Specify fluid properties used for fluid flow calculations. Options: bulk <f>: Set the bulk modulus of the fluid in the joints and the matrix.; bulk-matrix <f>: Set the bulk modulus of the fluid in the matrix.; cohesion <f>: Set the cohesion of the fluid for non-Newtonian flow.; density <f>: Set the density of the fluid.; f-factor <f>: Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1.; heat-transfer-coefficient <f>: Set fluid heat-transfer coefficient.; specific-heat <f>: Set fluid-specific heat.; thermal-conductivity <f>: Set fluid-thermal conductivity.; viscosity <f>: Set the fluid viscosity."
         },
         {
-          "name": "permeability-factor",
-          "syntax": "permeability-factor <f>",
-          "description": "Set properties and configure proppant calculations. Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state. Turn on / off off proppant settling calculations (default = off ). Set the concentration limit of proppant (0-1) above which it takes load. Set the mass concentration limit of proppant above which it takes load (mass / volume) Set the density of the fluid. Set the grain size (diameter) of proppant particles. Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability. List information about proppant. Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit). Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load. Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
+          "name": "proppant",
+          "syntax": "proppant {active <b> | settling <b> | concentration-limit-volume <f> | concentration-limit-mass <f> | density <f> | grain-size <f> | grain-size-factor <f> | list | modulus <f> | permeability <f> [table <s>] | permeability-factor <f>} ...",
+          "description": "Set properties and configure proppant calculations. Options: active <b>: Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state.; settling <b>: Turn on / off off proppant settling calculations (default = off ).; concentration-limit-volume <f>: Set the concentration limit of proppant (0-1) above which it takes load.; concentration-limit-mass <f>: Set the mass concentration limit of proppant above which it takes load (mass / volume); density <f>: Set the density of the fluid.; grain-size <f>: Set the grain size (diameter) of proppant particles.; grain-size-factor <f>: Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability.; list: List information about proppant.; modulus <f>: Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit).; permeability <f>[table <s>]: Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load.; permeability-factor <f>: Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
         },
         {
           "name": "sync-mech",
@@ -105,37 +105,17 @@
         {
           "name": "allow-largestrain",
           "syntax": "allow-largestrain",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Allow joint fluid flow with large strain."
+          "description": "Allow joint fluid flow with large strain. (Listed by 3DEC 9.7.47; not on the manual page.)"
         },
         {
           "name": "bh-heal-ini",
           "syntax": "bh-heal-ini",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Borehole heal initialization control."
-        },
-        {
-          "name": "fast-flow",
-          "syntax": "fast-flow",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Fast-flow scheme toggle."
-        },
-        {
-          "name": "gas",
-          "syntax": "gas",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Gas-flow settings."
-        },
-        {
-          "name": "property",
-          "syntax": "property <keyword> <value> ...",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Fluid property assignment (the documented relaxation/viscosity/density-minimum/permeability-factor keywords are sub-keywords of this slot)."
-        },
-        {
-          "name": "proppant",
-          "syntax": "proppant",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Proppant transport settings. Live 9.7 sub-keywords: active concentration-limit-mass concentration-limit-volume density grain-size grain-size-factor list modulus permeability permeability-factor permeability-table settling ('active' is the on/off switch - a bare boolean is rejected)."
+          "description": "Borehole heal initialization control. (Listed by 3DEC 9.7.47; not on the manual page.)"
         },
         {
           "name": "timestep-multiplier",
           "syntax": "timestep-multiplier <f>",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Fluid timestep multiplier."
+          "description": "Fluid timestep multiplier. (Listed by 3DEC 9.7.47; not on the manual page.)"
         }
       ],
       "examples": []
@@ -155,14 +135,14 @@
           "description": "Specify the \\(z\\) value used in hydraulic head plots."
         },
         {
-          "name": "relaxation",
-          "syntax": "relaxation <f>",
-          "description": "Specify settings for fast flow calculation. Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .) Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
+          "name": "fast-flow",
+          "syntax": "fast-flow {active <b> | relaxation <f>} ...",
+          "description": "Specify settings for fast flow calculation. Options: active <b>: Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .); relaxation <f>: Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
         },
         {
-          "name": "density-minimum",
-          "syntax": "density-minimum <f>",
-          "description": "Specify settings for gas flow calculation. Turn controls for gas-flow logic on / off . Define “a” factor for gas flow. Specify the minimum bulk modulus for gas flow. Specify the gas constant for gas flow. Specify the minimum density for gas flow."
+          "name": "gas",
+          "syntax": "gas {active <b> | alpha <f> | bulk-minumum <f> | constant <f> | density-minimum <f>} ...",
+          "description": "Specify settings for gas flow calculation. Options: active <b>: Turn controls for gas-flow logic on / off .; alpha <f>: Define “a” factor for gas flow.; bulk-minumum <f>: Specify the minimum bulk modulus for gas flow.; constant <f>: Specify the gas constant for gas flow.; density-minimum <f>: Specify the minimum density for gas flow."
         },
         {
           "name": "jointflow-substep",
@@ -180,14 +160,14 @@
           "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
         },
         {
-          "name": "viscosity",
-          "syntax": "viscosity <f>",
-          "description": "Specify fluid properties used for fluid flow calculations. Set the bulk modulus of the fluid in the joints and the matrix. Set the bulk modulus of the fluid in the matrix. Set the cohesion of the fluid for non-Newtonian flow. Set the density of the fluid. Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1. Set fluid heat-transfer coefficient. Set fluid-specific heat. Set fluid-thermal conductivity. Set the fluid viscosity."
+          "name": "property",
+          "syntax": "property {bulk <f> | bulk-matrix <f> | cohesion <f> | density <f> | f-factor <f> | heat-transfer-coefficient <f> | specific-heat <f> | thermal-conductivity <f> | viscosity <f>} ...",
+          "description": "Specify fluid properties used for fluid flow calculations. Options: bulk <f>: Set the bulk modulus of the fluid in the joints and the matrix.; bulk-matrix <f>: Set the bulk modulus of the fluid in the matrix.; cohesion <f>: Set the cohesion of the fluid for non-Newtonian flow.; density <f>: Set the density of the fluid.; f-factor <f>: Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1.; heat-transfer-coefficient <f>: Set fluid heat-transfer coefficient.; specific-heat <f>: Set fluid-specific heat.; thermal-conductivity <f>: Set fluid-thermal conductivity.; viscosity <f>: Set the fluid viscosity."
         },
         {
-          "name": "permeability-factor",
-          "syntax": "permeability-factor <f>",
-          "description": "Set properties and configure proppant calculations. Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state. Turn on / off off proppant settling calculations (default = off ). Set the concentration limit of proppant (0-1) above which it takes load. Set the mass concentration limit of proppant above which it takes load (mass / volume) Set the density of the fluid. Set the grain size (diameter) of proppant particles. Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability. List information about proppant. Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit). Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load. Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
+          "name": "proppant",
+          "syntax": "proppant {active <b> | settling <b> | concentration-limit-volume <f> | concentration-limit-mass <f> | density <f> | grain-size <f> | grain-size-factor <f> | list | modulus <f> | permeability <f> [table <s>] | permeability-factor <f>} ...",
+          "description": "Set properties and configure proppant calculations. Options: active <b>: Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state.; settling <b>: Turn on / off off proppant settling calculations (default = off ).; concentration-limit-volume <f>: Set the concentration limit of proppant (0-1) above which it takes load.; concentration-limit-mass <f>: Set the mass concentration limit of proppant above which it takes load (mass / volume); density <f>: Set the density of the fluid.; grain-size <f>: Set the grain size (diameter) of proppant particles.; grain-size-factor <f>: Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability.; list: List information about proppant.; modulus <f>: Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit).; permeability <f>[table <s>]: Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load.; permeability-factor <f>: Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
         },
         {
           "name": "sync-mech",
@@ -207,27 +187,7 @@
         {
           "name": "bh-heal-ini",
           "syntax": "bh-heal-ini",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Borehole heal initialization control."
-        },
-        {
-          "name": "fast-flow",
-          "syntax": "fast-flow",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Fast-flow scheme toggle."
-        },
-        {
-          "name": "gas",
-          "syntax": "gas",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Gas-flow settings."
-        },
-        {
-          "name": "property",
-          "syntax": "property <keyword> <value> ...",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Fluid property assignment (the documented relaxation/viscosity/density-minimum/permeability-factor keywords are sub-keywords of this slot)."
-        },
-        {
-          "name": "proppant",
-          "syntax": "proppant",
-          "description": "Live-enumerated on 3DEC 9.7.47 (Batch 7 '?' probe); not on the official page. Proppant transport settings. Live 9.7 sub-keywords: active concentration-limit-mass concentration-limit-volume density grain-size grain-size-factor list modulus permeability permeability-factor permeability-table settling ('active' is the on/off switch - a bare boolean is rejected)."
+          "description": "Borehole heal initialization control. (Listed by 3DEC 9.7.47; not on the manual page.)"
         }
       ],
       "examples": []

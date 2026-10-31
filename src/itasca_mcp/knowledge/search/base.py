@@ -30,9 +30,9 @@ class SearchStrategy(ABC):
 
         Example:
             >>> # Note: Direct strategy use is deprecated
-            >>> # Use APISearch.search() instead for unified BM25 search
-            >>> from itasca_mcp.knowledge.query import APISearch
-            >>> results = APISearch.search("itasca.ball.create")
+            >>> # Use PythonAPISearch.search() instead for unified BM25 search
+            >>> from itasca_mcp.knowledge.query import PythonAPISearch
+            >>> results = PythonAPISearch.search("itasca.ball.create")
             >>> results[0].document.name
             "itasca.ball.create"
         """
@@ -51,8 +51,8 @@ class SearchStrategy(ABC):
         Example:
             >>> # Note: Direct strategy use is deprecated
             >>> # BM25 search handles all query types automatically
-            >>> from itasca_mcp.knowledge.query import APISearch
-            >>> APISearch.search("itasca.ball.create")  # Path query
-            >>> APISearch.search("create a ball")  # Natural language query
+            >>> from itasca_mcp.knowledge.query import PythonAPISearch
+            >>> PythonAPISearch.search("itasca.ball.create")  # Path query
+            >>> PythonAPISearch.search("create a ball")  # Natural language query
         """
         pass

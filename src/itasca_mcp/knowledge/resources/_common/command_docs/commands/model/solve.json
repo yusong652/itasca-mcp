@@ -36,7 +36,7 @@
   ],
   "python_sdk_alternative": {
     "available": false,
-    "workaround": "itasca.command('model solve ratio 1e-5') - Python SDK does not provide direct solve() function. For custom solve loops in Python, manually compute equilibrium metrics:\n\nimport math\ndef vec_mag(v): return math.sqrt(v[0]**2 + v[1]**2 + v[2]**2)\n\nwhile True:\n    itasca.cycle(100)\n    # Compute unbalanced force ratio manually:\n    unbal_sum = sum(vec_mag(b.force_unbal()) for b in itasca.ball.list())\n    contact_sum = sum(vec_mag(b.force_contact()) for b in itasca.ball.list())\n    ratio = unbal_sum / contact_sum if contact_sum > 0 else 0\n    if ratio < 1e-5:\n        break\n\nNote: Prefer 'model solve' command for standard equilibrium. Custom loops require manual force ratio calculations."
+    "workaround": "itasca.command('model solve ratio 1e-5'): the Python SDK has no solve function. For a stopping rule of your own, cycle in chunks and read the solve ratio through FISH; itasca.cycle() only returns the cycle count and takes no argument:\n\nwhile True:\n    itasca.command('model cycle 100')\n    itasca.command(\"[global _ratio = mech.solve('ratio')]\")\n    if itasca.fish.get('_ratio') < 1e-5:\n        break\n\nChecked on 3DEC 9.8.54 (2026-10-29)."
   },
   "versions": {
     "7.0": {
@@ -64,9 +64,9 @@
           "description": "Limit based on the maximum convergence value of all gridpoints, zones, balls, clumps, or rigid blocks. The convergence value is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the creep process specifically. Limit of the number of cycles to take with creep active during this solve operation. Total number of cycles taken with creep active since model creation. Total number of cycles taken with creep active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated creep time in the zone module."
+          "name": "creep",
+          "syntax": "creep {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the creep process specifically. Options: cycles <i>: Limit of the number of cycles to take with creep active during this solve operation.; cycles-total <i>: Total number of cycles taken with creep active since model creation.; cycles-total-zone <i>: Total number of cycles taken with creep active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated creep time in the zone module."
         },
         {
           "name": "cycles",
@@ -84,9 +84,9 @@
           "description": "A solve limit based on the total number of accumulated cycles."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the dynamic process specifically. Limit of the number of cycles to take with dynamic active during this solve operation. Total number of cycles taken with dynamic active since model creation. Total number of cycles taken with dynamic active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the dynamic process specifically. Options: cycles <i>: Limit of the number of cycles to take with dynamic active during this solve operation.; cycles-total <i>: Total number of cycles taken with dynamic active since model creation.; cycles-total-zone <i>: Total number of cycles taken with dynamic active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "elastic",
@@ -94,9 +94,9 @@
           "description": "Perform a mechanical calculation in two steps: first, assuming elastic behavior; then, using the actual strength values of the material. The cohesion and tensile strength for all materials in the model are set to high values for the first step. For the second step, the cohesion and tensile strength are reset to their original values. If the optional only keyword is provided, then only the elastic portion (i.e., the first step) is undertaken. This keyword only applies to the mechanical process."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. If specified, then the function will only be called every i steps. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active The callback will only execute if the dynamic and mechanical process is active The callback will only execute if the fluid process is active The callback will only execute if the mechanical process is active The callback will only execute if the thermal process is active"
+          "name": "fish-call",
+          "syntax": "fish-call <f> <s> [{interval <i> | process {creep | dynamic | fluid | mechanical | thermal}}]",
+          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. Options: interval <i>: If specified, then the function will only be called every i steps.; process {creep | dynamic | fluid | mechanical | thermal}: If specified, then the function will only be called if the process indicated is active during that particular cycle. Options: creep: The callback will only execute if the creep and mechanical process is active; dynamic: The callback will only execute if the dynamic and mechanical process is active; fluid: The callback will only execute if the fluid process is active; mechanical: The callback will only execute if the mechanical process is active; thermal: The callback will only execute if the thermal process is active. The function is named bare, not quoted: 'model solve fish-call -1 myfunc cycles 10' runs (verified on FLAC3D 7.0 and 9.8); 'myfunc' in quotes fails with 'Bad conversion'."
         },
         {
           "name": "fish-halt",
@@ -104,14 +104,14 @@
           "description": "The FISH function s is called during every cycle to determine whether cycling should continue. If s returns false , cycling continues; otherwise, cycling terminates."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specifies a solve limit for the fluid process specifically. Limit of the number of cycles to take with fluid-flow active during this solve operation. Total number of cycles taken with fluid-flow active since model creation. Total number of cycles taken with fluid-flow active in the zone module. Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "fluid",
+          "syntax": "fluid {cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio-flow <f> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
-          "name": "unbalanced-maximum",
-          "syntax": "unbalanced-maximum <f>",
-          "description": "Specifies a solve limit for the mechanical process specifically. Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0. Limit of the number of cycles to take with mechanical active during this solve operation. Total number of cycles taken with mechanical active since model creation. Total number of cycles taken with mechanical active in the zone module. Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-. Limited based on the average convergence ratio. See ref-equilibrium-. Limited based on the local convergence ratio. See ref-equilibrium-. Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated mechanical time in the zone module. Limit based on the maximum unbalanced force among model objects."
+          "name": "mechanical",
+          "syntax": "mechanical {convergence <f> | cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-average <f> | ratio-local <f> | ratio-maximum <f> | time <f> | time-total <f> | time-total-zone <f> | unbalanced-maximum <f>}",
+          "description": "Specifies a solve limit for the mechanical process specifically. Options: convergence <f>: Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0.; cycles <i>: Limit of the number of cycles to take with mechanical active during this solve operation.; cycles-total <i>: Total number of cycles taken with mechanical active since model creation.; cycles-total-zone <i>: Total number of cycles taken with mechanical active in the zone module.; ratio <f>: Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-.; ratio-average <f>: Limited based on the average convergence ratio. See ref-equilibrium-.; ratio-local <f>: Limited based on the local convergence ratio. See ref-equilibrium-.; ratio-maximum <f>: Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated mechanical time in the zone module.; unbalanced-maximum <f>: Limit based on the maximum unbalanced force among model objects."
         },
         {
           "name": "or",
@@ -139,9 +139,9 @@
           "description": "Limit based on the maximum convergence ratio returned by all active modules."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specifies a solve limit for the thermal process specifically. Limit of the number of cycles to take with thermal active during this solve operation. Total number of cycles taken with thermal active since model creation. Total number of cycles taken with thermal active in the zone module. Specifies a limiting convergence ratio as defined by the thermal logic. Specifies a limiting local convergence ratio as defined by the thermal logic. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "thermal",
+          "syntax": "thermal {cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-local <f> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specifies a solve limit for the thermal process specifically. Options: cycles <i>: Limit of the number of cycles to take with thermal active during this solve operation.; cycles-total <i>: Total number of cycles taken with thermal active since model creation.; cycles-total-zone <i>: Total number of cycles taken with thermal active in the zone module.; ratio <f>: Specifies a limiting convergence ratio as defined by the thermal logic.; ratio-local <f>: Specifies a limiting local convergence ratio as defined by the thermal logic.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "time",
@@ -223,8 +223,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",
@@ -261,9 +261,9 @@
           "description": "Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the creep process specifically. Limit of the number of cycles to take with creep active during this solve operation. Total number of cycles taken with creep active since model creation. Total number of cycles taken with creep active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated creep time in the zone module."
+          "name": "creep",
+          "syntax": "creep {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the creep process specifically. Options: cycles <i>: Limit of the number of cycles to take with creep active during this solve operation.; cycles-total <i>: Total number of cycles taken with creep active since model creation.; cycles-total-zone <i>: Total number of cycles taken with creep active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated creep time in the zone module."
         },
         {
           "name": "cycles",
@@ -276,9 +276,9 @@
           "description": "A solve limit based on the total number of accumulated cycles."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the dynamic process specifically. Limit of the number of cycles to take with dynamic active during this solve operation. Total number of cycles taken with dynamic active since model creation. Total number of cycles taken with dynamic active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the dynamic process specifically. Options: cycles <i>: Limit of the number of cycles to take with dynamic active during this solve operation.; cycles-total <i>: Total number of cycles taken with dynamic active since model creation.; cycles-total-zone <i>: Total number of cycles taken with dynamic active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "elastic",
@@ -286,9 +286,9 @@
           "description": "Perform a mechanical calculation in two steps: first, assuming elastic behavior; then, using the actual strength values of the material. The cohesion and tensile strength for all materials in the model are set to high values for the first step. For the second step, the cohesion and tensile strength are reset to their original values. If the optional only keyword is provided, then only the elastic portion (i.e., the first step) is undertaken. This keyword only applies to the mechanical process."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. If specified, then the function will only be called every i steps. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active The callback will only execute if the dynamic and mechanical process is active The callback will only execute if the fluid process is active The callback will only execute if the mechanical process is active The callback will only execute if the thermal process is active"
+          "name": "fish-call",
+          "syntax": "fish-call <f> <s> [{interval <i> | process {creep | dynamic | fluid | mechanical | thermal}}]",
+          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. Options: interval <i>: If specified, then the function will only be called every i steps.; process {creep | dynamic | fluid | mechanical | thermal}: If specified, then the function will only be called if the process indicated is active during that particular cycle. Options: creep: The callback will only execute if the creep and mechanical process is active; dynamic: The callback will only execute if the dynamic and mechanical process is active; fluid: The callback will only execute if the fluid process is active; mechanical: The callback will only execute if the mechanical process is active; thermal: The callback will only execute if the thermal process is active"
         },
         {
           "name": "fish-halt",
@@ -296,14 +296,14 @@
           "description": "The FISH function s is called during every cycle to determine whether cycling should continue. If s returns false , cycling continues; otherwise, cycling terminates."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specifies a solve limit for the fluid process specifically. Limit of the number of cycles to take with fluid-flow active during this solve operation. Total number of cycles taken with fluid-flow active since model creation. Total number of cycles taken with fluid-flow active in the zone module. Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "fluid",
+          "syntax": "fluid {cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio-flow <f> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
-          "name": "unbalanced-maximum",
-          "syntax": "unbalanced-maximum <f>",
-          "description": "Specifies a solve limit for the mechanical process specifically. Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0. Limit of the number of cycles to take with mechanical active during this solve operation. Total number of cycles taken with mechanical active since model creation. Total number of cycles taken with mechanical active in the zone module. Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-. Limited based on the average convergence ratio. See ref-equilibrium-. Limited based on the local convergence ratio. See ref-equilibrium-. Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated mechanical time in the zone module. Limit based on the average unbalanced force among model objects. Limit based on the maximum unbalanced force among model objects."
+          "name": "mechanical",
+          "syntax": "mechanical {convergence <f> | cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-average <f> | ratio-local <f> | ratio-maximum <f> | time <f> | time-total <f> | time-total-zone <f> | unbalanced-average <f> | unbalanced-maximum <f>}",
+          "description": "Specifies a solve limit for the mechanical process specifically. Options: convergence <f>: Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0.; cycles <i>: Limit of the number of cycles to take with mechanical active during this solve operation.; cycles-total <i>: Total number of cycles taken with mechanical active since model creation.; cycles-total-zone <i>: Total number of cycles taken with mechanical active in the zone module.; ratio <f>: Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-.; ratio-average <f>: Limited based on the average convergence ratio. See ref-equilibrium-.; ratio-local <f>: Limited based on the local convergence ratio. See ref-equilibrium-.; ratio-maximum <f>: Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated mechanical time in the zone module.; unbalanced-average <f>: Limit based on the average unbalanced force among model objects.; unbalanced-maximum <f>: Limit based on the maximum unbalanced force among model objects."
         },
         {
           "name": "or",
@@ -331,9 +331,9 @@
           "description": "Limit based on the maximum convergence ratio returned by all active modules."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specifies a solve limit for the thermal process specifically. Limit of the number of cycles to take with thermal active during this solve operation. Total number of cycles taken with thermal active since model creation. Total number of cycles taken with thermal active in the zone module. Specifies a limiting convergence ratio as defined by the thermal logic. Specifies a limiting local convergence ratio as defined by the thermal logic. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "thermal",
+          "syntax": "thermal {cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-local <f> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specifies a solve limit for the thermal process specifically. Options: cycles <i>: Limit of the number of cycles to take with thermal active during this solve operation.; cycles-total <i>: Total number of cycles taken with thermal active since model creation.; cycles-total-zone <i>: Total number of cycles taken with thermal active in the zone module.; ratio <f>: Specifies a limiting convergence ratio as defined by the thermal logic.; ratio-local <f>: Specifies a limiting local convergence ratio as defined by the thermal logic.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "time",
@@ -415,8 +415,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",
@@ -453,9 +453,9 @@
           "description": "Limit based on the maximum convergence value of all gridpoints, zones, structural nodes, balls, clumps, or rigid blocks. The convergence value is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the creep process specifically. Limit of the number of cycles to take with creep active during this solve operation. Total number of cycles taken with creep active since model creation. Total number of cycles taken with creep active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated creep time in the zone module."
+          "name": "creep",
+          "syntax": "creep {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the creep process specifically. Options: cycles <i>: Limit of the number of cycles to take with creep active during this solve operation.; cycles-total <i>: Total number of cycles taken with creep active since model creation.; cycles-total-zone <i>: Total number of cycles taken with creep active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated creep time in the zone module."
         },
         {
           "name": "cycles",
@@ -473,9 +473,9 @@
           "description": "A solve limit based on the total number of accumulated cycles."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specify a solve limit for the dynamic process specifically. Limit of the number of cycles to take with dynamic active during this solve operation. Total number of cycles taken with dynamic active since model creation. Total number of cycles taken with dynamic active in the zone module. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "dynamic",
+          "syntax": "dynamic {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specify a solve limit for the dynamic process specifically. Options: cycles <i>: Limit of the number of cycles to take with dynamic active during this solve operation.; cycles-total <i>: Total number of cycles taken with dynamic active since model creation.; cycles-total-zone <i>: Total number of cycles taken with dynamic active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "elastic",
@@ -483,9 +483,9 @@
           "description": "Perform a mechanical calculation in two steps: first, assuming elastic behavior; then, using the actual strength values of the material. The cohesion and tensile strength for all materials in the model are set to high values for the first step. For the second step, the cohesion and tensile strength are reset to their original values. If the optional only keyword is provided, then only the elastic portion (i.e., the first step) is undertaken. This keyword only applies to the mechanical process."
         },
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. If specified, then the function will only be called every i steps. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active The callback will only execute if the dynamic and mechanical process is active The callback will only execute if the fluid process is active The callback will only execute if the mechanical process is active The callback will only execute if the thermal process is active"
+          "name": "fish-call",
+          "syntax": "fish-call <f> <s> [{interval <i> | process {creep | dynamic | fluid | mechanical | thermal}}]",
+          "description": "Add the FISH function s to the Fish-Call list at location f , as with the fish callback command. See the section FISH Callback Events for a discussion of FISH callbacks. The following keywords are available to reduce the frequency of the callback. Options: interval <i>: If specified, then the function will only be called every i steps.; process {creep | dynamic | fluid | mechanical | thermal}: If specified, then the function will only be called if the process indicated is active during that particular cycle. Options: creep: The callback will only execute if the creep and mechanical process is active; dynamic: The callback will only execute if the dynamic and mechanical process is active; fluid: The callback will only execute if the fluid process is active; mechanical: The callback will only execute if the mechanical process is active; thermal: The callback will only execute if the thermal process is active. The function is named bare, not quoted: 'model solve fish-call -1 myfunc cycles 10' runs (verified on FLAC3D 9.8 and 7.0); 'myfunc' in quotes fails with 'Bad conversion'."
         },
         {
           "name": "fish-halt",
@@ -493,14 +493,14 @@
           "description": "The FISH function s is called during every cycle to determine whether cycling should continue. If s returns false , cycling continues; otherwise, cycling terminates."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>valid only if FLAC zones exist",
-          "description": "Specifies a solve limit for the fluid process specifically. Limit of the number of cycles to take with fluid-flow active during this solve operation. Total number of cycles taken with fluid-flow active since model creation. Total number of cycles taken with fluid-flow active in the zone module. Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "fluid",
+          "syntax": "fluid {cycles <i> | cycles-total <i> | cycles-total-zone <i> valid only if FLAC zones exist | ratio-flow <f> FLAC3D only | time <f> | time-total <f> | time-total-zone <f> valid only if FLAC zones exist}",
+          "description": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>valid only if FLAC zones exist: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>FLAC3D only: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>valid only if FLAC zones exist: Total accumulated dynamic time in the zone module."
         },
         {
-          "name": "unbalanced-maximum",
-          "syntax": "unbalanced-maximum <f>",
-          "description": "Specifies a solve limit for the mechanical process specifically. Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0. Limit of the number of cycles to take with mechanical active during this solve operation. Total number of cycles taken with mechanical active since model creation. Total number of cycles taken with mechanical active in the zone module. Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-. Limited based on the average convergence ratio. See ref-equilibrium-. This quantity is defined for PFC here . Limited based on the local convergence ratio. See ref-equilibrium-. Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated mechanical time in the zone module. Limit based on the maximum unbalanced force among model objects."
+          "name": "mechanical",
+          "syntax": "mechanical {convergence <f> | cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-average <f> | ratio-local <f> | ratio-maximum <f> | time <f> | time-total <f> | time-total-zone <f> | unbalanced-maximum <f>}",
+          "description": "Specifies a solve limit for the mechanical process specifically. Options: convergence <f>: Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0.; cycles <i>: Limit of the number of cycles to take with mechanical active during this solve operation.; cycles-total <i>: Total number of cycles taken with mechanical active since model creation.; cycles-total-zone <i>: Total number of cycles taken with mechanical active in the zone module.; ratio <f>: Limit based on the current convergence ratio value, as defined by the various modules that use it. By default this is the same as ratio-average . See ref-equilibrium-.; ratio-average <f>: Limited based on the average convergence ratio. See ref-equilibrium-. This quantity is defined for PFC here .; ratio-local <f>: Limited based on the local convergence ratio. See ref-equilibrium-.; ratio-maximum <f>: Limited based on the maximum convergence ratio. See ref-equilibrium-. CS: Common trouble; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated mechanical time in the zone module.; unbalanced-maximum <f>: Limit based on the maximum unbalanced force among model objects."
         },
         {
           "name": "or",
@@ -528,9 +528,9 @@
           "description": "Limit based on the maximum convergence ratio returned by all active modules."
         },
         {
-          "name": "time-total-zone",
-          "syntax": "time-total-zone <f>",
-          "description": "Specifies a solve limit for the thermal process specifically. Limit of the number of cycles to take with thermal active during this solve operation. Total number of cycles taken with thermal active since model creation. Total number of cycles taken with thermal active in the zone module. Specifies a limiting convergence ratio as defined by the thermal logic. Specifies a limiting local convergence ratio as defined by the thermal logic. Limit of the time accumulated while this process is active during this solve operation. Limit of the time accumulated while this process is active since model creation. Total accumulated dynamic time in the zone module."
+          "name": "thermal",
+          "syntax": "thermal {cycles <i> | cycles-total <i> | cycles-total-zone <i> | ratio <f> | ratio-local <f> | time <f> | time-total <f> | time-total-zone <f>}",
+          "description": "Specifies a solve limit for the thermal process specifically. Options: cycles <i>: Limit of the number of cycles to take with thermal active during this solve operation.; cycles-total <i>: Total number of cycles taken with thermal active since model creation.; cycles-total-zone <i>: Total number of cycles taken with thermal active in the zone module.; ratio <f>: Specifies a limiting convergence ratio as defined by the thermal logic.; ratio-local <f>: Specifies a limiting local convergence ratio as defined by the thermal logic.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
         },
         {
           "name": "time",
@@ -612,8 +612,8 @@
           "description": "Solve to equilibrium OR 120 minutes (whichever comes first)"
         },
         {
-          "command": "fish define check_stop\n  if ball.num < 100 then\n    check_stop = true\n  else\n    check_stop = false\n  endif\nend\nmodel solve fish-halt check_stop",
-          "description": "Solve with custom FISH stopping criteria"
+          "command": "fish define check_stop\n  check_stop = mech.solve('ratio') < 1e-5 and global.step > 1000\nend\nmodel solve fish-halt check_stop",
+          "description": "Solve with a custom FISH stopping rule (FISH function returning true to stop)"
         },
         {
           "command": "model solve ratio-average 1e-5 ratio-maximum 1e-4",

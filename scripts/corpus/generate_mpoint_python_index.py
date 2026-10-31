@@ -15,7 +15,7 @@ points and background-grid nodes have no Python binding at all. After
 ``mpoint import from-zones`` every ``itasca`` module reports a count of zero
 while FISH sees every point. That is the single most likely thing for a new
 MPoint user to get wrong, so it is stated in the index description and, more
-importantly, in ``fallback_hints`` -- which ``itasca_query_python_api`` surfaces
+importantly, in ``fallback_hints`` -- which ``itasca_query_doc(source='python_api')`` surfaces
 whenever a query mentions material points, by text match rather than only on an
 empty result set.
 

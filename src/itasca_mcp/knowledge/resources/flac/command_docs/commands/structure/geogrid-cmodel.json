@@ -31,8 +31,8 @@
       "keywords": [
         {
           "name": "assign",
-          "syntax": "assign keyword <range>",
-          "description": "Assign the specified constitutive model to all geogrid elements in the range. If a constitutive model has already been assigned, the existing one is replaced with the new one. If an elastic or plastic model is replaced by an elastic one, the nodal forces acting on the element remain the same. If a plastic model is replaced by another plastic model, both the integration scheme and the stress at each integration point are preserved. Replacing an elastic model with a plastic model is not yet implemented. Properties of the newly assigned constitutive model take their default values and should be set with the structure geogrid property command. The integration scheme for plastic models is set with the structure geogrid cmodel plastic-integration command."
+          "syntax": "assign {elastic | orthotropic | anisotropic | mohr-coulomb | strain-softening | von-mises} [range]",
+          "description": "Assign the specified constitutive model to all geogrid elements in the range. If a constitutive model has already been assigned, the existing one is replaced with the new one. If an elastic or plastic model is replaced by an elastic one, the nodal forces acting on the element remain the same. If a plastic model is replaced by another plastic model, both the integration scheme and the stress at each integration point are preserved. Replacing an elastic model with a plastic model is not yet implemented. Properties of the newly assigned constitutive model take their default values and should be set with the structure geogrid property command. The integration scheme for plastic models is set with the structure geogrid cmodel plastic-integration command. Options: elastic: isotropic elastic model (see the Shell Elastic Constitutive Models description).; orthotropic: orthotropic elastic model (see the Shell Elastic Constitutive Models description).; anisotropic: anisotropic elastic model (see the Shell Elastic Constitutive Models description).; mohr-coulomb: Mohr Coulomb elasto-plasticity model in plane-stress mode (see the Mohr Coulomb model description). Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements.; strain-softening: Strain-softening/hardening Mohr Coulomb elasto-plasticity model in plane-stress mode (see the Mohr Coulomb strain softening model description). Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The softening properties vary over the integration points.; von-mises: von Mises elasto-plasticity model in plane-stress mode (see the von Mises model description). Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements."
         },
         {
           "name": "assign-anisotropic",
@@ -76,7 +76,7 @@
         },
         {
           "name": "list-plastic-integration",
-          "syntax": "plastic-integration <integration-point <ind>> <range>",
+          "syntax": "plastic-integration [integration-point <ind>] [range]",
           "description": "Output the plastic-integration data for elements in the range. Data for all integration points is listed unless integration-point <ind> is specified, in which case only the data for integration point ind is listed."
         },
         {
@@ -91,7 +91,7 @@
         },
         {
           "name": "plastic-integration",
-          "syntax": "plastic-integration <nplane> <nthickness> <range>",
+          "syntax": "plastic-integration <nplane> <nthickness> [range]",
           "description": "Assign the integration scheme for plastic geogrid elements: nplane is the number of integration points in the element plane, nthickness is the number of integration points through the thickness. Affects only elements with a plastic constitutive model assigned. The integration scheme cannot be modified after cycling has occurred. When the integration scheme is set, the constitutive-model properties are reset to their defaults, so model properties should be set AFTER setting the integration scheme."
         }
       ]

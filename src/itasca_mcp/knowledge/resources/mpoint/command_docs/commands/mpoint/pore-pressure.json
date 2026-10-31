@@ -1,0 +1,80 @@
+{
+  "category": "mpoint",
+  "search_keywords": [
+    "mpoint",
+    "pore-pressure"
+  ],
+  "description": "Assign or initialize values of pore-pressure to all material points in the range. Note that currently, mpoints are always considered fully saturated Available keywords are:",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "9.0": {
+      "command": "mpoint pore-pressure",
+      "syntax": "mpoint pore-pressure keyword [range]",
+      "keywords": [
+        {
+          "name": "geometry",
+          "syntax": "geometry [filename ...] <sname> [keyword ...] [range]",
+          "description": "Specify the pore-pressure as increasing due to gravity with depth below a geometry set. If the filename keyword is used then name refers to a geometry file that will be loaded, used to determine the surface, and then discarded. For each material point a ray is cast in the opposite direction of gravity. The first intersection with the geometric set sname determines the depth. If no intersection is found the mpoint is considered to be above the geometry and will be assigned a negative pore pressure, unless the cutoff keyword is used. See the geometry command for how to create, import, or modify geometric data."
+        },
+        {
+          "name": "kwd:cutoff",
+          "syntax": "cutoff [<f>]",
+          "description": "Specify the minimum cutoff of pore pressures assigned. If not value is given 0.0 is assumed. The default value is no limit."
+        },
+        {
+          "name": "kwd:fluid-density",
+          "syntax": "fluid-density <f>",
+          "description": "Specify the fluid density to use in the conversion of depth below plane to pore-pressure. If not specified the value given by the mpoint property fluid-density command is used. A non-zero fluid density must be available in order to specify pore-pressure with the geometry keyword."
+        },
+        {
+          "name": "kwd:effective",
+          "syntax": "effective [<b>]",
+          "description": "By default the total stress is held constant, so any change to pore-pressure results in a change of effective stress. If the effective keyword is used then effective stress is held constant and the total stress is adjusted."
+        },
+        {
+          "name": "head",
+          "syntax": "head <f> [keyword ...]",
+          "description": "Uses Head to initialize pore pressure. Pore-pressure is calculated from head using the formulation \\(p = \\rho[h|\\vec{g}| + (\\vec{x}-\\vec{d})\\cdot\\vec{g}]\\) where \\(p\\) is the pore-pressure, \\(\\rho\\) is the fluid density, \\(h\\) is the specified head, \\(\\vec{g}\\) is gravity, \\(\\vec{x}\\) is the position of the current gridpoint, and \\(\\vec{d}\\) is the datum. The following keywords are available:"
+        },
+        {
+          "name": "kwd:datum",
+          "syntax": "datum <v3> | <f>",
+          "description": "Specify the datum to use as the origin for purposes of calculated head height. The default value is the origin. Note that if only a single floating point value is given it is assumed to specify a location starting from the origin in the opposite direction of gravity for that many units."
+        },
+        {
+          "name": "initialize",
+          "syntax": "initialize <f> [keyword ...]",
+          "description": "Set the pore-pressure values in the material points of the range to f."
+        },
+        {
+          "name": "kwd:gradient",
+          "syntax": "gradient <v> [origin <v>]",
+          "description": "Apply a gradient to the scalar-value provided."
+        },
+        {
+          "name": "plane",
+          "syntax": "plane [keyword ...]",
+          "description": "Specify the pore-pressure as increasing due to gravity by depth from a single plane in space. Pore pressures above the plane can be set to a negative value, unless the cutoff keyword is used. The following keywords are available:"
+        },
+        {
+          "name": "kwd:origin",
+          "syntax": "origin <v>",
+          "description": "Specify the origin of the plane describing the \\(p = 0\\) surface. By default this value is \\((0,0,0)\\)."
+        },
+        {
+          "name": "kwd:normal",
+          "syntax": "normal <v>",
+          "description": "Specify the vector normal to the surface of the plane describing the \\(p = 0\\) surface. By default this is \\((0,0,1)\\). This vector need not be normalized."
+        },
+        {
+          "name": "table",
+          "syntax": "table <sname> [keyword ...] [range]",
+          "description": "Specify the pore-pressure as increasing due to gravity with depth below a table. It is assumed that x is the horizontal direction and y (2D) or z (3D) is the vertical direction and that gravity acts in the negative y (or z) direction. The pore pressure is calculated by taking the x-coordinate of each material point and calculating the depth below the table at that x location. Fluid density must be given as part of the command or before this command. If the material point is above the table, it will be assigned a negative pore pressure, unless the cutoff keyword is used. See Table for how to create, import, or modify table data."
+        }
+      ],
+      "examples": []
+    }
+  }
+}

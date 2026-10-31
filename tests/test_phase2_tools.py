@@ -57,3 +57,39 @@ def test_bridge_error_message_is_friendly() -> None:
     # The GUI stays the recommended path; the console build is offered as a
     # fallback for when nobody is there to run it, not as the default.
     assert "console.exe can start it unattended" in action
+
+
+class _ErrorBridge:
+    def __init__(self, engine_message: str) -> None:
+        self.engine_message = engine_message
+
+    async def execute_code(self, code: str, timeout_ms: int) -> dict:
+        return {
+            "status": "error",
+            "message": f"Code execution failed:\nValueError: {self.engine_message}",
+            "error": {"code": "error", "message": f"Code execution failed:\nValueError: {self.engine_message}"},
+        }
+
+
+def _execute_code_error(monkeypatch, engine_message: str) -> dict:
+    import itasca_mcp.tools.execute_code as module
+
+    async def client() -> _ErrorBridge:
+        return _ErrorBridge(engine_message)
+
+    monkeypatch.setattr(module, "get_bridge_client", client)
+    result = asyncio.run(mcp.call_tool("itasca_execute_code", {"code": "itasca.command('...')"}))
+    return result.structured_content
+
+
+def test_unused_parameter_error_warns_command_already_ran(monkeypatch) -> None:
+    # 'zone initialize stress xx -5 bogus range id 6' stresses all zones, then raises this
+    envelope = _execute_code_error(monkeypatch, "Unused extra parameter 6 (bogus) found on command line.")
+    assert envelope["ok"] is False
+    assert "whole model" in envelope["error"]["details"]["action"]
+
+
+def test_aborted_command_error_carries_no_warning(monkeypatch) -> None:
+    # 'zone delete bogus range id 6' checks first and deletes nothing
+    envelope = _execute_code_error(monkeypatch, "Unused tokens (bogus) present on command line, delete aborted.")
+    assert "action" not in envelope["error"].get("details", {})

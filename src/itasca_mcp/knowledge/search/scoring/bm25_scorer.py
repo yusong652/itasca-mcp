@@ -68,6 +68,20 @@ class BM25Scorer:
     # scored as plain presence: IDF only, no length normalization, no tf saturation.
     B_KEYWORDS = 0.0
 
+    # Quoted text. A query pasted from an engine message ('Default contact stiffness
+    # not set') is answered by the page that quotes it, but bag-of-words scoring
+    # cannot tell that page from one that merely mentions each word, and the
+    # command with 'stiffness' in its name wins instead. A run of at least this
+    # many query words, in query order, in the description lifts the total by the
+    # share of the query the run covers (up to x2, like a name that spells the
+    # query); a run that quotes the whole query, four words or more, is promoted
+    # like an exact name (see bm25_engine._promote_exact_names). Words that quote
+    # another entry's name ("prior to using the block zone generate-new command")
+    # are a cross-reference, not a quotation, and do not count, so 'zone face
+    # apply stress' does not lift the sibling that cites 'zone face apply'.
+    PHRASE_MIN_WORDS = 3
+    PHRASE_EXACT_MIN_WORDS = 4
+
     # Field weights (tunable) - must sum to 1.0
     # These define relative importance of each field in final score
     WEIGHT_NAME = 0.5  # 50% - API paths have highest importance
@@ -141,11 +155,21 @@ class BM25Scorer:
         #   words another command's name answers, so it earns less than that
         #   command. Query tokens include stems, which deflates coverage the
         #   same way for every document, so ranking is unaffected.
-        elif document.doc_type == DocumentType.COMMAND:
+        # FISH names get it too: 'struct node disp' must reach
+        # struct.node.disp.local, whose last segment is no query word, ahead of
+        # interface.node.disp, which ends in one but misses 'struct'.
+        elif document.doc_type in (DocumentType.COMMAND, DocumentType.FISH):
             name_tokens = set(self.indexer.get_field_tokens(doc_id, field="name"))
             shared = len(name_tokens & query_set)
             if shared:
                 total_score *= 1.0 + (shared / len(name_tokens)) * (shared / len(query_set))
+
+        # 5. Quoted text in the description (see PHRASE_MIN_WORDS).
+        phrase_words, query_words = self._phrase_run(query_tokens, desc_info["exact_matches"], doc_id)
+        exact_phrase = False
+        if phrase_words >= self.PHRASE_MIN_WORDS:
+            total_score *= 1.0 + phrase_words / query_words
+            exact_phrase = phrase_words == query_words and phrase_words >= self.PHRASE_EXACT_MIN_WORDS
 
         # 4. Collect all matched terms (union across fields)
         all_matched_terms = set()
@@ -169,8 +193,62 @@ class BM25Scorer:
             "matched_terms": list(all_matched_terms),
             "field_details": {"name": name_info, "description": desc_info, "keywords": kw_info},
         }
+        if exact_phrase:
+            match_info["exact_phrase"] = True
 
         return total_score, match_info
+
+    def _phrase_run(self, query_tokens: list[str], matched: list[str], doc_id: str) -> tuple[int, int]:
+        """Longest run of query tokens found in order in the description, counted in words.
+
+        Returns (words of the query quoted by the longest run, words in the query). The
+        tokenizer follows a word with its stem ('stiffness', 'stiff'), so both counts are
+        in words, and a sequence inside the run that is another entry's name is not counted.
+        """
+        if len(set(matched)) < self.PHRASE_MIN_WORDS:
+            return 0, 0
+        doc_tokens = self.indexer.get_field_tokens(doc_id, field="description")
+        n = len(query_tokens)
+        prev = [0] * (n + 1)
+        best_end, best_len = 0, 0
+        for token in doc_tokens:
+            cur = [0] * (n + 1)
+            for j in range(1, n + 1):
+                if query_tokens[j - 1] == token:
+                    cur[j] = prev[j - 1] + 1
+                    if cur[j] > best_len:
+                        best_len, best_end = cur[j], j
+            prev = cur
+        if not best_len:
+            return 0, 0
+        run = query_tokens[best_end - best_len : best_end]
+        return self._count_words(run, skip_names=True), self._count_words(query_tokens)
+
+    def _count_words(self, tokens: list[str], *, skip_names: bool = False) -> int:
+        names = self._name_sequences() if skip_names else {}
+        i, words = 0, 0
+        while i < len(tokens):
+            skip = next((len(c) for c in names.get(tokens[i], ()) if tuple(tokens[i : i + len(c)]) == c), 0)
+            if skip:
+                i += skip
+                continue
+            is_stem = i > 0 and tokens[i - 1] != tokens[i] and tokens[i - 1].startswith(tokens[i])
+            if not is_stem:
+                words += 1
+            i += 1
+        return words
+
+    def _name_sequences(self) -> dict[str, list[tuple[str, ...]]]:
+        """Token sequences of every multi-token entry name, by first token, longest first."""
+        if getattr(self, "_names", None) is None:
+            names: dict[str, list[tuple[str, ...]]] = {}
+            for tokens in self.indexer.name_documents.values():
+                if len(tokens) >= 2:
+                    names.setdefault(tokens[0], []).append(tuple(tokens))
+            for seqs in names.values():
+                seqs.sort(key=len, reverse=True)
+            self._names = names
+        return self._names
 
     def _score_field(self, query_tokens: set[str], doc_id: str, field: str) -> tuple[float, dict[str, Any]]:
         """Score query against a specific document field.

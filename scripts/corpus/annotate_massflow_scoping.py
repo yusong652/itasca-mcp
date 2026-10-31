@@ -42,7 +42,7 @@ FISH_MODULE_DESCRIPTION = (
     "Call FISH functions and read/write FISH symbols from Python. On the massflow "
     "binary this is the only Python route to model objects: mine blocks, drawpoints, "
     "markers, extracted markers and draw periods have no Python binding — see the "
-    "fish-intrinsics reference for the 175 massflow.* intrinsics that do reach them."
+    "browse source='fish' (path 'massflow') for the 175 massflow.* intrinsics that do reach them."
 )
 
 HISTORY_MODULE_DESCRIPTION = (

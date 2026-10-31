@@ -1,0 +1,76 @@
+{
+  "category": "building-blocks",
+  "search_keywords": [
+    "block",
+    "create",
+    "building-blocks"
+  ],
+  "description": "Create a block or blocks.",
+  "notes": [
+    "Requires a current building-blocks set: run 'building-blocks set create <name>' then 'building-blocks set select <name>' before any block/edge/face/point operation; otherwise FLAC rejects the command with 'Unused extra parameter'."
+  ],
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "command": "building-blocks block create",
+      "syntax": "building-blocks block create keyword",
+      "keywords": [
+        {
+          "name": "from-faces",
+          "syntax": "from-faces [distance <f>] [range]",
+          "description": "Create blocks attached to the faces specified by the range . All faces here must be external faces — each face is attached to one block only. New blocks will be “extruded” from the faces along the average face normal. The extruded distance is defined by f . If f is not supplied the default distance will be related to the maximum diagonal extent of a block among all the blocks attached to supplied faces."
+        },
+        {
+          "name": "hexahedron",
+          "syntax": "hexahedron [by-points <v1> <v2> <v3> <v4> <v5> <v6> <v7> <v8>] [group <s> [slot <s>]]",
+          "description": "Create a hexahedral block. by-points , if present, must be followed by points that define the block (a hexahedron requires eight points). The optional keywords group and slot assign the created block to the specified group and slot."
+        },
+        {
+          "name": "tetrahedron",
+          "syntax": "tetrahedron [by-points <v1> <v2> <v3> <v4>] [group <s> [slot <s>]]",
+          "description": "Create a tetrahedral block. by-points , if present, must be followed by points that define the block (a tetrahedron requires four points). The optional keywords group and slot assign the created block to the specified group and slot."
+        },
+        {
+          "name": "wedge",
+          "syntax": "wedge [by-points <v1> <v2> <v3> <v4> <v5> <v6>] [group <s> [slot <s>]]",
+          "description": "Create a wedge block. by-points , if present, must be followed by points that define the block (a wedge requires six points). The optional keywords group and slot assign the created block to the specified group and slot."
+        }
+      ],
+      "source": "Backfilled from the official FLAC3D 7.0 documentation tree (out_commands.txt index + command pages), 2026-08-13.",
+      "description": "Create a block or blocks."
+    },
+    "9.0": {
+      "command": "building-blocks block create",
+      "syntax": "building-blocks block create keyword",
+      "keywords": [
+        {
+          "name": "from-faces",
+          "syntax": "from-faces [distance <f>] [keep-shape <b>] range",
+          "description": "Create blocks attached to the faces specified by the range . All faces here must be external faces — each face is attached to one block only. New blocks will be “extruded” from the faces along the average face normal. The extruded distance is defined by f . If f is not supplied the default distance will be related to the maximum diagonal extent of a block among all the blocks attached to supplied faces. The keep-shape option specifies whether the shape of the starting face will be maintained in the extruded face. Face shape will be maintained using edge end points and edge control points but not face control points."
+        },
+        {
+          "name": "axial",
+          "syntax": "axial <s> origin <v1> radius <f> sweep <f> zones <i> tolerance <f> range",
+          "description": "Create blocks attached to the faces specified by the range . All faces here must be external faces — each face is attached to one block only. The new blocks will rotate around the specified origin point and axis to create axial symmetry. All the keywords are required. The axis string should be “X”, “Y”, or “Z”. The radius is the shortest distance from the axis to the closest point in the selection. Sweep is the sweep angle ranging from just above zero (depending on the specified tolerance) to a maximum of 90 degrees. Zones is the number of zones per 45 degrees to assign to edges in the sweep direction. Tolerance specifies how close points can be before they’re considered to be in the same place."
+        },
+        {
+          "name": "hexahedron",
+          "syntax": "hexahedron [by-points <v1> <v2> <v3> <v4> <v5> <v6> <v7> <v8>] [group <s> [slot <s>]]",
+          "description": "Create a hexahedral block. by-points , if present, must be followed by points that define the block (a hexahedron requires eight points). The optional keywords group and slot assign the created block to the specified group and slot."
+        },
+        {
+          "name": "tetrahedron",
+          "syntax": "tetrahedron [by-points <v1> <v2> <v3> <v4>] [group <s> [slot <s>]]",
+          "description": "Create a tetrahedral block. by-points , if present, must be followed by points that define the block (a tetrahedron requires four points). The optional keywords group and slot assign the created block to the specified group and slot."
+        },
+        {
+          "name": "wedge",
+          "syntax": "wedge [by-points <v1> <v2> <v3> <v4> <v5> <v6>] [group <s> [slot <s>]]",
+          "description": "Create a wedge block. by-points , if present, must be followed by points that define the block (a wedge requires six points). The optional keywords group and slot assign the created block to the specified group and slot."
+        }
+      ]
+    }
+  }
+}

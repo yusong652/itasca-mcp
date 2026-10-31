@@ -1,15 +1,15 @@
 """Regression tests for the rblock Python SDK docs integration."""
 
-from itasca_mcp.knowledge.python_api.formatter import APIDocFormatter
-from itasca_mcp.knowledge.python_api.loader import DocumentationLoader
+from itasca_mcp.knowledge.python_api.formatter import PythonAPIFormatter
+from itasca_mcp.knowledge.python_api.loader import PythonAPILoader
 
 
 class TestRBlockPythonApiDocs:
     def setup_method(self) -> None:
-        DocumentationLoader.clear_cache()
+        PythonAPILoader.clear_cache()
 
     def test_rblock_module_loads(self) -> None:
-        doc = DocumentationLoader.load_module("rblock", software="pfc")
+        doc = PythonAPILoader.load_module("rblock", software="pfc")
 
         assert doc is not None
         assert doc["module"] == "itasca.rblock"
@@ -18,7 +18,7 @@ class TestRBlockPythonApiDocs:
         assert "near" in function_names
 
     def test_rblock_template_module_loads(self) -> None:
-        doc = DocumentationLoader.load_module("rblock.template", software="pfc")
+        doc = PythonAPILoader.load_module("rblock.template", software="pfc")
 
         assert doc is not None
         assert doc["module"] == "itasca.rblock.template"
@@ -27,7 +27,7 @@ class TestRBlockPythonApiDocs:
         assert "maxid" in function_names
 
     def test_rblock_object_loads(self) -> None:
-        doc = DocumentationLoader.load_object("RBlock", software="pfc")
+        doc = PythonAPILoader.load_object("RBlock", software="pfc")
 
         assert doc is not None
         assert doc["class"] == "RBlock"
@@ -35,7 +35,7 @@ class TestRBlockPythonApiDocs:
         assert any(method["name"] == "vol" for method in doc["methods"])
 
     def test_rblock_template_object_loads(self) -> None:
-        doc = DocumentationLoader.load_object("RBlockTemplate", software="pfc")
+        doc = PythonAPILoader.load_object("RBlockTemplate", software="pfc")
 
         assert doc is not None
         assert doc["class"] == "Template"
@@ -43,15 +43,15 @@ class TestRBlockPythonApiDocs:
         assert any(method["name"] == "vol" for method in doc["methods"])
 
     def test_rblock_object_method_loads(self) -> None:
-        doc = DocumentationLoader.load_method("RBlock", "id", software="pfc")
+        doc = PythonAPILoader.load_method("RBlock", "id", software="pfc")
 
         assert doc is not None
         assert doc["name"] == "id"
         assert doc["signature"].startswith("rblock.id()")
 
     def test_formatter_root_includes_rblock_paths(self) -> None:
-        index = DocumentationLoader.load_index(software="pfc")
-        text = APIDocFormatter.format_root(index["modules"], index["objects"])
+        index = PythonAPILoader.load_index(software="pfc")
+        text = PythonAPIFormatter.format_root(index["modules"], index["objects"])
 
         assert "itasca.rblock" in text
         assert "itasca.rblock.template" in text

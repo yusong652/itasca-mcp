@@ -12,13 +12,13 @@
   "versions": {
     "7.0": {
       "command": "structure node apply",
-      "syntax": "structure node apply keyword <range>",
+      "syntax": "structure node apply keyword [range]",
       "description": "Set generalized point loads for all nodes in the range. Generalized point loads consist of an applied force and an applied moment. Pressure loading can be applied to shell surfaces using the commands structure shell apply, structure geogrid apply, or structure liner apply. Distributed loads can be applied to beam and pile surfaces using the command structure beam apply or structure pile apply. The following keywords are available to define generalized point loads.",
       "keywords": [
         {
           "name": "force",
-          "syntax": "force v <keyword>",
-          "description": "applied force vector (in terms of system defined by the system keyword). You can use one of the following keywords to modify how v is applied to the node:"
+          "syntax": "force <v> [keyword]",
+          "description": "applied force vector (in terms of system defined by the system keyword). You can use one of the following keywords to modify how v is applied to the node: Options: add; multiply"
         },
         {
           "name": "force-add",
@@ -32,13 +32,13 @@
         },
         {
           "name": "force-edge",
-          "syntax": "force-edge v <add>",
+          "syntax": "force-edge <v> <add>",
           "description": "by default, these forces will overwrite the previous applied forces at the node; however, the add keyword can be given to add them to those currently present. Note that if this changes the system they were applied under, the previous forces will not be corrected for the system change."
         },
         {
           "name": "moment",
-          "syntax": "moment v <keyword>",
-          "description": "applied moment vector (in terms of system defined by the system keyword). The following keywords can be used to modify how v is applied to the node:"
+          "syntax": "moment <v> [keyword]",
+          "description": "applied moment vector (in terms of system defined by the system keyword). The following keywords can be used to modify how v is applied to the node: Options: add; multiply"
         },
         {
           "name": "moment-add",
@@ -52,8 +52,8 @@
         },
         {
           "name": "remove",
-          "syntax": "remove keyword",
-          "description": "an applied condition remains in effect until it is removed with this command. The following keywords are available to choose which applied condition is removed:"
+          "syntax": "remove {force | moment}",
+          "description": "an applied condition remains in effect until it is removed with this command. The following keywords are available to choose which applied condition is removed: Options: force: removes any applied force condition on the node; moment: removes any applied moment condition on the node"
         },
         {
           "name": "remove-force",

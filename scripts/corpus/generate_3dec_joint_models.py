@@ -284,8 +284,8 @@ def main() -> None:
         },
         "notes": [
             "References are syntax elements used within commands, not standalone commands",
-            "Use itasca_browse_commands (software='3dec') for command syntax",
-            "Use itasca_browse_reference (software='3dec') for reference documentation",
+            "Use itasca_browse_doc(source='commands', software='3dec') for command syntax",
+            "Use itasca_browse_doc(source='reference', software='3dec') for reference documentation",
         ],
     }
     OUT.joinpath("index.json").write_text(json.dumps(top, indent=2, ensure_ascii=False) + "\n", "utf-8")

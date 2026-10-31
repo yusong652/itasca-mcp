@@ -17,23 +17,23 @@
       "keywords": [
         {
           "name": "box",
-          "syntax": "box <fxmin><fxmax>[<fymin><fymax>[<fzmin><fzmax>]]",
+          "syntax": "box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
           "description": "Create a rigid block in the shape of an axis-aligned box. Following specification of the box in the x -direction, if subsequent extents are omitted, then the latest specified extent is used."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed circular rigid block in 2D. Position of the center of the circle that is the origin by default. Radius of the circle that is 1.0 by default. Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <vpos> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a closed circular rigid block in 2D. Options: position <vpos>: Position of the center of the circle that is the origin by default.; radius <frad>: Radius of the circle that is 1.0 by default.; resolution <fres>: Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a conical rigid block in 3D. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1. Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | height <fh> | radius <fbot> [<ftop>] | resolution <fres>} ...",
+          "description": "Create a conical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1.; radius <fbot>[<ftop>]: Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a cylindrical rigid block in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | height <fh> | radius <frad> | resolution <fres>} ...",
+          "description": "Create a cylindrical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "density",
@@ -47,7 +47,7 @@
         },
         {
           "name": "group",
-          "syntax": "group <s>[slot <slot>] ...",
+          "syntax": "group <s> [slot <slot>] ...",
           "description": "The group name at slot slot is set to s for the newly created rigid block. If slot is not specified, then the group name at slot Default is set to s ."
         },
         {
@@ -61,13 +61,13 @@
           "description": "Introduce rigid block rounding. Rigid blocks are represented by a core shape that is composed of {linear facets in 2D; triangular facets in 3D}. The core shape is convex, closed and manifold. When rounding is nonzero, the core shape is expanded in a directions by a {circle in 2D; sphere in 3D} of a specified radius with center passing along all points on the exterior of the core shape. The value of the rounding corresponds to the radius of this expansion {circle in 2D; sphere in 3D}. If the relative keyword is given, the rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. When the rounding is changed so are the inertial properties."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin by default. Radius of the sphere that is 1.0 by default. Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <vpos> | radius <frad> | resolution <fres>} ...",
+          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <vpos>: Position of the sphere centroid that is the origin by default.; radius <frad>: Radius of the sphere that is 1.0 by default.; resolution <fres>: Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "vertices",
-          "syntax": "vertices <v1><v2>...",
+          "syntax": "vertices <v1> <v2> ...",
           "description": "Specify the vertices of the rigid block. The convex hull of the input points is computed and the rigid block is created from the convex hull."
         }
       ],
@@ -79,23 +79,23 @@
       "keywords": [
         {
           "name": "box",
-          "syntax": "box <fxmin><fxmax>[<fymin><fymax>[<fzmin><fzmax>]]",
+          "syntax": "box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
           "description": "Create a rigid block in the shape of an axis-aligned box. Following specification of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed circular rigid block in 2D. Position of the center of the circle that is the origin by default. Radius of the circle that is 1.0 by default. Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <vpos> | radius <frad> | resolution <fres>} ...",
+          "description": "Generate a closed circular rigid block in 2D. Options: position <vpos>: Position of the center of the circle that is the origin by default.; radius <frad>: Radius of the circle that is 1.0 by default.; resolution <fres>: Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a conical rigid block in 3D. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1. Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | height <fh> | radius <fbot> [<ftop>] | resolution <fres>} ...",
+          "description": "Create a conical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1.; radius <fbot>[<ftop>]: Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a cylindrical rigid block in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | height <fh> | radius <frad> | resolution <fres>} ...",
+          "description": "Create a cylindrical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "density",
@@ -109,7 +109,7 @@
         },
         {
           "name": "group",
-          "syntax": "group <s>[slot <slot>] ...",
+          "syntax": "group <s> [slot <slot>] ...",
           "description": "The group name at slot slot is set to s for the newly created rigid block. If slot is not specified, then the group name at slot Default is set to s ."
         },
         {
@@ -123,13 +123,13 @@
           "description": "Introduce rigid block rounding. Rigid blocks are represented by a core shape that is composed of {linear facets in 2D; triangular facets in 3D}. The core shape is convex, closed and manifold. When rounding is nonzero, the core shape is expanded in a directions by a {circle in 2D; sphere in 3D} of a specified radius with center passing along all points on the exterior of the core shape. The value of the rounding corresponds to the radius of this expansion {circle in 2D; sphere in 3D}. If the relative keyword is given, the rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. When the rounding is changed so are the inertial properties."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin by default. Radius of the sphere that is 1.0 by default. Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <vpos> | radius <frad> | resolution <fres>} ...",
+          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <vpos>: Position of the sphere centroid that is the origin by default.; radius <frad>: Radius of the sphere that is 1.0 by default.; resolution <fres>: Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "vertices",
-          "syntax": "vertices <v1><v2>...",
+          "syntax": "vertices <v1> <v2> ...",
           "description": "Specify the vertices of the rigid block. The convex hull of the input points is computed and the rigid block is created from the convex hull."
         }
       ],
@@ -141,23 +141,23 @@
       "keywords": [
         {
           "name": "box",
-          "syntax": "box <fxmin><fxmax>[<fymin><fymax>[<fzmin><fzmax>]]",
+          "syntax": "box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
           "description": "Create a rigid block in the shape of an axis-aligned box. Following specification of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Generate a closed circular rigid block in 2D. Position of the center of the circle that is the origin by default. Radius of the circle that is 1.0 by default. Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "circle",
+          "syntax": "circle {position <vpos> | radius <frad> | resolution <fres>} ... 2D ONLY",
+          "description": "Generate a closed circular rigid block in 2D. Options: position <vpos>: Position of the center of the circle that is the origin by default.; radius <frad>: Radius of the circle that is 1.0 by default.; resolution <fres>: Resolution of the facets. The number of facets is set so that the facet length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a conical rigid block in 3D. Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default. Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default. Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1. Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis. Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
+          "name": "cone",
+          "syntax": "cone {axis <v3> | base <v3> | height <fh> | radius <fbot> [<ftop>] | resolution <fres>} ... 3D only",
+          "description": "Create a conical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fh = 1.; radius <fbot>[<ftop>]: Radius of the cone. By default, fbot = 1.0 and ftop = 0.0, meaning that a cone is created. If ftop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fbot is the bottom radius at the base location, and ftop is the radius of the top of the frustum at a distance fh from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fbot . If a frustum is to be generated with ftop > 0, then the end edge lengths are less than fres * min( fradbot , ftop ). By default, fres = 0.1."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a cylindrical rigid block in 3D. Direction of the symmetry axis of the cylinder pointing from the base position. Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default. Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1. Radius of the cylinder, or the distance from the axis of symmetry to the side. Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
+          "name": "cylinder",
+          "syntax": "cylinder {axis <v3> | base <v3> | height <fh> | radius <frad> | resolution <fres>} ... 3D Only",
+          "description": "Create a cylindrical rigid block in 3D. Options: axis <v3>: Direction of the symmetry axis of the cylinder pointing from the base position.; base <v3>: Position of the base of the cylinder (i.e., the center of the bottom end) that is the origin, by default.; height <fh>: Height of the cylinder. This is the distance from the base position to the center of the top end. By default, fh = 1.; radius <frad>: Radius of the cylinder, or the distance from the axis of symmetry to the side.; resolution <fres>: Resolution of the edges of the cylinder ends. The number of end edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "density",
@@ -171,7 +171,7 @@
         },
         {
           "name": "group",
-          "syntax": "group <s>[slot <slot>] ...",
+          "syntax": "group <s> [slot <slot>] ...",
           "description": "The group name at slot slot is set to s for the newly created rigid block. If slot is not specified, then the group name at slot Default is set to s ."
         },
         {
@@ -190,13 +190,13 @@
           "description": "Suppress rigid block creation failure from stopping continued data file execution."
         },
         {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Position of the sphere centroid that is the origin by default. Radius of the sphere that is 1.0 by default. Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
+          "name": "sphere",
+          "syntax": "sphere {position <vpos> | radius <frad> | resolution <fres>} ... 3D ONLY",
+          "description": "Create a spherical rigid block in 3D. The sphere is created by refining an icosahedron (i.e., a sphere composed of 20 identical equilateral triangles) so that the edge lengths are smaller than a length defined by the resolution keyword. Options: position <vpos>: Position of the sphere centroid that is the origin by default.; radius <frad>: Radius of the sphere that is 1.0 by default.; resolution <fres>: Resolution of the facet edges. The number of facets is set so that the edge length is smaller than fres * frad . By default, fres = 0.1."
         },
         {
           "name": "vertices",
-          "syntax": "vertices <v1><v2>...",
+          "syntax": "vertices <v1> <v2> ...",
           "description": "Specify the vertices of the rigid block. The convex hull of the input points is computed and the rigid block is created from the convex hull."
         }
       ],

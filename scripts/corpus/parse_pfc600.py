@@ -10,6 +10,19 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 
+try:
+    from normalize_command_syntax import normalize_syntax as _normalize_command_syntax
+except ModuleNotFoundError:  # loaded by file path (tests) or as a package
+    import importlib.util as _ilu
+
+    _spec = _ilu.spec_from_file_location(
+        "normalize_command_syntax", Path(__file__).with_name("normalize_command_syntax.py")
+    )
+    assert _spec is not None and _spec.loader is not None
+    _module = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_module)
+    _normalize_command_syntax = _module.normalize_syntax
+
 # ---------------------------------------------------------------------------
 # Path configuration
 # ---------------------------------------------------------------------------
@@ -55,6 +68,15 @@ CATEGORY_CONFIG = {
         "json_to_html": {
             "large-strain": "largestrain",
         },
+        # 'model domain condition' is filed as model/domain-condition.json; its page
+        # lives in the kernel's domain manual as cmd_domain.condition.html
+        "also": [
+            {
+                "html_dir": PFC600_DOC / "common/kernel/doc/manual/domain_manual/command_reference/cmd_domain",
+                "file_prefix": "cmd_domain.",
+                "key_prefix": "domain-",
+            }
+        ],
     },
     "program": {
         "html_dir": PFC600_DOC / "common/kernel/doc/manual/program/commands",
@@ -116,11 +138,6 @@ CATEGORY_CONFIG = {
         "file_prefix": "cmd_data.",
         "dt_id_prefix": "kwd:",
     },
-    "domain": {
-        "html_dir": PFC600_DOC / "common/kernel/doc/manual/domain_manual/command_reference/cmd_domain",
-        "file_prefix": "cmd_domain.",
-        "dt_id_prefix": "kwd:",
-    },
 }
 
 # ---------------------------------------------------------------------------
@@ -163,10 +180,10 @@ class CommandHTMLParser(HTMLParser):
         self._kwd_dt_depth = 0
         self._kwd_dt_parts = []
 
-        # Keyword DD parsing
-        self._in_kwd_dd = False
-        self._kwd_dd_depth = 0
-        self._kwd_desc_parts = []
+        # Keyword DD parsing. A keyword's <dd> may hold a nested <dl> of its own
+        # options (dt id "kwd:point.gridpoint" inside the dd of "kwd:point"), so
+        # open dds form a stack; a closing option is folded into its parent.
+        self._kwd_stack = []  # [{name, syntax, depth, parts, children}]
         self._in_kwd_desc_p = False
         self._pending_kwd = None  # {name, syntax} waiting for description
 
@@ -233,6 +250,29 @@ class CommandHTMLParser(HTMLParser):
         raw = re.sub(r"  +", " ", raw)
         return raw.strip()
 
+    def _fold_keyword(self, frame):
+        """One keyword entry; nested options become alternatives in its syntax.
+
+        'point <i> keyword' with options '<v> [add]' and 'gridpoint <s>' reads
+        'point <i> {<v> [add] | gridpoint <s>}'; each option's text follows the
+        keyword's own description.
+        """
+        syntax = frame["syntax"]
+        description = self._dd_text(frame["parts"])
+        children = frame["children"]
+        if children:
+            alternatives = "{" + " | ".join(c["syntax"] for c in children) + "}"
+            placeholder = r"\bkeywo?rd\b"  # the manual misspells it 'keywrd' once (zone interface node)
+            if re.search(placeholder, syntax):
+                syntax = re.sub(placeholder, lambda _: alternatives, syntax, count=1)
+            else:
+                syntax = f"{syntax} {alternatives}"
+            options = "; ".join(
+                f"{c['syntax']}: {c['description']}" if c["description"] else c["syntax"] for c in children
+            )
+            description = f"{description} Options: {options}" if description else f"Options: {options}"
+        return {"name": frame["name"], "syntax": syntax, "description": description}
+
     def _dd_text(self, parts):
         raw = " ".join(p.strip() for p in parts if p.strip())
         return re.sub(r"\s+", " ", raw).strip()
@@ -291,10 +331,9 @@ class CommandHTMLParser(HTMLParser):
             self._cmdopt_depth = 0
 
         # --- Keyword DD ---
-        if tag == "dd" and self._in_kwd_dt is False and self._current_kwd_id and not self._in_kwd_dd:
-            self._in_kwd_dd = True
-            self._kwd_dd_depth = self._global_depth
-            self._kwd_desc_parts = []
+        if tag == "dd" and self._in_kwd_dt is False and self._pending_kwd:
+            self._kwd_stack.append({**self._pending_kwd, "depth": self._global_depth, "parts": [], "children": []})
+            self._pending_kwd = None
             self._in_kwd_desc_p = False
 
         # --- Track cmdopt spans ---
@@ -322,7 +361,7 @@ class CommandHTMLParser(HTMLParser):
             self._span_class_stack.append(cls)
 
         # p inside keyword dd
-        if tag == "p" and self._in_kwd_dd:
+        if tag == "p" and self._kwd_stack:
             self._in_kwd_desc_p = True
 
         # p inside main dd (first non-admonition p)
@@ -392,19 +431,13 @@ class CommandHTMLParser(HTMLParser):
             }
 
         # --- Keyword DD end ---
-        if tag == "dd" and self._in_kwd_dd and self._global_depth == self._kwd_dd_depth:
-            self._in_kwd_dd = False
-            if self._pending_kwd:
-                desc = self._dd_text(self._kwd_desc_parts)
-                self.keywords.append(
-                    {
-                        "name": self._pending_kwd["name"],
-                        "syntax": self._pending_kwd["syntax"],
-                        "description": desc,
-                    }
-                )
-                self._pending_kwd = None
-                self._current_kwd_id = None
+        if tag == "dd" and self._kwd_stack and self._global_depth == self._kwd_stack[-1]["depth"]:
+            entry = self._fold_keyword(self._kwd_stack.pop())
+            if self._kwd_stack:
+                self._kwd_stack[-1]["children"].append(entry)
+            else:
+                self.keywords.append(entry)
+            self._current_kwd_id = None
 
         # --- Keyword desc p end ---
         if tag == "p" and self._in_kwd_desc_p:
@@ -460,8 +493,8 @@ class CommandHTMLParser(HTMLParser):
             return
 
         # Keyword description p text
-        if self._in_kwd_desc_p:
-            self._kwd_desc_parts.append(data)
+        if self._in_kwd_desc_p and self._kwd_stack:
+            self._kwd_stack[-1]["parts"].append(data)
             return
 
 
@@ -489,8 +522,13 @@ def parse_html_file(html_path: Path) -> dict:
 
 
 def normalize_syntax(s: str) -> str:
-    """Normalize whitespace in syntax string for comparison."""
-    return re.sub(r"\s+", " ", s).strip()
+    """Whitespace-normalize a syntax string and apply the corpus bracket rules.
+
+    The span-by-span assembly above loses the space between adjacent placeholders
+    ('<i><a>[range]'); normalize_command_syntax.normalize_syntax puts it back and
+    collapses doubled block markers, so freshly parsed strings match the corpus.
+    """
+    return _normalize_command_syntax(re.sub(r"\s+", " ", s).strip())
 
 
 # ---------------------------------------------------------------------------
@@ -508,6 +546,12 @@ def build_html_map(category: str, config: dict) -> dict:
     mapping = {}
     prefixes = [config["file_prefix"]]
     prefixes += config.get("extra_prefixes", [])
+
+    for extra in config.get("also", []):
+        for html_file in extra["html_dir"].glob("*.html"):
+            if html_file.stem.startswith(extra["file_prefix"]):
+                sub = html_file.stem[len(extra["file_prefix"]) :].replace(".", "-")
+                mapping[extra["key_prefix"] + sub] = html_file
 
     for html_file in html_dir.glob("*.html"):
         name = html_file.stem  # e.g. "cmd_ball.create"

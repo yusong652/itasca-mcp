@@ -1,12 +1,12 @@
 {
   "type": "range_elements",
-  "description": "Range elements are filtering syntax used after the 'range' keyword in FLAC commands. They select subsets of model objects based on geometric regions, attributes, or logical conditions.",
+  "description": "Range elements are filtering syntax used after the 'range' keyword in 3DEC commands. They select subsets of blocks, zones, gridpoints, faces, contacts and subcontacts by geometric region, attribute, or logical condition.",
   "usage_pattern": {
     "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
     "examples": [
-      "zone group 'core' range position-x 0 10 position-y 0 10",
-      "zone property density 2650 range group 'sample'",
-      "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5"
+      "block group 'top' range position-z 5 10",
+      "block contact property friction 25 range jmodel 'mohr'",
+      "block contact group 'tunnel' range group-intersection 'rock' 'core'"
     ],
     "notes": [
       "Multiple range elements create intersection (AND) by default",
@@ -29,7 +29,11 @@
         "plane",
         "polygon",
         "rectangle",
-        "ellipse"
+        "ellipse",
+        "orientation",
+        "surface",
+        "geometry-distance",
+        "geometry-space"
       ]
     },
     "attribute": {
@@ -39,7 +43,14 @@
         "id",
         "id-list",
         "group",
-        "named-range"
+        "named-range",
+        "component-id",
+        "component-id-list",
+        "displacement",
+        "set",
+        "state",
+        "dfn",
+        "structure-type"
       ]
     },
     "user_defined": {
@@ -65,6 +76,38 @@
       "description": "Modify behavior of entire range phrase",
       "elements": [
         "union"
+      ]
+    },
+    "logical": {
+      "name": "Logical Elements",
+      "description": "Select by selection/visibility state or another named range",
+      "elements": [
+        "selected",
+        "deselected",
+        "use-hidden",
+        "project-range"
+      ]
+    },
+    "3dec_specific": {
+      "name": "3DEC-Specific Elements",
+      "description": "Elements specific to 3DEC blocks, joints and subcontacts",
+      "elements": [
+        "aspect-ratio",
+        "concave",
+        "deformable",
+        "dfn-3dec",
+        "edge-length",
+        "excavated",
+        "face-area",
+        "fracture-id",
+        "group-intersection",
+        "index-list",
+        "jmodel",
+        "joint-set",
+        "leader-id",
+        "velocity",
+        "volume",
+        "wall"
       ]
     }
   },
@@ -136,6 +179,30 @@
       "category": "geometric"
     },
     {
+      "name": "orientation",
+      "file": "_common/references/range-elements/orientation.json",
+      "short_description": "Select objects with a matching orientation, or dir",
+      "category": "geometric"
+    },
+    {
+      "name": "surface",
+      "file": "_common/references/range-elements/surface.json",
+      "short_description": "Select zone faces if they fall on the “surface” of",
+      "category": "geometric"
+    },
+    {
+      "name": "geometry-distance",
+      "file": "_common/references/range-elements/geometry-distance.json",
+      "short_description": "Select objects that fall within a certain distance",
+      "category": "geometric"
+    },
+    {
+      "name": "geometry-space",
+      "file": "_common/references/range-elements/geometry-space.json",
+      "short_description": "Select objects by their location in relation to th",
+      "category": "geometric"
+    },
+    {
       "name": "id",
       "file": "_common/references/range-elements/id.json",
       "short_description": "Select by ID range. Single value for exact match, ...",
@@ -157,6 +224,48 @@
       "name": "named-range",
       "file": "_common/references/range-elements/named-range.json",
       "short_description": "Reference a previously created named range (via 'm...",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id",
+      "file": "_common/references/range-elements/component-id.json",
+      "short_description": "For most objects, this is the same as the id range",
+      "category": "attribute"
+    },
+    {
+      "name": "component-id-list",
+      "file": "_common/references/range-elements/component-id-list.json",
+      "short_description": "For most objects, this is the same as the id-list ",
+      "category": "attribute"
+    },
+    {
+      "name": "displacement",
+      "file": "_common/references/range-elements/displacement.json",
+      "short_description": "Select an object with displacement between the spe",
+      "category": "attribute"
+    },
+    {
+      "name": "set",
+      "file": "_common/references/range-elements/set.json",
+      "short_description": "Select based on a parent/child relationship. id i ",
+      "category": "attribute"
+    },
+    {
+      "name": "state",
+      "file": "_common/references/range-elements/state.json",
+      "short_description": "Select objects by the state indicators of the zone",
+      "category": "attribute"
+    },
+    {
+      "name": "dfn",
+      "file": "_common/references/range-elements/dfn.json",
+      "short_description": "Select objects based on their distance from the di",
+      "category": "attribute"
+    },
+    {
+      "name": "structure-type",
+      "file": "_common/references/range-elements/structure-type.json",
+      "short_description": "Select structural elements of a specific type. The...",
       "category": "attribute"
     },
     {
@@ -200,6 +309,126 @@
       "file": "_common/references/range-elements/union.json",
       "short_description": "Change from intersection (AND) to union (OR) logic...",
       "category": "phrase_modifiers"
+    },
+    {
+      "name": "selected",
+      "file": "_common/references/range-elements/selected.json",
+      "short_description": "Include selected objects. This causes the range to",
+      "category": "logical"
+    },
+    {
+      "name": "deselected",
+      "file": "_common/references/range-elements/deselected.json",
+      "short_description": "Include not selected objects. This causes the rang",
+      "category": "logical"
+    },
+    {
+      "name": "use-hidden",
+      "file": "_common/references/range-elements/use-hidden.json",
+      "short_description": "Include hidden objects. By default, an object that",
+      "category": "logical"
+    },
+    {
+      "name": "project-range",
+      "file": "_common/references/range-elements/project-range.json",
+      "short_description": "Inserts the project named range s as an element wi",
+      "category": "logical"
+    },
+    {
+      "name": "aspect-ratio",
+      "file": "aspect-ratio.json",
+      "short_description": "Select blocks with a maximum aspect ratio between ",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "concave",
+      "file": "concave.json",
+      "short_description": "Select blocks that are concave. Other objects will",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "deformable",
+      "file": "deformable.json",
+      "short_description": "Select blocks that are deformable (zoned). Other o",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "dfn-3dec",
+      "file": "dfn-3dec.json",
+      "short_description": "Select faces, contacts or subcontacts created by t",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "edge-length",
+      "file": "edge-length.json",
+      "short_description": "Select blocks whose minimum edge length is between",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "excavated",
+      "file": "excavated.json",
+      "short_description": "Select blocks that are excavated (block excavate).",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "face-area",
+      "file": "face-area.json",
+      "short_description": "Select blocks whose minimum face area is between f",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "fracture-id",
+      "file": "fracture-id.json",
+      "short_description": "Select contacts, subcontacts or faces with the giv",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "group-intersection",
+      "file": "group-intersection.json",
+      "short_description": "Select objects at the intersection of blocks in gr",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "index-list",
+      "file": "index-list.json",
+      "short_description": "Select objects whose index (offset) is in the list",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "jmodel",
+      "file": "jmodel.json",
+      "short_description": "Select subcontacts whose joint constitutive model ",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "joint-set",
+      "file": "joint-set.json",
+      "short_description": "Select objects associated with any of the given jo",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "leader-id",
+      "file": "leader-id.json",
+      "short_description": "Select objects associated with the given block lea",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "velocity",
+      "file": "velocity.json",
+      "short_description": "Select objects whose velocity magnitude is between",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "volume",
+      "file": "volume.json",
+      "short_description": "Select objects whose volume is between fl and fu.",
+      "category": "3dec_specific"
+    },
+    {
+      "name": "wall",
+      "file": "wall.json",
+      "short_description": "Select blocks that are walls. Other objects will b",
+      "category": "3dec_specific"
     }
   ],
   "common_patterns": [

@@ -12,7 +12,7 @@
   "versions": {
     "7.0": {
       "command": "structure hybrid list",
-      "syntax": "structure hybrid list keyword <range>",
+      "syntax": "structure hybrid list keyword [range]",
       "description": "Lists properties and responses of hybrid bolt elements in the range. If no keyword is given, the default output of the command is that associated with the information keyword.",
       "keywords": [
         {
@@ -32,8 +32,8 @@
         },
         {
           "name": "force-node",
-          "syntax": "force-node <keyword>",
-          "description": "generalized nodal forces (force and moment) acting on the element. These are the generalized forces exerted by the nodes on the element."
+          "syntax": "force-node [{local | global}]",
+          "description": "generalized nodal forces (force and moment) acting on the element. These are the generalized forces exerted by the nodes on the element. Options: local: express the values in the element coordinate system (the default); global: express the values in the global coordinate system"
         },
         {
           "name": "force-node-local",
@@ -47,7 +47,7 @@
         },
         {
           "name": "group",
-          "syntax": "group <slot s >",
+          "syntax": "group [slot <s>]",
           "description": "group assignment(s). If slot is specified, then list the group assignment, if any, in slot s."
         },
         {
@@ -67,7 +67,8 @@
         },
         {
           "name": "property",
-          "syntax": "property keyword"
+          "syntax": "property {cross-sectional-area | density | grout-cohesion | grout-friction | grout-perimeter | grout-stiffness | slide | slide-tolerance | tensile-failure-strain | thermal-expansion | yield-compression | yield-tension | young {dowel-active-length | dowel-failure-strain | dowel-stiffness | dowel-yield}}",
+          "description": "Options: cross-sectional-area: cross-sectional area; density: mass density; grout-cohesion: grout cohesion (force units) per unit length; grout-friction: grout friction angle; grout-perimeter: grout exposed perimeter; grout-stiffness: grout stiffness per unit length; slide: large-strain sliding flag; slide-tolerance: large-strain sliding tolerance; tensile-failure-strain: tensile failure strain; thermal-expansion: thermal expansion coefficient; yield-compression: compressive yield strength; yield-tension: tensile yield strength; young {dowel-active-length | dowel-failure-strain | dowel-stiffness | dowel-yield}: Young’s modulus Options: dowel-active-length: Active length of dowel segments [L]; dowel-failure-strain: Dowel shear strain limit [-]; dowel-stiffness: Dowel shear stiffness [F/L]; dowel-yield: Dowel shear yield strength [F]"
         },
         {
           "name": "property-cross-sectional-area",
@@ -132,7 +133,7 @@
         {
           "name": "property-young",
           "syntax": "young",
-          "description": "Young\u2019s modulus"
+          "description": "Young’s modulus"
         },
         {
           "name": "property-young-dowel-active-length",
@@ -200,9 +201,9 @@
           "description": "axial force in the bolt (average of the two end forces)"
         },
         {
-          "name": "force-node-global",
-          "syntax": "global",
-          "description": "generalized nodal forces (force and moment) acting on the element. These are the generalized forces exerted by the nodes on the element. express the values in the element coordinate system (the default) express the values in the global coordinate system"
+          "name": "force-node",
+          "syntax": "force-node [{local | global}]",
+          "description": "generalized nodal forces (force and moment) acting on the element. These are the generalized forces exerted by the nodes on the element. Options: local: express the values in the element coordinate system (the default); global: express the values in the global coordinate system"
         },
         {
           "name": "group",
@@ -225,9 +226,9 @@
           "description": "length of the bolt"
         },
         {
-          "name": "property-young-dowel-yield",
-          "syntax": "dowel-yield",
-          "description": "cross-sectional area mass density grout cohesion (force units) per unit length grout friction angle grout exposed perimeter grout stiffness per unit length large-strain sliding flag large-strain sliding tolerance tensile failure strain thermal-expansion coefficient compressive yield strength tensile yield strength Young\u2019s modulus Active length of dowel segments [L] Dowel shear strain limit [-] Dowel shear stiffness [F/L] Dowel shear yield strength [F]"
+          "name": "property",
+          "syntax": "property {cross-sectional-area | density | grout-cohesion | grout-friction | grout-perimeter | grout-stiffness | slide | slide-tolerance | tensile-failure-strain | thermal-expansion | yield-compression | yield-tension | young {dowel-active-length | dowel-failure-strain | dowel-stiffness | dowel-yield}}",
+          "description": "Options: cross-sectional-area: cross-sectional area; density: mass density; grout-cohesion: grout cohesion (force units) per unit length; grout-friction: grout friction angle; grout-perimeter: grout exposed perimeter; grout-stiffness: grout stiffness per unit length; slide: large-strain sliding flag; slide-tolerance: large-strain sliding tolerance; tensile-failure-strain: tensile failure strain; thermal-expansion: thermal-expansion coefficient; yield-compression: compressive yield strength; yield-tension: tensile yield strength; young {dowel-active-length | dowel-failure-strain | dowel-stiffness | dowel-yield}: Young’s modulus Options: dowel-active-length: Active length of dowel segments [L]; dowel-failure-strain: Dowel shear strain limit [-]; dowel-stiffness: Dowel shear stiffness [F/L]; dowel-yield: Dowel shear yield strength [F]"
         },
         {
           "name": "stress",

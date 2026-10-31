@@ -14,7 +14,7 @@ regenerating the whole MassFlow corpus:
     generate_massflow_index.py
     generate_massflow_file_formats.py
     generate_massflow_range_elements.py
-    generate_massflow_fish_intrinsics.py
+    generate_fish_docs.py            (FISH intrinsics now live in fish_docs/)
     generate_massflow_plot_items.py
     annotate_massflow_scoping.py
     annotate_massflow_semantics.py
@@ -30,7 +30,6 @@ from pathlib import Path
 
 RESOURCES = Path(__file__).resolve().parents[2] / "src" / "itasca_mcp" / "knowledge" / "resources"
 CMD_DIR = RESOURCES / "massflow" / "command_docs" / "commands" / "massflow"
-FISH_DIR = RESOURCES / "massflow" / "references" / "fish-intrinsics"
 
 # Notes appended to a command's existing `notes`. The format pointer added in
 # Batch 2 is preserved by appending rather than replacing.
@@ -132,24 +131,6 @@ NOTES: dict[str, list[str]] = {
 }
 
 # Extra notes for the FISH families, same evidence run.
-FISH_NOTES: dict[str, list[str]] = {
-    "drawpoint.json": [
-        "`mass.requested` is the scheduled daily tonnage — the period mass divided by "
-        "the period length. On the tutorial model (2000 per 7-day period) it reads "
-        "285.714 for every day of the period.",
-        "`mass.actual` is quantised to whole markers, so a day either extracts a "
-        "marker's worth or nothing: days 1-3 of DP1 read 325, 0, 0 while "
-        "`mass.actual.cum` holds at 325. Over period 1 the requested 2000 came out as "
-        "1625 = 5 x 325.",
-        "`massflow.mass.DpDay(1,1)` returned 0 on that same model while "
-        "`massflow.drawpoint.mass.actual(dp,1)` returned 325 — the two do not agree, so "
-        "prefer the drawpoint accessors for per-day mass.",
-    ],
-    "marker.json": [
-        "On the tutorial model at day 20 every active marker was also type 2 (fully "
-        "bulked): 458 of 1117 by both counts.",
-    ],
-}
 
 
 def _append(path: Path, notes: list[str]) -> None:
@@ -169,13 +150,10 @@ def main() -> int:
             raise FileNotFoundError(path)
         _append(path, notes)
 
-    for filename, notes in FISH_NOTES.items():
-        path = FISH_DIR / filename
-        if not path.exists():
-            raise FileNotFoundError(path)
-        _append(path, notes)
-
-    print(f"annotated {len(NOTES)} command docs and {len(FISH_NOTES)} FISH families")
+    # The FISH-family notes this script used to append live in
+    # scripts/corpus/fish_family_hints.json (namespace_notes) since the
+    # references/fish-intrinsics category was retired in favour of fish_docs/.
+    print(f"annotated {len(NOTES)} command docs")
     return 0
 
 

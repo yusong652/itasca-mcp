@@ -2,7 +2,7 @@
 
 3DEC's engine-specific Python modules (itasca.block, itasca.flowplane, ...) are
 hand-authored docs and are deferred to a later pass. For now we ship a minimal
-skeleton so itasca_query_python_api / itasca_browse_python_api answer software="3dec"
+skeleton so itasca_query_doc(source='python_api') / itasca_browse_doc(source='python_api') answer software="3dec"
 without erroring: it exposes only the shared `itasca` core module, which already
 lives once in _common/ and is reused verbatim (same as FLAC's index does).
 

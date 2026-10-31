@@ -9,7 +9,7 @@
     "time-total",
     "safety-factor"
   ],
-  "description": "Set parameters for a dynamic model (only available with the dynamic model option \u2013 see Dynamic Analysis . Settings include damping, free-field, multi-step, time-total, safety-factor. These parameters apply to zones only, other model elements may have different values.",
+  "description": "Set parameters for a dynamic model (only available with the dynamic model option – see Dynamic Analysis . Settings include damping, free-field, multi-step, time-total, safety-factor. These parameters apply to zones only, other model elements may have different values.",
   "python_sdk_alternative": {
     "available": false
   },
@@ -17,30 +17,30 @@
     "7.0": {
       "command": "zone dynamic",
       "syntax": "zone dynamic keyword",
-      "description": "This command sets parameters for a dynamic model (only available with the dynamic model option \u2013 see Dynamic Analysis. These parameters apply to zones only, other model elements may have different values.",
+      "description": "This command sets parameters for a dynamic model (only available with the dynamic model option – see Dynamic Analysis. These parameters apply to zones only, other model elements may have different values.",
       "keywords": [
         {
           "name": "active",
-          "syntax": "active b"
+          "syntax": "active <b>"
         },
         {
           "name": "damping",
-          "syntax": "damping keyword <range>",
-          "description": "This command selects the damping type for the dynamic analysis. Damping in dynamic analysis is described in the topic Mechanical Damping and Material Response. Damping values can vary from region to region within the model. The following keywords apply:"
+          "syntax": "damping {artificial-viscosity <f1> <f2> | combined <f> [gradient <v>] | local <f> [gradient <v>] | hysteretic {default <f1> <f2> | hardin <f1> | off | sigmoidal-3 <f1> <f2> <f3> | sigmoidal-4 <f1> <f2> <f3> <f4> | reduction-minimum} | rayleigh [<f1> [gradient <v>] <f2> [gradient <v>] [mass] [stiffness]]} [range]",
+          "description": "This command selects the damping type for the dynamic analysis. Damping in dynamic analysis is described in the topic Mechanical Damping and Material Response. Damping values can vary from region to region within the model. The following keywords apply: Options: artificial-viscosity <f1><f2>: Sets the von Neumann ( f2 ) and Landshoff ( f2 ) constants, which in general should both be 1.0. This damping only applies to the main grid. See the topic Artificial Viscosity .; combined <f>[gradient <v>]: combined local damping (see Combined Damping ). For example, for a target 0.05 (5%) damping ratio the input should be \\(0.05*\\pi\\) . A gradient map be applied to vary the parameter in space.; local <f>[gradient <v>]: local damping (see Local Nonviscous Damping ). For example, for a target 0.05 (5%) damping ratio the input should be \\(0.05*\\pi\\) . A gradient map be applied to vary the parameter in space.; hysteretic {default <f1><f2> | hardin <f1> | off | sigmoidal-3 <f1><f2><f3> | sigmoidal-4 <f1><f2><f3><f4> | reduction-minimum}: Hysteretic damping is invoked (see Hysteretic Damping ). The following keywords and coefficients are the functions available to represent the variation in G / G max . Options: default <f1><f2>: Default model represented by a cubic equation with two parameters.; hardin <f1>: Hardin/Dernevich equation with one parameter.; off: Turns hysteretic damping off.; sigmoidal-3 <f1><f2><f3>: sigmoidal equation with three parameters.; sigmoidal-4 <f1><f2><f3><f4>: sigmoidal equation with four parameters.; reduction-minimum: Sets the minimum (lower-bound) of the modulus reduction factor. The default is 0.005.; rayleigh [<f1>[gradient <v>] <f2>[gradient <v>] [mass] [stiffness]]: For dynamic calculations, a certain fraction of critical damping is usually required over a given frequency range. This type of damping is known as Rayleigh damping (see Rayleigh Damping ), where f1 = the fraction of critical damping operating at center frequency of f2 . (NOTE: Input frequencies for the program are in cycles/sec or Hertz – not radians/sec.) The optional modifiers stiffness and mass denote that the damping is to be restricted to stiffness- or mass-proportional, respectively. If they are left out, normal Rayleigh damping is used. NOTE: By specifying stiffness damping, the critical timestep for numerical stability will automatically be reduced. It is still possible for instability to result if large mesh deformation occurs. In such a case, lower the timestep with the model dynamic timestep command."
         },
         {
           "name": "damping-artificial-viscosity",
-          "syntax": "artificial-viscosity f1 f2",
+          "syntax": "artificial-viscosity <f1> <f2>",
           "description": "Sets the von Neumann (f2) and Landshoff (f2) constants, which in general should both be 1.0. This damping only applies to the main grid. See the topic Artificial Viscosity."
         },
         {
           "name": "damping-combined",
-          "syntax": "combined f <gradient v >",
+          "syntax": "combined <f> [gradient <v>]",
           "description": "combined local damping (see Combined Damping). For example, for a target 0.05 (5%) damping ratio the input should be \\(0.05*\\pi\\). A gradient map be applied to vary the parameter in space."
         },
         {
           "name": "damping-local",
-          "syntax": "local f <gradient v >",
+          "syntax": "local <f> [gradient <v>]",
           "description": "local damping (see Local Nonviscous Damping). For example, for a target 0.05 (5%) damping ratio the input should be \\(0.05*\\pi\\). A gradient map be applied to vary the parameter in space."
         },
         {
@@ -50,12 +50,12 @@
         },
         {
           "name": "damping-hysteretic-default",
-          "syntax": "default f1 f2",
+          "syntax": "default <f1> <f2>",
           "description": "Default model represented by a cubic equation with two parameters."
         },
         {
           "name": "damping-hysteretic-hardin",
-          "syntax": "hardin f1",
+          "syntax": "hardin <f1>",
           "description": "Hardin/Dernevich equation with one parameter."
         },
         {
@@ -65,12 +65,12 @@
         },
         {
           "name": "damping-hysteretic-sigmoidal-3",
-          "syntax": "sigmoidal-3 f1 f2 f3",
+          "syntax": "sigmoidal-3 <f1> <f2> <f3>",
           "description": "sigmoidal equation with three parameters."
         },
         {
           "name": "damping-hysteretic-sigmoidal-4",
-          "syntax": "sigmoidal-4 f1 f2 f3 f4",
+          "syntax": "sigmoidal-4 <f1> <f2> <f3> <f4>",
           "description": "sigmoidal equation with four parameters."
         },
         {
@@ -80,17 +80,17 @@
         },
         {
           "name": "damping-rayleigh",
-          "syntax": "rayleigh <f1 <gradient v > f2 <gradient v > <mass> <stiffness>>",
-          "description": "For dynamic calculations, a certain fraction of critical damping is usually required over a given frequency range. This type of damping is known as Rayleigh damping (see Rayleigh Damping), where f1 = the fraction of critical damping operating at center frequency of f2. (NOTE: Input frequencies for the program are in cycles/sec or Hertz \u2013 not radians/sec.) The optional modifiers stiffness and mass denote that the damping is to be restricted to stiffness- or mass-proportional, respectively. If they are left out, normal Rayleigh damping is used."
+          "syntax": "rayleigh [f1 [gradient <v>] <f2> [gradient <v>] [mass] [stiffness]]",
+          "description": "For dynamic calculations, a certain fraction of critical damping is usually required over a given frequency range. This type of damping is known as Rayleigh damping (see Rayleigh Damping), where f1 = the fraction of critical damping operating at center frequency of f2. (NOTE: Input frequencies for the program are in cycles/sec or Hertz – not radians/sec.) The optional modifiers stiffness and mass denote that the damping is to be restricted to stiffness- or mass-proportional, respectively. If they are left out, normal Rayleigh damping is used."
         },
         {
           "name": "free-field",
-          "syntax": "free-field keyword",
-          "description": "Controls the free-field boundary condition (available only for dynamic option; see Free-Field Boundaries). The following keywords are also available instead of a boolean value:"
+          "syntax": "free-field {<b> | plane-x | plane-y}",
+          "description": "Controls the free-field boundary condition (available only for dynamic option; see Free-Field Boundaries). The following keywords are also available instead of a boolean value: Options: <b>: If on , creates free field boundary zones. If off , destroys the free field boundary zones and the rest of the associated apply conditions.; plane-x: Creates free field zones only on the planes perpendicular to the X axis. So free field zones will be created on the -X and +X sides of the model, but not on the -Y and +Y side of the mode, and corner zones will not be created. This is useful when FLAC3D is used to model 2D dynamic problems.; plane-y: Creates free field zones only on the planes perpendicular to the Y axis. So free field zones will be created on the -Y and +Y sides of the model, but not on the -X and +X side of the mode, and corner zones will not be created. This is useful when FLAC3D is used to model 2D dynamic problems."
         },
         {
           "name": "free-field-adummy",
-          "syntax": "b",
+          "syntax": "<b>",
           "description": "If on, creates free field boundary zones. If off, destroys the free field boundary zones and the rest of the associated apply conditions."
         },
         {
@@ -110,12 +110,12 @@
         },
         {
           "name": "multi-step",
-          "syntax": "multi-step b",
+          "syntax": "multi-step <b>",
           "description": "turns multi-stepping on or off (see Dynamic Multi-stepping). Multi-stepping speeds up calculations in dynamic models which have a large zone size or modulus contrast. Areas of the grid with critical timesteps greater than the global critical timestep are updated less frequently, thus saving execution time. The logic is general in the sense that all zones, gridpoints and structures are included. The user does not need to do anything beyond switching it on."
         },
         {
           "name": "time-total",
-          "syntax": "time-total f",
+          "syntax": "time-total <f>",
           "description": "Specifies the accumulated zone dynamic time, defined as the sum of all the timesteps over which zone dynamic mode is active. Once set, dynamic time will continue to accumulate with subsequent cycles."
         }
       ],
@@ -140,7 +140,7 @@
         },
         {
           "name": "damping",
-          "syntax": "damping keyword <range>",
+          "syntax": "damping keyword [range]",
           "description": "Set the damping scheme for dynamic zones in the range. Sub-keywords: artificial-viscosity, combined, hysteretic, local, maxwell, rayleigh."
         },
         {
@@ -150,12 +150,12 @@
         },
         {
           "name": "damping-combined",
-          "syntax": "combined <f> <gradient <v>>",
+          "syntax": "combined <f> [gradient <v>]",
           "description": "Apply combined damping with fraction f to zones in the range. Optional gradient v varies the damping fraction linearly through the zone."
         },
         {
           "name": "damping-local",
-          "syntax": "local <f> <gradient <v>>",
+          "syntax": "local <f> [gradient <v>]",
           "description": "Apply local damping with fraction f to zones in the range. Optional gradient v varies the damping fraction linearly. The local algorithm is mass-proportional and adapts to the energy of motion."
         },
         {
@@ -165,7 +165,7 @@
         },
         {
           "name": "damping-rayleigh",
-          "syntax": "rayleigh <<f1> <gradient <v>> <f2> <gradient <v>> <mass> <stiffness>>",
+          "syntax": "rayleigh [<f1> [gradient <v>] <f2> [gradient <v>] [mass] [stiffness]]",
           "description": "Apply Rayleigh damping to zones in the range. f1 is the fraction of critical damping; f2 is the centre frequency. Either or both mass-proportional and stiffness-proportional components may be selected with the mass and stiffness sub-keywords (default is both)."
         },
         {

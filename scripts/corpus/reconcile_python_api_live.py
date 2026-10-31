@@ -35,7 +35,14 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from parse_3dec_python import _first_paragraph, _functions, _group_key, _method_groups, _methods  # noqa: E402
+from parse_3dec_python import (  # noqa: E402
+    _first_paragraph,
+    _functions,
+    _group_key,
+    _method_groups,
+    _methods,
+    mark_bracketed_optional,
+)
 
 RESOURCES = Path(__file__).resolve().parents[2] / "src/itasca_mcp/knowledge/resources"
 DOC_SUFFIX = "exe64/doc/common/docproject/source/manual/scripting/python/doc"
@@ -60,7 +67,7 @@ ENGINES: dict[str, dict[str, Any]] = {
     "flac": {
         "dump_prefixes": ("flac2d", "flac3d"),
         "versions": ["7.0", "9.0"],
-        "families": SHARED + ("zone", "gridpoint", "attach", "interface", "structure", "vertexarray"),
+        "families": SHARED + ("zone", "gridpoint", "attach", "interface", "structure"),
     },
     "3dec": {
         "dump_prefixes": ("3dec",),
@@ -325,6 +332,7 @@ def entry_from_doc(name: str, doc: str, sig_prefix: str) -> dict[str, Any]:
     if desc:
         entry["description"] = desc
     params = _parse_params(args)
+    mark_bracketed_optional(args, params)
     if params:
         entry["parameters"] = params
     if ret:

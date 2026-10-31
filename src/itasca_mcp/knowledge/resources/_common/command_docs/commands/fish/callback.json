@@ -1,669 +1,1600 @@
 {
   "category": "fish",
   "search_keywords": [
-    "callback"
+    "callback",
+    "event",
+    "add",
+    "remove",
+    "cycle",
+    "position"
   ],
-  "description": "Add/remove functions to be executed in response to callback events.",
+  "description": "Add or remove FISH functions called at a point in the cycle sequence or when an event fires (entity creation/deletion, contact model events, solve start/end).",
   "notes": [],
   "python_sdk_alternative": {
-    "available": false,
-    "workaround": ""
+    "available": true,
+    "workaround": "For a cycle position: itasca.set_callback('fn', position) registers a Python function from __main__, itasca.remove_callback('fn', position) removes it. The event-name form is not verified: set_callback('fn', 'solve_complete') followed by a cycle crashed PFC3D 9.8.54."
   },
   "versions": {
     "6.0": {
       "command": "fish callback",
-      "syntax": "fish callback keyword",
+      "syntax": "fish callback {add | remove} <sym> ...",
       "keywords": [
         {
-          "name": "event",
-          "syntax": "event <s>",
-          "description": "Adds a FISH function to be called. When the function is called depends on the following keywords: The FISH function will be called every step at the location in the cycle sequence given by f . The following keywords are available to reduce the frequency of the callback. If specified, then the function will only be called every i steps. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active. The callback will only execute if the dynamic and mechanical process is active. The callback will only execute if the fluid process is active. The callback will only execute if the mechanical process is active. The callback will only execute if the thermal process is active. The FISH function will be called in response to the event named s ."
+          "name": "add",
+          "syntax": "add <sym> {<f> [interval <i>] [process [keyword]] | event <s>}",
+          "description": "Register the FISH function sym: at position f of the cycle sequence (called every step), or when the event s fires. Entity creation/deletion events pass a pointer to the entity as the first argument and contact model events pass model-defined arguments, provided sym takes arguments."
         },
         {
-          "name": "event",
-          "syntax": "event <s>",
-          "description": "Removes a FISH function callback. If no further keywords are specified, the function will be removed wherever it is found. The first callback found at location f in the cycle is removed. If the function has been entered multiple times only one entry will be removed. The first callback found associated with the event s is removed. If the function has been entered multiple times only one entry will be removed."
-        }
-      ],
-      "examples": []
-    },
-    "7.0": {
-      "command": "fish callback",
-      "syntax": "fish callback keyword",
-      "keywords": [
-        {
-          "name": "event",
-          "syntax": "event",
-          "description": "Adds the FISH symbol sym to be called back by the system. The location of the callback is determined by the following keyword. Note that any parameters required by sym must be given at this time enclosed in paranthesis. A FISH function sym will be called every step at the location in the cycle sequence given by f . The following keywords are available to reduce the frequency of the callback. If specified, then the function will only be called every i steps. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active. The callback will only execute if the dynamic and mechanical process is active. The callback will only execute if the fluid process is active. The callback will only execute if the mechanical process is active. The callback will only execute if the thermal process is active. The FISH function sym will be called in response to the specified event."
+          "name": "remove",
+          "syntax": "remove <sym> [<f> | event <s>]",
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
         },
         {
-          "name": "event",
-          "syntax": "event",
-          "description": "Removes sym from the list of callbacks in the system. If no event name or location is specified then the symbol will be removed wherever it is found. The following keywords and options are available: The first instance of a callback to symbol sym found at location f in the cycle is removed. If the function has been entered multiple times only one entry will be removed. The first callback to symbol sym found associated with the event is removed. If the function has been entered multiple times only one entry will be removed."
+          "name": "interval",
+          "syntax": "interval <i>",
+          "description": "After 'add <sym> <f>' only: call sym every i steps instead of every step."
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (cfd, mechanical, thermal; the standalone PFC 6.0 parser's list - later GUIs also offer creep, dynamic and fluid from other products' plugins).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (creep, dynamic, fluid, mechanical, thermal).",
+          "engines": [
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:all_slip_change",
+          "syntax": "all_slip_change",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ball_create",
           "syntax": "ball_create",
-          "description": "Ball creation event."
+          "description": "Ball creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ball_delete",
           "syntax": "ball_delete",
-          "description": "Ball deletion event."
+          "description": "Ball deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballcfd_create",
           "syntax": "ballcfd_create",
-          "description": "Ball CFD creation event."
+          "description": "Ball CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballcfd_delete",
           "syntax": "ballcfd_delete",
-          "description": "Ball CFD deletion event."
+          "description": "Ball CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballthermal_create",
           "syntax": "ballthermal_create",
-          "description": "Ball thermal creation event."
+          "description": "Ball thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballthermal_delete",
           "syntax": "ballthermal_delete",
-          "description": "Ball thermal deletion event."
-        },
-        {
-          "name": "kwd:block_create",
-          "syntax": "block_create",
-          "description": "Block creation event. Argument to called fish function will be the pointer to the new block."
-        },
-        {
-          "name": "kwd:block_delete",
-          "syntax": "block_delete",
-          "description": "Block deletion event. Argument to called fish function will be the pointer to the deleted block."
+          "description": "Ball thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:bond_break",
           "syntax": "bond_break",
-          "description": "Contact bond break event."
+          "description": "Contact bond break event. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). Remove it with 'remove <sym> event bond_break': a bare 'remove <sym>' leaves it firing (PFC3D 6.00, 7.00).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:broken",
+          "syntax": "broken",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_after_received",
+          "syntax": "cfd_after_received",
+          "description": "After CFD velocities have been received. The 7.0 and 9.8 manuals spell it cfd_after_receive; the parser's name is cfd_after_received in both, and the shorter spelling is accepted as a prefix.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_after_update",
           "syntax": "cfd_after_update",
-          "description": "After CFD porosities have been updated."
-        },
-        {
-          "name": "kwd:cfd_after_receive",
-          "syntax": "cfd_after_receive",
-          "description": "After CFD velocities have been received."
+          "description": "After CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_before_send",
           "syntax": "cfd_before_send",
-          "description": "Before CFD information has been sent."
+          "description": "Before CFD information has been sent.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_before_update",
           "syntax": "cfd_before_update",
-          "description": "Before CFD porosities have been updated."
+          "description": "Before CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clump_create",
           "syntax": "clump_create",
-          "description": "Clump creation event."
+          "description": "Clump creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clump_delete",
           "syntax": "clump_delete",
-          "description": "Clump deletion event."
+          "description": "Clump deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpcfd_create",
           "syntax": "clumpcfd_create",
-          "description": "Clump CFD creation event."
+          "description": "Clump CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpcfd_delete",
           "syntax": "clumpcfd_delete",
-          "description": "Clump CFD deletion event."
+          "description": "Clump CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpthermal_create",
           "syntax": "clumpthermal_create",
-          "description": "Clump thermal creation event."
+          "description": "Clump thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpthermal_delete",
           "syntax": "clumpthermal_delete",
-          "description": "Clump thermal deletion event."
+          "description": "Clump thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:contact_activated",
           "syntax": "contact_activated",
-          "description": "Contact activation event."
+          "description": "Contact activation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:contact_create",
           "syntax": "contact_create",
-          "description": "Contact creation event."
+          "description": "Contact creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:contact_delete",
           "syntax": "contact_delete",
-          "description": "Contact deletion event."
-        },
-        {
-          "name": "kwd:faceblock_create",
-          "syntax": "faceblock_create",
-          "description": "Face block creation event."
-        },
-        {
-          "name": "kwd:faceblock_delete",
-          "syntax": "faceblock_delete",
-          "description": "Face block deletion event."
+          "description": "Contact deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:facet_create",
           "syntax": "facet_create",
-          "description": "Wall facet creation event."
+          "description": "Wall facet creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:facet_delete",
           "syntax": "facet_delete",
-          "description": "Wall facet deletion event."
-        },
-        {
-          "name": "kwd:fos_complete",
-          "syntax": "fos_complete",
-          "description": "A factor of safety solution has completed. Check the current solve criteria to see if the model has converged. The global.fos intrinsic will return the current factor of safety."
-        },
-        {
-          "name": "kwd:fos_start",
-          "syntax": "fos_start",
-          "description": "A factor of safety solution has started. The global.fos intrinsic will return the current factor of safety. The model will have been restored from the initial state and automatic strength reduction applied. This can be used to customized strength reduction at a given factor of safety."
+          "description": "Wall facet deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblock_create",
           "syntax": "rblock_create",
-          "description": "RBlock creation event."
+          "description": "RBlock creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblock_delete",
           "syntax": "rblock_delete",
-          "description": "RBlock deletion event."
+          "description": "RBlock deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblockthermal_create",
           "syntax": "rblockthermal_create",
-          "description": "RBlock thermal creation event."
+          "description": "RBlock thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblockthermal_delete",
           "syntax": "rblockthermal_delete",
-          "description": "RBlock thermal deletion event."
+          "description": "RBlock thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:slip_change",
           "syntax": "slip_change",
-          "description": "Contact slip change event."
+          "description": "Contact slip change event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:solve_complete",
           "syntax": "solve_complete",
-          "description": "The solve of cycle command has terminiated. One argument available of type string. If the string is not empty this indicates the error message that halted cycling."
-        },
-        {
-          "name": "kwd:solve_ending",
-          "syntax": "solve_ending",
-          "description": "The solve of cycle command is about to terminate. Cycling has stopped and cleanup operations begun."
-        },
-        {
-          "name": "kwd:solve_master",
-          "syntax": "solve_master",
-          "description": "The code has entered the Master section of a coupled solution."
-        },
-        {
-          "name": "kwd:solve_slave",
-          "syntax": "solve_slave",
-          "description": "The code has entered a slave section of teh copuled solution. One argument is provided indicating the name of the slave process."
-        },
-        {
-          "name": "kwd:solve_start",
-          "syntax": "solve_start",
-          "description": "The solve or cycle command is just about to start."
-        },
-        {
-          "name": "kwd:struct_eom",
-          "syntax": "struct_eom",
-          "description": "Just before structural element node equations of motion."
-        },
-        {
-          "name": "kwd:struct_eom_complete",
-          "syntax": "struct_eom_complete",
-          "description": "Just after structural element node equations of motion."
-        },
-        {
-          "name": "kwd:struct_internal",
-          "syntax": "struct_internal",
-          "description": "Just before structural element internal forces are calculated."
-        },
-        {
-          "name": "kwd:struct_internal_complete",
-          "syntax": "struct_internal_complete",
-          "description": "Just after structural element internal forces are calculated"
-        },
-        {
-          "name": "kwd:struct_link_force",
-          "syntax": "struct_link_force",
-          "description": "Just before structural link forces are calculated."
-        },
-        {
-          "name": "kwd:struct_link_force_complete",
-          "syntax": "struct_link_force_complete",
-          "description": "Just after structural link forces are calculated."
-        },
-        {
-          "name": "kwd:struct_link_update_complete",
-          "syntax": "struct_link_update_complete",
-          "description": "Just after structural link properties are assigned from element properties as part of an update."
-        },
-        {
-          "name": "kwd:struct_update",
-          "syntax": "struct_update",
-          "description": "Just before structural geometry update. Done at the start of cycling and in large strain mode every update interval."
-        },
-        {
-          "name": "kwd:struct_update_complete",
-          "syntax": "struct_update_complete",
-          "description": "Just after structural geometry update. Done at the start of cycling and in large strain mode every update interval."
-        },
-        {
-          "name": "kwd:subcontact_create",
-          "syntax": "subcontact_create",
-          "description": "Subcontact creation event. Argument to called fish function will be the pointer to the new subcontact."
-        },
-        {
-          "name": "kwd:subcontact_delete",
-          "syntax": "subcontact_delete",
-          "description": "Subcontact deletion event. Argument to called fish function will be the pointer to the deleted subcontact."
-        },
-        {
-          "name": "kwd:subcontact_state_change",
-          "syntax": "subcontact_state_change",
-          "description": "Subcontact change of failure state. Arguments to called fish function will be the subcontact pointer and the old state (integer)."
+          "description": "The solve of cycle command has terminiated. One argument available of type string. If the string is not empty this indicates the error message that halted cycling.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "kwd:wall_create",
           "syntax": "wall_create",
-          "description": "Wall creation event."
+          "description": "Wall creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wall_delete",
           "syntax": "wall_delete",
-          "description": "Wall deletion event."
+          "description": "Wall deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wallthermal_create",
           "syntax": "wallthermal_create",
-          "description": "Wall thermal creation event."
+          "description": "Wall thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wallthermal_delete",
           "syntax": "wallthermal_delete",
-          "description": "Wall thermal deletion event."
+          "description": "Wall thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        }
+      ],
+      "examples": [
+        "fish callback add servo -1.0 interval 10 process mechanical",
+        "fish callback remove servo -1.0"
+      ],
+      "notes": [
+        "'fish callback add <sym> event ?' prints the event names this engine accepts and registers nothing; the 6.0 manual lists none.",
+        "interval and process follow a cycle position only. After 'event <s>' they raise 'Unused extra parameter', but the callback has already been registered: remove it before retrying.",
+        "Verified on PFC3D 6.00.30 (2026-10-29): add/remove grammar, process values and the event names. 6.0 has no solve_start or solve_ending, and prints rblockthermal_create as RBlockthermal_create (either case works).",
+        "A whilestepping statement inside a FISH function inserts the function into the cycle sequence at -1.0."
+      ]
+    },
+    "7.0": {
+      "command": "fish callback",
+      "syntax": "fish callback {add | remove} <sym> ...",
+      "keywords": [
+        {
+          "name": "add",
+          "syntax": "add <sym> {<f> [interval <i>] [process [keyword]] | event <s>}",
+          "description": "Register the FISH function sym: at position f of the cycle sequence (called every step), or when the event s fires. Entity creation/deletion events pass a pointer to the entity as the first argument and contact model events pass model-defined arguments, provided sym takes arguments."
+        },
+        {
+          "name": "remove",
+          "syntax": "remove <sym> [<f> | event <s>]",
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
+        },
+        {
+          "name": "interval",
+          "syntax": "interval <i>",
+          "description": "After 'add <sym> <f>' only: call sym every i steps instead of every step."
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (cfd, mechanical, thermal; the standalone PFC 6.0 parser's list - later GUIs also offer creep, dynamic and fluid from other products' plugins).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (creep, dynamic, fluid, mechanical, thermal).",
+          "engines": [
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:all_slip_change",
+          "syntax": "all_slip_change",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ball_create",
+          "syntax": "ball_create",
+          "description": "Ball creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ball_delete",
+          "syntax": "ball_delete",
+          "description": "Ball deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballcfd_create",
+          "syntax": "ballcfd_create",
+          "description": "Ball CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballcfd_delete",
+          "syntax": "ballcfd_delete",
+          "description": "Ball CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballthermal_create",
+          "syntax": "ballthermal_create",
+          "description": "Ball thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballthermal_delete",
+          "syntax": "ballthermal_delete",
+          "description": "Ball thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:block_create",
+          "syntax": "block_create",
+          "description": "Block creation event. Argument to called fish function will be the pointer to the new block.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:block_delete",
+          "syntax": "block_delete",
+          "description": "Block deletion event. Argument to called fish function will be the pointer to the deleted block.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:bond_break",
+          "syntax": "bond_break",
+          "description": "Contact bond break event. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). Remove it with 'remove <sym> event bond_break': a bare 'remove <sym>' leaves it firing (PFC3D 6.00, 7.00).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:broken",
+          "syntax": "broken",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_after_received",
+          "syntax": "cfd_after_received",
+          "description": "After CFD velocities have been received. The 7.0 and 9.8 manuals spell it cfd_after_receive; the parser's name is cfd_after_received in both, and the shorter spelling is accepted as a prefix.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_after_update",
+          "syntax": "cfd_after_update",
+          "description": "After CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_before_send",
+          "syntax": "cfd_before_send",
+          "description": "Before CFD information has been sent.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_before_update",
+          "syntax": "cfd_before_update",
+          "description": "Before CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clump_create",
+          "syntax": "clump_create",
+          "description": "Clump creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clump_delete",
+          "syntax": "clump_delete",
+          "description": "Clump deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clumpcfd_create",
+          "syntax": "clumpcfd_create",
+          "description": "Clump CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clumpcfd_delete",
+          "syntax": "clumpcfd_delete",
+          "description": "Clump CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clumpthermal_create",
+          "syntax": "clumpthermal_create",
+          "description": "Clump thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:clumpthermal_delete",
+          "syntax": "clumpthermal_delete",
+          "description": "Clump thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:contact_activated",
+          "syntax": "contact_activated",
+          "description": "Contact activation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:contact_create",
+          "syntax": "contact_create",
+          "description": "Contact creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:contact_delete",
+          "syntax": "contact_delete",
+          "description": "Contact deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:faceblock_create",
+          "syntax": "faceblock_create",
+          "description": "Face block creation event.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:faceblock_delete",
+          "syntax": "faceblock_delete",
+          "description": "Face block deletion event.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:facet_create",
+          "syntax": "facet_create",
+          "description": "Wall facet creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:facet_delete",
+          "syntax": "facet_delete",
+          "description": "Wall facet deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:fos_complete",
+          "syntax": "fos_complete",
+          "description": "A factor of safety solution has completed. Check the current solve criteria to see if the model has converged. The global.fos intrinsic will return the current factor of safety.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:fos_start",
+          "syntax": "fos_start",
+          "description": "A factor of safety solution has started. The global.fos intrinsic will return the current factor of safety. The model will have been restored from the initial state and automatic strength reduction applied. This can be used to customized strength reduction at a given factor of safety.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:rblock_create",
+          "syntax": "rblock_create",
+          "description": "RBlock creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:rblock_delete",
+          "syntax": "rblock_delete",
+          "description": "RBlock deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:rblockthermal_create",
+          "syntax": "rblockthermal_create",
+          "description": "RBlock thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:rblockthermal_delete",
+          "syntax": "rblockthermal_delete",
+          "description": "RBlock thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:slip_change",
+          "syntax": "slip_change",
+          "description": "Contact slip change event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:solve_complete",
+          "syntax": "solve_complete",
+          "description": "The solve of cycle command has terminiated. One argument available of type string. If the string is not empty this indicates the error message that halted cycling.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:solve_ending",
+          "syntax": "solve_ending",
+          "description": "The solve of cycle command is about to terminate. Cycling has stopped and cleanup operations begun.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:solve_master",
+          "syntax": "solve_master",
+          "description": "The code has entered the Master section of a coupled solution.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:solve_slave",
+          "syntax": "solve_slave",
+          "description": "The code has entered a slave section of teh copuled solution. One argument is provided indicating the name of the slave process.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:solve_start",
+          "syntax": "solve_start",
+          "description": "The solve or cycle command is just about to start.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:struct_eom",
+          "syntax": "struct_eom",
+          "description": "Just before structural element node equations of motion.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_eom_complete",
+          "syntax": "struct_eom_complete",
+          "description": "Just after structural element node equations of motion.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_internal",
+          "syntax": "struct_internal",
+          "description": "Just before structural element internal forces are calculated.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_internal_complete",
+          "syntax": "struct_internal_complete",
+          "description": "Just after structural element internal forces are calculated",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_link_force",
+          "syntax": "struct_link_force",
+          "description": "Just before structural link forces are calculated.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_link_force_complete",
+          "syntax": "struct_link_force_complete",
+          "description": "Just after structural link forces are calculated.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_link_update_complete",
+          "syntax": "struct_link_update_complete",
+          "description": "Just after structural link properties are assigned from element properties as part of an update.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_update",
+          "syntax": "struct_update",
+          "description": "Just before structural geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:struct_update_complete",
+          "syntax": "struct_update_complete",
+          "description": "Just after structural geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:subcontact_create",
+          "syntax": "subcontact_create",
+          "description": "Subcontact creation event. Argument to called fish function will be the pointer to the new subcontact.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:subcontact_delete",
+          "syntax": "subcontact_delete",
+          "description": "Subcontact deletion event. Argument to called fish function will be the pointer to the deleted subcontact.",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:subcontact_state_change",
+          "syntax": "subcontact_state_change",
+          "description": "Subcontact change of failure state. Arguments to called fish function will be the subcontact pointer and the old state (integer).",
+          "engines": [
+            "3dec"
+          ]
+        },
+        {
+          "name": "kwd:wall_create",
+          "syntax": "wall_create",
+          "description": "Wall creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:wall_delete",
+          "syntax": "wall_delete",
+          "description": "Wall deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:wallthermal_create",
+          "syntax": "wallthermal_create",
+          "description": "Wall thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:wallthermal_delete",
+          "syntax": "wallthermal_delete",
+          "description": "Wall thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:zone_eom",
           "syntax": "zone_eom",
-          "description": "Just before zone grid point equations of motion are performed."
+          "description": "Just before zone grid point equations of motion are performed.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_eom_complete",
           "syntax": "zone_eom_complete",
-          "description": "Just after zone grid point equations of motion are performed."
+          "description": "Just after zone grid point equations of motion are performed.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_stress",
           "syntax": "zone_stress",
-          "description": "Just before zone stress updates."
+          "description": "Just before zone stress updates.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_stress_complete",
           "syntax": "zone_stress_complete",
-          "description": "Just after zone stress updates and other forces applied."
+          "description": "Just after zone stress updates and other forces applied.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_update",
           "syntax": "zone_update",
-          "description": "Just before zone geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just before zone geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_update_complete",
           "syntax": "zone_update_complete",
-          "description": "Just after zone geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just after zone geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac"
+          ]
         }
+      ],
+      "examples": [
+        "fish callback add servo -1.0 interval 10 process mechanical",
+        "fish callback remove servo -1.0",
+        "fish callback add on_done event solve_complete"
+      ],
+      "notes": [
+        "'fish callback add <sym> event ?' prints the event names this engine accepts and registers nothing.",
+        "interval and process follow a cycle position only. After 'event <s>' they raise 'Unused extra parameter', but the callback has already been registered: remove it before retrying.",
+        "Verified on PFC3D 7.00.161 (2026-10-29): add/remove grammar, process values (the manual omits cfd) and the event names; all_slip_change, broken and cfd_after_received are parser names the 7.0 manual does not list."
       ]
     },
     "9.0": {
       "command": "fish callback",
-      "syntax": "fish callback keyword",
+      "syntax": "fish callback {add | remove} <sym> ...",
       "keywords": [
         {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Adds the FISH symbol sym to be called back by the system. The location of the callback is determined by the following keyword. See the section FISH Callback Events for a discussion of FISH callbacks. A FISH function sym will be called every step at the location in the cycle sequence given by f . The following keywords are available to reduce the frequency of the callback. The FISH function sym will be called in response to the specified event. If specified, then the function will only be called every i steps. Cannot be used with the interval-time keyword. If specified, then the function will only be called every f time units of the process specified with the process keyword. If no process is specified then the mechanical process is used. Cannot be used with the interval keyword. If specified, then the function will only be called if the process indicated is active during that particular cycle. The callback will only execute if the creep and mechanical process is active. The callback will only execute if the dynamic and mechanical process is active. The callback will only execute if the fluid process is active. The callback will only execute if the mechanical process is active. The callback will only execute if the thermal process is active."
+          "name": "add",
+          "syntax": "add <sym> {<f> [interval <i>] [interval-time <f>] [process [keyword]] | event <s>}",
+          "description": "Register the FISH function sym: at position f of the cycle sequence (called every step), or when the event s fires. Entity creation/deletion events pass a pointer to the entity as the first argument and contact model events pass model-defined arguments, provided sym takes arguments."
         },
         {
-          "name": "event",
-          "syntax": "event [evblock]",
-          "description": "Removes sym from the list of callbacks in the system. If no event name or location is specified then the symbol will be removed wherever it is found. The following keywords and options are available: The first instance of a callback to symbol sym found at location f in the cycle is removed. If the function has been entered multiple times only one entry will be removed. The first callback to symbol sym found associated with the event is removed. If the function has been entered multiple times only one entry will be removed."
+          "name": "remove",
+          "syntax": "remove <sym> [<f> | event <s>]",
+          "description": "Remove one registration of sym: the first at position f, or the first for event s; with neither, sym is removed wherever it is found. For event registrations (bond_break on PFC 6.0 / 7.0 / 9.8) the bare form leaves the registration in place: name the event. 'fish list callbacks' shows what is registered."
+        },
+        {
+          "name": "interval",
+          "syntax": "interval <i>",
+          "description": "After 'add <sym> <f>' only: call sym every i steps instead of every step."
+        },
+        {
+          "name": "interval-time",
+          "syntax": "interval-time <f>",
+          "description": "After 'add <sym> <f>' only: call sym every f time units of the process named by 'process' (mechanical by default)."
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (cfd, mechanical, thermal; the standalone PFC 6.0 parser's list - later GUIs also offer creep, dynamic and fluid from other products' plugins).",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "process",
+          "syntax": "process [keyword]",
+          "description": "After 'add <sym> <f>' only: call sym only in cycles where that process is active (creep, dynamic, fluid, mechanical, thermal).",
+          "engines": [
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:all_slip_change",
+          "syntax": "all_slip_change",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ball_create",
           "syntax": "ball_create",
-          "description": "Ball creation event."
+          "description": "Ball creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ball_delete",
           "syntax": "ball_delete",
-          "description": "Ball deletion event."
+          "description": "Ball deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballcfd_create",
           "syntax": "ballcfd_create",
-          "description": "Ball CFD creation event."
+          "description": "Ball CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballcfd_delete",
           "syntax": "ballcfd_delete",
-          "description": "Ball CFD deletion event."
+          "description": "Ball CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballfluid_create",
+          "syntax": "ballfluid_create",
+          "description": "Ball fluid creation event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:ballfluid_delete",
+          "syntax": "ballfluid_delete",
+          "description": "Ball fluid deletion event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballthermal_create",
           "syntax": "ballthermal_create",
-          "description": "Ball thermal creation event."
+          "description": "Ball thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:ballthermal_delete",
           "syntax": "ballthermal_delete",
-          "description": "Ball thermal deletion event."
+          "description": "Ball thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:block_create",
           "syntax": "block_create",
-          "description": "Block creation event. Argument to called fish function will be the pointer to the new block."
+          "description": "Block creation event. Argument to called fish function will be the pointer to the new block.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:block_delete",
           "syntax": "block_delete",
-          "description": "Block deletion event. Argument to called fish function will be the pointer to the deleted block."
+          "description": "Block deletion event. Argument to called fish function will be the pointer to the deleted block.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:bond_break",
           "syntax": "bond_break",
-          "description": "Contact bond break event."
+          "description": "Contact bond break event. For the Subspring Network Model, this event corresponds to a sub-contact bond breaking. Arguments are defined by the contact model; for linearpbond see itasca_browse_doc(source='reference', path='contact-models linearpbond callback_events'). A bare 'remove <sym>' does not remove a bond_break registration: on PFC3D 6.00, 7.00 and 9.8.54 the function kept firing and 'fish list callbacks' still listed it. The explicit 'remove <sym> event bond_break' does remove it on all three (clean 9.8.54 harness: 0 breaks counted after the explicit remove, 64 in the control and after the bare remove).",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:bond_broken",
           "syntax": "bond_broken",
-          "description": "Contact bond broken event."
+          "description": "Only available for the Subspring Network Model. Triggered when all sub-contact bonds have broken.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:broken",
+          "syntax": "broken",
+          "description": "Contact model event. Not described in the 7.0 or 9.8 manuals; the 6.0, 7.0 and 9.8 parsers all accept the name.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:cfd_after_received",
+          "syntax": "cfd_after_received",
+          "description": "After CFD velocities have been received. The 7.0 and 9.8 manuals spell it cfd_after_receive; the parser's name is cfd_after_received in both, and the shorter spelling is accepted as a prefix.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_after_update",
           "syntax": "cfd_after_update",
-          "description": "After CFD porosities have been updated."
-        },
-        {
-          "name": "kwd:cfd_after_receive",
-          "syntax": "cfd_after_receive",
-          "description": "After CFD velocities have been received."
+          "description": "After CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_before_send",
           "syntax": "cfd_before_send",
-          "description": "Before CFD information has been sent."
+          "description": "Before CFD information has been sent.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:cfd_before_update",
           "syntax": "cfd_before_update",
-          "description": "Before CFD porosities have been updated."
+          "description": "Before CFD porosities have been updated.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clump_create",
           "syntax": "clump_create",
-          "description": "Clump creation event."
+          "description": "Clump creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clump_delete",
           "syntax": "clump_delete",
-          "description": "Clump deletion event."
+          "description": "Clump deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpcfd_create",
           "syntax": "clumpcfd_create",
-          "description": "Clump CFD creation event."
+          "description": "Clump CFD creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpcfd_delete",
           "syntax": "clumpcfd_delete",
-          "description": "Clump CFD deletion event."
+          "description": "Clump CFD deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpthermal_create",
           "syntax": "clumpthermal_create",
-          "description": "Clump thermal creation event."
+          "description": "Clump thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:clumpthermal_delete",
           "syntax": "clumpthermal_delete",
-          "description": "Clump thermal deletion event."
+          "description": "Clump thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:contact_activated",
           "syntax": "contact_activated",
-          "description": "Contact activation event."
+          "description": "Contact activation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:contact_create",
           "syntax": "contact_create",
-          "description": "Contact creation event."
+          "description": "Contact creation event. In 3DEC the argument is the block contact (3DEC 9.8.54: one creation call per block contact).",
+          "engines": [
+            "pfc",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:contact_delete",
           "syntax": "contact_delete",
-          "description": "Contact deletion event."
+          "description": "Contact deletion event. In 3DEC the argument is the block contact (3DEC 9.8.54: one deletion call per block contact).",
+          "engines": [
+            "pfc",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:faceblock_create",
           "syntax": "faceblock_create",
-          "description": "Face block creation event."
+          "description": "Face block creation event.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:faceblock_delete",
           "syntax": "faceblock_delete",
-          "description": "Face block deletion event."
+          "description": "Face block deletion event.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:facet_create",
           "syntax": "facet_create",
-          "description": "Wall facet creation event."
+          "description": "Wall facet creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:facet_delete",
           "syntax": "facet_delete",
-          "description": "Wall facet deletion event."
+          "description": "Wall facet deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:fos_complete",
           "syntax": "fos_complete",
-          "description": "A factor of safety solution has completed. Check the current solve criteria to see if the model has converged. The global.fos intrinsic will return the current factor of safety."
+          "description": "A factor of safety solution has completed. Check the current solve criteria to see if the model has converged. The global.fos intrinsic will return the current factor of safety.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "kwd:fos_start",
           "syntax": "fos_start",
-          "description": "A factor of safety solution has started. The global.fos intrinsic will return the current factor of safety. The model will have been restored from the initial state and automatic strength reduction applied. This can be used to customized strength reduction at a given factor of safety."
+          "description": "A factor of safety solution has started. The global.fos intrinsic will return the current factor of safety. The model will have been restored from the initial state and automatic strength reduction applied. This can be used to customized strength reduction at a given factor of safety.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
+        },
+        {
+          "name": "kwd:mpm_create",
+          "syntax": "mpm_create",
+          "description": "MPM body creation event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "mpoint"
+          ]
+        },
+        {
+          "name": "kwd:mpm_delete",
+          "syntax": "mpm_delete",
+          "description": "MPM body deletion event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "mpoint"
+          ]
+        },
+        {
+          "name": "kwd:mpoint_create",
+          "syntax": "mpoint_create",
+          "description": "Material point creation event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "mpoint"
+          ]
+        },
+        {
+          "name": "kwd:mpoint_delete",
+          "syntax": "mpoint_delete",
+          "description": "Material point deletion event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "mpoint"
+          ]
         },
         {
           "name": "kwd:rblock_create",
           "syntax": "rblock_create",
-          "description": "RBlock creation event."
+          "description": "RBlock creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblock_delete",
           "syntax": "rblock_delete",
-          "description": "RBlock deletion event."
+          "description": "RBlock deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblockthermal_create",
           "syntax": "rblockthermal_create",
-          "description": "RBlock thermal creation event."
+          "description": "RBlock thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:rblockthermal_delete",
           "syntax": "rblockthermal_delete",
-          "description": "RBlock thermal deletion event."
+          "description": "RBlock thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:slip_change",
           "syntax": "slip_change",
-          "description": "Contact slip change event."
+          "description": "Contact slip change event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:solve_complete",
           "syntax": "solve_complete",
-          "description": "The solve of cycle command has terminiated. One argument available of type string. If the string is not empty this indicates the error message that halted cycling."
+          "description": "The solve of cycle command has terminiated. One argument available of type string. If the string is not empty this indicates the error message that halted cycling.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "kwd:solve_ending",
           "syntax": "solve_ending",
-          "description": "The solve of cycle command is about to terminate. Cycling has stopped and cleanup operations begun."
+          "description": "The solve of cycle command is about to terminate. Cycling has stopped and cleanup operations begun.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
-          "name": "kwd:solve_master",
-          "syntax": "solve_master",
-          "description": "The code has entered the Master section of a coupled solution."
+          "name": "kwd:solve_follower",
+          "syntax": "solve_follower",
+          "description": "The code has entered a follower section of the coupled solution; one argument gives the follower process name. Named solve_slave in 7.0; 9.8 rejects that name.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
-          "name": "kwd:solve_slave",
-          "syntax": "solve_slave",
-          "description": "The code has entered a slave section of teh copuled solution. One argument is provided indicating the name of the slave process."
+          "name": "kwd:solve_leader",
+          "syntax": "solve_leader",
+          "description": "The code has entered the leader section of a coupled solution. Named solve_master in 7.0; 9.8 rejects that name.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "kwd:solve_start",
           "syntax": "solve_start",
-          "description": "The solve or cycle command is just about to start."
+          "description": "The solve or cycle command is just about to start.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "kwd:struct_eom",
           "syntax": "struct_eom",
-          "description": "Just before structural element node equations of motion."
+          "description": "Just before structural element node equations of motion.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_eom_complete",
           "syntax": "struct_eom_complete",
-          "description": "Just after structural element node equations of motion."
-        },
-        {
-          "name": "kwd:struct_internal",
-          "syntax": "struct_internal",
-          "description": "Just before structural element internal forces are calculated."
+          "description": "Just after structural element node equations of motion.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_internal_complete",
           "syntax": "struct_internal_complete",
-          "description": "Just after structural element internal forces are calculated"
+          "description": "Just after structural element internal forces are calculated",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_link_force",
           "syntax": "struct_link_force",
-          "description": "Just before structural link forces are calculated."
+          "description": "Just before structural link forces are calculated.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_link_force_complete",
           "syntax": "struct_link_force_complete",
-          "description": "Just after structural link forces are calculated."
+          "description": "Just after structural link forces are calculated.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_link_update_complete",
           "syntax": "struct_link_update_complete",
-          "description": "Just after structural link properties are assigned from element properties as part of an update."
+          "description": "Just after structural link properties are assigned from element properties as part of an update.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_update",
           "syntax": "struct_update",
-          "description": "Just before structural geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just before structural geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:struct_update_complete",
           "syntax": "struct_update_complete",
-          "description": "Just after structural geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just after structural geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac",
+            "3dec"
+          ]
         },
         {
           "name": "kwd:subcontact_create",
           "syntax": "subcontact_create",
-          "description": "Subcontact creation event. Argument to called fish function will be the pointer to the new subcontact."
+          "description": "Subcontact creation event. Argument to called fish function will be the pointer to the new subcontact.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:subcontact_delete",
           "syntax": "subcontact_delete",
-          "description": "Subcontact deletion event. Argument to called fish function will be the pointer to the deleted subcontact."
+          "description": "Subcontact deletion event. Argument to called fish function will be the pointer to the deleted subcontact.",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:subcontact_state_change",
           "syntax": "subcontact_state_change",
-          "description": "Subcontact change of failure state. Arguments to called fish function will be the subcontact pointer and the old state (integer)."
+          "description": "Subcontact change of failure state. Arguments to called fish function will be the subcontact pointer and the old state (integer).",
+          "engines": [
+            "3dec"
+          ]
         },
         {
           "name": "kwd:wall_create",
           "syntax": "wall_create",
-          "description": "Wall creation event."
+          "description": "Wall creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wall_delete",
           "syntax": "wall_delete",
-          "description": "Wall deletion event."
+          "description": "Wall deletion event.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:wallfluid_create",
+          "syntax": "wallfluid_create",
+          "description": "Wall fluid creation event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "kwd:wallfluid_delete",
+          "syntax": "wallfluid_delete",
+          "description": "Wall fluid deletion event. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wallthermal_create",
           "syntax": "wallthermal_create",
-          "description": "Wall thermal creation event."
+          "description": "Wall thermal creation event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:wallthermal_delete",
           "syntax": "wallthermal_delete",
-          "description": "Wall thermal deletion event."
+          "description": "Wall thermal deletion event.",
+          "engines": [
+            "pfc"
+          ]
         },
         {
           "name": "kwd:zone_eom",
           "syntax": "zone_eom",
-          "description": "Just before zone grid point equations of motion are performed."
+          "description": "Just before zone grid point equations of motion are performed.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_eom_complete",
           "syntax": "zone_eom_complete",
-          "description": "Just after zone grid point equations of motion are performed."
+          "description": "Just after zone grid point equations of motion are performed.",
+          "engines": [
+            "flac"
+          ]
+        },
+        {
+          "name": "kwd:zone_fluid_update",
+          "syntax": "zone_fluid_update",
+          "description": "Just before the zone fluid update. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "flac"
+          ]
+        },
+        {
+          "name": "kwd:zone_fluid_update_complete",
+          "syntax": "zone_fluid_update_complete",
+          "description": "Just after the zone fluid update. Not described in the 9.8 manual; the name is accepted by the PFC3D 9.8.54 parser.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_stress",
           "syntax": "zone_stress",
-          "description": "Just before zone stress updates."
+          "description": "Just before zone stress updates.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_stress_complete",
           "syntax": "zone_stress_complete",
-          "description": "Just after zone stress updates and other forces applied."
+          "description": "Just after zone stress updates and other forces applied.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_update",
           "syntax": "zone_update",
-          "description": "Just before zone geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just before zone geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "kwd:zone_update_complete",
           "syntax": "zone_update_complete",
-          "description": "Just after zone geometry update. Done at the start of cycling and in large strain mode every update interval."
+          "description": "Just after zone geometry update. Done at the start of cycling and in large strain mode every update interval.",
+          "engines": [
+            "flac"
+          ]
         }
       ],
-      "examples": []
+      "examples": [
+        "fish callback add servo -1.0 interval 10 process mechanical",
+        "fish callback remove servo -1.0",
+        "fish callback add on_done event solve_complete",
+        "fish callback add on_done event ?"
+      ],
+      "notes": [
+        "'fish callback add <sym> event ?' prints the event names this engine accepts and registers nothing.",
+        "Write event names in full: an unambiguous prefix is accepted, so 'struct_internal' (a 7.0 name) silently registers on struct_internal_complete. solve_master/solve_slave are rejected; use solve_leader/solve_follower.",
+        "interval, interval-time and process follow a cycle position only. After 'event <s>' they raise 'Unused extra parameter', but the callback has already been registered: remove it before retrying.",
+        "Some cycle positions are reserved for the engine's own callbacks ('Cannot add a fish call at a reserved location', e.g. 45.0 in PFC 9.8).",
+        "Verified on PFC3D 9.8.54 (2026-10-29): add/remove grammar, process values, the event names and the notes above."
+      ]
     }
   }
 }

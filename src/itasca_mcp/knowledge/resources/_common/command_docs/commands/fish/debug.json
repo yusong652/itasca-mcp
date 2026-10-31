@@ -12,12 +12,12 @@
   "versions": {
     "6.0": {
       "command": "fish debug",
-      "syntax": "fish debug <s>keyword",
+      "syntax": "fish debug <s> keyword",
       "keywords": [
         {
-          "name": "line",
-          "syntax": "line [<i>] on/off",
-          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Remove all breakpoints from all pseudo-code objects. Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used. Set or clear a breakpoint at the first pseudo-code object in the FISH function. Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
+          "name": "break",
+          "syntax": "break {clear | code [<i>] <b> | fish <b> | line [<i>] on/off} ...",
+          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Options: clear: Remove all breakpoints from all pseudo-code objects.; code [<i>] <b>: Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used.; fish <b>: Set or clear a breakpoint at the first pseudo-code object in the FISH function.; line [<i>] on/off: Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
         },
         {
           "name": "codeinto",
@@ -50,9 +50,9 @@
           "description": "Execute until code originating from the current source file at line i is reached. If that line is never reached, then the original function call will end, as will the debugging mode."
         },
         {
-          "name": "stack",
-          "syntax": "stack",
-          "description": "Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output. Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used. Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions. Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output. The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
+          "name": "list",
+          "syntax": "list {call | code [<i1>] [<i2>] | fish | register | source [<i1>] [<i2>] | stack} ...",
+          "description": "Options: call: Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read:; code [<i1>] [<i2>]: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output.; fish: Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used.; register: Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions.; source [<i1>] [<i2>]: Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output.; stack: The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
         },
         {
           "name": "run",
@@ -64,12 +64,12 @@
     },
     "7.0": {
       "command": "fish debug",
-      "syntax": "fish debug <s>keyword",
+      "syntax": "fish debug <s> keyword",
       "keywords": [
         {
-          "name": "line",
-          "syntax": "line [<i>] on/off",
-          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Remove all breakpoints from all pseudo-code objects. Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used. Set or clear a breakpoint at the first pseudo-code object in the FISH function. Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
+          "name": "break",
+          "syntax": "break {clear | code [<i>] <b> | fish <b> | line [<i>] on/off} ...",
+          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Options: clear: Remove all breakpoints from all pseudo-code objects.; code [<i>] <b>: Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used.; fish <b>: Set or clear a breakpoint at the first pseudo-code object in the FISH function.; line [<i>] on/off: Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
         },
         {
           "name": "codeinto",
@@ -102,9 +102,9 @@
           "description": "Execute until code originating from the current source file at line i is reached. If that line is never reached, then the original function call will end, as will the debugging mode."
         },
         {
-          "name": "stack",
-          "syntax": "stack",
-          "description": "Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output. Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used. Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions. Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output. The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
+          "name": "list",
+          "syntax": "list {call | code [<i1>] [<i2>] | fish | register | source [<i1>] [<i2>] | stack} ...",
+          "description": "Options: call: Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read:; code [<i1>] [<i2>]: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output.; fish: Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used.; register: Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions.; source [<i1>] [<i2>]: Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output.; stack: The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
         },
         {
           "name": "run",
@@ -115,12 +115,12 @@
     },
     "9.0": {
       "command": "fish debug",
-      "syntax": "fish debug <s>keyword",
+      "syntax": "fish debug <s> keyword",
       "keywords": [
         {
-          "name": "line",
-          "syntax": "line [<i>] on/off",
-          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Remove all breakpoints from all pseudo-code objects. Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used. Set or clear a breakpoint at the first pseudo-code object in the FISH function. Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
+          "name": "break",
+          "syntax": "break {clear | code [<i>] <b> | fish <b> | line [<i>] on/off} ...",
+          "description": "This function sets and clears breakpoints in a number of ways. A breakpoint is set in a pseudo-code object, and causes FISH to stop before the object is executed, and to provide the Debug> prompt. Note that breakpoints only function in debug mode. Options: clear: Remove all breakpoints from all pseudo-code objects.; code [<i>] <b>: Set or clear a breakpoint at a pseudo-code object with ID number i . If i is not specified, then the current pseudo-code object is used.; fish <b>: Set or clear a breakpoint at the first pseudo-code object in the FISH function.; line [<i>] on/off: Set or clear a breakpoint at the first pseudo-code object from line i in the current source file. If i is not specified, then the current line is used."
         },
         {
           "name": "codeinto",
@@ -153,9 +153,9 @@
           "description": "Execute until code originating from the current source file at line i is reached. If that line is never reached, then the original function call will end, as will the debugging mode."
         },
         {
-          "name": "stack",
-          "syntax": "stack",
-          "description": "Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output. Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used. Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions. Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output. The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
+          "name": "list",
+          "syntax": "list {call | code [<i1>] [<i2>] | fish | register | source [<i1>] [<i2>] | stack} ...",
+          "description": "Options: call: Output the current call stack. For instance, if function fred calls function george , and execution is halted in function george , the call stack will read:; code [<i1>] [<i2>]: Output the pseudo-code object with ID i1 ; or if i1 is not specified, output the pseudo-code object that will be executed next. If i2 is specified, the pseudo-code from i1 to i2 is to be output.; fish: Output the current value of FISH symbol fish . The leading @ symbol is not necessary here, but it will be accepted. If the symbol is a function, it will not be executed; instead, its current value will be used.; register: Output the current contents of the register. The register is used to store FISH values that are going to be passed as arguments to FISH intrinsics, used for array access, or passed as arguments to functions.; source [<i1>] [<i2>]: Output the line from the source file that was used to create the FISH function. If the source file is unavailable, an error will occur. If i1 is not specified, then the line corresponding to the current execution point is used. If i2 is specified, then lines from i1 to i2 are output.; stack: The current contents of the stack are output. The stack is used to store local variables and arguments during function execution. At present, the names of stack variables are not available."
         },
         {
           "name": "run",

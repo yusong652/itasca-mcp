@@ -1,7 +1,7 @@
 """High-level command search interface.
 
 This module provides a simple, user-friendly API for searching Itasca commands.
-Model properties are handled separately via itasca_browse_reference tool.
+Model properties are handled separately via itasca_browse_doc(source='reference') tool.
 """
 
 from typing import Any
@@ -24,7 +24,7 @@ class CommandSearch:
     - Support for filtering by category
     - BM25 with multi-field scoring (name=0.5, keywords=0.3, description=0.2)
 
-    Note: For contact model properties, use itasca_browse_reference tool directly.
+    Note: For contact model properties, use itasca_browse_doc(source='reference') tool directly.
 
     Usage:
         >>> # Basic search

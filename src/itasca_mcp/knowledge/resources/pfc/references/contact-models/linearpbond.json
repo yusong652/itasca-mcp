@@ -662,7 +662,7 @@
         ],
         "warning": "The official PFC 7 'rocktest' example reads the failure mode from entries(3) - that is a BUG in the example. entries(3) is the failure strength (a float), so 'mode == 1' never matches and every crack classifies as shear (or whatever the else-branch is). The failure mode is entries(2). Verified empirically on PFC2D 7.00.161 with single-bond tension and shear calibration tests: tension break -> entries(2)=1, entries(3)=pb_ten value; shear break -> entries(2)=2, entries(3)=cohesion-derived tau_c.",
         "usage_pattern": {
-          "description": "Crack tracking with tension/shear classification (Brazilian/UCS tests). Tag each crack's group at creation so the fracture plot item can color by family (see itasca_browse_reference('plot-items fracture')).",
+          "description": "Crack tracking with tension/shear classification (Brazilian/UCS tests). Tag each crack's group at creation so the fracture plot item can color by family (see itasca_browse_doc(source='reference', path='plot-items fracture')).",
           "fish": "fish define add_crack(entries)\n    local cp   = entries(1)\n    local mode = entries(2)   ; 1=tension, 2=shear  (NOT entries(3)!)\n    local dfn_label = 'crack_shear'\n    if mode = 1 then\n        dfn_label = 'crack_tension'\n    endif\n    ; ... create fracture in dfn.find(dfn_label), then:\n    ; fracture.group(frac) = dfn_label   ; enables per-family plot coloring\nend\nfish callback add add_crack event bond_break"
         }
       }

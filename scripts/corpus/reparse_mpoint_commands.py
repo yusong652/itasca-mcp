@@ -29,7 +29,11 @@ Names are cross-checked against ``out_commands.txt`` (the installed command
 index) and any disagreement is reported.
 
 Usage:
-    uv run python scripts/corpus/reparse_mpoint_commands.py [--write]
+    uv run python scripts/corpus/reparse_mpoint_commands.py [--write] [--only stem,stem,...]
+
+``--only`` restricts the write to the named file stems (``apply,node-fix``). The
+corpus carries live-verified fixes the pages do not have, so a blanket rewrite
+after a manual version bump would undo them; name the pages that changed instead.
 """
 
 import html
@@ -37,6 +41,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from html.parser import HTMLParser
 from pathlib import Path
 
 MPM_DOC = Path("C:/Program Files/Itasca/Itasca Software Subscription/exe64/doc/mpm")
@@ -52,6 +57,59 @@ def text_of(fragment: str) -> str:
     return " ".join(html.unescape(re.sub(r"<[^>]+>", "", fragment)).split())
 
 
+class _SyntaxLabel(HTMLParser):
+    """Render a syntax <dt> fragment as corpus syntax.
+
+    text_of() is wrong for syntax lines. On the MPM pages a placeholder is
+    <span class="varint">i</span>, not the literal text '<i>' the PFC pages use, so
+    flattening the markup drops its brackets ('mpoint extra i a'). An optional group is
+    a literal '<' ... '>' pair inside <span class="cmdopt">, and the opening bracket is
+    glued to the next tag ('<<a href=...>range</a>>'), so a tag-stripping regex eats it
+    together with the tag and leaves 'range>'. This parser emits <i> for a var span and
+    [...] for a cmdopt span, which is the bracket convention the rest of the corpus uses.
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.frames: list[tuple[str | None, list[str]]] = [(None, [])]
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "span":
+            return
+        cls = dict(attrs).get("class") or ""
+        kind = "var" if cls.startswith("var") else "opt" if cls == "cmdopt" else None
+        self.frames.append((kind, []))
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag != "span" or len(self.frames) == 1:
+            return
+        kind, parts = self.frames.pop()
+        text = "".join(parts)
+        if kind == "var":
+            text = f" <{text.strip()}> "
+        elif kind == "opt":
+            text = f" [{text.strip()}] "
+        self.frames[-1][1].append(text)
+
+    def handle_data(self, data: str) -> None:
+        if data.strip() in ("<", ">") and any(kind == "opt" for kind, _ in self.frames):
+            return  # the literal brackets of an optional group; [...] stands in for them
+        self.frames[-1][1].append(data)
+
+    def label(self) -> str:
+        while len(self.frames) > 1:  # unclosed spans: flush as plain text
+            _, parts = self.frames.pop()
+            self.frames[-1][1].append("".join(parts))
+        text = " ".join(html.unescape("".join(self.frames[0][1])).split())
+        return re.sub(r"\[\s+", "[", re.sub(r"\s+\]", "]", text))
+
+
+def label_of(fragment: str) -> str:
+    parser = _SyntaxLabel()
+    parser.feed(fragment)
+    return parser.label()
+
+
 def description_after(source: str, dt_end: int) -> str:
     """Text of the <dd> following a <dt>, truncated at the first nested <dl>."""
     dd = re.compile(r"<dd\b[^>]*>", re.S).search(source, dt_end)
@@ -61,7 +119,10 @@ def description_after(source: str, dt_end: int) -> str:
     nested = re.compile(r"<dl\b", re.S).search(source, start)
     close = re.compile(r"</dd>", re.S).search(source, start)
     end = min(x.start() for x in (nested, close) if x) if (nested or close) else start
-    return text_of(source[start:end])
+    text = text_of(source[start:end])
+    # The page opens the <dd> with a 'Primary keywords: a b c' rubric before the
+    # prose; the keyword list is not the description.
+    return re.sub(r"^Primary keywords:(?:\s+[a-z][\w-]*)+\s+(?=[A-Z])", "", text)
 
 
 def parse_page(path: Path) -> dict | None:
@@ -74,7 +135,7 @@ def parse_page(path: Path) -> dict | None:
 
     for m in DT_RE.finditer(source):
         kind, ident, body = m.group(1), m.group(2), m.group(3)
-        label = text_of(body)
+        label = label_of(body)
         if kind == "command":
             command_id = ident
             command_name = ident.replace(".", " ")
@@ -120,6 +181,9 @@ def official_keywords() -> dict[str, set[str]]:
 
 def main() -> None:
     write = "--write" in sys.argv
+    only: set[str] | None = None
+    if "--only" in sys.argv:
+        only = set(sys.argv[sys.argv.index("--only") + 1].split(","))
     official = official_keywords()
     changed = 0
     mismatches = 0
@@ -130,6 +194,8 @@ def main() -> None:
             continue
         command = parsed["command"]
         stem = command.replace("mpoint node ", "node-").replace("mpoint ", "")
+        if only is not None and stem not in only:
+            continue
         target = COMMANDS_DIR / f"{stem}.json"
         if not target.exists():
             print(f"  [NEW]  {stem}.json  ({command})")

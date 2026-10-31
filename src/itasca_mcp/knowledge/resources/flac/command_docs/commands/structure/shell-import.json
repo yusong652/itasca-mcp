@@ -17,17 +17,17 @@
       "keywords": [
         {
           "name": "from-file",
-          "syntax": "from-file s [shellimportblock]",
+          "syntax": "from-file <s> [shellimportblock]",
           "description": "Create elements from the geometry file s."
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry s [shellimportblock] <range>",
+          "syntax": "from-geometry <s> [shellimportblock] [range]",
           "description": "Create elements from the geometry set named s. The range applies to the list of edges in the geometry set."
         },
         {
           "name": "cross-diagonal",
-          "syntax": "cross-diagonal <b >",
+          "syntax": "cross-diagonal <b>",
           "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral."
         },
         {
@@ -41,7 +41,7 @@
         },
         {
           "name": "element-type-adummy",
-          "syntax": "s",
+          "syntax": "<s>",
           "description": "Attempt to match the string s to one of the available keywords below, and treats as that option"
         },
         {
@@ -91,13 +91,13 @@
         },
         {
           "name": "group",
-          "syntax": "group s1 <slot s2 >",
+          "syntax": "group <s1> [slot <s2>]",
           "description": "Assign the created elements to group s1. The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups."
         },
         {
           "name": "id",
-          "syntax": "id i",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found \u201cnear\u201d the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i."
+          "syntax": "id <i>",
+          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i."
         },
         {
           "name": "internal",
@@ -106,17 +106,17 @@
         },
         {
           "name": "maximum-length",
-          "syntax": "maximum-length f",
+          "syntax": "maximum-length <f>",
           "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
         },
         {
           "name": "offset",
-          "syntax": "offset v",
+          "syntax": "offset <v>",
           "description": "Specify the translational offset of the shell."
         },
         {
           "name": "segments",
-          "syntax": "segments i",
+          "syntax": "segments <i>",
           "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created."
         }
       ],
@@ -155,14 +155,14 @@
           "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
         },
         {
-          "name": "dkt-csth",
-          "syntax": "dkt-csth",
-          "description": "Specify the type of finite element to be used by each structural element. If no element type is specified, then the element type will be DKT-CST. Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. The finite element type of existing structural elements is listed by the structure shell list element-type command. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The value of the keyword supplied must be one of the following three-noded shell finite elements: Attempt to match the string s to one of the available keywords below, and treats as that option CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading. CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading. DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading. DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading. DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
+          "name": "element-type",
+          "syntax": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}",
+          "description": "Specify the type of finite element to be used by each structural element. If no element type is specified, then the element type will be DKT-CST. Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. The finite element type of existing structural elements is listed by the structure shell list element-type command. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The value of the keyword supplied must be one of the following three-noded shell finite elements: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
         },
         {
-          "name": "stl",
-          "syntax": "stl",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure shell import command: from-file . Specify the DXF file format. Specify the geometry file format. Specify the STL file format."
+          "name": "format",
+          "syntax": "format {dxf | geom | stl}",
+          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure shell import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
         },
         {
           "name": "group",
@@ -172,7 +172,7 @@
         {
           "name": "id",
           "syntax": "id <i>",
-          "description": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found \u201cnear\u201d the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
+          "description": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
         },
         {
           "name": "maximum-length",
@@ -191,5 +191,8 @@
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "'[shellimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (cross-diagonal, distinct, element-type, format, group, id, maximum-length, offset, segments)."
+  ]
 }

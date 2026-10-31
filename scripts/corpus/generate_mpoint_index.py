@@ -43,7 +43,7 @@ OUT_INDEX = RESOURCES / "mpoint" / "command_docs" / "index.json"
 CATEGORY_META: dict[str, dict[str, Any]] = {
     "mpoint": {
         "full_name": "Material Point Commands",
-        "description": "Core MPoint (Material Point Method) commands: create/generate/import material points, assign constitutive models and properties, manage the background-grid nodes (fix/free/damping/dynamic/spacing/skin), convert between material points and zones, and drive PIC/FLIP blending, locking adjustment and volume limiting.",
+        "description": "Core MPoint (Material Point Method) commands: create/generate/import material points, assign constitutive models and properties, manage the background-grid nodes (fix/free/damping/dynamic/spacing/skin), convert between material points and zones, and drive PIC/FLIP blending, locking mitigation and volume limiting.",
         "command_prefix": "mpoint",
         "notes": [
             "Sub-namespaces are part of the JSON key: 'mpoint node fix' -> commands/mpoint/node-fix.json, 'mpoint zone-conversion' -> commands/mpoint/zone-conversion.json",
@@ -101,6 +101,8 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
         if not common_cmds:
             continue
         meta = {k: v for k, v in info.items() if k != "commands"}
+        # The FLAC index names its own product in the program/project blurbs.
+        meta["description"] = str(meta.get("description", "")).replace("FLAC3D", "MPoint")
         meta["commands"] = common_cmds
         out[name] = meta
     return out

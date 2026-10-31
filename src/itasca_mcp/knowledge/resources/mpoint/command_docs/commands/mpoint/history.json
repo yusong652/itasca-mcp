@@ -2,27 +2,26 @@
   "category": "mpoint",
   "search_keywords": [
     "mpoint",
-    "history",
-    "deformation",
-    "displacement",
-    "extra",
-    "strain",
-    "stress",
-    "velocity"
+    "history"
   ],
-  "description": "Primary keywords: deformation displacement displacement-x displacement-y displacement-z extra position position-x position-y position-z strain stress velocity velocity-x velocity-y velocity-z Add a history of an mpoint value. Quantities that can be recorded include deformation, displacement, extra, strain, stress, velocity. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional id keyword followed by an integer id, or 2) an additional position keyword followed by a position vector v must be given to specify the mpoint whose attribute will be recorded.",
+  "description": "Add a history of an mpoint value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. Review the common c history commands for details regarding the manipulation of histories. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number. Following one of the keywords given below, either 1) an additional id keyword followed by an integer id, or 2) an additional position keyword followed by a position vector v must be given to specify the mpoint whose attribute will be recorded.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "9.0": {
       "command": "mpoint history",
-      "syntax": "mpoint history name sid > keyword ...",
+      "syntax": "mpoint history [name <sid>] keyword ...",
       "keywords": [
         {
           "name": "deformation",
           "syntax": "deformation [mpointhistoryblock]",
           "description": "MPoint deformation, or the determinant of the deformation matrix."
+        },
+        {
+          "name": "density",
+          "syntax": "density [mpointhistoryblock]",
+          "description": "The mpoint density. Listed by `mpoint history ?` on MPoint3D 9.8.54 but absent from the 9.8 manual page and the installed command index."
         },
         {
           "name": "displacement",
@@ -46,8 +45,18 @@
         },
         {
           "name": "extra",
-          "syntax": "extra [mpointhistoryblock]",
-          "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type."
+          "syntax": "extra [<index>] [mpointhistoryblock]",
+          "description": "Take a history of an extra variable. Use index to specify the extra index. The default extra index is 1 if not specified. The value will, by default, be treated as a scalar floating point type, but this can be changed by specifying a type keyword as described in the mpoint history Keyword Block."
+        },
+        {
+          "name": "mass",
+          "syntax": "mass [mpointhistoryblock]",
+          "description": "The mass of the mpoint."
+        },
+        {
+          "name": "pore-pressure",
+          "syntax": "pore-pressure [mpointhistoryblock]",
+          "description": "The pore-pressure for the mpoint."
         },
         {
           "name": "position",
@@ -70,14 +79,174 @@
           "description": "The \\(z\\)-component of the location of mpoint."
         },
         {
+          "name": "property",
+          "syntax": "property name <s> [mpointhistoryblock]",
+          "description": "A property of the mechanical constitutive model of the mpoint. The value s is the keyword for the desired property, supplied as a string—for example, the property keyword bulk becomes 'bulk' in this command (quotes required). By default, it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword (one of the keywords available in the mpoint history Keyword Block)."
+        },
+        {
+          "name": "property-fluid",
+          "syntax": "property-fluid name <s> [mpointhistoryblock]",
+          "description": "A property of the fluid constitutive model of the mpoint. The value s is the keyword for the desired property, supplied as a string (see property above)."
+        },
+        {
           "name": "strain",
           "syntax": "strain [mpointhistoryblock]",
-          "description": "The mpoint strain. Use the quantity keyword to specify the quantity to be recorded."
+          "description": "The mpoint strain. Use the quantity keyword to specify the quantity to be recorded (e.g. minimum)."
+        },
+        {
+          "name": "strain-xx",
+          "syntax": "strain-xx [mpointhistoryblock]",
+          "description": "The mpoint xx strain."
+        },
+        {
+          "name": "strain-xy",
+          "syntax": "strain-xy [mpointhistoryblock]",
+          "description": "The mpoint xy strain."
+        },
+        {
+          "name": "strain-xz",
+          "syntax": "strain-xz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint xz strain."
+        },
+        {
+          "name": "strain-yy",
+          "syntax": "strain-yy [mpointhistoryblock]",
+          "description": "The mpoint yy strain."
+        },
+        {
+          "name": "strain-yz",
+          "syntax": "strain-yz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint yz strain."
+        },
+        {
+          "name": "strain-zz",
+          "syntax": "strain-zz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint zz strain."
+        },
+        {
+          "name": "strain-rate",
+          "syntax": "strain-rate [mpointhistoryblock]",
+          "description": "The mpoint strain rate. Use the quantity keyword to specify the quantity to be recorded (e.g. minimum)."
+        },
+        {
+          "name": "strain-rate-xx",
+          "syntax": "strain-rate-xx [mpointhistoryblock]",
+          "description": "The mpoint xx strain rate."
+        },
+        {
+          "name": "strain-rate-xy",
+          "syntax": "strain-rate-xy [mpointhistoryblock]",
+          "description": "The mpoint xy strain rate."
+        },
+        {
+          "name": "strain-rate-xz",
+          "syntax": "strain-rate-xz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint xz strain rate."
+        },
+        {
+          "name": "strain-rate-yy",
+          "syntax": "strain-rate-yy [mpointhistoryblock]",
+          "description": "The mpoint yy strain rate."
+        },
+        {
+          "name": "strain-rate-yz",
+          "syntax": "strain-rate-yz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint yz strain rate."
+        },
+        {
+          "name": "strain-rate-zz",
+          "syntax": "strain-rate-zz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint zz strain rate."
         },
         {
           "name": "stress",
           "syntax": "stress [mpointhistoryblock]",
-          "description": "The mpoint stress. Use the quantity keyword to specify the quantity to be recorded."
+          "description": "The mpoint stress. Use the quantity keyword to specify the quantity to be recorded (e.g. minimum)."
+        },
+        {
+          "name": "stress-xx",
+          "syntax": "stress-xx [mpointhistoryblock]",
+          "description": "The mpoint xx stress."
+        },
+        {
+          "name": "stress-xy",
+          "syntax": "stress-xy [mpointhistoryblock]",
+          "description": "The mpoint xy stress."
+        },
+        {
+          "name": "stress-xz",
+          "syntax": "stress-xz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint xz stress."
+        },
+        {
+          "name": "stress-yy",
+          "syntax": "stress-yy [mpointhistoryblock]",
+          "description": "The mpoint yy stress."
+        },
+        {
+          "name": "stress-yz",
+          "syntax": "stress-yz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint yz stress."
+        },
+        {
+          "name": "stress-zz",
+          "syntax": "stress-zz [mpointhistoryblock]",
+          "description": "The mpoint zz stress."
+        },
+        {
+          "name": "stress-effective",
+          "syntax": "stress-effective [mpointhistoryblock]",
+          "description": "The mpoint effective stress. Use the quantity keyword to specify the quantity to be recorded (e.g. minimum)."
+        },
+        {
+          "name": "stress-effective-xx",
+          "syntax": "stress-effective-xx [mpointhistoryblock]",
+          "description": "The mpoint effective xx stress."
+        },
+        {
+          "name": "stress-effective-xy",
+          "syntax": "stress-effective-xy [mpointhistoryblock]",
+          "description": "The mpoint effective xy stress."
+        },
+        {
+          "name": "stress-effective-xz",
+          "syntax": "stress-effective-xz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint effective xz stress."
+        },
+        {
+          "name": "stress-effective-yy",
+          "syntax": "stress-effective-yy [mpointhistoryblock]",
+          "description": "The mpoint effective yy stress."
+        },
+        {
+          "name": "stress-effective-yz",
+          "syntax": "stress-effective-yz (3D Only) [mpointhistoryblock]",
+          "description": "The mpoint effective yz stress."
+        },
+        {
+          "name": "stress-effective-zz",
+          "syntax": "stress-effective-zz [mpointhistoryblock]",
+          "description": "The mpoint effective zz stress."
+        },
+        {
+          "name": "unbalanced-force",
+          "syntax": "unbalanced-force [mpointhistoryblock]",
+          "description": "Magnitude of the mpoint unbalanced force vector. Use the component keyword to specify the component to be recorded."
+        },
+        {
+          "name": "unbalanced-force-x",
+          "syntax": "unbalanced-force-x [mpointhistoryblock]",
+          "description": "The \\(x\\)-component of the mpoint unbalanced force."
+        },
+        {
+          "name": "unbalanced-force-y",
+          "syntax": "unbalanced-force-y [mpointhistoryblock]",
+          "description": "The \\(y\\)-component of the mpoint unbalanced force."
+        },
+        {
+          "name": "unbalanced-force-z",
+          "syntax": "unbalanced-force-z (3D ONLY) [mpointhistoryblock]",
+          "description": "The \\(z\\)-component of the mpoint unbalanced force."
         },
         {
           "name": "velocity",
@@ -98,6 +267,11 @@
           "name": "velocity-z",
           "syntax": "velocity-z (3D ONLY) [mpointhistoryblock]",
           "description": "The \\(z\\)-component of the mpoint velocity."
+        },
+        {
+          "name": "volume",
+          "syntax": "volume [mpointhistoryblock]",
+          "description": "The volume of the mpoint."
         },
         {
           "name": "kwd:component",
@@ -126,22 +300,22 @@
         },
         {
           "name": "kwd:id",
-          "syntax": "id i",
+          "syntax": "id <i>",
           "description": "Record the history of mpoint with ID i."
         },
         {
           "name": "kwd:index",
-          "syntax": "index i",
+          "syntax": "index <i>",
           "description": "For keywords that require it (most notably extra), this specifies the index that should be used."
         },
         {
           "name": "kwd:log",
-          "syntax": "log b",
+          "syntax": "log <b>",
           "description": "If on, the returned number is the base 10 log of the absolute value of the original value. The default is off."
         },
         {
           "name": "kwd:position",
-          "syntax": "position v",
+          "syntax": "position <v>",
           "description": "Record the history of mpoint either containing or closest to position v."
         },
         {
@@ -226,31 +400,34 @@
         },
         {
           "name": "kwd:quantity.zz",
-          "syntax": "zz (3D ONLY)",
+          "syntax": "zz",
           "description": "Record the zz-component of the tensor."
         },
         {
           "name": "kwd:type",
           "syntax": "type keyword",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned."
+          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows specifying which type it is assumed to be. If the original value type does not match, 0.0 is returned."
         },
         {
           "name": "kwd:type.scalar",
           "syntax": "scalar",
-          "description": "Specify a scalar float type."
-        },
-        {
-          "name": "kwd:type.tensor",
-          "syntax": "tensor",
-          "description": "Specify a tensor type."
+          "description": "A scalar float type. This is the default."
         },
         {
           "name": "kwd:type.vector",
           "syntax": "vector",
-          "description": "Specify a vector type."
+          "description": "A vector type."
+        },
+        {
+          "name": "kwd:type.tensor",
+          "syntax": "tensor",
+          "description": "A tensor type."
         }
       ],
       "examples": []
     }
-  }
+  },
+  "notes": [
+    "'[mpointhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+  ]
 }

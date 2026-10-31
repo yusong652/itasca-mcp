@@ -52,13 +52,13 @@ def consolidate_component_apis(results: list[SearchResult]) -> list[SearchResult
             ...
 
     Usage:
-        >>> from itasca_mcp.knowledge.query import APISearch
+        >>> from itasca_mcp.knowledge.query import PythonAPISearch
         >>> from itasca_mcp.knowledge.search.postprocessing import (
         ...     consolidate_contact_apis,
         ...     consolidate_component_apis
         ... )
         >>>
-        >>> results = APISearch.search("contact force", top_k=30)
+        >>> results = PythonAPISearch.search("contact force", top_k=30)
         >>> len(results)
         30  # May contain many component APIs
         >>>
