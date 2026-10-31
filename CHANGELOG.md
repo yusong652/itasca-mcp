@@ -45,6 +45,125 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-31
+
+### Added
+
+- **FISH intrinsics are a documentation source.** `source="fish"` browses
+  and searches the FISH intrinsic functions of the selected engine, one tree
+  per namespace (`ball.pos`, `block.subcontact.stress.norm`,
+  `zone.permeability.ratio`, ...), with the signature, return type,
+  settability, the versions that list the name and the manual anchor.
+  Names and signatures come from each engine's live `fish list intrinsics`
+  table (PFC 6.0 / 7.0 / 9.8, FLAC3D 7.0 / 9.8, 3DEC 7.0 / 9.8, MPoint 9.8,
+  MassFlow 9.8); descriptions come from the manual page. Every namespace the
+  engines list is served: 70 namespace files, including the FLAC sketch,
+  building_blocks and 7.0 extrude faces, the kernel mail / socket / system
+  utilities and 3DEC's 7.0-only `sel.*`. No entry is without a description:
+  the 504 names no installed manual documents carry text inferred from their
+  signature and documented siblings, kept apart from page text so the
+  provenance stays visible, and the ones that could only be guessed were
+  checked on 9.8.54 console builds (`block.solfob / block.solfmag` is the
+  average force ratio, `zone.permeability.ratio` is s²(3−2s),
+  `zone.eigen` returns a mode frequency in Hz, `ball.axis.angle` accumulates
+  only with `model orientation-tracking on`, ...).
+- **Cross-source search.** `itasca_query_doc` without `source` searches
+  commands, Python API, FISH and reference together and merges them by a
+  per-tree normalised score weighted by how much of the query the hit's
+  name spells, so `ball pos` shows the FISH intrinsic and the Python method
+  side by side. Hits are tagged with their `source`; `data.source` is
+  `"all"`.
+- **Engine word groups browse as listings.** `itasca_browse_doc` with a
+  path such as `block contact`, `zone face` or `structure beam` returns the
+  commands of that group; category listings carry `groups` with member
+  counts.
+- **Range elements for every engine.** The FLAC, PFC and MPoint range-element
+  indexes were reconciled with the 9.8.54 `range ?` vocabularies (FLAC
+  22→43, PFC 24→37, MPoint 22→31 referenced elements), 3DEC got its own
+  index with `dfn-3dec`, `fracture-id` and `structure-type`, and the
+  reference category listing describes each element. The `seed` syntax,
+  the `orientation` normal sense and the 2D-only `circle` are documented.
+- **A warning when an engine error comes after the command already ran.**
+  "Unused extra parameter" means the engine executed the command and then
+  rejected the trailing token; the execution result now says so as a warning
+  on an executed action instead of reporting a failure.
+
+### Changed
+
+- **Two documentation tools instead of five.** `itasca_browse_doc(software,
+  source, path, version)` walks one tree by path and
+  `itasca_query_doc(software, query, source, limit, version)` searches by
+  keywords. `itasca_browse_commands`, `itasca_search_commands`,
+  `itasca_browse_python_api`, `itasca_search_python_api` and
+  `itasca_browse_reference` are gone; the tool count goes from 10 to 7.
+  `data` keeps `source` / `action` / `entries` / `summary` for both tools.
+- **Commands are named the way the engine spells them.** Entries and search
+  hits read `block contact apply`, `structure beam create`, `zone face
+  apply` rather than the corpus file key; the category keys are the engine's
+  words (`building-blocks`, not `body`); the root listing is sorted by name
+  and leaves out a category the requested version has no commands in.
+- **Search ranking.** The name a query spells out ranks first
+  (`contact_count`, `block face apply remove`); FISH names get the same
+  graded name-coverage boost as commands; a page that quotes an engine
+  message word for word ranks first for that message ("Default contact
+  stiffness not set" now finds `block contact material-table`); keyword
+  names of uncurated commands are searchable; command hits summarise
+  themselves in `description` like the other trees.
+- **Cross-source hits show the score they were ranked by** (the merge rank
+  key, two decimals) instead of each tree's raw BM25 score, which made the
+  list look mis-sorted.
+- **The no-hit hint names the queried engine's own commands** (`block
+  create, block generate` on 3DEC) instead of PFC examples.
+- **The Python API corpus is on the Itasca 9.8 baseline**, with
+  `itasca.mpoint` (155 members) documented from the 9.8.54 build.
+- **Command categories 7.0 lacks are hidden at version 7.0**, and a FLAC
+  `zone/gridpoint` duplicate entry is gone.
+
+### Fixed
+
+- **Oversized documentation pages are trimmed, not blanked.** The response
+  budget used to empty the whole page for large entries (the PFC `Ball`
+  class, `measure create`, the 3DEC Python API root); they now return the
+  core fields with the long sections cut and summarised.
+- **Command keywords the parser had collapsed are back.** Nested keyword
+  options (`zone face apply` modifiers, `contact history gap` /
+  `localforce-x`, FLAC zone and structure families) were merged into their
+  parent by the HTML parser; they are restored with the right syntax, and
+  bracketed Python SDK parameters are marked optional.
+- **FISH descriptions read from their own manual entry**, not the first
+  paragraph of a shared page, and component intrinsics (`.x`, `.xx`) derive
+  theirs from the vector or tensor sibling.
+- **The `fish callback` doc is rebuilt and its events scoped per engine**;
+  `bond_break` states that only the explicit `remove <sym> event
+  bond_break` removes the registration on PFC 6.0 / 7.0 / 9.8.
+- **`ball.create`, `Measure.porosity`, `plot ... color-options` and the PFC
+  6.0 / 7.0 sides of those entries** are corrected from live runs.
+
+### Documentation
+
+- **3DEC corpus settled against 3DEC 9.8.54 and 7.00:** `block zone generate`
+  with a range only records the edge length and meshing happens at the first
+  generate that covers every block; `block contact generate-subcontacts` on
+  deferred-zoned blocks crashes the engine and is flagged; `block cut
+  joint-set` is z-up with +y north on both versions; `block mechanical
+  damping` defaults to combined on 9.8 and local 0.8 on 7.0; `range jmodel`
+  needs quotes; `creep`, `geometry-test` and `structure` commands the
+  manual lacks are documented from `block ?`; 3DEC Subcontact setters,
+  callback events (`contact_create`, `contact_delete`) and `history.get`
+  are corrected.
+- **MPoint command corpus reconciled with 9.8.54**, bracket convention
+  restored in its syntax, program / project / ratio commands described, and
+  the "Primary keywords" rubric dropped.
+- **Shared model pages no longer carry `itasca.cycle(n)` or PFC-only Python
+  recipes**, and the retired `references/fish-intrinsics` category and the
+  FISH `python_equivalent` field are gone in favour of the fish source and
+  cross-source search.
+- **PFC 9.8 range-element notes:** an unknown token after `range` fails the
+  command on PFC3D and MPoint3D but ends the range and runs the command on
+  FLAC3D; `selected` / `deselected` / `use-hidden` follow the GUI selection.
+- **An Itasca subscription release-notes watcher** (`scripts/releases`)
+  records installer revisions the corpus has not been reconciled with.
+
 ## [0.10.7] - 2026-10-28
 
 ### Added
