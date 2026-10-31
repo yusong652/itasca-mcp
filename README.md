@@ -21,7 +21,7 @@
 
 ![itasca-mcp demo](https://raw.githubusercontent.com/yusong652/itasca-mcp/assets/itasca-mcp.gif)
 
-## Tools (10)
+## Tools (7)
 
 **2 documentation tools** — browse by path and search by keywords across the selected engine's commands, Python API, FISH intrinsics, and reference docs. No bridge required.
 
