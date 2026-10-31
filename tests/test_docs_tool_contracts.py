@@ -445,3 +445,15 @@ async def test_query_reference_finds_a_model_property_by_its_keyword() -> None:
     merged = _parse_tool_payload(await mcp.call_tool("itasca_query_doc", {"software": "pfc", "query": "pb_ten"}))
     assert merged["data"]["entries"][0]["path"] == "contact-models linearpbond pb_ten"
     assert merged["data"]["entries"][0]["source"] == "reference"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("path", ["ball.pos.", "BALL.POS.", ".ball.pos", "ball..pos"])
+async def test_browse_fish_tolerates_empty_dotted_segments(path: str) -> None:
+    payload = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "fish", "path": path, "software": "pfc"})
+    )
+
+    assert payload["ok"] is True
+    assert payload["data"]["summary"]["path"] == "ball.pos"
+    assert payload["data"]["entries"][0]["name"] == "ball.pos"
