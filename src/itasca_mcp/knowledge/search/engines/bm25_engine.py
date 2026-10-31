@@ -229,16 +229,20 @@ def _promote_exact_names(results: list[SearchResult], query: str) -> None:
     'contact_count' scores the shorter itasca.contact.count higher, so the method the
     query spells out ranks below near-namesakes. A query equal to a document's title,
     or to its last dotted/space-separated segments ('in_group', 'Ball.in_group',
-    'create'), lifts it by the best score in the list.
+    'create'), lifts it by the best score in the list. So does a description that quotes
+    the whole query (an engine message pasted as the query).
     """
     key = " ".join(query.lower().split())
     exact = [r for r in results if _names_match(r.document.title, key) or _names_match(r.document.name, key)]
-    if not exact:
+    quoted = [r for r in results if (r.match_info or {}).get("exact_phrase")]
+    if not exact and not quoted:
         return
     top = max(r.score for r in results)
     for result in exact:
         result.score += top
         result.match_info = {**(result.match_info or {}), "exact_name": True}
+    for result in quoted:  # a description quoting the whole query (BM25Scorer.PHRASE_EXACT_MIN_WORDS)
+        result.score += top
 
 
 def _names_match(name: str, key: str) -> bool:

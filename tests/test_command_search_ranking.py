@@ -158,3 +158,24 @@ def test_partial_matching_direction() -> None:
 
 def test_nonsense_query_yields_no_api_results() -> None:
     assert PythonAPISearch.search("definitelynonexistentkeyword", top_k=5, software="pfc") == []
+
+
+@pytest.mark.parametrize(
+    ("query", "expected", "software"),
+    [
+        # An engine message pasted as the query lands on the page that quotes it, not on
+        # the command whose name carries the rarest word.
+        ("Default contact stiffness not set", "block contact material-table", "3dec"),
+        (
+            "cannot change block to deformable after INSITU or face triangulation",
+            "block contact generate-subcontacts",
+            "3dec",
+        ),
+        # A command name quoted inside a sibling's description is a cross-reference, not a
+        # quotation: the sibling does not overtake the command the query names.
+        ("zone face apply stress", "zone face apply", "flac"),
+        ("block zone generate edgelength", "block zone generate", "3dec"),
+    ],
+)
+def test_quoted_engine_text_ranks_quoting_page_first(query: str, expected: str, software: str) -> None:
+    assert _top(query, software=software, version="9.0")[0] == expected
