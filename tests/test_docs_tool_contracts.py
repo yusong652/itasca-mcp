@@ -392,3 +392,38 @@ async def test_browse_reference_root_contract() -> None:
     assert data["action"] == "browse"
     assert data["summary"]["count"] >= 1
     assert isinstance(data["entries"], list)
+
+
+@pytest.mark.asyncio
+async def test_browse_command_unavailable_error_lists_only_versions_that_have_it() -> None:
+    # pfc 'ball accumulate-stress' carries a 6.0 entry marked available: false.
+    payload = _parse_tool_payload(
+        await mcp.call_tool(
+            "itasca_browse_doc",
+            {"source": "commands", "path": "ball accumulate-stress", "software": "pfc", "version": "6.0"},
+        )
+    )
+
+    assert payload["ok"] is False
+    assert payload["error"]["code"] == "command_unavailable_for_version"
+    assert "6.0" not in payload["error"]["details"]["available_versions"]
+    assert {"7.0", "9.0"} <= set(payload["error"]["details"]["available_versions"])
+
+    full = _parse_tool_payload(
+        await mcp.call_tool(
+            "itasca_browse_doc", {"source": "commands", "path": "ball accumulate-stress", "software": "pfc"}
+        )
+    )
+    assert "6.0" not in full["data"]["entries"][0]["doc"]["versions"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("path", ["itasca.", "itasca..ball", "itasca.ball.", ".itasca.ball.Ball.pos"])
+async def test_browse_python_api_tolerates_empty_dotted_segments(path: str) -> None:
+    payload = _parse_tool_payload(
+        await mcp.call_tool("itasca_browse_doc", {"source": "python_api", "path": path, "software": "pfc"})
+    )
+
+    assert payload["ok"] is True
+    assert payload["data"]["source"] == "python_api"
+    assert payload["data"]["action"] == "browse"
