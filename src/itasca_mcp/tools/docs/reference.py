@@ -381,6 +381,8 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
         }
         if meta.get("sub_item"):
             entry["sub_item"] = meta["sub_item"]
+        if meta.get("property"):
+            entry["property"] = meta["property"]
         if meta.get("full_name"):
             entry["full_name"] = meta["full_name"]
         entries.append(entry)

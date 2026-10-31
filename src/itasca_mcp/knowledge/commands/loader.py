@@ -94,7 +94,11 @@ class CommandLoader:
             raise KeyError(version)
 
         resolved = {k: v for k, v in doc.items() if k != "versions"}
-        resolved["versions"] = [v for v in versions if allowed_versions is None or v in allowed_versions]
+        resolved["versions"] = [
+            v
+            for v, v_doc in versions.items()
+            if (allowed_versions is None or v in allowed_versions) and v_doc.get("available") is not False
+        ]
 
         version_doc = versions[version]
         if version_doc.get("available") is False:

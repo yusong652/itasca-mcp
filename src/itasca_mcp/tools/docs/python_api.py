@@ -63,9 +63,10 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
 
 
 def _normalize_api_path(api: str | None) -> str:
+    """Trim whitespace and drop empty dotted segments ('itasca.' -> 'itasca')."""
     if api is None:
         return ""
-    return api.strip()
+    return ".".join(part for part in api.strip().split(".") if part)
 
 
 def _parse_api_path(api: str, software: str) -> dict[str, Any]:
