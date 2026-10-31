@@ -80,6 +80,9 @@ def _search_all(software: str, query: str, limit: int, version: str) -> dict[str
     command outranked the FISH intrinsic the query named ('version code major' put
     geometry refine above version.code.major). The share of query words found in the hit's
     own path breaks that tie, and a path that is the query outright goes first.
+
+    The merged entries carry that rank key as their ``score`` (so score is monotone with
+    rank); a single-tree query keeps the tree's raw BM25 score.
     """
     merged: list[dict[str, Any]] = []
     hints: list[str] = []
@@ -98,7 +101,7 @@ def _search_all(software: str, query: str, limit: int, version: str) -> dict[str
     merged = merged[:limit]
     for rank, entry in enumerate(merged, start=1):
         entry["rank"] = rank
-        entry.pop("_rank_key", None)
+        entry["score"] = round(entry.pop("_rank_key"), 2)
 
     summary: dict[str, Any] = {
         "count": len(merged),
