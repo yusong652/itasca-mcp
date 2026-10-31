@@ -101,7 +101,14 @@ KERNEL = [
 FAMILIES: dict[str, list[str]] = {
     # contact/fragment are documented under common/ but only PFC can model with them.
     "pfc": ["ball", "brick", "cfd", "clump", "contact", "element", "fragment", "inlet", "measure", "rblock", "wall"],
-    "flac": ["attach", "gp", "interface", "zone"],
+    "flac": [
+        "attach",
+        "building_blocks",
+        "gp",
+        "interface",
+        "sketch",
+        "zone",
+    ],  # sketch/building_blocks: command corpus has them too
     "3dec": ["block", "fblock", "feblock", "flowknot", "flowplane", "sel"],  # sel: 7.0-only legacy SEL
     "mpoint": ["mpoint"],
     "massflow": ["massflow"],
@@ -110,8 +117,6 @@ EXCLUDED: dict[str, str] = {
     "mail": "e-mail utilities; outside modelling scope (same policy as itasca.util)",
     "socket": "raw socket utilities; outside modelling scope (same policy as itasca.util)",
     "system": "OS/process utilities; outside modelling scope (same policy as itasca.util)",
-    "sketch": "FISH face of the FLAC GUI sketch tool; interactive-only",
-    "building_blocks": "FISH face of the FLAC GUI building-blocks tool; interactive-only",
     "extrude": "FISH face of the FLAC 7.0 extruder GUI tool (sketch in 9.x); interactive-only",
 }
 
@@ -373,8 +378,9 @@ def main() -> None:
     static = {v: read_static(p) for v, p in STATIC.items()}
     curated = load_hints()
     hints: dict[str, str] = curated["family_by_name"]
-    # Page text (description_by_name) over text inferred for names that have no page.
-    descriptions: dict[str, str] = {**curated["inferred_description_by_name"], **curated["description_by_name"]}
+    descriptions: dict[str, str] = curated["description_by_name"]
+    # Only for names without a manual page: the page text always wins over inferred text.
+    inferred: dict[str, str] = curated["inferred_description_by_name"]
     # Live-table signatures the manual and a live call contradict: {name: {signature, note}}.
     signature_fixes: dict[str, dict[str, str]] = curated["signature_fixes"]
 
@@ -465,10 +471,10 @@ def main() -> None:
                 rec["family"] = hints[name]
             if name in descriptions:
                 rec["description"] = descriptions[name]
-            elif st and st_version:
-                described = manual_description(STATIC[st_version].parent, st["doc"])
-                if described:
-                    rec["description"] = described
+            elif st and st_version and (described := manual_description(STATIC[st_version].parent, st["doc"])):
+                rec["description"] = described
+            elif name in inferred:
+                rec["description"] = inferred[name]
             if name in signature_fixes:
                 rec["note"] = signature_fixes[name]["note"]
             entries.append(rec)
