@@ -45,6 +45,33 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.2] - 2026-11-02
+
+### Added
+
+- **The agent sees your edits.** `_context.gui` now reports what you do to a
+  data file in the engine's GUI editor: `modified` when you start editing
+  (the agent holds off writing that file), `saved` with the file's `path`
+  and a unified diff of what you changed (capped; `truncated: true` when
+  cut), `reverted` when you undo your edits, `reloaded` when the editor
+  takes the file from disk. Requires itasca-mcp-bridge >= 0.6.7; older
+  bridges simply do not send these events.
+- **The agent's files appear in your project** (itasca-mcp-bridge 0.6.7).
+  The Python script of every task and every data file the bridge runs
+  through `program call` are listed in the Project pane's Data Files once
+  the task is over, as a `program call` typed at the prompt would list them,
+  and a data file the agent changes while you have it open in the editor is
+  reloaded right away instead of when you next switch windows. A file with
+  unsaved edits still gets the GUI's Load / Save / Do Nothing choice.
+
+### Fixed
+
+- `itasca_browse_doc` with `source="fish"` no longer returns
+  `intrinsic_not_found` for a path with an empty dotted segment
+  (`ball.pos.`, `.ball.pos`, `ball..pos`): the segment is dropped, as the
+  `python_api` tree already did. A trailing dot is what an agent types when
+  it completes a path.
+
 ## [0.11.1] - 2026-11-01
 
 ### Added
