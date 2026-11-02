@@ -208,6 +208,51 @@ async def test_fetch_splits_gui_entries_into_gui():
     ]
 
 
+async def test_fetch_passes_a_saved_files_path_and_diff_through():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "script",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {"kind": "data_file", "event": "modified", "path": "G:/run/script.dat"},
+        },
+        {
+            "id": 2,
+            "source": "view",
+            "input": "script",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 2.0,
+            "data": {
+                "kind": "data_file",
+                "event": "saved",
+                "path": "G:/run/script.dat",
+                "diff": "@@ -1 +1 @@\n-model cycle 10\n+model cycle 100",
+                "truncated": True,
+            },
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context["gui"]["entries"] == [
+        {"event": "modified", "kind": "data_file", "name": "script", "path": "G:/run/script.dat"},
+        {
+            "event": "saved",
+            "kind": "data_file",
+            "name": "script",
+            "path": "G:/run/script.dat",
+            "diff": "@@ -1 +1 @@\n-model cycle 10\n+model cycle 100",
+            "truncated": True,
+        },
+    ]
+
+
 async def test_fetch_with_only_gui_entries_has_no_user_console():
     entries = [
         {
