@@ -35,8 +35,8 @@ GUI_DESCRIPTION = (
     "items added, removed or changed. 'executed' = the USER ran that data file from "
     "its editor ('master' = the project's master files). 'modified' = the USER has "
     "unsaved edits in that file: do not write it on disk until 'saved' (their changes, "
-    "as a diff), 'reverted' or 'closed' follows. To see one, read the file or export "
-    "the plot as an image."
+    "as a diff), 'reverted', 'reloaded' (the editor took the file from disk) or 'closed' "
+    "follows. To see one, read the file or export the plot as an image."
 )
 
 # Console entries are what the person typed; GUI entries are what changed in
