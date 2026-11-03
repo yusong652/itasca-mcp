@@ -45,6 +45,33 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.3] - 2026-11-03
+
+### Added
+
+- **The agent sees what you have selected.** `_context.gui` now carries the
+  editors' state at the time of each call: `selection`, the text you have
+  selected in the GUI's data file editor (with the file's name; capped), and
+  `unsaved`, the data files you are editing with changes not yet on disk.
+  Select the lines you mean and say "this". Requires itasca-mcp-bridge
+  >= 0.6.9; older bridges simply do not send the state.
+
+### Changed
+
+- A data file's `saved` entry arrives once per call, with the diff from the
+  text the agent last saw: saving several times between two calls (Ctrl+S
+  twice, PFC 6.0's periodic project save) is one entry carrying `saves`,
+  the number merged (itasca-mcp-bridge 0.6.9).
+
+### Removed
+
+- The `modified`, `reverted` and `reloaded` data-file events
+  (itasca-mcp-bridge 0.6.9). They reported state as events, and the
+  editor's reload from disk could not be told from typing and undoing
+  without a false `modified` on every reload. `unsaved` in the state says
+  what `modified` was for; the description asks the agent to tell you
+  before writing a file you are editing.
+
 ## [0.11.2] - 2026-11-02
 
 ### Added
