@@ -78,12 +78,12 @@ async def test_passes_arguments_through():
     assert tool.__name__ == "tool"
 
 
-def _client_returning(entries):
+def _client_returning(entries, state=None):
     client = AsyncMock()
-    client.consume_console_history.return_value = {
-        "status": "success",
-        "data": {"entries": entries, "cursor": len(entries), "has_more": False},
-    }
+    data = {"entries": entries, "cursor": len(entries), "has_more": False}
+    if state is not None:
+        data["state"] = state
+    client.consume_console_history.return_value = {"status": "success", "data": data}
     return client
 
 
@@ -233,6 +233,7 @@ async def test_fetch_passes_a_saved_files_path_and_diff_through():
                 "event": "saved",
                 "path": "G:/run/script.dat",
                 "diff": "@@ -1 +1 @@\n-model cycle 10\n+model cycle 100",
+                "saves": 2,
                 "truncated": True,
             },
         },
@@ -248,9 +249,30 @@ async def test_fetch_passes_a_saved_files_path_and_diff_through():
             "name": "script",
             "path": "G:/run/script.dat",
             "diff": "@@ -1 +1 @@\n-model cycle 10\n+model cycle 100",
+            "saves": 2,
             "truncated": True,
         },
     ]
+    assert "unsaved" not in context["gui"]["description"]
+
+
+async def test_fetch_carries_the_editors_state_with_its_own_description():
+    state = {"unsaved": ["script"], "selection": {"name": "script", "text": "model cycle 10"}}
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([], state)):
+        context = await fetch_bridge_context()
+
+    assert context == {
+        "gui": {
+            "description": ctx_module.GUI_DESCRIPTION + " " + ctx_module.GUI_STATE_DESCRIPTION,
+            "unsaved": ["script"],
+            "selection": {"name": "script", "text": "model cycle 10"},
+        }
+    }
+
+
+async def test_an_empty_state_adds_nothing():
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([], {})):
+        assert await fetch_bridge_context() is None
 
 
 async def test_fetch_with_only_gui_entries_has_no_user_console():
