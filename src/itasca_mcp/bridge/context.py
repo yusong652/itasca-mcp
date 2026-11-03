@@ -3,8 +3,9 @@
 Two pieces live here:
 
 * ``fetch_bridge_context`` pulls the runtime signals the bridge keeps for
-  the client (what the person typed into the product's consoles, and which
-  plots and data files they have open) and returns them as one dict.
+  the client (what the person typed into the product's consoles, which
+  plots and data files they have open, and what they are doing in the
+  editors right now) and returns them as one dict.
 * ``with_context`` is applied at the tool boundary. It awaits the tool's
   envelope, success or error alike, and attaches ``_context`` in one
   place, so the contract layer stays pure and both branches get the same
@@ -33,10 +34,16 @@ GUI_DESCRIPTION = (
     "Plots and data files opened or switched to in the Itasca GUI since the last "
     "call, by the user or by your own code ('active' = the one in front), and plot "
     "items added, removed or changed. 'executed' = the USER ran that data file from "
-    "its editor ('master' = the project's master files). 'modified' = the USER has "
-    "unsaved edits in that file: do not write it on disk until 'saved' (their changes, "
-    "as a diff), 'reverted', 'reloaded' (the editor took the file from disk) or 'closed' "
-    "follows. To see one, read the file or export the plot as an image."
+    "its editor ('master' = the project's master files); 'saved' = the USER saved it, "
+    "'diff' being their changes since you last saw the file. To see one, read the "
+    "file or export the plot as an image."
+)
+
+# Appended when the bridge reports the editors' state along with the entries.
+GUI_STATE_DESCRIPTION = (
+    "'unsaved' = data files the USER is editing right now, with changes not yet on "
+    "disk: tell them before writing one. 'selection' = the text they have selected "
+    "in the editor at this moment -- 'this', when they point at something."
 )
 
 # Console entries are what the person typed; GUI entries are what changed in
@@ -60,16 +67,14 @@ async def fetch_bridge_context() -> dict[str, Any] | None:
         entries = data.get("entries") or []
         console = [_format_entry(e) for e in entries if e.get("source", "python") in _CONSOLE_SOURCES]
         gui = _coalesce_gui([_format_gui_entry(e) for e in entries if e.get("source") in _GUI_SOURCES])
+        state = data.get("state") or {}
         if console:
             context["user_console"] = {
                 "description": USER_CONSOLE_DESCRIPTION,
                 "entries": console,
             }
-        if gui:
-            context["gui"] = {
-                "description": GUI_DESCRIPTION,
-                "entries": gui,
-            }
+        if gui or state:
+            context["gui"] = _gui_context(gui, state)
     except Exception as exc:
         logger.debug("Console context unavailable: %s", exc)
 
@@ -96,6 +101,22 @@ def with_context(
         return envelope
 
     return wrapper
+
+
+def _gui_context(entries: list[dict[str, Any]], state: dict[str, Any]) -> dict[str, Any]:
+    """The ``gui`` block: what changed since the last call, and the editors' state now."""
+    gui: dict[str, Any] = {"description": GUI_DESCRIPTION}
+    if entries:
+        gui["entries"] = entries
+    unsaved = state.get("unsaved")
+    selection = state.get("selection")
+    if unsaved or selection:
+        gui["description"] = GUI_DESCRIPTION + " " + GUI_STATE_DESCRIPTION
+    if unsaved:
+        gui["unsaved"] = unsaved
+    if selection:
+        gui["selection"] = selection
+    return gui
 
 
 def _format_entry(entry: dict[str, Any]) -> dict[str, Any]:
@@ -137,7 +158,7 @@ def _format_gui_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "kind": data.get("kind", ""),
         "name": entry.get("input", ""),
     }
-    for key in ("active", "previous", "items", "master", "path", "diff", "truncated"):
+    for key in ("active", "previous", "items", "master", "path", "diff", "saves", "truncated"):
         if data.get(key):
             formatted[key] = data[key]
     return formatted
