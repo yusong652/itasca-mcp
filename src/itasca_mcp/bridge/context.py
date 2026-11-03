@@ -4,8 +4,8 @@ Two pieces live here:
 
 * ``fetch_bridge_context`` pulls the runtime signals the bridge keeps for
   the client (what the person typed into the product's consoles, which
-  plots and data files they have open, and what they are doing in the
-  editors right now) and returns them as one dict.
+  plots and data files they have open, and which they are editing right
+  now) and returns them as one dict.
 * ``with_context`` is applied at the tool boundary. It awaits the tool's
   envelope, success or error alike, and attaches ``_context`` in one
   place, so the contract layer stays pure and both branches get the same
@@ -41,9 +41,7 @@ GUI_DESCRIPTION = (
 
 # Appended when the bridge reports the editors' state along with the entries.
 GUI_STATE_DESCRIPTION = (
-    "'unsaved' = data files the USER is editing right now, with changes not yet on "
-    "disk: tell them before writing one. 'selection' = the text they have selected "
-    "in the editor at this moment -- 'this', when they point at something."
+    "'unsaved' = data files the USER is editing right now, with changes not yet on disk: tell them before writing one."
 )
 
 # Console entries are what the person typed; GUI entries are what changed in
@@ -109,13 +107,9 @@ def _gui_context(entries: list[dict[str, Any]], state: dict[str, Any]) -> dict[s
     if entries:
         gui["entries"] = entries
     unsaved = state.get("unsaved")
-    selection = state.get("selection")
-    if unsaved or selection:
-        gui["description"] = GUI_DESCRIPTION + " " + GUI_STATE_DESCRIPTION
     if unsaved:
+        gui["description"] = GUI_DESCRIPTION + " " + GUI_STATE_DESCRIPTION
         gui["unsaved"] = unsaved
-    if selection:
-        gui["selection"] = selection
     return gui
 
 
