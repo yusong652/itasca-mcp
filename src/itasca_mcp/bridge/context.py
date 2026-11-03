@@ -42,8 +42,9 @@ GUI_DESCRIPTION = (
 # Appended when the bridge reports the editors' state along with the entries.
 GUI_STATE_DESCRIPTION = (
     "'unsaved' = data files the USER is editing right now, with changes not yet on "
-    "disk: tell them before writing one. 'selection' = the text they have selected "
-    "in the editor at this moment -- 'this', when they point at something."
+    "disk: tell them before writing one. 'selection' = the lines they have selected "
+    "in the editor at this moment ('lines' = first and last, 1-based): read them from "
+    "the file when they point at something."
 )
 
 # Console entries are what the person typed; GUI entries are what changed in

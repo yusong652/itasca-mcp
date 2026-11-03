@@ -257,7 +257,7 @@ async def test_fetch_passes_a_saved_files_path_and_diff_through():
 
 
 async def test_fetch_carries_the_editors_state_with_its_own_description():
-    state = {"unsaved": ["script"], "selection": {"name": "script", "text": "model cycle 10"}}
+    state = {"unsaved": ["script"], "selection": {"name": "script", "path": "G:/run/script.dat", "lines": [3, 5]}}
     with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([], state)):
         context = await fetch_bridge_context()
 
@@ -265,7 +265,7 @@ async def test_fetch_carries_the_editors_state_with_its_own_description():
         "gui": {
             "description": ctx_module.GUI_DESCRIPTION + " " + ctx_module.GUI_STATE_DESCRIPTION,
             "unsaved": ["script"],
-            "selection": {"name": "script", "text": "model cycle 10"},
+            "selection": {"name": "script", "path": "G:/run/script.dat", "lines": [3, 5]},
         }
     }
 
