@@ -1158,10 +1158,10 @@ def test_massflow_constitutive_models_scoped_to_coupled_analysis() -> None:
 
 def test_massflow_python_exposes_kernel_modules_only() -> None:
     # MassFlow has no proprietary Python package; itasca is flat and exposes only
-    # the generic 9.0-kernel sub-modules (contact/history/fish) beyond the core.
+    # the generic 9.0-kernel sub-modules (contact/history/fish/table) beyond the core.
     index = PythonAPILoader.load_index(software="massflow")
     mods = set(index["modules"])
-    assert {"itasca", "contact", "history", "fish"} <= mods
+    assert {"itasca", "contact", "history", "fish", "table"} <= mods
     # No zone-family / other-engine / fabricated 'massflow' python modules.
     assert not ({"zone", "block", "ball", "structure", "massflow", "dfn"} & mods)
 

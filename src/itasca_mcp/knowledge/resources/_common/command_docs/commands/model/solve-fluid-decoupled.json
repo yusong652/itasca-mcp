@@ -1,0 +1,56 @@
+{
+  "category": "model",
+  "search_keywords": [
+    "solve",
+    "fluid decoupled"
+  ],
+  "description": "Solve an uncoupled fluid-mechanical system in a specific number of steps (or divisions).",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('model solve-fluid-decoupled time 0.001 stages 2')"
+  },
+  "versions": {
+    "6.0": {
+      "available": false
+    },
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "model solve-fluid-decoupled",
+      "syntax": "model solve-fluid-decoupled [time] <ftime> [convergence] [<fconv>] [keyword ...]",
+      "keywords": [
+        {
+          "name": "stages",
+          "syntax": "stages <i>",
+          "description": "Specify the number of stages over which to divide the fluid time. The default is 5 ."
+        },
+        {
+          "name": "stage-save",
+          "syntax": "stage-save [<sname>]",
+          "description": "If specified, after the end of each stage a save file will be made in the current directory. The save file will be named stageXX where XX is the number of the stage ( 0 prefix). If given the string sname will be used instead of stage ."
+        },
+        {
+          "name": "stage-result",
+          "syntax": "stage-result [<sname>]",
+          "description": "If specified, after the end of each stage a results file will be made in the current directory. The results file will be named stageXX where XX is the number of the stage ( 0 prefix). If given the string sname will be used instead of stage ."
+        },
+        {
+          "name": "stage-fish",
+          "syntax": "stage-fish <sym>",
+          "description": "If specified, after each stage the FISH function sym will be called. If the FISH function takes an argument it will be set to the stage number starting at i1 ."
+        }
+      ],
+      "examples": [
+        {
+          "command": "model solve-fluid-decoupled time 0.001 stages 2",
+          "description": "Solve 0.001 units of fluid time in 2 stages"
+        }
+      ],
+      "notes": [
+        "Accepted by the 9.8 PFC, FLAC, 3DEC, MPoint and MassFlow builds; 9.00 and 7.0 reject it.",
+        "Also takes the keywords of model solve."
+      ]
+    }
+  }
+}

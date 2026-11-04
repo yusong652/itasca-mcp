@@ -167,6 +167,23 @@
           "name": "unbalanced-maximum",
           "syntax": "unbalanced-maximum <f>",
           "description": "Cycle until the maximum unbalanced quantity, defined by the active processes, is less than or equal to f . For the mechanical process, unbalanced refers to the maximum unbalanced force (i.e., the unbalanced force is what remains after all forces are applied to a model object)."
+        },
+        {
+          "name": "age",
+          "syntax": "age <f>",
+          "description": "Solve until the total model time reaches f. f is an absolute time, not an increment: a model already past f takes one more step and stops.",
+          "engines": [
+            "pfc",
+            "flac"
+          ]
+        },
+        {
+          "name": "cfd",
+          "syntax": "cfd keyword",
+          "description": "Specifies a solve limit for the cfd process specifically. The process must be active, otherwise the engine reports 'Process cfd is not active'.",
+          "engines": [
+            "pfc"
+          ]
         }
       ],
       "examples": [
@@ -535,12 +552,24 @@
         {
           "name": "time",
           "syntax": "time <f>",
-          "description": "Cycle until the total time accumulated by any active process after the initiation of the solve meets or exceeds f . This is distinct from the time-total keyword that refers to the total age of the process."
+          "description": "Cycle until the total time accumulated by any active process after the initiation of the solve meets or exceeds f . This is distinct from the time-total keyword that refers to the total age of the process.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint"
+          ]
         },
         {
           "name": "time-total",
           "syntax": "time-total <f>",
-          "description": "Cycle until the total age of any active process meets or exceeds f . This is distinct from the time keyword."
+          "description": "Cycle until the total age of any active process meets or exceeds f . This is distinct from the time keyword.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint"
+          ]
         },
         {
           "name": "time-total-zone",
@@ -550,12 +579,46 @@
         {
           "name": "unbalanced-average",
           "syntax": "unbalanced-average <f>",
-          "description": "Cycle until the average unbalanced quantity, defined by the active processes, is less than or equal to f . For the mechanical process, unbalanced refers to the average unbalanced force (i.e., the unbalanced force is what remains after all forces are applied to a model object)."
+          "description": "Cycle until the average unbalanced quantity, defined by the active processes, is less than or equal to f . For the mechanical process, unbalanced refers to the average unbalanced force (i.e., the unbalanced force is what remains after all forces are applied to a model object).",
+          "engines": [
+            "pfc",
+            "flac",
+            "mpoint",
+            "massflow"
+          ]
         },
         {
           "name": "unbalanced-maximum",
           "syntax": "unbalanced-maximum <f>",
           "description": "Cycle until the maximum unbalanced quantity, defined by the active processes, is less than or equal to f . For the mechanical process, unbalanced refers to the maximum unbalanced force (i.e., the unbalanced force is what remains after all forces are applied to a model object)."
+        },
+        {
+          "name": "age",
+          "syntax": "age <f>",
+          "description": "Solve until the total model time reaches f. f is an absolute time, not an increment: a model already past f takes one more step and stops.",
+          "engines": [
+            "pfc",
+            "flac",
+            "mpoint"
+          ]
+        },
+        {
+          "name": "cfd",
+          "syntax": "cfd keyword",
+          "description": "Specifies a solve limit for the cfd process specifically. The process must be active, otherwise the engine reports 'Process cfd is not active'.",
+          "engines": [
+            "pfc"
+          ]
+        },
+        {
+          "name": "follower",
+          "syntax": "follower <s> [substep <i>]",
+          "description": "Make process s (for example mechanical) a follower for this solve: it cycles to equilibrium after each leader step. Give it last, only substep may follow it. Not every active process can be a follower."
+        },
+        {
+          "name": "synchronize",
+          "syntax": "synchronize",
+          "description": "In a typical loosely coupled analysis (most commonly fluid-mechanical) the leader process (fluid) takes one or more cycles and then the follower process (mechanical) cycles to equilibrium. In some cases both processes have timesteps that are meaningful (fluid-thermal coupling, fluid-creep, etc). In which case you can use the synchronize keyword. In this case the follower process(es) will not solve to equilibrium but will instead cycle until the accumulated time matches the time in the leader process."
         }
       ],
       "examples": [
