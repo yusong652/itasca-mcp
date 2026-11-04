@@ -12,6 +12,7 @@ import pytest
 
 from itasca_mcp.knowledge.fish import FishLoader
 from itasca_mcp.server import mcp
+from itasca_mcp.tools.docs import fish
 
 DOC_SOURCES = {"commands", "python_api", "fish", "reference"}
 
@@ -250,3 +251,21 @@ async def test_fish_entries_carry_manual_descriptions() -> None:
 def test_fish_suggestions_rank_by_closeness() -> None:
     assert FishLoader.suggest("ball.position", software="pfc")[0] == "ball.pos"
     assert FishLoader.suggest("tensor.principal", software="pfc")[:2] == ["tensor", "tensor.prin"]
+
+
+@pytest.mark.parametrize("software", ["pfc", "flac", "3dec", "mpoint", "massflow"])
+def test_every_fish_intrinsic_is_browsable(software: str) -> None:
+    """itasca_query_doc hands out entry names as browse paths, so each one has to resolve."""
+    missing = []
+    for name in FishLoader.entries(software=software):
+        envelope = fish.browse(software, name, "9.0")
+        if not envelope["ok"] and envelope["error"]["code"] == "intrinsic_not_found":
+            missing.append(name)
+    assert not missing
+
+
+def test_fish_child_count_follows_the_version() -> None:
+    """A listing must promise what browsing that child returns, not the all-version total."""
+    listing = fish.browse("flac", "struct", "9.0")["data"]["entries"]
+    beam = next(entry for entry in listing if entry["name"] == "struct.beam")
+    assert beam["children"] == fish.browse("flac", "struct.beam", "9.0")["data"]["summary"]["child_count"]
