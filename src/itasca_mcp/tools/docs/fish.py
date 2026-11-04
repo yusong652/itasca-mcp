@@ -51,11 +51,7 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
 
     entry = FishLoader.get(node, software=software)
     self_available = entry is not None and FishLoader.available(entry, version)
-    children = [
-        child
-        for child in FishLoader.children(node, software=software)
-        if FishLoader.has_available_descendant(child, version, software=software)
-    ]
+    children = _available_children(node, software, version)
 
     if not self_available and not children:
         available_in = FishLoader.available_in(entry) if entry else _namespace_versions(node, software)
@@ -77,7 +73,7 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         child_entry = FishLoader.get(child, software=software)
         if child_entry is not None and FishLoader.available(child_entry, version):
             item["signature"] = child_entry.get("signature")
-        grandchildren = FishLoader.children(child, software=software)
+        grandchildren = _available_children(child, software, version)
         if grandchildren:
             item["children"] = len(grandchildren)
         entries.append(item)
@@ -95,6 +91,14 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         if notes:
             summary["notes"] = notes
     return build_ok(build_docs_data(source="fish", action="browse", entries=entries, summary=summary))
+
+
+def _available_children(node: str, software: str, version: str) -> list[str]:
+    return [
+        child
+        for child in FishLoader.children(node, software=software)
+        if FishLoader.has_available_descendant(child, version, software=software)
+    ]
 
 
 def _browse_root(software: str, version: str) -> dict[str, Any]:

@@ -233,14 +233,14 @@ def split_args(raw: str | None) -> list[dict[str, Any]]:
 
 def parse_signature(name: str, sig: str) -> dict[str, Any]:
     m = GETTER.match(sig)
-    if m and m.group("name") == name:
+    if m and m.group("name").lower() == name:
         return {
             "returns": m.group("ret").strip(),
             "args": split_args(m.group("args")),
             "settable": m.group("set") is not None,
         }
     m = SETTER_ONLY.match(sig)
-    if m and m.group("name") == name:
+    if m and m.group("name").lower() == name:
         return {"returns": None, "args": split_args(m.group("args")), "settable": True}
     raise ValueError(f"unparsed signature for {name}: {sig!r}")
 
@@ -402,7 +402,9 @@ def main() -> None:
     names_by_ns: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
     for engine, versions in live.items():
         for version, rows in versions.items():
-            for name, sig in rows.items():
+            for live_name, sig in rows.items():
+                # FISH is case-insensitive: the binary's massflow.mass.DpDay is the manual's dpday.
+                name = live_name.lower()
                 ns = name.split(".")[0]
                 if ns not in FAMILIES[engine] and ns not in KERNEL:
                     continue  # other engines' families leaking through a unified table
