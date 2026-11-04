@@ -4,9 +4,45 @@
   "engines": [
     "flac"
   ],
-  "count": 247,
-  "undocumented": 5,
+  "count": 276,
+  "undocumented": 11,
   "entries": [
+    {
+      "name": "zone.area",
+      "signature": "flt := zone.area(zone_pnt)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.area.html#function:zone.area",
+      "dimension": "2D",
+      "description": "Get the zone area calculated using the current position of the zone’s gridpoints."
+    },
+    {
+      "name": "zone.area.deformed",
+      "signature": "flt := zone.area.deformed(zone_pnt)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.area.deformed.html#function:zone.area.deformed",
+      "dimension": "2D",
+      "description": "Get the area of a zone using gridpoint positions that take into account accumulated gridpoint displacements."
+    },
     {
       "name": "zone.aspect",
       "signature": "flt := zone.aspect(zone_pnt)",
@@ -23,6 +59,24 @@
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.aspect.html#function:zone.aspect",
       "description": "Get the measure of a zone’s aspect ratio. Values near zero indicate a zone with a large aspect ratio. This is defined as the ratio of the smallest to the largest edge length among edges of a zone."
+    },
+    {
+      "name": "zone.bad",
+      "signature": "bool := zone.bad(zone_pnt)",
+      "returns": "bool",
+      "args": [
+        {
+          "type": "zone_pnt"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": true,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.bad.html#function:zone.bad",
+      "dimension": "2D",
+      "description": "Checks the shape quality of a 2D zone. Returns true if the shape quality is bad (the zone is badly deformed), and false otherwise. In general use the zone.condition method instead."
     },
     {
       "name": "zone.block.gp",
@@ -42,6 +96,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.gp.html#function:zone.block.gp",
+      "dimension": "3D",
       "description": "Get the FLAC3D gridpoint for the input zone-block coupling item and gridpoint number (from 1 to 4). Each coupling item consists of a single 3DEC vertex and 3 or 4 FLAC3D gridpoints (defining the intersected face)."
     },
     {
@@ -55,6 +110,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.list.html#function:zone.block.list",
+      "dimension": "3D",
       "description": "Get the list of zone block coupling items. Each item in the list is a single 3DEC vertex and an array or 3 or 4 FLAC3D gridpoints with weights."
     },
     {
@@ -72,6 +128,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.numgp.html#function:zone.block.numgp",
+      "dimension": "3D",
       "description": "Get the number of FLAC3D gridpoints for the input zone-block coupling item. This can be 3 or 4 depending on the number of gridpoints of the FLAC3D zone face that is coupled to the 3DEC vertex."
     },
     {
@@ -85,6 +142,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.typeid.html#function:zone.block.typeid",
+      "dimension": "3D",
       "description": "Get the zone-block coupling data structure type number. The typeid can be used to uniquely identify zone-block FISH pointers from any other type of FISH pointer."
     },
     {
@@ -102,6 +160,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.vertex.html#function:zone.block.vertex",
+      "dimension": "3D",
       "description": "Get the 3DEC vertex for the input zone-block coupling item."
     },
     {
@@ -122,6 +181,7 @@
         "9.0": true
       },
       "doc": "common/docproject/source/manual/coupling/schemes/zoneblock/fish/fish_zone.block.weight.html#function:zone.block.weight",
+      "dimension": "3D",
       "description": "Get the weight associated with the FLAC3D gridpoint for the input zone-block coupling item and gridpoint number (from 1 to 4)."
     },
     {
@@ -453,7 +513,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.area.html#function:zone.face.area",
-      "dimension": "3D",
       "description": "Get the area of the face."
     },
     {
@@ -503,7 +562,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.find.html#function:zone.face.find",
-      "dimension": "3D",
       "description": "In FLAC2D, get the face index of zone z that contains the two gridpoints gp1, gp2."
     },
     {
@@ -630,6 +688,27 @@
       "description": "Check if the group name s is associated with the zone face indicated by z and iside and return true if a match is found in any slot. The check for s will only occur in slot, if provided."
     },
     {
+      "name": "zone.face.length",
+      "signature": "flt := zone.face.length(zone_pnt,int)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.length.html#function:zone.face.length",
+      "dimension": "2D",
+      "description": "Get the length of the zone face."
+    },
+    {
       "name": "zone.face.normal",
       "signature": "vec3/flt := zone.face.normal(zone_pnt,int,<int>)",
       "returns": "vec3/flt",
@@ -712,6 +791,7 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.normal.html#function:zone.face.normal.z",
+      "dimension": "3D",
       "description": "Get the z-component of the normal to the face, facing outward from zone z."
     },
     {
@@ -796,6 +876,7 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.pos.html#function:zone.face.pos.z",
+      "dimension": "3D",
       "description": "Get the z-component of the position of the face, defined as the centroid of its grid points."
     },
     {
@@ -816,7 +897,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.face_intrinsics/fish_zone.face.size.html#function:zone.face.size",
-      "dimension": "3D",
       "description": "Get the number of unique face vertices. A quadrilateral face will return 4; a triangular face will return 3. A number less than three indicates that this is a degenerate face that is not valid."
     },
     {
@@ -1233,6 +1313,7 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.flow.html#function:zone.flow.z",
+      "dimension": "3D",
       "description": "Get the z-component of the specific discharge vector for the zone."
     },
     {
@@ -1444,6 +1525,7 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.flux.html#function:zone.flux.z",
+      "dimension": "3D",
       "description": "Get the z-component of the zone average heat flux vector."
     },
     {
@@ -2226,6 +2308,7 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.pos.html#function:zone.pos.z",
+      "dimension": "3D",
       "description": "Get the z-component of the zone centroid position."
     },
     {
@@ -3382,7 +3465,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.test.quality.html#function:zone.test.quality",
-      "dimension": "3D",
       "description": "Get a measure of the zone quality, or how the zone shape may affect solution accuracy."
     },
     {
@@ -3412,7 +3494,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.gp.html#function:zone.tet.gp",
-      "dimension": "3D",
       "description": "Gets a list of the gridpoint pointers associated with one or more tetrahedra of a zone."
     },
     {
@@ -3430,7 +3511,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.num.html#function:zone.tet.num",
-      "dimension": "3D",
       "description": "Get the number of tetra in each overlay of the zone."
     },
     {
@@ -3452,7 +3532,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.smallest.vol.html#function:zone.tet.smallest.vol",
-      "dimension": "3D",
       "description": "Get the volume of the smallest tetrahedron in an overlay."
     },
     {
@@ -3486,7 +3565,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.strain.increment.html#function:zone.tet.strain.inc",
-      "dimension": "3D",
       "description": "Get the zone tetra strain increments based on the current displacement field."
     },
     {
@@ -3670,7 +3748,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.strain.rate.html#function:zone.tet.strain.rate",
-      "dimension": "3D",
       "description": "Get the zone tetra strain rate based on the current velocity field."
     },
     {
@@ -3854,7 +3931,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.stress.html#function:zone.tet.stress",
-      "dimension": "3D",
       "description": "Get/set a list of the the zone tetra stresses."
     },
     {
@@ -4030,7 +4106,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tetra_intrinsics/fish_zone.tetra.vol.html#function:zone.tet.vol",
-      "dimension": "3D",
       "description": "Gets a list of the volumes associated with one or more tetrahedra of a zone."
     },
     {
@@ -4408,6 +4483,671 @@
       "description": "Get/set the total accumulated zone module thermal time. This accumulates the timesteps of every cycle the zone thermal module is active."
     },
     {
+      "name": "zone.tri.area",
+      "signature": "flt := zone.tri.area(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.area.html#function:zone.tri.area",
+      "dimension": "2D",
+      "description": "Gets a list of the areas associated with one or more triangles of a zone."
+    },
+    {
+      "name": "zone.tri.gp",
+      "signature": "list/flt := zone.tri.gp(zone_pnt,<int>,<int>,<arr>)",
+      "returns": "list/flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "arr",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.gp.html#function:zone.tri.gp",
+      "dimension": "2D",
+      "description": "Gets a list of the gridpoint pointers associated with one or more triangles of a zone."
+    },
+    {
+      "name": "zone.tri.num",
+      "signature": "int := zone.tri.num(zone_pnt)",
+      "returns": "int",
+      "args": [
+        {
+          "type": "zone_pnt"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.num.html#function:zone.tri.num",
+      "dimension": "2D",
+      "description": "Get the number of triangles in each overlay of the zone."
+    },
+    {
+      "name": "zone.tri.smallest.area",
+      "signature": "flt := zone.tri.smallest.area(zone_pnt,int)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int"
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.smallest.area.html#function:zone.tri.smallest.area",
+      "dimension": "2D",
+      "description": "Get the area of the smallest triangle in an overlay."
+    },
+    {
+      "name": "zone.tri.strain.inc",
+      "signature": "ten/flt := zone.tri.strain.inc(zone_pnt,<int>,<int>,<int>,<int>)",
+      "returns": "ten/flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.increment.html#function:zone.tri.strain.inc",
+      "dimension": "2D",
+      "description": "Get the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.xx",
+      "signature": "flt := zone.tri.strain.inc.xx(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the xx-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.xy",
+      "signature": "flt := zone.tri.strain.inc.xy(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the xy-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.xz",
+      "signature": "flt := zone.tri.strain.inc.xz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the xz-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.yy",
+      "signature": "flt := zone.tri.strain.inc.yy(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the yy-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.yz",
+      "signature": "flt := zone.tri.strain.inc.yz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the yz-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.inc.zz",
+      "signature": "flt := zone.tri.strain.inc.zz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": null,
+      "dimension": "2D",
+      "description": "Get the zz-component of the zone triangle strain increments based on the current displacement field."
+    },
+    {
+      "name": "zone.tri.strain.rate",
+      "signature": "ten/flt := zone.tri.strain.rate(zone_pnt,<int>,<int>,<int>,<int>)",
+      "returns": "ten/flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate",
+      "dimension": "2D",
+      "description": "Get the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.xx",
+      "signature": "flt := zone.tri.strain.rate.xx(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.xx",
+      "dimension": "2D",
+      "description": "Get the xx-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.xy",
+      "signature": "flt := zone.tri.strain.rate.xy(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.xy",
+      "dimension": "2D",
+      "description": "Get the xy-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.xz",
+      "signature": "flt := zone.tri.strain.rate.xz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.xz",
+      "dimension": "2D",
+      "description": "Get the xz-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.yy",
+      "signature": "flt := zone.tri.strain.rate.yy(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.yy",
+      "dimension": "2D",
+      "description": "Get the yy-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.yz",
+      "signature": "flt := zone.tri.strain.rate.yz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.yz",
+      "dimension": "2D",
+      "description": "Get the yz-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.strain.rate.zz",
+      "signature": "flt := zone.tri.strain.rate.zz(zone_pnt,<int>,<int>)",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": false,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.strain.rate.html#function:zone.tri.strain.rate.zz",
+      "dimension": "2D",
+      "description": "Get the zz-component of the zone triangle strain rate based on the current velocity field."
+    },
+    {
+      "name": "zone.tri.stress",
+      "signature": "ten/flt := zone.tri.stress(zone_pnt,<int>,<int>,<int>,<int>) := ten/flt",
+      "returns": "ten/flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress",
+      "dimension": "2D",
+      "description": "Get/set a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.xx",
+      "signature": "flt := zone.tri.stress.xx(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.xx",
+      "dimension": "2D",
+      "description": "Get/set the xx-component of a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.xy",
+      "signature": "flt := zone.tri.stress.xy(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.xy",
+      "dimension": "2D",
+      "description": "Get/set the xy-component of a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.xz",
+      "signature": "flt := zone.tri.stress.xz(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.xz",
+      "dimension": "2D",
+      "description": "Get/set the xz-component of a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.yy",
+      "signature": "flt := zone.tri.stress.yy(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.yy",
+      "dimension": "2D",
+      "description": "Get/set the yy-component of a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.yz",
+      "signature": "flt := zone.tri.stress.yz(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.yz",
+      "dimension": "2D",
+      "description": "Get/set the yz-component of a list of the the zone triangle stresses."
+    },
+    {
+      "name": "zone.tri.stress.zz",
+      "signature": "flt := zone.tri.stress.zz(zone_pnt,<int>,<int>) := ten/list",
+      "returns": "flt",
+      "args": [
+        {
+          "type": "zone_pnt"
+        },
+        {
+          "type": "int",
+          "optional": true
+        },
+        {
+          "type": "int",
+          "optional": true
+        }
+      ],
+      "settable": true,
+      "versions": {
+        "7.0": false,
+        "9.0": true
+      },
+      "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone.tri_intrinsics/fish_zone.tri.stress.html#function:zone.tri.stress.zz",
+      "dimension": "2D",
+      "description": "Get/set the zz-component of a list of the the zone triangle stresses."
+    },
+    {
       "name": "zone.typeid",
       "signature": "int := zone.typeid()",
       "returns": "int",
@@ -4448,7 +5188,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.vol.html#function:zone.vol",
-      "dimension": "3D",
       "description": "Get the zone volume (in 3D) or area (in 2D)calculated using the current position of the zone’s gridpoints."
     },
     {
@@ -4466,7 +5205,6 @@
         "9.0": true
       },
       "doc": "flac3d/zone/doc/manual/zone_manual/zone_fish/zone_intrinsics/fish_zone.vol.deformed.html#function:zone.vol.deformed",
-      "dimension": "3D",
       "description": "Get the volume (in 3D) or area (in 2D) of a zone using gridpoint positions that take into account accumulated gridpoint displacements."
     },
     {

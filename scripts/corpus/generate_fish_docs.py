@@ -23,6 +23,11 @@ cannot serve as evidence; PFC 6.0 (a standalone product) and 3DEC/MassFlow 9.x
 tables are clean. Engines without a clean table fall back to the full kernel
 set and are flagged ``kernel_verified: false`` in their index.
 
+Dimension: PFC, FLAC and MPoint ship 2D builds whose tables differ from the 3D ones.
+Each engine keeps one tree. A name only one build lists carries ``dimension`` ("2D" or
+"3D"), measured by comparing the two tables of the same version; the manual's marker
+is only the fallback where no 2D build exists.
+
 Usage:
     uv run python scripts/corpus/generate_fish_docs.py
 """
@@ -60,6 +65,20 @@ LIVE: dict[str, dict[str, Path]] = {
     "massflow": {"9.0": WORK / "massflow98_fish_intrinsics.log"},  # MassFlow 9.8 (clean)
     # MPoint 9.8 (unified: identical to PFC's table, so it cannot decide kernel membership)
     "mpoint": {"9.0": WORK / "mpoint98_fish_intrinsics.log"},
+}
+# 2D console builds. Comparing one with the 3D table of the same version gives each name's
+# dimension; the corpus keeps one tree per engine, with 2D-only names as entries of their own.
+LIVE_2D: dict[str, dict[str, Path]] = {
+    "pfc": {
+        "6.0": WORK / "pfc2d60_fish_intrinsics.log",  # PFC2D 6.00 (console stdout: demo mode rejects logging)
+        "7.0": WORK / "pfc2d70_fish_intrinsics.log",  # PFC2D 7.00
+        "9.0": WORK / "pfc2d98_fish_intrinsics.log",  # PFC2D 9.8
+    },
+    "flac": {
+        "7.0": WORK / "flac2d70_fish_intrinsics.log",  # FLAC2D 7.00
+        "9.0": WORK / "flac2d98_fish_intrinsics.log",  # FLAC2D 9.8
+    },
+    "mpoint": {"9.0": WORK / "mpoint2d98_fish_intrinsics.log"},  # MPoint2D 9.8
 }
 # Engines whose kernel-namespace membership is decided by a clean live table.
 CLEAN_TABLE: dict[str, tuple[str, str]] = {
@@ -143,7 +162,7 @@ def read_columnar_60(text: str) -> dict[str, str | None]:
     cols = {key: lines[header].index(key) for key in ("Name", "Return", "Arg", "Write", "Arguments")}
     rows: dict[str, str | None] = {}
     for line in lines[header + 2 :]:
-        if not line.strip() or line.startswith(("pfc3d>", "*")):
+        if not line.strip() or line.startswith(("pfc3d>", "pfc2d>", "*")):
             continue
         name = line[cols["Name"] : cols["Return"]].strip()
         if not re.fullmatch(r"[A-Za-z_][\w.-]*", name):
@@ -369,8 +388,15 @@ VERIFICATION = {
 }
 
 
+VERIFICATION_2D = (
+    " Dimension and 2D-only names: live 'fish list intrinsics' of the 2D console build of each version, "
+    "generated 2026-11-04."
+)
+
+
 def main() -> None:
     live = {e: {v: read_live(p) for v, p in vs.items()} for e, vs in LIVE.items()}
+    live_2d = {e: {v: read_live(p) for v, p in vs.items()} for e, vs in LIVE_2D.items()}
     static = {v: read_static(p) for v, p in STATIC.items()}
     curated = load_hints()
     hints: dict[str, str] = curated["family_by_name"]
@@ -398,20 +424,40 @@ def main() -> None:
                 scopes[ns] = "common"
         engine_ns[engine] = scopes
 
-    # Build the per-namespace entry tables from every live source.
+    # Build the per-namespace entry tables from every live source. 3D tables go first, so a
+    # name both builds list keeps its 3D signature; a 2D-only name gets its 2D one.
     names_by_ns: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
-    for engine, versions in live.items():
-        for version, rows in versions.items():
-            for live_name, sig in rows.items():
-                # FISH is case-insensitive: the binary's massflow.mass.DpDay is the manual's dpday.
-                name = live_name.lower()
-                ns = name.split(".")[0]
-                if ns not in FAMILIES[engine] and ns not in KERNEL:
-                    continue  # other engines' families leaking through a unified table
-                entry = names_by_ns[ns].setdefault(name, {"name": name, "sigs": {}, "seen": defaultdict(set)})
-                entry["seen"][engine].add(version)
-                if sig:
-                    entry["sigs"].setdefault(version, normalize_sig(sig))
+    for tables in (live, live_2d):
+        for engine, versions in tables.items():
+            for version, rows in versions.items():
+                for live_name, sig in rows.items():
+                    # FISH is case-insensitive: the binary's massflow.mass.DpDay is the manual's dpday.
+                    name = live_name.lower()
+                    ns = name.split(".")[0]
+                    if ns not in FAMILIES[engine] and ns not in KERNEL:
+                        continue  # other engines' families leaking through a unified table
+                    entry = names_by_ns[ns].setdefault(name, {"name": name, "sigs": {}, "seen": defaultdict(set)})
+                    entry["seen"][engine].add(version)
+                    if sig:
+                        entry["sigs"].setdefault(version, normalize_sig(sig))
+
+    def lowered(tables: dict[str, dict[str, Any]]) -> dict[str, dict[str, set[str]]]:
+        return {e: {v: {n.lower() for n in rows} for v, rows in vs.items()} for e, vs in tables.items()}
+
+    names_3d, names_2d = lowered(live), lowered(live_2d)
+
+    def measured_dimension(name: str, ns: str) -> str | None:
+        """'3D' or '2D' when only one build lists the name, 'both', or None when no 2D build applies."""
+        in_3d = in_2d = False
+        for engine, versions in names_2d.items():
+            if ns not in FAMILIES[engine] and ns not in KERNEL:
+                continue
+            for version, names in versions.items():
+                in_2d = in_2d or name in names
+                in_3d = in_3d or name in names_3d[engine][version]
+        if in_3d and in_2d:
+            return "both"
+        return "3D" if in_3d else "2D" if in_2d else None
 
     def versions_for(entry: dict[str, Any], ns: str, engine: str | None) -> dict[str, bool]:
         """Availability per corpus version from live evidence only.
@@ -465,6 +511,12 @@ def main() -> None:
                     rec["note"] = st["note"]
             else:
                 rec["doc"] = None
+            # The live tables outrank the manual's marker wherever a 2D build can be compared.
+            measured = measured_dimension(name, ns)
+            if measured == "both":
+                rec.pop("dimension", None)
+            elif measured:
+                rec["dimension"] = measured
             if name in hints:
                 rec["family"] = hints[name]
             if name in descriptions:
@@ -529,7 +581,7 @@ def main() -> None:
             "namespaces": namespaces,
             "excluded_namespaces": excluded,
             **curated["engine_index_extras"].get(engine, {}),
-            "verification": VERIFICATION[engine],
+            "verification": VERIFICATION[engine] + (VERIFICATION_2D if engine in LIVE_2D else ""),
         }
         out = RES / engine / "fish_docs" / "index.json"
         out.parent.mkdir(parents=True, exist_ok=True)

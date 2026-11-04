@@ -53,9 +53,9 @@ def register(mcp: FastMCP) -> None:
 
         source picks the tree: commands (Itasca command syntax and keywords), python_api
         (the itasca Python SDK), fish (FISH intrinsic functions: name, signature, which
-        versions have it), reference (contact/constitutive/joint model properties, range
-        elements, plot items). Each level lists what is below it, so start at the top of
-        a tree when unsure and descend.
+        versions have it, whether it is 2D or 3D only), reference (contact/constitutive/joint
+        model properties, range elements, plot items). Each level lists what is below it, so
+        start at the top of a tree when unsure and descend.
 
         Use itasca_query_doc when you only have keywords; its results are paths for this tool.
         """

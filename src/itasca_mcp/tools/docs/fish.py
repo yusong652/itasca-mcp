@@ -73,6 +73,8 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
         child_entry = FishLoader.get(child, software=software)
         if child_entry is not None and FishLoader.available(child_entry, version):
             item["signature"] = child_entry.get("signature")
+            if child_entry.get("dimension"):
+                item["dimension"] = child_entry["dimension"]
         grandchildren = _available_children(child, software, version)
         if grandchildren:
             item["children"] = len(grandchildren)
@@ -146,21 +148,22 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
     for result in results:
         doc = result.document
         meta = doc.metadata or {}
-        entries.append(
-            {
-                "path": doc.name,
-                "name": doc.name,
-                "signature": doc.syntax,
-                "description": meta.get("description"),
-                "namespace": doc.category,
-                "returns": meta.get("returns"),
-                "settable": meta.get("settable"),
-                "available_in": [v for v, ok in (meta.get("versions") or {}).items() if ok],
-                "doc": meta.get("doc"),
-                "score": round(result.score, 2),
-                "rank": result.rank,
-            }
-        )
+        hit: dict[str, Any] = {
+            "path": doc.name,
+            "name": doc.name,
+            "signature": doc.syntax,
+            "description": meta.get("description"),
+            "namespace": doc.category,
+            "returns": meta.get("returns"),
+            "settable": meta.get("settable"),
+            "available_in": [v for v, ok in (meta.get("versions") or {}).items() if ok],
+            "doc": meta.get("doc"),
+            "score": round(result.score, 2),
+            "rank": result.rank,
+        }
+        if meta.get("dimension"):
+            hit["dimension"] = meta["dimension"]
+        entries.append(hit)
 
     extras: dict[str, Any] = {}
     if not entries:

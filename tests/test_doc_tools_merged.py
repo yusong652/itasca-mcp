@@ -88,13 +88,13 @@ async def test_browse_fish_namespace_lists_children() -> None:
 @pytest.mark.asyncio
 async def test_browse_fish_not_found_suggests_siblings() -> None:
     payload = _payload(
-        await mcp.call_tool("itasca_browse_doc", {"software": "pfc", "source": "fish", "path": "ball.rotation"})
+        await mcp.call_tool("itasca_browse_doc", {"software": "pfc", "source": "fish", "path": "ball.position"})
     )
     assert payload["ok"] is False
     assert payload["error"]["code"] == "intrinsic_not_found"
     details = payload["error"]["details"]
     assert details["source"] == "fish"
-    assert details["input"]["path"] == "ball.rotation"
+    assert details["input"]["path"] == "ball.position"
     assert any(s.startswith("ball.") for s in details["suggestions"])
 
 
@@ -269,3 +269,13 @@ def test_fish_child_count_follows_the_version() -> None:
     listing = fish.browse("flac", "struct", "9.0")["data"]["entries"]
     beam = next(entry for entry in listing if entry["name"] == "struct.beam")
     assert beam["children"] == fish.browse("flac", "struct.beam", "9.0")["data"]["summary"]["child_count"]
+
+
+def test_fish_dimension_reaches_browse_and_query() -> None:
+    """2D and 3D builds list different names, so a 2D user has to see which is which."""
+    assert fish.browse("pfc", "ball.rotation", "9.0")["data"]["entries"][0]["dimension"] == "2D"
+    assert "dimension" not in fish.browse("pfc", "ball.pos", "9.0")["data"]["entries"][0]
+    shell = fish.browse("flac", "struct.shell", "9.0")["data"]["entries"]
+    assert shell and all(item["dimension"] == "3D" for item in shell if "signature" in item)
+    hit = fish.search("flac", "zone.area", 1, "9.0")[0][0]
+    assert (hit["name"], hit["dimension"]) == ("zone.area", "2D")

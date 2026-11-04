@@ -116,6 +116,7 @@ class FishDocumentAdapter:
                         "doc": entry.get("doc"),
                         "scope": entry.get("scope"),
                         "description": entry.get("description"),
+                        "dimension": entry.get("dimension"),
                     },
                 )
             )
