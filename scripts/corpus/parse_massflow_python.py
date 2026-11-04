@@ -3,7 +3,7 @@
 MassFlow has no proprietary Python package: its ``itasca`` is a flat module whose
 only documentable sub-modules (confirmed live against the running massflow bridge
 via ``dir(itasca)`` -> ModuleType filter) are the generic 9.0-kernel modules
-``contact``, ``history`` and ``fish``. ``util`` is interop-only (FLAC3D/PFC/UDEC
+``contact``, ``history``, ``fish`` and ``table``. ``util`` is interop-only (FLAC3D/PFC/UDEC
 *_Connection bridges) and is skipped, exactly as the 3DEC parser skips it.
 
 Source: the unified Sphinx Python API pages shipped with the Itasca Software
@@ -51,6 +51,7 @@ MODULES = [
     "contact",
     "history",
     "fish",
+    "table",
 ]
 
 
