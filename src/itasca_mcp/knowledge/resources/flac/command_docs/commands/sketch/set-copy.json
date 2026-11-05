@@ -1,0 +1,48 @@
+{
+  "category": "sketch",
+  "search_keywords": [
+    "copy",
+    "set",
+    "sketch"
+  ],
+  "description": "Copy sketch set data. All sketch objects from the source set s1 (or the current default, if not specified) are copied to the target sketch set s2 . The target set is created if it does not exist. If the target set is not specified, the sketch objects are copied within the source set and a translate vector need to be specified. The optional range can be used to filter which sketch objects are included in the copy. By default, all points, edges and blocks in the range are copied unless the type to be copied is restricted with a keyword.",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "sketch set copy",
+      "syntax": "sketch set copy [source <s1>] [target <s2>] keyword ... [range]",
+      "keywords": [
+        {
+          "name": "edges",
+          "syntax": "edges",
+          "description": "If specified, only edges and dependent points will be copied."
+        },
+        {
+          "name": "group",
+          "syntax": "group <s> [{add | slot <slot>}]",
+          "description": "All copied objects will be assigned group name s . Use of the group logic is described in Groups . By default, the group name is added to slot Default . Options: add: Assign s to the next available slot. In this case, slot Default is used.; slot <slot>: Set group slot slot to s . By default, slot Default is used."
+        },
+        {
+          "name": "points",
+          "syntax": "points",
+          "description": "If specified, only points will be copied."
+        },
+        {
+          "name": "blocks",
+          "syntax": "blocks",
+          "description": "If specified, only blocks and dependent edges and points will be copied."
+        },
+        {
+          "name": "translate",
+          "syntax": "translate <v2>",
+          "description": "Translate objects. Copied sketch objects are moved by v2 (2D vector coordinates)."
+        }
+      ]
+    }
+  }
+}

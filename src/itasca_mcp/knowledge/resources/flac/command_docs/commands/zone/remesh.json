@@ -1,0 +1,61 @@
+{
+  "category": "zone",
+  "search_keywords": [
+    "remesh",
+    "zone"
+  ],
+  "description": "Specifies remeshing boundary (required) and other parameters used in the remeshing functionality. Remeshing option must be enabled with model remeshing command.",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "zone remesh",
+      "syntax": "zone remesh keyword",
+      "keywords": [
+        {
+          "name": "boundary",
+          "syntax": "boundary {by-slot <s> [range] | pinchout-angle <f> | smoothing <b>}",
+          "description": "Identifies, validates, and assigns zone faces to be used as a remeshing boundary. The remeshing boundary may consist of multiple disjoint parts but the exterior border of each part must form a closed polygon. For more details, see Automatic Remeshing . Options: by-slot <s>[range]: Specifies face group Slot s to be used as a container of all remeshing boundaries. Internal and/or external faces may be assigned various groups and placed in Slot s . All grouped faces from this slot will be used as remeshing boundaries.; pinchout-angle <f>: Specifies the maximum pinch-out angle f in degrees. During large-strain simulations, some gridpoints on the exterior remeshing boundaries may significantly move away or pinch-out from the main domain due to high velocities. This may form long and narrow triangular “spikes” which are non-physical and typically need to be removed. If the angle at the tip of the pinch-out is below specified value f , the remeshing logic “flattens” the zone at the tip to remove the pinching-out geometry. This helps with maintaining model convergence (however, in rare cases it may change model behavior and lead to issues with stability). The default value is 10 degrees. Users are advised to exercise caution when using larger pinch-out angles (e.g., > 15-20 deg) as this may lead to unrealistic and excessive changes in model geometry.; smoothing <b>: This option specifies if internal remeshing boundaries are to be smoothed and re-discretized or not. By the default, smoothing is turned on. In this case, contiguous internal boundary segments are combined into a single polyline which is re-discretized using an average zone size. This allows for producing better quality meshes. In some cases, however, particularly when internal remeshing boundaries contain acute angles, smoothing may not be desired and should be turned off to preserve model geometry."
+        },
+        {
+          "name": "extra",
+          "syntax": "extra {gridpoint <i>... | zone <i>... | clear} ...",
+          "description": "Specifies which extra zone or gridpoint variables will be interpolated during remeshing. Only scalars (numbers), vectors, and tensors can be interpolated. Zone extras are interpolated within unique remeshing domains and not across them (domain-level), while gridpoint extras are interpolated using data from all nearest gridpoints in the model (model-level). The interpolation scheme is the same as for gridpoints and zones (based on the Inverse Distance Weighting method). IMPORTANT NOTES: (1) Gridpoints / zones extra parameters must be consistent and represent same quantity within a remeshing domain (for zones) or whole model (for gridpoints). (2) Each gridpoint / zone in new mesh always receives a direct copy of all parameters (including extra variables) from the nearest gridpoint / zone in the old mesh. If extra keyword is specified, the interpolated values overwrite those copied from the nearest gridpoint / zone. Options: gridpoint <i>...: Specifies indices i of extra gridpoint variables to interpolate. Multiple indices i within range 1 - 128 may be specified.; zone <i>...: Specifies indices i of extra zone variables to interpolate. Multiple indices i within range 1 - 128 may be specified.; clear: Clears the lists of extra variable indices set for interpolation. This option may be useful to clear and later update the interpolation lists as once specified, they persist between model runs. Note that after clearing extra indices lists, extra variables will continue receiving direct copies from the nearest gridpoints/zones upon further remeshing."
+        },
+        {
+          "name": "interpolation",
+          "syntax": "interpolation {mode {synchronized | density-smoothed} ...} ...",
+          "description": "Specifies the mode of interpolation from old to new meshes. Most zone-based parameters are interpolated within unique remeshing domains (domain-level). One exception is zone density which is interpolated within and across the internal remehsing boundaries (model-level). Gridpoint-based quantities always use model-level interpolation. Options: mode {synchronized | density-smoothed} ...: Sets the interpolation mode. Options: synchronized: Sets same Inverse Distance Weighting (IDW) interpolation mode for all gridpoint- and zone-based quantities. An inverse power decay function based on the Euclidean distance is used which assures that the nearest gridpoints / zones from the old mesh are accounted with much higher weights than other gridpoints / zones within a search radius.; density-smoothed: Sets to use a smooth exponential decay function in the IDW interpolation scheme for zone density . All other gridpoint- and zone-based quantities use a standard inverse power decay function. Using a smoother interpolation function provides more uniform density distribution which improves model behavior during very large deformations. This is the default option."
+        },
+        {
+          "name": "list",
+          "syntax": "list",
+          "description": "Lists all remeshing parameters including geometry check / update interval."
+        },
+        {
+          "name": "reference-update",
+          "syntax": "reference-update <i>",
+          "description": "Specifies interval (in i steps) for updating reference geometry and initial data needed for remeshing. If current model geometry significantly differs from the initial / reference geometry, the logic may not be able to find proper boundaries, domains, and/or map and interpolate data (including boundary conditions). If not specified, reference geometry and data are updated at interval = 50 x the zone geometry check interval (set by zone geometry update-interval command), or every 500 steps, by the default. Users may change this interval by specifying a smaller number of steps. If remeshing encounters interpolation or data mapping errors, it is recommended to reduce the reference update interval to 50 - 250 steps. Note that very frequent updates may slow down the analysis."
+        },
+        {
+          "name": "shape-quality",
+          "syntax": "shape-quality <f>",
+          "description": "Sets the minimum shape quality value. If zone shape quality falls below this value, remeshing is triggered. See more information about other criteria which may trigger remeshing in Automatic Remeshing . If user does not specify this option for remeshing, the default value of 0.025 is used. Note that zone shape quality and other geometry checks are performed only as specified with the zone geometry update-interval command or every 10 steps otherwise (by the default). To query the current geometry update interval, use zone remesh list ."
+        },
+        {
+          "name": "clear",
+          "syntax": "clear",
+          "description": "Clear the remeshing settings, including the boundary slot."
+        }
+      ],
+      "notes": [
+        "2D only. Needs model remeshing on, otherwise the engine reports MODEL REMESH ON is required.",
+        "The engine calls remeshing a beta feature."
+      ]
+    }
+  }
+}

@@ -15,7 +15,8 @@
         "Building blocks are a topology-first meshing workflow: define blocks, then generate zones from them",
         "Command verb is 'building-blocks' even though the docs/UI call it the Building Blocks pane",
         "Primarily a model-setup tool; most workflows drive it via the GUI or 'itasca.command()'",
-        "Use 'zone generate from-build-blocks' to turn the block topology into a zone grid"
+        "Use 'zone generate from-build-blocks' to turn the block topology into a zone grid",
+        "FLAC3D only: FLAC2D 7.0 and 9.8 reject building-blocks."
       ],
       "commands": [
         {
@@ -323,7 +324,7 @@
           "name": "set-auto-tolerance",
           "file": "flac/command_docs/commands/building-blocks/set-auto-tolerance.json",
           "short_description": "Set the auto-tolerance flag for geometric manipulations",
-          "syntax": "building-blocks set autotolerance <b>",
+          "syntax": "building-blocks set automatic-tolerance <b>",
           "python_available": false
         },
         {
@@ -619,7 +620,8 @@
         "Workflow: sketch a 2D section (sketch point/edge/segment), then extrude it into zones",
         "Sub-namespace is part of the JSON key: 'sketch block create' -> commands/extruder/block-create.json",
         "Primarily a GUI-driven model-setup tool; scriptable via 'itasca.command()'",
-        "Nested keyword options (e.g. <kwd>-group) are captured; some parent keywords may be partial pending nested-dl parsing"
+        "Nested keyword options (e.g. <kwd>-group) are captured; some parent keywords may be partial pending nested-dl parsing",
+        "The 7.0 verb is extrude. FLAC2D 7.0 has no extrude segment commands."
       ],
       "commands": [
         {
@@ -759,7 +761,7 @@
           "name": "edge-zone-length",
           "file": "flac/command_docs/commands/sketch/edge-zone-length.json",
           "short_description": "Set the length of zones on the edge",
-          "syntax": "sketch edge zone-length <f> [range]",
+          "syntax": "sketch edge zone-length <f> [keyword] [range]",
           "python_available": false
         },
         {
@@ -767,6 +769,41 @@
           "file": "flac/command_docs/commands/sketch/edge-zone-length-default.json",
           "short_description": "Set the default length of zones on the edge",
           "syntax": "sketch edge zone-length-default <f>",
+          "python_available": false
+        },
+        {
+          "name": "export",
+          "file": "flac/command_docs/commands/sketch/export.json",
+          "short_description": "Export sketch data to a file",
+          "syntax": "sketch export [keyword] [range]",
+          "python_available": false
+        },
+        {
+          "name": "fracture-create",
+          "file": "flac/command_docs/commands/sketch/fracture-create.json",
+          "short_description": "Generate edges from a DFN",
+          "syntax": "sketch fracture create keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "fracture-domain",
+          "file": "flac/command_docs/commands/sketch/fracture-domain.json",
+          "short_description": "Set the domain boundary for fractures",
+          "syntax": "sketch fracture domain keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "joint-set-create",
+          "file": "flac/command_docs/commands/sketch/joint-set-create.json",
+          "short_description": "Generate a sub-parallel joint set",
+          "syntax": "sketch joint-set create keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "joint-set-domain",
+          "file": "flac/command_docs/commands/sketch/joint-set-domain.json",
+          "short_description": "Set the domain boundary for a joint set",
+          "syntax": "sketch joint-set domain keyword ...",
           "python_available": false
         },
         {
@@ -903,6 +940,13 @@
           "python_available": false
         },
         {
+          "name": "point-merge",
+          "file": "flac/command_docs/commands/sketch/point-merge.json",
+          "short_description": "Merge points within a tolerance",
+          "syntax": "sketch point merge [tolerance <f>]",
+          "python_available": false
+        },
+        {
           "name": "point-transform",
           "file": "flac/command_docs/commands/sketch/point-transform.json",
           "short_description": "Transform points",
@@ -928,6 +972,13 @@
           "file": "flac/command_docs/commands/sketch/section-rectangle.json",
           "short_description": "Adds rectangular section(s)",
           "syntax": "sketch section rectangle keyword",
+          "python_available": false
+        },
+        {
+          "name": "segment-add",
+          "file": "flac/command_docs/commands/sketch/segment-add.json",
+          "short_description": "Add segments",
+          "syntax": "sketch segment add keyword",
           "python_available": false
         },
         {
@@ -1015,6 +1066,13 @@
           "python_available": false
         },
         {
+          "name": "segment-origin",
+          "file": "flac/command_docs/commands/sketch/segment-origin.json",
+          "short_description": "Set the start position of the first segment",
+          "syntax": "extrude segment origin <f>",
+          "python_available": false
+        },
+        {
           "name": "segment-ratio",
           "file": "flac/command_docs/commands/sketch/segment-ratio.json",
           "short_description": "Set the ratio",
@@ -1057,10 +1115,24 @@
           "python_available": false
         },
         {
+          "name": "set-clean",
+          "file": "flac/command_docs/commands/sketch/set-clean.json",
+          "short_description": "Clean up objects in the sketch set",
+          "syntax": "sketch set clean [keyword]",
+          "python_available": false
+        },
+        {
           "name": "set-clear",
           "file": "flac/command_docs/commands/sketch/set-clear.json",
           "short_description": "Clear all set data (points, edges, blocks in the 2D construction data, and segments in the 1D ext...",
           "syntax": "sketch set clear",
+          "python_available": false
+        },
+        {
+          "name": "set-copy",
+          "file": "flac/command_docs/commands/sketch/set-copy.json",
+          "short_description": "Copy sketch set data",
+          "syntax": "sketch set copy [source <s1>] [target <s2>] keyword ... [range]",
           "python_available": false
         },
         {
@@ -1117,6 +1189,27 @@
           "file": "flac/command_docs/commands/sketch/set-update-polygons.json",
           "short_description": "Update the internal list of closed polygons to assure that it reflects current geometry",
           "syntax": "sketch set update-polygons <b> [keyword]",
+          "python_available": false
+        },
+        {
+          "name": "shape-create",
+          "file": "flac/command_docs/commands/sketch/shape-create.json",
+          "short_description": "Create a tunnel or slope cross-section",
+          "syntax": "sketch shape create keyword",
+          "python_available": false
+        },
+        {
+          "name": "tessellate-create",
+          "file": "flac/command_docs/commands/sketch/tessellate-create.json",
+          "short_description": "Tessellate a domain into Voronoi or Trigon blocks",
+          "syntax": "sketch tessellate create keyword ...",
+          "python_available": false
+        },
+        {
+          "name": "tessellate-domain",
+          "file": "flac/command_docs/commands/sketch/tessellate-domain.json",
+          "short_description": "Set the domain boundary for a tessellation",
+          "syntax": "sketch tessellate domain keyword ...",
           "python_available": false
         }
       ]
@@ -1527,6 +1620,14 @@
           "short_description": "Assign the group s to the edges of the geometric set that fall within the range",
           "syntax": "geometry edge group <s> [keyword ...] [range]",
           "python_available": false
+        },
+        {
+          "name": "edge-import",
+          "file": "_common/command_docs/commands/geometry/edge-import.json",
+          "short_description": "Import geometry edges from a file of point locations",
+          "syntax": "geometry edge import <sfile> set <set_geo> [keyword ...]",
+          "python_available": false,
+          "python_alternative": ""
         },
         {
           "name": "export",
@@ -2074,6 +2175,13 @@
           "python_available": false
         },
         {
+          "name": "remeshing",
+          "file": "flac/command_docs/commands/model/remeshing.json",
+          "short_description": "Turn automatic zone remeshing on or off",
+          "syntax": "model remeshing <b>",
+          "python_available": false
+        },
+        {
           "name": "restore",
           "file": "_common/command_docs/commands/model/restore.json",
           "short_description": "Restore program-state information",
@@ -2613,7 +2721,8 @@
         "Element type is part of the command: 'structure beam create', 'structure cable property', etc.",
         "Structural nodes ('structure node') connect elements and attach to the zone grid via links ('structure link')",
         "Constitutive behavior via 'structure <type> cmodel' / property; results via 'structure <type> results'",
-        "2D-specific syntax variants exist for some elements; this index ships the dimension-shared base command"
+        "2D-specific syntax variants exist for some elements; this index ships the dimension-shared base command",
+        "FLAC2D 7.0 has no structure commands."
       ],
       "commands": [
         {
@@ -2642,6 +2751,13 @@
           "file": "flac/command_docs/commands/structure/beam-delete.json",
           "short_description": "Delete all beam elements in the range",
           "syntax": "structure beam delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "beam-export",
+          "file": "flac/command_docs/commands/structure/beam-export.json",
+          "short_description": "Export beam element data to a csv file",
+          "syntax": "structure beam export keyword [range]",
           "python_available": false
         },
         {
@@ -2729,6 +2845,13 @@
           "python_available": false
         },
         {
+          "name": "cable-export",
+          "file": "flac/command_docs/commands/structure/cable-export.json",
+          "short_description": "Export cable element data to a csv file",
+          "syntax": "structure cable export keyword [range]",
+          "python_available": false
+        },
+        {
           "name": "cable-group",
           "file": "flac/command_docs/commands/structure/cable-group.json",
           "short_description": "Assign all cable elements in the range to the group with the name s ",
@@ -2792,6 +2915,13 @@
           "python_available": false
         },
         {
+          "name": "damping",
+          "file": "flac/command_docs/commands/structure/damping.json",
+          "short_description": "Set the structural element damping scheme (deprecated)",
+          "syntax": "structure damping keyword",
+          "python_available": false
+        },
+        {
           "name": "dynamic-damping",
           "file": "flac/command_docs/commands/structure/dynamic-damping.json",
           "short_description": "Set the damping scheme used by the structural elements for dynamic analysis (see Structual Elemen...",
@@ -2831,6 +2961,13 @@
           "file": "flac/command_docs/commands/structure/geogrid-delete.json",
           "short_description": "Delete all geogrid elements in the range",
           "syntax": "structure geogrid delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "geogrid-export",
+          "file": "flac/command_docs/commands/structure/geogrid-export.json",
+          "short_description": "Export geogrid element data to a csv file",
+          "syntax": "structure geogrid export keyword [range]",
           "python_available": false
         },
         {
@@ -2932,6 +3069,13 @@
           "python_available": false
         },
         {
+          "name": "hybrid-export",
+          "file": "flac/command_docs/commands/structure/hybrid-export.json",
+          "short_description": "Export hybrid element data to a csv file",
+          "syntax": "structure hybrid export keyword [range]",
+          "python_available": false
+        },
+        {
           "name": "hybrid-group",
           "file": "flac/command_docs/commands/structure/hybrid-group.json",
           "short_description": "Assign all hybrid bolt elements in the range to the group with the name s ",
@@ -3013,6 +3157,13 @@
           "file": "flac/command_docs/commands/structure/liner-delete.json",
           "short_description": "Delete all liner elements in the range",
           "syntax": "structure liner delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "liner-export",
+          "file": "flac/command_docs/commands/structure/liner-export.json",
+          "short_description": "Export liner element data to a csv file",
+          "syntax": "structure liner export keyword [range]",
           "python_available": false
         },
         {
@@ -3331,6 +3482,20 @@
           "python_available": false
         },
         {
+          "name": "pile-end-bearing",
+          "file": "flac/command_docs/commands/structure/pile-end-bearing.json",
+          "short_description": "Assign end-bearing properties to pile elements",
+          "syntax": "structure pile end-bearing keyword ... [range]",
+          "python_available": false
+        },
+        {
+          "name": "pile-export",
+          "file": "flac/command_docs/commands/structure/pile-export.json",
+          "short_description": "Export pile element data to a csv file",
+          "syntax": "structure pile export keyword [range]",
+          "python_available": false
+        },
+        {
           "name": "pile-group",
           "file": "flac/command_docs/commands/structure/pile-group.json",
           "short_description": "Assign all pile elements in the range to the group with the name s ",
@@ -3447,6 +3612,13 @@
           "file": "flac/command_docs/commands/structure/shell-delete.json",
           "short_description": "Delete all shell elements in the range",
           "syntax": "structure shell delete [range]",
+          "python_available": false
+        },
+        {
+          "name": "shell-export",
+          "file": "flac/command_docs/commands/structure/shell-export.json",
+          "short_description": "Export shell element data to a csv file",
+          "syntax": "structure shell export keyword [range]",
           "python_available": false
         },
         {
@@ -4179,6 +4351,13 @@
           "python_available": false
         },
         {
+          "name": "remesh",
+          "file": "flac/command_docs/commands/zone/remesh.json",
+          "short_description": "Set the remeshing boundary and parameters",
+          "syntax": "zone remesh keyword",
+          "python_available": false
+        },
+        {
           "name": "results",
           "file": "flac/command_docs/commands/zone/results.json",
           "short_description": "Controls if and what values are saved from zones in an exported results file",
@@ -4197,6 +4376,13 @@
           "file": "flac/command_docs/commands/zone/separate.json",
           "short_description": "Separates internal faces, making a new internal surface",
           "syntax": "zone separate keyword",
+          "python_available": false
+        },
+        {
+          "name": "slice",
+          "file": "flac/command_docs/commands/zone/slice.json",
+          "short_description": "Create a surface mesh by slicing through the 3D model",
+          "syntax": "zone slice keyword",
           "python_available": false
         },
         {
@@ -4240,6 +4426,79 @@
           "short_description": "This command initializes pore pressures, changing the effective stresses",
           "syntax": "zone water keyword",
           "python_available": false
+        }
+      ]
+    },
+    "trace": {
+      "full_name": "Trace Commands",
+      "description": "Commands for managing particle traces — recordings of per-object scalar/vector quantities sampled during cycling, used for path visualization and post-hoc analysis.",
+      "command_prefix": "trace",
+      "python_module": null,
+      "related_categories": [
+        "history",
+        "zone"
+      ],
+      "notes": [
+        "Traces are created by 'zone trace' or 'fish trace'; these commands manage lifecycle",
+        "Similar to histories but record per-object trajectories instead of scalar time-series",
+        "trace list / export prints sample data; trace interval controls cadence; trace purge erases samples but keeps definitions"
+      ],
+      "commands": [
+        {
+          "name": "delete",
+          "file": "_common/command_docs/commands/trace/delete.json",
+          "short_description": "Delete all traces",
+          "syntax": "trace delete",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "export",
+          "file": "_common/command_docs/commands/trace/export.json",
+          "short_description": "Export the contents of the list of traces to the screen",
+          "syntax": "trace export <s> ... [file <sfile>]",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "interval",
+          "file": "_common/command_docs/commands/trace/interval.json",
+          "short_description": "Specify the step interval on which trace values will be recorded",
+          "syntax": "trace interval <i>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "list",
+          "file": "_common/command_docs/commands/trace/list.json",
+          "short_description": "List trace information",
+          "syntax": "trace list [keyword]",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "name",
+          "file": "_common/command_docs/commands/trace/name.json",
+          "short_description": "Specify the label for trace s ",
+          "syntax": "trace name <s> label <slabel>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "purge",
+          "file": "_common/command_docs/commands/trace/purge.json",
+          "short_description": "Clear the contents of all traces while retaining the list of objects to trace",
+          "syntax": "trace purge",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "results",
+          "file": "_common/command_docs/commands/trace/results.json",
+          "short_description": "Specify whether trace information is stored in subsequent results files",
+          "syntax": "trace results active <b>",
+          "python_available": false,
+          "python_alternative": ""
         }
       ]
     }

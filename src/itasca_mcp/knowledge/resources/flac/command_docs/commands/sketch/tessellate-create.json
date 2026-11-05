@@ -1,0 +1,78 @@
+{
+  "category": "sketch",
+  "search_keywords": [
+    "create",
+    "sketch",
+    "tessellate"
+  ],
+  "description": "Tessellate a user-specified domain by generating a collection of edges in Voronoi pattern (diagram) or in Trigon pattern. The operation starts with the generation of random seeds, which are then connected forming a Trigon pattern. If the user selects to generate a Voronoi pattern, the connecting lines from the previous step are bisected at the midpoints and perpendicular lines are drawn at these midpoints. This leads to creation of Voronoi vertices where three or more of such lines intersect, resulting in a Voronoi diagram. By the default, the number of Voronoi/Trigon blocks is limited to 10,000 and the maximum number of tries to generate random seeds satisfying provided criteria is limited to 100 (this can be changed using the keywords below).",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "sketch tessellate create",
+      "syntax": "sketch tessellate create keyword ...",
+      "keywords": [
+        {
+          "name": "distance",
+          "syntax": "distance <fmin> [<fmax>]",
+          "description": "Specify a distance range used during random generation of seeds. Only those seeds that fall within this range are accepted. If fmax is not specified, fmax = fmin is used. By the default, fmin = fmax = 1.0."
+        },
+        {
+          "name": "elongation-angle",
+          "syntax": "elongation-angle <f>",
+          "description": "Specify the orientation (angle from the vertical v-axis) of the elongation direction of Voronoi/Trigon blocks."
+        },
+        {
+          "name": "elongation-ratio",
+          "syntax": "elongation-ratio <f>",
+          "description": "Specify the elongation ratio of Voronoi/Trigon blocks."
+        },
+        {
+          "name": "group",
+          "syntax": "group <s1> [slot <s2>]",
+          "description": "Assign group name s1 in slot s2 (if supplied) to the edges representing Voronoi/Trigon pattern. If slot keyword is omitted, slot Default is used."
+        },
+        {
+          "name": "hexagonal",
+          "syntax": "hexagonal",
+          "description": "The block seeds are arranged in a semi-regular hexagonal packing. The seeds spacing is chosen from a uniform distribution with minimum distance fmin and maximum distance fmax ."
+        },
+        {
+          "name": "keep-domain",
+          "syntax": "keep-domain <b>",
+          "description": "If b = True , the domain is preserved. By the default, the domain is deleted each time after creating Voronoi/Trigon blocks."
+        },
+        {
+          "name": "number",
+          "syntax": "number <i>",
+          "description": "Specify the maximum number of blocks to be generated. By default, i = 10,000. The keyword is only active for random Voronoi/Trigon blocks generation (not the quad or hexagonal )."
+        },
+        {
+          "name": "quad",
+          "syntax": "quad",
+          "description": "The block seeds are arranged in a semi-regular quadrilateral packing. The seeds spacing is chosen from a uniform distribution with minimum distance fmin and maximum distance fmax ."
+        },
+        {
+          "name": "tries",
+          "syntax": "tries <i>",
+          "description": "Number of tries to fill specified region with Voronoi/Trigon blocks satisfying provided criteria. By default, i = 100. The keyword is only active for random Voronoi/Trigon pattern generation (not the quad or hexagonal )."
+        },
+        {
+          "name": "triangulation",
+          "syntax": "triangulation",
+          "description": "Fill the domain with triangular blocks using the Delaunay triangulation (Trigon pattern)."
+        }
+      ],
+      "notes": [
+        "FLAC2D only: the FLAC3D sketch rejects it.",
+        "Set the domain first with sketch tessellate domain; keep-domain on keeps it for the next create.",
+        "The manual also lists minimum-length; the 9.8 build reports it as an unused parameter."
+      ]
+    }
+  }
+}

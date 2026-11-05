@@ -1,0 +1,42 @@
+{
+  "category": "geometry",
+  "search_keywords": [
+    "edge-import"
+  ],
+  "description": "Import geometry edges data to a set with name set_geo by reading point locations from the file with name sfile . Point locations represent ends of the edges, and it is assumed that all imported edges are ordered and connected; thus, a polyline will be created from the imported locations.",
+  "notes": [],
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": ""
+  },
+  "versions": {
+    "6.0": {
+      "available": false
+    },
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "geometry edge import",
+      "syntax": "geometry edge import <sfile> set <set_geo> [keyword ...]",
+      "keywords": [
+        {
+          "name": "group",
+          "syntax": "group <s> [slot <slot>]",
+          "description": "Add the group name s using slot slot to all imported edges. Use of the group logic is described in Groups . If not specified the slot name Default is used. More than one group keyword may be given."
+        },
+        {
+          "name": "extra",
+          "syntax": "extra <i> <a>",
+          "description": "Add the value a to imported edges in extra variable index i . More than one extra keyword may be given."
+        }
+      ],
+      "notes": [
+        "New in 9.8: 9.00 and 7.0 reject it.",
+        "The engine skips the first line of the file as a header: four lines of points give three nodes and two edges.",
+        "One point per line, separated by spaces or commas; two values in a 2D build, three in 3D.",
+        "set is required."
+      ]
+    }
+  }
+}

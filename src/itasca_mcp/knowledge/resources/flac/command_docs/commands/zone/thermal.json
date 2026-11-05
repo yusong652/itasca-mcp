@@ -13,7 +13,9 @@
     "property",
     "time-total",
     "zone-based-temperature",
-    "analytical"
+    "analytical",
+    "steady-state",
+    "timestep"
   ],
   "description": "Set parameters for a thermal analysis (only available if model configure thermal has been specified). Settings include cmodel, advection-conduction, anisotropic, hydration, isotropic, null, implicit, property, time-total, zone-based-temperature, analytical. The following keywords apply:",
   "python_sdk_alternative": {
@@ -135,6 +137,91 @@
           "name": "zone-based-temperature",
           "syntax": "zone-based-temperature <b>",
           "description": "Turns zone-based temperatures on and off. By default temperatures are calculated and stored at gridpoints, and the zone temperature is the average gridpoint value. When this is turned on, the zone temperature is stored in the zone and the gridpoint temperatures are ignored. Temperatures must be set manually using the zone.temp FISH intrinsic."
+        },
+        {
+          "name": "analytical",
+          "syntax": "analytical keyword",
+          "description": "Configure and run the closed-form analytical thermal solver (used for verification and for problems with simple geometry/source layouts). Sub-keywords: isothermal-planes, list, property, solve, source, symmetry-planes, tolerance."
+        },
+        {
+          "name": "analytical-isothermal-planes",
+          "syntax": "isothermal-planes <x> <y> <z>",
+          "description": "Declare which of the global x/y/z planes are isothermal boundaries (each axis takes a boolean)."
+        },
+        {
+          "name": "analytical-symmetry-planes",
+          "syntax": "symmetry-planes <x> <y> <z>",
+          "description": "Declare which of the global x/y/z planes are symmetry planes (each axis takes a boolean)."
+        },
+        {
+          "name": "analytical-tolerance",
+          "syntax": "tolerance <f>",
+          "description": "Set the relative tolerance used by the analytical solver to decide when contributions from individual sources can be truncated."
+        },
+        {
+          "name": "analytical-list",
+          "syntax": "list",
+          "description": "List the current analytical-solver settings (isothermal-planes, symmetry-planes, tolerance, registered sources)."
+        },
+        {
+          "name": "analytical-property",
+          "syntax": "property <prop> <f>",
+          "description": "Set an analytical-solver material property. Recognised properties: conductivity, diffusivity."
+        },
+        {
+          "name": "analytical-solve",
+          "syntax": "solve",
+          "description": "Run the analytical solver, summing contributions from all registered sources to compute temperatures at every gridpoint."
+        },
+        {
+          "name": "analytical-source",
+          "syntax": "source keyword",
+          "description": "Define, list, or delete analytical heat sources. Sub-keywords: components, delete, grid, group, line, list, point, range, strength, time-start."
+        },
+        {
+          "name": "analytical-source-point",
+          "syntax": "point <v> ...",
+          "description": "Add a point heat source at each supplied position v."
+        },
+        {
+          "name": "analytical-source-line",
+          "syntax": "line begin <v> end <v> segment <i>",
+          "description": "Add a line heat source discretised into i+1 collocation points between begin and end."
+        },
+        {
+          "name": "analytical-source-grid",
+          "syntax": "grid begin <v> end-1 <v> end-2 <v> end-3 <v> segment <i1> <i2> <i3>",
+          "description": "Add a volumetric (3D grid) heat source spanning the box defined by the begin corner and three edge vectors, discretised into (i1+1)*(i2+1)*(i3+1) collocation points."
+        },
+        {
+          "name": "analytical-source-strength",
+          "syntax": "strength <f>",
+          "description": "Heat strength of the source being added (W per source point)."
+        },
+        {
+          "name": "analytical-source-time-start",
+          "syntax": "time-start <f>",
+          "description": "Time at which the source being added becomes active (default 0)."
+        },
+        {
+          "name": "analytical-source-components",
+          "syntax": "components",
+          "description": "List the individual component (point) entries that make up the most-recently-added source."
+        },
+        {
+          "name": "analytical-source-group",
+          "syntax": "group <s>",
+          "description": "Assign group s to the source(s) being added."
+        },
+        {
+          "name": "analytical-source-list",
+          "syntax": "list",
+          "description": "List all currently-registered analytical sources."
+        },
+        {
+          "name": "analytical-source-delete",
+          "syntax": "delete [range]",
+          "description": "Delete analytical sources matching the range (or all sources if no range supplied)."
         }
       ],
       "legacy_documentation": {
@@ -145,7 +232,10 @@
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
-      }
+      },
+      "notes": [
+        "FLAC2D 7.0 has no analytical keyword."
+      ]
     },
     "9.0": {
       "command": "zone thermal",
@@ -350,7 +440,20 @@
           "name": "analytical-source-delete",
           "syntax": "delete [range]",
           "description": "Delete analytical sources matching the range (or all sources if no range supplied)."
+        },
+        {
+          "name": "steady-state",
+          "syntax": "steady-state [update-stresses]",
+          "description": "Calculates a steady state solution for the current thermal boundary conditions of the model. This is done via a solution to the resulting set of linear equations. All current boundary conditions and sources are included. If time-varying boundary conditions are applied their values are calculated at the current thermal time only. Because the resulting linear system is not diagonally dominant a direct solver is used rather than an iterative one, which means the solution times are longer. By default the temperate values are over-written without any change in the rest of the model. If the update-stresses keyword is given then the mechanical response due to the pressure change (through thermal expansion) will activate at the next mechanical timestep."
+        },
+        {
+          "name": "timestep",
+          "syntax": "timestep {automatic | fix <f> | maximum <f>}",
+          "description": "Options to control the timestep used in zone thermal calculations. Options: automatic: Removes any fixed timestep that may have been specified earlier.; fix <f>: Fixes the timestep at the value f. Note that this will ignore any maximum also specified.; maximum <f>: Set a maximum timestep allowed for thermal calculations. Note that this will apply both to the result of the explicit stable timestep and to the implicit servo if active."
         }
+      ],
+      "notes": [
+        "The timestep keyword is fix in the 9.8 engine; the manual's fixed is rejected, and maximum needs a value."
       ]
     }
   }

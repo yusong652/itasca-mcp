@@ -367,6 +367,21 @@
           "name": "westergaard",
           "syntax": "westergaard",
           "description": "Westergaard hydrodynamic pressure condition (moved to the dedicated zone face westergaard command in 9.x). Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
+        },
+        {
+          "name": "reaction-tangential",
+          "syntax": "reaction-tangential [faceapplyblock] 2D ONLY",
+          "description": "Reaction force, tangential component. (2D only.)"
+        },
+        {
+          "name": "stress-shear",
+          "syntax": "stress-shear <f> [faceapplyblock] 2D ONLY",
+          "description": "Apply shear traction. (2D only.)"
+        },
+        {
+          "name": "velocity-tangential",
+          "syntax": "velocity-tangential <f> [faceapplyblock] 2D ONLY",
+          "description": "Velocity in the tangential direction. (2D only.)"
         }
       ],
       "legacy_documentation": {
@@ -692,6 +707,16 @@
           "name": "update-direction",
           "syntax": "update-direction <b>",
           "description": "If on, the direction of the applied vector quantity is updated each step to follow the current face normal (for large-strain analyses). Verified FLAC3D 9.7: accepted after gridpoint-based vector conditions (velocity, velocity-normal, acceleration, ...); rejected after face-based stress conditions (stress-normal, stress-xx, ...)."
+        },
+        {
+          "name": "cutoff",
+          "syntax": "cutoff <f>",
+          "description": "Follows head or pore-pressure. Pore-pressure values are not allowed to fall below this value. If no value is given 0.0 is assumed. The default is no limit."
+        },
+        {
+          "name": "datum",
+          "syntax": "datum <v>",
+          "description": "Follows head. The datum used as the origin of the head height; the applied pore pressure is density * gravity * (head - height above the datum). The default value is the origin."
         }
       ],
       "figure_reference": {

@@ -19,7 +19,18 @@
     "group",
     "tail",
     "tortuosity",
-    "pressure-cutoff"
+    "pressure-cutoff",
+    "conserve-generated",
+    "density",
+    "modulus-automatic",
+    "modulus-scale",
+    "permeability-saturation",
+    "steady-state",
+    "timestep",
+    "unsaturated",
+    "brooks-corey",
+    "van-genuchten",
+    "gardner"
   ],
   "description": "Set parameters for a groundwater fluid flow analysis. Settings include biot, cmodel, anisotropic, isotropic, null, fastflow, fastflow-relaxation, implicit, property, saturation-tolerance, time-total, track, zone-based-pp, group, tail, tortuosity, pressure-cutoff.",
   "python_sdk_alternative": {
@@ -263,37 +274,37 @@
           "description": "Principal permeability plane rotation angle (in degrees)."
         },
         {
-          "name": "property-distribution",
-          "syntax": "property-distribution <s> akeyword... [range]",
+          "name": "property-distributed",
+          "syntax": "property-distributed <s> akeyword... [range]",
           "description": "Assigns a single property name to the fluid flow constitutive models of all zones in the range. The property value may be varied in space by using the following optional keyword values. Options: add: Add a to the property value. This keyword only applies to float type property values.; deviation-gaussian <f>: A gaussian distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; deviation-uniform <f>: A uniform distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f . This keyword only applies to float type property values.; gradient <v>[origin <v>]: Apply a gradient to the property value. This keyword only applies to float type property values.; multiply: Multiply the property value by a .; vary <v>: Apply a linear variation to the property value. This keyword only applies to float type property values."
         },
         {
-          "name": "property-distribution-add",
+          "name": "property-distributed-add",
           "syntax": "add",
           "description": "Add a to the property value. This keyword only applies to float type property values."
         },
         {
-          "name": "property-distribution-deviation-gaussian",
+          "name": "property-distributed-deviation-gaussian",
           "syntax": "deviation-gaussian <f>",
           "description": "A gaussian distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f. This keyword only applies to float type property values."
         },
         {
-          "name": "property-distribution-deviation-uniform",
+          "name": "property-distributed-deviation-uniform",
           "syntax": "deviation-uniform <f>",
           "description": "A uniform distribution is used to assign the value randomly, with a mean value of a and a standard deviation of f. This keyword only applies to float type property values."
         },
         {
-          "name": "property-distribution-gradient",
+          "name": "property-distributed-gradient",
           "syntax": "gradient <v> [origin <v>]",
           "description": "Apply a gradient to the property value. This keyword only applies to float type property values."
         },
         {
-          "name": "property-distribution-multiply",
+          "name": "property-distributed-multiply",
           "syntax": "multiply",
           "description": "Multiply the property value by a."
         },
         {
-          "name": "property-distribution-vary",
+          "name": "property-distributed-vary",
           "syntax": "vary <v>",
           "description": "Apply a linear variation to the property value. This keyword only applies to float type property values."
         },
@@ -421,6 +432,11 @@
           "name": "tortuosity",
           "syntax": "tortuosity <f>",
           "description": "The tortuosity is specified as f, which is defined as the ratio of the straight line path to the actual fluid path through a zone. This factor will be used to multiply track increments calculated from the flow velocity; it defaults to 1 if not given."
+        },
+        {
+          "name": "pressure-cutoff",
+          "syntax": "pressure-cutoff <b>",
+          "description": "Turn the pore-pressure cutoff (Pcut) mode on or off. When on, negative pore pressures are clamped at zero (a useful approximation in unsaturated regions)."
         }
       ],
       "legacy_documentation": {
@@ -431,7 +447,11 @@
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
-      }
+      },
+      "notes": [
+        "The 7.0 engine takes property-distributed; the manual's property-distribution is rejected.",
+        "FLAC2D 7.0 has no fluid configuration: model configure rejects fluid."
+      ]
     },
     "9.0": {
       "command": "zone fluid",
@@ -651,7 +671,51 @@
           "name": "track-trace",
           "syntax": "trace name <s> <i>",
           "description": "Add a named trace of an individual particle (by id i) so its path can be queried later via the FISH trace API."
+        },
+        {
+          "name": "conserve-generated",
+          "syntax": "conserve-generated <b>",
+          "description": "When fluid-mechanical two-way coupling is active (See the pore-pressure-generation property) pore-pressure is generated by mechanical volumetric strain. This pore-pressure is distributed equally to all grid points connected to the zone. If a given grid point is fixed in pore pressure, some of this pore pressure increase is lost. When conserve-generated is on this pore pressure is instead distributed to the remaining non-fixed grid points. The default value is off ."
+        },
+        {
+          "name": "density",
+          "syntax": "density <f>",
+          "description": "Sets the global fluid density. This is a synonymn for the zone fluid-density command."
+        },
+        {
+          "name": "modulus-automatic",
+          "syntax": "modulus-automatic [<fratio>] [range]",
+          "description": "Sets the the biot modulus of zones in the range to fratio times the current mechanical confined stiffness, using the relation \\(R_k = \\alpha^2 M / (K + \\frac{4}{3} G)\\). The goal is the set the fluid modulus high enough to get a reasonable transient response while not so high that the limiting timestep is too small. See the discussion in the Stiffness Ratio section of Solving Flow-Only and Coupled-Flow Problems . If there is a currently assigned modulus ( fluid-modulus or biot-modulus ) and it is less than this value it will not be changed. If fratio is not specified the default value is 20 . Note the fluid moduli will not update if the mechanical confined modulus changes later."
+        },
+        {
+          "name": "modulus-scale",
+          "syntax": "modulus-scale [{limit-modulus <fmin> <fmax> | limit-modulus-biot <fmin> <fmax> | limit-stiffness-ratio <fmax> | restore} ...] [range]",
+          "description": "This command scales the fluid modulus (or Biot modulus) of the zones in the range - typically in preparation for a consolidation analysis executed with the model solve-fluid-decoupled command. The scaling is designed for a fluid-only calculation, modifying the modulus to account for material compliance changes to pore-pressure when mechanical calculations are not active. See the discussion in the Stiffness Ratio section of Solving Flow-Only and Coupled-Flow Problems . The fluid modulus is scaled by the material confined modulus using the relation \\(K_w' = n / (n / K_w + 1 / (K + \\frac{4}{3} G))\\), where \\(n\\) is the porosity, \\(K\\) is the material bulk modulus, and \\(G\\) is the material shear modulus. Equivalently, or if the Biot coefficient \\(\\alpha\\) is not 1.0 , the Biot modulus becomes \\(M' = \\frac{1}{\\frac{1}{M} + {\\frac{\\alpha^2}{K + {4 \\over 3} G}}}\\). The following keywords are available: Options: limit-modulus <fmin><fmax>: Specifies minimum and maximum fluid modulus values that can result from this scaling. Effective fluid moduli will be capped at these limits. Note that if the Biot coefficient is non-zero these limits will be ignored.; limit-modulus-biot <fmin><fmax>: Specifies minimum and maximum Biot modulus values that can result from this scaling. Effective Biot moduli will be capped at these limits.; limit-stiffness-ratio <fmax>: Specifies a maximum limit to the stiffness ratio of the zone \\(R = \\frac{\\alpha^2 M}{K + {4 \\over 3} G}\\) .; restore: Once the fluid modulus (or Biot modulus) has been scaled using this command, the original values can be restored using this keyword."
+        },
+        {
+          "name": "permeability-saturation",
+          "syntax": "permeability-saturation {constant | s-shape | table <sname>} [range]",
+          "description": "Specify how the effective permeability of the zone varies as a function of average saturation of the zone grid-points. This can vary in each zone of the model. See Permeability Ratio vs. Saturation Relationships . The available keywords are: Options: constant: The permeability is not changed by saturation.; s-shape: The permeability is multiplied by the function \\(s^2(3-2s)\\); table <sname>: The permeability is multiplied by the the user defined table sname , where the \\(x\\) value of the table is the average zone saturation and the \\(y\\) value is the value the permeability is multiplied by."
+        },
+        {
+          "name": "steady-state",
+          "syntax": "steady-state [{effective [<b>] | linear-first | maximum-iterations <i> | minimum-relax <f> | cutoff [<f>] | tolerance <f> | relax <f>} ...]",
+          "description": "Calculates a steady state solution for the current fluid boundary conditions of the model. This is done via a solution to the resulting set of linear equations. If an unsaturated flow model is present then the nonlinear effects are handled via Picard iteration. Note that since there is no transient response it is not necessary to specify a fluid modulus (or Biot modulus) in the model. All current boundary conditions and sources are included. If time-varying boundary conditions are applied their values are calculated at the current fluid time only. Because the resulting linear system is not diagonally dominant a direct solver is used rather than an iterative one, which means the solution times are longer for each matrix solve necessary. The following keywords are available: Options: effective [<b>]: By default the solution will update the pore-pressures but not the total stresses in the zones, resulting in a change of effective stress. If the effective keyword is set to true used the effective stress is instead held constant and the total stress will be adjusted in each zone. A value of true is assumed if unspecified after the keyword.; linear-first: This option is designed to accelerate convergence to steady-state when using the cutoff unsaturated flow model. All gridpoints with the cutoff option are temporarily changed to unsaturated flow off. All gridpoints with pore pressures fixed at the cutoff (generally zero) are temporarily changed to a maximum pore-pressure instead. Then a linear steady-state solution is done – iterating to compatibility with any maximums. Once that solution is found, the previous states are restored. Any gridpoints with negative pore-pressures are set to zero saturation. Then the steady-state continues with the cutoff model active.; maximum-iterations <i>: Specifies the maximum number of Picard iterations allowed before the system assumes it will never converge and causes an error. The default value is 300 .; minimum-relax <f>: Specifies the minimum iterative relaxation factor allowed. The default is 0.5 . If unsaturated flow models other than cutoff are present and contain sharp gradients it may be necessary to reduce this value.; cutoff [<f>]: The assigned pore-pressures are not allowed to fall below this value. So regardless of the result of the linear system any pore-pressures below this value are set to the cutoff instead. If not value is given it is assumed to be 0.0 . The default condition is that no negative cutoff is applied.; tolerance <f>: The tolerance used to determine convergence during Picard iteration. The default value is 1e-4 .; relax <f>: If the results of a Picard iteration has a convergence value greater than the previous, than a relaxation factor is employed. Each time this happens the relaxation factor (which starts at 1.0 ) is reduced by multiplying by this value until either the maximum number of iterations is reached or the relaxation factor reaches a the minimum. See the minimum-relax keyword. The default value is 0.8 ."
+        },
+        {
+          "name": "timestep",
+          "syntax": "timestep {automatic | fix <f> | maximum <f>}",
+          "description": "Options to control the timestep used in zone fluid calculations. Options: automatic: Removes any fixed timestep that may have been specified earlier.; fix <f>: Fixes the timestep at the value f. Note that this will ignore any maximum also specified.; maximum <f>: Set a maximum timestep allowed for fluid calculations. Note that this will apply both to the result of the explicit stable timestep and to the implicit servo if active."
+        },
+        {
+          "name": "unsaturated",
+          "syntax": "unsaturated {brooks-corey <fae> <fpsi> [<fcutoff>] | cutoff [<fcutoff> [<ftension>]] | gardner <fa> <fn> <fref> [<fcutoff>] | off | table <sname> | van-genuchten <fn> <fm> <fref>} [range]",
+          "description": "Specify the unsaturated flow model used in the grid-point. Note that this can vary in each grid-point of the model. When a new unsaturated flow model is assigned, the saturation will be adjusted (if possible) to be consistent with the existing pore-pressure. If the cutoff unsaturated flow model is assigned and the pore pressure is below the newly assigned tension, then the saturation will become reduced to zero and the pore-pressure will be set to the cutoff value. See Saturation vs. Matrix Suction Relationships . The available keywords are: Options: brooks-corey <fae><fpsi>[<fcutoff>]: The Brooks-Corey model for saturation-suction. The saturation is not reduced until the pore-pressure falls below - fae . Once it does the saturation follows the relation \\(s = (-ae / p)^\\psi\\). The optional fcutoff value specifies a limit below which the saturation cannot fall, which prevents infinitely negative pore-pressure results. The default value is 1e-4 .; cutoff [<fcutoff>[<ftension>]]: Pore-pressure cannot fall below the ftension value. If it reaches that value the pore-pressure is immediately set to the cutoff value and from then on any further fluid volume removed causes the saturation in the grid-point to fall while the pore-pressure stays fixed at the cutoff. If the grid-point again becomes fully saturated the tension is reactivated. The default value for the fcutoff is 0 . The default value for ftension is the same as cutoff .; gardner <fa><fn><fref>[<fcutoff>]: The Gardner model for saturation-suction. This model follows the relation \\(s = 1 / (1 + a (p / ref)^n)\\). The optional fcutoff value specifies a limit below which the saturation cannot fall, which prevents infinitely negative pore-pressure results. The default value is 1e-4 .; off: Unsaturated flow is not supported. Saturation in this grid-point is fixed at 1.0 and the pore-pressure can become infinitely negative.; table <sname>: Pore-pressure and saturation are related via the contents of table sname . This table contains pore-pressure (positive for this purpose) on the \\(x\\) -axis and saturation on the \\(y\\) -axis. The pore-pressure values are considered to vary exponentially for the purposes of interpolation. Note that pore-pressure values greater than zero as assumed to have saturation of 1.0 .; van-genuchten <fn><fm><fref>: The Van-Genuchten model for saturation-suction. This model follows the relation: \\(s = 1 / (1 + (-p / ref)^n)^m\\)."
         }
+      ],
+      "notes": [
+        "The timestep keyword is fix in the 9.8 engine; the manual's fixed is rejected, and maximum needs a value.",
+        "The engine also lists saturation and saturation-gravity here; the manual does not describe them."
       ]
     }
   },

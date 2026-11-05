@@ -26,7 +26,9 @@
     "side",
     "surface",
     "ipstress",
-    "integration-point"
+    "integration-point",
+    "coupling-yield-shear",
+    "coupling-yield-normal"
   ],
   "description": "Sample liner responses. Quantities that can be recorded include coupling-displacement, coupling-displacement-shear, coupling-stress, coupling-stress-shear, coupling-yield, force, moment, resultant-mx, resultant-my, resultant-mxy, resultant-nx, resultant-ny, resultant-nxy, resultant-qx, resultant-qy, stress, component-id, depth-factor, node, side, surface, ipstress, integration-point.",
   "python_sdk_alternative": {
@@ -442,6 +444,16 @@
           "name": "surface-x",
           "syntax": "surface-x <v>",
           "description": "the surface-x vector whose projection onto the element plane defines the x-direction of the surface coordinate system (see the structure liner recover surface command). If this keyword is specified, then the surface coordinate system of the three nodes used by the element will be modified."
+        },
+        {
+          "name": "coupling-yield-shear",
+          "syntax": "coupling-yield-shear 2D ONLY [linerhistoryblock]",
+          "description": "yield state in the shear coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords."
+        },
+        {
+          "name": "coupling-yield-normal",
+          "syntax": "coupling-yield-normal 2D ONLY [linerhistoryblock]",
+          "description": "yield state in the normal coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords."
         }
       ],
       "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."

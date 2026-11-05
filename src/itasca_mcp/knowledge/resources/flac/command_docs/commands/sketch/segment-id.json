@@ -11,14 +11,40 @@
   },
   "versions": {
     "7.0": {
-      "available": false,
-      "reason": "Not listed in the official FLAC3D 7.0 contents command index.",
-      "source_urls": [
-        "https://docs.itascacg.com/flac3d700/contents.html"
-      ],
-      "target_version": "7.0",
-      "note": "The 2D sketch 'segment'/'segment-node' objects are new in the 9.x sketch workflow; in 7.0 the equivalent 2D geometry is built with 'extrude point' and 'extrude edge' commands.",
-      "command": "extrude segment id"
+      "command": "extrude segment index",
+      "syntax": "extrude segment index <i> keyword ...",
+      "keywords": [
+        {
+          "name": "group",
+          "syntax": "group <s1> [slot <s2>]",
+          "description": "Assign the segment the group name s1 (in slot s2 if provided, in slot Default if not)."
+        },
+        {
+          "name": "length",
+          "syntax": "length <f>",
+          "description": "Set the segment length f ."
+        },
+        {
+          "name": "node-group",
+          "syntax": "node-group <s1> [slot <s2>]",
+          "description": "Assign nodes of the segment the group name s1 (in slot s2 if provided, in slot Default if not)."
+        },
+        {
+          "name": "position",
+          "syntax": "position <f>",
+          "description": "Set segment position. Note that segments may be split, deleted, or extended."
+        },
+        {
+          "name": "ratio",
+          "syntax": "ratio <f>",
+          "description": "Set the ratio f of zone size distribution along the segment. This setting defines zone sizes relatively along the segment, where the size of each zone will be f of the previous zone length. The default value is 1.0 (uniform zones — same length)."
+        },
+        {
+          "name": "size",
+          "syntax": "size <i>",
+          "description": "Set the number of zones i (integer) along the segment."
+        }
+      ]
     },
     "9.0": {
       "command": "sketch segment id",
@@ -103,6 +129,11 @@
           "name": "zone-length",
           "syntax": "zone-length <f>",
           "description": "Set the target zone length on the segment (f between 1e-05 and 100000). The number of zones is derived from segment length / zone-length, clamped to the 1-10000 range."
+        },
+        {
+          "name": "split",
+          "syntax": "split [{by-point <v> | by-control-point <i> | by-line <v1> <v2> | by-ray <vo> <vd>}]",
+          "description": "Split the segment at a specified location. Options: by-point <v>: Split the segment at the point specified by v .; by-control-point <i>: Split the segment at the control point with index i .; by-line <v1><v2>: Split the segment at its intersection with the line defined by points v1 and v2 .; by-ray <vo><vd>: Split the segment at its intersection with the ray defined by origin point vo and direction vd ."
         }
       ]
     }

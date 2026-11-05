@@ -7,7 +7,12 @@
     "free-field",
     "multi-step",
     "time-total",
-    "safety-factor"
+    "safety-factor",
+    "eigen",
+    "eigenmodes",
+    "natural",
+    "frequencies",
+    "modes"
   ],
   "description": "Set parameters for a dynamic model (only available with the dynamic model option – see Dynamic Analysis . Settings include damping, free-field, multi-step, time-total, safety-factor. These parameters apply to zones only, other model elements may have different values.",
   "python_sdk_alternative": {
@@ -242,6 +247,11 @@
           "name": "time-total",
           "syntax": "time-total <f>",
           "description": "Set the total accumulated dynamic time."
+        },
+        {
+          "name": "eigen",
+          "syntax": "eigen {delete | list | modes <i> | setmode}",
+          "description": "Calculate natural frequencies and modes of vibration for an elastic system (see Calculation of Natural Frequencies and Modes of Vibration ). The following keywords are available. Options: delete: Delete the previously calculated eigenvalue data.; list: List eigenmode frequencies (this assumes they have already been calculated).; modes <i>: Calculate the natural frequencies for the first \\(i\\) modes of vibration (1 to 32). The first six modes will be near zero and correspond to rigid body modes if no boundary conditions are applied. The first 10 frequency modes for a three-dimensional beam with a symmetric cross-section are listed below. Mode Description 1 first bending mode 2 mode shape orthogonal to mode 1 3 second bending mode 4 mode shape orthogonal to mode 2 5 first torsional mode 6 third bending mode 7 mode shape orthogonal to mode 6 8 axial deformation mode 9 fourth bending mode 10 mode shape orthogonal to mode 9; setmode: Copy the calculated modes to gridpoint extra variables for plotting. WARNING gridpoint extra variables from 1 to i will be overwritten with vectors (where i is the number of modes in the analysis)."
         }
       ]
     }

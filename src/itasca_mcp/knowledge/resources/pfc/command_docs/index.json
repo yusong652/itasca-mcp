@@ -1469,6 +1469,14 @@
           "python_alternative": ""
         },
         {
+          "name": "edge-import",
+          "file": "_common/command_docs/commands/geometry/edge-import.json",
+          "short_description": "Import geometry edges from a file of point locations",
+          "syntax": "geometry edge import <sfile> set <set_geo> [keyword ...]",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
           "name": "export",
           "file": "_common/command_docs/commands/geometry/export.json",
           "short_description": "Export geometry data",
@@ -3208,14 +3216,15 @@
         "wall"
       ],
       "notes": [
-        "Traces are created by object-specific commands ('ball trace', 'wall trace'); these commands manage lifecycle",
+        "Traces are created by object-specific commands ('ball trace', 'clump trace', 'rblock trace') or 'fish trace'; these commands manage lifecycle",
         "Similar to histories but record per-object trajectories instead of scalar time-series",
-        "trace list / export prints sample data; trace interval controls cadence; trace purge erases samples but keeps definitions"
+        "trace list / export prints sample data; trace interval controls cadence; trace purge erases samples but keeps definitions",
+        "On the PFC 9.8 builds ball, clump and rblock traces record nothing: see the notes on those commands."
       ],
       "commands": [
         {
           "name": "delete",
-          "file": "pfc/command_docs/commands/trace/delete.json",
+          "file": "_common/command_docs/commands/trace/delete.json",
           "short_description": "Delete all traces",
           "syntax": "trace delete",
           "python_available": false,
@@ -3223,7 +3232,7 @@
         },
         {
           "name": "export",
-          "file": "pfc/command_docs/commands/trace/export.json",
+          "file": "_common/command_docs/commands/trace/export.json",
           "short_description": "Export the contents of the list of traces to the screen",
           "syntax": "trace export <s> ... [file <sfile>]",
           "python_available": false,
@@ -3231,7 +3240,7 @@
         },
         {
           "name": "interval",
-          "file": "pfc/command_docs/commands/trace/interval.json",
+          "file": "_common/command_docs/commands/trace/interval.json",
           "short_description": "Specify the step interval on which trace values will be recorded",
           "syntax": "trace interval <i>",
           "python_available": false,
@@ -3239,7 +3248,7 @@
         },
         {
           "name": "list",
-          "file": "pfc/command_docs/commands/trace/list.json",
+          "file": "_common/command_docs/commands/trace/list.json",
           "short_description": "List trace information",
           "syntax": "trace list [keyword]",
           "python_available": false,
@@ -3247,7 +3256,7 @@
         },
         {
           "name": "name",
-          "file": "pfc/command_docs/commands/trace/name.json",
+          "file": "_common/command_docs/commands/trace/name.json",
           "short_description": "Specify the label for trace s ",
           "syntax": "trace name <s> label <slabel>",
           "python_available": false,
@@ -3255,7 +3264,7 @@
         },
         {
           "name": "purge",
-          "file": "pfc/command_docs/commands/trace/purge.json",
+          "file": "_common/command_docs/commands/trace/purge.json",
           "short_description": "Clear the contents of all traces while retaining the list of objects to trace",
           "syntax": "trace purge",
           "python_available": false,
@@ -3263,7 +3272,7 @@
         },
         {
           "name": "results",
-          "file": "pfc/command_docs/commands/trace/results.json",
+          "file": "_common/command_docs/commands/trace/results.json",
           "short_description": "Specify whether trace information is stored in subsequent results files",
           "syntax": "trace results active <b>",
           "python_available": false,

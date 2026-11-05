@@ -1,0 +1,77 @@
+{
+  "category": "structure",
+  "search_keywords": [
+    "export",
+    "liner",
+    "structure"
+  ],
+  "description": "Exports data from liner elements to csv file. This command controls if and what values are included in the exported file. The values being exported by default are positions, stresses, groups, and displacements.",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "versions": {
+    "7.0": {
+      "available": false
+    },
+    "9.0": {
+      "command": "structure liner export",
+      "syntax": "structure liner export keyword [range]",
+      "keywords": [
+        {
+          "name": "filename",
+          "syntax": "filename <s>",
+          "description": "Specify the output filename s ."
+        },
+        {
+          "name": "position",
+          "syntax": "position <b>",
+          "description": "Includes the position of structure elements"
+        },
+        {
+          "name": "displacement",
+          "syntax": "displacement <b>",
+          "description": "Includes the displacement vector at the centroid of structure elements"
+        },
+        {
+          "name": "velocity",
+          "syntax": "velocity <b>",
+          "description": "Includes the velocity vector at the centroid of structure elements"
+        },
+        {
+          "name": "acceleration",
+          "syntax": "acceleration <b>",
+          "description": "Includes the acceleration vector at the centroid of structure elements"
+        },
+        {
+          "name": "stress",
+          "syntax": "stress <b>",
+          "description": "Includes the stresses at the centroid of structure elements. Note that a stress recovery operation must be performed to get non-zero stresses. Use the commands structure liner recover surface and structure liner recover resultants ."
+        },
+        {
+          "name": "location-index",
+          "syntax": "location-index <i>",
+          "description": "Indicates where the stresses are computed: i = 0 corresponds to the element centroid, while i = 1 to 3 indicates the positions of the nodes with those local indices."
+        },
+        {
+          "name": "depth-factor",
+          "syntax": "depth-factor <f>",
+          "description": "Specifies the depth factor at which stresses for elements with an elastic material model have been recovered."
+        },
+        {
+          "name": "group",
+          "syntax": "group <b>",
+          "description": "Includes the group assignments to elements in the slot defined by keyword Slot"
+        },
+        {
+          "name": "slot",
+          "syntax": "slot <s>",
+          "description": "Specifies the slot s in which the group name is exported. If not specified, slot Default is used."
+        }
+      ],
+      "notes": [
+        "New in 9.8. Without filename the data goes to out.csv in the working directory.",
+        "FLAC2D liners export force and moment columns rather than stress."
+      ]
+    }
+  }
+}
