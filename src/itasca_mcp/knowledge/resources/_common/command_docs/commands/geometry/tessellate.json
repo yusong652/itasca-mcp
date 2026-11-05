@@ -80,9 +80,23 @@
           "name": "voronoi",
           "syntax": "voronoi",
           "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
+        },
+        {
+          "name": "box-check",
+          "syntax": "box-check",
+          "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint"
+          ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "notes": [
+        "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it."
+      ]
     },
     "9.0": {
       "command": "geometry tessellate",
@@ -117,9 +131,24 @@
           "name": "voronoi",
           "syntax": "voronoi",
           "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
+        },
+        {
+          "name": "box-check",
+          "syntax": "box-check",
+          "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes.",
+          "engines": [
+            "pfc",
+            "flac",
+            "3dec",
+            "mpoint"
+          ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "notes": [
+        "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it.",
+        "box-check alone makes no polygons and prints a qhull error."
+      ]
     }
   }
 }
