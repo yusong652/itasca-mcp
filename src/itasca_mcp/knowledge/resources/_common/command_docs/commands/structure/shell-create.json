@@ -1,42 +1,40 @@
 {
   "category": "structure",
   "search_keywords": [
-    "geogrid",
+    "shell",
     "create",
     "structure"
   ],
-  "description": "Create a geogrid consisting of a collection of shell finite elements. The five main keywords articulate five creation techniques: (1) create a single element from three existing nodes ( by-nodeids ); (2) create a collection of elements from a quadrilateral shape ( by-quadrilateral ); (3) create a collection of elements from a triangular shape ( by-triangle ); and (4) create a collection of elements from a set of zone faces ( by-zone-face ). For technique 1, newly created nodes will remain unattached. If you wish to attach them to a target object, position them with the structure node initialize position command. A geogrid can also be created by the structure geogrid import command.",
+  "description": "Create a shell consisting of a collection of shell finite elements. The five main keywords articulate five creation techniques: (1) create a collection of elements from a set of block faces ( by-block-face ); (2) create a single element from three existing nodes ( by-nodeids ); (3) create a collection of elements from a quadrilateral shape ( by-quadrilateral ); (4) create a collection of elements from a triangular shape ( by-triangle ); and (5) create a collection of elements from a set of zone faces ( by-zone-face ). For technique 2, newly created nodes will remain unattached. If you wish to attach them to a target object, position them with the structure node initialize position command. A shell can also be created by the structure shell import command.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "7.0": {
-      "command": "structure geogrid create",
-      "syntax": "structure geogrid create keyword",
-      "description": "Create a geogrid. The four main keywords articulate four different techniques of creation: by creating a collection of elements from a group of zone faces (by-face); by creating a single element from four existing nodes (by-nodeids); from a specified quadrilateral (by-quadrilateral); or from a triangle (by-triangle).",
+      "command": "structure shell create",
+      "syntax": "structure shell create keyword",
+      "description": "Create a shell. The four main keywords articulate four different techniques of creation: by creating a collection of elements from a group of zone faces (by-face); by creating a single element from four existing nodes (by-nodes); from a specified quadrilateral (by-quadrilateral); or from a triangle (by-triangle).",
       "keywords": [
         {
           "name": "by-zone-face",
-          "syntax": "by-zone-face [geogridcreateblock] [range]"
+          "syntax": "by-zone-face [shellcreateblock] [range]",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "by-nodeids",
-          "syntax": "by-nodeids <i1> <i2> <i3> [geogridcreateblock]"
+          "syntax": "by-nodeids <i1> <i2> <i3> [shellcreateblock]"
         },
         {
           "name": "by-quadrilateral",
-          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [geogridcreateblock]",
+          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [shellcreateblock]",
           "description": "Create elements based on four points forming a quadrilateral, in order. The element local system will point in the direction determined by using the right-hand rule."
         },
         {
           "name": "by-triangle",
-          "syntax": "by-triangle <v1> <v2> <v3> [geogridcreateblock]",
+          "syntax": "by-triangle <v1> <v2> <v3> [shellcreateblock]",
           "description": "Create elements based on three points forming a triangle. The element local system will point in the direction determined by using the right-hand rule."
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
         },
         {
           "name": "id",
@@ -52,6 +50,11 @@
           "name": "cross-diagonal",
           "syntax": "cross-diagonal <b>",
           "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral."
+        },
+        {
+          "name": "distinct",
+          "syntax": "distinct",
+          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
         },
         {
           "name": "element-type",
@@ -90,12 +93,23 @@
         {
           "name": "internal",
           "syntax": "internal",
-          "description": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered."
+          "description": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "maximum-length",
           "syntax": "maximum-length <f>",
           "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
+        },
+        {
+          "name": "reverse",
+          "syntax": "reverse",
+          "description": "This keyword only applies if the from-faces option was used. Specifies that the orientation of the element will be reversed from the default with respect to the face, so that the element local Z direction faces the other direction. Also if the cross-diagonal keyword was not used the diagonal will appear in the other direction with respect to quadrilateral faces.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "segments",
@@ -112,35 +126,48 @@
         "availability_verified": true,
         "source": "official FLAC3D 7.0 contents command index",
         "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.create.html"
+          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/shells/commands/cmd_structure.shell.create.html"
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
       }
     },
     "9.0": {
-      "command": "structure geogrid create",
-      "syntax": "structure geogrid create keyword",
+      "command": "structure shell create",
+      "syntax": "structure shell create keyword",
       "keywords": [
         {
+          "name": "by-block-face",
+          "syntax": "by-block-face [shellcreateblock] [range]",
+          "description": "Create new elements that are attached to the set of 3-sided 3DEC zone faces in the range. Elements can only be created on block surfaces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword."
+        },
+        {
           "name": "by-nodeids",
-          "syntax": "by-nodeids <i1> <i2> <i3> [geogridcreateblock]",
+          "syntax": "by-nodeids <i1> <i2> <i3> [shellcreateblock]",
           "description": "Create a single element from three existing nodes."
         },
         {
           "name": "by-quadrilateral",
-          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [geogridcreateblock]",
+          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [shellcreateblock]",
           "description": "Create elements based on four points forming a quadrilateral, in order. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the quadrilateral."
         },
         {
+          "name": "by-circle",
+          "syntax": "by-circle {center <v> | diameter <f> | normal <v> | radius <f> | size <i1> <i2>} ... [shellcreateblock]",
+          "description": "Create new elements within a circle. Options: center <v>: Specify the center of the circle.; normal <v>: Specify the normal of the circle.; radius <f>: Specify the radius of the circle.; diameter <f>: Specify the diameter of the circle."
+        },
+        {
           "name": "by-triangle",
-          "syntax": "by-triangle <v1> <v2> <v3> [geogridcreateblock]",
+          "syntax": "by-triangle <v1> <v2> <v3> [shellcreateblock]",
           "description": "Create elements based on three points forming a triangle. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the triangle."
         },
         {
           "name": "by-zone-face",
-          "syntax": "by-zone-face [geogridcreateblock] [range]",
-          "description": "Create new elements that are attached to the set of three- or four-sided zone-faces in the range. By default, only surface faces will be considered, and the internal keyword can be used to select internal faces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword. Note that after creating the elements with this command, the zones may be deleted and the elements may be positioned by moving their nodes with the structure node initialize position command."
+          "syntax": "by-zone-face [shellcreateblock] [range]",
+          "description": "Create new elements that are attached to the set of three- or four-sided zone-faces in the range. By default, only surface faces will be considered, and the internal keyword can be used to select internal faces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword. Note that after creating the elements with this command, the zones may be deleted and the elements may be positioned by moving their nodes with the structure node initialize position command.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "cross-diagonal",
@@ -155,7 +182,7 @@
         {
           "name": "element-type",
           "syntax": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}",
-          "description": "Specify the type of finite element to be used by each structural element. A description of the available shell finite elements is provided here . If no element type is specified, then the element type will be DKT-CST. [ 2 ] Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The keyword must be one of the following entries: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option.; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
+          "description": "Specify the type of finite element to be used by each structural element. A description of the available shell finite elements is provided here . If no element type is specified, then the element type will be DKT-CST. [ 2 ] Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The keyword must be one of the following entries: Options: <s>: Attempt to match the string s to one of the available keywords below, and treat as that option.; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
         },
         {
           "name": "group",
@@ -170,7 +197,10 @@
         {
           "name": "internal",
           "syntax": "internal",
-          "description": "This keyword only applies if the by-zone-face option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered."
+          "description": "This keyword only applies if the by-zone-face option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "maximum-length",
@@ -191,21 +221,14 @@
           "name": "size",
           "syntax": "size <i1> <i2>",
           "description": "This keyword only applies if the by-quadrilateral option was used. Increases the number of elements created by subdividing the quadrilateral into i1 segments along the first edge and i2 segments along the second. By default, only one quad is created."
-        },
-        {
-          "name": "by-block-face",
-          "syntax": "by-block-face",
-          "description": "create geogrid elements covering each block face in the range (one element per face)"
-        },
-        {
-          "name": "by-circle",
-          "syntax": "by-circle [keyword ...]",
-          "description": "Create elements on a circle. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
         }
+      ],
+      "notes": [
+        "by-circle is a 9.8 keyword: 7.0 rejects it. center, radius and normal on 3DEC and FLAC made 17 nodes and 24 elements."
       ]
     }
   },
   "notes": [
-    "'[geogridcreateblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+    "'[shellcreateblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
   ]
 }

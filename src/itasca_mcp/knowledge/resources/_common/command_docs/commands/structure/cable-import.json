@@ -1,33 +1,36 @@
 {
   "category": "structure",
   "search_keywords": [
-    "hybrid",
+    "cable",
     "import",
     "structure"
   ],
-  "description": "Create hybrid bolt elements from an outside source.",
+  "description": "Create cable elements from an outside source.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "7.0": {
-      "command": "structure hybrid import",
-      "syntax": "structure hybrid import keyword",
-      "description": "Create hybrid bolt elements from an outside source.",
+      "command": "structure cable import",
+      "syntax": "structure cable import keyword",
+      "description": "Create cable elements from an outside source.",
       "keywords": [
         {
           "name": "from-extruder",
-          "syntax": "from-extruder <s> [hybridimportblock] [range]",
-          "description": "Create elements from the extruder set named s. The range applies to the list of edges in the extruder set."
+          "syntax": "from-extruder <s> [cableimportblock] [range]",
+          "description": "Create elements from the extruder set named s. The range applies to the list of edges in the extruder set.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "from-file",
-          "syntax": "from-file <s> [hybridimportblock]",
+          "syntax": "from-file <s> [cableimportblock]",
           "description": "Create elements from the geometry file s."
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry <s> [hybridimportblock] [range]",
+          "syntax": "from-geometry <s> [cableimportblock] [range]",
           "description": "Create elements from the geometry set named s. The range applies to the list of edges in the geometry set."
         },
         {
@@ -38,7 +41,7 @@
         {
           "name": "format",
           "syntax": "format keyword",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure hybrid import command: from-file."
+          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure cable import command: from-file."
         },
         {
           "name": "format-dxf",
@@ -58,17 +61,22 @@
         {
           "name": "group",
           "syntax": "group <s> [slot <s>]",
-          "description": "Assign the elements created to group s. Use of the group logic is described in Groups. If not specified, the default group name assigned will be Hybrid N where N is the ID number assinged to the elements."
+          "description": "Assign the elements created to group s. Use of the group logic is described in Groups. If not specified, the default group name assigned will be Cable N where N is the ID number assinged to the elements."
         },
         {
           "name": "group-begin",
           "syntax": "group-begin <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Hybrid Begin."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Cable Begin."
         },
         {
           "name": "group-end",
           "syntax": "group-end <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Hybrid End."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Cable End."
+        },
+        {
+          "name": "offset",
+          "syntax": "offset <v>",
+          "description": "Offset the created cables from the imported geometry along the vector v"
         },
         {
           "name": "id",
@@ -79,11 +87,6 @@
           "name": "maximum-length",
           "syntax": "maximum-length <f>",
           "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "offset",
-          "syntax": "offset <v>",
-          "description": "Offset the created bolts from the imported geometry along the vector v"
         },
         {
           "name": "segments",
@@ -100,29 +103,32 @@
         "availability_verified": true,
         "source": "official FLAC3D 7.0 contents command index",
         "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/hybrid/commands/cmd_structure.hybrid.import.html"
+          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/cables/commands/cmd_structure.cable.import.html"
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
       }
     },
     "9.0": {
-      "command": "structure hybrid import",
-      "syntax": "structure hybrid import keyword",
+      "command": "structure cable import",
+      "syntax": "structure cable import keyword",
       "keywords": [
         {
           "name": "from-sketch",
-          "syntax": "from-sketch <s> [hybridimportblock] [range]",
-          "description": "Create elements from Sketch set named s . The range applies to the list of edges in the Sketch set."
+          "syntax": "from-sketch <s> [cableimportblock] [range]",
+          "description": "Create elements from Sketch set named s . The range applies to the list of edges in the Sketch set.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "from-file",
-          "syntax": "from-file <s> [hybridimportblock]",
+          "syntax": "from-file <s> [cableimportblock]",
           "description": "Create elements from the geometry file s ."
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry <s> [hybridimportblock] [range]",
+          "syntax": "from-geometry <s> [cableimportblock] [range]",
           "description": "Create elements from the geometry set named s . The range applies to the list of edges in the geometry set."
         },
         {
@@ -133,22 +139,22 @@
         {
           "name": "format",
           "syntax": "format {dxf | geom | stl}",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure hybrid import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
+          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure cable import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
         },
         {
           "name": "group",
           "syntax": "group <s> [slot <s>]",
-          "description": "Assign the elements created to group s . Use of the group logic is described in Groups . If not specified, the default group name assigned will be the same as the name of the imported geometry set."
+          "description": "Assign the elements created to group s . Use of the group logic is described in Groups . If not specified, the default group name assigned will be Cable N where N is the ID number assinged to the elements."
         },
         {
           "name": "group-begin",
           "syntax": "group-begin <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Hybrid Begin ."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Cable Begin ."
         },
         {
           "name": "group-end",
           "syntax": "group-end <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Hybrid End ."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Cable End ."
         },
         {
           "name": "offset",
@@ -179,6 +185,6 @@
     }
   },
   "notes": [
-    "'[hybridimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (distinct, format, group, group-begin, group-end, offset, id, maximum-length, segments, snap)."
+    "'[cableimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (distinct, format, group, group-begin, group-end, offset, id, maximum-length, segments, snap)."
   ]
 }
