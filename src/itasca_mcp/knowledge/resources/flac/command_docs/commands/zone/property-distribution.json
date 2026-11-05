@@ -4,7 +4,10 @@
     "property",
     "distribution",
     "zone",
-    "property-distribution"
+    "property-distribution",
+    "deviation-lognormal",
+    "lognormal",
+    "density"
   ],
   "description": "Modify a zone constitutive model property. The property should accept a value of type float. While technically any valid type can be used here, none of the distribution keywords will apply and the zone property command should probably be used instead.",
   "python_sdk_alternative": {
@@ -45,6 +48,11 @@
           "name": "vary",
           "syntax": "vary <v>",
           "description": "Apply a linear variation to the property value."
+        },
+        {
+          "name": "density",
+          "syntax": "density <fvalue>",
+          "description": "Assign zone density instead of a constitutive model property; density is stored on the zone. The distribution keywords apply to it in the same way."
         }
       ],
       "legacy_documentation": {
@@ -90,6 +98,16 @@
           "name": "vary",
           "syntax": "vary <v>",
           "description": "Apply a linear variation to the property value."
+        },
+        {
+          "name": "deviation-lognormal",
+          "syntax": "deviation-lognormal <f>",
+          "description": "A log-normal distribution is used to assign the property values randomly. In other words, the natural logarithm of property values is a Gaussian distribution with a mean of fvalue and standard deviation of f . Because fvalue is the mean of the logarithm, 18 gives values near 7e7, and a value such as 1e8 overflows."
+        },
+        {
+          "name": "density",
+          "syntax": "density <fvalue>",
+          "description": "Assign zone density instead of a constitutive model property; density is stored on the zone. The distribution keywords apply to it in the same way."
         }
       ]
     }

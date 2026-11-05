@@ -13,19 +13,20 @@
   },
   "versions": {
     "7.0": {
-      "available": false,
-      "reason": "Not listed in the official FLAC3D 7.0 contents command index.",
-      "source_urls": [
-        "https://docs.itascacg.com/flac3d700/contents.html"
-      ],
-      "target_version": "7.0",
-      "note": "7.0 'extrude edge' exposes ratio / ratio-isolate and size / size-default / length / length-default instead of this 9.x keyword.",
-      "command": "extrude edge zone-length"
+      "command": "extrude edge length",
+      "syntax": "extrude edge length <f> [range]",
+      "keywords": []
     },
     "9.0": {
       "command": "sketch edge zone-length",
-      "syntax": "sketch edge zone-length <f> [range]",
-      "keywords": []
+      "syntax": "sketch edge zone-length <f> [keyword] [range]",
+      "keywords": [
+        {
+          "name": "min-size",
+          "syntax": "min-size <i>",
+          "description": "Set the minimum number of zones on an edge even if the provided length value would otherwise produce a smaller number of zones. The keyword is useful to assure that there would be at least certain number of zones (or more) on edges when setting length for multiple edges at once."
+        }
+      ]
     }
   }
 }
