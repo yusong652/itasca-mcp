@@ -20,8 +20,8 @@
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry {cut-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | merge | random | set <s>}",
-          "description": "Create tetrahedral blocks to fill a closed volume defined by a geometric set. Options: cut-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the surface of the tetrahedral mesh, neighboring triangle sizes vary as triangles increase or decrease in size due to local size adaptation; gradation-volume <f>: Rate at which neighboring tetrahedra will increase in size away from the surface.; maximum-edge <f>: Specify the maximum edge length for any tetra to be generated. The actual maximum edge length will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum edge length for any tetra to be generated. The actual minimum edge length will be close to this, but the result is not guaranteed to be exact.; merge: If specified, all the blocks in the same groups will be merged in one block; random: If the random keyword is specified, blocks edge sizes will be assigned a uniform random distribution between the maximum and minimum specified edge sizes.; set <s>: Specify the geometry set used to define the surface. By default, the current geometric set will be used."
+          "syntax": "from-geometry {cut-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | merge | random | repair-geometry | set <s>}",
+          "description": "Create tetrahedral blocks to fill a closed volume defined by a geometric set. Options: cut-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the surface of the tetrahedral mesh, neighboring triangle sizes vary as triangles increase or decrease in size due to local size adaptation; gradation-volume <f>: Rate at which neighboring tetrahedra will increase in size away from the surface.; maximum-edge <f>: Specify the maximum edge length for any tetra to be generated. The actual maximum edge length will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum edge length for any tetra to be generated. The actual minimum edge length will be close to this, but the result is not guaranteed to be exact.; merge: If specified, all the blocks in the same groups will be merged in one block; random: If the random keyword is specified, blocks edge sizes will be assigned a uniform random distribution between the maximum and minimum specified edge sizes.; repair-geometry: If the repair-geometry keyword is specified, a pre-processing step will be performed to ensure that the surface mesh in conformal. Use this keyword if attempts to mesh geometries produce errors.; set <s>: Specify the geometry set used to define the surface. By default, the current geometric set will be used."
         },
         {
           "name": "from-topography",
@@ -30,11 +30,17 @@
         },
         {
           "name": "voronoi",
-          "syntax": "voronoi {cut-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | set <s>}",
-          "description": "Create Voronoi blocks to fill a closed volume defined by a geometric set (restricted surface). Options: cut-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the restricted surface, distance between two seeds vary (increase or decrease) in size due to local size adaptation; gradation-volume <f>: Rate at which distance between two seeds will increase in size away from the restricted surface.; maximum-edge <f>: Specify the maximum distance between two seeds. The actual maximum distance will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum distance between two seeds. The actual minimum distance will be close to this, but the result is not guaranteed to be exact.; set <s>: Specify the geometry set used to define the restricted surface. By default, the current geometric set will be used."
+          "syntax": "voronoi {break-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | set <s>}",
+          "description": "Create Voronoi blocks to fill a closed volume defined by a geometric set (restricted surface). Options: break-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the restricted surface, distance between two seeds vary (increase or decrease) in size due to local size adaptation; gradation-volume <f>: Rate at which distance between two seeds will increase in size away from the restricted surface.; maximum-edge <f>: Specify the maximum distance between two seeds. The actual maximum distance will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum distance between two seeds. The actual minimum distance will be close to this, but the result is not guaranteed to be exact.; set <s>: Specify the geometry set used to define the restricted surface. By default, the current geometric set will be used."
         }
       ],
-      "examples": []
+      "examples": [],
+      "notes": [
+        "voronoi takes break-angle. The manual's cut-angle is rejected with 'Unused extra parameter', after the blocks have already been generated.",
+        "maxedge and minedge are short forms of maximum-edge and minimum-edge.",
+        "voronoi also lists size-surface <f>, size-volume <f> and tolerance <f>; the manual does not describe them. On a unit cube size-surface 0.5 gave 154 blocks and size-volume 0.5 gave 229, against 248 without them.",
+        "repair-geometry and random are 9.8 keywords: 7.00 stops at them with 'Unused extra parameter'."
+      ]
     },
     "7.0": {
       "command": "block generate",
@@ -57,11 +63,16 @@
         },
         {
           "name": "voronoi",
-          "syntax": "voronoi {cut-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | set <s>}",
-          "description": "Create Voronoi blocks to fill a closed volume defined by a geometric set (restricted surface). Options: cut-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the restricted surface, distance between two seeds vary (increase or decrease) in size due to local size adaptation; gradation-volume <f>: Rate at which distance between two seeds will increase in size away from the restricted surface.; maximum-edge <f>: Specify the maximum distance between two seeds. The actual maximum distance will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum distance between two seeds. The actual minimum distance will be close to this, but the result is not guaranteed to be exact.; set <s>: Specify the geometry set used to define the restricted surface. By default, the current geometric set will be used."
+          "syntax": "voronoi {break-angle <f> | gradation-surface <f> | gradation-volume <f> | maximum-edge <f> | minimum-edge <f> | set <s>}",
+          "description": "Create Voronoi blocks to fill a closed volume defined by a geometric set (restricted surface). Options: break-angle <f>: Threshold angle for the capture of surface features. The default value is 45°. Use a larger cut angle smooth over unwanted surface features associated with the coarseness of the triangulation. Use a smaller cut angle if there are intersecting surfaces after surface remeshing.; gradation-surface <f>: Rate at which, on the restricted surface, distance between two seeds vary (increase or decrease) in size due to local size adaptation; gradation-volume <f>: Rate at which distance between two seeds will increase in size away from the restricted surface.; maximum-edge <f>: Specify the maximum distance between two seeds. The actual maximum distance will be close to this, but the result is not guaranteed to be exact.; minimum-edge <f>: Specify the minimum distance between two seeds. The actual minimum distance will be close to this, but the result is not guaranteed to be exact.; set <s>: Specify the geometry set used to define the restricted surface. By default, the current geometric set will be used."
         }
       ],
-      "examples": []
+      "examples": [],
+      "notes": [
+        "voronoi takes break-angle. The manual's cut-angle is rejected with 'Unused extra parameter', after the blocks have already been generated.",
+        "maxedge and minedge are short forms of maximum-edge and minimum-edge.",
+        "voronoi also lists size-surface <f>, size-volume <f> and tolerance <f>; the manual does not describe them. On a unit cube size-surface 0.5 gave 154 blocks and size-volume 0.5 gave 229, against 248 without them."
+      ]
     }
   }
 }

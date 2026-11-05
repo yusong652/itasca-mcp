@@ -72,6 +72,10 @@ CATEGORY_META: dict[str, dict[str, Any]] = {
 
 PROPRIETARY = list(CATEGORY_META.keys())
 
+# Shared-kernel commands the 3DEC engine rejects: 'geometry paint-extra'
+# (3DEC has 'geometry paint-extra-block' instead) and 'fracture set-property'.
+NOT_IN_3DEC = {"geometry": {"paint-extra"}, "fracture": {"set-property"}}
+
 
 def _resolve_versioned(cmd_data: dict[str, Any]) -> dict[str, Any]:
     """Merge the newest available version block (9.0, else 7.0) for index fields."""
@@ -117,7 +121,8 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
     flac = json.loads(FLAC_INDEX.read_text(encoding="utf-8"))
     out: dict[str, dict[str, Any]] = {}
     for name, info in flac.get("categories", {}).items():
-        common_cmds = [c for c in info.get("commands", []) if str(c.get("file", "")).startswith("_common/")]
+        skip = NOT_IN_3DEC.get(name, set())
+        common_cmds = [c for c in info.get("commands", []) if str(c.get("file", "")).startswith("_common/") and c["name"] not in skip]
         if not common_cmds:
             continue
         meta = {k: v for k, v in info.items() if k != "commands"}
