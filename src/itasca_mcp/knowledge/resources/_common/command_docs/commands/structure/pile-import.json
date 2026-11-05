@@ -1,33 +1,36 @@
 {
   "category": "structure",
   "search_keywords": [
-    "beam",
+    "pile",
     "import",
     "structure"
   ],
-  "description": "Create beam elements from an outside source (currently 3D ONLY).",
+  "description": "Create pile elements from an outside source.",
   "python_sdk_alternative": {
     "available": false
   },
   "versions": {
     "7.0": {
-      "command": "structure beam import",
-      "syntax": "structure beam import keyword",
-      "description": "Create beam elements from an outside source.",
+      "command": "structure pile import",
+      "syntax": "structure pile import keyword",
+      "description": "Create pile elements from an outside source.",
       "keywords": [
         {
           "name": "from-extruder",
-          "syntax": "from-extruder <s> [beamimportblock] [range]",
-          "description": "Create elements from the extruder set named s. The range applies to the list of edges in the extruder set."
+          "syntax": "from-extruder <s> [pileimportblock] [range]",
+          "description": "Create elements from the extruder set named s. The range applies to the list of edges in the extruder set.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "from-file",
-          "syntax": "from-file <s> [beamimportblock]",
+          "syntax": "from-file <s> [pileimportblock]",
           "description": "Create elements from the geometry file s."
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry <s> [beamimportblock] [range]",
+          "syntax": "from-geometry <s> [pileimportblock] [range]",
           "description": "Create elements from the geometry set named s. The range applies to the list of edges in the geometry set."
         },
         {
@@ -38,7 +41,7 @@
         {
           "name": "format",
           "syntax": "format keyword",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure beam import command: from-file."
+          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure pile import command: from-file."
         },
         {
           "name": "format-dxf",
@@ -58,27 +61,32 @@
         {
           "name": "group",
           "syntax": "group <s> [slot <s>]",
-          "description": "Assign the elements created to group s. Use of the group logic is described in Groups. If not specified, the default group name assigned will be Beam N where N is the ID number assinged to the elements."
+          "description": "Assign the elements created to group s. Use of the group logic is described in Groups. If not specified, the default group name assigned will be Pile N where N is the ID number assinged to the elements."
         },
         {
           "name": "group-begin",
           "syntax": "group-begin <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Beam Begin."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Pile Begin."
         },
         {
           "name": "group-end",
           "syntax": "group-end <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Beam End."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Pile End."
         },
         {
           "name": "id",
           "syntax": "id <i>",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the two element end-nodes to an existing element as follows. At each end-node location, a new node is created unless all of the following conditions are fulfilled: (1) the ID is given; (2) an existing node is found “near” the potential new node location; and (3) the found node is part of an element with ID equal to i."
+          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the two element end-nodes to an existing element as follows. At each end-node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element with ID equal to i."
         },
         {
           "name": "maximum-length",
           "syntax": "maximum-length <f>",
           "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
+        },
+        {
+          "name": "offset",
+          "syntax": "offset <v>",
+          "description": "Offset the created piles from the imported geometry along the vector v"
         },
         {
           "name": "segments",
@@ -95,29 +103,32 @@
         "availability_verified": true,
         "source": "official FLAC3D 7.0 contents command index",
         "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.import.html"
+          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.import.html"
         ],
         "syntax_basis": "official FLAC3D 7.0 detailed command page",
         "target_version": "7.0"
       }
     },
     "9.0": {
-      "command": "structure beam import",
-      "syntax": "structure beam import keyword",
+      "command": "structure pile import",
+      "syntax": "structure pile import keyword",
       "keywords": [
         {
           "name": "from-sketch",
-          "syntax": "from-sketch <s> [beamimportblock] [range]",
-          "description": "Create elements from Sketch set named s . The range applies to the list of edges in the Sketch set."
+          "syntax": "from-sketch <s> [pileimportblock] [range]",
+          "description": "Create elements from Sketch set named s . The range applies to the list of edges in the Sketch set.",
+          "engines": [
+            "flac"
+          ]
         },
         {
           "name": "from-file",
-          "syntax": "from-file <s> [beamimportblock]",
-          "description": "Create elements from the geometry file s . The optional format keyword can be used to specify the format of the file. The options are dxf , geom , or stl . [CS: work out what needs to happen here later; formats should have links] If not specified, the format is assumed from the file extension."
+          "syntax": "from-file <s> [pileimportblock]",
+          "description": "Create elements from the geometry file s ."
         },
         {
           "name": "from-geometry",
-          "syntax": "from-geometry <s> [beamimportblock] [range]",
+          "syntax": "from-geometry <s> [pileimportblock] [range]",
           "description": "Create elements from the geometry set named s . The range applies to the list of edges in the geometry set."
         },
         {
@@ -128,32 +139,37 @@
         {
           "name": "format",
           "syntax": "format {dxf | geom | stl}",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure beam import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
+          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure pile import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
         },
         {
           "name": "group",
           "syntax": "group <s> [slot <s>]",
-          "description": "Assign the elements created to group s . Use of the group logic is described in Groups . If not specified, the default group name assigned will be Beam N where N is the ID number assinged to the elements."
+          "description": "Assign the elements created to group s . Use of the group logic is described in Groups . If not specified, the default group name assigned will be Pile N where N is the ID number assinged to the elements."
         },
         {
           "name": "group-begin",
           "syntax": "group-begin <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Beam Begin ."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Pile Begin ."
         },
         {
           "name": "group-end",
           "syntax": "group-end <s> [slot <s>]",
-          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Beam End ."
+          "description": "A group name that will be assigned to the first node of the elements created along a line. The default name assigned will be Pile End ."
         },
         {
           "name": "id",
           "syntax": "id <i>",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the two element end-nodes to an existing element as follows. At each end-node location, a new node is created unless all of the following conditions are fulfilled: (1) the ID is given; (2) an existing node is found “near” the potential new node location; and (3) the found node is part of an element with ID equal to i ."
+          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the two element end-nodes to an existing element as follows. At each end-node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element with ID equal to i ."
         },
         {
           "name": "maximum-length",
           "syntax": "maximum-length <f>",
           "description": "Break the element into segments no greater than length f . The segments setting, if provided, is overridden as needed by this setting."
+        },
+        {
+          "name": "offset",
+          "syntax": "offset <v>",
+          "description": "Offset the created piles from the imported geometry along the vector v"
         },
         {
           "name": "segments",
@@ -169,6 +185,6 @@
     }
   },
   "notes": [
-    "'[beamimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (distinct, format, group, group-begin, group-end, id, maximum-length, segments, snap)."
+    "'[pileimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (distinct, format, group, group-begin, group-end, id, maximum-length, offset, segments, snap)."
   ]
 }

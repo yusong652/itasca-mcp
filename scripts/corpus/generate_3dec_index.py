@@ -8,11 +8,11 @@ Two parts, mirroring how flac/command_docs/index.json is built:
 
 2. Shared-kernel commands are reused from the FLAC index: every command whose
    ``file`` points into ``_common/`` is copied verbatim. This is a single rule
-   that keeps pure-kernel categories whole (data/fish/geometry/...), trims
-   ``model`` to just its shared subset, and drops FLAC-only categories (body,
-   zone, extruder, structure, group, domain) because none of their commands
-   live under _common/. 3DEC is a 9.0 unified-kernel product, so it supports
-   the same _common command set.
+   that keeps pure-kernel categories whole (data/fish/geometry/structure/...),
+   trims ``model`` to just its shared subset, and drops FLAC-only categories
+   (zone, sketch, building-blocks) because none of their commands live under
+   _common/. 3DEC is a 9.0 unified-kernel product, so it supports the same
+   _common command set, minus NOT_IN_3DEC.
 
 Usage:
     uv run python scripts/corpus/generate_3dec_index.py
@@ -65,7 +65,7 @@ CATEGORY_META: dict[str, dict[str, Any]] = {
         "command_prefix": "sel",
         "notes": [
             "7.0-only family: in 3DEC 9.x these merged into the unified structure family (structure hybrid / structure dowel / ...)",
-            "3DEC 7.0 also ships the unified structure family alongside sel (structure beam/cable/liner/... — documented on the FLAC side)",
+            "3DEC 7.0 also ships the unified structure family alongside sel: see the structure category",
         ],
     },
 }
@@ -75,6 +75,19 @@ PROPRIETARY = list(CATEGORY_META.keys())
 # Shared-kernel commands the 3DEC engine rejects: 'geometry paint-extra'
 # (3DEC has 'geometry paint-extra-block' instead) and 'fracture set-property'.
 NOT_IN_3DEC = {"geometry": {"paint-extra"}, "fracture": {"set-property"}}
+
+# Category text for borrowed categories whose FLAC wording does not fit 3DEC.
+BORROWED_META: dict[str, dict[str, Any]] = {
+    "structure": {
+        "related_categories": ["block", "geometry", "model"],
+        "notes": [
+            "Element type is part of the command: 'structure beam create', 'structure cable property', etc.",
+            "Structural nodes ('structure node') connect elements and attach to block zones via links ('structure link')",
+            "Constitutive behavior via 'structure <type> cmodel' / property; results via 'structure <type> results'",
+        ],
+    },
+    "group": {"related_categories": ["block"]},
+}
 
 
 def _resolve_versioned(cmd_data: dict[str, Any]) -> dict[str, Any]:
@@ -131,6 +144,9 @@ def borrow_common_categories() -> dict[str, dict[str, Any]]:
         for key in ("description", "notes"):
             if key in meta:
                 meta[key] = json.loads(json.dumps(meta[key]).replace("FLAC3D", "3DEC"))
+        meta.update(BORROWED_META.get(name, {}))
+        if name == "structure":
+            meta.pop("doc_url", None)
         meta["commands"] = common_cmds
         out[name] = meta
     return out

@@ -103,12 +103,17 @@ def test_initialize_stress_keeps_both_setters_on_top(query: str, software: str) 
         ("block cohesion", "block property", "3dec"),
         ("block history displacement", "block history", "3dec"),
         # keyword names of commands without curated search_keywords
-        ("damping", "block mechanical", "3dec"),
-        ("rayleigh damping", "block mechanical", "3dec"),
+        ("damping", "structure damping", "3dec"),
     ],
 )
 def test_flac_3dec_keyword_vocabulary_queries_rank_owner_first(query: str, expected: str, software: str) -> None:
     assert _top(query, software=software, version="9.0")[0] == expected
+
+
+@pytest.mark.parametrize("query", ["block damping", "rayleigh damping"])
+def test_3dec_block_damping_stays_reachable_behind_the_structure_commands(query: str) -> None:
+    # block mechanical has no curated search_keywords: only its keyword names find it.
+    assert "block mechanical" in _top(query, software="3dec", version="9.0", k=10)
 
 
 @pytest.mark.parametrize(
