@@ -114,8 +114,12 @@ def register(mcp: FastMCP) -> None:
             if termination_method == "stuck_in_c":
                 action = (
                     "Bridge could not terminate the code (likely stuck "
-                    "in a C extension). It may recover when the C call "
-                    "returns; otherwise restart the Itasca bridge."
+                    "in a C extension). Ask the person to check the engine "
+                    "console for an interactive prompt (e.g. 'Job Title', "
+                    "a FISH continuation) and complete it there - that "
+                    "releases the call and the bridge recovers. Otherwise "
+                    "it may recover when the C call returns; if not, "
+                    "restart the Itasca bridge."
                 )
             else:
                 action = "Increase timeout (max 20s) or move the work to itasca_execute_task"
