@@ -1863,7 +1863,7 @@ def test_3dec_fish_intrinsics_are_engine_local() -> None:
     # 3DEC's FISH is block/joint/flow plus the 7.0-only sel.* legacy SEL family, not FLAC's zone/gridpoint.
     namespaces = FishLoader.load_index(software="3dec")["namespaces"]
     assert {"block", "flowplane", "flowknot", "sel"} <= set(namespaces)
-    assert namespaces["sel"]["available"] == {"7.0": 256, "9.0": 0}
+    assert namespaces["sel"]["counts"] == {"7.0": 256, "9.0": 0}
     assert "zone" not in namespaces and "ball" not in namespaces
     assert "block.subcontact.model" in FishLoader.entries(software="3dec")
     assert "block" not in FishLoader.load_index(software="flac")["namespaces"]

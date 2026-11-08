@@ -192,10 +192,13 @@ C–E.
 fish_docs is already closest to spec: keep
 `{namespace, scope, engines, count, undocumented, entries}` /
 entry `{name, signature, returns, args, settable, description, doc,
-dimension?, family?}`. Changes: bool-map `versions` → `availability` (A),
-`signature_7.0` → version map (A), `note` → `notes` (C). Generators updated
-to emit the new shape; regenerate must reproduce the corpus byte-for-byte
-before and after the format change (established check).
+dimension?, family?}`. Changes: bool-map `versions` → `availability` (A,
+done 2026-11-09), the per-engine index's `available` per-version count map →
+`counts` (same change — the old name read as an availability field),
+`signature_7.0` → version map (A, with the command restructure), `note` →
+`notes` (C). Generators updated to emit the new shape; regenerate must
+reproduce the corpus byte-for-byte before and after the format change
+(established check).
 
 ## H. python_sdk tree
 

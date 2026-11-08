@@ -156,7 +156,7 @@ def search(software: str, query: str, limit: int, version: str) -> tuple[list[di
             "namespace": doc.category,
             "returns": meta.get("returns"),
             "settable": meta.get("settable"),
-            "available_in": [v for v, ok in (meta.get("versions") or {}).items() if ok],
+            "available_in": meta.get("available_in") or [],
             "doc": meta.get("doc"),
             "score": round(result.score, 2),
             "rank": result.rank,

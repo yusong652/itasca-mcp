@@ -43,8 +43,8 @@ def _property_docs(
             path = f"{category} {item} {keyword}"
             description = " ".join(part for part in (_text(prop.get("description")), _text(prop.get("notes"))) if part)
             metadata: dict[str, Any] = {"category": category, "item": item, "property": keyword}
-            if prop.get("since"):
-                metadata["since"] = prop["since"]
+            if prop.get("availability"):
+                metadata["availability"] = prop["availability"]
             docs.append(
                 SearchDocument(
                     name=path,

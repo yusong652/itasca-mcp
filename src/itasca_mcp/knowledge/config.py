@@ -22,6 +22,10 @@ RESOURCES_DIR = Path(__file__).parent / "resources"
 # itasca-mcp must not silently bias toward one product.
 SUPPORTED_SOFTWARE = ("pfc", "flac", "3dec", "mpoint", "massflow")
 
+# Every version label the corpus uses; an entry without an ``availability``
+# field is available in all of them (docs/development/corpus-spec.md).
+DOC_VERSIONS = ("6.0", "7.0", "9.0")
+
 
 def normalize_software(software: str) -> str:
     """Validate/normalize a required software selector.

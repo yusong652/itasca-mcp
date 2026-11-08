@@ -222,15 +222,16 @@ class ReferenceLoader:
     def _entry_available(entry: dict[str, Any], version: str | None) -> bool:
         """Whether an index entry is available in the requested version.
 
-        Entries without an ``availability`` map are version-agnostic and
-        treated as available in every version (backward compatible).
+        Entries without an ``availability`` field are unrestricted
+        (corpus-spec rule); otherwise ``availability.versions`` lists where
+        the entry exists.
         """
         if version is None:
             return True
         availability = entry.get("availability")
         if not isinstance(availability, dict):
             return True
-        return bool(availability.get(version, False))
+        return version in availability.get("versions", ())
 
     @staticmethod
     def get_item_list(category: str, version: str | None = None, *, software: str) -> list[dict[str, Any]]:
@@ -277,20 +278,6 @@ class ReferenceLoader:
         if version is None:
             return items
         return [i for i in items if ReferenceLoader._entry_available(i, version)]
-
-    @staticmethod
-    def item_availability(category: str, item_name: str, *, software: str) -> dict[str, bool] | None:
-        """Return an item's availability map, or None if version-agnostic.
-
-        Used by the browse tool to gate a model behind a requested version.
-        """
-        doc = ReferenceLoader.load_item_doc(category, item_name, software=software)
-        if not doc:
-            return None
-        availability = doc.get("availability")
-        if isinstance(availability, dict):
-            return cast(dict[str, bool], availability)
-        return None
 
     @staticmethod
     def clear_cache() -> None:
