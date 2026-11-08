@@ -19,7 +19,7 @@ from difflib import SequenceMatcher
 from functools import lru_cache
 from typing import Any, cast
 
-from itasca_mcp.knowledge.config import fish_index_path, resolve
+from itasca_mcp.knowledge.config import DOC_VERSIONS, fish_index_path, resolve
 
 
 class FishLoader:
@@ -88,14 +88,24 @@ class FishLoader:
 
     @staticmethod
     def available(entry: dict[str, Any], version: str | None) -> bool:
-        """Version gate; kernel entries carry the union view across engines."""
+        """Version gate; kernel entries carry the union view across engines.
+
+        An entry without ``availability`` is unrestricted (corpus-spec rule);
+        otherwise ``availability.versions`` lists where it exists.
+        """
         if version is None:
             return True
-        return bool(entry.get("versions", {}).get(version, False))
+        availability = entry.get("availability")
+        if not isinstance(availability, dict):
+            return True
+        return version in availability.get("versions", ())
 
     @staticmethod
     def available_in(entry: dict[str, Any]) -> list[str]:
-        return [v for v, ok in entry.get("versions", {}).items() if ok]
+        availability = entry.get("availability")
+        if isinstance(availability, dict):
+            return [str(v) for v in availability.get("versions", ())]
+        return list(DOC_VERSIONS)
 
     @staticmethod
     def has_available_descendant(prefix: str, version: str | None, *, software: str) -> bool:
@@ -130,7 +140,7 @@ class FishLoader:
         index = FishLoader.load_index(software=software)
         out = []
         for ns, meta in index.get("namespaces", {}).items():
-            count = meta.get("available", {}).get(version, meta.get("count", 0)) if version else meta.get("count", 0)
+            count = meta.get("counts", {}).get(version, meta.get("count", 0)) if version else meta.get("count", 0)
             if version and not count:
                 continue
             out.append({"name": ns, "scope": meta.get("scope", "common"), "count": count})

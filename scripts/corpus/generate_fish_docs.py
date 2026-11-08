@@ -502,7 +502,10 @@ def main() -> None:
             sigs = entry["sigs"]
             if "7.0" in sigs and "9.0" in sigs and sigs["7.0"] != sigs["9.0"]:
                 rec["signature_7.0"] = sigs["7.0"]
-            rec["versions"] = versions_for(entry, ns, ref_engine)
+            # corpus-spec availability: omitted = available in every corpus version.
+            available = [v for v, ok in versions_for(entry, ns, ref_engine).items() if ok]
+            if available != ALL_VERSIONS:
+                rec["availability"] = {"versions": available}
             if st:
                 rec["doc"] = st["doc"]
                 if st["dimension"]:
@@ -560,7 +563,7 @@ def main() -> None:
                 "file": written[ns].relative_to(RES).as_posix(),
                 "scope": scope,
                 "count": len(names_by_ns[ns]),
-                "available": {v: avail.get(v, 0) for v in versions},
+                "counts": {v: avail.get(v, 0) for v in versions},
             }
         excluded = {}
         seen_names = {name for rows in live[engine].values() for name in rows}

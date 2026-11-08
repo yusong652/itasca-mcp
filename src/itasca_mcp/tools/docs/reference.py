@@ -153,8 +153,8 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
         }
 
     availability = item_doc.get("availability")
-    if isinstance(availability, dict) and not availability.get(version, False):
-        supported = [v for v, ok in availability.items() if ok]
+    if isinstance(availability, dict) and version not in availability.get("versions", ()):
+        supported = [str(v) for v in availability.get("versions", ())]
         return {
             "source": "reference",
             "action": "browse",
@@ -201,7 +201,7 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
     }
     summary: dict[str, Any] = {"count": 1, "version": version}
     if isinstance(item_doc.get("availability"), dict):
-        summary["available_in"] = [v for v, ok in item_doc["availability"].items() if ok]
+        summary["available_in"] = list(item_doc["availability"].get("versions", ()))
     payload = build_docs_data(
         source="reference",
         action="browse",

@@ -12,6 +12,14 @@ Formatting Goals:
 from typing import Any
 
 
+def _availability_text(obj: dict[str, Any]) -> str:
+    """Comma-joined ``availability.versions``; 'none' for an explicit empty list."""
+    availability = obj.get("availability")
+    if not isinstance(availability, dict):
+        return "all"
+    return ", ".join(str(v) for v in availability.get("versions", ())) or "none"
+
+
 class ReferenceFormatter:
     """Format Itasca reference documentation as markdown.
 
@@ -146,7 +154,7 @@ class ReferenceFormatter:
         parts.append(f"*Model name: `{model_name}`*")
         availability = doc.get("availability")
         if isinstance(availability, dict):
-            avail_in = [v for v, ok in availability.items() if ok]
+            avail_in = [str(v) for v in availability.get("versions", ())]
             parts.append(f"*Available in versions: {', '.join(avail_in) or 'none'}*")
         parts.append("")
 
@@ -182,10 +190,10 @@ class ReferenceFormatter:
 
                 properties = group.get("properties", [])
                 if properties:
-                    has_since = any(p.get("since") for p in properties)
-                    if has_since:
-                        parts.append("| Property | Symbol | Description | Type | Default | Since |")
-                        parts.append("|----------|--------|-------------|------|---------|-------|")
+                    has_gated = any(isinstance(p.get("availability"), dict) for p in properties)
+                    if has_gated:
+                        parts.append("| Property | Symbol | Description | Type | Default | Versions |")
+                        parts.append("|----------|--------|-------------|------|---------|----------|")
                     else:
                         parts.append("| Property | Symbol | Description | Type | Default |")
                         parts.append("|----------|--------|-------------|------|---------|")
@@ -201,9 +209,9 @@ class ReferenceFormatter:
                         if len(desc) > 60:
                             desc = desc[:57] + "..."
 
-                        if has_since:
-                            since = prop.get("since", "")
-                            parts.append(f"| `{keyword}` | {symbol} | {desc} | {prop_type} | {default} | {since} |")
+                        if has_gated:
+                            versions = _availability_text(prop)
+                            parts.append(f"| `{keyword}` | {symbol} | {desc} | {prop_type} | {default} | {versions} |")
                         else:
                             parts.append(f"| `{keyword}` | {symbol} | {desc} | {prop_type} | {default} |")
 
@@ -371,9 +379,8 @@ class ReferenceFormatter:
         parts.append("## Property Flags")
         parts.append(f"- **Modifiable**: {'Yes' if modifiable else 'No'}")
         parts.append(f"- **Inheritable**: {'Yes' if inheritable else 'No'}")
-        since = target_property.get("since")
-        if since:
-            parts.append(f"- **Since**: version {since}")
+        if isinstance(target_property.get("availability"), dict):
+            parts.append(f"- **Available in versions**: {_availability_text(target_property)}")
         parts.append("")
 
         # Notes

@@ -134,8 +134,9 @@ def test_every_reference_item_loads(software: str) -> None:
         availability = doc.get("availability")
         if availability is not None and not (
             isinstance(availability, dict)
-            and availability
-            and all(k in ALL_VERSIONS and isinstance(v, bool) for k, v in availability.items())
+            and set(availability) <= {"versions", "engines"}
+            and all(isinstance(v, list) for v in availability.values())
+            and all(str(v) in ALL_VERSIONS for v in availability.get("versions", []))
         ):
             problems.append(f"{where}: malformed availability {availability!r}")
     assert problems == []

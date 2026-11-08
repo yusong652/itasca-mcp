@@ -112,7 +112,7 @@ class FishDocumentAdapter:
                         "returns": entry.get("returns"),
                         "args": entry.get("args", []),
                         "settable": entry.get("settable"),
-                        "versions": entry.get("versions", {}),
+                        "available_in": FishLoader.available_in(entry),
                         "doc": entry.get("doc"),
                         "scope": entry.get("scope"),
                         "description": entry.get("description"),
