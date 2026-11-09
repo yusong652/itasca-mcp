@@ -4,7 +4,8 @@
     "domain",
     "boundary",
     "extent",
-    "strain-rate"
+    "strain-rate",
+    "tolerance"
   ],
   "description": "Specify the domain boundaries and conditions. DFN fractures only exist within the domain extent. In FLAC3D, zones and structural elements are not aware of the model domain. In PFC, walls, clumps and balls must be inside of the domain and are aware of the domain boundary conditions.",
   "notes": {
@@ -20,13 +21,18 @@
       "destroy condition: deletes objects whose extents fall outside domain",
       "periodic condition: translates objects to opposite side, creates 'ghost' objects, not compatible with walls",
       "extent: if only fxl and fxu specified, creates cubic domain",
-      "Domain must be set before creating PFC objects"
+      "Domain must be set before creating PFC objects",
+      "The bare top-level spelling is also live on every PFC build (6.00/7.00/9.8, 2D & 3D): domain extent / domain condition / domain strain-rate / domain tolerance work without the model prefix. The top-level domain strain-rate takes one component per dimension (a vector), unlike the full-tensor component list of this command."
     ],
     "7.0": [
-      "strain-rate takes the components in the order xx yy zz xy xz yz yx zx zy in 3D, and xx yy xy yx in 2D."
+      "strain-rate takes the components in the order xx yy zz xy xz yz yx zx zy in 3D, and xx yy xy yx in 2D.",
+      "The bare top-level spelling is also live on every PFC build (6.00/7.00/9.8, 2D & 3D): domain extent / domain condition / domain strain-rate / domain tolerance work without the model prefix. The top-level domain strain-rate takes one component per dimension (a vector), unlike the full-tensor component list of this command.",
+      "tolerance and the strain-rate component keywords were dropped from the 7.0 manual page but remain live."
     ],
     "9.0": [
-      "strain-rate takes the components in the order xx yy zz xy xz yz yx zx zy in 3D, and xx yy xy yx in 2D."
+      "strain-rate takes the components in the order xx yy zz xy xz yz yx zx zy in 3D, and xx yy xy yx in 2D.",
+      "The bare top-level spelling is also live on every PFC build (6.00/7.00/9.8, 2D & 3D): domain extent / domain condition / domain strain-rate / domain tolerance work without the model prefix. The top-level domain strain-rate takes one component per dimension (a vector), unlike the full-tensor component list of this command.",
+      "tolerance and the strain-rate component keywords were dropped from the 9.0 manual page but remain live."
     ]
   },
   "python_sdk_alternative": {
@@ -249,5 +255,8 @@
       "command": "model domain extent -10 10\nmodel domain condition reflect",
       "description": "Reflect condition (not recommended - may cause instabilities)"
     }
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on the six PFC consoles (2D/3D x 6.00/7.00/9.8) (state grade): the extent set via both 'model domain extent' and top-level 'domain extent' reads back through domain.min/max on all six; condition, tolerance, strain-rate-xx and the vector strain-rate accepted on all six (3D also accepted the full 9-component model domain strain-rate; 2D takes the 4-component xx yy xy yx form)."
   ]
 }

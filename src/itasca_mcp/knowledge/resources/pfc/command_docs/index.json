@@ -302,6 +302,14 @@
           "syntax": "ball cfd list [keyword] [range]",
           "python_available": false,
           "python_alternative": "itasca.command('ball cfd list ...')"
+        },
+        {
+          "name": "remap-interval",
+          "file": "pfc/command_docs/commands/ball/remap-interval.json",
+          "short_description": "Set the cell space remapping interval",
+          "syntax": "ball remap-interval <i>",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball remap-interval ...')"
         }
       ]
     },
@@ -714,6 +722,14 @@
           "syntax": "clump cfd list [keyword] [range]",
           "python_available": false,
           "python_alternative": "itasca.command('clump cfd list ...')"
+        },
+        {
+          "name": "remap-interval",
+          "file": "pfc/command_docs/commands/clump/remap-interval.json",
+          "short_description": "Set the cell space remapping interval",
+          "syntax": "clump remap-interval <i>",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump remap-interval ...')"
         }
       ]
     },
@@ -905,6 +921,14 @@
           "syntax": "contact property keyword ... [inheritance <b>] [range]",
           "python_available": true,
           "python_alternative": ""
+        },
+        {
+          "name": "create-on-overlap",
+          "file": "pfc/command_docs/commands/contact/create-on-overlap.json",
+          "short_description": "Specify whether or not contacts are created when pieces overlap",
+          "syntax": "contact create-on-overlap <b> [type keyword ...]",
+          "python_available": false,
+          "python_alternative": "itasca.command('contact create-on-overlap on')"
         }
       ]
     },
@@ -1152,7 +1176,8 @@
         "fish define introduces a function; fish list prints all symbols (loggable)",
         "fish callback registers per-cycle FISH execution; fish-halt in 'model solve' is a stop-condition callback",
         "fish trace / debug emit diagnostic output capturable via log",
-        "Prefer Python SDK for new scripting; FISH remains required for callbacks and in-cycle hooks"
+        "Prefer Python SDK for new scripting; FISH remains required for callbacks and in-cycle hooks",
+        "Live 7.00/9.8 fish enumeration also includes an undocumented boolean 'fish allow-single-split-assignment' (absent on 6.00; no manual page in any version)."
       ],
       "commands": [
         {
@@ -1220,8 +1245,8 @@
           "python_alternative": ""
         },
         {
-          "name": "result",
-          "file": "_common/command_docs/commands/fish/result.json",
+          "name": "results",
+          "file": "_common/command_docs/commands/fish/results.json",
           "short_description": "Set storage of FISH information in results files",
           "syntax": "fish results active <b>",
           "python_available": false,
@@ -1240,6 +1265,14 @@
           "file": "_common/command_docs/commands/fish/trace.json",
           "short_description": "Create a particle trace of the FISH variable sym ",
           "syntax": "fish trace [name <s>] <sym>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "integer-convert",
+          "file": "_common/command_docs/commands/fish/integer-convert.json",
+          "short_description": "Allow automatic conversion of integers into indices (6.0 only)",
+          "syntax": "fish integer-convert <b>",
           "python_available": false,
           "python_alternative": ""
         }
@@ -2059,6 +2092,14 @@
           "file": "_common/command_docs/commands/history/results.json",
           "short_description": "Specify whether history information is stored in subsequent results files",
           "syntax": "history results active <b>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "name",
+          "file": "_common/command_docs/commands/history/name.json",
+          "short_description": "Assign a plotting label to a history (only labelling spelling on 6.0)",
+          "syntax": "history name <sn> label <sl>",
           "python_available": false,
           "python_alternative": ""
         }
@@ -2958,6 +2999,14 @@
           "syntax": "program warning <b>",
           "python_available": false,
           "python_alternative": ""
+        },
+        {
+          "name": "convert",
+          "file": "pfc/command_docs/commands/program/convert.json",
+          "short_description": "Convert PFC 5.0 data files to 6.0 syntax (6.0 only)",
+          "syntax": "program convert [<s>] [keyword] ...",
+          "python_available": false,
+          "python_alternative": ""
         }
       ]
     },
@@ -3300,10 +3349,10 @@
         {
           "name": "remap-interval",
           "file": "pfc/command_docs/commands/rblock/remap-interval.json",
-          "short_description": "Set the interval at which rblock positions are remapped for periodic boundary conditions",
+          "short_description": "Set the cell space remapping interval",
           "syntax": "rblock remap-interval <i>",
           "python_available": false,
-          "python_alternative": "Use itasca.command('rblock remap interval ...') via command interface"
+          "python_alternative": "itasca.command('rblock remap-interval ...')"
         },
         {
           "name": "replicate",
@@ -3863,6 +3912,14 @@
           "syntax": "wall thermal property <s> <a> [<s> <a> ...] [range]",
           "python_available": true,
           "python_alternative": "itasca.wall.thermal.find(id).set_prop(name, value)"
+        },
+        {
+          "name": "remap-interval",
+          "file": "pfc/command_docs/commands/wall/remap-interval.json",
+          "short_description": "Set the cell space remapping interval",
+          "syntax": "wall remap-interval <i>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall remap-interval ...')"
         }
       ]
     },

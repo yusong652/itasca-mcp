@@ -1,0 +1,45 @@
+{
+  "category": "contact",
+  "search_keywords": [
+    "create-on-overlap",
+    "overlap",
+    "contact creation"
+  ],
+  "description": "Specify whether or not contacts are created when pieces overlap (off by default). If the type keyword is not given then it applies to all contact types.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('contact create-on-overlap on')"
+  },
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "contact create-on-overlap",
+  "syntax": "contact create-on-overlap <b> [type keyword ...]",
+  "keywords": [
+    {
+      "name": "type",
+      "syntax": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock} ...",
+      "description": "Apply the setting to one or more specific contact types instead of all of them."
+    }
+  ],
+  "examples": [
+    {
+      "command": "contact create-on-overlap on",
+      "description": "Create contacts for all overlapping pieces"
+    },
+    {
+      "command": "contact create-on-overlap on type ball-facet",
+      "description": "Only for ball-facet overlaps"
+    }
+  ],
+  "notes": [
+    "The live parser is laxer than the manual: the bare form (no boolean), 'type' with no pair, and an unknown type token are all accepted silently on 9.8.",
+    "No state difference was observed in a simple probe (two overlapping balls, then model clean): one contact formed whether the setting was on or off.",
+    "The manual's type-keyword description is copied from contact detection; here the type list selects which contact types the create-on-overlap setting applies to."
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on the PFC2D/PFC3D 9.8 consoles (syntax grade): the on/off and type forms accepted on both; create-on-overlap is absent from the 6.00/7.00 contact enumerations. A two-overlapping-ball probe formed 1 contact at model clean with the setting both off and on."
+  ]
+}
