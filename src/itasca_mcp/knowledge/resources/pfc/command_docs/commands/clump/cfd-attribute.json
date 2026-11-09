@@ -1,0 +1,50 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "cfd",
+    "attribute",
+    "fluid",
+    "force",
+    "porosity",
+    "drag"
+  ],
+  "description": "Set the value of clump CFD attributes. This command is a synonym for the clump cfd initialize command. Individual attributes can be listed with the clump cfd list command, and all clump CFD attributes can be visualized.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('clump cfd attribute ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "clump cfd attribute",
+  "syntax": "clump cfd attribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "force",
+      "syntax": "force <v>",
+      "description": "Force applied by fluid to the clump or the drag force. Options: add <f>: Add f to the existing value.; gradient <v>: Apply a linear gradient in each of the axes directions starting at the origin.; gradient-x <f>: Apply a linear gradient in the \\(x\\) -direction starting at the origin.; gradient-y <f>: Apply a linear gradient in the \\(y\\) -direction starting at the origin.; gradient-z <f>: Apply a linear gradient in the \\(z\\) -direction starting at the origin.; multiply <f>: Multiply the existing value by f.; replace <f>: Replace the existing value with f."
+    },
+    {
+      "name": "porosity",
+      "syntax": "porosity <b>",
+      "description": "Porosity contribution mode. If true (the default), the clump contributes to the porosity of the CFD element associated with it."
+    }
+  ],
+  "examples": [
+    {
+      "command": "clump cfd attribute force (0.01,0.02,0.03)",
+      "description": "Apply a fluid force"
+    }
+  ],
+  "notes": [
+    "The 7.0/9.0 manuals attach a post-value modifier block (add, gradient, gradient-x/y/z, multiply, replace) to the value; live, trailing modifier tokens error as unused parameters on 6.00, 7.00 and 9.8 - and the base value is still applied before the error."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): force vectors set and read back exactly via clump.cfd.force.x on all three consoles; the porosity flag accepted both ways."
+  ]
+}

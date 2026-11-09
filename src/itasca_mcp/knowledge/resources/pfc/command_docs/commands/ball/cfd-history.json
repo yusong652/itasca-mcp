@@ -1,0 +1,84 @@
+{
+  "category": "ball",
+  "search_keywords": [
+    "cfd",
+    "history",
+    "force"
+  ],
+  "description": "Add a ball CFD history.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('ball cfd history ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "ball cfd history",
+  "syntax": {
+    "6.0": "ball cfd history [id <i>] keyword (id <i> | <v>)",
+    "7.0": "ball cfd history [name <s>] ball cfd keyword ...",
+    "9.0": "ball cfd history [name <s>] ball cfd keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "force",
+      "syntax": "force",
+      "description": "Magnitude of the force resulting from fluid interactions."
+    },
+    {
+      "name": "xforce",
+      "syntax": "xforce",
+      "description": "The x-component of the force resulting from fluid interactions."
+    },
+    {
+      "name": "yforce",
+      "syntax": "yforce",
+      "description": "The y-component of the force resulting from fluid interactions."
+    },
+    {
+      "name": "zforce",
+      "syntax": "zforce",
+      "description": "The z-component of the force resulting from fluid interactions."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra [index <i>] [type {scalar | tensor | vector}]",
+      "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Take the history of the CFD ball with this ID.",
+      "group": "target selection"
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Take the history of the CFD ball closest to this position.",
+      "group": "target selection"
+    }
+  ],
+  "examples": [
+    {
+      "command": "ball cfd history ball cfd force id 1",
+      "description": "Track the fluid force on ball 1 (7.0/9.0 form)"
+    }
+  ],
+  "notes": [
+    "On 7.00 and 9.8 the quantity must be prefixed by 'ball cfd' ('ball cfd history ball cfd force id 1'); the bare quantity form shown in the manuals is rejected ('Expected tokens: Keywords: ball name'). On 6.00 the bare form works and the prefixed form is rejected."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): on 6.00 force/xforce histories created by id, position and name with the bare quantity; on 7.00 and 9.8 created via the 'ball cfd' prefixed form, with the engine enumerating extra, force, xforce, yforce and zforce as the quantities."
+  ]
+}

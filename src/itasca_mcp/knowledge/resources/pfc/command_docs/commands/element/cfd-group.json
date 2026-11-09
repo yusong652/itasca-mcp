@@ -1,0 +1,50 @@
+{
+  "category": "element",
+  "search_keywords": [
+    "cfd",
+    "element",
+    "group",
+    "slot"
+  ],
+  "description": "Specify CFD element group names. Use of the group logic is described in Groups. By default, s is assigned to the group slot Default. Use the add keyword to assign the group name to the next available slot and the remove keyword to remove s from all slots.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.cfdarray.set_group(name, slot)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "element cfd group",
+  "syntax": "element cfd group <s> [keyword ...] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot."
+    },
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "Remove s from all slots."
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <slot>",
+      "description": "Set group slot slot to s. By default, slot Default is used."
+    }
+  ],
+  "examples": [
+    {
+      "command": "element cfd group 'fluid-zone'",
+      "description": "Assign the group in the Default slot"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): element.cfd.isgroup reads True after assignment (Default and named slot) and False after remove on all three consoles - unlike the ball/clump cfd groups, element groups persist on every version."
+  ]
+}

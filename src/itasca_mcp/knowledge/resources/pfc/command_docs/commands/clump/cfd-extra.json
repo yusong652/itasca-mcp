@@ -1,0 +1,35 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "cfd",
+    "extra"
+  ],
+  "description": "Set clump CFD extra variables. The extra variable can be of any type and is associated with the index i as if stored in an array.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('clump cfd extra ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "clump cfd extra",
+  "syntax": "clump cfd extra <i> <a> [range]",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "clump cfd extra 1 2.5",
+      "description": "Store a value in extra slot 1"
+    }
+  ],
+  "notes": [
+    "On 7.00 and 9.8 the command is accepted and echoes success, but the value is not retrievable afterwards: clump.cfd.extra reads 0 and 'clump cfd list extra' shows nothing. On 6.00 the value persists."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): on 6.00 the value reads back exactly via clump.cfd.extra; on 7.00 and 9.8 the command is accepted but the stored value is lost (reads 0) - treat it as unreliable there."
+  ]
+}

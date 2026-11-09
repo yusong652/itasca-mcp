@@ -1,0 +1,56 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "cfd",
+    "list"
+  ],
+  "description": "List CFD clump information. By default, the CFD clump ID and position are listed. Use the attribute keyword to list all CFD clump attributes that can be listed.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('clump cfd list ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "clump cfd list",
+  "syntax": "clump cfd list [keyword] [range]",
+  "keywords": [
+    {
+      "name": "attribute",
+      "syntax": "attribute [ <s> ]",
+      "description": "List CFD clump attributes. If no s is given, then the available attributes are listed. If s is specified, then the value of that attribute is listed for each CFD clump. Attributes are characteristics of CFD clumps such as force and porosity."
+    },
+    {
+      "name": "elements",
+      "syntax": "elements",
+      "description": "List the CFD elements to which a clump contributes."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i>",
+      "description": "List the extra variables at index i."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s>",
+      "description": "List the group names at slot s."
+    }
+  ],
+  "examples": [
+    {
+      "command": "clump cfd list attribute force",
+      "description": "List the fluid force per object"
+    }
+  ],
+  "notes": [
+    "Give the optional attribute name to 'list attribute' as a bare token; a quoted string errors as an unused parameter on all versions. 'list group <s>' takes a slot name, not a group name."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): list and the attribute, elements, extra and group sub-keywords executed on all three consoles."
+  ]
+}

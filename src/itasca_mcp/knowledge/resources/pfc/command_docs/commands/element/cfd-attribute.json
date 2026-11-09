@@ -1,0 +1,121 @@
+{
+  "category": "element",
+  "search_keywords": [
+    "cfd",
+    "element",
+    "attribute",
+    "fluid",
+    "velocity",
+    "pressure",
+    "density",
+    "viscosity"
+  ],
+  "description": "Set the value of element CFD attributes. This command is a synonym for the element cfd initialize command. Individual attributes can be listed with the element cfd list command, and all element CFD attributes can be visualized.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.cfdarray.set_density()/set_velocity()/set_pressure()/set_viscosity()/set_pressure_gradient() (vectorized numpy arrays over all elements)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "element cfd attribute",
+  "syntax": "element cfd attribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density <f>",
+      "description": "Fluid density."
+    },
+    {
+      "name": "dragforce",
+      "syntax": "dragforce <v>",
+      "description": "Magnitude of the drag force."
+    },
+    {
+      "name": "dragforce-x",
+      "syntax": "dragforce-x <f>",
+      "description": "The \\(x\\) -component of the drag force."
+    },
+    {
+      "name": "dragforce-y",
+      "syntax": "dragforce-y <f>",
+      "description": "The \\(y\\) -component of the drag force."
+    },
+    {
+      "name": "dragforce-z",
+      "syntax": "dragforce-z <f>",
+      "description": "The \\(z\\) -component of the drag force."
+    },
+    {
+      "name": "presgradient",
+      "syntax": "presgradient <v>",
+      "description": "Magnitude of the pressure gradient."
+    },
+    {
+      "name": "presgradient-x",
+      "syntax": "presgradient-x <f>",
+      "description": "The \\(x\\) -component of the pressure gradient."
+    },
+    {
+      "name": "presgradient-y",
+      "syntax": "presgradient-y <f>",
+      "description": "The \\(y\\) -component of the pressure gradient."
+    },
+    {
+      "name": "presgradient-z",
+      "syntax": "presgradient-z <f>",
+      "description": "The \\(z\\) -component of the pressure gradient."
+    },
+    {
+      "name": "pressure",
+      "syntax": "pressure <f>",
+      "description": "Fluid pressure."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <v>",
+      "description": "Magnitude of the fluid velocity."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x <f>",
+      "description": "The \\(x\\) -component of the fluid velocity."
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y <f>",
+      "description": "The \\(y\\) -component of the fluid velocity."
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z <f>",
+      "description": "The \\(z\\) -component of the fluid velocity."
+    },
+    {
+      "name": "viscosity",
+      "syntax": "viscosity <f>",
+      "description": "Fluid viscosity."
+    }
+  ],
+  "examples": [
+    {
+      "command": "element cfd attribute density 1000 viscosity 0.001",
+      "description": "Set the fluid density and viscosity"
+    },
+    {
+      "command": "element cfd attribute velocity (0.1,0.2,0.3)",
+      "description": "Set the fluid velocity"
+    }
+  ],
+  "notes": [
+    "The 6.0 manual spells the component keywords xvelocity, xdragforce, xpresgradient and so on; live, 6.00 accepts only the suffixed spellings (velocity-x, dragforce-x, presgradient-x, ...), exactly as 7.00 and 9.8 do."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): density, viscosity, pressure, velocity (vector and components), dragforce-x and presgradient-x set and read back exactly via element.cfd.* FISH intrinsics on all three consoles; the x-prefixed 6.0-manual spellings are rejected on all three."
+  ]
+}

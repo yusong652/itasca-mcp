@@ -1,0 +1,31 @@
+{
+  "category": "cfd",
+  "search_keywords": [
+    "cfd",
+    "slave",
+    "coupling",
+    "proxy"
+  ],
+  "description": "Give control of PFC to the CFD proxy server. PFC will return from slave mode when the coupled calculation is complete or if the Esc key is pressed. After pressing Esc, giving the command again will rejoin slave mode and continue the coupled calculation. The start, end, and interval of the coupled calculation are specified in the GiD program.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('cfd slave ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "cfd slave",
+  "syntax": "cfd slave",
+  "keywords": [],
+  "notes": [
+    "Requires an active socket: without a prior successful cfd connect the command is rejected with 'Socket not active, unable to slave. Did you call CCFD CONNECT?' on 6.00, 7.00 and 9.8."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): rejected with the socket-not-active error on all three consoles (no proxy server available for a full coupling test)."
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "category": "element",
+  "search_keywords": [
+    "cfd",
+    "element",
+    "history",
+    "pressure",
+    "velocity",
+    "porosity"
+  ],
+  "description": "Add an element CFD history.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('element cfd history ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "element cfd history",
+  "syntax": "element cfd history [name <s>] [id <i>] keyword ...",
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density",
+      "description": "Fluid density."
+    },
+    {
+      "name": "dragforce",
+      "syntax": "dragforce",
+      "description": "Magnitude of the drag force."
+    },
+    {
+      "name": "dragforce-x",
+      "syntax": "dragforce-x",
+      "description": "The x-component of the drag force."
+    },
+    {
+      "name": "dragforce-y",
+      "syntax": "dragforce-y",
+      "description": "The y-component of the drag force."
+    },
+    {
+      "name": "dragforce-z",
+      "syntax": "dragforce-z",
+      "description": "The z-component of the drag force."
+    },
+    {
+      "name": "porosity",
+      "syntax": "porosity",
+      "description": "Fluid porosity."
+    },
+    {
+      "name": "presgradient",
+      "syntax": "presgradient",
+      "description": "Magnitude of the pressure gradient."
+    },
+    {
+      "name": "presgradient-x",
+      "syntax": "presgradient-x",
+      "description": "The x-component of the fluid pressure gradient."
+    },
+    {
+      "name": "pregradient-y",
+      "syntax": "pregradient-y",
+      "description": "The y-component of the fluid pressure gradient (the engine's own spelling)."
+    },
+    {
+      "name": "presgradient-z",
+      "syntax": "presgradient-z",
+      "description": "The z-component of the fluid pressure gradient."
+    },
+    {
+      "name": "pressure",
+      "syntax": "pressure",
+      "description": "Fluid pressure."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity",
+      "description": "Magnitude of the fluid velocity."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x",
+      "description": "The x-component of the fluid velocity."
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y",
+      "description": "The y-component of the fluid velocity."
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z",
+      "description": "The z-component of the fluid velocity."
+    },
+    {
+      "name": "viscosity",
+      "syntax": "viscosity",
+      "description": "Fluid viscosity."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra",
+      "description": "Take a history of an extra variable (no index keyword here).",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Take the history of the CFD element with this ID.",
+      "group": "target selection"
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Take the history of the CFD element closest to this position.",
+      "group": "target selection"
+    }
+  ],
+  "examples": [
+    {
+      "command": "element cfd history pressure id 1",
+      "description": "Track the fluid pressure of element 1"
+    },
+    {
+      "command": "element cfd history velocity-x id 1",
+      "description": "Track a velocity component"
+    }
+  ],
+  "notes": [
+    "The manuals of every version spell the component quantities xvelocity, xdragforce, xpresgradient, ypregradient, ...; live, all of 6.00, 7.00 and 9.8 accept only the suffixed forms - including the engine's own typo 'pregradient-y' for the y pressure-gradient component (presgradient-y is rejected).",
+    "The extra history takes no index keyword here ('Unused extra parameter (index)'), unlike the ball/clump cfd histories."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): every suffixed quantity (including pregradient-y) created by id, position and name on all three consoles; the manual's x-prefixed spellings and presgradient-y rejected on all three; quantity set confirmed against the engine's own keyword enumeration."
+  ]
+}

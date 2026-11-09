@@ -254,6 +254,54 @@
           "syntax": "ball thermal property <s> <a> [<s> <a> ...] [range]",
           "python_available": true,
           "python_alternative": "itasca.ball.thermal.find(id).set_prop(name, value)"
+        },
+        {
+          "name": "cfd-attribute",
+          "file": "pfc/command_docs/commands/ball/cfd-attribute.json",
+          "short_description": "Set the value of ball CFD attributes",
+          "syntax": "ball cfd attribute keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd attribute ...')"
+        },
+        {
+          "name": "cfd-extra",
+          "file": "pfc/command_docs/commands/ball/cfd-extra.json",
+          "short_description": "Set ball CFD extra variables",
+          "syntax": "ball cfd extra <i> <a> [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd extra ...')"
+        },
+        {
+          "name": "cfd-group",
+          "file": "pfc/command_docs/commands/ball/cfd-group.json",
+          "short_description": "Specify CFD ball group names",
+          "syntax": "ball cfd group <s> [keyword ...] [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd group ...')"
+        },
+        {
+          "name": "cfd-history",
+          "file": "pfc/command_docs/commands/ball/cfd-history.json",
+          "short_description": "Add a ball CFD history",
+          "syntax": "ball cfd history [name <s>] ball cfd keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd history ...')"
+        },
+        {
+          "name": "cfd-initialize",
+          "file": "pfc/command_docs/commands/ball/cfd-initialize.json",
+          "short_description": "Modify ball CFD attributes",
+          "syntax": "ball cfd initialize keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd initialize ...')"
+        },
+        {
+          "name": "cfd-list",
+          "file": "pfc/command_docs/commands/ball/cfd-list.json",
+          "short_description": "List CFD ball information",
+          "syntax": "ball cfd list [keyword] [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball cfd list ...')"
         }
       ]
     },
@@ -618,6 +666,54 @@
           "syntax": "clump thermal property <s> <a> [<s> <a> ...] [range]",
           "python_available": true,
           "python_alternative": "itasca.clump.thermal.find(id).set_prop(name, value)"
+        },
+        {
+          "name": "cfd-attribute",
+          "file": "pfc/command_docs/commands/clump/cfd-attribute.json",
+          "short_description": "Set the value of clump CFD attributes",
+          "syntax": "clump cfd attribute keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd attribute ...')"
+        },
+        {
+          "name": "cfd-extra",
+          "file": "pfc/command_docs/commands/clump/cfd-extra.json",
+          "short_description": "Set clump CFD extra variables",
+          "syntax": "clump cfd extra <i> <a> [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd extra ...')"
+        },
+        {
+          "name": "cfd-group",
+          "file": "pfc/command_docs/commands/clump/cfd-group.json",
+          "short_description": "Specify CFD clump group names",
+          "syntax": "clump cfd group <s> [keyword ...] [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd group ...')"
+        },
+        {
+          "name": "cfd-history",
+          "file": "pfc/command_docs/commands/clump/cfd-history.json",
+          "short_description": "Add a clump CFD history",
+          "syntax": "clump cfd history [name <s>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd history ...')"
+        },
+        {
+          "name": "cfd-initialize",
+          "file": "pfc/command_docs/commands/clump/cfd-initialize.json",
+          "short_description": "Modify clump CFD attributes",
+          "syntax": "clump cfd initialize keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd initialize ...')"
+        },
+        {
+          "name": "cfd-list",
+          "file": "pfc/command_docs/commands/clump/cfd-list.json",
+          "short_description": "List CFD clump information",
+          "syntax": "clump cfd list [keyword] [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump cfd list ...')"
         }
       ]
     },
@@ -3702,6 +3798,207 @@
           "syntax": "wall thermal property <s> <a> [<s> <a> ...] [range]",
           "python_available": true,
           "python_alternative": "itasca.wall.thermal.find(id).set_prop(name, value)"
+        }
+      ]
+    },
+    "cfd": {
+      "full_name": "CFD Coupling Commands",
+      "description": "Coarse-grid CFD coupling (CCFD module) for PFC3D: fluid mesh import, coupling settings, drag/buoyancy terms, and socket coupling to an external CFD program.",
+      "command_prefix": "cfd",
+      "related_categories": [
+        "ball",
+        "clump",
+        "element",
+        "model"
+      ],
+      "notes": [
+        "3D only: PFC2D 6.00, 7.00 and 9.8 reject 'model configure cfd' and have no cfd command.",
+        "Requires 'model configure cfd' before any cfd command."
+      ],
+      "commands": [
+        {
+          "name": "buoyancy",
+          "file": "pfc/command_docs/commands/cfd/buoyancy.json",
+          "short_description": "Activate/deactivate buoyancy terms",
+          "syntax": "cfd buoyancy <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd buoyancy ...')"
+        },
+        {
+          "name": "connect",
+          "file": "pfc/command_docs/commands/cfd/connect.json",
+          "short_description": "Establish the socket connection to the CFD proxy server",
+          "syntax": "cfd connect [port <i>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd connect ...')"
+        },
+        {
+          "name": "coupling",
+          "file": "pfc/command_docs/commands/cfd/coupling.json",
+          "short_description": "Activate/deactivate PFC coupling",
+          "syntax": "cfd coupling <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd coupling ...')"
+        },
+        {
+          "name": "cycling",
+          "file": "pfc/command_docs/commands/cfd/cycling.json",
+          "short_description": "Set the PFC cycling status",
+          "syntax": "cfd cycling <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd cycling ...')"
+        },
+        {
+          "name": "interval",
+          "file": "pfc/command_docs/commands/cfd/interval.json",
+          "short_description": "Specify the update interval",
+          "syntax": "cfd interval <i>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd interval ...')"
+        },
+        {
+          "name": "list",
+          "file": "pfc/command_docs/commands/cfd/list.json",
+          "short_description": "List the CFD settings",
+          "syntax": "cfd list",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd list ...')"
+        },
+        {
+          "name": "output",
+          "file": "pfc/command_docs/commands/cfd/output.json",
+          "short_description": "Change the coupling outputs",
+          "syntax": "cfd output keyword",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd output ...')"
+        },
+        {
+          "name": "porosity",
+          "file": "pfc/command_docs/commands/cfd/porosity.json",
+          "short_description": "Specify the porosity calculation mode",
+          "syntax": "cfd porosity keyword",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd porosity ...')"
+        },
+        {
+          "name": "read",
+          "file": "pfc/command_docs/commands/cfd/read.json",
+          "short_description": "Read a fluid mesh or fluid property from files",
+          "syntax": "cfd read keyword",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd read ...')"
+        },
+        {
+          "name": "relaxation",
+          "file": "pfc/command_docs/commands/cfd/relaxation.json",
+          "short_description": "Set the relaxation parameter",
+          "syntax": "cfd relaxation <f>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd relaxation ...')"
+        },
+        {
+          "name": "restart",
+          "file": "pfc/command_docs/commands/cfd/restart.json",
+          "short_description": "Reset the coupling time and coupling interval to the starting state",
+          "syntax": "cfd restart",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd restart ...')"
+        },
+        {
+          "name": "slave",
+          "file": "pfc/command_docs/commands/cfd/slave.json",
+          "short_description": "Give control of PFC to the CFD proxy server",
+          "syntax": "cfd slave",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd slave ...')"
+        },
+        {
+          "name": "term",
+          "file": "pfc/command_docs/commands/cfd/term.json",
+          "short_description": "Modify terms used in drag force calculations",
+          "syntax": "cfd term keyword",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd term ...')"
+        },
+        {
+          "name": "update",
+          "file": "pfc/command_docs/commands/cfd/update.json",
+          "short_description": "Update the porosity, particle-applied force, and drag force",
+          "syntax": "cfd update",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd update ...')"
+        },
+        {
+          "name": "vof",
+          "file": "pfc/command_docs/commands/cfd/vof.json",
+          "short_description": "Enable/disable the volume of fluid (VOF) mode",
+          "syntax": "cfd vof <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('cfd vof ...')"
+        }
+      ]
+    },
+    "element": {
+      "full_name": "CFD Element Commands",
+      "description": "Per-element fluid state of the CCFD coarse-grid coupling: density, viscosity, velocity, pressure and drag of the fluid mesh elements.",
+      "command_prefix": "element",
+      "related_categories": [
+        "cfd",
+        "ball",
+        "clump"
+      ],
+      "notes": [
+        "3D only; part of the CCFD module ('model configure cfd').",
+        "Elements exist after 'cfd read nodes/elements' or itasca.cfdarray.create_mesh()."
+      ],
+      "commands": [
+        {
+          "name": "cfd-attribute",
+          "file": "pfc/command_docs/commands/element/cfd-attribute.json",
+          "short_description": "Set the value of element CFD attributes",
+          "syntax": "element cfd attribute keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.cfdarray.set_density()/set_velocity()/set_pressure()/set_viscosity()/set_pressure_gradient() (vectorized numpy arrays over all elements)"
+        },
+        {
+          "name": "cfd-extra",
+          "file": "pfc/command_docs/commands/element/cfd-extra.json",
+          "short_description": "Set element CFD extra variables",
+          "syntax": "element cfd extra <i> <a> [range]",
+          "python_available": true,
+          "python_alternative": "itasca.cfdarray.set_extra(index, values)"
+        },
+        {
+          "name": "cfd-group",
+          "file": "pfc/command_docs/commands/element/cfd-group.json",
+          "short_description": "Specify CFD element group names",
+          "syntax": "element cfd group <s> [keyword ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.cfdarray.set_group(name, slot)"
+        },
+        {
+          "name": "cfd-history",
+          "file": "pfc/command_docs/commands/element/cfd-history.json",
+          "short_description": "Add an element CFD history",
+          "syntax": "element cfd history [name <s>] [id <i>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('element cfd history ...')"
+        },
+        {
+          "name": "cfd-initialize",
+          "file": "pfc/command_docs/commands/element/cfd-initialize.json",
+          "short_description": "Modify element CFD attributes",
+          "syntax": "element cfd initialize keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.cfdarray.set_density()/set_velocity()/set_pressure()/set_viscosity()/set_pressure_gradient() (vectorized numpy arrays over all elements)"
+        },
+        {
+          "name": "cfd-list",
+          "file": "pfc/command_docs/commands/element/cfd-list.json",
+          "short_description": "List CFD element information",
+          "syntax": "element cfd list [keyword] [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('element cfd list ...')"
         }
       ]
     }

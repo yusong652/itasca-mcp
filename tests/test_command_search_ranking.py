@@ -42,7 +42,9 @@ def test_ball_velocity_ranks_ball_attribute_first(version: str) -> None:
         # solve limits / calculation modes
         ("model ratio", "model solve"),
         ("model convergence", "model solve"),
-        ("model cfd", "model configure"),
+        # "model cfd" now legitimately lands on the cfd command family itself;
+        # the configure-flavoured phrasing still ranks the owner of the keyword first.
+        ("model configure cfd", "model configure"),
         # recorded quantities
         ("contact force", "contact history"),
         ("ball history velocity", "ball history"),
