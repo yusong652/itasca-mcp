@@ -215,20 +215,10 @@ def _entry_problems(where: str, entries: Any) -> list[str]:
 _RESOURCES = Path(__file__).resolve().parents[1] / "src" / "itasca_mcp" / "knowledge" / "resources"
 
 # Subtrees owned by later migration steps; their internals are not judged yet.
-# (The flac3d_*/\*_3d_only property-set and element blocks: dimension step B.)
-_DEFERRED_SUBTREES = {
-    "legacy_documentation",
-    "dimension_differences",
-    "independent_dimensions",
-    "flac3d_liner_property_set",
-    "flac3d_shell_property_set",
-    "flac3d_geogrid_property_set",
-    "keywords_3d_only",
-    "related_3d_only",
-    "mpoint2d_only_elements",
-    "dimension_note",
-}
-# Whole categories owned by the dimension step.
+# (legacy_documentation: the command version-block restructure, step A.)
+_DEFERRED_SUBTREES = {"legacy_documentation"}
+# The mpoint dimension-differences category is the curated 2D-vs-3D correction
+# page; its structured diff lists are its content, not drift.
 _DEFERRED_PATHS = ("references/dimension-differences/",)
 
 # ---------------------------------------------------------------------------
@@ -318,6 +308,23 @@ _BANNED_KEYS = {
 }
 _BANNED_PREFIXES = ("live_verification", "live_enumeration", "binary_validated")
 
+# Section B: dimension is the structured {"2D","3D"} tag; every other spelling
+# of "this differs between the 2D and 3D builds" is retired.
+_BANNED_KEYS |= {
+    "dimension_differences",
+    "independent_dimensions",
+    "dimension_caveat",
+    "dimension_note",
+    "keywords_3d_only",
+    "related_3d_only",
+    "3d_only_keywords",
+    "mpoint2d_only_keywords",
+    "mpoint2d_only_elements",
+    "flac3d_liner_property_set",
+    "flac3d_shell_property_set",
+    "flac3d_geogrid_property_set",
+}
+
 # Section E: one structured keyword list. Every parallel *_keywords spelling is
 # retired except the curated search field and the range-element sub-keywords.
 _ALLOWED_KEYWORD_FIELDS = {"search_keywords", "sub_keywords"}
@@ -363,6 +370,16 @@ def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool, parent_
                 isinstance(value, str) or (isinstance(value, list) and all(isinstance(v, str) for v in value))
             ):
                 problems.append(f"{rel} @{jp}: 'source' is not str | list[str]")
+            if key == "dimension" and value not in ("2D", "3D"):
+                problems.append(f"{rel} @{jp}: 'dimension' is {value!r}, not 2D|3D")
+            if (
+                key == "notes"
+                and isinstance(value, list)
+                and any(
+                    isinstance(note, str) and note.startswith(("2D builds only", "3D builds only")) for note in value
+                )
+            ):
+                problems.append(f"{rel} @{jp}: prose dimension note; use the dimension field")
             if key not in _DEFERRED_SUBTREES:
                 problems.extend(_shape_problems(value, rel, f"{jp}.{key}", in_command_docs, key))
     elif isinstance(node, list):

@@ -574,6 +574,8 @@ def main() -> None:
             n = sum(1 for k in seen_names if k.split(".")[0] == ns)
             if n:
                 excluded[ns] = {"count": n, "reason": reason}
+        extras = dict(curated["engine_index_extras"].get(engine, {}))
+        extra_verification = extras.pop("verification", [])
         index = {
             "version": "1.0",
             "software": engine,
@@ -586,8 +588,9 @@ def main() -> None:
             "kernel_verified": kernel_verified[engine],
             "namespaces": namespaces,
             "excluded_namespaces": excluded,
-            **curated["engine_index_extras"].get(engine, {}),
-            "verification": [VERIFICATION[engine] + (VERIFICATION_2D if engine in LIVE_2D else "")],
+            **extras,
+            "verification": [VERIFICATION[engine] + (VERIFICATION_2D if engine in LIVE_2D else "")]
+            + extra_verification,
         }
         out = RES / engine / "fish_docs" / "index.json"
         out.parent.mkdir(parents=True, exist_ok=True)

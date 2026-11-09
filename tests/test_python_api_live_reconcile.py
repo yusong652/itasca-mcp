@@ -52,7 +52,7 @@ async def test_live_families_are_browsable(software: str, api: str) -> None:
 def test_flac_interface_dimension_and_version_entries() -> None:
     node = {m["name"]: m for m in PythonAPILoader.load_object("Node", software="flac")["methods"]}
 
-    assert "2D builds only." in node["length"]["notes"]
+    assert node["length"]["dimension"] == "2D"
     assert any("reads 0.0 before the first cycle" in n for n in node["length"]["notes"])
     assert node["has_prop"]["availability"] == {"versions": ["7.0"]}
     assert any("not usable" in n for n in node["has_prop"]["notes"])
@@ -61,8 +61,9 @@ def test_flac_interface_dimension_and_version_entries() -> None:
 def test_pfc_2d_rotation_is_documented_in_degrees_and_euler_is_3d_only() -> None:
     funcs = {f["name"]: f for f in PythonAPILoader.load_module("ballarray", software="pfc")["functions"]}
 
-    assert "2D builds only." in funcs["rotation"]["notes"]
+    assert funcs["rotation"]["dimension"] == "2D"
     assert any("Angle in degrees" in n for n in funcs["rotation"]["notes"])
+    assert funcs["euler"]["dimension"] == "3D"
     assert any("2D builds expose rotation" in n for n in funcs["euler"]["notes"])
 
 

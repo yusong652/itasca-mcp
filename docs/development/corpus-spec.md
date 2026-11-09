@@ -87,30 +87,29 @@ New file shape: one body, availability where it binds —
   version-map resolver; the browse payload's advertised `versions` list is
   derived from `availability`. Tool response shape does not change.
 
-## B. Dimension (2D/3D)
+## B. Dimension (2D/3D) (done 2026-11-09)
 
-Today: fish has structured `dimension: "2D" | "3D"` (842 entries);
-python_sdk_docs has 263 prose notes "2D builds only." / "3D builds only.";
-references has free-text `dimension` (88 files — values include `"3D"`,
-`"mixed"`, whole sentences) plus `dimension_differences` (16),
-`dimension_caveat`, `dimension_note`, `by_dimension`, `dimension-differences`,
-and parallel list fields (`keywords_3d_only`, `mpoint2d_only_keywords`,
-`flac2d_only_keywords`, `3d_only_keywords`, ...).
+Outcome (`scripts/corpus/migrate_dimension.py`, 141 files + the mpoint fish
+index via the generator): 263 python "2D/3D builds only." notes became
+`dimension` tags (combined sentences keep their remainder as a note); the
+`dimension_differences`/`_caveat`/`_note` blocks and every "X-only" list
+dissolved; the parked FLAC3D-only property sets on liner/beam-pile became
+`property_groups` entries tagged `dimension: "3D"`.
 
 **Canonical form:**
 
-- `dimension: "2D" | "3D"` — structured, allowed on any entry, present only
-  when the thing is restricted to one build dimension. Omitted = both.
-- All prose about *how* the dimensions differ goes in `dimension_notes:
-  list[str]` (one canonical name; `dimension_differences`/`_caveat`/`_note`
-  all fold in).
-- Parallel "X-only keyword" list fields dissolve: each keyword entry carries
-  its own `dimension` tag inside the structured `keywords` list.
-- python_sdk_docs: the 263 "2D/3D builds only." notes convert to
-  `dimension` on the method/function entry (mechanical: exact-string match),
-  keeping any surrounding prose in `notes`.
-- references `"mixed"` means per-member differences: the file loses its
-  top-level `dimension` and tags members instead.
+- `dimension: "2D" | "3D"` — structured, allowed on any entry (keywords,
+  attributes, models, property_groups, python functions/methods/modules),
+  present only when the thing is restricted to one build dimension.
+  Omitted = both. The sweep pins the value set at every level.
+- Dimension prose goes in plain `notes` (decided during the fold: section C
+  made notes the only free-prose field, so the draft's separate
+  `dimension_notes` was dropped); live 2D-vs-3D probe records go to
+  `verification`.
+- Top-level `dimension` disappeared where the engine has no 2D product
+  (3dec, massflow) and where it said `"mixed"` — members carry the tags.
+- The mpoint `references/dimension-differences/` category stays as the
+  curated 2D-vs-3D correction page (sweep-exempt).
 
 ## C. Notes and ad-hoc sections (done 2026-11-09)
 

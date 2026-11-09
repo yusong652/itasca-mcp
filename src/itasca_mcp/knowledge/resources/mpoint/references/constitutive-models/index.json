@@ -51,7 +51,9 @@
       "live_property_count": 76,
       "requires": "model configure imass",
       "property_naming": "snake_case",
-      "dimension_caveat": "Enumerated by 'mpoint cmodel assign' on MPoint2D and rejected when you try it: 'Not configured for model cavehoek. See the MODEL CONFIG command.' But MPoint2D's 'model configure' offers no 'imass' option, so there is no way to satisfy it. A dead entry in the 2D keyword table -- and a reminder that appearing in an enumeration is not the same as being usable."
+      "notes": [
+        "MPoint2D: Enumerated by 'mpoint cmodel assign' on MPoint2D and rejected when you try it: 'Not configured for model cavehoek. See the MODEL CONFIG command.' But MPoint2D's 'model configure' offers no 'imass' option, so there is no way to satisfy it. A dead entry in the 2D keyword table -- and a reminder that appearing in an enumeration is not the same as being usable."
+      ]
     },
     {
       "name": "clay-and-sand",
@@ -68,7 +70,7 @@
       "description": "Note **Not available in FLAC2D . The Columnar-Basalt (COMBA) model (Detournay et al 2016, Meng et al 2020) accounts for ",
       "documented_property_count": 32,
       "live_property_count": 96,
-      "dimension": "3D only -- not offered by MPoint2D"
+      "dimension": "3D"
     },
     {
       "name": "concrete",
@@ -151,7 +153,7 @@
       "live_property_count": 68,
       "requires": "model configure imass",
       "property_naming": "snake_case",
-      "dimension": "3D only -- not offered by MPoint2D"
+      "dimension": "3D"
     },
     {
       "name": "jones-wilkins-lee",
@@ -192,7 +194,7 @@
       "description": "Note **Not available in FLAC2D . The Mohr-Coulomb model is not well suited for simulation of tensile failure (fracturing",
       "documented_property_count": 15,
       "live_property_count": 16,
-      "dimension": "3D only -- not offered by MPoint2D"
+      "dimension": "3D"
     },
     {
       "name": "munson-dawson",
@@ -223,7 +225,7 @@
       "description": "Note **Not available in FLAC2D . The orthotropic model accounts for three orthogonal planes of elastic symmetry. Princip",
       "documented_property_count": 17,
       "live_property_count": 18,
-      "dimension": "3D only -- not offered by MPoint2D"
+      "dimension": "3D"
     },
     {
       "name": "p2psand",
@@ -359,40 +361,20 @@
     "cavehoek and imass are listed by 'mpoint cmodel assign' but refuse to assign until the model is configured: run 'model configure imass' right after 'model new'. Their properties are snake_case (in_stren_gsi, hb_cohesion, ...), not the kebab-case every other model uses.",
     "Property availability is per-model, not global: 'mpoint property <name>' is rejected unless <name> belongs to the assigned model's table.",
     "mpoint cmodel assign <name> [range ...]",
-    "mpoint property <prop> <value> [range ...]"
+    "mpoint property <prop> <value> [range ...]",
+    "mpoint2d count: 39",
+    "cavehoek: Enumerated by 'mpoint cmodel assign' on MPoint2D and rejected when you try it: 'Not configured for model cavehoek. See the MODEL CONFIG command.' But MPoint2D's 'model configure' offers no 'imass' option, so there is no way to satisfy it. A dead entry in the 2D keyword table -- and a reminder that appearing in an enumeration is not the same as being usable."
   ],
-  "dimension_differences": {
-    "3d_only": [
-      "columnar-basalt",
-      "imass",
-      "mohr-coulomb-tension",
-      "orthotropic"
-    ],
-    "mpoint2d_count": 39,
-    "listed_but_unreachable_in_2d": {
-      "cavehoek": "Enumerated by 'mpoint cmodel assign' on MPoint2D and rejected when you try it: 'Not configured for model cavehoek. See the MODEL CONFIG command.' But MPoint2D's 'model configure' offers no 'imass' option, so there is no way to satisfy it. A dead entry in the 2D keyword table -- and a reminder that appearing in an enumeration is not the same as being usable."
-    },
-    "verified": {
-      "grade": "state",
-      "engines": [
-        "MPoint3D 9.7",
-        "MPoint2D 9.7"
-      ],
-      "date": "2026-09-14",
-      "method": "Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
-      "identical": "The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
-      "resolved": "'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
-      "traps": [
-        "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
-        "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
-      ]
-    }
-  },
   "verification": [
     "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): For each model: 'mpoint cmodel assign <model>' onto 8 generated material points, then 'mpoint property zzbogus 1.0' to make the engine enumerate that model's legal property keywords. The returned sets were diffed against the _common docs.",
     "Result: All 43 models assign successfully (2 of them only after 'model configure imass'). Every property name in the _common docs is accepted by the engine. The diff reduced to three facts, all now reflected in the docs: 'density' is universal and was missing everywhere; double-yield spells it 'strain-tension-plastic' (not 'tensile'); and columnar-basalt's '-i' keywords expand to 1..4.",
     "Trap: The enumerated keyword table under-reports: 'strain-volume-plastic' is accepted by both cap-yield and double-yield but is listed by neither. Absence from the table is not proof a keyword is rejected -- only a rejection is.",
-    "Trap: 'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks."
+    "Trap: 'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks.",
+    "Live-verified 2026-09-14 on MPoint3D 9.7, MPoint2D 9.7 (state grade): Re-ran the enumeration probes from Batches 2-6 against the 2D binary and executed the differences in both directions -- confirming that each 2D-only keyword works in 2D and each 3D-only keyword is rejected there.",
+    "Identical: The 'mpoint' command family is the same in both: 28 subcommands, letter for letter. So are the 'mpoint initialize' field list (25 entries) and the six plot item type names. The command docs need no dimension gating; only the geometry vocabulary around them differs.",
+    "Resolved: 'zone create2d' was recorded in Batch 1 as absent from MPoint. It is present on MPoint2D (spelled 'create2D' in the keyword table). The original verdict described the 3D binary, not the product -- which is what prompted this pass.",
+    "Trap: Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
+    "Trap: An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
   ],
   "property_groups": [
     {
