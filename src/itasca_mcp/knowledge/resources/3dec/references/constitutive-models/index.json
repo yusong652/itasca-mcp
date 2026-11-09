@@ -1,17 +1,6 @@
 {
   "type": "constitutive_model_properties",
   "description": "3DEC zone (deformable-block) constitutive model properties — the property vocabulary for 'block zone cmodel assign' + 'block zone property'. Shared 9.0 kernel with FLAC3D (docs live in _common); 3DEC exposes the 26 models listed here.",
-  "usage_contexts": [
-    "block zone cmodel assign <name> [range ...]",
-    "block zone property <prop> <value> [range cmodel-name <name>]",
-    "Python: itasca.block.zone.Zone.set_prop('<prop>', value)"
-  ],
-  "property_metadata_fields": {
-    "keyword": "Property name used in 'block zone property' commands",
-    "symbol": "Mathematical symbol used in the model documentation",
-    "description": "Description including physical meaning and units",
-    "type": "Coarse data type (FLT=float, BOOL=boolean) — heuristic"
-  },
   "models": [
     {
       "name": "anisotropic",
@@ -235,7 +224,10 @@
     }
   ],
   "notes": [
-    "3DEC 7.00 Release 161 (2026-08-21): 'block zone cmodel ?' enumerates 24 tokens = 22 models + assign/list + 'load' (a plugin-DLL load subcommand, not a model). Absent from 7.0: columnar-basalt, concrete, curved-mohr-coulomb, munson-dawson, von-mises (9.x-only; availability marked per model). All other documented models are present at the 7.0 first slot."
+    "3DEC 7.00 Release 161 (2026-08-21): 'block zone cmodel ?' enumerates 24 tokens = 22 models + assign/list + 'load' (a plugin-DLL load subcommand, not a model). Absent from 7.0: columnar-basalt, concrete, curved-mohr-coulomb, munson-dawson, von-mises (9.x-only; availability marked per model). All other documented models are present at the 7.0 first slot.",
+    "block zone cmodel assign <name> [range ...]",
+    "block zone property <prop> <value> [range cmodel-name <name>]",
+    "Python: itasca.block.zone.Zone.set_prop('<prop>', value)"
   ],
   "verification": [
     "Live-verified 2026-08-14 against 3DEC 9.7.47: 'block zone cmodel assign' enumerates exactly these 28 zone models (incl. null): anisotropic, burgers, burgers-mohr, columnar-basalt, concrete, curved-mohr-coulomb, double-yield, drucker-prager, elastic, hoek-brown, imass, maxwell, modified-cam-clay, mohr-coulomb, mohr-coulomb-tension, munson-dawson, null, orthotropic, power, power-mohr, softening-ubiquitous, strain-softening, ubiquitous-anisotropic, ubiquitous-joint, von-mises, wipp, wipp-drucker, wipp-salt. This is a strict subset of the FLAC3D 41-model set (no cavehoek/cap-yield/hoek-brown-pac/jointed-* etc.); zone cmodel property semantics are shared with FLAC and deliberately not duplicated here."

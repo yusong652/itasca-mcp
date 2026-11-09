@@ -1,21 +1,6 @@
 {
   "type": "constitutive_model_properties",
   "description": "Reference documentation for FLAC zone constitutive (material) model properties. Each zone constitutive model has specific properties controlling its mechanical/creep behavior. Use when setting properties via 'zone cmodel assign' + 'zone property', or the Python SDK.",
-  "usage_contexts": [
-    "zone cmodel assign <name> [range ...]",
-    "zone property <prop> <value> [range cmodel-name <name>]",
-    "zone property-distribution <prop> ... [range ...]",
-    "Python: zone.set_prop('<prop>', value)"
-  ],
-  "property_metadata_fields": {
-    "keyword": "Property name used in 'zone property' commands",
-    "symbol": "Mathematical symbol used in the model documentation",
-    "description": "Description including physical meaning and units",
-    "type": "Coarse data type (FLT=float, BOOL=boolean) — heuristic",
-    "default": "Default value if documented",
-    "dim": "Present (value '3D') only for the dip/dip-direction weak-plane orientation keywords, which FLAC2D rejects (it uses 'angle'). Self-evidently out-of-plane keywords (xz/yz/-z) are left untagged. Absent = dimension-agnostic or obvious from the name.",
-    "readonly": "Present (true) when FLAC3D 9.7 rejects setting the property with an 'is read-only' error - it is a queryable state variable, not an input."
-  },
   "models": [
     {
       "name": "anisotropic",
@@ -322,6 +307,10 @@
     "All 41 model names and per-model property keyword sets verified against FLAC3D 9.7 via live z.props() readback (2026-08-13). 'cavehoek' and 'imass' require 'model configure imass' before assignment.",
     "Property keywords are matched case-insensitively and support unambiguous prefix abbreviation (e.g. 'strain-volume-plastic' matches 'strain-volumetric-plastic'); docs list canonical names.",
     "A wrong property name errors with an enumeration of every property name valid for the models currently assigned in the range - a fast way to discover property sets live ('zone property <bogus> 1').",
-    "Setting a read-only property fails with 'Property <name> of model <Model> is read-only'; such properties are marked readonly here."
+    "Setting a read-only property fails with 'Property <name> of model <Model> is read-only'; such properties are marked readonly here.",
+    "zone cmodel assign <name> [range ...]",
+    "zone property <prop> <value> [range cmodel-name <name>]",
+    "zone property-distribution <prop> ... [range ...]",
+    "Python: zone.set_prop('<prop>', value)"
   ]
 }

@@ -8,20 +8,6 @@
     "model"
   ],
   "description": "Linear contact bond model simulates a pair of elastic springs with constant normal and shear stiffnesses acting at the contact point. This model permits tensile forces while limiting shear forces through strength parameters rather than friction coefficients. When bonded, contacts can resist tension and prevent slip. When unbonded, behavior is equivalent to the linear model with Coulomb friction.",
-  "typical_applications": [
-    "Point-based bonds between particles",
-    "Adhesion simulation",
-    "Weak cementation",
-    "Contact-specific bonding (not parallel bonds)",
-    "Materials where bonds form at contact points"
-  ],
-  "key_characteristics": [
-    "Bonded behavior: prevents slip and allows tensile forces up to tensile strength limit",
-    "Unbonded behavior: equivalent to linear model with Coulomb friction and no tension",
-    "Bond breakage occurs when tensile force exceeds T_F or shear force magnitude exceeds S_F",
-    "Upon shear failure, shear forces are set to zero",
-    "Normal force becomes zero only if positive (tension) after bond breaks"
-  ],
   "property_groups": [
     {
       "name": "Linear Group",
@@ -353,68 +339,6 @@
       ]
     }
   ],
-  "energy_partitions": [
-    {
-      "name": "energy-strain",
-      "symbol": "E_k",
-      "description": "Strain energy stored in linear springs",
-      "range": "[0.0, +∞)",
-      "accumulated": false
-    },
-    {
-      "name": "energy-slip",
-      "symbol": "E_μ",
-      "description": "Energy dissipated by frictional slip (unbonded state)",
-      "range": "(-∞, 0.0]",
-      "accumulated": true
-    },
-    {
-      "name": "energy-dashpot",
-      "symbol": "E_β",
-      "description": "Energy dissipated by dashpots",
-      "range": "(-∞, 0.0]",
-      "accumulated": true
-    }
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Create bonded contacts with force-based strength",
-      "commands": [
-        "contact cmat default model linearcbond property kn 1e8 ks 5e7 cb_tenf 1e4 cb_shearf 5e3",
-        "contact method bond range contact"
-      ],
-      "description": "Set stiffnesses and strengths, then activate bonds using 'bond' method"
-    },
-    {
-      "use_case": "Use deformability method for stiffness calculation",
-      "commands": [
-        "contact cmat default model linearcbond method deformability emod 5e9 kratio 1.5 property cb_tenf 1e4 cb_shearf 5e3"
-      ],
-      "description": "Calculate stiffnesses automatically from elastic modulus"
-    },
-    {
-      "use_case": "Stress-based strength criterion",
-      "commands": [
-        "contact cmat default model linearcbond property kn 1e8 ks 5e7 user_area 1e-6 cb_tens 1e7 cb_shears 5e6",
-        "contact method bond range contact"
-      ],
-      "description": "Use stress-based strengths (requires user_area to be set)"
-    }
-  ],
-  "typical_parameter_values": {
-    "weak_adhesion": {
-      "kn": "1e7 - 1e8 [N/m]",
-      "ks": "kn / 1.5 to kn / 2.5",
-      "cb_tenf": "1e3 - 1e5 [N] (weak bonding)",
-      "cb_shearf": "0.5 × cb_tenf to 1.0 × cb_tenf"
-    },
-    "moderate_cementation": {
-      "kn": "1e8 - 1e9 [N/m]",
-      "ks": "kn / 1.5 to kn / 2.5",
-      "cb_tenf": "1e4 - 1e6 [N]",
-      "cb_shearf": "0.5 × cb_tenf to 1.0 × cb_tenf"
-    }
-  },
   "notes": [
     "Bonds must be activated using 'contact method bond' command",
     "Use force-based (cb_tenf, cb_shearf) OR stress-based (cb_tens, cb_shears) strength, not both",
@@ -423,24 +347,31 @@
     "Normal force becomes zero only if positive (tension) after bond breaks",
     "Unbonded behavior is equivalent to the linear model",
     "Friction coefficient only applies in unbonded state",
-    "cb_state can be queried to track bond breakage patterns"
+    "cb_state can be queried to track bond breakage patterns",
+    "Bonded behavior: prevents slip and allows tensile forces up to tensile strength limit",
+    "Unbonded behavior: equivalent to linear model with Coulomb friction and no tension",
+    "Bond breakage occurs when tensile force exceeds T_F or shear force magnitude exceeds S_F",
+    "Upon shear failure, shear forces are set to zero",
+    "Normal force becomes zero only if positive (tension) after bond breaks",
+    "Energy partition energy-strain (E_k): Strain energy stored in linear springs",
+    "Energy partition energy-slip (E_μ): Energy dissipated by frictional slip (unbonded state) Accumulated.",
+    "Energy partition energy-dashpot (E_β): Energy dissipated by dashpots Accumulated.",
+    "Typical values (weak adhesion): kn 1e7 - 1e8 [N/m], ks kn / 1.5 to kn / 2.5, cb_tenf 1e3 - 1e5 [N] (weak bonding), cb_shearf 0.5 × cb_tenf to 1.0 × cb_tenf",
+    "Typical values (moderate cementation): kn 1e8 - 1e9 [N/m], ks kn / 1.5 to kn / 2.5, cb_tenf 1e4 - 1e6 [N], cb_shearf 0.5 × cb_tenf to 1.0 × cb_tenf",
+    "Related models: linear — Base model - linearcbond behaves like linear when unbonded; linearpbond — Parallel bond model - bonds act in parallel with base behavior, not at a point"
   ],
-  "workflow": [
-    "1. Set contact model to linearcbond via CMAT or contact model assign",
-    "2. Set stiffnesses (kn, ks) directly or via deformability method",
-    "3. Set bond strengths (cb_tenf, cb_shearf) or stress-based (with user_area)",
-    "4. Activate bonds using 'contact method bond' command",
-    "5. Bonds break automatically when forces exceed strength limits",
-    "6. After breaking, contact behaves like linear model with friction"
-  ],
-  "related_models": [
+  "examples": [
     {
-      "model": "linear",
-      "description": "Base model - linearcbond behaves like linear when unbonded"
+      "command": "contact cmat default model linearcbond property kn 1e8 ks 5e7 cb_tenf 1e4 cb_shearf 5e3\ncontact method bond range contact",
+      "description": "Set stiffnesses and strengths, then activate bonds using 'bond' method. Use case: Create bonded contacts with force-based strength"
     },
     {
-      "model": "linearpbond",
-      "description": "Parallel bond model - bonds act in parallel with base behavior, not at a point"
+      "command": "contact cmat default model linearcbond method deformability emod 5e9 kratio 1.5 property cb_tenf 1e4 cb_shearf 5e3",
+      "description": "Calculate stiffnesses automatically from elastic modulus. Use case: Use deformability method for stiffness calculation"
+    },
+    {
+      "command": "contact cmat default model linearcbond property kn 1e8 ks 5e7 user_area 1e-6 cb_tens 1e7 cb_shears 5e6\ncontact method bond range contact",
+      "description": "Use stress-based strengths (requires user_area to be set). Use case: Stress-based strength criterion"
     }
   ]
 }

@@ -1,20 +1,6 @@
 {
   "type": "constitutive_model_properties",
   "description": "MPoint (MPM) material-point constitutive model properties — the property vocabulary for 'mpoint cmodel assign' + 'mpoint property'. Shared 9.0 kernel with FLAC3D/3DEC (docs live in _common). All 43 models MPoint exposes are documented; each model's 'property_count' is the size of its keyword table as read back off the live engine.",
-  "usage_contexts": [
-    "mpoint cmodel assign <name> [range ...]",
-    "mpoint property <prop> <value> [range ...]"
-  ],
-  "universal_properties": [
-    {
-      "keyword": "density",
-      "description": "Mass density of the material points. Present in every model's live keyword table but absent from every _common model doc, because the official per-model pages document it separately from the property table. There is no 'mpoint density' command -- unlike some other Itasca families, density on material points is set only as a model property.",
-      "usage": "mpoint property density <value> [range ...]",
-      "verification": [
-        "state -- accepted on all 42 assignable models, MPoint3D 9.7"
-      ]
-    }
-  ],
   "models": [
     {
       "name": "anisotropic",
@@ -371,7 +357,9 @@
   "notes": [
     "'mpoint property' operates on whatever model is currently assigned, so assign first. Assigning 'null' removes the constitutive model entirely and any following 'mpoint property' fails with 'There are no constitutive models in material points.'",
     "cavehoek and imass are listed by 'mpoint cmodel assign' but refuse to assign until the model is configured: run 'model configure imass' right after 'model new'. Their properties are snake_case (in_stren_gsi, hb_cohesion, ...), not the kebab-case every other model uses.",
-    "Property availability is per-model, not global: 'mpoint property <name>' is rejected unless <name> belongs to the assigned model's table."
+    "Property availability is per-model, not global: 'mpoint property <name>' is rejected unless <name> belongs to the assigned model's table.",
+    "mpoint cmodel assign <name> [range ...]",
+    "mpoint property <prop> <value> [range ...]"
   ],
   "dimension_differences": {
     "3d_only": [
@@ -405,5 +393,20 @@
     "Result: All 43 models assign successfully (2 of them only after 'model configure imass'). Every property name in the _common docs is accepted by the engine. The diff reduced to three facts, all now reflected in the docs: 'density' is universal and was missing everywhere; double-yield spells it 'strain-tension-plastic' (not 'tensile'); and columnar-basalt's '-i' keywords expand to 1..4.",
     "Trap: The enumerated keyword table under-reports: 'strain-volume-plastic' is accepted by both cap-yield and double-yield but is listed by neither. Absence from the table is not proof a keyword is rejected -- only a rejection is.",
     "Trap: 'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks."
+  ],
+  "property_groups": [
+    {
+      "group_name": "universal",
+      "properties": [
+        {
+          "keyword": "density",
+          "description": "Mass density of the material points. Present in every model's live keyword table but absent from every _common model doc, because the official per-model pages document it separately from the property table. There is no 'mpoint density' command -- unlike some other Itasca families, density on material points is set only as a model property.",
+          "usage": "mpoint property density <value> [range ...]",
+          "verification": [
+            "state -- accepted on all 42 assignable models, MPoint3D 9.7"
+          ]
+        }
+      ]
+    }
   ]
 }

@@ -1,6 +1,5 @@
 {
   "name": "flow",
-  "item_type": "flow",
   "item_types": [
     "fblock",
     "fknot",
@@ -19,92 +18,17 @@
   ],
   "description": "Fracture-flow network items: 'flowplane' (the planar flow domain on joints — contour/label, cracked), 'fknot' (flow knots/nodes — contour pore pressure/head), and 'fblock' (flow blocks). Colour by domain attributes via 'colorby' / 'contour'. Used for hydro-mechanical (joint flow) analyses.",
   "sub_items": [],
-  "common_usage_patterns": [
-    {
-      "use_case": "Flowplane pore pressure",
-      "command": "plot item create flowplane contour legend active on",
-      "description": "Contour the joint flow plane field."
-    },
-    {
-      "use_case": "Flow knots",
-      "command": "plot item create fknot contour legend active on",
-      "description": "Colour flow knots by head/pressure."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0.",
     "flowplane top-level: active, clip, color-list, colorby, contour, cracked, cut, cut-line, label, legend, polygons, range, transparency.",
     "fknot top-level: active, clip, color-by-value, color-list, colorby, contour, contourby, cut, legend, map, mark, pixel-size, range, scale, transparency.",
-    "fblock top-level: active, axis, clip, color-list, colorby, cut, legend, polygons, range, rotate, scale, translate, transparency, value."
+    "fblock top-level: active, axis, clip, color-list, colorby, cut, legend, polygons, range, rotate, scale, translate, transparency, value.",
+    "fblock top-level keywords: active, axis, clip, color-list, colorby, cut, legend, polygons, range, rotate, scale, translate, transparency, value",
+    "fknot top-level keywords: active, clip, color-by-value, color-list, colorby, contour, contourby, cut, legend, map, mark, pixel-size, range, scale, transparency",
+    "flowplane top-level keywords: active, clip, color-list, colorby, contour, cracked, cut, cut-line, label, legend, polygons, range, transparency",
+    "flowplane-vector top-level keywords: active, by-magnitude, clip, color, cut, draw-as, legend, map, point-to-base, quality, range, scale, shape, transparency, value",
+    "The previous shared top_level_keywords list was the UNION of the three types; live 3DEC 9.7.47 enumerates distinct sets per type (fblock has no contour/map; fknot adds contourby/color-by-value; flowplane adds cracked/cut-line/label). 'fplane' is a live twin of flowplane with the same keyword set. Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14."
   ],
-  "top_level_keywords_by_type": {
-    "fblock": [
-      "active",
-      "axis",
-      "clip",
-      "color-list",
-      "colorby",
-      "cut",
-      "legend",
-      "polygons",
-      "range",
-      "rotate",
-      "scale",
-      "translate",
-      "transparency",
-      "value"
-    ],
-    "fknot": [
-      "active",
-      "clip",
-      "color-by-value",
-      "color-list",
-      "colorby",
-      "contour",
-      "contourby",
-      "cut",
-      "legend",
-      "map",
-      "mark",
-      "pixel-size",
-      "range",
-      "scale",
-      "transparency"
-    ],
-    "flowplane": [
-      "active",
-      "clip",
-      "color-list",
-      "colorby",
-      "contour",
-      "cracked",
-      "cut",
-      "cut-line",
-      "label",
-      "legend",
-      "polygons",
-      "range",
-      "transparency"
-    ],
-    "flowplane-vector": [
-      "active",
-      "by-magnitude",
-      "clip",
-      "color",
-      "cut",
-      "draw-as",
-      "legend",
-      "map",
-      "point-to-base",
-      "quality",
-      "range",
-      "scale",
-      "shape",
-      "transparency",
-      "value"
-    ]
-  },
-  "top_level_keywords_note": "The previous shared top_level_keywords list was the UNION of the three types; live 3DEC 9.7.47 enumerates distinct sets per type (fblock has no contour/map; fknot adds contourby/color-by-value; flowplane adds cracked/cut-line/label). 'fplane' is a live twin of flowplane with the same keyword set. Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14.",
   "syntax": "plot item create <flowplane|fknot|fblock> <keywords...>",
   "keywords": [
     {
@@ -191,6 +115,16 @@
     },
     {
       "name": "value"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create flowplane contour legend active on",
+      "description": "Contour the joint flow plane field. Use case: Flowplane pore pressure"
+    },
+    {
+      "command": "plot item create fknot contour legend active on",
+      "description": "Colour flow knots by head/pressure. Use case: Flow knots"
     }
   ]
 }

@@ -13,40 +13,30 @@
     "table list",
     "history export <id|name> table '<name>'"
   ],
-  "syntax_note": "Every table subcommand except 'table list' REQUIRES a table name first: 'table <name-string-or-int> <subcommand> ...'. PR-6 forms like 'table add' without a name are rejected by FLAC2D 9.0 with 'A table has not been specified.' FLAC3D 9.7 reproduces the same behavior verbatim ('A table has not been specified.') — the name-first requirement holds in 3D too.",
-  "common_patterns": [
-    {
-      "name": "Time-dependent load table",
-      "commands": [
-        "table 'load' add (0,0) (1,1) (10,1)",
-        "zone face apply stress-normal -1e5 table 'load' range group 'Top'"
-      ]
-    },
-    {
-      "name": "Import curve",
-      "commands": [
-        "table 'load' import 'load_curve.csv'",
-        "table list"
-      ]
-    },
-    {
-      "name": "Export history to table",
-      "commands": [
-        "history export 'top_disp' table 'disp_curve'"
-      ],
-      "notes": [
-        "Requires 'top_disp' to be a NAMED history (set via 'history name <id> rename <new-string>'). Reference by ID also works: 'history export 1 table 'disp_curve''."
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/flac3dhome.html",
   "notes": [
     "Confirm table x-axis meaning before using it in a boundary modifier.",
     "Use table list after import to catch delimiter or unit mistakes.",
-    "Prefer named tables over numeric IDs in generated scripts."
+    "Prefer named tables over numeric IDs in generated scripts.",
+    "Every table subcommand except 'table list' REQUIRES a table name first: 'table <name-string-or-int> <subcommand> ...'. PR-6 forms like 'table add' without a name are rejected by FLAC2D 9.0 with 'A table has not been specified.' FLAC3D 9.7 reproduces the same behavior verbatim ('A table has not been specified.') — the name-first requirement holds in 3D too.",
+    "Requires 'top_disp' to be a NAMED history (set via 'history name <id> rename <new-string>'). Reference by ID also works: 'history export 1 table 'disp_curve''."
   ],
   "verification": [
     "\"table 'tt' add (0,0) (1,1)\" state-verified: engine reports 'The table with name tt had 2 values added.'",
     "The subcommand slot after the table name is NOT keyword-enumerated ('Unused extra parameter') — probe by acceptance, not enumeration."
+  ],
+  "examples": [
+    {
+      "command": "table 'load' add (0,0) (1,1) (10,1)\nzone face apply stress-normal -1e5 table 'load' range group 'Top'",
+      "description": "Time-dependent load table"
+    },
+    {
+      "command": "table 'load' import 'load_curve.csv'\ntable list",
+      "description": "Import curve"
+    },
+    {
+      "command": "history export 'top_disp' table 'disp_curve'",
+      "description": "Export history to table"
+    }
   ]
 }

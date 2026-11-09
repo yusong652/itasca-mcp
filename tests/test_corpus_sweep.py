@@ -215,16 +215,91 @@ def _entry_problems(where: str, entries: Any) -> list[str]:
 _RESOURCES = Path(__file__).resolve().parents[1] / "src" / "itasca_mcp" / "knowledge" / "resources"
 
 # Subtrees owned by later migration steps; their internals are not judged yet.
-# (flac3d_liner_property_set and index_expansion: dimension step B / archetype step F.)
+# (The flac3d_*/\*_3d_only property-set and element blocks: dimension step B.)
 _DEFERRED_SUBTREES = {
     "legacy_documentation",
     "dimension_differences",
     "independent_dimensions",
     "flac3d_liner_property_set",
-    "index_expansion",
+    "flac3d_shell_property_set",
+    "flac3d_geogrid_property_set",
+    "keywords_3d_only",
+    "related_3d_only",
+    "mpoint2d_only_elements",
+    "dimension_note",
 }
 # Whole categories owned by the dimension step.
 _DEFERRED_PATHS = ("references/dimension-differences/",)
+
+# ---------------------------------------------------------------------------
+# references archetypes (corpus-spec section F): every top-level key of every
+# references page belongs to its archetype's set.
+# ---------------------------------------------------------------------------
+
+_F_CROSS = {"name", "full_name", "description", "notes", "verification", "source", "availability", "search_keywords"}
+_F_MODEL_CATS = {"constitutive-models", "contact-models", "joint-models"}
+_F_ARCHETYPES = {
+    "model": _F_CROSS | {"model", "property_groups", "usage", "examples", "callback_events", "index_expansion"},
+    "range-element": _F_CROSS
+    | {"syntax", "category", "category_name", "parameters", "sub_keywords", "supports_extent", "examples"},
+    "plot-item": _F_CROSS
+    | {"syntax", "keywords", "modes", "attributes", "dimension", "examples", "sub_items", "items", "item_types"},
+    "topic": _F_CROSS
+    | {"dimension", "primary_commands", "keywords", "examples", "property_groups", "steps", "measured"},
+    "file-format": _F_CROSS
+    | {"dimension", "primary_commands", "keywords", "examples", "direction", "layout", "columns", "example"},
+    "index": _F_CROSS
+    | {
+        "type",
+        "category",
+        "items",
+        "models",
+        "elements",
+        "categories",
+        "item_types",
+        "sub_items",
+        "keywords",
+        "examples",
+        "syntax",
+        "dimension",
+        "measured",
+        "demo_mode_limits",
+        "property_groups",
+    },
+}
+
+
+def _reference_archetype(rel: str) -> str:
+    parts = rel.split("/")
+    category = parts[2]
+    if parts[-1] == "index.json" and len(parts) <= 4:
+        return "index"
+    if category in _F_MODEL_CATS:
+        return "model"
+    if category == "range-elements":
+        return "range-element"
+    if category == "plot-items":
+        return "plot-item"
+    if category == "file-formats":
+        return "file-format"
+    return "topic"
+
+
+def test_every_reference_page_fits_its_archetype() -> None:
+    problems = []
+    for path in sorted(_RESOURCES.glob("*/references/**/*.json")):
+        rel = path.relative_to(_RESOURCES).as_posix()
+        if any(deferred in rel for deferred in _DEFERRED_PATHS):
+            continue
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(doc, dict):
+            continue
+        archetype = _reference_archetype(rel)
+        extra = set(doc) - _F_ARCHETYPES[archetype] - _DEFERRED_SUBTREES
+        if extra:
+            problems.append(f"{rel} ({archetype}): {sorted(extra)}")
+    assert problems == []
+
 
 # Legacy spellings that section D retires. `source_urls` survives only inside
 # command_docs version blocks (the removed-command apparatus, step A).

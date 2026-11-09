@@ -1,6 +1,5 @@
 {
   "name": "zone",
-  "item_type": "zone",
   "search_keywords": [
     "zone",
     "grid",
@@ -31,62 +30,13 @@
       "description": "2D cut-line settings for FLAC2D."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Zones colored by group",
-      "command": "plot item create zone label group legend active on",
-      "description": "Different color per zone group."
-    },
-    {
-      "use_case": "Zones colored by displacement magnitude",
-      "command": "plot item create zone contour displacement legend active on",
-      "description": "Continuous displacement color map (interpolated from gridpoints)."
-    },
-    {
-      "use_case": "Zones colored by stress component",
-      "command": "plot item create zone contour stress-xx legend active on",
-      "description": "Useful for stress concentration / equilibrium checks."
-    },
-    {
-      "use_case": "Zones colored by constitutive model state",
-      "command": "plot item create zone label state any legend active on",
-      "description": "Highlight plastic / elastic / yielded zones by model state codes. 'label state' requires 'any' or 'average' before further options."
-    },
-    {
-      "use_case": "Flat-color zone shading",
-      "command": "plot item create zone color \"gray\"",
-      "description": "Uniform color (e.g. background context behind a vector overlay)."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create zone ?' to list top-level keywords, then 'plot item create zone <kw> ?' for sub-options.",
     "'contour' is the FLAC mechanism for color-by-field-value; 'label' is the mechanism for categorical coloring (group/state/model).",
-    "Tokens like 'color-by', 'color-options' from other Itasca-style tools are NOT accepted by zone items in FLAC2D 9.0."
-  ],
-  "flac3d_notes": [
+    "Tokens like 'color-by', 'color-options' from other Itasca-style tools are NOT accepted by zone items in FLAC2D 9.0.",
     "FLAC3D 9.0 zone item ALSO accepts 'transparency <0-100>', 'clip ...', and a 3D 'cut' (plane) keyword in addition to the keywords listed in basic_keywords. These are FLAC3D-only and are rejected by FLAC2D 9.0.",
     "FLAC3D 'cut' uses a 3D plane: 'cut active on type plane origin (x,y,z) normal (nx,ny,nz) [surface on|off] [front on|off] [back on|off]'. FLAC2D uses 'cut-line width <int>' for 2D cutting.",
     "FLAC2D-only keywords NOT accepted by FLAC3D: 'color' (flat color), 'show-zone-id', 'text', 'zone-id-max', 'zone-id-min'."
-  ],
-  "top_level_keywords_flac3d_97": [
-    "active",
-    "clip",
-    "color-list",
-    "contour",
-    "cut",
-    "cut-line",
-    "deformation-factor",
-    "hide-null",
-    "internal-boundaries",
-    "label",
-    "legend",
-    "map",
-    "null-faces-only",
-    "polygons",
-    "range",
-    "selected-highlight",
-    "selected-only",
-    "transparency"
   ],
   "dimension_differences": {
     "flac2d_only": [
@@ -199,5 +149,30 @@
       "name": "transparency",
       "dimension": "3D"
     }
+  ],
+  "examples": [
+    {
+      "command": "plot item create zone label group legend active on",
+      "description": "Different color per zone group. Use case: Zones colored by group"
+    },
+    {
+      "command": "plot item create zone contour displacement legend active on",
+      "description": "Continuous displacement color map (interpolated from gridpoints). Use case: Zones colored by displacement magnitude"
+    },
+    {
+      "command": "plot item create zone contour stress-xx legend active on",
+      "description": "Useful for stress concentration / equilibrium checks. Use case: Zones colored by stress component"
+    },
+    {
+      "command": "plot item create zone label state any legend active on",
+      "description": "Highlight plastic / elastic / yielded zones by model state codes. 'label state' requires 'any' or 'average' before further options. Use case: Zones colored by constitutive model state"
+    },
+    {
+      "command": "plot item create zone color \"gray\"",
+      "description": "Uniform color (e.g. background context behind a vector overlay). Use case: Flat-color zone shading"
+    }
+  ],
+  "verification": [
+    "top level keywords flac3d 97 (18): active, clip, color-list, contour, cut, cut-line, deformation-factor, hide-null, internal-boundaries, label, legend, map, null-faces-only, polygons, range, selected-highlight, selected-only, transparency"
   ]
 }

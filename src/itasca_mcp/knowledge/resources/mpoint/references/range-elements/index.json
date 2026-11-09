@@ -1,19 +1,6 @@
 {
   "type": "range_elements",
   "description": "Range elements are filtering syntax used after the 'range' keyword in FLAC commands. They select subsets of model objects based on geometric regions, attributes, or logical conditions.",
-  "usage_pattern": {
-    "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
-    "examples": [
-      "zone group 'core' range position-x 0 10 position-y 0 10",
-      "zone property density 2650 range group 'sample'",
-      "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5"
-    ],
-    "notes": [
-      "Multiple range elements create intersection (AND) by default",
-      "Use 'union' keyword for OR logic",
-      "Unspecified range affects all objects of target type"
-    ]
-  },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
@@ -274,41 +261,79 @@
       "category": "logical"
     }
   ],
-  "common_patterns": [
-    {
-      "name": "Group zones in region",
-      "example": "zone group 'core' range position-x 0 10 position-y 0 10",
-      "description": "Assign a group to zones in an XY rectangle"
-    },
-    {
-      "name": "Set property by group",
-      "example": "zone property density 2650 range group 'sample'",
-      "description": "Set density for zones in a group"
-    },
-    {
-      "name": "Cylindrical structural-node range",
-      "example": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
-      "description": "Fix structural nodes in a cylindrical region"
-    },
-    {
-      "name": "Named range reuse",
-      "example": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
-      "description": "Create reusable named range"
-    }
-  ],
   "notes": [
     "Multiple range elements create intersection (AND) by default",
     "Use 'union' keyword for OR logic",
     "Unspecified range affects all objects of target type",
     "A token the range parser does not know fails the command before anything runs on MPoint3D 9.8.54 ('Bad conversion of parameter (nosuch)'), as on PFC; FLAC3D 9.8.54 instead ends the range and runs the command.",
-    "The 9.x parser lists every engine's range elements (bmaterial / cmodel / jmodel / structure-type / wall / ...); only elements verified to select material points are referenced here. project-range, set, geometry-distance and geometry-space parse but were not exercised on material points."
+    "The 9.x parser lists every engine's range elements (bmaterial / cmodel / jmodel / structure-type / wall / ...); only elements verified to select material points are referenced here. project-range, set, geometry-distance and geometry-space parse but were not exercised on material points.",
+    "Multiple range elements create intersection (AND) by default",
+    "Use 'union' keyword for OR logic",
+    "Unspecified range affects all objects of target type",
+    "Related commands: model range create, model range delete, model range list",
+    "Additional element (live-verified on material points): (status) — description: The elements below are now referenced in this index (2026-10-31) after re-checking on MPoint3D 9.8.54; the text records the original 9.7 verification.",
+    "Additional element (live-verified on material points): volume — syntax: volume <low> <high>; description: Filter by material-point volume. Verified discriminating: 0..0.05 matched 0 points, 0.06..0.07 matched all 216, 0.07..1 matched 0, on a lattice whose point volume is exactly 0.4^3 = 0.064.",
+    "Additional element (live-verified on material points): velocity — syntax: velocity <low> <high>; description: Filter by velocity magnitude. Verified discriminating at a 1e-12 threshold.",
+    "Additional element (live-verified on material points): displacement — syntax: displacement <low> <high>; description: Filter by displacement magnitude. Verified discriminating at a 1e-12 threshold.",
+    "Additional element (live-verified on material points): selected / deselected — syntax: selected | deselected; description: Filter by GUI selection state. Both parse and evaluate, but there is no 'mpoint select' command, so selection can only be driven from the GUI.",
+    "Inapplicable element on material points: by — reason: Its object-type list (ball, zone, clump, structure, ...) has no 'mpoint' entry, and 'by zone' / 'by ball' on an mpoint command parse but change the result by nothing. The shared doc's example 'range position-z 0 10 by zone' is a no-op here.",
+    "Inapplicable element on material points: cmodel — reason: Matched 0 points even with every point assigned 'elastic'; it filters zone models.",
+    "Inapplicable element on material points: radius — reason: Material points have no radius (a ball/pebble attribute). Always 0.",
+    "Inapplicable element on material points: name — reason: Always 0 on material points.",
+    "Inapplicable element on material points: group-intersection — reason: Always 0 on material points.",
+    "Inapplicable element on material points: index-list — reason: Always 0 on material points."
   ],
-  "related_commands": [
-    "model range create",
-    "model range delete",
-    "model range list"
+  "mpoint2d_only_elements": {
+    "circle": {
+      "syntax": "circle center <v> radius <f>",
+      "description": "The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'.",
+      "verification": [
+        "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
+      ]
+    }
+  },
+  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
+  "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
+  "verification": [
+    "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
+    "Result: All 22 documented elements parse, and every geometric and attribute element selects exactly the predicted set. One documented example is rejected by the engine ('range fish' quoting), one is a no-op on material points ('by'), and four useful elements were undocumented.",
+    "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is rejected. Multiple elements go inside the single range phrase.",
+    "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so 'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' matched 32.",
+    "Group slots hold ONE group per point. Assigning a second group in the same slot silently replaces the first, and the replaced group then matches nothing -- the original 'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. Groups in different slots coexist.",
+    "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works.",
+    "Description: Range-element keyword set listed by 'mpoint group ... range ?' on MPoint3D 9.8.54 (2026-10-31, after 'mpoint node spacing' and a 216-point lattice): 66 tokens, identical to PFC3D 9.8.54. Every element referenced by this index is in it.",
+    "State-verified 'component-id': 'component-id 1 3' -> 3 of 216 points",
+    "State-verified 'component-id-list': 'component-id-list 1 5 10' -> 3 points",
+    "State-verified 'use-hidden': 'use-hidden position-x 0 10' -> 108 (nothing hidden)",
+    "State-verified 'volume': 'volume 0.06 0.07' -> all 216 (point volume 0.064), as on 9.7",
+    "State-verified 'selected / deselected': 0 / 216 with nothing selected in the GUI",
+    "State-verified 'radius': 'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
+    "State-verified 'circle': rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)",
+    "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
   ],
-  "mpoint_selection_counts": {
+  "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
+  "examples": [
+    "zone group 'core' range position-x 0 10 position-y 0 10",
+    "zone property density 2650 range group 'sample'",
+    "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+    {
+      "command": "zone group 'core' range position-x 0 10 position-y 0 10",
+      "description": "Assign a group to zones in an XY rectangle"
+    },
+    {
+      "command": "zone property density 2650 range group 'sample'",
+      "description": "Set density for zones in a group"
+    },
+    {
+      "command": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+      "description": "Fix structural nodes in a cylindrical region"
+    },
+    {
+      "command": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
+      "description": "Create reusable named range"
+    }
+  ],
+  "measured": {
     "lattice": {
       "setup": [
         "model domain extent -1.2 1.2 -1.2 1.2 -1.2 1.2",
@@ -393,85 +418,5 @@
         "expected": "every point's volume is 0.4^3"
       }
     ]
-  },
-  "mpoint_additional_elements": [
-    {
-      "name": "(status)",
-      "description": "The elements below are now referenced in this index (2026-10-31) after re-checking on MPoint3D 9.8.54; the text records the original 9.7 verification."
-    },
-    {
-      "name": "volume",
-      "syntax": "volume <low> <high>",
-      "description": "Filter by material-point volume. Verified discriminating: 0..0.05 matched 0 points, 0.06..0.07 matched all 216, 0.07..1 matched 0, on a lattice whose point volume is exactly 0.4^3 = 0.064."
-    },
-    {
-      "name": "velocity",
-      "syntax": "velocity <low> <high>",
-      "description": "Filter by velocity magnitude. Verified discriminating at a 1e-12 threshold."
-    },
-    {
-      "name": "displacement",
-      "syntax": "displacement <low> <high>",
-      "description": "Filter by displacement magnitude. Verified discriminating at a 1e-12 threshold."
-    },
-    {
-      "name": "selected / deselected",
-      "syntax": "selected | deselected",
-      "description": "Filter by GUI selection state. Both parse and evaluate, but there is no 'mpoint select' command, so selection can only be driven from the GUI."
-    }
-  ],
-  "mpoint_inapplicable_elements": [
-    {
-      "name": "by",
-      "reason": "Its object-type list (ball, zone, clump, structure, ...) has no 'mpoint' entry, and 'by zone' / 'by ball' on an mpoint command parse but change the result by nothing. The shared doc's example 'range position-z 0 10 by zone' is a no-op here."
-    },
-    {
-      "name": "cmodel",
-      "reason": "Matched 0 points even with every point assigned 'elastic'; it filters zone models."
-    },
-    {
-      "name": "radius",
-      "reason": "Material points have no radius (a ball/pebble attribute). Always 0."
-    },
-    {
-      "name": "name",
-      "reason": "Always 0 on material points."
-    },
-    {
-      "name": "group-intersection",
-      "reason": "Always 0 on material points."
-    },
-    {
-      "name": "index-list",
-      "reason": "Always 0 on material points."
-    }
-  ],
-  "mpoint2d_only_elements": {
-    "circle": {
-      "syntax": "circle center <v> radius <f>",
-      "description": "The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'.",
-      "verification": [
-        "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
-      ]
-    }
-  },
-  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
-  "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
-  "verification": [
-    "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
-    "Result: All 22 documented elements parse, and every geometric and attribute element selects exactly the predicted set. One documented example is rejected by the engine ('range fish' quoting), one is a no-op on material points ('by'), and four useful elements were undocumented.",
-    "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is rejected. Multiple elements go inside the single range phrase.",
-    "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so 'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' matched 32.",
-    "Group slots hold ONE group per point. Assigning a second group in the same slot silently replaces the first, and the replaced group then matches nothing -- the original 'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. Groups in different slots coexist.",
-    "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works.",
-    "Description: Range-element keyword set listed by 'mpoint group ... range ?' on MPoint3D 9.8.54 (2026-10-31, after 'mpoint node spacing' and a 216-point lattice): 66 tokens, identical to PFC3D 9.8.54. Every element referenced by this index is in it.",
-    "State-verified 'component-id': 'component-id 1 3' -> 3 of 216 points",
-    "State-verified 'component-id-list': 'component-id-list 1 5 10' -> 3 points",
-    "State-verified 'use-hidden': 'use-hidden position-x 0 10' -> 108 (nothing hidden)",
-    "State-verified 'volume': 'volume 0.06 0.07' -> all 216 (point volume 0.064), as on 9.7",
-    "State-verified 'selected / deselected': 0 / 216 with nothing selected in the GUI",
-    "State-verified 'radius': 'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
-    "State-verified 'circle': rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)",
-    "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
-  ]
+  }
 }

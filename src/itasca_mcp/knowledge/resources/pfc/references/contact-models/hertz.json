@@ -7,24 +7,6 @@
     "model"
   ],
   "description": "Hertz contact model implements a nonlinear formulation based on an approximation of the theory of Mindlin and Deresiewicz. Unlike linear models with constant stiffnesses, the Hertz model produces nonlinear force-displacement relationships through elastic sphere deformation analysis. Normal force follows F_n^h = -h_n|g_c|^(α_h) where α_h defaults to 1.5, and shear stiffness depends on current normal force, making the contact response highly nonlinear and velocity-dependent.",
-  "typical_applications": [
-    "Impact simulations",
-    "Energy dissipation analysis",
-    "More realistic contact mechanics",
-    "Scenarios requiring nonlinear elasticity",
-    "Material systems where Hertzian contact theory applies",
-    "Coaxial cylinder contact problems"
-  ],
-  "key_characteristics": [
-    "Nonlinear force-displacement relationships (unlike linear model)",
-    "Normal force: F_n^h = -h_n|g_c|^(α_h), default α_h = 1.5",
-    "Shear stiffness depends dynamically on current normal force",
-    "Based on Mindlin-Deresiewicz theory of elastic sphere deformation",
-    "Uses shear modulus (G) and Poisson's ratio (ν) instead of direct stiffnesses",
-    "Contact response is velocity-dependent through dashpot damping",
-    "Complex property inheritance through effective elastic properties",
-    "Suitable for impact and energy dissipation scenarios"
-  ],
   "property_groups": [
     {
       "name": "Hertz Group",
@@ -254,104 +236,29 @@
       ]
     }
   ],
-  "energy_partitions": [
-    {
-      "name": "energy-strain",
-      "symbol": "E_k",
-      "description": "Strain energy stored in nonlinear Hertzian springs",
-      "range": "[0.0, +∞)",
-      "accumulated": false,
-      "group": "Hertz Group"
-    },
-    {
-      "name": "energy-slip",
-      "symbol": "E_μ",
-      "description": "Energy dissipated by frictional slip",
-      "range": "(-∞, 0.0]",
-      "accumulated": true,
-      "group": "Hertz Group"
-    },
-    {
-      "name": "energy-dashpot",
-      "symbol": "E_β",
-      "description": "Energy dissipated by velocity-dependent dashpots",
-      "range": "(-∞, 0.0]",
-      "accumulated": true,
-      "group": "Dashpot Group"
-    }
-  ],
-  "callback_events": [
-    {
-      "name": "contact_activated",
-      "description": "Triggered when surface gap becomes ≤ 0 (contact initiates)",
-      "use": "Monitor contact formation in dynamic simulations"
-    },
-    {
-      "name": "slip_change",
-      "description": "Triggered when slip state transitions",
-      "values": [
-        {
-          "value": 0,
-          "description": "Slip initiates (hz_slip changes from false to true)"
-        },
-        {
-          "value": 1,
-          "description": "Slip ends (hz_slip changes from true to false)"
-        }
-      ],
-      "use": "Track sliding events and transitions"
-    }
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Basic Hertz contact with material properties",
-      "commands": [
-        "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5"
-      ],
-      "description": "Set fundamental material properties (shear modulus and Poisson's ratio) directly. More physically meaningful than linear stiffnesses."
-    },
-    {
-      "use_case": "Impact simulation with energy dissipation",
-      "commands": [
-        "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 dp_nratio 0.5 dp_sratio 0.3"
-      ],
-      "description": "Add dashpot damping for velocity-dependent energy dissipation in impact scenarios."
-    },
-    {
-      "use_case": "Custom nonlinearity exponent",
-      "commands": [
-        "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 hz_alpha 1.2"
-      ],
-      "description": "Adjust hz_alpha for different contact geometries (e.g., coaxial cylinders use 1.0-1.5 instead of default 1.5)."
-    },
-    {
-      "use_case": "Nonlinear dashpot damping",
-      "commands": [
-        "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 dp_nratio 0.5 dp_alpha 0.5"
-      ],
-      "description": "Use dp_alpha > 0 for nonlinear velocity-dependent damping behavior."
-    }
-  ],
-  "typical_parameter_values": {
-    "rock_materials": {
-      "hz_shear": "1e10 - 1e11 [Pa] (typical rock shear modulus)",
-      "hz_poiss": "0.20 - 0.30",
-      "fric": "0.5 - 0.7",
-      "hz_alpha": "1.5 (default for sphere-sphere)",
-      "dp_nratio": "0.3 - 0.7 for impact simulations"
-    },
-    "soil_materials": {
-      "hz_shear": "1e7 - 1e9 [Pa] (typical soil shear modulus)",
-      "hz_poiss": "0.25 - 0.35",
-      "fric": "0.3 - 0.6",
-      "hz_alpha": "1.5 (default)",
-      "dp_nratio": "0.5 - 0.8"
-    },
-    "contact_geometry": {
-      "sphere_sphere": "hz_alpha = 1.5 (default, Hertzian contact)",
-      "coaxial_cylinders": "hz_alpha = 1.0 - 1.5",
-      "other_geometries": "Adjust hz_alpha based on contact theory"
-    }
+  "callback_events": {
+    "events": [
+      {
+        "name": "contact_activated",
+        "description": "Triggered when surface gap becomes ≤ 0 (contact initiates)",
+        "use": "Monitor contact formation in dynamic simulations"
+      },
+      {
+        "name": "slip_change",
+        "description": "Triggered when slip state transitions",
+        "values": [
+          {
+            "value": 0,
+            "description": "Slip initiates (hz_slip changes from false to true)"
+          },
+          {
+            "value": 1,
+            "description": "Slip ends (hz_slip changes from true to false)"
+          }
+        ],
+        "use": "Track sliding events and transitions"
+      }
+    ]
   },
   "notes": [
     "Hertz model is NONLINEAR - forces depend on overlap raised to power hz_alpha (default 1.5)",
@@ -365,68 +272,39 @@
     "Dashpot damping is essential for impact simulations to dissipate energy",
     "dp_alpha allows nonlinear velocity-dependent damping (default 0.0 = linear)",
     "Contact response is inherently velocity-dependent",
-    "More computationally expensive than linear model due to nonlinearity"
+    "More computationally expensive than linear model due to nonlinearity",
+    "Nonlinear force-displacement relationships (unlike linear model)",
+    "Normal force: F_n^h = -h_n|g_c|^(α_h), default α_h = 1.5",
+    "Shear stiffness depends dynamically on current normal force",
+    "Based on Mindlin-Deresiewicz theory of elastic sphere deformation",
+    "Uses shear modulus (G) and Poisson's ratio (ν) instead of direct stiffnesses",
+    "Contact response is velocity-dependent through dashpot damping",
+    "Complex property inheritance through effective elastic properties",
+    "Suitable for impact and energy dissipation scenarios",
+    "Energy partition energy-strain (E_k): Strain energy stored in nonlinear Hertzian springs",
+    "Energy partition energy-slip (E_μ): Energy dissipated by frictional slip Accumulated.",
+    "Energy partition energy-dashpot (E_β): Energy dissipated by velocity-dependent dashpots Accumulated.",
+    "Typical values (rock materials): hz_shear 1e10 - 1e11 [Pa] (typical rock shear modulus), hz_poiss 0.20 - 0.30, fric 0.5 - 0.7, hz_alpha 1.5 (default for sphere-sphere), dp_nratio 0.3 - 0.7 for impact simulations",
+    "Typical values (soil materials): hz_shear 1e7 - 1e9 [Pa] (typical soil shear modulus), hz_poiss 0.25 - 0.35, fric 0.3 - 0.6, hz_alpha 1.5 (default), dp_nratio 0.5 - 0.8",
+    "Typical values (contact geometry): sphere_sphere hz_alpha = 1.5 (default, Hertzian contact), coaxial_cylinders hz_alpha = 1.0 - 1.5, other_geometries Adjust hz_alpha based on contact theory",
+    "Related models: linear — Simpler alternative with constant stiffnesses - computationally cheaper"
   ],
-  "hertzian_contact_theory": {
-    "concept": "Hertz contact theory describes the elastic deformation when two curved surfaces come into contact. The contact area and pressure distribution are nonlinear functions of the applied force and material properties.",
-    "force_displacement": "Normal force varies as F_n ~ δ^(3/2) for sphere-sphere contact, where δ is overlap. This is why default hz_alpha = 1.5.",
-    "advantages_over_linear": [
-      "More realistic contact mechanics",
-      "Nonlinear stiffness increases with overlap (stiffens under load)",
-      "Based on continuum mechanics theory",
-      "Better for impact and dynamic loading scenarios",
-      "Material properties (G, ν) are more fundamental than arbitrary stiffnesses"
-    ],
-    "disadvantages": [
-      "More computationally expensive",
-      "Requires careful calibration of material properties",
-      "May require smaller timesteps due to nonlinearity",
-      "Cannot transmit tension (purely repulsive)"
-    ]
-  },
-  "workflow": [
-    "1. Set contact model to hertz via CMAT or contact model assign",
-    "2. Set material properties: hz_shear (shear modulus) and hz_poiss (Poisson's ratio)",
-    "3. Set friction coefficient (fric) for sliding resistance",
-    "4. Optionally adjust hz_alpha for non-spherical contact geometries",
-    "5. Add dashpot damping (dp_nratio, dp_sratio) for energy dissipation in impact",
-    "6. Optionally set dp_alpha for nonlinear velocity-dependent damping",
-    "7. Monitor energy-dashpot to verify energy dissipation",
-    "8. Use callback events (contact_activated, slip_change) for tracking"
-  ],
-  "comparison_to_linear_model": {
-    "linear_model": {
-      "force_displacement": "Linear: F = k × δ (constant stiffness)",
-      "parameters": "Direct stiffnesses kn, ks",
-      "behavior": "Linear elastic at all loads",
-      "computational_cost": "Low",
-      "physical_basis": "Phenomenological springs"
-    },
-    "hertz_model": {
-      "force_displacement": "Nonlinear: F = h_n × |δ|^(α_h) (variable stiffness)",
-      "parameters": "Material properties G, ν",
-      "behavior": "Stiffens with increasing overlap",
-      "computational_cost": "Higher",
-      "physical_basis": "Continuum mechanics (Hertz theory)"
-    },
-    "when_to_use_hertz": [
-      "Impact and dynamic loading scenarios",
-      "When realistic contact mechanics is important",
-      "When material properties G and ν are known",
-      "Energy dissipation analysis",
-      "High-velocity collisions"
-    ],
-    "when_to_use_linear": [
-      "Quasi-static simulations",
-      "When computational efficiency is critical",
-      "When simple calibration is needed",
-      "Large-scale simulations with many contacts"
-    ]
-  },
-  "related_models": [
+  "examples": [
     {
-      "model": "linear",
-      "description": "Simpler alternative with constant stiffnesses - computationally cheaper"
+      "command": "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5",
+      "description": "Set fundamental material properties (shear modulus and Poisson's ratio) directly. More physically meaningful than linear stiffnesses. Use case: Basic Hertz contact with material properties"
+    },
+    {
+      "command": "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 dp_nratio 0.5 dp_sratio 0.3",
+      "description": "Add dashpot damping for velocity-dependent energy dissipation in impact scenarios. Use case: Impact simulation with energy dissipation"
+    },
+    {
+      "command": "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 hz_alpha 1.2",
+      "description": "Adjust hz_alpha for different contact geometries (e.g., coaxial cylinders use 1.0-1.5 instead of default 1.5). Use case: Custom nonlinearity exponent"
+    },
+    {
+      "command": "contact cmat default model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5 dp_nratio 0.5 dp_alpha 0.5",
+      "description": "Use dp_alpha > 0 for nonlinear velocity-dependent damping behavior. Use case: Nonlinear dashpot damping"
     }
   ]
 }

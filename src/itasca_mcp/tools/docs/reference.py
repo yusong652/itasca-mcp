@@ -179,8 +179,8 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
         }
         if "keywords" in item_doc:
             overview["keywords"] = item_doc["keywords"]
-        if "common_usage_patterns" in item_doc:
-            overview["common_usage_patterns"] = item_doc["common_usage_patterns"]
+        if "examples" in item_doc:
+            overview["examples"] = item_doc["examples"]
         overview["sub_items"] = [{"name": s["name"], "description": s.get("description", "")} for s in sub_items]
         return build_docs_data(
             source="reference",

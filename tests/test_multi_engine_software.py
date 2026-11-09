@@ -755,7 +755,8 @@ def test_mpoint_constitutive_models_carry_live_evidence() -> None:
         assert entry["requires"] == "model configure imass"
         assert entry["property_naming"] == "snake_case"
     # 'density' is accepted by every model but documented by none of the per-model pages.
-    assert [p["keyword"] for p in cat["universal_properties"]] == ["density"]
+    universal = next(g for g in cat["property_groups"] if g["group_name"] == "universal")
+    assert [p["keyword"] for p in universal["properties"]] == ["density"]
 
 
 def test_mpoint_plot_items_carry_live_evidence() -> None:
@@ -768,10 +769,11 @@ def test_mpoint_plot_items_carry_live_evidence() -> None:
         u["command"]
         for item in cat["items"]
         for u in (ReferenceLoader.load_item_doc("plot-items", item["name"], software="mpoint") or {}).get(
-            "common_usage_patterns", []
+            "examples", []
         )
     }
-    assert documented and documented <= set(cat["verified_example_commands"])
+    verified = {v.removeprefix("Verified: ") for v in cat["verification"] if v.startswith("Verified: ")}
+    assert documented and documented <= verified
     assert not any(" scale 1.0" in c or " scale 2.0" in c for c in documented), (
         "'scale' takes a mode keyword: write 'scale value <float>'"
     )
@@ -802,12 +804,17 @@ def test_mpoint_plot_item_label_differs_per_item_type() -> None:
 def test_mpoint_plot_items_document_argument_types_and_hidden_modifier() -> None:
     mp = ReferenceLoader.load_item_doc("plot-items", "mpoint", software="mpoint")
     assert mp is not None
-    types = mp["keyword_argument_types"]
+    types = {
+        k["name"]: note.removeprefix("Argument: ")
+        for k in mp["keywords"]
+        for note in k.get("notes", [])
+        if note.startswith("Argument: ")
+    }
     assert types["extra"].startswith("integer between 1 and 128")
     assert types["hide-null"] == "boolean"
     # keywords whose probe re-enumerates the parent list take no argument at all
     assert all("bare switch" in types[k] for k in ("fixity", "model", "uniform", "state"))
-    assert [m["keyword"] for m in mp["undocumented_modifiers"]] == ["omitPast"]
+    assert [k["name"] for k in mp["keywords"] if k.get("group") == "undocumented"] == ["omitPast"]
     # the three tensor quantities each open their own sub-context
     tensor = ReferenceLoader.load_item_doc("plot-items", "mpoint-tensor", software="mpoint")
     assert tensor is not None
@@ -873,7 +880,7 @@ def test_mpoint_live_property_tables_account_for_every_documented_property() -> 
     cat = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
     basalt = ReferenceLoader.load_item_doc("constitutive-models", "columnar-basalt", software="mpoint")
     assert basalt is not None
-    indexed = len(basalt["index_expansion"]["indexed_keywords"])
+    indexed = len(basalt["index_expansion"]["keywords"])
     fanout = len(basalt["index_expansion"]["values"])
 
     for m in cat["models"]:
@@ -910,7 +917,7 @@ def test_common_constitutive_property_spellings_match_the_engine() -> None:
         p["keyword"] for g in basalt["property_groups"] for p in g.get("properties", [])
     }
     assert basalt["index_expansion"]["values"] == [1, 2, 3, 4]
-    assert len(basalt["index_expansion"]["indexed_keywords"]) == 21
+    assert len(basalt["index_expansion"]["keywords"]) == 21
 
 
 def test_mpoint_range_elements_shared_via_common() -> None:
@@ -932,7 +939,7 @@ def test_mpoint_range_elements_carry_their_own_evidence() -> None:
     """
     cat = ReferenceLoader.load_category_index("range-elements", software="mpoint")
     assert any("(state grade)" in v for v in cat["verification"])
-    counts = cat["mpoint_selection_counts"]
+    counts = cat["measured"]
     assert counts["lattice"]["points"] == 216
     by_range = {c["range"]: c["selected"] for c in counts["counts"]}
     # hand-checkable on a 216-point lattice with coordinates +-{0.2, 0.6, 1.0}
@@ -941,9 +948,17 @@ def test_mpoint_range_elements_carry_their_own_evidence() -> None:
     assert by_range["range position-x 0 20 position-y 0 20 union"] == 162  # 108+108-54
     assert by_range["range id 42"] == 1
     # 'by' enumerates but cannot name material points, so it changes nothing here
-    inapplicable = {e["name"] for e in cat["mpoint_inapplicable_elements"]}
+    inapplicable = {
+        n.split(": ", 1)[1].split(" — ")[0]
+        for n in cat["notes"]
+        if n.startswith("Inapplicable element on material points: ")
+    }
     assert "by" in inapplicable and "radius" in inapplicable
-    extra = {e["name"] for e in cat["mpoint_additional_elements"]}
+    extra = {
+        n.split(": ", 1)[1].split(" — ")[0]
+        for n in cat["notes"]
+        if n.startswith("Additional element (live-verified on material points): ")
+    }
     assert {"volume", "velocity", "displacement"} <= extra
 
 
@@ -985,7 +1000,7 @@ def test_mpoint_initial_conditions_field_and_gravity() -> None:
     grav = ReferenceLoader.load_item_doc("initial-conditions", "gravitational-stress", software="mpoint")
     assert "mpoint initialize-stresses" in grav["primary_commands"]
     field = ReferenceLoader.load_item_doc("initial-conditions", "field-initialization", software="mpoint")
-    all_fields = {f for g in field["field_groups"] for f in g["fields"]}
+    all_fields = {k["name"] for k in field["keywords"]}
     assert {"stress", "pore-pressure", "biot-modulus"} <= all_fields
 
 
@@ -1015,13 +1030,13 @@ def test_mpoint_fixity_does_not_claim_to_pin_material_points() -> None:
 def test_mpoint_initialize_documents_its_hidden_modifiers() -> None:
     field = ReferenceLoader.load_item_doc("initial-conditions", "field-initialization", software="mpoint")
     assert field is not None
-    keywords = {m["keyword"] for m in field["modifiers"]}
+    keywords = {k["name"] for k in field["keywords"] if k.get("group") == "modifier"}
     assert keywords == {"add | multiply | replace", "component", "quantity", "gradient"}
-    combine = next(m for m in field["modifiers"] if m["keyword"].startswith("add"))
+    modifiers = {k["name"]: " ".join(k.get("notes", [])) for k in field["keywords"] if k.get("group") == "modifier"}
+    combine = next(v for k, v in modifiers.items() if k.startswith("add"))
     # writing the modifier after the value half-applies the command, then errors
-    assert "BEFORE the value" in combine["trap"]
-    gradient = next(m for m in field["modifiers"] if m["keyword"] == "gradient")
-    assert "NOT listed by" in gradient["trap"]
+    assert "BEFORE the value" in combine
+    assert "NOT listed by" in modifiers["gradient"]
 
 
 def test_mpoint_gravitational_stress_records_measured_semantics() -> None:
@@ -1331,7 +1346,7 @@ def test_massflow_range_index_prose_is_not_flac() -> None:
     blob = json.dumps(index)
     assert "in FLAC commands" not in blob
     assert "structure node" not in blob  # `structure` does not exist in MassFlow
-    assert all(e.startswith("massflow ") for e in index["usage_pattern"]["examples"])
+    assert all(e.startswith("massflow ") for e in index["examples"])
 
 
 def test_massflow_range_additions_do_not_leak_into_other_engines() -> None:
@@ -1457,7 +1472,7 @@ def test_massflow_plot_items_are_engine_specific() -> None:
     marker = ReferenceLoader.load_item_doc("plot-items", "marker", software="massflow")
     assert "marker-extracted" in marker["item_types"]
     mcb = ReferenceLoader.load_sub_item_doc("plot-items", "marker", "color-by", software="massflow")
-    assert "meanDiameter" in mcb["size_by"]
+    assert "meanDiameter" in {k["name"] for k in mcb["keywords"] if k.get("group") == "size-by"}
 
 
 def test_massflow_plot_items_cover_the_chart_types() -> None:
@@ -1475,7 +1490,8 @@ def test_massflow_plot_item_index_records_the_binary_type_list() -> None:
     """Undocumented shared items are named rather than silently absent."""
     index = ReferenceLoader.load_category_index("plot-items", software="massflow")
     assert index is not None
-    binary = set(index["binary_item_types"])
+    enumeration = next(v for v in index["verification"] if v.startswith("Live binary item-type enumeration"))
+    binary = set(enumeration.split(": ", 1)[1].split(", "))
     assert len(binary) == 20
     documented = {t for i in index["items"] for t in (i.get("item_types") or [i["name"]])}
     assert documented <= binary

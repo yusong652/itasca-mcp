@@ -59,38 +59,13 @@
       ]
     }
   ],
-  "related_commands_not_properties": {
-    "permeability": "Set via 'zone interface permeability <value>' command (interface-level, not a node property keyword).",
-    "stress-normal / stress-shear": "Read-only node STATE — query via 'zone interface <id> node list stress' or via 'zone interface node ?' subcommands (NOT property keywords).",
-    "gap": "Not a documented interface node property in FLAC2D 9.0."
-  },
-  "common_patterns": [
-    {
-      "name": "Create interface on grouped faces (FLAC2D)",
-      "commands": [
-        "zone face skin",
-        "zone face group 'Fault' range position-x 0.5 0.5",
-        "zone interface create by-face range group 'Fault'",
-        "zone interface node property stiffness-normal 1e9 stiffness-shear 5e8 cohesion 1e4 friction 30 tension 0"
-      ]
-    },
-    {
-      "name": "Inspect interface state",
-      "commands": [
-        "zone interface list",
-        "zone interface 1 node list information",
-        "zone interface 1 node list stress"
-      ],
-      "notes": [
-        "'zone interface node list' alone is incomplete — must reference a specific interface first ('zone interface <id|name> node list <sub-kw>') with one of: displacement / extra / host / information / property / state / stress / target / velocity."
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/command_summary.html",
   "notes": [
     "Check interface node count and groups immediately after creation.",
     "Verify normal direction and selected faces before assigning properties.",
-    "For coupled flow, set and inspect permeability behavior explicitly."
+    "For coupled flow, set and inspect permeability behavior explicitly.",
+    "Commands, not properties: permeability: Set via 'zone interface permeability <value>' command (interface-level, not a node property keyword).; stress-normal / stress-shear: Read-only node STATE — query via 'zone interface <id> node list stress' or via 'zone interface node ?' subcommands (NOT property keywords).; gap: Not a documented interface node property in FLAC2D 9.0.",
+    "'zone interface node list' alone is incomplete — must reference a specific interface first ('zone interface <id|name> node list <sub-kw>') with one of: displacement / extra / host / information / property / state / stress / target / velocity."
   ],
   "verification": [
     "Top level subcommands (10): create, create-from-3dec, effective, element, group, list, name, node, permeability, tolerance-contact",
@@ -100,5 +75,15 @@
     "'zone interface <name> node list' sub-keywords are an exact match with this file's list: displacement / extra / host / information / property / state / stress / target / velocity.",
     "The property-name slot is not keyword-enumerated ('Unused extra parameter' on a bogus name) — probe by acceptance.",
     "9.7 top-level extras not previously documented here: create-from-3dec, element, name."
+  ],
+  "examples": [
+    {
+      "command": "zone face skin\nzone face group 'Fault' range position-x 0.5 0.5\nzone interface create by-face range group 'Fault'\nzone interface node property stiffness-normal 1e9 stiffness-shear 5e8 cohesion 1e4 friction 30 tension 0",
+      "description": "Create interface on grouped faces (FLAC2D)"
+    },
+    {
+      "command": "zone interface list\nzone interface 1 node list information\nzone interface 1 node list stress",
+      "description": "Inspect interface state"
+    }
   ]
 }

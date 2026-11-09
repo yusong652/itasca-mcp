@@ -3,13 +3,6 @@
   "full_name": "Draw Schedule (Draw Period) Import File",
   "direction": "input",
   "description": "How much is drawn, from where, and when. One row per drawpoint, one column per draw period; the cell is the mass drawn from that drawpoint during that period.",
-  "commands": [
-    "massflow drawpoint import-drawperiod <s>",
-    "massflow drawpoint import-drawperiod-txt <s>",
-    "massflow drawpoint import-drawperiod-GUI",
-    "massflow drawpoint add-drawperiod <s>",
-    "massflow drawpoint add-drawperiod-txt <s>"
-  ],
   "layout": {
     "delimiter": "comma (`import-drawperiod`) or tab (`import-drawperiod-txt`)",
     "header": "line 1 names the periods; the first cell is the drawpoint-name column",
@@ -36,13 +29,18 @@
     "MassFlow divides the period mass by the period length to get a daily tonnage and moves markers once a day, so an unrealistically large period mass relative to the period length under-samples the movement inside the IMZ.",
     "A schedule can be imported at any time. A new import deletes any *undrawn* periods from the existing schedule and appends the new ones; a partially drawn period is completed first.",
     "On import the engine reports the total days: `--- Total number of days imported from <file>: 413`.",
-    "On MassFlow 9.7.47 `massflow drawpoint import-drawperiod-txt` terminated the process on the tab-delimited schedule shipped with the tutorial project; the comma-delimited path reads the same schedule without incident."
-  ],
-  "related_formats": [
-    "draw-points"
+    "On MassFlow 9.7.47 `massflow drawpoint import-drawperiod-txt` terminated the process on the tab-delimited schedule shipped with the tutorial project; the comma-delimited path reads the same schedule without incident.",
+    "Related formats: draw-points"
   ],
   "source": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs",
   "verification": [
     "Evidence: docs + state"
+  ],
+  "primary_commands": [
+    "massflow drawpoint import-drawperiod <s>",
+    "massflow drawpoint import-drawperiod-txt <s>",
+    "massflow drawpoint import-drawperiod-GUI",
+    "massflow drawpoint add-drawperiod <s>",
+    "massflow drawpoint add-drawperiod-txt <s>"
   ]
 }

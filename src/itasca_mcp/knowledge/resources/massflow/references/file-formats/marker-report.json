@@ -3,12 +3,6 @@
   "full_name": "Marker Report Output File",
   "direction": "output",
   "description": "The full state of every marker: where it started, where it is, what it is made of, and — if it has been drawn — which drawpoint took it and on what day. Extracted markers are listed first, then unextracted ones.",
-  "commands": [
-    "massflow marker report-export [<s>]",
-    "massflow marker report-days <i>",
-    "massflow marker report-period <i>",
-    "massflow marker filename <s>"
-  ],
   "layout": {
     "delimiter": "tab",
     "header": "line 1 is the column header",
@@ -119,13 +113,17 @@
   "notes": [
     "`massflow marker report-days` / `report-period` schedule the report to be written automatically during the run; `report-export` writes one immediately.",
     "The manual disagrees with itself about the type codes: this section lists five (-2 to 2), while the FISH page for massflow.marker.type lists six, adding `3: air`. The engine takes the FISH page's side — `range marker-type` accepts -2 to 3.",
-    "`TensileStrength` appears in the `report-export` output but not in the trace-marker report, which otherwise shares the column set."
-  ],
-  "related_formats": [
-    "trace-marker-report"
+    "`TensileStrength` appears in the `report-export` output but not in the trace-marker report, which otherwise shares the column set.",
+    "Related formats: trace-marker-report"
   ],
   "source": "Itasca 9.7 MassFlow manual: command pages + 'MassFlow Theory and Background' > Model Inputs / Model Outputs",
   "verification": [
     "Evidence: docs + state"
+  ],
+  "primary_commands": [
+    "massflow marker report-export [<s>]",
+    "massflow marker report-days <i>",
+    "massflow marker report-period <i>",
+    "massflow marker filename <s>"
   ]
 }

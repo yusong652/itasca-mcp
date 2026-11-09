@@ -11,133 +11,248 @@
     "zone.field.init",
     "zone.field.reset"
   ],
-  "field_groups": [
-    {
-      "group": "kinematics",
-      "names": [
-        "displacement",
-        "displacement-x",
-        "displacement-y",
-        "displacement-z",
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z",
-        "acceleration",
-        "acceleration-x",
-        "acceleration-y",
-        "acceleration-z"
-      ],
-      "notes": [
-        "FLAC2D accepts only the x/y components plus magnitude form (no '-z' kinematic field).",
-        "'displacement-z' / 'velocity-z' / 'acceleration-z' are FLAC3D-only and rejected by both 'zone history' and 'zone.field.name' in FLAC2D.",
-        "Acceleration fields require dynamic configuration."
-      ]
-    },
-    {
-      "group": "stress-strain",
-      "names": [
-        "stress",
-        "stress-xx",
-        "stress-yy",
-        "stress-zz",
-        "stress-xy",
-        "stress-xz",
-        "stress-yz",
-        "strain-increment",
-        "strain-rate"
-      ],
-      "notes": [
-        "Tensor values may require a quantity selector such as maximum, minimum, mean, or shear-maximum.",
-        "FLAC2D plane-strain workflows may still report out-of-plane stress values, but out-of-plane position/vector commands remain FLAC3D-specific."
-      ]
-    },
-    {
-      "group": "model-state",
-      "names": [
-        "condition",
-        "convergence",
-        "density",
-        "extra",
-        "factor-of-safety",
-        "multiplier",
-        "property",
-        "property-fluid",
-        "property-thermal",
-        "ratio-local",
-        "ratio-target",
-        "strength-stress-ratio",
-        "timestep-dynamic",
-        "unbalanced-force"
-      ],
-      "notes": [
-        "'condition' is the constitutive-model state code field (NOT 'state' — that token is rejected by both 'zone history' and 'zone.field.name').",
-        "property and extra field queries require the relevant property or extra index to be set through the corresponding zone.field function."
-      ]
-    },
-    {
-      "group": "fluid-thermal",
-      "names": [
-        "pore-pressure",
-        "saturation",
-        "temperature",
-        "density-fluid",
-        "fluid-biot-modulus",
-        "fluid-head",
-        "permeability-ratio"
-      ],
-      "notes": [
-        "Fluid fields require fluid configuration where applicable.",
-        "Thermal fields require thermal configuration where applicable.",
-        "'thermal-flux' is NOT a zone field name — use 'property-thermal' for thermal material constants and a thermal-specific FISH query for flux.",
-        "REMOVED as field names (live-verified both engines, 2026-08-13): 'saturation-apparent' and 'fluid-bulk-modulus' are rejected by 'zone history' in live FLAC2D 9 ('Bad conversion') and absent from the FLAC3D 9.7 enumeration — they are NOT history/field names in current 9.x engines. They exist only as 2D plot-contour attributes (see the plot-items reference).",
-        "The mobility-coefficient family, porosity, density-fluid, density-wet, and oob-flow enumerate in BOTH current engines (2D lacks only the -xz/-yz tensor components) — they are not 3D-only."
-      ]
-    }
-  ],
-  "quantity_names": [
-    "maximum",
-    "minimum",
-    "intermediate",
-    "mean",
-    "norm",
-    "octahedral",
-    "shear-maximum",
-    "total-measure",
-    "volumetric",
-    "von-mises"
-  ],
-  "quantity_notes": [
-    "Quantity selectors apply to tensor fields (stress, strain-rate, strain-increment, stress-effective) via the 'quantity' sub-keyword of zone history, e.g. 'zone history stress quantity von-mises position (0.5,0.5)'.",
-    "Quantity tokens can also be appended directly to the field name as a single concatenated form (e.g. 'stress-von-mises', 'stress-shear-maximum', 'stress-mean') — both forms validated against FLAC2D 9.0."
-  ],
-  "fish_patterns": [
-    {
-      "name": "Single-point query (FLAC2D)",
-      "commands": [
-        "zone.field.name = 'displacement-x'",
-        "local value = zone.field.get(vector(0.5, 0.5))"
-      ],
-      "notes": [
-        "FLAC2D vector is 2D: vector(x, y). FLAC3D is vector(x, y, z)."
-      ]
-    },
-    {
-      "name": "Repeated queries",
-      "commands": [
-        "zone.field.name = 'stress-xx'",
-        "zone.field.method.name = 'poly'",
-        "zone.field.init",
-        "; query many points",
-        "zone.field.reset"
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/zones/zones.html",
   "verification": [
     "Full 'zone history <bogus>' first-token enumeration captured (76 names). All names documented in this file are present EXCEPT saturation-apparent and fluid-bulk-modulus (FLAC2D-only, see fluid-thermal group note).",
     "'condition' is confirmed present and 'state' confirmed absent in 9.7 — the file's claim holds in 3D too.",
     "The quantity_names list is an exact match with the live 'quantity' enumeration (plus the six tensor components xx/yy/zz/xy/xz/yz, which the enumeration folds into the same slot).",
     "FLAC2D 9 comparison (live, 2026-08-13): 62-name 2D enumeration differs from the 76-name 3D one only by dimension-mechanical names (-z kinematics, -xz/-yz tensor components, mobility-coefficient-xz) — the scalar name sets otherwise match, including balloon/porosity/density-wet/oob-flow/stress-effective."
+  ],
+  "keywords": [
+    {
+      "name": "displacement",
+      "group": "kinematics"
+    },
+    {
+      "name": "displacement-x",
+      "group": "kinematics"
+    },
+    {
+      "name": "displacement-y",
+      "group": "kinematics"
+    },
+    {
+      "name": "displacement-z",
+      "group": "kinematics"
+    },
+    {
+      "name": "velocity",
+      "group": "kinematics"
+    },
+    {
+      "name": "velocity-x",
+      "group": "kinematics"
+    },
+    {
+      "name": "velocity-y",
+      "group": "kinematics"
+    },
+    {
+      "name": "velocity-z",
+      "group": "kinematics"
+    },
+    {
+      "name": "acceleration",
+      "group": "kinematics"
+    },
+    {
+      "name": "acceleration-x",
+      "group": "kinematics"
+    },
+    {
+      "name": "acceleration-y",
+      "group": "kinematics"
+    },
+    {
+      "name": "acceleration-z",
+      "group": "kinematics"
+    },
+    {
+      "name": "stress",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-xx",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-yy",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-zz",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-xy",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-xz",
+      "group": "stress-strain"
+    },
+    {
+      "name": "stress-yz",
+      "group": "stress-strain"
+    },
+    {
+      "name": "strain-increment",
+      "group": "stress-strain"
+    },
+    {
+      "name": "strain-rate",
+      "group": "stress-strain"
+    },
+    {
+      "name": "condition",
+      "group": "model-state"
+    },
+    {
+      "name": "convergence",
+      "group": "model-state"
+    },
+    {
+      "name": "density",
+      "group": "model-state"
+    },
+    {
+      "name": "extra",
+      "group": "model-state"
+    },
+    {
+      "name": "factor-of-safety",
+      "group": "model-state"
+    },
+    {
+      "name": "multiplier",
+      "group": "model-state"
+    },
+    {
+      "name": "property",
+      "group": "model-state"
+    },
+    {
+      "name": "property-fluid",
+      "group": "model-state"
+    },
+    {
+      "name": "property-thermal",
+      "group": "model-state"
+    },
+    {
+      "name": "ratio-local",
+      "group": "model-state"
+    },
+    {
+      "name": "ratio-target",
+      "group": "model-state"
+    },
+    {
+      "name": "strength-stress-ratio",
+      "group": "model-state"
+    },
+    {
+      "name": "timestep-dynamic",
+      "group": "model-state"
+    },
+    {
+      "name": "unbalanced-force",
+      "group": "model-state"
+    },
+    {
+      "name": "pore-pressure",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "saturation",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "temperature",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "density-fluid",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "fluid-biot-modulus",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "fluid-head",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "permeability-ratio",
+      "group": "fluid-thermal"
+    },
+    {
+      "name": "maximum",
+      "group": "quantity"
+    },
+    {
+      "name": "minimum",
+      "group": "quantity"
+    },
+    {
+      "name": "intermediate",
+      "group": "quantity"
+    },
+    {
+      "name": "mean",
+      "group": "quantity"
+    },
+    {
+      "name": "norm",
+      "group": "quantity"
+    },
+    {
+      "name": "octahedral",
+      "group": "quantity"
+    },
+    {
+      "name": "shear-maximum",
+      "group": "quantity"
+    },
+    {
+      "name": "total-measure",
+      "group": "quantity"
+    },
+    {
+      "name": "volumetric",
+      "group": "quantity"
+    },
+    {
+      "name": "von-mises",
+      "group": "quantity"
+    }
+  ],
+  "notes": [
+    "FLAC2D accepts only the x/y components plus magnitude form (no '-z' kinematic field).",
+    "'displacement-z' / 'velocity-z' / 'acceleration-z' are FLAC3D-only and rejected by both 'zone history' and 'zone.field.name' in FLAC2D.",
+    "Acceleration fields require dynamic configuration.",
+    "Tensor values may require a quantity selector such as maximum, minimum, mean, or shear-maximum.",
+    "FLAC2D plane-strain workflows may still report out-of-plane stress values, but out-of-plane position/vector commands remain FLAC3D-specific.",
+    "'condition' is the constitutive-model state code field (NOT 'state' — that token is rejected by both 'zone history' and 'zone.field.name').",
+    "property and extra field queries require the relevant property or extra index to be set through the corresponding zone.field function.",
+    "Fluid fields require fluid configuration where applicable.",
+    "Thermal fields require thermal configuration where applicable.",
+    "'thermal-flux' is NOT a zone field name — use 'property-thermal' for thermal material constants and a thermal-specific FISH query for flux.",
+    "REMOVED as field names (live-verified both engines, 2026-08-13): 'saturation-apparent' and 'fluid-bulk-modulus' are rejected by 'zone history' in live FLAC2D 9 ('Bad conversion') and absent from the FLAC3D 9.7 enumeration — they are NOT history/field names in current 9.x engines. They exist only as 2D plot-contour attributes (see the plot-items reference).",
+    "The mobility-coefficient family, porosity, density-fluid, density-wet, and oob-flow enumerate in BOTH current engines (2D lacks only the -xz/-yz tensor components) — they are not 3D-only.",
+    "Quantity selectors apply to tensor fields (stress, strain-rate, strain-increment, stress-effective) via the 'quantity' sub-keyword of zone history, e.g. 'zone history stress quantity von-mises position (0.5,0.5)'.",
+    "Quantity tokens can also be appended directly to the field name as a single concatenated form (e.g. 'stress-von-mises', 'stress-shear-maximum', 'stress-mean') — both forms validated against FLAC2D 9.0.",
+    "FLAC2D vector is 2D: vector(x, y). FLAC3D is vector(x, y, z)."
+  ],
+  "examples": [
+    {
+      "command": "zone.field.name = 'displacement-x'\nlocal value = zone.field.get(vector(0.5, 0.5))",
+      "description": "Single-point query (FLAC2D)"
+    },
+    {
+      "command": "zone.field.name = 'stress-xx'\nzone.field.method.name = 'poly'\nzone.field.init\n; query many points\nzone.field.reset",
+      "description": "Repeated queries"
+    }
   ]
 }

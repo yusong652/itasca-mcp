@@ -1,19 +1,6 @@
 {
   "type": "range_elements",
   "description": "Range elements are filtering syntax used after the 'range' keyword in FLAC commands. They select subsets of model objects based on geometric regions, attributes, or logical conditions.",
-  "usage_pattern": {
-    "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
-    "examples": [
-      "zone group 'core' range position-x 0 10 position-y 0 10",
-      "zone property density 2650 range group 'sample'",
-      "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5"
-    ],
-    "notes": [
-      "Multiple range elements create intersection (AND) by default",
-      "Use 'union' keyword for OR logic",
-      "Unspecified range affects all objects of target type"
-    ]
-  },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
@@ -355,38 +342,15 @@
       "category": "logical"
     }
   ],
-  "common_patterns": [
-    {
-      "name": "Group zones in region",
-      "example": "zone group 'core' range position-x 0 10 position-y 0 10",
-      "description": "Assign a group to zones in an XY rectangle"
-    },
-    {
-      "name": "Set property by group",
-      "example": "zone property density 2650 range group 'sample'",
-      "description": "Set density for zones in a group"
-    },
-    {
-      "name": "Cylindrical structural-node range",
-      "example": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
-      "description": "Fix structural nodes in a cylindrical region"
-    },
-    {
-      "name": "Named range reuse",
-      "example": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
-      "description": "Create reusable named range"
-    }
-  ],
   "notes": [
     "Multiple range elements create intersection (AND) by default",
     "Use 'union' keyword for OR logic",
     "Unspecified range affects all objects of target type",
-    "A token the range parser does not know ends the range phrase instead of failing it: on FLAC3D 9.8.54 'zone group ... range position-x 0 1 nosuch' assigned the group to the 4 zones selected so far and only then reported 'Unused extra parameter (nosuch)'. Check spelling before trusting a silent range."
-  ],
-  "related_commands": [
-    "model range create",
-    "model range delete",
-    "model range list"
+    "A token the range parser does not know ends the range phrase instead of failing it: on FLAC3D 9.8.54 'zone group ... range position-x 0 1 nosuch' assigned the group to the 4 zones selected so far and only then reported 'Unused extra parameter (nosuch)'. Check spelling before trusting a silent range.",
+    "Multiple range elements create intersection (AND) by default",
+    "Use 'union' keyword for OR logic",
+    "Unspecified range affects all objects of target type",
+    "Related commands: model range create, model range delete, model range list"
   ],
   "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
   "verification": [
@@ -412,5 +376,27 @@
     "State-verified 'deselected': 4 zones after selecting the other 4",
     "State-verified 'structure-type': 3 beam nodes / 3 cable nodes",
     "Tokens (70): active, annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, marker-type, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
+  ],
+  "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
+  "examples": [
+    "zone group 'core' range position-x 0 10 position-y 0 10",
+    "zone property density 2650 range group 'sample'",
+    "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+    {
+      "command": "zone group 'core' range position-x 0 10 position-y 0 10",
+      "description": "Assign a group to zones in an XY rectangle"
+    },
+    {
+      "command": "zone property density 2650 range group 'sample'",
+      "description": "Set density for zones in a group"
+    },
+    {
+      "command": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+      "description": "Fix structural nodes in a cylindrical region"
+    },
+    {
+      "command": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
+      "description": "Create reusable named range"
+    }
   ]
 }

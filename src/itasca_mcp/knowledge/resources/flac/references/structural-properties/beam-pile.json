@@ -90,30 +90,22 @@
       "9.x beam/pile also carry constitutive models ('structure beam cmodel assign', 5 models: concrete/elastic/mohr-coulomb/strain-softening/von-mises) -- see structure-cmodels.json for the mechanism and the elastic->plastic assignment trap."
     ]
   },
-  "common_patterns": [
-    {
-      "name": "Elastic beam (FLAC2D)",
-      "commands": [
-        "structure beam create by-line (0,0) (1,0)",
-        "structure beam property young 2e11 poisson 0.3 cross-sectional-area 0.01 moi 1e-5 spacing 1.0"
-      ]
-    },
-    {
-      "name": "Pile with coupling (FLAC2D)",
-      "commands": [
-        "structure pile create by-line (0,0) (1,0)",
-        "structure pile property young 2e10 poisson 0.25 cross-sectional-area 0.1 moi 1e-5 perimeter 1.0 coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-cohesion-shear 1e5"
-      ]
-    },
-    {
-      "name": "Rockbolt-style pile",
-      "commands": [
-        "structure pile property rockbolt-flag true yield-tension 1e6 yield-compression 1e6 tensile-failure-strain 0.01"
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/beamtypes/beamtypes.html",
   "verification": [
     "Live FLAC2D 9 re-check (2026-08-13): 'structure beam property' enumerates exactly the 10 keywords in the shared group (young/poisson/density/cross-sectional-area/moi/direction-y/shear-coefficient/spacing/plastic-moment/plastic-shear) with no -y/-z, torsion-constant, or thermal-expansion forms; 'structure pile property' adds exactly the pile-only coupling and rockbolt keywords documented here. 2D beam/pile also expose 'cmodel' (5 models) — see structure-cmodels.json."
+  ],
+  "examples": [
+    {
+      "command": "structure beam create by-line (0,0) (1,0)\nstructure beam property young 2e11 poisson 0.3 cross-sectional-area 0.01 moi 1e-5 spacing 1.0",
+      "description": "Elastic beam (FLAC2D)"
+    },
+    {
+      "command": "structure pile create by-line (0,0) (1,0)\nstructure pile property young 2e10 poisson 0.25 cross-sectional-area 0.1 moi 1e-5 perimeter 1.0 coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-cohesion-shear 1e5",
+      "description": "Pile with coupling (FLAC2D)"
+    },
+    {
+      "command": "structure pile property rockbolt-flag true yield-tension 1e6 yield-compression 1e6 tensile-failure-strain 0.01",
+      "description": "Rockbolt-style pile"
+    }
   ]
 }

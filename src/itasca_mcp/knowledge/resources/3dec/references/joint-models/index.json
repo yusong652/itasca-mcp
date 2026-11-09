@@ -1,17 +1,6 @@
 {
   "type": "joint_constitutive_model_properties",
   "description": "Reference documentation for 3DEC joint (sub-contact) constitutive model properties — the property vocabulary for 'block contact jmodel assign' and 'block contact property'.",
-  "usage_contexts": [
-    "block contact jmodel assign <name> [range ...]",
-    "block contact property <prop> <value> [range jmodel '<name>']",
-    "Python: subcontact.set_model('<name>') ; subcontact.set_prop('<prop>', value)"
-  ],
-  "property_metadata_fields": {
-    "keyword": "Property name used in 'block contact property' commands",
-    "symbol": "Mathematical symbol used in the model documentation",
-    "description": "Description including physical meaning and units",
-    "type": "Coarse data type (FLT=float, BOOL=boolean) — heuristic"
-  },
   "models": [
     {
       "name": "elastic",
@@ -139,5 +128,10 @@
     "State round-trip verified per model on stiffness-normal (set 1.25e9 -> Subcontact.prop reads 1.25e9).",
     "Material-table routing (live-verified 2026-08-15): 'block contact material-table default jmodel <name>' selects the model for new contacts (unknown names rejected); 'block contact material-table default property' accepts the UNION of all 9 models' property command-names (68 keywords), while plain 'block contact material-table property' offers only the default model's (mohr) set. Cycling a model with subcontacts but no default stiffness fails with 'Default contact stiffness not set. Use BLOCK CONTACT MATERIAL-TABLE DEFAULT PROP'.",
     "3DEC 7.00 Release 161 (2026-08-21): SEVEN of the nine jmodels exist (ratestate and velocity-weakening are 9.x-only). TRAP: the first-slot enumeration 'block contact jmodel ?' omits softening-mohr, but 'assign softening-mohr' works and the bad-model-name error enumerates all seven. Property sets of all seven are IDENTICAL to the 9.7 enumerations. In 7.0 the 'block contact property' slot error-enumerates even with no jmodel assigned (defaults to the mohr set) — unlike 9.7 where the unassigned slot is free-form/silent."
+  ],
+  "notes": [
+    "block contact jmodel assign <name> [range ...]",
+    "block contact property <prop> <value> [range jmodel '<name>']",
+    "Python: subcontact.set_model('<name>') ; subcontact.set_prop('<prop>', value)"
   ]
 }

@@ -14,82 +14,59 @@
     "zone gridpoint free pore-pressure",
     "zone gridpoint fix well"
   ],
-  "keyword_groups": [
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/theory/fluid-mechanical/boundary_conditions/boundary_conditions.html",
+  "keywords": [
     {
-      "group": "pressure control",
-      "keywords": [
-        {
-          "name": "pore-pressure"
-        },
-        {
-          "name": "head"
-        }
-      ],
-      "notes": [
-        "Fixed pore pressure permits fluid exchange with the exterior.",
-        "Free pore pressure is the default impermeable condition for gridpoints."
-      ]
+      "name": "pore-pressure",
+      "group": "pressure control"
     },
     {
-      "group": "limited / combined pressure conditions (face apply, live-verified both engines)",
-      "keywords": [
-        {
-          "name": "pore-pressure-maximum"
-        },
-        {
-          "name": "pore-pressure-saturation"
-        },
-        {
-          "name": "head-saturation"
-        }
-      ],
-      "notes": [
-        "'pore-pressure-maximum <f>' is a seepage-type limited-pp boundary: face pp stays FREE below f and is drain-clamped at f when flow would exceed it; bare form = f 0 (zero-pressure seepage face). State-verified against FLAC3D 9.7; absent from the official 9.x HTML docs.",
-        "'pore-pressure-saturation <v2>' applies pore pressure and saturation together; 'head-saturation <f>' is the head-based companion (needs fluid density + gravity set first). Both absent from the official 9.x HTML docs.",
-        "See the zone face apply command doc for the full verified keyword entries.",
-        "All three keywords also enumerate in live FLAC2D 9 (2026-08-13) — they are engine-family-wide 9.x features, not FLAC3D-only."
-      ]
+      "name": "head",
+      "group": "pressure control"
     },
     {
-      "group": "flux and leakage (face apply)",
-      "keywords": [
-        {
-          "name": "discharge"
-        },
-        {
-          "name": "leakage"
-        }
-      ],
-      "notes": [
-        "Use face discharge/leakage for boundary fluxes via 'zone face apply'."
-      ]
+      "name": "pore-pressure-maximum",
+      "group": "limited / combined pressure conditions (face apply, live-verified both engines)"
     },
     {
-      "group": "source/sink (gridpoint only)",
-      "keywords": [
-        {
-          "name": "well"
-        }
-      ],
-      "notes": [
-        "'well' is a gridpoint-fix keyword — NOT a 'zone face apply' keyword. Use 'zone gridpoint fix well ...' for source/sink style flow."
-      ]
+      "name": "pore-pressure-saturation",
+      "group": "limited / combined pressure conditions (face apply, live-verified both engines)"
+    },
+    {
+      "name": "head-saturation",
+      "group": "limited / combined pressure conditions (face apply, live-verified both engines)"
+    },
+    {
+      "name": "discharge",
+      "group": "flux and leakage (face apply)"
+    },
+    {
+      "name": "leakage",
+      "group": "flux and leakage (face apply)"
+    },
+    {
+      "name": "well",
+      "group": "source/sink (gridpoint only)"
     }
   ],
-  "common_patterns": [
+  "notes": [
+    "Fixed pore pressure permits fluid exchange with the exterior.",
+    "Free pore pressure is the default impermeable condition for gridpoints.",
+    "'pore-pressure-maximum <f>' is a seepage-type limited-pp boundary: face pp stays FREE below f and is drain-clamped at f when flow would exceed it; bare form = f 0 (zero-pressure seepage face). State-verified against FLAC3D 9.7; absent from the official 9.x HTML docs.",
+    "'pore-pressure-saturation <v2>' applies pore pressure and saturation together; 'head-saturation <f>' is the head-based companion (needs fluid density + gravity set first). Both absent from the official 9.x HTML docs.",
+    "See the zone face apply command doc for the full verified keyword entries.",
+    "All three keywords also enumerate in live FLAC2D 9 (2026-08-13) — they are engine-family-wide 9.x features, not FLAC3D-only.",
+    "Use face discharge/leakage for boundary fluxes via 'zone face apply'.",
+    "'well' is a gridpoint-fix keyword — NOT a 'zone face apply' keyword. Use 'zone gridpoint fix well ...' for source/sink style flow."
+  ],
+  "examples": [
     {
-      "name": "Fixed boundary pore pressure",
-      "commands": [
-        "model configure fluid",
-        "zone face apply pore-pressure 0 range group 'drain'"
-      ]
+      "command": "model configure fluid\nzone face apply pore-pressure 0 range group 'drain'",
+      "description": "Fixed boundary pore pressure"
     },
     {
-      "name": "Free pore pressure condition",
-      "commands": [
-        "zone gridpoint free pore-pressure range group 'sealed'"
-      ]
+      "command": "zone gridpoint free pore-pressure range group 'sealed'",
+      "description": "Free pore pressure condition"
     }
-  ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/theory/fluid-mechanical/boundary_conditions/boundary_conditions.html"
+  ]
 }

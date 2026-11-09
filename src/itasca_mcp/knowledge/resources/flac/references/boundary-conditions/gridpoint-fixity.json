@@ -9,114 +9,101 @@
     "zone gridpoint initialize",
     "zone gridpoint system"
   ],
-  "keyword_groups": [
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/boundary_conditions.html",
+  "keywords": [
     {
-      "group": "mechanical velocity fixity",
-      "keywords": [
-        {
-          "name": "velocity"
-        },
-        {
-          "name": "velocity-x"
-        },
-        {
-          "name": "velocity-y"
-        },
-        {
-          "name": "velocity-z"
-        }
-      ],
-      "notes": [
-        "FLAC2D uses x/y translational degrees of freedom; z velocity fixity is FLAC3D-only.",
-        "Use 'zone gridpoint free velocity-x' or related keywords to release a condition.",
-        "Local / normal / tangential components are FACE-apply concepts only — they are NOT accepted by 'zone gridpoint fix'. Use 'zone face apply velocity-local 0 ...' instead."
-      ]
+      "name": "velocity",
+      "group": "mechanical velocity fixity"
     },
     {
-      "group": "mechanical acceleration fixity",
-      "keywords": [
-        {
-          "name": "acceleration"
-        },
-        {
-          "name": "acceleration-x"
-        },
-        {
-          "name": "acceleration-y"
-        },
-        {
-          "name": "acceleration-z"
-        }
-      ],
-      "notes": [
-        "Requires dynamic configuration (model configure dynamic).",
-        "z component is FLAC3D-only; FLAC2D uses x/y."
-      ]
+      "name": "velocity-x",
+      "group": "mechanical velocity fixity"
     },
     {
-      "group": "applied force",
-      "keywords": [
-        {
-          "name": "force-applied"
-        },
-        {
-          "name": "force-applied-x"
-        },
-        {
-          "name": "force-applied-y"
-        },
-        {
-          "name": "force-applied-z"
-        }
-      ],
-      "notes": [
-        "Direct forces do not account for boundary face area; use face stress conditions when traction is intended."
-      ]
+      "name": "velocity-y",
+      "group": "mechanical velocity fixity"
     },
     {
-      "group": "coupled scalar conditions",
-      "keywords": [
-        {
-          "name": "pore-pressure"
-        },
-        {
-          "name": "temperature"
-        },
-        {
-          "name": "saturation"
-        },
-        {
-          "name": "source"
-        },
-        {
-          "name": "well"
-        },
-        {
-          "name": "head"
-        }
-      ],
-      "keywords_3d_only": [],
-      "notes": [
-        "Fluid and thermal keywords require the corresponding model configuration to EXECUTE (FLAC3D 9.7 rejects with 'Not configured for fluid/thermal calculations'); the keywords still appear in parser enumerations regardless of configuration.",
-        "'source' is a heat-source term (thermal); 'well' is a fluid source/sink.",
-        "'saturation' fixity holds the value in both fluid-flow (implicit) and fluid-explicit modes; it is also the only way to impose a saturation value in implicit mode (unfixed writes clamp back to 1.0). State-verified against FLAC3D 9.7.",
-        "CORRECTED (live FLAC2D 9, 2026-08-13): 'head' IS a valid 'zone gridpoint fix' keyword in current FLAC2D 9 — it is semantically gated, not absent ('Must define fluid density before calculating head'). State-verified in 2D: with 'zone water density 1000' + 'model gravity 10', 'fix head 10' at y=0 reads back pp = 100000 = rho*g*h via gp.pp(). The earlier \"rejected by FLAC2D 9.0\" note applied to the older 9.0 binary."
-      ]
+      "name": "velocity-z",
+      "group": "mechanical velocity fixity"
+    },
+    {
+      "name": "acceleration",
+      "group": "mechanical acceleration fixity"
+    },
+    {
+      "name": "acceleration-x",
+      "group": "mechanical acceleration fixity"
+    },
+    {
+      "name": "acceleration-y",
+      "group": "mechanical acceleration fixity"
+    },
+    {
+      "name": "acceleration-z",
+      "group": "mechanical acceleration fixity"
+    },
+    {
+      "name": "force-applied",
+      "group": "applied force"
+    },
+    {
+      "name": "force-applied-x",
+      "group": "applied force"
+    },
+    {
+      "name": "force-applied-y",
+      "group": "applied force"
+    },
+    {
+      "name": "force-applied-z",
+      "group": "applied force"
+    },
+    {
+      "name": "pore-pressure",
+      "group": "coupled scalar conditions"
+    },
+    {
+      "name": "temperature",
+      "group": "coupled scalar conditions"
+    },
+    {
+      "name": "saturation",
+      "group": "coupled scalar conditions"
+    },
+    {
+      "name": "source",
+      "group": "coupled scalar conditions"
+    },
+    {
+      "name": "well",
+      "group": "coupled scalar conditions"
+    },
+    {
+      "name": "head",
+      "group": "coupled scalar conditions"
     }
   ],
-  "common_patterns": [
+  "notes": [
+    "FLAC2D uses x/y translational degrees of freedom; z velocity fixity is FLAC3D-only.",
+    "Use 'zone gridpoint free velocity-x' or related keywords to release a condition.",
+    "Local / normal / tangential components are FACE-apply concepts only — they are NOT accepted by 'zone gridpoint fix'. Use 'zone face apply velocity-local 0 ...' instead.",
+    "Requires dynamic configuration (model configure dynamic).",
+    "z component is FLAC3D-only; FLAC2D uses x/y.",
+    "Direct forces do not account for boundary face area; use face stress conditions when traction is intended.",
+    "Fluid and thermal keywords require the corresponding model configuration to EXECUTE (FLAC3D 9.7 rejects with 'Not configured for fluid/thermal calculations'); the keywords still appear in parser enumerations regardless of configuration.",
+    "'source' is a heat-source term (thermal); 'well' is a fluid source/sink.",
+    "'saturation' fixity holds the value in both fluid-flow (implicit) and fluid-explicit modes; it is also the only way to impose a saturation value in implicit mode (unfixed writes clamp back to 1.0). State-verified against FLAC3D 9.7.",
+    "CORRECTED (live FLAC2D 9, 2026-08-13): 'head' IS a valid 'zone gridpoint fix' keyword in current FLAC2D 9 — it is semantically gated, not absent ('Must define fluid density before calculating head'). State-verified in 2D: with 'zone water density 1000' + 'model gravity 10', 'fix head 10' at y=0 reads back pp = 100000 = rho*g*h via gp.pp(). The earlier \"rejected by FLAC2D 9.0\" note applied to the older 9.0 binary."
+  ],
+  "examples": [
     {
-      "name": "Fixed base in vertical direction",
-      "commands": [
-        "zone gridpoint fix velocity-y 0 range position-y 0"
-      ]
+      "command": "zone gridpoint fix velocity-y 0 range position-y 0",
+      "description": "Fixed base in vertical direction"
     },
     {
-      "name": "Release a pore-pressure constraint",
-      "commands": [
-        "zone gridpoint free pore-pressure range group 'drain'"
-      ]
+      "command": "zone gridpoint free pore-pressure range group 'drain'",
+      "description": "Release a pore-pressure constraint"
     }
-  ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/boundary_conditions.html"
+  ]
 }

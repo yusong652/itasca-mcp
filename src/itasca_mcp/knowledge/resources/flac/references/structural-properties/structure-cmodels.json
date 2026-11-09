@@ -3,179 +3,347 @@
   "dimension": "mixed",
   "full_name": "Structural-Element Constitutive Models (9.x, FLAC3D and FLAC2D)",
   "description": "In the 9.x series (both FLAC3D and FLAC2D), structural elements carry their own constitutive models, assigned with 'structure <type> cmodel assign <model>'. The 'structure <type> property' keyword set is MODEL-DEPENDENT: material property names (young, poisson, cohesion, ...) only parse after the corresponding cmodel is assigned, on top of a fixed per-type base set (thickness, density, coupling-*, ...). All facts below were live-verified against FLAC3D 9.7 (error-enumeration probing plus set-and-list readback).",
-  "cmodel_support_by_type": {
-    "shell": [
-      "anisotropic",
-      "concrete",
-      "elastic",
-      "mohr-coulomb",
-      "orthotropic",
-      "strain-softening",
-      "von-mises"
-    ],
-    "liner": [
-      "anisotropic",
-      "concrete",
-      "elastic",
-      "mohr-coulomb",
-      "orthotropic",
-      "strain-softening",
-      "von-mises"
-    ],
-    "geogrid": [
-      "anisotropic",
-      "concrete",
-      "elastic",
-      "mohr-coulomb",
-      "orthotropic",
-      "strain-softening",
-      "von-mises"
-    ],
-    "beam": [
-      "concrete",
-      "elastic",
-      "mohr-coulomb",
-      "strain-softening",
-      "von-mises"
-    ],
-    "pile": [
-      "concrete",
-      "elastic",
-      "mohr-coulomb",
-      "strain-softening",
-      "von-mises"
-    ],
-    "cable": [],
-    "notes": [
-      "beam/pile omit the anisotropic/orthotropic surface models (1D elements).",
-      "cable has NO cmodel subcommand at all ('structure cable cmodel' is rejected with 'Unused extra parameter'); cable material behavior is fully driven by its fixed property set.",
-      "'structure <type> cmodel' subcommands: assign, list, plastic-integration.",
-      "FLAC2D 9 (live-verified 2026-08-13): beam, pile, AND liner each expose the same 5-model set (concrete/elastic/mohr-coulomb/strain-softening/von-mises) — the 2D liner is beam-formulation, so it gets the 1D model set, not the 7-model surface set. cable has no cmodel in 2D either. shell/geogrid/dowel/hybrid types do not exist in 2D."
-    ]
-  },
-  "assignment_trap": {
-    "description": "On FLAC3D 9.7 shell and liner elements: once an elastic-family model (elastic/anisotropic/orthotropic) has been explicitly assigned, reassigning a PLASTIC model (concrete/mohr-coulomb/strain-softening/von-mises) to the same elements is rejected: 'Cannot replace an elastic model with a plastic model'. The reverse direction (plastic -> elastic) IS accepted, as are swaps within the elastic family. Freshly created elements (default state, no explicit assign yet) accept any model.",
-    "workaround": "Assign the plastic model first on fresh elements, or delete and recreate the elements ('structure <type> delete' then create).",
-    "verification": [
-      "Reproduced on FLAC3D 9.7 shell and liner elements. NOT universal: live FLAC2D 9 beam elements ACCEPT elastic -> von-mises reassignment (2026-08-13). Untested combinations: FLAC3D beam/pile, FLAC2D pile/liner — treat the trap as confirmed for 3D surface elements only."
-    ]
-  },
-  "property_sets_by_cmodel": {
-    "description": "Full 'structure shell property' keyword enumeration per assigned cmodel (FLAC3D 9.7; 'range' omitted). Each set = the type's base set (density, thermal-expansion, thickness for shell) + the model's material properties. liner/geogrid/beam/pile follow the same expansion pattern on top of their own base sets (spot-verified: liner + elastic adds young, poisson).",
-    "shell_base_no_cmodel": [
-      "density",
-      "thermal-expansion",
-      "thickness"
-    ],
-    "elastic": [
-      "density",
-      "poisson",
-      "thermal-expansion",
-      "thickness",
-      "young"
-    ],
-    "anisotropic": [
-      "aniso-bend-constants",
-      "aniso-bend-thickness",
-      "aniso-memb-constants",
-      "aniso-memb-thickness",
-      "density",
-      "material-x",
-      "thermal-expansion",
-      "thickness"
-    ],
-    "orthotropic": [
-      "density",
-      "material-x",
-      "ortho-bend-constants",
-      "ortho-bend-thickness",
-      "ortho-memb-constants",
-      "ortho-memb-thickness",
-      "thermal-expansion",
-      "thickness"
-    ],
-    "mohr-coulomb": [
-      "bulk",
-      "cohesion",
-      "density",
-      "dilation",
-      "flag-brittle",
-      "friction",
-      "plastic-strain",
-      "poisson",
-      "shear",
-      "tension",
-      "thermal-expansion",
-      "thickness",
-      "young"
-    ],
-    "strain-softening": [
-      "bulk",
-      "cohesion",
-      "density",
-      "dilation",
-      "flag-brittle",
-      "friction",
-      "length-calibration",
-      "plastic-strain",
-      "poisson",
-      "shear",
-      "strain-shear-plastic",
-      "strain-tension-plastic",
-      "table-cohesion",
-      "table-dilation",
-      "table-friction",
-      "table-tension",
-      "tension",
-      "thermal-expansion",
-      "thickness",
-      "young"
-    ],
-    "von-mises": [
-      "bulk",
-      "density",
-      "modulus-plastic",
-      "poisson",
-      "shear",
-      "strength-yield",
-      "thermal-expansion",
-      "thickness",
-      "young"
-    ],
-    "concrete": [
-      "bulk",
-      "compression",
-      "compression-d",
-      "compression-energy-fracture",
-      "compression-initial",
-      "compression-length-reference",
-      "compression-strength",
-      "damage",
-      "damage-compression",
-      "damage-tension",
-      "density",
-      "dilation",
-      "poisson",
-      "ratio-biaxial",
-      "shear",
-      "strain-plastic-compression",
-      "strain-plastic-tension",
-      "tension",
-      "tension-d",
-      "tension-energy-fracture",
-      "tension-initial",
-      "tension-length-reference",
-      "tension-recovery",
-      "tension-strength",
-      "thermal-expansion",
-      "thickness",
-      "young"
-    ]
-  },
-  "enumeration_caveats": [
+  "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html",
+  "notes": [
+    "shell supports cmodels: anisotropic, concrete, elastic, mohr-coulomb, orthotropic, strain-softening, von-mises",
+    "liner supports cmodels: anisotropic, concrete, elastic, mohr-coulomb, orthotropic, strain-softening, von-mises",
+    "geogrid supports cmodels: anisotropic, concrete, elastic, mohr-coulomb, orthotropic, strain-softening, von-mises",
+    "beam supports cmodels: concrete, elastic, mohr-coulomb, strain-softening, von-mises",
+    "pile supports cmodels: concrete, elastic, mohr-coulomb, strain-softening, von-mises",
+    "cable supports cmodels: ",
+    "beam/pile omit the anisotropic/orthotropic surface models (1D elements).",
+    "cable has NO cmodel subcommand at all ('structure cable cmodel' is rejected with 'Unused extra parameter'); cable material behavior is fully driven by its fixed property set.",
+    "'structure <type> cmodel' subcommands: assign, list, plastic-integration.",
+    "FLAC2D 9 (live-verified 2026-08-13): beam, pile, AND liner each expose the same 5-model set (concrete/elastic/mohr-coulomb/strain-softening/von-mises) — the 2D liner is beam-formulation, so it gets the 1D model set, not the 7-model surface set. cable has no cmodel in 2D either. shell/geogrid/dowel/hybrid types do not exist in 2D.",
+    "On FLAC3D 9.7 shell and liner elements: once an elastic-family model (elastic/anisotropic/orthotropic) has been explicitly assigned, reassigning a PLASTIC model (concrete/mohr-coulomb/strain-softening/von-mises) to the same elements is rejected: 'Cannot replace an elastic model with a plastic model'. The reverse direction (plastic -> elastic) IS accepted, as are swaps within the elastic family. Freshly created elements (default state, no explicit assign yet) accept any model.",
+    "Workaround: Assign the plastic model first on fresh elements, or delete and recreate the elements ('structure <type> delete' then create).",
+    "Full 'structure shell property' keyword enumeration per assigned cmodel (FLAC3D 9.7; 'range' omitted). Each set = the type's base set (density, thermal-expansion, thickness for shell) + the model's material properties. liner/geogrid/beam/pile follow the same expansion pattern on top of their own base sets (spot-verified: liner + elastic adds young, poisson)."
+  ],
+  "verification": [
+    "Reproduced on FLAC3D 9.7 shell and liner elements. NOT universal: live FLAC2D 9 beam elements ACCEPT elastic -> von-mises reassignment (2026-08-13). Untested combinations: FLAC3D beam/pile, FLAC2D pile/liner — treat the trap as confirmed for 3D surface elements only.",
     "The 'structure <type> property' error enumeration only lists properties valid for the CURRENTLY assigned cmodel -- it is not the union across models. Probing with no elements of the type present enumerates nothing but 'range'.",
     "The legacy 7.0-style vector property 'isotropic (E, nu)' is still ACCEPTED by 9.7 shells even though it never appears in any error enumeration (it maps onto the elastic material).",
     "Evidence grade: property names are enumeration-verified; young/poisson additionally state-verified (set 3.21e9, read back via 'structure shell list property young')."
   ],
-  "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html"
+  "property_groups": [
+    {
+      "group_name": "shell_base_no_cmodel",
+      "properties": [
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        }
+      ]
+    },
+    {
+      "group_name": "elastic",
+      "properties": [
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "young"
+        }
+      ]
+    },
+    {
+      "group_name": "anisotropic",
+      "properties": [
+        {
+          "keyword": "aniso-bend-constants"
+        },
+        {
+          "keyword": "aniso-bend-thickness"
+        },
+        {
+          "keyword": "aniso-memb-constants"
+        },
+        {
+          "keyword": "aniso-memb-thickness"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "material-x"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        }
+      ]
+    },
+    {
+      "group_name": "orthotropic",
+      "properties": [
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "material-x"
+        },
+        {
+          "keyword": "ortho-bend-constants"
+        },
+        {
+          "keyword": "ortho-bend-thickness"
+        },
+        {
+          "keyword": "ortho-memb-constants"
+        },
+        {
+          "keyword": "ortho-memb-thickness"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        }
+      ]
+    },
+    {
+      "group_name": "mohr-coulomb",
+      "properties": [
+        {
+          "keyword": "bulk"
+        },
+        {
+          "keyword": "cohesion"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "dilation"
+        },
+        {
+          "keyword": "flag-brittle"
+        },
+        {
+          "keyword": "friction"
+        },
+        {
+          "keyword": "plastic-strain"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "shear"
+        },
+        {
+          "keyword": "tension"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "young"
+        }
+      ]
+    },
+    {
+      "group_name": "strain-softening",
+      "properties": [
+        {
+          "keyword": "bulk"
+        },
+        {
+          "keyword": "cohesion"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "dilation"
+        },
+        {
+          "keyword": "flag-brittle"
+        },
+        {
+          "keyword": "friction"
+        },
+        {
+          "keyword": "length-calibration"
+        },
+        {
+          "keyword": "plastic-strain"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "shear"
+        },
+        {
+          "keyword": "strain-shear-plastic"
+        },
+        {
+          "keyword": "strain-tension-plastic"
+        },
+        {
+          "keyword": "table-cohesion"
+        },
+        {
+          "keyword": "table-dilation"
+        },
+        {
+          "keyword": "table-friction"
+        },
+        {
+          "keyword": "table-tension"
+        },
+        {
+          "keyword": "tension"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "young"
+        }
+      ]
+    },
+    {
+      "group_name": "von-mises",
+      "properties": [
+        {
+          "keyword": "bulk"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "modulus-plastic"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "shear"
+        },
+        {
+          "keyword": "strength-yield"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "young"
+        }
+      ]
+    },
+    {
+      "group_name": "concrete",
+      "properties": [
+        {
+          "keyword": "bulk"
+        },
+        {
+          "keyword": "compression"
+        },
+        {
+          "keyword": "compression-d"
+        },
+        {
+          "keyword": "compression-energy-fracture"
+        },
+        {
+          "keyword": "compression-initial"
+        },
+        {
+          "keyword": "compression-length-reference"
+        },
+        {
+          "keyword": "compression-strength"
+        },
+        {
+          "keyword": "damage"
+        },
+        {
+          "keyword": "damage-compression"
+        },
+        {
+          "keyword": "damage-tension"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "dilation"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "ratio-biaxial"
+        },
+        {
+          "keyword": "shear"
+        },
+        {
+          "keyword": "strain-plastic-compression"
+        },
+        {
+          "keyword": "strain-plastic-tension"
+        },
+        {
+          "keyword": "tension"
+        },
+        {
+          "keyword": "tension-d"
+        },
+        {
+          "keyword": "tension-energy-fracture"
+        },
+        {
+          "keyword": "tension-initial"
+        },
+        {
+          "keyword": "tension-length-reference"
+        },
+        {
+          "keyword": "tension-recovery"
+        },
+        {
+          "keyword": "tension-strength"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "young"
+        }
+      ]
+    }
+  ]
 }

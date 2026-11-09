@@ -1,6 +1,5 @@
 {
   "name": "joint",
-  "item_type": "joint",
   "item_types": [
     "joint"
   ],
@@ -26,52 +25,15 @@
       "description": "Categorical colour/label joints (colorby, cracked, joined)."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Cracked joints",
-      "command": "plot item create joint cracked on legend active on",
-      "description": "Show only failed joint segments."
-    },
-    {
-      "use_case": "Joint property contour",
-      "command": "plot item create joint contour property-name 'friction' legend active on",
-      "description": "Colour joints by a named property field."
-    },
-    {
-      "use_case": "Orientation stereonet",
-      "command": "plot item create joint stereonet active on",
-      "description": "Project joint orientations on a stereonet."
-    }
-  ],
   "notes": [
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0."
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0.",
+    "Related item types: jointvector (alias: jvector) — ['active', 'by-magnitude', 'clip', 'color', 'cut', 'draw-as', 'joined', 'legend', 'map', 'point-to-base', 'quality', 'range', 'scale', 'shape', 'shearoffset', 'transparency', 'value']",
+    "Joint vector item; 'jvector' is a live-verified alias with an identical keyword set. Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14."
   ],
   "verification": [
-    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match."
+    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match.",
+    "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active clip color-list contour cracked cut cut-line deformation-factor joined label legend lines map polygons range stereonet threshold transparency."
   ],
-  "related_item_types": {
-    "jointvector (alias: jvector)": [
-      "active",
-      "by-magnitude",
-      "clip",
-      "color",
-      "cut",
-      "draw-as",
-      "joined",
-      "legend",
-      "map",
-      "point-to-base",
-      "quality",
-      "range",
-      "scale",
-      "shape",
-      "shearoffset",
-      "transparency",
-      "value"
-    ]
-  },
-  "related_note": "Joint vector item; 'jvector' is a live-verified alias with an identical keyword set. Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14.",
-  "verification_70": "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active clip color-list contour cracked cut cut-line deformation-factor joined label legend lines map polygons range stereonet threshold transparency.",
   "syntax": "plot item create joint <keywords...>",
   "keywords": [
     {
@@ -155,6 +117,20 @@
     },
     {
       "name": "threshold"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create joint cracked on legend active on",
+      "description": "Show only failed joint segments. Use case: Cracked joints"
+    },
+    {
+      "command": "plot item create joint contour property-name 'friction' legend active on",
+      "description": "Colour joints by a named property field. Use case: Joint property contour"
+    },
+    {
+      "command": "plot item create joint stereonet active on",
+      "description": "Project joint orientations on a stereonet. Use case: Orientation stereonet"
     }
   ]
 }

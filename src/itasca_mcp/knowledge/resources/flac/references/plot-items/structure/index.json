@@ -1,6 +1,5 @@
 {
   "name": "structure",
-  "item_type": "structure-*",
   "search_keywords": [
     "structure",
     "beam",
@@ -12,106 +11,11 @@
     "moment"
   ],
   "description": "Structural-element plot items. Each element type has its own 'plot item create <type>' command. Type names and keywords are binary-validated against FLAC2D 9.0.",
-  "available_types": [
-    {
-      "type": "structure-beam",
-      "description": "Beam structural elements.",
-      "shares_keyword_set_with": [
-        "structure-cable",
-        "structure-liner",
-        "structure-pile"
-      ]
-    },
-    {
-      "type": "structure-cable",
-      "description": "Cable structural elements.",
-      "shares_keyword_set_with": [
-        "structure-beam",
-        "structure-liner",
-        "structure-pile"
-      ]
-    },
-    {
-      "type": "structure-liner",
-      "description": "Liner structural elements.",
-      "shares_keyword_set_with": [
-        "structure-beam",
-        "structure-cable",
-        "structure-pile"
-      ]
-    },
-    {
-      "type": "structure-pile",
-      "description": "Pile structural elements.",
-      "shares_keyword_set_with": [
-        "structure-beam",
-        "structure-cable",
-        "structure-liner"
-      ]
-    },
-    {
-      "type": "structure-vector",
-      "description": "Vector field at structural-element nodes (displacement, velocity, force-applied, reaction, etc.).",
-      "shares_keyword_set_with": []
-    }
-  ],
-  "top_level_keywords_beam_family": [
-    "active",
-    "color-list",
-    "contour",
-    "deformation-factor",
-    "label",
-    "legend",
-    "line",
-    "map",
-    "marker",
-    "range",
-    "shrink",
-    "slot",
-    "system"
-  ],
-  "top_level_keywords_structure_vector": [
-    "active",
-    "by-magnitude",
-    "color",
-    "deformation-factor",
-    "draw-as",
-    "legend",
-    "map",
-    "point-to-base",
-    "range",
-    "scale",
-    "shape",
-    "structures",
-    "value"
-  ],
   "sub_items": [
     {
       "name": "contour",
       "file": "contour.json",
       "description": "Continuous coloring of beam-family structural elements by force / moment / displacement / velocity / link-* attributes."
-    }
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Beams colored by bending moment",
-      "command": "plot item create structure-beam contour moment legend active on",
-      "description": "Continuous moment color map along beams."
-    },
-    {
-      "use_case": "Cables colored by axial force",
-      "command": "plot item create structure-cable contour force-axial legend active on",
-      "description": "Highlight cable axial loading."
-    },
-    {
-      "use_case": "Structural-element displacement vectors",
-      "command": "plot item create structure-vector value displacement",
-      "description": "Vector arrows at structural-element nodes."
-    },
-    {
-      "use_case": "Liners colored by group",
-      "command": "plot item create structure-liner label group legend active on",
-      "description": "Different color per liner group."
     }
   ],
   "notes": [
@@ -120,18 +24,78 @@
     "For node-level fix markers, use 'plot item create struct-node-fix'.",
     "Beam-family element types (beam, cable, liner, pile) share the same top-level keyword set, but their 'contour' attribute lists differ — probe 'plot item create structure-<type> contour ?' for each.",
     "FLAC3D 9.7 adds structure-shell, structure-geogrid, structure-dowel and structure-hybrid item types (see available_types_flac3d_97). The beam family uses line-style keywords including CamelCase Bar/BarScale/FlipBars ('Bar' takes a boolean; leaked internal property names, but real accepted keywords); the shell family (structure-shell verified) uses surface-style keywords (polygons) and has no Bar/line keywords. Verified against FLAC3D 9.7 via '?' probing (2026-08-13). Full 3D keyword sets: see flac3d-items.json.",
-    "struct-node-fix (FLAC3D 9.7) adds a 'rotational' keyword over the gridpoint-fix marker set."
+    "struct-node-fix (FLAC3D 9.7) adds a 'rotational' keyword over the gridpoint-fix marker set.",
+    "Beam-family top-level keywords (13): active, color-list, contour, deformation-factor, label, legend, line, map, marker, range, shrink, slot, system",
+    "structure-vector top-level keywords (13): active, by-magnitude, color, deformation-factor, draw-as, legend, map, point-to-base, range, scale, shape, structures, value"
   ],
-  "available_types_flac3d_97": [
-    "structure-beam",
-    "structure-cable",
-    "structure-dowel",
-    "structure-geogrid",
-    "structure-hybrid",
-    "structure-liner",
-    "structure-pile",
-    "structure-shell",
-    "structure-vector"
+  "syntax": "plot item create <structure-beam|structure-cable|structure-liner|structure-pile|structure-vector> <keywords...>",
+  "keywords": [
+    {
+      "description": "Beam structural elements.",
+      "shares_keyword_set_with": [
+        "structure-cable",
+        "structure-liner",
+        "structure-pile"
+      ],
+      "name": "structure-beam",
+      "group": "label-type"
+    },
+    {
+      "description": "Cable structural elements.",
+      "shares_keyword_set_with": [
+        "structure-beam",
+        "structure-liner",
+        "structure-pile"
+      ],
+      "name": "structure-cable",
+      "group": "label-type"
+    },
+    {
+      "description": "Liner structural elements.",
+      "shares_keyword_set_with": [
+        "structure-beam",
+        "structure-cable",
+        "structure-pile"
+      ],
+      "name": "structure-liner",
+      "group": "label-type"
+    },
+    {
+      "description": "Pile structural elements.",
+      "shares_keyword_set_with": [
+        "structure-beam",
+        "structure-cable",
+        "structure-liner"
+      ],
+      "name": "structure-pile",
+      "group": "label-type"
+    },
+    {
+      "description": "Vector field at structural-element nodes (displacement, velocity, force-applied, reaction, etc.).",
+      "shares_keyword_set_with": [],
+      "name": "structure-vector",
+      "group": "label-type"
+    }
   ],
-  "syntax": "plot item create <structure-beam|structure-cable|structure-liner|structure-pile|structure-vector> <keywords...>"
+  "examples": [
+    {
+      "command": "plot item create structure-beam contour moment legend active on",
+      "description": "Continuous moment color map along beams. Use case: Beams colored by bending moment"
+    },
+    {
+      "command": "plot item create structure-cable contour force-axial legend active on",
+      "description": "Highlight cable axial loading. Use case: Cables colored by axial force"
+    },
+    {
+      "command": "plot item create structure-vector value displacement",
+      "description": "Vector arrows at structural-element nodes. Use case: Structural-element displacement vectors"
+    },
+    {
+      "command": "plot item create structure-liner label group legend active on",
+      "description": "Different color per liner group. Use case: Liners colored by group"
+    }
+  ],
+  "verification": [
+    "available types flac3d 97 (9): structure-beam, structure-cable, structure-dowel, structure-geogrid, structure-hybrid, structure-liner, structure-pile, structure-shell, structure-vector"
+  ]
 }

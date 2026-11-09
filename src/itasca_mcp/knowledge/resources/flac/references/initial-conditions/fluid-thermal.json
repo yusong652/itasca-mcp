@@ -15,84 +15,63 @@
     "zone face apply pore-pressure",
     "zone face apply temperature"
   ],
-  "keyword_groups": [
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html",
+  "keywords": [
     {
-      "group": "fluid (zone gridpoint initialize)",
-      "keywords": [
-        {
-          "name": "pore-pressure"
-        },
-        {
-          "name": "saturation"
-        },
-        {
-          "name": "head"
-        },
-        {
-          "name": "biot"
-        },
-        {
-          "name": "fluid-modulus"
-        },
-        {
-          "name": "fluid-tension"
-        }
-      ],
-      "notes": [
-        "Pore-pressure, saturation, and head are nodal scalar quantities → use 'zone gridpoint initialize <kw>' (NOT 'zone initialize <kw>').",
-        "Gridpoint pore pressures are used to derive zone pore pressures.",
-        "Effective stresses depend on pore pressure when using effective-stress constitutive behavior.",
-        "SATURATION TRAP (state-verified, FLAC3D 9.7): in fluid-flow (implicit) mode, 'initialize saturation' on unfixed gridpoints is clamped back to 1.0 (the command still reports 'saturation modified') — fix saturation to impose a value; in fluid-explicit mode initialized values hold.",
-        "'biot', 'fluid-modulus', and 'fluid-tension' are accepted and execute ('-biot modified in N gridpoints') but never appear in the parser's keyword enumeration in 9.7 — enumeration-invisible keywords; do not conclude from an enumeration diff that they are gone."
-      ]
+      "name": "pore-pressure",
+      "group": "fluid (zone gridpoint initialize)"
     },
     {
-      "group": "fluid (zone-level + bulk)",
-      "keywords": [
-        {
-          "name": "fluid-density"
-        }
-      ],
-      "notes": [
-        "'fluid-density' is a 'zone initialize' keyword (per-zone fluid density).",
-        "For BULK water density use 'zone water density <value>' (a 'zone water' subcommand, not 'zone initialize')."
-      ]
+      "name": "saturation",
+      "group": "fluid (zone gridpoint initialize)"
     },
     {
-      "group": "thermal (zone gridpoint initialize)",
-      "keywords": [
-        {
-          "name": "temperature"
-        }
-      ],
-      "notes": [
-        "Temperature is a nodal quantity → use 'zone gridpoint initialize temperature' (NOT 'zone initialize temperature').",
-        "Thermal initialization must be paired with thermal material properties when thermal-mechanical coupling is modeled.",
-        "'thermal-timestep' is a 'model thermal' configuration, not an initialize keyword.",
-        "'thermal-expansion' is a 'zone property' material property, not an initialize keyword."
-      ]
+      "name": "head",
+      "group": "fluid (zone gridpoint initialize)"
+    },
+    {
+      "name": "biot",
+      "group": "fluid (zone gridpoint initialize)"
+    },
+    {
+      "name": "fluid-modulus",
+      "group": "fluid (zone gridpoint initialize)"
+    },
+    {
+      "name": "fluid-tension",
+      "group": "fluid (zone gridpoint initialize)"
+    },
+    {
+      "name": "fluid-density",
+      "group": "fluid (zone-level + bulk)"
+    },
+    {
+      "name": "temperature",
+      "group": "thermal (zone gridpoint initialize)"
     }
   ],
-  "common_patterns": [
+  "notes": [
+    "Pore-pressure, saturation, and head are nodal scalar quantities → use 'zone gridpoint initialize <kw>' (NOT 'zone initialize <kw>').",
+    "Gridpoint pore pressures are used to derive zone pore pressures.",
+    "Effective stresses depend on pore pressure when using effective-stress constitutive behavior.",
+    "SATURATION TRAP (state-verified, FLAC3D 9.7): in fluid-flow (implicit) mode, 'initialize saturation' on unfixed gridpoints is clamped back to 1.0 (the command still reports 'saturation modified') — fix saturation to impose a value; in fluid-explicit mode initialized values hold.",
+    "'biot', 'fluid-modulus', and 'fluid-tension' are accepted and execute ('-biot modified in N gridpoints') but never appear in the parser's keyword enumeration in 9.7 — enumeration-invisible keywords; do not conclude from an enumeration diff that they are gone.",
+    "'fluid-density' is a 'zone initialize' keyword (per-zone fluid density).",
+    "For BULK water density use 'zone water density <value>' (a 'zone water' subcommand, not 'zone initialize').",
+    "Temperature is a nodal quantity → use 'zone gridpoint initialize temperature' (NOT 'zone initialize temperature').",
+    "Thermal initialization must be paired with thermal material properties when thermal-mechanical coupling is modeled.",
+    "'thermal-timestep' is a 'model thermal' configuration, not an initialize keyword.",
+    "'thermal-expansion' is a 'zone property' material property, not an initialize keyword.",
+    "FLAC2D gradient tuple is (gx,gy); FLAC3D is (gx,gy,gz)."
+  ],
+  "examples": [
     {
-      "name": "Initialize phreatic pore pressure then fix drain",
-      "commands": [
-        "model configure fluid",
-        "zone water density 1000",
-        "zone gridpoint initialize pore-pressure 0 gradient (0,-9810)",
-        "zone face apply pore-pressure 0 range group 'drain'"
-      ],
-      "notes": [
-        "FLAC2D gradient tuple is (gx,gy); FLAC3D is (gx,gy,gz)."
-      ]
+      "command": "model configure fluid\nzone water density 1000\nzone gridpoint initialize pore-pressure 0 gradient (0,-9810)\nzone face apply pore-pressure 0 range group 'drain'",
+      "description": "Initialize phreatic pore pressure then fix drain"
     },
     {
-      "name": "Uniform initial temperature",
-      "commands": [
-        "model configure thermal",
-        "zone gridpoint initialize temperature 20"
-      ]
+      "command": "model configure thermal\nzone gridpoint initialize temperature 20",
+      "description": "Uniform initial temperature"
     }
-  ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html"
+  ]
 }

@@ -13,40 +13,24 @@
     "history purge",
     "model save"
   ],
-  "common_patterns": [
-    {
-      "name": "Elastic initialization then reset displacements (FLAC2D)",
-      "commands": [
-        "model large-strain on",
-        "model solve elastic",
-        "zone gridpoint initialize displacement (0,0)",
-        "zone gridpoint initialize velocity (0,0)",
-        "model save 'initial-equilibrium'"
-      ],
-      "notes": [
-        "FLAC2D requires 'model large-strain on' (or off) before any solve / cycle command.",
-        "Displacement and velocity are nodal vector quantities → use 'zone gridpoint initialize' (NOT 'zone initialize').",
-        "FLAC2D vector tuple is (x,y); FLAC3D is (x,y,z)."
-      ]
-    },
-    {
-      "name": "Preserve stress through cmodel change",
-      "commands": [
-        "model large-strain on",
-        "zone cmodel assign elastic",
-        "model solve elastic",
-        "zone cmodel assign mohr-coulomb range group 'stage'",
-        "zone property friction 35 cohesion 1e5 range group 'stage'"
-      ],
-      "notes": [
-        "Changing from one non-null constitutive model to another preserves zone stresses.",
-        "Assigning null removes stresses in affected zones."
-      ]
-    }
-  ],
   "notes": [
     "Reset only the state variables that are artificial products of initialization; do not reset physical stress or pore-pressure state unless intended.",
-    "Save an initial-equilibrium state before staged model changes."
+    "Save an initial-equilibrium state before staged model changes.",
+    "FLAC2D requires 'model large-strain on' (or off) before any solve / cycle command.",
+    "Displacement and velocity are nodal vector quantities → use 'zone gridpoint initialize' (NOT 'zone initialize').",
+    "FLAC2D vector tuple is (x,y); FLAC3D is (x,y,z).",
+    "Changing from one non-null constitutive model to another preserves zone stresses.",
+    "Assigning null removes stresses in affected zones."
   ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html"
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html",
+  "examples": [
+    {
+      "command": "model large-strain on\nmodel solve elastic\nzone gridpoint initialize displacement (0,0)\nzone gridpoint initialize velocity (0,0)\nmodel save 'initial-equilibrium'",
+      "description": "Elastic initialization then reset displacements (FLAC2D)"
+    },
+    {
+      "command": "model large-strain on\nzone cmodel assign elastic\nmodel solve elastic\nzone cmodel assign mohr-coulomb range group 'stage'\nzone property friction 35 cohesion 1e5 range group 'stage'",
+      "description": "Preserve stress through cmodel change"
+    }
+  ]
 }

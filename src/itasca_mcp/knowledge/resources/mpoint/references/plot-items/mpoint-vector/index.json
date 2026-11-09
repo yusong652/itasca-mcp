@@ -1,6 +1,5 @@
 {
   "name": "mpoint-vector",
-  "item_type": "mpoint-vector",
   "item_types": [
     "mpoint-vector",
     "meshnode-vector"
@@ -16,23 +15,6 @@
   ],
   "description": "Vector field drawn at material points. 'value' selects the quantity (velocity, displacement, discharge, fob, velocity-applied); 'draw-as' picks the glyph (arrow/disk/line). The 'meshnode-vector' item draws the same vector quantities at background-grid nodes with an identical keyword set.",
   "sub_items": [],
-  "common_usage_patterns": [
-    {
-      "use_case": "Velocity arrows",
-      "command": "plot item create mpoint-vector value velocity draw-as arrow scale value 1.0",
-      "description": "Velocity vectors at material points."
-    },
-    {
-      "use_case": "Displacement field",
-      "command": "plot item create mpoint-vector value displacement by-magnitude on",
-      "description": "Displacement vectors coloured by magnitude."
-    },
-    {
-      "use_case": "Grid-node velocity",
-      "command": "plot item create meshnode-vector value velocity draw-as arrow",
-      "description": "Same vectors at the background-grid nodes."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9.",
     "value quantities: discharge, displacement, fob, velocity, velocity-applied.",
@@ -123,6 +105,20 @@
     },
     {
       "name": "shape"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create mpoint-vector value velocity draw-as arrow scale value 1.0",
+      "description": "Velocity vectors at material points. Use case: Velocity arrows"
+    },
+    {
+      "command": "plot item create mpoint-vector value displacement by-magnitude on",
+      "description": "Displacement vectors coloured by magnitude. Use case: Displacement field"
+    },
+    {
+      "command": "plot item create meshnode-vector value velocity draw-as arrow",
+      "description": "Same vectors at the background-grid nodes. Use case: Grid-node velocity"
     }
   ]
 }

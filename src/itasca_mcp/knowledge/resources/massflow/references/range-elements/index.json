@@ -1,21 +1,6 @@
 {
   "type": "range_elements",
   "description": "Range elements are the filtering syntax that follows the `range` keyword in a MassFlow command. They scope a command to a subset of drawpoints, mine blocks or markers by spatial region, by attribute, or by MassFlow state.",
-  "usage_pattern": {
-    "syntax": "<command> ... range <element> [params] <element> [params] ...",
-    "examples": [
-      "massflow drawpoint group 'left' range position-x 0 1530",
-      "massflow mine-block group 'right' range position-x 1500 2000",
-      "massflow marker list range marker-type 2",
-      "massflow marker list range active",
-      "massflow mine-block list range id 1"
-    ],
-    "notes": [
-      "Multiple range elements intersect (AND) by default; `union` switches the whole phrase to OR.",
-      "`not` inverts the element it follows; `extent` requires the object's whole extent inside a geometric element rather than just its centroid.",
-      "A command with no range phrase affects every object of the type it acts on."
-    ]
-  },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
@@ -384,15 +369,19 @@
     "The 48 elements listed here are what MassFlow 9.7.47 enumerates. The shared kernel manual documents 61; the 13 it carries that MassFlow rejects belong to 3DEC blocks, structural elements, joints, or 2D.",
     "`active` and `marker-type` are MassFlow's own filters.",
     "`fid`, `fidlist`, `name` and `remove` are accepted by the binary but have no page in the 9.7 manual.",
-    "`cmodel`, `contact`, `dfn` and `interface` reach FLAC3D zone objects and only apply in a coupled analysis."
+    "`cmodel`, `contact`, `dfn` and `interface` reach FLAC3D zone objects and only apply in a coupled analysis.",
+    "Multiple range elements intersect (AND) by default; `union` switches the whole phrase to OR.",
+    "`not` inverts the element it follows; `extent` requires the object's whole extent inside a geometric element rather than just its centroid.",
+    "A command with no range phrase affects every object of the type it acts on.",
+    "Related commands: massflow drawpoint group, massflow mine-block group, massflow marker group, massflow drawpoint list, massflow mine-block list, massflow marker list"
   ],
-  "related_commands": [
-    "massflow drawpoint group",
-    "massflow mine-block group",
-    "massflow marker group",
-    "massflow drawpoint list",
-    "massflow mine-block list",
-    "massflow marker list"
-  ],
-  "source": "Itasca 9.7 shared kernel manual: Range Phrase Keyword Reference"
+  "source": "Itasca 9.7 shared kernel manual: Range Phrase Keyword Reference",
+  "syntax": "<command> ... range <element> [params] <element> [params] ...",
+  "examples": [
+    "massflow drawpoint group 'left' range position-x 0 1530",
+    "massflow mine-block group 'right' range position-x 1500 2000",
+    "massflow marker list range marker-type 2",
+    "massflow marker list range active",
+    "massflow mine-block list range id 1"
+  ]
 }

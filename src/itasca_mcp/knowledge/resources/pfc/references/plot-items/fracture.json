@@ -1,6 +1,5 @@
 {
   "name": "fracture",
-  "item_type": "fracture",
   "search_keywords": [
     "fracture",
     "dfn",
@@ -11,23 +10,6 @@
     "bond break"
   ],
   "description": "Configuration keywords for 'plot item create fracture'. Draws the fractures of the Discrete Fracture Network (DFN) system - including cracks recorded during bond breakage - with coloring and range filtering. Verified against PFC2D 7.00.",
-  "common_usage_patterns": [
-    {
-      "use_case": "Cracks colored by family (tension vs shear)",
-      "command": "plot item create fracture color-by text-attribute 'group' Any",
-      "description": "Requires groups assigned first (see notes). Legend then lists each group with its own color"
-    },
-    {
-      "use_case": "One item per crack family",
-      "command": "plot item create fracture range group 'tension_cracks'",
-      "description": "Separate items allow per-family styling; repeat with the other group name"
-    },
-    {
-      "use_case": "Fracture size contour",
-      "command": "plot item create fracture color-by numeric-attribute 'length' color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
-      "description": "Contour fractures by trace length (2D; use 'area' in 3D)"
-    }
-  ],
   "notes": [
     "There is NO color-by attribute for the parent DFN: text-attribute 'dfn', 'dfn-group', 'name' etc. are rejected as invalid attributes (verified PFC2D 7.00). Coloring or filtering by DFN membership must go through groups.",
     "Per-DFN recipe: assign a group to each DFN's fractures, then color by group. Scope the assignment with 'fracture group <name> range fish <fn>' (official pattern, filter on dfn.fracture.dfn(frac)), or simplest: tag each crack's group right when it is created in the bond-break callback.",
@@ -71,6 +53,20 @@
       "description": "Show or hide this item's legend entry",
       "syntax": "legend active on",
       "name": "legend active on|off"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create fracture color-by text-attribute 'group' Any",
+      "description": "Requires groups assigned first (see notes). Legend then lists each group with its own color. Use case: Cracks colored by family (tension vs shear)"
+    },
+    {
+      "command": "plot item create fracture range group 'tension_cracks'",
+      "description": "Separate items allow per-family styling; repeat with the other group name. Use case: One item per crack family"
+    },
+    {
+      "command": "plot item create fracture color-by numeric-attribute 'length' color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
+      "description": "Contour fractures by trace length (2D; use 'area' in 3D). Use case: Fracture size contour"
     }
   ]
 }

@@ -7,13 +7,6 @@
     "model"
   ],
   "description": "Linear elastic-frictional contact model with optional viscous damping. This is the default general-purpose contact model in PFC, providing linear elastic behavior in both normal and shear directions, with Coulomb friction and optional dashpot damping.",
-  "typical_applications": [
-    "General granular material simulations",
-    "Soil mechanics",
-    "Rock mechanics without bonding",
-    "Default contact behavior",
-    "Quick exploratory simulations"
-  ],
   "property_groups": [
     {
       "name": "Linear Group",
@@ -256,65 +249,32 @@
       ]
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Direct stiffness specification",
-      "commands": [
-        "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5"
-      ],
-      "description": "Set stiffnesses directly. Simple and explicit."
-    },
-    {
-      "use_case": "Deformability method (automatic stiffness calculation)",
-      "commands": [
-        "contact cmat default model linear method deformability emod 5e9 kratio 1.5 property fric 0.5"
-      ],
-      "description": "Calculate stiffnesses from elastic modulus and stiffness ratio. More physically meaningful."
-    },
-    {
-      "use_case": "With damping for quasi-static simulation",
-      "commands": [
-        "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5 dp_nratio 0.7 dp_mode 1"
-      ],
-      "description": "Add normal damping (no-tension mode) to dissipate energy and reach equilibrium faster."
-    },
-    {
-      "use_case": "Frictionless contact",
-      "commands": [
-        "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.0"
-      ],
-      "description": "Zero friction coefficient for frictionless sliding."
-    }
-  ],
-  "typical_parameter_values": {
-    "granular_materials": {
-      "kn": "1e7 - 1e9 [N/m] depending on particle size and material stiffness",
-      "ks": "kn / 1.5 to kn / 2.5",
-      "fric": "0.3 - 0.7 for typical granular materials",
-      "dp_nratio": "0.5 - 0.8 for quasi-static simulations",
-      "dp_mode": "1 (no-tension normal damping) is common"
-    }
-  },
   "notes": [
     "By convention, κ* = 0.0 if either the normal or the shear stiffness is 0",
     "The 'deformability' method is preferred over direct stiffness specification for physically meaningful parameters",
     "Damping is critical for quasi-static simulations to dissipate kinetic energy",
     "Use dp_mode=1 (no-tension normal) to avoid artificial attraction forces",
     "Friction coefficient of 0.0 creates frictionless contacts (free sliding)",
-    "Contact forces are in contact plane coordinate system (normal is negative for compression)"
+    "Contact forces are in contact plane coordinate system (normal is negative for compression)",
+    "Typical values (granular materials): kn 1e7 - 1e9 [N/m] depending on particle size and material stiffness, ks kn / 1.5 to kn / 2.5, fric 0.3 - 0.7 for typical granular materials, dp_nratio 0.5 - 0.8 for quasi-static simulations, dp_mode 1 (no-tension normal damping) is common",
+    "Related models: linearpbond — Extends linear model with parallel bonds for cemented materials; rrlinear — Extends linear model with rolling resistance; hertz — Non-linear alternative with Hertzian contact mechanics"
   ],
-  "related_models": [
+  "examples": [
     {
-      "model": "linearpbond",
-      "description": "Extends linear model with parallel bonds for cemented materials"
+      "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5",
+      "description": "Set stiffnesses directly. Simple and explicit. Use case: Direct stiffness specification"
     },
     {
-      "model": "rrlinear",
-      "description": "Extends linear model with rolling resistance"
+      "command": "contact cmat default model linear method deformability emod 5e9 kratio 1.5 property fric 0.5",
+      "description": "Calculate stiffnesses from elastic modulus and stiffness ratio. More physically meaningful. Use case: Deformability method (automatic stiffness calculation)"
     },
     {
-      "model": "hertz",
-      "description": "Non-linear alternative with Hertzian contact mechanics"
+      "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5 dp_nratio 0.7 dp_mode 1",
+      "description": "Add normal damping (no-tension mode) to dissipate energy and reach equilibrium faster. Use case: With damping for quasi-static simulation"
+    },
+    {
+      "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.0",
+      "description": "Zero friction coefficient for frictionless sliding. Use case: Frictionless contact"
     }
   ]
 }
