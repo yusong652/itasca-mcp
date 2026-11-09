@@ -10,7 +10,8 @@
     "fluid",
     "energy",
     "cluster",
-    "plugins"
+    "plugins",
+    "axisymmetry"
   ],
   "description": "Configure an additional calculation mode. This command allows the user to specify that the model is using calculation modes that either require extra resources or are restricted by the current license. The model configure command can be given at any stage of an analysis, but it must be given before the calculation mode (model solve or model cycle) can be invoked. Calculation modes include cfd, thermal, mechanical, and plugins; 7.0 adds dynamic, creep, fluid, energy, and cluster.",
   "notes": {
@@ -23,10 +24,11 @@
       "Configures calculation modes that require extra resources or license restrictions",
       "CFD mode enables fluid-particle coupling simulations",
       "Once configured, the mode remains active for the model",
-      "May affect available memory and computational resources"
+      "May affect available memory and computational resources",
+      "Live 7.00 enums - 2D: cluster creep dynamic imass mechanical plugins thermal; 3D adds array cfd energy feblock fluid highorder hotetra matrixflow."
     ],
     "9.0": [
-      "Live 9.7 enum: the fluid option is configured via fluid-explicit / fluid-flow / fluid-implicit; axisymmetry and plugins are not live on 9.7."
+      "Live 9.8 enums - 2D: axisymmetry cluster creep dynamic fluid-explicit fluid-flow fluid-implicit mechanical thermal; 3D: array cfd cluster creep dynamic energy feblock fluid-explicit fluid-flow fluid-implicit highorder hotetra imass matrixflow mechanical thermal. plugins is not live on 9.8; fluid is configured via fluid-explicit / fluid-flow / fluid-implicit."
     ]
   },
   "python_sdk_alternative": {
@@ -50,7 +52,8 @@
         "6.0": "CFD (computational fluid dynamics) analysis* ( PFC3D only)",
         "7.0": "PFC CFD analysis",
         "9.0": "PFC CFD analysis"
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "creep",
@@ -83,7 +86,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "feblock",
@@ -94,7 +98,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "fluid",
@@ -104,7 +109,8 @@
         "versions": [
           "7.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "highorder",
@@ -115,7 +121,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "hotetra",
@@ -126,7 +133,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "imass",
@@ -137,7 +145,10 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "notes": [
+        "Live: both dimensions on 7.00, 3D-only on 9.8 (absent from the 2D 9.8 enumeration)."
+      ]
     },
     {
       "name": "matrixflow",
@@ -148,7 +159,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "thermal",
@@ -164,7 +176,8 @@
           "7.0",
           "9.0"
         ]
-      }
+      },
+      "dimension": "3D"
     },
     {
       "name": "cluster",
@@ -222,6 +235,17 @@
           "7.0"
         ]
       }
+    },
+    {
+      "name": "axisymmetry",
+      "syntax": "axisymmetry",
+      "description": "Axisymmetric analysis. Currently available for standard mechanical analysis only (no full dynamics).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      },
+      "dimension": "2D"
     }
   ],
   "examples": [
@@ -237,5 +261,8 @@
       "command": "model configure cfd\nball generate number 1000 radius 0.5\n; ... set up fluid domain ...\nmodel solve",
       "description": "Configure CFD, create particles and fluid domain, then solve"
     }
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on the six PFC consoles (2D/3D x 6.00/7.00/9.8) (syntax grade): model configure axisymmetry accepted on the 2D 9.8 console only (absent from the 3D 9.8 and every 6.00/7.00 enumeration); the per-build keyword enumerations in the notes are the engines' own."
   ]
 }

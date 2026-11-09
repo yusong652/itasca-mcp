@@ -1,0 +1,71 @@
+{
+  "category": "program",
+  "search_keywords": [
+    "convert",
+    "PFC 5.0",
+    "data file migration"
+  ],
+  "description": "This command is available for PFC only. It can be used to convert data files written in PFC 5.0 to be compatible with PFC 6.0 . If s is specified, it must correspond to an existing file name, and this file will be converted. The original file is not altered, and a converted file is created that retains the name of the original file and is placed in the folder './out/' by default. This default behavior may be changed with the following keywords.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command(\"program convert file '...'\")"
+  },
+  "availability": {
+    "versions": [
+      "6.0"
+    ]
+  },
+  "command": "program convert",
+  "syntax": "program convert [<s>] [keyword] ...",
+  "keywords": [
+    {
+      "name": "directory",
+      "syntax": "directory <s>",
+      "description": "If specified, all the files located in the direcory s will be converted. This keyword cannot be used in conjonction with file and output-file ."
+    },
+    {
+      "name": "file",
+      "syntax": "file <s>",
+      "description": "If specified, the name of the file to be converted is set to s ."
+    },
+    {
+      "name": "output-directory",
+      "syntax": "output-directory <s>",
+      "description": "If specified, the name of the output directory where the converted file(s) are created is set to s ."
+    },
+    {
+      "name": "output-file",
+      "syntax": "output-file <s>",
+      "description": "If specified, the name of the output file is set to s ."
+    },
+    {
+      "name": "prefix",
+      "syntax": "prefix <s>",
+      "description": "If specified, the name of the new, converted file is set to the name of the original file prefixed with the string s ."
+    },
+    {
+      "name": "suffix",
+      "syntax": "suffix <s>",
+      "description": "If specified, the name of the new, converted file is set to the name of the original file suffixed with the string s ."
+    },
+    {
+      "name": "safe",
+      "syntax": "safe <b>",
+      "description": "Activate/Deactivate safe conversion of FISH variables. If set to true (default), then FISH variables are expected to start with the @ symbol."
+    }
+  ],
+  "examples": [
+    {
+      "command": "program convert file 'old_50.dat' output-file 'new_60.dat'",
+      "description": "Convert one PFC 5.0 data file to 6.0 syntax"
+    }
+  ],
+  "notes": [
+    "PFC only: converts data files written for PFC 5.0 to PFC 6.0 syntax.",
+    "Removed after 6.0: convert is absent from the 7.00/9.8 program enumerations.",
+    "With no file or directory argument it converts every data file in the current directory - mind your working directory before running the bare form."
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on the PFC2D/PFC3D 6.00 consoles (syntax grade): convert is in the 6.00 program enumeration and \"program convert file '<missing>'\" parses through to a file-open error; the convert token itself is rejected on 7.00/9.8. The bare (convert-everything) form was never run."
+  ]
+}
