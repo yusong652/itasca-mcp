@@ -587,7 +587,7 @@ def main() -> None:
             "namespaces": namespaces,
             "excluded_namespaces": excluded,
             **curated["engine_index_extras"].get(engine, {}),
-            "verification": VERIFICATION[engine] + (VERIFICATION_2D if engine in LIVE_2D else ""),
+            "verification": [VERIFICATION[engine] + (VERIFICATION_2D if engine in LIVE_2D else "")],
         }
         out = RES / engine / "fish_docs" / "index.json"
         out.parent.mkdir(parents=True, exist_ok=True)

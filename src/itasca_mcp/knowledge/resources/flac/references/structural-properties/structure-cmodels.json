@@ -56,7 +56,9 @@
   "assignment_trap": {
     "description": "On FLAC3D 9.7 shell and liner elements: once an elastic-family model (elastic/anisotropic/orthotropic) has been explicitly assigned, reassigning a PLASTIC model (concrete/mohr-coulomb/strain-softening/von-mises) to the same elements is rejected: 'Cannot replace an elastic model with a plastic model'. The reverse direction (plastic -> elastic) IS accepted, as are swaps within the elastic family. Freshly created elements (default state, no explicit assign yet) accept any model.",
     "workaround": "Assign the plastic model first on fresh elements, or delete and recreate the elements ('structure <type> delete' then create).",
-    "verified": "Reproduced on FLAC3D 9.7 shell and liner elements. NOT universal: live FLAC2D 9 beam elements ACCEPT elastic -> von-mises reassignment (2026-08-13). Untested combinations: FLAC3D beam/pile, FLAC2D pile/liner — treat the trap as confirmed for 3D surface elements only."
+    "verification": [
+      "Reproduced on FLAC3D 9.7 shell and liner elements. NOT universal: live FLAC2D 9 beam elements ACCEPT elastic -> von-mises reassignment (2026-08-13). Untested combinations: FLAC3D beam/pile, FLAC2D pile/liner — treat the trap as confirmed for 3D surface elements only."
+    ]
   },
   "property_sets_by_cmodel": {
     "description": "Full 'structure shell property' keyword enumeration per assigned cmodel (FLAC3D 9.7; 'range' omitted). Each set = the type's base set (density, thermal-expansion, thickness for shell) + the model's material properties. liner/geogrid/beam/pile follow the same expansion pattern on top of their own base sets (spot-verified: liner + elastic adds young, poisson).",
@@ -175,5 +177,5 @@
     "The legacy 7.0-style vector property 'isotropic (E, nu)' is still ACCEPTED by 9.7 shells even though it never appears in any error enumeration (it maps onto the elastic material).",
     "Evidence grade: property names are enumeration-verified; young/poisson additionally state-verified (set 3.21e9, read back via 'structure shell list property young')."
   ],
-  "official_documentation": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html"
+  "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html"
 }

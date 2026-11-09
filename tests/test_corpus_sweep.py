@@ -10,6 +10,8 @@ A failure here names the exact path that stopped resolving, so a migration
 script that corrupts one file out of 2,300 is caught by name.
 """
 
+import json
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -85,12 +87,10 @@ def _command_doc_problems(doc: dict[str, Any]) -> list[str]:
         problems.append("'examples' is not a list")
         examples = []
     for ex in examples:
-        # A handful of legacy files carry bare-string examples; the spec
-        # migration will normalise them to {command, description}.
-        if isinstance(ex, str):
-            continue
         if not isinstance(ex, dict) or not isinstance(ex.get("command"), str):
             problems.append(f"example without a command: {ex!r}")
+        elif not set(ex) <= {"command", "description"}:
+            problems.append(f"example with non-canonical keys: {sorted(set(ex) - {'command', 'description'})}")
     return problems
 
 
@@ -206,3 +206,63 @@ def _entry_problems(where: str, entries: Any) -> list[str]:
         ):
             problems.append(f"{where}.{name}: malformed availability {availability!r}")
     return problems
+
+
+# ---------------------------------------------------------------------------
+# raw spec-shape scan (corpus-spec section D: naming and provenance)
+# ---------------------------------------------------------------------------
+
+_RESOURCES = Path(__file__).resolve().parents[1] / "src" / "itasca_mcp" / "knowledge" / "resources"
+
+# Subtrees owned by later migration steps; their internals are not judged yet.
+_DEFERRED_SUBTREES = {"legacy_documentation", "dimension_differences", "independent_dimensions", "plot_items"}
+
+# Legacy spellings that section D retires. `source_urls` survives only inside
+# command_docs version blocks (the removed-command apparatus, step A).
+_BANNED_KEYS = {
+    "parent",
+    "parent_item",
+    "base_syntax",
+    "documented_syntax",
+    "alt_syntax",
+    "source_url",
+    "official_documentation",
+    "verified",
+    "evidence",
+    "live_notes",
+    "validation_notes",
+}
+_BANNED_PREFIXES = ("live_verification", "live_enumeration", "binary_validated")
+
+
+def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool) -> list[str]:
+    problems: list[str] = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key in _BANNED_KEYS or key.startswith(_BANNED_PREFIXES):
+                problems.append(f"{rel} @{jp}: legacy field {key!r}")
+            if key == "source_urls" and not in_command_docs:
+                problems.append(f"{rel} @{jp}: legacy field 'source_urls'")
+            if key == "verification" and not (
+                isinstance(value, list) and value and all(isinstance(v, str) and v.strip() for v in value)
+            ):
+                problems.append(f"{rel} @{jp}: 'verification' is not a non-empty list[str]")
+            if key == "source" and not (
+                isinstance(value, str) or (isinstance(value, list) and all(isinstance(v, str) for v in value))
+            ):
+                problems.append(f"{rel} @{jp}: 'source' is not str | list[str]")
+            if key not in _DEFERRED_SUBTREES:
+                problems.extend(_shape_problems(value, rel, f"{jp}.{key}", in_command_docs))
+    elif isinstance(node, list):
+        for i, value in enumerate(node):
+            problems.extend(_shape_problems(value, rel, f"{jp}[{i}]", in_command_docs))
+    return problems
+
+
+def test_no_legacy_naming_or_provenance_fields_remain() -> None:
+    problems: list[str] = []
+    for path in sorted(_RESOURCES.rglob("*.json")):
+        rel = path.relative_to(_RESOURCES).as_posix()
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        problems.extend(_shape_problems(doc, rel, "$", "/command_docs/" in f"/{rel}"))
+    assert problems == []

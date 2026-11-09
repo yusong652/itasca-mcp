@@ -557,8 +557,9 @@ def test_mpoint_dimension_differences_are_measured_on_both_binaries() -> None:
     exposed it: recorded as missing, actually present on MPoint2D.
     """
     cat = ReferenceLoader.load_category_index("dimension-differences", software="mpoint")
-    assert cat["live_verification"]["grade"] == "state"
-    assert set(cat["live_verification"]["engines"]) == {"MPoint3D 9.7", "MPoint2D 9.7"}
+    verification = " ".join(cat["verification"])
+    assert "(state grade)" in verification
+    assert "MPoint3D 9.7" in verification and "MPoint2D 9.7" in verification
     by_cat = {d["category"]: d for d in cat["differences"]}
     assert set(by_cat) == {
         "constitutive-models",
@@ -647,8 +648,8 @@ def test_mpoint_workflows_are_end_to_end_and_verified() -> None:
     for name in names:
         wf = ReferenceLoader.load_item_doc("workflows", name, software="mpoint")
         assert wf is not None and wf["steps"]
-        assert wf["verified"]["engine"].startswith("MPoint3D")
-        assert wf["verified"]["result"]
+        assert any("MPoint3D" in v for v in wf["verification"])
+        assert any(v.startswith("Result:") for v in wf["verification"])
     # the zone-free path must not smuggle a zone command back in
     native = ReferenceLoader.load_item_doc("workflows", "zone-free-native", software="mpoint")
     assert native is not None
@@ -676,8 +677,9 @@ def test_mpoint_demo_limits_are_measured_not_assumed() -> None:
     assert limits["zones"]["limit"] == 1000
     mp = limits["material_points"]
     # the ceiling bites at cmodel assign, not at generate -- easy to conclude the opposite
-    assert "mpoint cmodel assign" in mp["evidence"]
-    assert "125000" in mp["evidence"]
+    evidence = " ".join(mp["verification"])
+    assert "mpoint cmodel assign" in evidence
+    assert "125000" in evidence
     assert "background grid" in " ".join(mp).lower() or mp["not_the_background_grid"]
     assert any("erratic" in n for n in mp["notes"])
 
@@ -698,7 +700,7 @@ def test_mpoint_documents_model_configure() -> None:
     assert "cavehoek" in options["imass"]["description"]
     # 'array' is the one option taking a further argument
     assert options["array"]["syntax"] == "array <value>"
-    assert doc["live_verification"]["grade"] == "state"
+    assert any("(state grade)" in v for v in doc["verification"])
 
 
 def test_mpoint_plot_items_are_engine_specific() -> None:
@@ -737,7 +739,7 @@ def test_mpoint_borrows_constitutive_models_from_common() -> None:
 
 def test_mpoint_constitutive_models_carry_live_evidence() -> None:
     cat = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
-    assert cat["live_verification"]["grade"] == "state"
+    assert any("(state grade)" in v for v in cat["verification"])
     # Property-table sizes were read back off the engine, so every assignable model
     # has one. 'null' has none: assigning it removes the constitutive model.
     counted = [m for m in cat["models"] if "live_property_count" in m]
@@ -758,7 +760,7 @@ def test_mpoint_constitutive_models_carry_live_evidence() -> None:
 
 def test_mpoint_plot_items_carry_live_evidence() -> None:
     cat = ReferenceLoader.load_category_index("plot-items", software="mpoint")
-    assert cat["live_verification"]["grade"] == "state"
+    assert any("(state grade)" in v for v in cat["verification"])
     # Every documented example was executed on the engine. 'scale 1.0' shipped
     # broken because nobody ran it: the keyword is real and the line is still
     # rejected, so only execution catches it.
@@ -929,7 +931,7 @@ def test_mpoint_range_elements_carry_their_own_evidence() -> None:
     this category had only ever been assumed.
     """
     cat = ReferenceLoader.load_category_index("range-elements", software="mpoint")
-    assert cat["live_verification"]["grade"] == "state"
+    assert any("(state grade)" in v for v in cat["verification"])
     counts = cat["mpoint_selection_counts"]
     assert counts["lattice"]["points"] == 216
     by_range = {c["range"]: c["selected"] for c in counts["counts"]}
@@ -1003,7 +1005,7 @@ def test_mpoint_fixity_does_not_claim_to_pin_material_points() -> None:
     assert "restrains but does not pin" in json.dumps(mp)
     # both carry the comparison, so whichever one the reader lands on tells them
     for doc in (mp, node):
-        assert doc["live_verification"]["grade"] == "state"
+        assert any("(state grade)" in v for v in doc["verification"])
         by_cmd = {r["command"]: r for r in doc["measured"]["results"]}
         point_fix = next(v for k, v in by_cmd.items() if not k.startswith("mpoint node"))
         grid_fix = next(v for k, v in by_cmd.items() if k.startswith("mpoint node"))
