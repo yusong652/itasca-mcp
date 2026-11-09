@@ -15,77 +15,6 @@
     "background node"
   ],
   "description": "Vector field drawn at material points. 'value' selects the quantity (velocity, displacement, discharge, fob, velocity-applied); 'draw-as' picks the glyph (arrow/disk/line). The 'meshnode-vector' item draws the same vector quantities at background-grid nodes with an identical keyword set.",
-  "top_level_keywords": [
-    "active",
-    "by-magnitude",
-    "clip",
-    "color",
-    "cut",
-    "draw-as",
-    "legend",
-    "map",
-    "maxnumber",
-    "point-to-base",
-    "quality",
-    "range",
-    "scale",
-    "shape",
-    "skip",
-    "transparency",
-    "value"
-  ],
-  "basic_keywords": [
-    {
-      "keyword": "active",
-      "description": "Show or hide the item without removing it.",
-      "syntax": "active <bool>"
-    },
-    {
-      "keyword": "value",
-      "description": "Vector quantity to draw (discharge/displacement/fob/velocity/velocity-applied).",
-      "syntax": "value <quantity>"
-    },
-    {
-      "keyword": "draw-as",
-      "description": "Glyph used to draw each vector.",
-      "syntax": "draw-as <arrow|disk|line>"
-    },
-    {
-      "keyword": "scale",
-      "description": "Scale the drawn glyphs. Takes a mode keyword, not a bare number: 'value <float>' for a fixed factor, 'automatic' to let the plot fit them, 'target' to size against a target.",
-      "syntax": "scale <automatic | target | value <float>>"
-    },
-    {
-      "keyword": "by-magnitude",
-      "description": "Colour vectors by their magnitude.",
-      "syntax": "by-magnitude <bool>"
-    },
-    {
-      "keyword": "skip",
-      "description": "Draw every Nth vector to thin a dense field.",
-      "syntax": "skip <int <= 1000>"
-    },
-    {
-      "keyword": "range",
-      "description": "Filter which entities are drawn using range elements (see references/range-elements).",
-      "syntax": "range <range-element> [...]"
-    },
-    {
-      "keyword": "legend",
-      "description": "Show/configure the item legend.",
-      "syntax": "legend <sub-keyword> [<value>]"
-    },
-    {
-      "keyword": "map",
-      "description": "Configure the contour colour map (ranges, intervals, colours).",
-      "syntax": "map <sub-keyword> [<value>]"
-    },
-    {
-      "keyword": "transparency",
-      "description": "Set item transparency (0 opaque .. 100 fully transparent).",
-      "syntax": "transparency <0-100>"
-    }
-  ],
   "sub_items": [],
   "common_usage_patterns": [
     {
@@ -122,5 +51,78 @@
       "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both."
     ]
   },
-  "syntax": "plot item create mpoint-vector <keywords...>"
+  "syntax": "plot item create mpoint-vector <keywords...>",
+  "keywords": [
+    {
+      "description": "Show or hide the item without removing it.",
+      "syntax": "active <bool>",
+      "name": "active"
+    },
+    {
+      "description": "Vector quantity to draw (discharge/displacement/fob/velocity/velocity-applied).",
+      "syntax": "value <quantity>",
+      "name": "value"
+    },
+    {
+      "description": "Glyph used to draw each vector.",
+      "syntax": "draw-as <arrow|disk|line>",
+      "name": "draw-as"
+    },
+    {
+      "description": "Scale the drawn glyphs. Takes a mode keyword, not a bare number: 'value <float>' for a fixed factor, 'automatic' to let the plot fit them, 'target' to size against a target.",
+      "syntax": "scale <automatic | target | value <float>>",
+      "name": "scale"
+    },
+    {
+      "description": "Colour vectors by their magnitude.",
+      "syntax": "by-magnitude <bool>",
+      "name": "by-magnitude"
+    },
+    {
+      "description": "Draw every Nth vector to thin a dense field.",
+      "syntax": "skip <int <= 1000>",
+      "name": "skip"
+    },
+    {
+      "description": "Filter which entities are drawn using range elements (see references/range-elements).",
+      "syntax": "range <range-element> [...]",
+      "name": "range"
+    },
+    {
+      "description": "Show/configure the item legend.",
+      "syntax": "legend <sub-keyword> [<value>]",
+      "name": "legend"
+    },
+    {
+      "description": "Configure the contour colour map (ranges, intervals, colours).",
+      "syntax": "map <sub-keyword> [<value>]",
+      "name": "map"
+    },
+    {
+      "description": "Set item transparency (0 opaque .. 100 fully transparent).",
+      "syntax": "transparency <0-100>",
+      "name": "transparency"
+    },
+    {
+      "name": "clip"
+    },
+    {
+      "name": "color"
+    },
+    {
+      "name": "cut"
+    },
+    {
+      "name": "maxnumber"
+    },
+    {
+      "name": "point-to-base"
+    },
+    {
+      "name": "quality"
+    },
+    {
+      "name": "shape"
+    }
+  ]
 }

@@ -9,41 +9,40 @@
     "block face apply-remove",
     "block gridpoint apply-remove"
   ],
-  "condition_families": [
+  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html",
+  "keywords": [
     {
-      "family": "spatial variation",
-      "keywords": [
-        "gradient-x",
-        "gradient-y",
-        "gradient-z"
-      ],
-      "notes": [
-        "Per-axis gradient keywords vary the applied value with position — live 9.7 has gradient-x/gradient-y/gradient-z on 'block face apply' ONLY; 'block gridpoint apply' has no gradient keywords (use 'fish' there instead).",
-        "There is NO 'origin' keyword in the live 9.7 apply enumerations (removed from this file — previously listed in error).",
-        "'block gridpoint initialize <field> <value>' has its own modifier slot: add gradient multiply vary (live-enumerated) — see initial-conditions."
-      ]
+      "name": "gradient-x",
+      "group": "spatial variation"
     },
     {
-      "family": "functional variation",
-      "keywords": [
-        "fish",
-        "table"
-      ],
-      "notes": [
-        "'fish <fn>' or 'table <name>' make the applied value a function of time/state.",
-        "Live on both 'block face apply' and 'block gridpoint apply' (and on rigid-block 'block apply')."
-      ]
+      "name": "gradient-y",
+      "group": "spatial variation"
     },
     {
-      "family": "removal",
-      "keywords": [
-        "apply-remove"
-      ],
-      "notes": [
-        "'block face apply-remove ...' / 'block gridpoint apply-remove ...' clears conditions.",
-        "The removal keyword sets differ from the apply side: face apply-remove uses 'load(-x/y/z)' for point loads (not 'point-load'), and drops the fish/table/gradient modifiers (live-enumerated)."
-      ]
+      "name": "gradient-z",
+      "group": "spatial variation"
+    },
+    {
+      "name": "fish",
+      "group": "functional variation"
+    },
+    {
+      "name": "table",
+      "group": "functional variation"
+    },
+    {
+      "name": "apply-remove",
+      "group": "removal"
     }
   ],
-  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html"
+  "notes": [
+    "Per-axis gradient keywords vary the applied value with position — live 9.7 has gradient-x/gradient-y/gradient-z on 'block face apply' ONLY; 'block gridpoint apply' has no gradient keywords (use 'fish' there instead).",
+    "There is NO 'origin' keyword in the live 9.7 apply enumerations (removed from this file — previously listed in error).",
+    "'block gridpoint initialize <field> <value>' has its own modifier slot: add gradient multiply vary (live-enumerated) — see initial-conditions.",
+    "'fish <fn>' or 'table <name>' make the applied value a function of time/state.",
+    "Live on both 'block face apply' and 'block gridpoint apply' (and on rigid-block 'block apply').",
+    "'block face apply-remove ...' / 'block gridpoint apply-remove ...' clears conditions.",
+    "The removal keyword sets differ from the apply side: face apply-remove uses 'load(-x/y/z)' for point loads (not 'point-load'), and drops the fish/table/gradient modifiers (live-enumerated)."
+  ]
 }

@@ -7,39 +7,60 @@
     "block face apply",
     "block gridpoint apply"
   ],
-  "condition_families": [
-    {
-      "family": "thermal",
-      "keywords": [
-        "temperature",
-        "convection",
-        "flux"
-      ],
-      "notes": [
-        "'block gridpoint apply temperature ...' fixes temperature; 'block face apply convection ...' sets film coefficient."
-      ]
-    },
-    {
-      "family": "dynamic absorbing (quiet / viscous)",
-      "keywords": [
-        "quiet",
-        "quiet-x",
-        "quiet-y",
-        "quiet-z",
-        "viscous",
-        "viscous-x",
-        "viscous-y",
-        "viscous-z"
-      ],
-      "notes": [
-        "Viscous (quiet) gridpoint boundaries absorb outgoing waves in dynamic runs.",
-        "Both 'quiet(-x/y/z)' and 'viscous(-x/y/z)' exist as separate live keyword families on 'block gridpoint apply'."
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html",
   "verification": [
     "All thermal and dynamic keywords are visible in the live 9.7 enumerations even WITHOUT 'model configure thermal/dynamic' — the configure gate applies at execution, not keyword visibility.",
     "Thermal keywords sit on 'block face apply' (convection, flux) and 'block gridpoint apply' (temperature), matching the placement documented here."
+  ],
+  "keywords": [
+    {
+      "name": "temperature",
+      "group": "thermal"
+    },
+    {
+      "name": "convection",
+      "group": "thermal"
+    },
+    {
+      "name": "flux",
+      "group": "thermal"
+    },
+    {
+      "name": "quiet",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "quiet-x",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "quiet-y",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "quiet-z",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "viscous",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "viscous-x",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "viscous-y",
+      "group": "dynamic absorbing (quiet / viscous)"
+    },
+    {
+      "name": "viscous-z",
+      "group": "dynamic absorbing (quiet / viscous)"
+    }
+  ],
+  "notes": [
+    "'block gridpoint apply temperature ...' fixes temperature; 'block face apply convection ...' sets film coefficient.",
+    "Viscous (quiet) gridpoint boundaries absorb outgoing waves in dynamic runs.",
+    "Both 'quiet(-x/y/z)' and 'viscous(-x/y/z)' exist as separate live keyword families on 'block gridpoint apply'."
   ]
 }

@@ -7,42 +7,6 @@
     "mpoint node fix",
     "mpoint node free"
   ],
-  "condition_families": [
-    {
-      "family": "prescribed velocity",
-      "keywords": [
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z"
-      ],
-      "notes": [
-        "Pin a wall/floor by fixing the relevant grid-node velocity component to 0 over a range.",
-        "This is the boundary condition that actually holds: a prescribed 'mpoint node fix velocity-x 0.01' kept the mean point velocity at exactly 0.01 with displacement linear in time."
-      ]
-    },
-    {
-      "family": "prescribed fluid velocity",
-      "keywords": [
-        "fluid-velocity",
-        "fluid-velocity-x",
-        "fluid-velocity-y",
-        "fluid-velocity-z"
-      ],
-      "notes": [
-        "Fluid-phase grid-node velocity for coupled fluid-flow analyses."
-      ]
-    },
-    {
-      "family": "modifiers",
-      "keywords": [
-        "range"
-      ],
-      "notes": [
-        "'range' scopes which grid nodes are affected (e.g. a boundary plane)."
-      ]
-    }
-  ],
   "dimension_differences": {
     "plane": {
       "mpoint2d": "x-y",
@@ -98,5 +62,49 @@
     "Trap: 'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
     "Trap: 'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
     "Trap: 'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+  ],
+  "keywords": [
+    {
+      "name": "velocity",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-x",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-y",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-z",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "fluid-velocity",
+      "group": "prescribed fluid velocity"
+    },
+    {
+      "name": "fluid-velocity-x",
+      "group": "prescribed fluid velocity"
+    },
+    {
+      "name": "fluid-velocity-y",
+      "group": "prescribed fluid velocity"
+    },
+    {
+      "name": "fluid-velocity-z",
+      "group": "prescribed fluid velocity"
+    },
+    {
+      "name": "range",
+      "group": "modifiers"
+    }
+  ],
+  "notes": [
+    "Pin a wall/floor by fixing the relevant grid-node velocity component to 0 over a range.",
+    "This is the boundary condition that actually holds: a prescribed 'mpoint node fix velocity-x 0.01' kept the mean point velocity at exactly 0.01 with displacement linear in time.",
+    "Fluid-phase grid-node velocity for coupled fluid-flow analyses.",
+    "'range' scopes which grid nodes are affected (e.g. a boundary plane)."
   ]
 }

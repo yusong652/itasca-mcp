@@ -538,7 +538,7 @@ def main() -> None:
         payload = {
             "namespace": ns,
             "scope": scope,
-            "engines": engines,
+            "availability": {"engines": engines},
             "count": len(entries),
             "undocumented": sum(1 for e in entries if e["doc"] is None),
             "entries": entries,

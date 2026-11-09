@@ -7,53 +7,76 @@
     "block face apply",
     "block face apply-remove"
   ],
-  "condition_families": [
-    {
-      "family": "stress (traction)",
-      "keywords": [
-        "stress",
-        "stress-normal",
-        "stress-principal",
-        "stress-xx",
-        "stress-yy",
-        "stress-zz",
-        "stress-xy",
-        "stress-xz",
-        "stress-yz"
-      ],
-      "notes": [
-        "Applied as a face traction over the selected faces; compression is negative.",
-        "'stress' takes the full tensor; 'stress-normal' the face-normal component; 'stress-principal' principal values (all live-enumerated)."
-      ]
-    },
-    {
-      "family": "point load",
-      "keywords": [
-        "point-load",
-        "point-load-x",
-        "point-load-y",
-        "point-load-z"
-      ],
-      "notes": [
-        "A concentrated load distributed to the face.",
-        "'block face apply-remove' names these 'load'/'load-x'/'load-y'/'load-z' (NOT point-load) — live-enumerated rename on the removal side."
-      ]
-    },
-    {
-      "family": "prescribed motion",
-      "keywords": [
-        "velocity-normal"
-      ],
-      "notes": [
-        "Prescribes the face-normal velocity component."
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html",
   "verification": [
     "Live enumeration (9.7) of 'block face apply': apply apply-remove convection fish flux gradient-x gradient-y gradient-z group list merge point-load point-load-x point-load-y point-load-z range stress stress-normal stress-principal stress-xx stress-xy stress-xz stress-yy stress-yz stress-zz table triangulate velocity-normal westergaard",
     "Live enumeration (9.7) of 'block face apply-remove': apply apply-remove convection flux group list load load-x load-y load-z merge range stress triangulate velocity-normal westergaard",
     "The enumeration is context-free: identical with and without 'model configure thermal/dynamic/fluid-flow' — thermal (convection, flux) and water (westergaard) keywords are always visible.",
     "Thermal conditions: see thermal-and-dynamic; flux/westergaard: see fluid-flow; gradient-x/y/z, fish, table: see apply-modifiers."
+  ],
+  "keywords": [
+    {
+      "name": "stress",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-normal",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-principal",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-xx",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-yy",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-zz",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-xy",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-xz",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "stress-yz",
+      "group": "stress (traction)"
+    },
+    {
+      "name": "point-load",
+      "group": "point load"
+    },
+    {
+      "name": "point-load-x",
+      "group": "point load"
+    },
+    {
+      "name": "point-load-y",
+      "group": "point load"
+    },
+    {
+      "name": "point-load-z",
+      "group": "point load"
+    },
+    {
+      "name": "velocity-normal",
+      "group": "prescribed motion"
+    }
+  ],
+  "notes": [
+    "Applied as a face traction over the selected faces; compression is negative.",
+    "'stress' takes the full tensor; 'stress-normal' the face-normal component; 'stress-principal' principal values (all live-enumerated).",
+    "A concentrated load distributed to the face.",
+    "'block face apply-remove' names these 'load'/'load-x'/'load-y'/'load-z' (NOT point-load) — live-enumerated rename on the removal side.",
+    "Prescribes the face-normal velocity component."
   ]
 }

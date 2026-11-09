@@ -10,80 +10,6 @@
     "zone gridpoint fix",
     "zone gridpoint initialize"
   ],
-  "condition_families": [
-    {
-      "family": "stress",
-      "keywords": [
-        "stress-normal",
-        "stress-shear",
-        "stress-tensor",
-        "stress-xx",
-        "stress-yy",
-        "stress-xy"
-      ],
-      "keywords_3d_only": [
-        "stress-dip",
-        "stress-strike",
-        "stress-zz",
-        "stress-xz",
-        "stress-yz"
-      ],
-      "notes": [
-        "Use stress-normal for pressure-like loading normal to selected faces.",
-        "Use tensor components for global-axis stress loading; 'stress-tensor' accepts a full 6-component tensor.",
-        "stress-dip / stress-strike are dimension-non-obvious 3D-only forms (FLAC2D uses angle-based alternatives). Accepted by FLAC3D 9.0 binary.",
-        "'stress-shear' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (the 3D in-plane forms are stress-dip/-strike).",
-        "CORRECTED (live FLAC2D 9, 2026-08-13): 'zone face apply stress-zz/-xz' is REJECTED by FLAC2D ('Bad conversion') — the out-of-plane FACE-apply components are 3D-only. Plane-strain out-of-plane tracking in 2D is done via 'zone initialize stress-zz' instead (state-verified: 'stress-zz modified in 9 zones').",
-        "'stress-shear' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only; 9.7 3D uses -dip/-strike)."
-      ]
-    },
-    {
-      "family": "velocity",
-      "keywords": [
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z",
-        "velocity-normal",
-        "velocity-tangential",
-        "velocity-local"
-      ],
-      "keywords_3d_only": [
-        "velocity-dip",
-        "velocity-strike"
-      ],
-      "notes": [
-        "Velocity boundary conditions are usually preferred for roller/fixed displacement boundaries.",
-        "Local components are interpreted from automatically generated gridpoint local axes.",
-        "velocity-dip / velocity-strike are dimension-non-obvious 3D-only forms; rejected by FLAC2D.",
-        "'velocity-tangential' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (use -dip/-strike in 3D).",
-        "'velocity-tangential' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only claim now verified on both engines)."
-      ]
-    },
-    {
-      "family": "reaction",
-      "keywords": [
-        "reaction",
-        "reaction-x",
-        "reaction-y",
-        "reaction-z",
-        "reaction-normal",
-        "reaction-tangential",
-        "reaction-local"
-      ],
-      "keywords_3d_only": [
-        "reaction-dip",
-        "reaction-strike"
-      ],
-      "notes": [
-        "Reaction conditions apply forces where the corresponding direction is fixed.",
-        "Use after fixity has been established.",
-        "reaction-dip / reaction-strike are dimension-non-obvious 3D-only forms; rejected by FLAC2D.",
-        "'reaction-tangential' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (use -dip/-strike in 3D).",
-        "'reaction-tangential' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only claim now verified on both engines)."
-      ]
-    }
-  ],
   "common_patterns": [
     {
       "name": "Roller side boundaries",
@@ -106,5 +32,150 @@
       ]
     }
   ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html"
+  "source": "https://docs.itascacg.com/itasca900/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html",
+  "keywords": [
+    {
+      "name": "stress-normal",
+      "group": "stress"
+    },
+    {
+      "name": "stress-shear",
+      "group": "stress"
+    },
+    {
+      "name": "stress-tensor",
+      "group": "stress"
+    },
+    {
+      "name": "stress-xx",
+      "group": "stress"
+    },
+    {
+      "name": "stress-yy",
+      "group": "stress"
+    },
+    {
+      "name": "stress-xy",
+      "group": "stress"
+    },
+    {
+      "name": "stress-dip",
+      "group": "stress",
+      "dimension": "3D"
+    },
+    {
+      "name": "stress-strike",
+      "group": "stress",
+      "dimension": "3D"
+    },
+    {
+      "name": "stress-zz",
+      "group": "stress",
+      "dimension": "3D"
+    },
+    {
+      "name": "stress-xz",
+      "group": "stress",
+      "dimension": "3D"
+    },
+    {
+      "name": "stress-yz",
+      "group": "stress",
+      "dimension": "3D"
+    },
+    {
+      "name": "velocity",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-x",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-y",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-z",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-normal",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-tangential",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-local",
+      "group": "velocity"
+    },
+    {
+      "name": "velocity-dip",
+      "group": "velocity",
+      "dimension": "3D"
+    },
+    {
+      "name": "velocity-strike",
+      "group": "velocity",
+      "dimension": "3D"
+    },
+    {
+      "name": "reaction",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-x",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-y",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-z",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-normal",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-tangential",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-local",
+      "group": "reaction"
+    },
+    {
+      "name": "reaction-dip",
+      "group": "reaction",
+      "dimension": "3D"
+    },
+    {
+      "name": "reaction-strike",
+      "group": "reaction",
+      "dimension": "3D"
+    }
+  ],
+  "notes": [
+    "Use stress-normal for pressure-like loading normal to selected faces.",
+    "Use tensor components for global-axis stress loading; 'stress-tensor' accepts a full 6-component tensor.",
+    "stress-dip / stress-strike are dimension-non-obvious 3D-only forms (FLAC2D uses angle-based alternatives). Accepted by FLAC3D 9.0 binary.",
+    "'stress-shear' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (the 3D in-plane forms are stress-dip/-strike).",
+    "CORRECTED (live FLAC2D 9, 2026-08-13): 'zone face apply stress-zz/-xz' is REJECTED by FLAC2D ('Bad conversion') — the out-of-plane FACE-apply components are 3D-only. Plane-strain out-of-plane tracking in 2D is done via 'zone initialize stress-zz' instead (state-verified: 'stress-zz modified in 9 zones').",
+    "'stress-shear' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only; 9.7 3D uses -dip/-strike).",
+    "Velocity boundary conditions are usually preferred for roller/fixed displacement boundaries.",
+    "Local components are interpreted from automatically generated gridpoint local axes.",
+    "velocity-dip / velocity-strike are dimension-non-obvious 3D-only forms; rejected by FLAC2D.",
+    "'velocity-tangential' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (use -dip/-strike in 3D).",
+    "'velocity-tangential' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only claim now verified on both engines).",
+    "Reaction conditions apply forces where the corresponding direction is fixed.",
+    "Use after fixity has been established.",
+    "reaction-dip / reaction-strike are dimension-non-obvious 3D-only forms; rejected by FLAC2D.",
+    "'reaction-tangential' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (use -dip/-strike in 3D).",
+    "'reaction-tangential' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only claim now verified on both engines)."
+  ]
 }

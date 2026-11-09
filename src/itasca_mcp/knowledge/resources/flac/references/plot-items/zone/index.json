@@ -14,80 +14,6 @@
     "contour"
   ],
   "description": "Configuration keywords for 'plot item create zone'. Top-level keywords are binary-validated against FLAC2D 9.0.",
-  "top_level_keywords": [
-    "active",
-    "color",
-    "color-list",
-    "contour",
-    "cut-line",
-    "deformation-factor",
-    "hide-null",
-    "internal-boundaries",
-    "label",
-    "legend",
-    "map",
-    "null-faces-only",
-    "polygons",
-    "range",
-    "selected-highlight",
-    "selected-only",
-    "show-zone-id",
-    "text",
-    "zone-id-max",
-    "zone-id-min"
-  ],
-  "basic_keywords": [
-    {
-      "keyword": "active",
-      "description": "Show or hide the zone item without removing it.",
-      "syntax": "active <bool>"
-    },
-    {
-      "keyword": "color",
-      "description": "Apply a single flat color to all zones (no field mapping).",
-      "syntax": "color <Color>"
-    },
-    {
-      "keyword": "contour",
-      "description": "Color zones by a scalar/vector/tensor field attribute. See sub-item 'contour'.",
-      "syntax": "contour <attribute> [...sub-keywords]"
-    },
-    {
-      "keyword": "label",
-      "description": "Label / categorical color zones by group, state, model, property, etc. See sub-item 'label'.",
-      "syntax": "label <type> [...sub-keywords]"
-    },
-    {
-      "keyword": "legend",
-      "description": "Show a legend with sub-keywords (active, count, deformation-factor, heading, hide-null, label, map, title).",
-      "syntax": "legend <sub-keyword> [<value>]"
-    },
-    {
-      "keyword": "cut-line",
-      "description": "Apply a 2D cut to the zone visualization (FLAC2D).",
-      "syntax": "cut-line width <integer>"
-    },
-    {
-      "keyword": "range",
-      "description": "Filter which zones are drawn using range elements (see references/range-elements).",
-      "syntax": "range <range-element> [...]"
-    },
-    {
-      "keyword": "deformation-factor",
-      "description": "Exaggerate displacement when drawing zone deformation.",
-      "syntax": "deformation-factor <float>"
-    },
-    {
-      "keyword": "hide-null",
-      "description": "Hide null zones from rendering.",
-      "syntax": "hide-null <bool>"
-    },
-    {
-      "keyword": "show-zone-id",
-      "description": "Show zone ID numbers on each zone.",
-      "syntax": "show-zone-id <bool>"
-    }
-  ],
   "sub_items": [
     {
       "name": "contour",
@@ -137,11 +63,6 @@
     "'contour' is the FLAC mechanism for color-by-field-value; 'label' is the mechanism for categorical coloring (group/state/model).",
     "Tokens like 'color-by', 'color-options' from other Itasca-style tools are NOT accepted by zone items in FLAC2D 9.0."
   ],
-  "flac3d_extra_keywords": [
-    "clip",
-    "cut",
-    "transparency"
-  ],
   "flac3d_notes": [
     "FLAC3D 9.0 zone item ALSO accepts 'transparency <0-100>', 'clip ...', and a 3D 'cut' (plane) keyword in addition to the keywords listed in basic_keywords. These are FLAC3D-only and are rejected by FLAC2D 9.0.",
     "FLAC3D 'cut' uses a 3D plane: 'cut active on type plane origin (x,y,z) normal (nx,ny,nz) [surface on|off] [front on|off] [back on|off]'. FLAC2D uses 'cut-line width <int>' for 2D cutting.",
@@ -184,5 +105,99 @@
       "FLAC2D 9.0 list is the binary-validated 'top_level_keywords'; FLAC3D 9.7 list captured live. Verified against FLAC3D 9.7 via '?' probing (2026-08-13)."
     ]
   },
-  "syntax": "plot item create zone <keywords...>"
+  "syntax": "plot item create zone <keywords...>",
+  "keywords": [
+    {
+      "description": "Show or hide the zone item without removing it.",
+      "syntax": "active <bool>",
+      "name": "active"
+    },
+    {
+      "description": "Apply a single flat color to all zones (no field mapping).",
+      "syntax": "color <Color>",
+      "name": "color"
+    },
+    {
+      "description": "Color zones by a scalar/vector/tensor field attribute. See sub-item 'contour'.",
+      "syntax": "contour <attribute> [...sub-keywords]",
+      "name": "contour"
+    },
+    {
+      "description": "Label / categorical color zones by group, state, model, property, etc. See sub-item 'label'.",
+      "syntax": "label <type> [...sub-keywords]",
+      "name": "label"
+    },
+    {
+      "description": "Show a legend with sub-keywords (active, count, deformation-factor, heading, hide-null, label, map, title).",
+      "syntax": "legend <sub-keyword> [<value>]",
+      "name": "legend"
+    },
+    {
+      "description": "Apply a 2D cut to the zone visualization (FLAC2D).",
+      "syntax": "cut-line width <integer>",
+      "name": "cut-line"
+    },
+    {
+      "description": "Filter which zones are drawn using range elements (see references/range-elements).",
+      "syntax": "range <range-element> [...]",
+      "name": "range"
+    },
+    {
+      "description": "Exaggerate displacement when drawing zone deformation.",
+      "syntax": "deformation-factor <float>",
+      "name": "deformation-factor"
+    },
+    {
+      "description": "Hide null zones from rendering.",
+      "syntax": "hide-null <bool>",
+      "name": "hide-null"
+    },
+    {
+      "description": "Show zone ID numbers on each zone.",
+      "syntax": "show-zone-id <bool>",
+      "name": "show-zone-id"
+    },
+    {
+      "name": "color-list"
+    },
+    {
+      "name": "internal-boundaries"
+    },
+    {
+      "name": "map"
+    },
+    {
+      "name": "null-faces-only"
+    },
+    {
+      "name": "polygons"
+    },
+    {
+      "name": "selected-highlight"
+    },
+    {
+      "name": "selected-only"
+    },
+    {
+      "name": "text"
+    },
+    {
+      "name": "zone-id-max"
+    },
+    {
+      "name": "zone-id-min"
+    },
+    {
+      "name": "clip",
+      "dimension": "3D"
+    },
+    {
+      "name": "cut",
+      "dimension": "3D"
+    },
+    {
+      "name": "transparency",
+      "dimension": "3D"
+    }
+  ]
 }

@@ -11,41 +11,6 @@
     "bond break"
   ],
   "description": "Configuration keywords for 'plot item create fracture'. Draws the fractures of the Discrete Fracture Network (DFN) system - including cracks recorded during bond breakage - with coloring and range filtering. Verified against PFC2D 7.00.",
-  "basic_keywords": [
-    {
-      "keyword": "active on|off",
-      "description": "Show or hide the item without removing it",
-      "syntax": "active on"
-    },
-    {
-      "keyword": "color-by text-attribute 'group' <slot>",
-      "description": "Color fractures by group. The slot argument after 'group' is REQUIRED: a slot name string (e.g. 'Default') or the keyword Any",
-      "syntax": "color-by text-attribute 'group' Any",
-      "notes": [
-        "This is the way to distinguish crack families (e.g. tension vs shear) - see the per-DFN recipe in notes"
-      ]
-    },
-    {
-      "keyword": "color-by text-attribute 'id'",
-      "description": "Color each fracture individually by ID",
-      "syntax": "color-by text-attribute 'id'"
-    },
-    {
-      "keyword": "color-by numeric-attribute",
-      "description": "Contour fractures by a numeric attribute. Valid attributes (verified 2D): 'aperture', 'length', 'cluster'; 3D uses 'area' instead of 'length'",
-      "syntax": "color-by numeric-attribute 'aperture'"
-    },
-    {
-      "keyword": "range group",
-      "description": "Restrict the item to fractures in a group - the supported way to build one plot item per crack family",
-      "syntax": "range group 'tension_cracks'"
-    },
-    {
-      "keyword": "legend active on|off",
-      "description": "Show or hide this item's legend entry",
-      "syntax": "legend active on"
-    }
-  ],
   "common_usage_patterns": [
     {
       "use_case": "Cracks colored by family (tension vs shear)",
@@ -72,5 +37,40 @@
     "'rosette' continuation (live 9.7): active bins border colors display grid legend plane-normal position range size transparency. 'stereonet' continuation: active border contours density display grid hemisphere legend points position projection range resolution size transparency. 'intersections' takes the entity core set.",
     "9.7 attribute-name trap: color-by names are NOT validated at create time on 9.7 (any string accepted silently) - the attribute verdicts above are from PFC2D 7.00, which did reject invalid names."
   ],
-  "syntax": "plot item create fracture <keywords...>"
+  "syntax": "plot item create fracture <keywords...>",
+  "keywords": [
+    {
+      "description": "Show or hide the item without removing it",
+      "syntax": "active on",
+      "name": "active on|off"
+    },
+    {
+      "description": "Color fractures by group. The slot argument after 'group' is REQUIRED: a slot name string (e.g. 'Default') or the keyword Any",
+      "syntax": "color-by text-attribute 'group' Any",
+      "notes": [
+        "This is the way to distinguish crack families (e.g. tension vs shear) - see the per-DFN recipe in notes"
+      ],
+      "name": "color-by text-attribute 'group' <slot>"
+    },
+    {
+      "description": "Color each fracture individually by ID",
+      "syntax": "color-by text-attribute 'id'",
+      "name": "color-by text-attribute 'id'"
+    },
+    {
+      "description": "Contour fractures by a numeric attribute. Valid attributes (verified 2D): 'aperture', 'length', 'cluster'; 3D uses 'area' instead of 'length'",
+      "syntax": "color-by numeric-attribute 'aperture'",
+      "name": "color-by numeric-attribute"
+    },
+    {
+      "description": "Restrict the item to fractures in a group - the supported way to build one plot item per crack family",
+      "syntax": "range group 'tension_cracks'",
+      "name": "range group"
+    },
+    {
+      "description": "Show or hide this item's legend entry",
+      "syntax": "legend active on",
+      "name": "legend active on|off"
+    }
+  ]
 }
