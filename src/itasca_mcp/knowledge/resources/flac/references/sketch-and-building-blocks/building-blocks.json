@@ -10,7 +10,26 @@
     "building-blocks block export",
     "zone generate from-building-blocks"
   ],
-  "workflow": [
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/buildingblocks/buildingblocks.html",
+  "notes": [
+    "Check block quality and grouping before zone generation.",
+    "Use structured meshes where local refinement or hexahedral control matters.",
+    "Do not expose this workflow for FLAC2D product-filtered sessions.",
+    "Building Blocks are FLAC3D-only.",
+    "FLAC2D 9.0 rejects 'building-blocks ...' commands at the parser level ('Bad conversion of parameter number 1 (building-blocks)'). 'zone generate from-building-blocks' is also rejected by FLAC2D — only 'zone generate from-sketch' is accepted in 2D.",
+    "FLAC3D 9.0 'zone generate ?' valid forms: from-building-blocks, from-geometry, from-sketch, from-topography.",
+    "Use sketch-workflow for FLAC2D zone generation.",
+    "Sketch can send fully structured FLAC3D sketches to Building Blocks.",
+    "FLAC3D 9.7 live re-check: top-level 'building-blocks' enumerates exactly block / edge / face / point / set (matches the 9.0 validation); 'zone generate' enumerates the four from-* forms PLUS 'domain' (undocumented in the 9.0 note above).",
+    "Live FLAC2D 9 re-check (2026-08-13): 'building-blocks set create' still rejected verbatim ('Bad conversion of parameter number 1 (building-blocks)')."
+  ],
+  "verification": [
+    "Binary-validated subcommands (FLAC3D): block, edge, face, point, set",
+    "Top-level 'building-blocks ?' in FLAC3D 9.0 returns these five subcommands: block / edge / face / point / set.",
+    "'building-blocks set ?' subcommands include: arrest-triangle, automatic-zone, break-angle, create, delete, export, geometry, import, list, select, validate-all.",
+    "Subcommands 'building-blocks block / edge / point / face' do NOT accept a '?' help token directly ('Unused extra parameter 3 (?)') — they require a real subcommand and arguments. Probe via 'building-blocks <kw> create ?' or similar."
+  ],
+  "steps": [
     {
       "step": "Create or import blocks",
       "commands": [
@@ -31,28 +50,5 @@
         "zone generate from-building-blocks"
       ]
     }
-  ],
-  "compatibility_notes": [
-    "Building Blocks are FLAC3D-only.",
-    "FLAC2D 9.0 rejects 'building-blocks ...' commands at the parser level ('Bad conversion of parameter number 1 (building-blocks)'). 'zone generate from-building-blocks' is also rejected by FLAC2D — only 'zone generate from-sketch' is accepted in 2D.",
-    "FLAC3D 9.0 'zone generate ?' valid forms: from-building-blocks, from-geometry, from-sketch, from-topography.",
-    "Use sketch-workflow for FLAC2D zone generation.",
-    "Sketch can send fully structured FLAC3D sketches to Building Blocks.",
-    "FLAC3D 9.7 live re-check: top-level 'building-blocks' enumerates exactly block / edge / face / point / set (matches the 9.0 validation); 'zone generate' enumerates the four from-* forms PLUS 'domain' (undocumented in the 9.0 note above).",
-    "Live FLAC2D 9 re-check (2026-08-13): 'building-blocks set create' still rejected verbatim ('Bad conversion of parameter number 1 (building-blocks)')."
-  ],
-  "binary_validation_notes": [
-    "Top-level 'building-blocks ?' in FLAC3D 9.0 returns these five subcommands: block / edge / face / point / set.",
-    "'building-blocks set ?' subcommands include: arrest-triangle, automatic-zone, break-angle, create, delete, export, geometry, import, list, select, validate-all.",
-    "Subcommands 'building-blocks block / edge / point / face' do NOT accept a '?' help token directly ('Unused extra parameter 3 (?)') — they require a real subcommand and arguments. Probe via 'building-blocks <kw> create ?' or similar."
-  ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/buildingblocks/buildingblocks.html",
-  "notes": [
-    "Check block quality and grouping before zone generation.",
-    "Use structured meshes where local refinement or hexahedral control matters.",
-    "Do not expose this workflow for FLAC2D product-filtered sessions."
-  ],
-  "verification": [
-    "Binary-validated subcommands (FLAC3D): block, edge, face, point, set"
   ]
 }

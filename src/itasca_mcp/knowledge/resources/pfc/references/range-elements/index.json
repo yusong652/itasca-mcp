@@ -1,19 +1,6 @@
 {
   "type": "range_elements",
   "description": "Range elements are filtering syntax used after the 'range' keyword in PFC commands. They select subsets of objects (balls, walls, contacts, etc.) based on geometric regions, attributes, or logical conditions.",
-  "usage_pattern": {
-    "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
-    "examples": [
-      "ball delete range position-x 0 10",
-      "ball attribute density 2650 range group 'sample'",
-      "contact property fric 0.5 range cylinder end-1 0 0 0 end-2 0 0 10 radius 5"
-    ],
-    "notes": [
-      "Multiple range elements create intersection (AND) by default",
-      "Use 'union' keyword for OR logic",
-      "Unspecified range affects all objects of target type"
-    ]
-  },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
@@ -319,45 +306,17 @@
       "category": "logical"
     }
   ],
-  "common_patterns": [
-    {
-      "name": "Delete in region",
-      "example": "ball delete range position-x 0 10 position-y 0 10",
-      "description": "Delete balls in XY rectangle"
-    },
-    {
-      "name": "Set property by group",
-      "example": "ball attribute density 2650 range group 'sample'",
-      "description": "Set density for balls in group"
-    },
-    {
-      "name": "Cylindrical confining",
-      "example": "wall attribute velocity (0.001,0,0) range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
-      "description": "Set wall velocity in cylindrical region"
-    },
-    {
-      "name": "Exclude boundary",
-      "example": "ball fix velocity range group 'boundary' not",
-      "description": "Fix all balls except boundary group"
-    },
-    {
-      "name": "Named range reuse",
-      "example": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nball attribute density 2500 range named-range 'core'",
-      "description": "Create reusable named range"
-    }
-  ],
   "notes": [
     "Multiple range elements create intersection (AND) by default",
     "Use 'union' keyword for OR logic",
     "Unspecified range affects all objects of target type",
     "UNIFIED-KERNEL caveat (same as FLAC): the 9.x parser enumerates other engines' range elements too (bmaterial/cmodel/deformable/excavated/jmaterial/jmodel/joint-set/interface/structure-type/dfn-3dec/...): accepted by the parser but meaningless for PFC data. They are deliberately not referenced here.",
     "A token the range parser does not know fails the command before anything runs on PFC3D 9.8.54 ('Bad conversion of parameter (nosuch)'); FLAC3D 9.8.54 behaves differently (the range ends and the command runs).",
-    "PFC has no 'ball hide' / 'ball select' commands: selected, deselected and use-hidden act on the selection and visibility made in the GUI (with nothing selected, 'selected' chose 0 of 64 balls and 'deselected' all 64)."
-  ],
-  "related_commands": [
-    "model range create",
-    "model range delete",
-    "model range list"
+    "PFC has no 'ball hide' / 'ball select' commands: selected, deselected and use-hidden act on the selection and visibility made in the GUI (with nothing selected, 'selected' chose 0 of 64 balls and 'deselected' all 64).",
+    "Multiple range elements create intersection (AND) by default",
+    "Use 'union' keyword for OR logic",
+    "Unspecified range affects all objects of target type",
+    "Related commands: model range create, model range delete, model range list"
   ],
   "source": "https://docs.itascacg.com/pfc700/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
   "verification": [
@@ -370,5 +329,31 @@
     "State-verified 'use-hidden': 32 balls with 'position-z 0.05 1' (nothing hidden)",
     "State-verified 'radius': 'radius 0.2' -> 0 balls (2D parameter leaking into the 3D vocabulary)",
     "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
+  ],
+  "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
+  "examples": [
+    "ball delete range position-x 0 10",
+    "ball attribute density 2650 range group 'sample'",
+    "contact property fric 0.5 range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+    {
+      "command": "ball delete range position-x 0 10 position-y 0 10",
+      "description": "Delete balls in XY rectangle"
+    },
+    {
+      "command": "ball attribute density 2650 range group 'sample'",
+      "description": "Set density for balls in group"
+    },
+    {
+      "command": "wall attribute velocity (0.001,0,0) range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+      "description": "Set wall velocity in cylindrical region"
+    },
+    {
+      "command": "ball fix velocity range group 'boundary' not",
+      "description": "Fix all balls except boundary group"
+    },
+    {
+      "command": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nball attribute density 2500 range named-range 'core'",
+      "description": "Create reusable named range"
+    }
   ]
 }

@@ -1,6 +1,5 @@
 {
   "name": "mpoint",
-  "item_type": "mpoint",
   "item_types": [
     "mpoint"
   ],
@@ -22,28 +21,6 @@
       "description": "Continuous contour (value/property) vs categorical label colouring of material points."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Stress field",
-      "command": "plot item create mpoint color-by contour value stress-zz legend active on",
-      "description": "Contour material points by a stress component."
-    },
-    {
-      "use_case": "Displacement",
-      "command": "plot item create mpoint color-by contour value displacement legend active on",
-      "description": "Continuous displacement-magnitude colour map."
-    },
-    {
-      "use_case": "Model state",
-      "command": "plot item create mpoint state legend active on",
-      "description": "Colour points by constitutive-model state (elastic/plastic)."
-    },
-    {
-      "use_case": "By constitutive model",
-      "command": "plot item create mpoint model legend active on",
-      "description": "Colour points by their assigned cmodel."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
   ],
@@ -61,27 +38,6 @@
       "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both."
     ]
   },
-  "keyword_argument_types": {
-    "extra": "integer between 1 and 128",
-    "group": "string",
-    "hide-null": "boolean",
-    "interval": "float >= 1.4e-45, or the keyword 'automatic'",
-    "label": "string",
-    "fixity": "none (bare switch)",
-    "model": "none (bare switch)",
-    "state": "none (bare switch; takes an optional 'omitPast <bool>')",
-    "uniform": "none (bare switch)"
-  },
-  "undocumented_modifiers": [
-    {
-      "keyword": "omitPast",
-      "syntax": "state omitPast <bool>",
-      "description": "Omit material points whose plastic state is historical (yielded in the past but elastic now), leaving only points currently at yield. Undocumented in the official pages; found by probing 'plot item create mpoint state ?', whose keyword list is the parent list plus this.",
-      "verification": [
-        "state -- MPoint3D 9.7, accepted as 'state omitPast on'"
-      ]
-    }
-  ],
   "syntax": "plot item create mpoint <keywords...>",
   "keywords": [
     {
@@ -97,27 +53,42 @@
     {
       "description": "Colour material points by constitutive-model state (elastic/plastic/yielded). Bare switch; accepts an optional 'omitPast <bool>' to drop points that only yielded in the past.",
       "syntax": "state [omitPast <bool>]",
-      "name": "state"
+      "name": "state",
+      "notes": [
+        "Argument: none (bare switch; takes an optional 'omitPast <bool>')"
+      ]
     },
     {
       "description": "Colour material points by the assigned constitutive model. Bare switch.",
       "syntax": "model",
-      "name": "model"
+      "name": "model",
+      "notes": [
+        "Argument: none (bare switch)"
+      ]
     },
     {
       "description": "Colour material points by velocity/fluid fixity condition. Bare switch.",
       "syntax": "fixity",
-      "name": "fixity"
+      "name": "fixity",
+      "notes": [
+        "Argument: none (bare switch)"
+      ]
     },
     {
       "description": "Colour material points by group (optionally a slot).",
       "syntax": "group <string> [slot <slot>]",
-      "name": "group"
+      "name": "group",
+      "notes": [
+        "Argument: string"
+      ]
     },
     {
       "description": "Categorical colour/label by a named attribute.",
       "syntax": "label <string>",
-      "name": "label"
+      "name": "label",
+      "notes": [
+        "Argument: string"
+      ]
     },
     {
       "description": "Filter which entities are drawn using range elements (see references/range-elements).",
@@ -157,16 +128,25 @@
       "name": "clip"
     },
     {
-      "name": "extra"
+      "name": "extra",
+      "notes": [
+        "Argument: integer between 1 and 128"
+      ]
     },
     {
       "name": "global"
     },
     {
-      "name": "hide-null"
+      "name": "hide-null",
+      "notes": [
+        "Argument: boolean"
+      ]
     },
     {
-      "name": "interval"
+      "name": "interval",
+      "notes": [
+        "Argument: float >= 1.4e-45, or the keyword 'automatic'"
+      ]
     },
     {
       "name": "log"
@@ -190,7 +170,37 @@
       "name": "reversed"
     },
     {
-      "name": "uniform"
+      "name": "uniform",
+      "notes": [
+        "Argument: none (bare switch)"
+      ]
+    },
+    {
+      "syntax": "state omitPast <bool>",
+      "description": "Omit material points whose plastic state is historical (yielded in the past but elastic now), leaving only points currently at yield. Undocumented in the official pages; found by probing 'plot item create mpoint state ?', whose keyword list is the parent list plus this.",
+      "verification": [
+        "state -- MPoint3D 9.7, accepted as 'state omitPast on'"
+      ],
+      "name": "omitPast",
+      "group": "undocumented"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create mpoint color-by contour value stress-zz legend active on",
+      "description": "Contour material points by a stress component. Use case: Stress field"
+    },
+    {
+      "command": "plot item create mpoint color-by contour value displacement legend active on",
+      "description": "Continuous displacement-magnitude colour map. Use case: Displacement"
+    },
+    {
+      "command": "plot item create mpoint state legend active on",
+      "description": "Colour points by constitutive-model state (elastic/plastic). Use case: Model state"
+    },
+    {
+      "command": "plot item create mpoint model legend active on",
+      "description": "Colour points by their assigned cmodel. Use case: By constitutive model"
     }
   ]
 }

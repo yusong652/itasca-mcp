@@ -1,6 +1,5 @@
 {
   "name": "subcontact",
-  "item_type": "subcontact",
   "item_types": [
     "subcontact"
   ],
@@ -22,30 +21,13 @@
       "description": "Categorical colour subcontacts by state, model, property, group, joint-set, dfn, ..."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Joint slip/state",
-      "command": "plot item create subcontact colorby state legend active on",
-      "description": "Show which sub-contacts are slipping / open / bonded."
-    },
-    {
-      "use_case": "By joint model",
-      "command": "plot item create subcontact colorby model legend active on",
-      "description": "Colour by the assigned joint constitutive model."
-    },
-    {
-      "use_case": "Hide unloaded",
-      "command": "plot item create subcontact colorby state hide-nforce0 on",
-      "description": "Drop sub-contacts with zero normal force."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0."
   ],
   "verification": [
-    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match."
+    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match.",
+    "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active clip color-list colorby cut hide-nforce0 legend map mark pixel-size range scale transparency."
   ],
-  "verification_70": "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active clip color-list colorby cut hide-nforce0 legend map mark pixel-size range scale transparency.",
   "syntax": "plot item create subcontact <keywords...>",
   "keywords": [
     {
@@ -108,6 +90,20 @@
     },
     {
       "name": "pixel-size"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create subcontact colorby state legend active on",
+      "description": "Show which sub-contacts are slipping / open / bonded. Use case: Joint slip/state"
+    },
+    {
+      "command": "plot item create subcontact colorby model legend active on",
+      "description": "Colour by the assigned joint constitutive model. Use case: By joint model"
+    },
+    {
+      "command": "plot item create subcontact colorby state hide-nforce0 on",
+      "description": "Drop sub-contacts with zero normal force. Use case: Hide unloaded"
     }
   ]
 }

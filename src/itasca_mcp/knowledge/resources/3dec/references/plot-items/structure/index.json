@@ -1,6 +1,5 @@
 {
   "name": "structure",
-  "item_type": "structure",
   "item_types": [
     "structure-beam",
     "structure-cable",
@@ -36,117 +35,16 @@
       "description": "Categorical colour SELs by group, model, id, type-element, plastic state, ..."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Cable axial force",
-      "command": "plot item create structure-cable contour force legend active on",
-      "description": "Colour cable elements by axial force."
-    },
-    {
-      "use_case": "Beam bending moment",
-      "command": "plot item create structure-beam contour moment-bending legend active on",
-      "description": "Bending-moment distribution along beams."
-    },
-    {
-      "use_case": "Shell resultants",
-      "command": "plot item create structure-shell contour resultants-mx legend active on",
-      "description": "Shell moment resultant Mx."
-    },
-    {
-      "use_case": "SELs by group",
-      "command": "plot item create structure-liner label group legend active on",
-      "description": "Colour liner elements by group."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0.",
     "Line elements (beam/cable/pile) accept 'line'; surface elements (geogrid/liner/shell) accept 'polygons' — otherwise the top-level keyword set is identical.",
-    "structure-shell adds resultants-* and stress-elastic/plastic-* and coupling-* contour attributes that line elements do not have."
+    "structure-shell adds resultants-* and stress-elastic/plastic-* and coupling-* contour attributes that line elements do not have.",
+    "structure-beam / -cable / -pile / -hybrid top-level keywords: Bar, BarScale, FlipBars, active, clip, color-list, contour, cut, deformation-factor, label, legend, line, map, marker, range, shrink, slot, system, transparency",
+    "structure-geogrid / -liner / -shell top-level keywords: active, clip, color-list, contour, cut, deformation-factor, label, legend, map, marker, polygons, range, shrink, slot, system, transparency",
+    "structure-dowel top-level keywords: active, clip, color-list, contour, cut, deformation-factor, doweloffset, label, legend, length-scale, map, marker, minval, offsetnormal, range, shrink, slot, system, transparency, usesminval, width-scale",
+    "structure-vector top-level keywords: active, by-magnitude, clip, color, cut, deformation-factor, draw-as, legend, map, point-to-base, quality, range, scale, shape, structures, transparency, value",
+    "Live 9.7 splits the family: 1D elements (beam/cable/pile/hybrid) draw as lines and carry the leaked-internal CamelCase keywords Bar/BarScale/FlipBars (really accepted - same quirk as FLAC3D); surface elements (geogrid/liner/shell) use polygons instead of line; structure-dowel has its own 21-keyword set (doweloffset/length-scale/minval/offsetnormal/usesminval/width-scale - matches the FLAC3D finding that the dowel analogy to beams is wrong); structure-vector is a vector item (by-magnitude/color/draw-as/point-to-base/quality/scale/shape/structures/value), NOT a styled element view - Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14."
   ],
-  "top_level_keywords_by_type": {
-    "structure-beam / -cable / -pile / -hybrid": [
-      "Bar",
-      "BarScale",
-      "FlipBars",
-      "active",
-      "clip",
-      "color-list",
-      "contour",
-      "cut",
-      "deformation-factor",
-      "label",
-      "legend",
-      "line",
-      "map",
-      "marker",
-      "range",
-      "shrink",
-      "slot",
-      "system",
-      "transparency"
-    ],
-    "structure-geogrid / -liner / -shell": [
-      "active",
-      "clip",
-      "color-list",
-      "contour",
-      "cut",
-      "deformation-factor",
-      "label",
-      "legend",
-      "map",
-      "marker",
-      "polygons",
-      "range",
-      "shrink",
-      "slot",
-      "system",
-      "transparency"
-    ],
-    "structure-dowel": [
-      "active",
-      "clip",
-      "color-list",
-      "contour",
-      "cut",
-      "deformation-factor",
-      "doweloffset",
-      "label",
-      "legend",
-      "length-scale",
-      "map",
-      "marker",
-      "minval",
-      "offsetnormal",
-      "range",
-      "shrink",
-      "slot",
-      "system",
-      "transparency",
-      "usesminval",
-      "width-scale"
-    ],
-    "structure-vector": [
-      "active",
-      "by-magnitude",
-      "clip",
-      "color",
-      "cut",
-      "deformation-factor",
-      "draw-as",
-      "legend",
-      "map",
-      "point-to-base",
-      "quality",
-      "range",
-      "scale",
-      "shape",
-      "structures",
-      "transparency",
-      "value"
-    ]
-  },
-  "top_level_keywords_note": "Live 9.7 splits the family: 1D elements (beam/cable/pile/hybrid) draw as lines and carry the leaked-internal CamelCase keywords Bar/BarScale/FlipBars (really accepted - same quirk as FLAC3D); surface elements (geogrid/liner/shell) use polygons instead of line; structure-dowel has its own 21-keyword set (doweloffset/length-scale/minval/offsetnormal/usesminval/width-scale - matches the FLAC3D finding that the dowel analogy to beams is wrong); structure-vector is a vector item (by-magnitude/color/draw-as/point-to-base/quality/scale/shape/structures/value), NOT a styled element view - Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14.",
   "syntax": "plot item create structure-<type> <keywords...>",
   "keywords": [
     {
@@ -224,6 +122,24 @@
     },
     {
       "name": "shrink"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create structure-cable contour force legend active on",
+      "description": "Colour cable elements by axial force. Use case: Cable axial force"
+    },
+    {
+      "command": "plot item create structure-beam contour moment-bending legend active on",
+      "description": "Bending-moment distribution along beams. Use case: Beam bending moment"
+    },
+    {
+      "command": "plot item create structure-shell contour resultants-mx legend active on",
+      "description": "Shell moment resultant Mx. Use case: Shell resultants"
+    },
+    {
+      "command": "plot item create structure-liner label group legend active on",
+      "description": "Colour liner elements by group. Use case: SELs by group"
     }
   ]
 }

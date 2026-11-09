@@ -7,31 +7,20 @@
     "block initialize",
     "block gridpoint initialize"
   ],
-  "methods": [
+  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html",
+  "examples": [
     {
-      "name": "reset velocities",
-      "commands": [
-        "block initialize velocity 0 0 0",
-        "block initialize rvelocity 0 0 0",
-        "block gridpoint initialize velocity 0 0 0"
-      ],
-      "notes": [
-        "Rigid blocks carry block velocity / rvelocity; deformable blocks carry gridpoint velocity."
-      ]
+      "command": "block initialize velocity 0 0 0\nblock initialize rvelocity 0 0 0\nblock gridpoint initialize velocity 0 0 0",
+      "description": "reset velocities"
     },
     {
-      "name": "reset accumulated displacement",
-      "commands": [
-        "block gridpoint initialize displacement 0 0 0",
-        "block gridpoint initialize displacement-x 0"
-      ],
-      "notes": [
-        "Zeroing displacement does not move the mesh; it only resets the accumulator."
-      ]
+      "command": "block gridpoint initialize displacement 0 0 0\nblock gridpoint initialize displacement-x 0",
+      "description": "reset accumulated displacement"
     }
   ],
-  "validation_checks": [
+  "notes": [
+    "Rigid blocks carry block velocity / rvelocity; deformable blocks carry gridpoint velocity.",
+    "Zeroing displacement does not move the mesh; it only resets the accumulator.",
     "FISH: block.gp.disp(gp) / block.gp.vel(gp) read back zero after reset (the block.gridpoint.* spellings do NOT exist — live FISH namespace is block.gp.*)"
-  ],
-  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html"
+  ]
 }

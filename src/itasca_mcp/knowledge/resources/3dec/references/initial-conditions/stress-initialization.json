@@ -9,39 +9,26 @@
     "block insitu",
     "model solve"
   ],
-  "methods": [
+  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html",
+  "examples": [
     {
-      "name": "uniform / anisotropic stress",
-      "commands": [
-        "block zone initialize stress-xx -5e6",
-        "block zone initialize stress-yy -1e7",
-        "block zone initialize stress-zz -5e6",
-        "block zone initialize stress-xy 0"
-      ],
-      "notes": [
-        "Components: stress-xx/yy/zz (normal) and stress-xy/xz/yz (shear); the first slot also enumerates stress (full tensor), stress-principal and state (live 9.7).",
-        "Use modifier keywords add / gradient / multiply / vary to build depth-varying fields (all four live-enumerated at the post-value slot)."
-      ]
+      "command": "block zone initialize stress-xx -5e6\nblock zone initialize stress-yy -1e7\nblock zone initialize stress-zz -5e6\nblock zone initialize stress-xy 0",
+      "description": "uniform / anisotropic stress"
     },
     {
-      "name": "gravitational in-situ stress",
-      "commands": [
-        "model gravity 0 0 -9.81",
-        "block insitu stress -1e6 -1e6 -2e6 0 0 0 gradient-z 0 0 2e4 0 0 0",
-        "block insitu stress ... nodisplacements"
-      ],
-      "notes": [
-        "'block insitu stress <6 components>' then optional per-axis gradients: live 9.7 slot enumerates gradient-x gradient-y gradient-z nodisplacements — each gradient keyword is followed by the stress-component gradient values (floats).",
-        "A bare 'gradient' keyword is REJECTED on live 9.7 ('Unused extra parameter') — use the per-axis form.",
-        "'nodisplacements' suppresses displacements during the seating solve and is terminal (no further keywords).",
-        "'total' is NOT accepted at the 'block insitu stress' slot on live 9.7 — it belongs to 'block insitu topography' (live sub-keywords: overburden overburden-xx/yy/zz ratio-x/y/z total; requires gravity to be defined)."
-      ]
+      "command": "model gravity 0 0 -9.81\nblock insitu stress -1e6 -1e6 -2e6 0 0 0 gradient-z 0 0 2e4 0 0 0\nblock insitu stress ... nodisplacements",
+      "description": "gravitational in-situ stress"
     }
   ],
-  "validation_checks": [
+  "notes": [
+    "Components: stress-xx/yy/zz (normal) and stress-xy/xz/yz (shear); the first slot also enumerates stress (full tensor), stress-principal and state (live 9.7).",
+    "Use modifier keywords add / gradient / multiply / vary to build depth-varying fields (all four live-enumerated at the post-value slot).",
+    "'block insitu stress <6 components>' then optional per-axis gradients: live 9.7 slot enumerates gradient-x gradient-y gradient-z nodisplacements — each gradient keyword is followed by the stress-component gradient values (floats).",
+    "A bare 'gradient' keyword is REJECTED on live 9.7 ('Unused extra parameter') — use the per-axis form.",
+    "'nodisplacements' suppresses displacements during the seating solve and is terminal (no further keywords).",
+    "'total' is NOT accepted at the 'block insitu stress' slot on live 9.7 — it belongs to 'block insitu topography' (live sub-keywords: overburden overburden-xx/yy/zz ratio-x/y/z total; requires gravity to be defined).",
     "block zone list information",
     "FISH: block.zone.stress(z) to confirm the assigned field",
     "Solve elastically and confirm small block.gp.force.unbal (near equilibrium)"
-  ],
-  "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/initialconditions.html"
+  ]
 }

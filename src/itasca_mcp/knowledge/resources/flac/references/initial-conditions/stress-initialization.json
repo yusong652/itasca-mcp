@@ -10,49 +10,32 @@
     "zone face apply",
     "model solve elastic"
   ],
-  "methods": [
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html",
+  "examples": [
     {
-      "name": "uniform stress",
-      "commands": [
-        "zone initialize stress-xx -5e6",
-        "zone initialize stress-yy -1e7",
-        "zone initialize stress-zz -5e6"
-      ],
-      "notes": [
-        "Use range clauses to assign different initial stresses to different regions.",
-        "Match stress boundaries when boundaries are stress controlled.",
-        "FLAC2D accepts 'stress-zz' for plane-strain out-of-plane stress tracking."
-      ]
+      "command": "zone initialize stress-xx -5e6\nzone initialize stress-yy -1e7\nzone initialize stress-zz -5e6",
+      "description": "uniform stress"
     },
     {
-      "name": "gravity stress with K0 ratio",
-      "commands": [
-        "model gravity 10",
-        "zone property density 2000",
-        "zone initialize-stresses ratio 0.5"
-      ],
-      "notes": [
-        "Density must be assigned before 'zone initialize-stresses' (binary requirement).",
-        "Use different ratio values or overburden where geology requires it."
-      ]
+      "command": "model gravity 10\nzone property density 2000\nzone initialize-stresses ratio 0.5",
+      "description": "gravity stress with K0 ratio"
     },
     {
-      "name": "manual gradient (FLAC2D)",
-      "commands": [
-        "zone initialize stress-xx -1e6 gradient (0,10000)",
-        "zone initialize stress-yy -1e6 gradient (0,10000)"
-      ],
-      "notes": [
-        "FLAC2D gradient tuple is (gx,gy); FLAC3D is (gx,gy,gz).",
-        "Gradient values are evaluated from zone centroid positions.",
-        "FLAC2D can initialize plane-strain stress-zz, but should not initialize velocity-z."
-      ]
+      "command": "zone initialize stress-xx -1e6 gradient (0,10000)\nzone initialize stress-yy -1e6 gradient (0,10000)",
+      "description": "manual gradient (FLAC2D)"
     }
   ],
-  "validation_checks": [
+  "notes": [
+    "Use range clauses to assign different initial stresses to different regions.",
+    "Match stress boundaries when boundaries are stress controlled.",
+    "FLAC2D accepts 'stress-zz' for plane-strain out-of-plane stress tracking.",
+    "Density must be assigned before 'zone initialize-stresses' (binary requirement).",
+    "Use different ratio values or overburden where geology requires it.",
+    "FLAC2D gradient tuple is (gx,gy); FLAC3D is (gx,gy,gz).",
+    "Gradient values are evaluated from zone centroid positions.",
+    "FLAC2D can initialize plane-strain stress-zz, but should not initialize velocity-z.",
     "Run a small number of steps or 'model solve elastic' and inspect velocities/unbalanced force.",
     "Plot zone state or plastic indicators to detect immediate yield from incompatible initial stresses.",
     "After gravity initialization, reset displacements if the subsequent staged analysis needs zeroed movement."
-  ],
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/modeling/problemsolving/initial_conditions.html"
+  ]
 }

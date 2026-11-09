@@ -1,6 +1,5 @@
 {
   "name": "bzone",
-  "item_type": "bzone",
   "item_types": [
     "bzone"
   ],
@@ -28,30 +27,13 @@
       "description": "Categorical colour zones by group, model, state, ..."
     }
   ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Stress contour",
-      "command": "plot item create bzone contour stress-zz checkinnerzones on legend active on",
-      "description": "Vertical stress across the continuum, interior zones included."
-    },
-    {
-      "use_case": "Displacement",
-      "command": "plot item create bzone contour displacement legend active on",
-      "description": "Displacement magnitude interpolated from gridpoints."
-    },
-    {
-      "use_case": "Plastic state",
-      "command": "plot item create bzone label state legend active on",
-      "description": "Colour zones by constitutive-model state."
-    }
-  ],
   "notes": [
     "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Keyword sets here are binary-validated against 3DEC 9.0."
   ],
   "verification": [
-    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match."
+    "Verified against live 3DEC 9.7.47 ('?' enumeration), 2026-08-14. Top-level keyword set is an exact match.",
+    "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active checkinnerzones clip color-list contour cut deformation-factor excavated label legend map polygons range transparency."
   ],
-  "verification_70": "3DEC 7.00 Release 161 (2026-08-21): live first-slot keyword enumeration = active checkinnerzones clip color-list contour cut deformation-factor excavated label legend map polygons range transparency.",
   "syntax": "plot item create bzone <keywords...>",
   "keywords": [
     {
@@ -119,6 +101,20 @@
     },
     {
       "name": "excavated"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create bzone contour stress-zz checkinnerzones on legend active on",
+      "description": "Vertical stress across the continuum, interior zones included. Use case: Stress contour"
+    },
+    {
+      "command": "plot item create bzone contour displacement legend active on",
+      "description": "Displacement magnitude interpolated from gridpoints. Use case: Displacement"
+    },
+    {
+      "command": "plot item create bzone label state legend active on",
+      "description": "Colour zones by constitutive-model state. Use case: Plastic state"
     }
   ]
 }

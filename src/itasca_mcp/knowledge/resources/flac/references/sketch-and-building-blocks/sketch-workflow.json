@@ -12,41 +12,25 @@
     "sketch section",
     "zone generate from-sketch"
   ],
-  "valid_subcommands_binary": [
-    "block",
-    "edge",
-    "mesh",
-    "point",
-    "section",
-    "set"
+  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/sketch/sketch.html",
+  "verification": [
+    "valid subcommands binary (6): block, edge, mesh, point, section, set",
+    "'sketch segment' and 'sketch path' are NOT valid FLAC2D 9.0 subcommands ('Bad conversion of parameter number 2'). Only block / edge / mesh / point / section / set are accepted after 'sketch'. UPDATE (live FLAC2D 9, 2026-08-13): the current 2D engine enumerates NINE subcommands — the six above plus fracture, joint-set, and tessellate ('segment'/'path'/'segment-node' remain 3D-only). The 'only six' claim applied to the FLAC2D 9.0 binary.",
+    "FLAC3D 9.7 subcommands (9): block, edge, mesh, path, point, section, segment, segment-node, set",
+    "Live FLAC3D 9.7 enumeration: the 2D six (block/edge/mesh/point/section/set) plus the 3D-only drawing objects path / segment / segment-node — confirming from the 3D side that 'sketch segment' and 'sketch path' are 3D-only (this file already records their rejection by FLAC2D 9.0)."
   ],
-  "objects": [
-    {
-      "object": "set",
-      "role": "Named sketch collection; commands operate on the active set."
-    },
-    {
-      "object": "point",
-      "role": "Coordinate anchors for edges and blocks."
-    },
-    {
-      "object": "edge",
-      "role": "Line or curved boundaries with zoning controls."
-    },
-    {
-      "object": "block",
-      "role": "Closed shape meshed as regular structured or irregular unstructured mesh."
-    },
-    {
-      "object": "mesh",
-      "role": "Mesh sizing, optimization, and meshing control parameters."
-    },
-    {
-      "object": "section",
-      "role": "Pre-defined section primitives (circle / polygon / rectangle) to seed a sketch."
-    }
+  "notes": [
+    "set: Named sketch collection; commands operate on the active set.",
+    "point: Coordinate anchors for edges and blocks.",
+    "edge: Line or curved boundaries with zoning controls.",
+    "block: Closed shape meshed as regular structured or irregular unstructured mesh.",
+    "mesh: Mesh sizing, optimization, and meshing control parameters.",
+    "section: Pre-defined section primitives (circle / polygon / rectangle) to seed a sketch.",
+    "In FLAC 9.0, sketch replaces the older extrude naming.",
+    "Some legacy documentation and command resources may still use extruder/extrude terminology.",
+    "'zone generate' in live FLAC2D 9 enumerates from-sketch AND from-topography (the from-sketch-only claim applied to the 9.0 binary); 3D adds from-building-blocks, from-geometry, and domain."
   ],
-  "workflow": [
+  "steps": [
     {
       "step": "Create geometry",
       "commands": [
@@ -78,28 +62,5 @@
         "FLAC3D requires extrusion/section setup before 3D zones are generated."
       ]
     }
-  ],
-  "rejected_subcommands_note": "'sketch segment' and 'sketch path' are NOT valid FLAC2D 9.0 subcommands ('Bad conversion of parameter number 2'). Only block / edge / mesh / point / section / set are accepted after 'sketch'. UPDATE (live FLAC2D 9, 2026-08-13): the current 2D engine enumerates NINE subcommands — the six above plus fracture, joint-set, and tessellate ('segment'/'path'/'segment-node' remain 3D-only). The 'only six' claim applied to the FLAC2D 9.0 binary.",
-  "version_notes": [
-    "In FLAC 9.0, sketch replaces the older extrude naming.",
-    "Some legacy documentation and command resources may still use extruder/extrude terminology.",
-    "'zone generate' in live FLAC2D 9 enumerates from-sketch AND from-topography (the from-sketch-only claim applied to the 9.0 binary); 3D adds from-building-blocks, from-geometry, and domain."
-  ],
-  "flac3d_97_subcommands": {
-    "subcommands": [
-      "block",
-      "edge",
-      "mesh",
-      "path",
-      "point",
-      "section",
-      "segment",
-      "segment-node",
-      "set"
-    ],
-    "notes": [
-      "Live FLAC3D 9.7 enumeration: the 2D six (block/edge/mesh/point/section/set) plus the 3D-only drawing objects path / segment / segment-node — confirming from the 3D side that 'sketch segment' and 'sketch path' are 3D-only (this file already records their rejection by FLAC2D 9.0)."
-    ]
-  },
-  "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/elements/sketch/sketch.html"
+  ]
 }

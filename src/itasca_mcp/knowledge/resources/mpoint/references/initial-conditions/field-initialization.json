@@ -6,64 +6,6 @@
   "primary_commands": [
     "mpoint initialize"
   ],
-  "field_groups": [
-    {
-      "group": "stress & strain",
-      "fields": [
-        "stress",
-        "stress-effective",
-        "strain",
-        "deformation"
-      ],
-      "notes": [
-        "'stress' / 'stress-effective' set the carried tensor; pair with 'mpoint initialize-stresses' for gravitational fields."
-      ]
-    },
-    {
-      "group": "kinematics",
-      "fields": [
-        "velocity",
-        "displacement",
-        "position"
-      ],
-      "notes": [
-        "Reset velocity/displacement between staged-loading phases so reported values measure the current stage."
-      ]
-    },
-    {
-      "group": "fluid / poromechanics",
-      "fields": [
-        "pore-pressure",
-        "porosity",
-        "fluid-density",
-        "fluid-modulus",
-        "fluid-tension",
-        "fluid-flow",
-        "biot-coefficient",
-        "biot-modulus",
-        "mobility-coefficient"
-      ],
-      "notes": [
-        "Initialize the poromechanical field for hydro-mechanical (Biot) coupling."
-      ]
-    },
-    {
-      "group": "mass & identity",
-      "fields": [
-        "density",
-        "volume",
-        "applied-force",
-        "fixity",
-        "state",
-        "model",
-        "id",
-        "index"
-      ],
-      "notes": [
-        "'model' / 'state' seed the constitutive model and its state; see the 'constitutive-models' reference."
-      ]
-    }
-  ],
   "dimension_differences": {
     "plane": {
       "mpoint2d": "x-y",
@@ -91,30 +33,6 @@
       "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both."
     ]
   },
-  "modifiers": [
-    {
-      "keyword": "add | multiply | replace",
-      "syntax": "mpoint initialize <field> <add|multiply|replace> <value>",
-      "description": "How the value combines with what is already there. 'replace' is the default. Verified: density 1000, then 'add 500' -> 1500, then 'multiply 2' -> 3000, then 'replace 777' -> 777.",
-      "trap": "The modifier goes BEFORE the value. Written after it ('mpoint initialize density 500 add') the engine sets the field to 500 and THEN rejects 'add' -- the command half-applies before it errors."
-    },
-    {
-      "keyword": "component",
-      "syntax": "mpoint initialize <vector-field> component <x|y|z> <value>",
-      "description": "Initialize one component of a vector field rather than the whole vector."
-    },
-    {
-      "keyword": "quantity",
-      "syntax": "mpoint initialize <tensor-field> quantity <xx|xy|xz|yy|yz|zz> <value>",
-      "description": "Initialize one component of a tensor field."
-    },
-    {
-      "keyword": "gradient",
-      "syntax": "mpoint initialize <field> <value> gradient <3D vector>",
-      "description": "Spatially varying initialization: the field becomes value + gradient . position. Verified exactly -- 'density 1000 gradient (0,0,-100)' gave 1100 at z=-1 and 900 at z=+1.",
-      "trap": "'gradient' is NOT listed by 'mpoint initialize ?'. It only appears in the keyword table of an unrelated parse error. Absence from an enumeration is not evidence a keyword is absent."
-    }
-  ],
   "verification": [
     "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): Conditions applied to a 216-point model and the resulting field read back through FISH (material points are not reachable from the Python SDK).",
     "Keyword lists: All four match the engine exactly: 'mpoint node fix' 9, 'mpoint fix' 7, 'mpoint initialize' 25, 'mpoint initialize-stresses' 5 (each including 'range').",
@@ -122,5 +40,139 @@
     "Trap: 'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
     "Trap: 'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
     "Trap: 'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+  ],
+  "keywords": [
+    {
+      "name": "stress",
+      "group": "stress & strain"
+    },
+    {
+      "name": "stress-effective",
+      "group": "stress & strain"
+    },
+    {
+      "name": "strain",
+      "group": "stress & strain"
+    },
+    {
+      "name": "deformation",
+      "group": "stress & strain"
+    },
+    {
+      "name": "velocity",
+      "group": "kinematics"
+    },
+    {
+      "name": "displacement",
+      "group": "kinematics"
+    },
+    {
+      "name": "position",
+      "group": "kinematics"
+    },
+    {
+      "name": "pore-pressure",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "porosity",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "fluid-density",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "fluid-modulus",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "fluid-tension",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "fluid-flow",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "biot-coefficient",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "biot-modulus",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "mobility-coefficient",
+      "group": "fluid / poromechanics"
+    },
+    {
+      "name": "density",
+      "group": "mass & identity"
+    },
+    {
+      "name": "volume",
+      "group": "mass & identity"
+    },
+    {
+      "name": "applied-force",
+      "group": "mass & identity"
+    },
+    {
+      "name": "fixity",
+      "group": "mass & identity"
+    },
+    {
+      "name": "state",
+      "group": "mass & identity"
+    },
+    {
+      "name": "model",
+      "group": "mass & identity"
+    },
+    {
+      "name": "id",
+      "group": "mass & identity"
+    },
+    {
+      "name": "index",
+      "group": "mass & identity"
+    },
+    {
+      "syntax": "mpoint initialize <field> <add|multiply|replace> <value>",
+      "description": "How the value combines with what is already there. 'replace' is the default. Verified: density 1000, then 'add 500' -> 1500, then 'multiply 2' -> 3000, then 'replace 777' -> 777.",
+      "name": "add | multiply | replace",
+      "notes": [
+        "Trap: The modifier goes BEFORE the value. Written after it ('mpoint initialize density 500 add') the engine sets the field to 500 and THEN rejects 'add' -- the command half-applies before it errors."
+      ],
+      "group": "modifier"
+    },
+    {
+      "syntax": "mpoint initialize <vector-field> component <x|y|z> <value>",
+      "description": "Initialize one component of a vector field rather than the whole vector.",
+      "name": "component",
+      "group": "modifier"
+    },
+    {
+      "syntax": "mpoint initialize <tensor-field> quantity <xx|xy|xz|yy|yz|zz> <value>",
+      "description": "Initialize one component of a tensor field.",
+      "name": "quantity",
+      "group": "modifier"
+    },
+    {
+      "syntax": "mpoint initialize <field> <value> gradient <3D vector>",
+      "description": "Spatially varying initialization: the field becomes value + gradient . position. Verified exactly -- 'density 1000 gradient (0,0,-100)' gave 1100 at z=-1 and 900 at z=+1.",
+      "name": "gradient",
+      "notes": [
+        "Trap: 'gradient' is NOT listed by 'mpoint initialize ?'. It only appears in the keyword table of an unrelated parse error. Absence from an enumeration is not evidence a keyword is absent."
+      ],
+      "group": "modifier"
+    }
+  ],
+  "notes": [
+    "'stress' / 'stress-effective' set the carried tensor; pair with 'mpoint initialize-stresses' for gravitational fields.",
+    "Reset velocity/displacement between staged-loading phases so reported values measure the current stage.",
+    "Initialize the poromechanical field for hydro-mechanical (Biot) coupling.",
+    "'model' / 'state' seed the constitutive model and its state; see the 'constitutive-models' reference."
   ]
 }

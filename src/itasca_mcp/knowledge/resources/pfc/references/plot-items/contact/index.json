@@ -1,6 +1,5 @@
 {
   "name": "contact",
-  "item_type": "contact",
   "search_keywords": [
     "contact",
     "force",
@@ -27,18 +26,6 @@
     "The force-chain pattern below is verified working on PFC2D 7.00.",
     "First-slot keywords on PFC3D 9.7: active all-contacts both-directions clip cm-normal color-by color-options cut directed display ghosts legend map orientation range scale-by-force scale-by-magnitude selected-only shape transparency.",
     "contact 'shape' drill-down (live 9.7): arrow cylinder disk joint sphere."
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Contact force network",
-      "command": "plot item create contact active on color-by vector-attribute \"force\" color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
-      "description": "Force chains with thickness and color encoding magnitude"
-    },
-    {
-      "use_case": "Contacts colored by friction",
-      "command": "plot item create contact active on color-by numeric-property \"fric\" color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
-      "description": "Friction coefficient distribution across contacts"
-    }
   ],
   "syntax": "plot item create contact <keywords...>",
   "keywords": [
@@ -72,6 +59,16 @@
         "Goes with color-by for continuous color mapping; never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by). Verified on PFC3D 6.00.30, 7.00.161 and 9.8.54 (2026-10-29)."
       ],
       "name": "color-options"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create contact active on color-by vector-attribute \"force\" color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
+      "description": "Force chains with thickness and color encoding magnitude. Use case: Contact force network"
+    },
+    {
+      "command": "plot item create contact active on color-by numeric-property \"fric\" color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
+      "description": "Friction coefficient distribution across contacts. Use case: Contacts colored by friction"
     }
   ]
 }

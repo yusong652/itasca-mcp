@@ -14,40 +14,6 @@
     "data tensor import",
     "data label create"
   ],
-  "data_types": [
-    {
-      "type": "scalar",
-      "use": "Point measurements such as pore pressure, elevation, or material index."
-    },
-    {
-      "type": "vector",
-      "use": "Directional measurements such as displacement or velocity vectors."
-    },
-    {
-      "type": "tensor",
-      "use": "Stress/strain tensor measurements or interpreted tensor fields."
-    },
-    {
-      "type": "label",
-      "use": "Text labels for annotations, stations, or named locations."
-    }
-  ],
-  "common_patterns": [
-    {
-      "name": "Import measured scalar values",
-      "commands": [
-        "data scalar import 'measurements.csv'",
-        "data scalar group 'field-data'"
-      ]
-    },
-    {
-      "name": "Export interpreted data",
-      "commands": [
-        "data vector export 'vectors.csv'",
-        "data tensor export 'stress_tensor.csv'"
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/flac3d/docproject/source/flac3dhome.html",
   "notes": [
     "Keep units and coordinate system in the data-set name or metadata.",
@@ -59,5 +25,37 @@
     "data scalar / data vector / data tensor share the identical subcommand set above (live-enumerated, FLAC3D 9.7) — all primary commands in this file confirmed.",
     "'data label' parses positionally (no subcommand enumeration at that slot); its subcommand shapes are not yet curated.",
     "Top-level 'data <bogus>' does not enumerate the type names (scalar/vector/tensor/label) — probe one level down."
+  ],
+  "keywords": [
+    {
+      "use": "Point measurements such as pore pressure, elevation, or material index.",
+      "name": "scalar",
+      "group": "data-type"
+    },
+    {
+      "use": "Directional measurements such as displacement or velocity vectors.",
+      "name": "vector",
+      "group": "data-type"
+    },
+    {
+      "use": "Stress/strain tensor measurements or interpreted tensor fields.",
+      "name": "tensor",
+      "group": "data-type"
+    },
+    {
+      "use": "Text labels for annotations, stations, or named locations.",
+      "name": "label",
+      "group": "data-type"
+    }
+  ],
+  "examples": [
+    {
+      "command": "data scalar import 'measurements.csv'\ndata scalar group 'field-data'",
+      "description": "Import measured scalar values"
+    },
+    {
+      "command": "data vector export 'vectors.csv'\ndata tensor export 'stress_tensor.csv'",
+      "description": "Export interpreted data"
+    }
   ]
 }

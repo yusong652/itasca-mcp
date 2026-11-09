@@ -10,28 +10,6 @@
     "zone gridpoint fix",
     "zone gridpoint initialize"
   ],
-  "common_patterns": [
-    {
-      "name": "Roller side boundaries",
-      "commands": [
-        "zone face skin",
-        "zone face apply velocity-normal 0 range group 'East' or 'West'",
-        "zone face apply velocity-normal 0 range group 'Bottom'"
-      ]
-    },
-    {
-      "name": "Uniform normal stress",
-      "commands": [
-        "zone face apply stress-normal -1e5 range group 'Top'"
-      ]
-    },
-    {
-      "name": "Remove matching applied face conditions",
-      "commands": [
-        "zone face apply-remove range group 'Top'"
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html",
   "keywords": [
     {
@@ -177,5 +155,19 @@
     "reaction-dip / reaction-strike are dimension-non-obvious 3D-only forms; rejected by FLAC2D.",
     "'reaction-tangential' is FLAC2D-only — FLAC3D 9.7 does not enumerate it (use -dip/-strike in 3D).",
     "'reaction-tangential' live-confirmed in the FLAC2D 9 face-apply enumeration (2D-only claim now verified on both engines)."
+  ],
+  "examples": [
+    {
+      "command": "zone face skin\nzone face apply velocity-normal 0 range group 'East' or 'West'\nzone face apply velocity-normal 0 range group 'Bottom'",
+      "description": "Roller side boundaries"
+    },
+    {
+      "command": "zone face apply stress-normal -1e5 range group 'Top'",
+      "description": "Uniform normal stress"
+    },
+    {
+      "command": "zone face apply-remove range group 'Top'",
+      "description": "Remove matching applied face conditions"
+    }
   ]
 }

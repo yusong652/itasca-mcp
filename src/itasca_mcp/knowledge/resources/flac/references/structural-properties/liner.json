@@ -61,21 +61,6 @@
       ]
     }
   ],
-  "common_patterns": [
-    {
-      "name": "FLAC2D liner with single-sided coupling",
-      "commands": [
-        "structure liner create by-line (0,0) (1,0)",
-        "structure liner property young 2e10 poisson 0.2 cross-sectional-area 0.25 moi 1.3e-3 coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-cohesion-shear 1e5 coupling-friction-shear 30"
-      ]
-    },
-    {
-      "name": "Double-sided liner",
-      "commands": [
-        "structure liner property coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-stiffness-normal-2 1e9 coupling-stiffness-shear-2 1e9"
-      ]
-    }
-  ],
   "related_3d_only": {
     "structure_types": [
       "shell",
@@ -187,5 +172,15 @@
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html",
   "verification": [
     "Live FLAC2D 9 re-check (2026-08-13): 'structure liner property' enumerates the full documented 2D set (section props incl. spacing + all 12 coupling-*/-2 keywords + slide/slide-tolerance); 'thickness' and 'thermal-expansion' confirmed absent. shell/geogrid/dowel/hybrid rejections reproduced verbatim. 2D liner also exposes 'cmodel' with the 5 beam-family models — see structure-cmodels.json."
+  ],
+  "examples": [
+    {
+      "command": "structure liner create by-line (0,0) (1,0)\nstructure liner property young 2e10 poisson 0.2 cross-sectional-area 0.25 moi 1.3e-3 coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-cohesion-shear 1e5 coupling-friction-shear 30",
+      "description": "FLAC2D liner with single-sided coupling"
+    },
+    {
+      "command": "structure liner property coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-stiffness-normal-2 1e9 coupling-stiffness-shear-2 1e9",
+      "description": "Double-sided liner"
+    }
   ]
 }

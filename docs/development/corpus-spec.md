@@ -198,27 +198,39 @@ siblings use. Deferred to B: `*/references/dimension-differences/`,
   manually maintained — remember new keywords do not index themselves
   (`command_adapter._keyword_names` fallback only covers uncurated files).
 
-## F. references tree archetypes
+## F. references tree archetypes (done 2026-11-09)
 
-The tree is really four page kinds; the spec names them so new files copy the
-right shape (`spec-first`, 2026-11-07):
+Outcome (`scripts/corpus/migrate_references.py`, 155 files): 287 folds, 44
+reviewed drops (application lists, theory/comparison essays, model-page
+workflows, navigation and schema self-descriptions). Live enumerations and
+binary validations went to `verification`; vocabularies to `keywords`
+(grouped); command patterns (`common_usage_patterns`/`common_patterns`,
+multi-command sequences newline-joined) to `examples`; operative prose to
+`notes`. `test_every_reference_page_fits_its_archetype` keeps the field sets
+closed. Cross-cutting fields allowed on every page: `name, full_name,
+description, search_keywords, availability, notes, verification, source`.
 
 1. **model** (constitutive-models, contact-models, joint-models):
-   `model, full_name, search_keywords, description, property_groups,
-   availability, source, usage, notes, verification`.
-2. **range-element**: `name, syntax, description, search_keywords, category,
-   category_name, parameters?, sub_keywords?, supports_extent?, examples,
-   notes, source`.
-3. **plot/data item** (ball, clump, wall, block, zone, mpoint, marker, ...):
-   `name, description, syntax, keywords, modes?, attributes?,
-   notes, verification` (`parent` deleted in section D: the path carries it).
+   `model, property_groups, usage?, examples?, callback_events?`
+   (+ columnar-basalt's structured `index_expansion`, load-bearing for the
+   live property-count accounting). (`parent` deleted in section D.)
+2. **range-element**: `syntax, category, category_name, parameters?,
+   sub_keywords?, supports_extent?, examples` (examples stay bare command
+   strings here).
+3. **plot/data item** (incl. the per-type directory `index.json` overviews):
+   `syntax, keywords, modes?, attributes?, dimension?, examples?,
+   item_types?, sub_items?, items?`.
 4. **topic page** (boundary-conditions, initial-conditions,
-   histories-and-results, structural-properties, file-formats, workflows,
-   ...): `name, full_name, description, dimension?, primary_commands,
-   keywords?, examples?, notes, verification, source`.
+   histories-and-results, structural-properties, workflows, ...):
+   `dimension?, primary_commands, keywords?, examples?, property_groups?
+   (structural-properties), steps? (ordered command sequences; the old
+   `workflow` lists), measured? (structured live-experiment records)`.
+5. **file-format** (the massflow file-formats category): topic fields plus
+   `direction, layout, columns, example` — a format spec is data, not prose.
 
-Everything a current file carries outside its archetype folds per sections
-C–E.
+Category `index.json` files keep `type/category/items/models/elements/
+categories/item_types/sub_items/keywords/examples/syntax/dimension/measured/
+demo_mode_limits/property_groups`.
 
 ## G. fish tree (reference model — minimal change)
 

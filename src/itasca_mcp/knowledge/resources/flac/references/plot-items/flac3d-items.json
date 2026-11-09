@@ -2,7 +2,6 @@
   "name": "flac3d-items",
   "dimension": "3D",
   "description": "FLAC3D 9.7 plot item types and their verified top-level keyword sets, captured live via 'plot item create <type> ?' error/'?' enumeration. Complements the FLAC2D 9.0-validated zone/gridpoint-fix/structure references. Verified against FLAC3D 9.7 via '?' probing (2026-08-13).",
-  "unified_kernel_note": "The Itasca 9.x unified kernel enumerates ALL engines' plot item types in 'plot item create ?' (ball/clump/rblock from PFC, block-* from 3DEC, mpoint-* from MPM, drawpoint/mineblock from MassFlow, ...). Acceptance by the parser does not mean the item is meaningful in a FLAC model -- only the types listed here (plus zone, gridpoint-fix, structure-beam/-cable/-liner/-pile/-geogrid/-dowel/-hybrid, chart-history) render FLAC data.",
   "items": {
     "zone-vector": {
       "keywords": [
@@ -981,12 +980,13 @@
       ]
     }
   },
-  "probing_recipe": "plot item create <type> ? enumerates top-level keywords; plot item create <type> <kw> ? drills into a keyword. The '?' output goes to the console, not an error.",
   "notes": [
     "Beam-family item types (identical keyword sets): structure-beam, structure-cable (verified identical), structure-pile (verified identical, 2026-08-13), structure-hybrid (verified identical, 2026-08-13)",
     "'Bar', 'BarScale' and 'FlipBars' are CamelCase keywords leaked from internal property names; 'Bar' takes a boolean. They are real, accepted keywords in 9.7.",
     "'contour <attribute>' accepts the beam-family attribute set including 3D-only -z / angular / plastic entries (see structure/contour.json).",
-    "structure-dowel REMOVED from this family (2026-08-13): live '?' enumeration shows it has its own keyword set (no Bar/BarScale/FlipBars/line; six unique keywords) — see the structure-dowel item entry."
+    "structure-dowel REMOVED from this family (2026-08-13): live '?' enumeration shows it has its own keyword set (no Bar/BarScale/FlipBars/line; six unique keywords) — see the structure-dowel item entry.",
+    "The Itasca 9.x unified kernel enumerates ALL engines' plot item types in 'plot item create ?' (ball/clump/rblock from PFC, block-* from 3DEC, mpoint-* from MPM, drawpoint/mineblock from MassFlow, ...). Acceptance by the parser does not mean the item is meaningful in a FLAC model -- only the types listed here (plus zone, gridpoint-fix, structure-beam/-cable/-liner/-pile/-geogrid/-dowel/-hybrid, chart-history) render FLAC data.",
+    "plot item create <type> ? enumerates top-level keywords; plot item create <type> <kw> ? drills into a keyword. The '?' output goes to the console, not an error."
   ],
   "keywords": [
     {

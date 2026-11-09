@@ -8,22 +8,6 @@
     "model"
   ],
   "description": "Rolling resistance linear model extends the standard linear contact model by incorporating a torque mechanism that opposes rolling motion. This simple model simulates real-world effects like surface roughness and adhesion without requiring additional damping parameters. The rolling resistance torque counteracts rolling motion, making it particularly useful for granular materials where rolling behavior significantly affects overall response.",
-  "typical_applications": [
-    "Granular materials with significant rolling resistance",
-    "Heap repose angle analysis",
-    "Materials where particle shape effects are approximated via rolling resistance",
-    "Simulations requiring energy dissipation through rolling motion",
-    "Single sphere rolling and sliding analysis"
-  ],
-  "key_characteristics": [
-    "Extends linear model with rolling resistance mechanism",
-    "Applies torque opposing rolling motion at contact point",
-    "Simulates surface roughness and adhesion effects",
-    "Rolling friction coefficient uses minimum value inheritance from contacting pieces",
-    "Separate energy tracking for rolling strain and rolling slip dissipation",
-    "Does not require additional damping parameters for rolling dissipation",
-    "Compatible with standard linear elastic-frictional behavior"
-  ],
   "property_groups": [
     {
       "name": "Linear Group",
@@ -339,111 +323,6 @@
       ]
     }
   ],
-  "energy_partitions": [
-    {
-      "name": "energy-strain",
-      "symbol": "E_k",
-      "description": "Strain energy stored in linear springs",
-      "range": "[0.0, +∞)",
-      "accumulated": false,
-      "group": "Linear Group"
-    },
-    {
-      "name": "energy-slip",
-      "symbol": "E_μ",
-      "description": "Energy dissipated by frictional slip (linear component)",
-      "range": "(-∞, 0.0]",
-      "accumulated": true,
-      "group": "Linear Group"
-    },
-    {
-      "name": "energy-dashpot",
-      "symbol": "E_β",
-      "description": "Energy dissipated by dashpots",
-      "range": "(-∞, 0.0]",
-      "accumulated": true,
-      "group": "Dashpot Group"
-    },
-    {
-      "name": "energy-rrstrain",
-      "symbol": "E_kr",
-      "description": "Strain energy stored in rolling resistance mechanism",
-      "range": "[0.0, +∞)",
-      "accumulated": false,
-      "group": "Rolling-Resistance Group"
-    },
-    {
-      "name": "energy-rrslip",
-      "symbol": "E_μr",
-      "description": "Energy dissipated by rolling slip (rolling resistance)",
-      "range": "(-∞, 0.0]",
-      "accumulated": true,
-      "group": "Rolling-Resistance Group"
-    }
-  ],
-  "available_methods": [
-    {
-      "name": "area",
-      "description": "Set or query user_area. Fixes contact area independent of geometry changes.",
-      "typical_args": []
-    },
-    {
-      "name": "deformability",
-      "description": "Calculate kn and ks from emod and kratio. More physically meaningful than direct stiffness specification.",
-      "typical_args": [
-        "emod",
-        "kratio"
-      ]
-    }
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Basic rolling resistance with direct stiffness",
-      "commands": [
-        "contact cmat default model rrlinear property kn 1e8 ks 5e7 fric 0.5 rr_fric 0.3"
-      ],
-      "description": "Set stiffnesses and friction coefficients directly. Rolling friction coefficient controls rolling resistance."
-    },
-    {
-      "use_case": "Using deformability method (recommended)",
-      "commands": [
-        "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 rr_fric 0.3"
-      ],
-      "description": "Calculate stiffnesses from elastic modulus. More physically meaningful parameters."
-    },
-    {
-      "use_case": "With damping for quasi-static simulation",
-      "commands": [
-        "contact cmat default model rrlinear property kn 1e8 ks 5e7 fric 0.5 rr_fric 0.3 dp_nratio 0.7 dp_mode 1"
-      ],
-      "description": "Add normal damping (no-tension mode) to dissipate energy and reach equilibrium faster."
-    },
-    {
-      "use_case": "Granular heap repose angle analysis",
-      "commands": [
-        "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 rr_fric 0.2 dp_nratio 0.7"
-      ],
-      "description": "Typical setup for heap formation studies where rolling resistance affects repose angle."
-    }
-  ],
-  "typical_parameter_values": {
-    "granular_materials": {
-      "kn": "1e7 - 1e9 [N/m] depending on particle size and material stiffness",
-      "ks": "kn / 1.5 to kn / 2.5",
-      "fric": "0.3 - 0.7 for typical granular materials (sliding friction)",
-      "rr_fric": "0.1 - 0.5 (rolling friction, typically lower than sliding friction)",
-      "dp_nratio": "0.5 - 0.8 for quasi-static simulations",
-      "dp_mode": "1 (no-tension normal damping) is common"
-    },
-    "rolling_friction_guidance": {
-      "low_resistance": "rr_fric = 0.0 - 0.1 (spherical, smooth particles)",
-      "moderate_resistance": "rr_fric = 0.1 - 0.3 (typical granular materials)",
-      "high_resistance": "rr_fric = 0.3 - 0.5 (angular, rough particles)",
-      "notes": [
-        "Rolling friction typically lower than sliding friction"
-      ]
-    }
-  },
   "notes": [
     "Rolling resistance simulates effects of surface roughness and adhesion without additional damping",
     "Rolling friction coefficient (rr_fric) uses MINIMUM value inheritance from contacting pieces",
@@ -454,45 +333,41 @@
     "Rolling resistance moment opposes relative rotation between contacting pieces",
     "Particularly important for granular materials where rolling affects heap angles",
     "Does not require additional damping parameters for rolling energy dissipation",
-    "Compatible with all standard linear model features (damping, friction, etc.)"
+    "Compatible with all standard linear model features (damping, friction, etc.)",
+    "Extends linear model with rolling resistance mechanism",
+    "Applies torque opposing rolling motion at contact point",
+    "Simulates surface roughness and adhesion effects",
+    "Rolling friction coefficient uses minimum value inheritance from contacting pieces",
+    "Separate energy tracking for rolling strain and rolling slip dissipation",
+    "Does not require additional damping parameters for rolling dissipation",
+    "Compatible with standard linear elastic-frictional behavior",
+    "Energy partition energy-strain (E_k): Strain energy stored in linear springs",
+    "Energy partition energy-slip (E_μ): Energy dissipated by frictional slip (linear component) Accumulated.",
+    "Energy partition energy-dashpot (E_β): Energy dissipated by dashpots Accumulated.",
+    "Energy partition energy-rrstrain (E_kr): Strain energy stored in rolling resistance mechanism",
+    "Energy partition energy-rrslip (E_μr): Energy dissipated by rolling slip (rolling resistance) Accumulated.",
+    "Methods (general): ",
+    "Methods (general): ",
+    "Typical values (granular materials): kn 1e7 - 1e9 [N/m] depending on particle size and material stiffness, ks kn / 1.5 to kn / 2.5, fric 0.3 - 0.7 for typical granular materials (sliding friction), rr_fric 0.1 - 0.5 (rolling friction, typically lower than sliding friction), dp_nratio 0.5 - 0.8 for quasi-static simulations, dp_mode 1 (no-tension normal damping) is common",
+    "Typical values (rolling friction guidance): low_resistance rr_fric = 0.0 - 0.1 (spherical, smooth particles), moderate_resistance rr_fric = 0.1 - 0.3 (typical granular materials), high_resistance rr_fric = 0.3 - 0.5 (angular, rough particles), notes ['Rolling friction typically lower than sliding friction']",
+    "Related models: linear — Base model - rrlinear extends linear with rolling resistance; arrlinear — Adhesive Rolling Resistance Linear Model - adds adhesion to rrlinear"
   ],
-  "physical_interpretation": {
-    "rolling_resistance_concept": "Rolling resistance approximates the energy dissipation that occurs when particles roll over each other due to surface irregularities, adhesion, and deformation effects that are not captured by pure spherical geometry.",
-    "why_use_it": "In reality, particles are not perfectly smooth spheres. Rolling resistance provides a simple way to account for particle shape effects and surface properties without complex geometry.",
-    "effect_on_behavior": "Higher rolling friction increases the angle of repose in heap formations and reduces particle mobility in granular flows."
-  },
-  "workflow": [
-    "1. Set contact model to rrlinear via CMAT or contact model assign",
-    "2. Set linear stiffnesses (kn, ks) directly or via deformability method",
-    "3. Set sliding friction coefficient (fric)",
-    "4. Set rolling friction coefficient (rr_fric) - typically 0.1 to 0.5",
-    "5. Optionally add damping for quasi-static simulations",
-    "6. Rolling resistance mechanism activates automatically",
-    "7. Monitor energy-rrslip to track rolling dissipation"
-  ],
-  "comparison_to_linear_model": {
-    "similarities": [
-      "Same linear elastic behavior (kn, ks)",
-      "Same sliding friction mechanism (fric)",
-      "Same dashpot damping options",
-      "All linear model features available"
-    ],
-    "differences": [
-      "Adds rolling resistance torque mechanism",
-      "Additional property: rr_fric (rolling friction coefficient)",
-      "Additional state: rr_slip (rolling slip indicator)",
-      "Additional energy: energy-rrstrain, energy-rrslip",
-      "Affects rotational motion and heap angles"
-    ]
-  },
-  "related_models": [
+  "examples": [
     {
-      "model": "linear",
-      "description": "Base model - rrlinear extends linear with rolling resistance"
+      "command": "contact cmat default model rrlinear property kn 1e8 ks 5e7 fric 0.5 rr_fric 0.3",
+      "description": "Set stiffnesses and friction coefficients directly. Rolling friction coefficient controls rolling resistance. Use case: Basic rolling resistance with direct stiffness"
     },
     {
-      "model": "arrlinear",
-      "description": "Adhesive Rolling Resistance Linear Model - adds adhesion to rrlinear"
+      "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 rr_fric 0.3",
+      "description": "Calculate stiffnesses from elastic modulus. More physically meaningful parameters. Use case: Using deformability method (recommended)"
+    },
+    {
+      "command": "contact cmat default model rrlinear property kn 1e8 ks 5e7 fric 0.5 rr_fric 0.3 dp_nratio 0.7 dp_mode 1",
+      "description": "Add normal damping (no-tension mode) to dissipate energy and reach equilibrium faster. Use case: With damping for quasi-static simulation"
+    },
+    {
+      "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 rr_fric 0.2 dp_nratio 0.7",
+      "description": "Typical setup for heap formation studies where rolling resistance affects repose angle. Use case: Granular heap repose angle analysis"
     }
   ]
 }

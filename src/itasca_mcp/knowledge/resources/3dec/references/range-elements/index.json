@@ -1,19 +1,6 @@
 {
   "type": "range_elements",
   "description": "Range elements are filtering syntax used after the 'range' keyword in 3DEC commands. They select subsets of blocks, zones, gridpoints, faces, contacts and subcontacts by geometric region, attribute, or logical condition.",
-  "usage_pattern": {
-    "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
-    "examples": [
-      "block group 'top' range position-z 5 10",
-      "block contact property friction 25 range jmodel 'mohr'",
-      "block contact group 'tunnel' range group-intersection 'rock' 'core'"
-    ],
-    "notes": [
-      "Multiple range elements create intersection (AND) by default",
-      "Use 'union' keyword for OR logic",
-      "Unspecified range affects all objects of target type"
-    ]
-  },
   "categories": {
     "geometric": {
       "name": "Geometric Elements",
@@ -431,42 +418,41 @@
       "category": "3dec_specific"
     }
   ],
-  "common_patterns": [
-    {
-      "name": "Group zones in region",
-      "example": "zone group 'core' range position-x 0 10 position-y 0 10",
-      "description": "Assign a group to zones in an XY rectangle"
-    },
-    {
-      "name": "Set property by group",
-      "example": "zone property density 2650 range group 'sample'",
-      "description": "Set density for zones in a group"
-    },
-    {
-      "name": "Cylindrical structural-node range",
-      "example": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
-      "description": "Fix structural nodes in a cylindrical region"
-    },
-    {
-      "name": "Named range reuse",
-      "example": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
-      "description": "Create reusable named range"
-    }
-  ],
   "notes": [
     "Multiple range elements create intersection (AND) by default",
     "Use 'union' keyword for OR logic",
     "Unspecified range affects all objects of target type",
-    "3DEC 7.00 Release 161 (2026-08-21): all 22 documented range elements appear in the live 7.0 range-slot enumeration (probed via 'block hide' — 67 tokens, a superset with unified-kernel extras such as project-range/undo). No documented element is missing in 7.0."
+    "3DEC 7.00 Release 161 (2026-08-21): all 22 documented range elements appear in the live 7.0 range-slot enumeration (probed via 'block hide' — 67 tokens, a superset with unified-kernel extras such as project-range/undo). No documented element is missing in 7.0.",
+    "Multiple range elements create intersection (AND) by default",
+    "Use 'union' keyword for OR logic",
+    "Unspecified range affects all objects of target type",
+    "Related commands: model range create, model range delete, model range list"
   ],
-  "related_commands": [
-    "model range create",
-    "model range delete",
-    "model range list"
-  ],
-  "live_note": "Live-verified 2026-08-14 against 3DEC 9.7.47: the block-hide first slot enumerates the full range-element vocabulary shown in live_enumeration_97 (62 tokens incl. the operators not/union/by and hide modifiers remove/undo/use-hidden/set). All 22 documented elements are present; the ~37 undocumented extras include unified-kernel entries (wall, contact, ...) - acceptance of a token does not imply 3DEC data behind it. 3DEC is 3D-only: no 2D-specific elements (circle/radius) appear.",
   "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
   "verification": [
-    "Live enumeration (9.7), 65 tokens: annulus, aspect-ratio, bmaterial, by, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, rectangle, region, remove, rintersection, selected, set, sphere, sregion, state, structure-type, surface, undo, union, use-hidden, velocity, volume, wall"
+    "Live enumeration (9.7), 65 tokens: annulus, aspect-ratio, bmaterial, by, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, rectangle, region, remove, rintersection, selected, set, sphere, sregion, state, structure-type, surface, undo, union, use-hidden, velocity, volume, wall",
+    "Live-verified 2026-08-14 against 3DEC 9.7.47: the block-hide first slot enumerates the full range-element vocabulary shown in live_enumeration_97 (62 tokens incl. the operators not/union/by and hide modifiers remove/undo/use-hidden/set). All 22 documented elements are present; the ~37 undocumented extras include unified-kernel entries (wall, contact, ...) - acceptance of a token does not imply 3DEC data behind it. 3DEC is 3D-only: no 2D-specific elements (circle/radius) appear."
+  ],
+  "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
+  "examples": [
+    "block group 'top' range position-z 5 10",
+    "block contact property friction 25 range jmodel 'mohr'",
+    "block contact group 'tunnel' range group-intersection 'rock' 'core'",
+    {
+      "command": "zone group 'core' range position-x 0 10 position-y 0 10",
+      "description": "Assign a group to zones in an XY rectangle"
+    },
+    {
+      "command": "zone property density 2650 range group 'sample'",
+      "description": "Set density for zones in a group"
+    },
+    {
+      "command": "structure node fix velocity range cylinder end-1 0 0 0 end-2 0 0 10 radius 5",
+      "description": "Fix structural nodes in a cylindrical region"
+    },
+    {
+      "command": "model range create 'core' cylinder end-1 0 0 0 end-2 0 0 10 radius 3\nzone property density 2500 range named-range 'core'",
+      "description": "Create reusable named range"
+    }
   ]
 }

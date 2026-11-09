@@ -1,6 +1,5 @@
 {
   "name": "rblock",
-  "item_type": "rblock",
   "search_keywords": [
     "rblock",
     "rigid-block",
@@ -22,23 +21,6 @@
       "name": "cut",
       "file": "cut.json",
       "description": "Clip visualization with a cutting plane"
-    }
-  ],
-  "common_usage_patterns": [
-    {
-      "use_case": "Default rblock visualization",
-      "command": "plot item create rblock active on",
-      "description": "Show all rigid blocks with default coloring"
-    },
-    {
-      "use_case": "Rblocks colored by velocity magnitude",
-      "command": "plot item create rblock active on color-by vector-attribute \"velocity\" color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
-      "description": "Rainbow color scale from min to max velocity"
-    },
-    {
-      "use_case": "Rblocks colored by group",
-      "command": "plot item create rblock active on color-by text-attribute \"group\" 'Any' color-options named maximum-names 1000000 name-controls true legend active on",
-      "description": "Different color per group name"
     }
   ],
   "notes": [
@@ -72,6 +54,20 @@
         "Goes with color-by for continuous color mapping; never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by). Verified on PFC3D 6.00.30, 7.00.161 and 9.8.54 (2026-10-29)."
       ],
       "name": "color-options"
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot item create rblock active on",
+      "description": "Show all rigid blocks with default coloring. Use case: Default rblock visualization"
+    },
+    {
+      "command": "plot item create rblock active on color-by vector-attribute \"velocity\" color-options scaled ramp rainbow minimum automatic maximum automatic legend active on",
+      "description": "Rainbow color scale from min to max velocity. Use case: Rblocks colored by velocity magnitude"
+    },
+    {
+      "command": "plot item create rblock active on color-by text-attribute \"group\" 'Any' color-options named maximum-names 1000000 name-controls true legend active on",
+      "description": "Different color per group name. Use case: Rblocks colored by group"
     }
   ]
 }
