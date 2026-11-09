@@ -1,0 +1,102 @@
+{
+  "category": "plot",
+  "search_keywords": [
+    "legend",
+    "placement",
+    "heading",
+    "copyright"
+  ],
+  "description": "set attributes of the plot legend. If a plot name s is not specified, the current view is assumed.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command(\"plot legend ...\")"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot legend",
+  "syntax": "plot [<s>] legend keyword ...",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Turns the legend on and off (the default is on)."
+    },
+    {
+      "name": "placement",
+      "syntax": "placement {floating | left | right}",
+      "description": "Legend location on the plot."
+    },
+    {
+      "name": "position",
+      "syntax": "position <ix> <iy>",
+      "description": "Position of the legend if floating, from 0 to 100 (percentage of display size)."
+    },
+    {
+      "name": "size",
+      "syntax": "size <iw> <ih>",
+      "description": "Size of the legend in percentage of screen width and height."
+    },
+    {
+      "name": "view-dip",
+      "syntax": "view-dip <b>",
+      "description": "If on, the orientation in the view-info part of the legend is given as dip and dip direction."
+    },
+    {
+      "name": "copyright",
+      "syntax": "copyright <font block>",
+      "description": "the font used for Itasca's copyright and code restriction information."
+    },
+    {
+      "name": "heading",
+      "syntax": "heading <font block>",
+      "description": "the font used to draw the heading."
+    },
+    {
+      "name": "step",
+      "syntax": "step <font block>",
+      "description": "the font used to draw the step number."
+    },
+    {
+      "name": "time-model",
+      "syntax": "time-model <font block>",
+      "description": "the font used to draw the total time of any active process in the current model."
+    },
+    {
+      "name": "time-real",
+      "syntax": "time-real <font block>",
+      "description": "the font used to draw the current date and time."
+    },
+    {
+      "name": "title-customer",
+      "syntax": "title-customer <font block>",
+      "description": "the font used to draw the customer title at the bottom of the legend."
+    },
+    {
+      "name": "view-info",
+      "syntax": "view-info <font block>",
+      "description": "the font used to draw the current camera view information."
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot legend placement left",
+      "description": "Dock the legend on the left"
+    },
+    {
+      "command": "plot 'view1' legend heading color 'blue'",
+      "description": "Style a legend font"
+    }
+  ],
+  "notes": [
+    "The manual's 'text' token is a font block: the live keywords are active, color, family, size and style (no free text argument).",
+    "Live, the copyright font block is restricted: only color on 6.00, color and size on 9.8."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on the PFC3D 6.00 and 9.8 GUIs (syntax grade): active, placement, position, size, view-dip and every font block accepted on both GUIs (console builds cannot probe plot commands - they accept any word)."
+  ]
+}

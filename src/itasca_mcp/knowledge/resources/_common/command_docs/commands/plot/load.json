@@ -1,0 +1,47 @@
+{
+  "category": "plot",
+  "search_keywords": [
+    "load",
+    "plugin",
+    "dll",
+    "plot item"
+  ],
+  "description": "attempts to load one or more user-defined plot item DLLs. If successful, these plot items will be available in the GUI for plotting.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command(\"plot load ...\")"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot load",
+  "syntax": "plot load {automatic | <s>}",
+  "keywords": [
+    {
+      "name": "automatic",
+      "syntax": "automatic",
+      "description": "Automatically attempt to load all compatible plot-item DLLs found in the plugins directory."
+    },
+    {
+      "name": "dll",
+      "syntax": "<s>",
+      "description": "Attempt to load the plot-item DLL named s; if not a fully qualified path the plugins directories are searched."
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot load automatic",
+      "description": "Load all compatible plot-item DLLs"
+    }
+  ],
+  "notes": [
+    "The DLL name must be a quoted string; a bare token is rejected."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on the PFC3D 6.00 and 9.8 GUIs (syntax grade): 'plot load automatic' accepted on both GUIs; a bare (unquoted) DLL name rejected."
+  ]
+}

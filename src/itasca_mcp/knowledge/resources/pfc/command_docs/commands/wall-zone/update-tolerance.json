@@ -1,0 +1,36 @@
+{
+  "category": "wall-zone",
+  "search_keywords": [
+    "coupling",
+    "wall-zone",
+    "tolerance",
+    "update"
+  ],
+  "description": "Set the tolerance for triggering zone updates. When the dynamic process is not active, zone geometric updates are triggered by FLAC3D based on an update interval or when the user changes the zone geometry. When coupled with PFC, zone updates are also triggered when the total contact stiffness of all contacts with any wall facet changes by a factor of f from one timestep to the next.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('wall-zone update-tolerance ...')"
+  },
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall-zone update-tolerance",
+  "syntax": "wall-zone update-tolerance <f>",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "wall-zone update-tolerance 2",
+      "description": "Trigger zone updates at twice the stiffness change"
+    }
+  ],
+  "notes": [
+    "The 6.0 manual documents this command too, but the 6.00 binaries have no coupling commands at all (live top-level command enumeration on the PFC3D 6.00 GUI).",
+    "Live, the tolerance value must be >= 1 ('floating point >= to 1'); the manuals do not state the bound."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 7.00 and 9.8 consoles (plus the PFC3D 6.00 GUI for the 6.0 verdict) (syntax grade): accepted on 2D and 3D, 7.00 and 9.8; values below 1 rejected with the range error."
+  ]
+}

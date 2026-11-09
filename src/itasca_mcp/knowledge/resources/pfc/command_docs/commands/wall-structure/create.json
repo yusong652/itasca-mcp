@@ -1,0 +1,65 @@
+{
+  "category": "wall-structure",
+  "search_keywords": [
+    "coupling",
+    "wall-structure",
+    "structure",
+    "shell",
+    "wall",
+    "wrap"
+  ],
+  "description": "Wrap FLAC3D structural elements with PFC walls. PFC walls are, by definition, edge-connected sets of triangular facets without any non-manifold conditions (i.e., facets penetrating one another, multiple facets sharing one edge, etc). The provided range is applied to FLAC3D shell-based structural elements, filtering the structural elements that are considered for wrapping.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('wall-structure create ...')"
+  },
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "wall-structure create",
+  "syntax": "wall-structure create keyword ... [range]",
+  "keywords": [
+    {
+      "name": "angle",
+      "syntax": "angle <f>",
+      "description": "Only consider elements with normal within f degrees of the initial shell element, as specified with the starting-shell keyword."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [{remove | slot <s> }]",
+      "description": "Add the group name s to shell elements that are coupled via PFC wall facets. Use of the group logic is described in Groups. Options: remove: Remove s from the shell elements. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s. The default slot name is Default."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Set the wall name to s. If a coupled wall with this name exists, new facets, corresponding to shell elements, are added to this wall. If the wall does not exist, a new coupled wall is created. If no name is specified, the wall name is set to wallstructureXX where XX is the next available wall ID."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "Skip any errors when stitching together the wall facets from shell elements."
+    },
+    {
+      "name": "starting-shell",
+      "syntax": "starting-shell <i>",
+      "description": "Select the first shell element to be added. i is the component ID of the shell element. This shell element should be within the model domain (see the model domain command)."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall-structure create name 'ws'",
+      "description": "Wrap structural shell elements with a PFC wall"
+    }
+  ],
+  "notes": [
+    "The 6.0 manual documents this command too, but the 6.00 binaries have no coupling commands at all (live top-level command enumeration on the PFC3D 6.00 GUI).",
+    "3D only live: the 2D binaries have no wall-structure command (7.00 and 9.8)."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 7.00 and 9.8 consoles (plus the PFC3D 6.00 GUI for the 6.0 verdict) (syntax grade): accepted on PFC3D 7.00 and 9.8 (without shell elements it answers 'No faceted wall has been added'); rejected at the top level on both 2D consoles and on 6.00."
+  ]
+}
