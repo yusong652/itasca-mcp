@@ -1,0 +1,71 @@
+{
+  "category": "plot",
+  "search_keywords": [
+    "movie",
+    "frames",
+    "animation",
+    "bitmap"
+  ],
+  "description": "controls whether this plot participates in automatic movie generation. If a plot name s is not specified, the current view is assumed.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command(\"plot movie ...\")"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot movie",
+  "syntax": "plot [<s>] movie keyword ...",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Turns participation in movie frame generation on and off (default off)."
+    },
+    {
+      "name": "extension",
+      "syntax": "extension <ext>",
+      "description": "The extension (and format) used for movie bitmap generation; one of the bare keywords bmp, cur, icns, ico, jpeg, jpg, pbm, pgm, png, ppm, tif, tiff, wbmp, webp, xbm, xpm (9.8 also accepts jfif). The install default is png."
+    },
+    {
+      "name": "index",
+      "syntax": "index <i>",
+      "description": "The next index used for the movie frame filename; incremented per frame."
+    },
+    {
+      "name": "interval",
+      "syntax": "interval <i>",
+      "description": "Global calculation steps taken between movie frames."
+    },
+    {
+      "name": "prefix",
+      "syntax": "prefix <s>",
+      "description": "The prefix used for the automatically generated frame filenames."
+    },
+    {
+      "name": "size",
+      "syntax": "size <ix> <iy>",
+      "description": "The size of the bitmap used for movie frames (install default 1024 x 768)."
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot movie active on",
+      "description": "Include the current plot in movie generation"
+    },
+    {
+      "command": "plot movie extension png",
+      "description": "Choose the frame format (bare keyword)"
+    }
+  ],
+  "notes": [
+    "extension takes a bare keyword from the format enumeration; a quoted string is rejected."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on the PFC3D 6.00 and 9.8 GUIs (syntax grade): active, interval, index, prefix, extension and size accepted on both GUIs; quoted extension rejected with the format enumeration on both."
+  ]
+}

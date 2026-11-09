@@ -1,0 +1,84 @@
+{
+  "category": "wall-zone",
+  "search_keywords": [
+    "coupling",
+    "wall-zone",
+    "zone",
+    "wall",
+    "wrap",
+    "flac3d"
+  ],
+  "description": "Wrap FLAC3D zones with PFC walls. PFC walls are, by definition, edge-connected sets of triangular facets without any non-manifold conditions (i.e., facets penetrating one another, multiple facets sharing one edge, etc). The provided range is applied to FLAC3D zones, filtering the zones that are considered for wrapping. Only zone faces that are considered surfaces are wrapped by wall facets by default. In this context, a surface is either an exterior zone face (i.e., a face with only one adjacent zone) or face with one null zone and one non-null zone adjacent to it.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('wall-zone create ...')"
+  },
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall-zone create",
+  "syntax": "wall-zone create keyword ... [range]",
+  "keywords": [
+    {
+      "name": "angle",
+      "syntax": "angle <f>",
+      "description": "Only consider faces with normal within f degrees of the initial zone face, as specified with the starting-zone and face keywords."
+    },
+    {
+      "name": "face",
+      "syntax": "face <i> [restrict-to-face]",
+      "description": "This keyword sets the initial zone face to i that is to be added to the wall. One generally uses this keyword with the starting-zone keyword to specify the zone and face to initialize wrapping. The optional restict-to-face keyword specifies that only zone faces with this face number are considered for coupling."
+    },
+    {
+      "name": "fill",
+      "syntax": "fill",
+      "description": "Specify that walls are to be made of all potential zone facets. This means that new walls will be created for each non-manifold set of zone faces."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [{remove | slot <s> }]",
+      "description": "Add the group name s to zone faces that are coupled via PFC wall facets. Use of the group logic is described in Groups. Options: remove: Remove s from the zone faces. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s. The default slot name is Default."
+    },
+    {
+      "name": "internal",
+      "syntax": "internal <b>",
+      "description": "Specify whether or not internal faces can be wrapped. For instance, an internal face may occur when attach conditions are not present between zones with different gridpoint locations on adjacent faces. By default, internal faces are not wrapped."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Set the wall name to s. If a coupled wall with this name exists, new facets, corresponding to zones faces, are added to this wall. If the wall does not exist, a new coupled wall is created. If no name is specified, the wall name is set to wallzoneXX where XX is the next available wall ID."
+    },
+    {
+      "name": "merge",
+      "syntax": "merge <b>",
+      "description": "By default if a coupling entry is made at the same location as a previous coupling entry, the coupling entries will be merged into a single coupling entry."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "Skip any errors when stitching together the wall facets from zone faces. For instance, adjacent zone faces with different sizes that are not attached may form non-manifold geometries. In this case, those wall facets that cannot form an edge-connected, manifold geometry are ignored."
+    },
+    {
+      "name": "starting-zone",
+      "syntax": "starting-zone <i>",
+      "description": "Select the first zone to be added. One can use the additional face keyword to specify the initial face. This may be important as wall facets are added from a seed facet and it is required that added facets are edge-connected. This zone should be within the model domain (see the model domain command)."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall-zone create name 'wz'",
+      "description": "Wrap the zone faces with a PFC wall"
+    }
+  ],
+  "notes": [
+    "The 6.0 manual documents this command too, but the 6.00 binaries have no coupling commands at all (live top-level command enumeration on the PFC3D 6.00 GUI).",
+    "FLAC3D zones can be created in the same PFC process ('zone create brick' works on the PFC 7.00/9.8 consoles); the zone commands are documented under software=\"flac\"."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 7.00 and 9.8 consoles (plus the PFC3D 6.00 GUI for the 6.0 verdict) (state grade): with an in-process zone grid, 'wall-zone create name' built one faceted wall (wall.num = 1) on PFC2D and PFC3D, 7.00 and 9.8; without zone faces it answers 'No faceted wall has been added'."
+  ]
+}

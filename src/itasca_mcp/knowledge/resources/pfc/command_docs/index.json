@@ -2542,7 +2542,8 @@
         "Plot commands control visualization, not simulation",
         "Use 'plot export bitmap' to save plot images",
         "Plot item keywords are extensive; use 'plot export datafile' to inspect syntax",
-        "Camera view controlled via center, eye, magnification, projection keywords"
+        "Camera view controlled via center, eye, magnification, projection keywords",
+        "Live 6.00/9.8 per-plot enumeration also includes an undocumented 'target active <b>' keyword."
       ],
       "commands": [
         {
@@ -2648,6 +2649,70 @@
           "syntax": "plot [<s>] view keyword ...",
           "python_available": false,
           "python_alternative": "itasca.command('plot view <keyword> <value>') - no direct Python SDK method"
+        },
+        {
+          "name": "legend",
+          "file": "_common/command_docs/commands/plot/legend.json",
+          "short_description": "set attributes of the plot legend",
+          "syntax": "plot [<s>] legend keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot legend ...\")"
+        },
+        {
+          "name": "load",
+          "file": "_common/command_docs/commands/plot/load.json",
+          "short_description": "attempts to load one or more user-defined plot item DLLs",
+          "syntax": "plot load {automatic | <s>}",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot load ...\")"
+        },
+        {
+          "name": "movie",
+          "file": "_common/command_docs/commands/plot/movie.json",
+          "short_description": "controls whether this plot participates in automatic movie generation",
+          "syntax": "plot [<s>] movie keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot movie ...\")"
+        },
+        {
+          "name": "outline",
+          "file": "_common/command_docs/commands/plot/outline.json",
+          "short_description": "controls the line used to Outline the plot and the legend",
+          "syntax": "plot [<s>] outline keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot outline ...\")"
+        },
+        {
+          "name": "print-size",
+          "file": "_common/command_docs/commands/plot/print-size.json",
+          "short_description": "the size of the bitmap used when exporting plot images to certain formats including Postscript, PDF, and SVG",
+          "syntax": "plot print-size <ix> <iy>",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot print-size ...\")"
+        },
+        {
+          "name": "reset",
+          "file": "_common/command_docs/commands/plot/reset.json",
+          "short_description": "Reset the plot system",
+          "syntax": "plot reset",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot reset ...\")"
+        },
+        {
+          "name": "show",
+          "file": "_common/command_docs/commands/plot/show.json",
+          "short_description": "This is the same as the plot current command, but the plot is also forced to regenerate its contents as if the Regenerate tool button were pressed",
+          "syntax": "plot [<s>] show",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot show ...\")"
+        },
+        {
+          "name": "title-job",
+          "file": "_common/command_docs/commands/plot/title-job.json",
+          "short_description": "the font and settings used to render the job title at the top of the plot",
+          "syntax": "plot [<s>] title-job keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command(\"plot title-job ...\")"
         }
       ]
     },
@@ -3999,6 +4064,133 @@
           "syntax": "element cfd list [keyword] [range]",
           "python_available": false,
           "python_alternative": "itasca.command('element cfd list ...')"
+        }
+      ]
+    },
+    "ball-zone": {
+      "full_name": "Ball-Zone Coupling Commands",
+      "description": "Couple PFC balls with FLAC3D zones running in the same process: identify overlapping balls and zones and build the coupling data structures.",
+      "command_prefix": "ball-zone",
+      "related_categories": [
+        "wall-zone",
+        "wall-structure",
+        "ball"
+      ],
+      "notes": [
+        "Available since 7.0 and 3D only; the 6.0 manual documents the command but the 6.00 binaries do not have it.",
+        "Zone commands are documented under software=\"flac\"; 'zone create' works in the same PFC 7.00/9.8 process."
+      ],
+      "commands": [
+        {
+          "name": "create",
+          "file": "pfc/command_docs/commands/ball-zone/create.json",
+          "short_description": "Identifies overlapping balls and zones (i.e",
+          "syntax": "ball-zone create [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball-zone create ...')"
+        }
+      ]
+    },
+    "wall-zone": {
+      "full_name": "Wall-Zone Coupling Commands",
+      "description": "Wrap FLAC3D zones with PFC walls for coupled PFC-FLAC3D models in one process, and control the stiffness/update exchange.",
+      "command_prefix": "wall-zone",
+      "related_categories": [
+        "ball-zone",
+        "wall-structure",
+        "wall"
+      ],
+      "notes": [
+        "Available since 7.0 (2D and 3D except full-computation); the 6.0 manual documents the commands but the 6.00 binaries do not have them."
+      ],
+      "commands": [
+        {
+          "name": "compute-stiffness",
+          "file": "pfc/command_docs/commands/wall-zone/compute-stiffness.json",
+          "short_description": "Compute the stiffnesses to be added to gridpoints (default b = false )",
+          "syntax": "wall-zone compute-stiffness <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-zone compute-stiffness ...')"
+        },
+        {
+          "name": "create",
+          "file": "pfc/command_docs/commands/wall-zone/create.json",
+          "short_description": "Wrap FLAC3D zones with PFC walls",
+          "syntax": "wall-zone create keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-zone create ...')"
+        },
+        {
+          "name": "full-computation",
+          "file": "pfc/command_docs/commands/wall-zone/full-computation.json",
+          "short_description": "Turn on/off full computation mode",
+          "syntax": "wall-zone full-computation <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-zone full-computation ...')"
+        },
+        {
+          "name": "stiffness-factor",
+          "file": "pfc/command_docs/commands/wall-zone/stiffness-factor.json",
+          "short_description": "Set the multiplicative factor for stiffnesses to be added to zones",
+          "syntax": "wall-zone stiffness-factor <f>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-zone stiffness-factor ...')"
+        },
+        {
+          "name": "update-tolerance",
+          "file": "pfc/command_docs/commands/wall-zone/update-tolerance.json",
+          "short_description": "Set the tolerance for triggering zone updates",
+          "syntax": "wall-zone update-tolerance <f>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-zone update-tolerance ...')"
+        }
+      ]
+    },
+    "wall-structure": {
+      "full_name": "Wall-Structure Coupling Commands",
+      "description": "Wrap FLAC3D structural shell elements with PFC walls and control the stiffness/update exchange.",
+      "command_prefix": "wall-structure",
+      "related_categories": [
+        "wall-zone",
+        "ball-zone",
+        "wall"
+      ],
+      "notes": [
+        "Available since 7.0 and 3D only; the 6.0 manual documents the commands but the 6.00 binaries do not have them.",
+        "The documented 'wall-structure compute-stiffness' is rejected live on 7.00/9.8."
+      ],
+      "commands": [
+        {
+          "name": "create",
+          "file": "pfc/command_docs/commands/wall-structure/create.json",
+          "short_description": "Wrap FLAC3D structural elements with PFC walls",
+          "syntax": "wall-structure create keyword ... [range]",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-structure create ...')"
+        },
+        {
+          "name": "full-computation",
+          "file": "pfc/command_docs/commands/wall-structure/full-computation.json",
+          "short_description": "Turn on/off full computation mode",
+          "syntax": "wall-structure full-computation <b>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-structure full-computation ...')"
+        },
+        {
+          "name": "stiffness-factor",
+          "file": "pfc/command_docs/commands/wall-structure/stiffness-factor.json",
+          "short_description": "Set the multiplicative factor for stiffnesses to be added to structural elements",
+          "syntax": "wall-structure stiffness-factor <f>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-structure stiffness-factor ...')"
+        },
+        {
+          "name": "update-tolerance",
+          "file": "pfc/command_docs/commands/wall-structure/update-tolerance.json",
+          "short_description": "Set the tolerance for triggering structural element updates",
+          "syntax": "wall-structure update-tolerance <f>",
+          "python_available": false,
+          "python_alternative": "itasca.command('wall-structure update-tolerance ...')"
         }
       ]
     }

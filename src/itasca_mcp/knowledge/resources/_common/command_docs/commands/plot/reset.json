@@ -1,0 +1,37 @@
+{
+  "category": "plot",
+  "search_keywords": [
+    "reset",
+    "views",
+    "default"
+  ],
+  "description": "Reset the plot system. Live this is a view-level operation, not the per-view settings reset the 6.0 manual describes - see the notes.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command(\"plot reset ...\")"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot reset",
+  "syntax": "plot reset",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "plot reset",
+      "description": "Reset the plot system (see notes - destructive on 6.00)"
+    }
+  ],
+  "notes": [
+    "Only the 6.0 manual documents this command, but it remains in the engine's global plot enumeration on 9.8.",
+    "The live semantics differ from the manual and across versions: on 6.00 it closes EVERY open view and recreates the default view (not the documented per-view settings reset); on 9.8 it leaves existing views untouched and opens a fresh default view.",
+    "The named form ('plot <s> reset') is rejected on both 6.00 and 9.8."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on the PFC3D 6.00 and 9.8 GUIs (state grade via the GUI event stream): on 6.00 'plot reset' closed all open views and recreated the default view; on 9.8 it opened a new default view while existing views and their items survived intact."
+  ]
+}
