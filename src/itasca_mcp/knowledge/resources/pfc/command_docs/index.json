@@ -182,6 +182,78 @@
           "syntax": "ball tractions keyword ... [range]",
           "python_available": false,
           "python_alternative": "itasca.command('ball tractions ...') - Python SDK does not provide Voronoi-based traction computation"
+        },
+        {
+          "name": "thermal-attribute",
+          "file": "pfc/command_docs/commands/ball/thermal-attribute.json",
+          "short_description": "Set the value of ball thermal attributes",
+          "syntax": "ball thermal attribute keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id) then set_temp()/set_expansion()/set_specific_heat()/set_power_app()/set_del_temp() per object - iterate for ranges"
+        },
+        {
+          "name": "thermal-extra",
+          "file": "pfc/command_docs/commands/ball/thermal-extra.json",
+          "short_description": "Set ball thermal extra variables",
+          "syntax": "ball thermal extra <i> <a> [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_extra(index, value)"
+        },
+        {
+          "name": "thermal-fix",
+          "file": "pfc/command_docs/commands/ball/thermal-fix.json",
+          "short_description": "Fix thermal ball’s temperature",
+          "syntax": "ball thermal fix [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_fix(True)"
+        },
+        {
+          "name": "thermal-free",
+          "file": "pfc/command_docs/commands/ball/thermal-free.json",
+          "short_description": "Free thermal ball’s temperature",
+          "syntax": "ball thermal free [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_fix(False)"
+        },
+        {
+          "name": "thermal-group",
+          "file": "pfc/command_docs/commands/ball/thermal-group.json",
+          "short_description": "Specify thermal ball group names",
+          "syntax": "ball thermal group <s> [keyword ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_group(name, slot)"
+        },
+        {
+          "name": "thermal-history",
+          "file": "pfc/command_docs/commands/ball/thermal-history.json",
+          "short_description": "Add a ball thermal history",
+          "syntax": "ball thermal history [name <s>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('ball thermal history ...')"
+        },
+        {
+          "name": "thermal-initialize",
+          "file": "pfc/command_docs/commands/ball/thermal-initialize.json",
+          "short_description": "Modify ball thermal attributes",
+          "syntax": "ball thermal initialize keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_temp() - same object setters as ball thermal attribute"
+        },
+        {
+          "name": "thermal-list",
+          "file": "pfc/command_docs/commands/ball/thermal-list.json",
+          "short_description": "List thermal ball information",
+          "syntax": "ball thermal list [keyword] [range]",
+          "python_available": true,
+          "python_alternative": "read the same data via itasca.ball.thermal object getters"
+        },
+        {
+          "name": "thermal-property",
+          "file": "pfc/command_docs/commands/ball/thermal-property.json",
+          "short_description": "Assign ball thermal surface properties",
+          "syntax": "ball thermal property <s> <a> [<s> <a> ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.ball.thermal.find(id).set_prop(name, value)"
         }
       ]
     },
@@ -474,6 +546,78 @@
           "syntax": "clump trace [id <id>] [pebble] id <id2>| <v>",
           "python_available": false,
           "python_alternative": "itasca.command('clump trace ...') - Python SDK does not provide direct particle trace creation"
+        },
+        {
+          "name": "thermal-attribute",
+          "file": "pfc/command_docs/commands/clump/thermal-attribute.json",
+          "short_description": "Set the value of thermal clump attributes",
+          "syntax": "clump thermal attribute keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id) then set_temp()/set_expansion()/set_specific_heat()/set_power_app()/set_del_temp() per object - iterate for ranges"
+        },
+        {
+          "name": "thermal-extra",
+          "file": "pfc/command_docs/commands/clump/thermal-extra.json",
+          "short_description": "Set thermal clump or pebble extra variables",
+          "syntax": "clump thermal extra <i> <a> [pebble] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_extra(index, value)"
+        },
+        {
+          "name": "thermal-fix",
+          "file": "pfc/command_docs/commands/clump/thermal-fix.json",
+          "short_description": "Fix thermal clump temperature",
+          "syntax": "clump thermal fix [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_fix(True)"
+        },
+        {
+          "name": "thermal-free",
+          "file": "pfc/command_docs/commands/clump/thermal-free.json",
+          "short_description": "Free thermal clump temperature",
+          "syntax": "clump thermal free [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_fix(False)"
+        },
+        {
+          "name": "thermal-group",
+          "file": "pfc/command_docs/commands/clump/thermal-group.json",
+          "short_description": "Specify thermal clump or pebble group names",
+          "syntax": "clump thermal group <s> [keyword ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_group(name, slot)"
+        },
+        {
+          "name": "thermal-history",
+          "file": "pfc/command_docs/commands/clump/thermal-history.json",
+          "short_description": "Add a clump thermal history",
+          "syntax": "clump thermal history [name <s>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('clump thermal history ...')"
+        },
+        {
+          "name": "thermal-initialize",
+          "file": "pfc/command_docs/commands/clump/thermal-initialize.json",
+          "short_description": "Modify clump thermal attributes",
+          "syntax": "clump thermal initialize keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_temp() - same object setters as clump thermal attribute"
+        },
+        {
+          "name": "thermal-list",
+          "file": "pfc/command_docs/commands/clump/thermal-list.json",
+          "short_description": "List thermal clump information",
+          "syntax": "clump thermal list [keyword] [range]",
+          "python_available": true,
+          "python_alternative": "read the same data via itasca.clump.thermal object getters"
+        },
+        {
+          "name": "thermal-property",
+          "file": "pfc/command_docs/commands/clump/thermal-property.json",
+          "short_description": "Assign thermal clump pebble surface properties",
+          "syntax": "clump thermal property <s> <a> [<s> <a> ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.clump.thermal.find(id).set_prop(name, value)"
         }
       ]
     },
@@ -3071,6 +3215,78 @@
           "syntax": "rblock tractions keyword ... [range]",
           "python_available": false,
           "python_alternative": "Use itasca.command('rblock tractions ...') via command interface"
+        },
+        {
+          "name": "thermal-attribute",
+          "file": "pfc/command_docs/commands/rblock/thermal-attribute.json",
+          "short_description": "Set the value of rigid block thermal attributes",
+          "syntax": "rblock thermal attribute keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id) then set_temp()/set_expansion()/set_specific_heat()/set_power_app()/set_del_temp() per object - iterate for ranges"
+        },
+        {
+          "name": "thermal-extra",
+          "file": "pfc/command_docs/commands/rblock/thermal-extra.json",
+          "short_description": "Set rigid block thermal extra variables",
+          "syntax": "rblock thermal extra <i> <a> [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_extra(index, value)"
+        },
+        {
+          "name": "thermal-fix",
+          "file": "pfc/command_docs/commands/rblock/thermal-fix.json",
+          "short_description": "Fix thermal rigid block’s temperature",
+          "syntax": "rblock thermal fix [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_fix(True)"
+        },
+        {
+          "name": "thermal-free",
+          "file": "pfc/command_docs/commands/rblock/thermal-free.json",
+          "short_description": "Free thermal rigid block’s temperature",
+          "syntax": "rblock thermal free [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_fix(False)"
+        },
+        {
+          "name": "thermal-group",
+          "file": "pfc/command_docs/commands/rblock/thermal-group.json",
+          "short_description": "Specify thermal rigid block group names",
+          "syntax": "rblock thermal group <s> [keyword ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_group(name, slot)"
+        },
+        {
+          "name": "thermal-history",
+          "file": "pfc/command_docs/commands/rblock/thermal-history.json",
+          "short_description": "Add a rigid block thermal history",
+          "syntax": "rblock thermal history [id <i>] keyword ...",
+          "python_available": false,
+          "python_alternative": "itasca.command('rblock thermal history ...')"
+        },
+        {
+          "name": "thermal-initialize",
+          "file": "pfc/command_docs/commands/rblock/thermal-initialize.json",
+          "short_description": "Modify rigid block thermal attributes",
+          "syntax": "rblock thermal initialize keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_temp() - same object setters as rblock thermal attribute"
+        },
+        {
+          "name": "thermal-list",
+          "file": "pfc/command_docs/commands/rblock/thermal-list.json",
+          "short_description": "List thermal rigid block information",
+          "syntax": "rblock thermal list [keyword] [range]",
+          "python_available": true,
+          "python_alternative": "read the same data via itasca.rblock.thermal object getters"
+        },
+        {
+          "name": "thermal-property",
+          "file": "pfc/command_docs/commands/rblock/thermal-property.json",
+          "short_description": "Assign rigid block thermal surface properties",
+          "syntax": "rblock thermal property <s> <a> [<s> <a> ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.rblock.thermal.find(id).set_prop(name, value)"
         }
       ]
     },
@@ -3438,6 +3654,54 @@
           "syntax": "wall conveyor keyword ... [range...]",
           "python_available": true,
           "python_alternative": "Facet.set_conveyor(vec) or Facet.set_conveyor_x/y/z(float) - requires manual calculation of tangential velocities and iteration: for w in itasca.wall.list(): for f in w.facets(): v_tangent = omega_cross_r; f.set_conveyor(v_tangent). For automatic calculation, use itasca.command('wall velocity-conveyor ...')"
+        },
+        {
+          "name": "thermal-attribute",
+          "file": "pfc/command_docs/commands/wall/thermal-attribute.json",
+          "short_description": "Set the value of thermal wall attributes",
+          "syntax": "wall thermal attribute [facet] keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.wall.thermal.find(id).set_temp() (facet level via ThermalFacet.set_temp()) - iterate for ranges"
+        },
+        {
+          "name": "thermal-extra",
+          "file": "pfc/command_docs/commands/wall/thermal-extra.json",
+          "short_description": "Set thermal wall or facet extra variables",
+          "syntax": "wall thermal extra <i> <a> [facet] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.wall.thermal.find(id).set_extra(index, value)"
+        },
+        {
+          "name": "thermal-group",
+          "file": "pfc/command_docs/commands/wall/thermal-group.json",
+          "short_description": "Specify thermal wall or facet group names",
+          "syntax": "wall thermal group <s> [keyword ...] [facet] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.wall.thermal.find(id).set_group(name, slot)"
+        },
+        {
+          "name": "thermal-initialize",
+          "file": "pfc/command_docs/commands/wall/thermal-initialize.json",
+          "short_description": "Modify wall thermal attributes",
+          "syntax": "wall thermal initialize [facet] keyword ... [range]",
+          "python_available": true,
+          "python_alternative": "itasca.wall.thermal.find(id).set_temp() - same object setters as wall thermal attribute"
+        },
+        {
+          "name": "thermal-list",
+          "file": "pfc/command_docs/commands/wall/thermal-list.json",
+          "short_description": "List thermal wall information",
+          "syntax": "wall thermal list [keyword] [range]",
+          "python_available": true,
+          "python_alternative": "read the same data via itasca.wall.thermal object getters"
+        },
+        {
+          "name": "thermal-property",
+          "file": "pfc/command_docs/commands/wall/thermal-property.json",
+          "short_description": "Assign thermal wall facet surface properties",
+          "syntax": "wall thermal property <s> <a> [<s> <a> ...] [range]",
+          "python_available": true,
+          "python_alternative": "itasca.wall.thermal.find(id).set_prop(name, value)"
         }
       ]
     }

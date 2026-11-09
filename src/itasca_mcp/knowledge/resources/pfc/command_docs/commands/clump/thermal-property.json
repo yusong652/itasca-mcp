@@ -1,0 +1,36 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "thermal",
+    "property",
+    "surface",
+    "heat"
+  ],
+  "description": "Assign thermal clump pebble surface properties. The value a is assigned to the surface property with name s. Any number of name-value pairs can be specified.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.clump.thermal.find(id).set_prop(name, value)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump thermal property",
+  "syntax": "clump thermal property <s> <a> [<s> <a> ...] [range]",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "clump thermal property 'thres' 1000",
+      "description": "Assign a surface property consumed by thermal contact models"
+    }
+  ],
+  "notes": [
+    "Values are stored on the thermal pebbles, not on the clump."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): the value lands on the thermal pebbles - clump.thermal.pebble.prop reads 1000.0 back on all six consoles (clump.thermal.prop itself is write-only in 7.0/9.8 FISH and reads 0 on 6.00)."
+  ]
+}

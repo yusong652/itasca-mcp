@@ -1,0 +1,102 @@
+{
+  "category": "ball",
+  "search_keywords": [
+    "thermal",
+    "history",
+    "temperature",
+    "power-unbalanced"
+  ],
+  "description": "Add a ball thermal history.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('ball thermal history ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball thermal history",
+  "syntax": {
+    "6.0": "ball thermal history [id <i>] keyword (id <i> | <v>)",
+    "7.0": "ball thermal history [name <s>] keyword ...",
+    "9.0": "ball thermal history [name <s>] keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "temperature",
+      "syntax": "temperature",
+      "description": "temperature"
+    },
+    {
+      "name": "power-unbalanced",
+      "syntax": "power-unbalanced",
+      "description": "out-of-balance power"
+    },
+    {
+      "name": "extra",
+      "syntax": "extra",
+      "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Take the history of the thermal ball with this ID.",
+      "group": "target selection"
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Take the history of the thermal ball closest to this position.",
+      "group": "target selection"
+    },
+    {
+      "name": "index",
+      "syntax": "index <i>",
+      "description": "For keywords that require it (most notably extra ), this specifies the index that should be used.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      },
+      "group": "extra history"
+    },
+    {
+      "name": "type",
+      "syntax": "type {scalar | tensor | vector}",
+      "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: Specify a scalar float type.; tensor: Specify a tensor type.; vector: Specify a vector type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      },
+      "group": "extra history"
+    }
+  ],
+  "examples": [
+    {
+      "command": "ball thermal history temperature id 1",
+      "description": "Track the temperature of thermal ball 1"
+    },
+    {
+      "command": "ball thermal history power-unbalanced position 0 0",
+      "description": "Track the out-of-balance power of the object closest to a position"
+    }
+  ],
+  "notes": [
+    "The 6.0 manual documents the history selector as 'id <i>' and the 7.0/9.0 manuals as 'name <s>'; live, 6.00, 7.00 and 9.8 all accept both selectors."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): temperature and power-unbalanced histories created with both the id and position selectors on all six consoles; the name selector accepted on all six consoles and the extra history accepted on 7.00 and 9.8."
+  ]
+}

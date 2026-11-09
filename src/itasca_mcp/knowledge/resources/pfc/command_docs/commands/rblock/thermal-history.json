@@ -1,0 +1,64 @@
+{
+  "category": "rblock",
+  "search_keywords": [
+    "thermal",
+    "history",
+    "temperature",
+    "power-unbalanced"
+  ],
+  "description": "Add a rigid block thermal history.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('rblock thermal history ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock thermal history",
+  "syntax": "rblock thermal history [id <i>] keyword ...",
+  "keywords": [
+    {
+      "name": "temperature",
+      "syntax": "temperature",
+      "description": "temperature"
+    },
+    {
+      "name": "power-unbalanced",
+      "syntax": "power-unbalanced",
+      "description": "out-of-balance power"
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Take the history of the thermal rigid block with this ID.",
+      "group": "target selection"
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Take the history of the thermal rigid block closest to this position.",
+      "group": "target selection"
+    }
+  ],
+  "examples": [
+    {
+      "command": "rblock thermal history temperature id 1",
+      "description": "Track the temperature of thermal rigid block 1"
+    },
+    {
+      "command": "rblock thermal history power-unbalanced position 0 0",
+      "description": "Track the out-of-balance power of the object closest to a position"
+    }
+  ],
+  "notes": [
+    "The rblock manual keeps the 'id <i>' history selector in all versions; live, 7.00 and 9.8 also accept 'name <s>'.",
+    "The 9.0 manual also lists an 'extra' quantity for rblock thermal history; it is rejected live on 7.00 and 9.8 ('Bad conversion of parameter number 4 (extra)')."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): temperature and power-unbalanced histories created with both the id and position selectors on all six consoles; the name selector also accepted on 7.00 and 9.8."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "category": "rblock",
+  "search_keywords": [
+    "thermal",
+    "list"
+  ],
+  "description": "List thermal rigid block information. By default, the thermal rigid block ID, temperature, and fixity are listed. Use the attribute keyword to list all thermal rigid block attributes that can be listed.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "read the same data via itasca.rblock.thermal object getters"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock thermal list",
+  "syntax": "rblock thermal list [keyword] [range]",
+  "keywords": [
+    {
+      "name": "attribute",
+      "syntax": "attribute [ <s> ]",
+      "description": "List thermal rigid block attributes. If no s is given, then the available attributes are listed. If s is specified, then the value of that attribute is listed for each thermal rigid block. Attributes are characteristics of thermal rigid blocks such as temperature and unbalpower. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
+    },
+    {
+      "name": "contact",
+      "syntax": "contact [all]",
+      "description": "List the contacts with a thermal rigid block. The contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i>",
+      "description": "List the extra variables at index i."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s>",
+      "description": "List the group names at slot s."
+    },
+    {
+      "name": "property",
+      "syntax": "property [ <s> ]",
+      "description": "List rigid block properties. If no s is given, then the available properties are listed for each thermal rigid block. If s is specified, then the value of that property is listed for each rigid block. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes, which are characteristics of rigid blocks such as temperature and unbalpower."
+    }
+  ],
+  "examples": [
+    {
+      "command": "rblock thermal list",
+      "description": "List ID, temperature and fixity"
+    },
+    {
+      "command": "rblock thermal list attribute temperature",
+      "description": "List one attribute"
+    }
+  ],
+  "notes": [
+    "Give the optional attribute name as a bare token (list attribute temperature); a quoted string is rejected live on all versions. 'list group' requires the group name string."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): list and the attribute, contact, extra, group and property sub-keywords executed on all six consoles."
+  ]
+}

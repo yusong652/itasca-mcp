@@ -1,0 +1,57 @@
+{
+  "category": "wall",
+  "search_keywords": [
+    "thermal",
+    "group",
+    "slot"
+  ],
+  "description": "Specify thermal wall or facet group names. Use of the group logic is described in Groups. By default, s is assigned to the group slot Default. Use the add keyword to assign the group name to the next available slot, and the remove keyword to remove s from all slots. The optional facet keyword can be given before the optional range to specify that the group name will be applied to thermal wall facets. In this case, the range is applied to thermal wall facets and not to thermal walls.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.wall.thermal.find(id).set_group(name, slot)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall thermal group",
+  "syntax": "wall thermal group <s> [keyword ...] [facet] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot."
+    },
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "Remove s from all slots."
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <slot>",
+      "description": "Set group slot slot to s. By default, slot Default is used."
+    },
+    {
+      "name": "facet",
+      "syntax": "facet",
+      "description": "Apply the group name to thermal wall facets; the range then applies to the facets and not to thermal walls."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall thermal group 'tg1'",
+      "description": "Assign the group in the Default slot"
+    },
+    {
+      "command": "wall thermal group 'wgf' facet range id 10",
+      "description": "Assign the group on the facets of wall 10"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): wall.thermal.isgroup reads True after assignment at wall and facet level on all six consoles."
+  ]
+}

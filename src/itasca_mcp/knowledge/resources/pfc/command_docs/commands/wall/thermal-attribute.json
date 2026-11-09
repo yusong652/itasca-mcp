@@ -1,0 +1,60 @@
+{
+  "category": "wall",
+  "search_keywords": [
+    "thermal",
+    "attribute",
+    "temperature",
+    "expansion",
+    "specific-heat",
+    "power-applied",
+    "heat"
+  ],
+  "description": "Set the value of thermal wall attributes. This command is a synonym for the wall thermal initialize command. Individual attributes can be listed with the wall thermal list command, and all thermal wall attributes can be visualized. The optional facet keyword can be used with the temperature keyword to set the facet temperature for facets in the specified range.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.wall.thermal.find(id).set_temp() (facet level via ThermalFacet.set_temp()) - iterate for ranges"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall thermal attribute",
+  "syntax": "wall thermal attribute [facet] keyword ... [range]",
+  "keywords": [
+    {
+      "name": "temperature",
+      "syntax": "temperature <f> [{add <f> | gradient <v> | gradient-x <f> | gradient-y <f> | gradient-z <f> | multiply <f> | replace <f> }]",
+      "description": "temperature Options: add <f>: Add f to the existing value.; gradient <v>: Apply a linear gradient in each of the axes directions starting at the origin.; gradient-x <f>: Apply a linear gradient in the \\(x\\) -direction starting at the origin.; gradient-y <f>: Apply a linear gradient in the \\(y\\) -direction starting at the origin.; gradient-z <f>: Apply a linear gradient in the \\(z\\) -direction starting at the origin.; multiply <f>: Multiply the existing value by f.; replace <f>: Replace the existing value with f."
+    },
+    {
+      "name": "facet",
+      "syntax": "facet",
+      "description": "Set the attribute on thermal wall facets instead of whole thermal walls; the range then applies to facets."
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient <v> (post-value modifier)",
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin; the stored value is the base value plus gradient dot position."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall thermal attribute temperature 50",
+      "description": "Set the temperature of all thermal walls"
+    },
+    {
+      "command": "wall thermal attribute facet temperature 35 range id 10",
+      "description": "Set the facet temperature on the facets of wall 10"
+    }
+  ],
+  "notes": [
+    "The 7.0/9.0 manuals attach a post-value modifier block (add, gradient, gradient-x/y/z, multiply, replace) to every attribute; live, only plain 'gradient <v>' is accepted - add, multiply, replace and the gradient-x/y/z spellings are rejected on 6.00, 7.00 and 9.8 (2D and 3D). The 6.0 manual does not document the block, but 6.00 accepts 'gradient' all the same.",
+    "The facet keyword requires an explicit range; without one the command is rejected ('No range is given with the facet keyword') on all of 6.00, 7.00 and 9.8."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): temperature accepted at wall level and, with a range, at facet level on all six consoles; gradient accepted, add/multiply/replace/gradient-x rejected exactly as on the other thermal families."
+  ]
+}

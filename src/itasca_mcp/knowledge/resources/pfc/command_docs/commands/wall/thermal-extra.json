@@ -1,0 +1,41 @@
+{
+  "category": "wall",
+  "search_keywords": [
+    "thermal",
+    "extra"
+  ],
+  "description": "Set thermal wall or facet extra variables. The extra variable can be of any type and is associated with the index i as if stored in an array. The optional facet keyword can be given before the optional range to specify that the extra variable will be applied to thermal wall facets. In this case, the range is applied to the thermal wall facets and not to thermal walls.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.wall.thermal.find(id).set_extra(index, value)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall thermal extra",
+  "syntax": "wall thermal extra <i> <a> [facet] [range]",
+  "keywords": [
+    {
+      "name": "facet",
+      "syntax": "facet",
+      "description": "Apply the extra variable to thermal wall facets; the range then applies to the facets and not to thermal walls."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall thermal extra 1 3.25",
+      "description": "Store 3.25 in extra slot 1"
+    },
+    {
+      "command": "wall thermal extra 2 1.5 facet range id 10",
+      "description": "Store the value on the facets of wall 10"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): 'thermal extra 1 3.25' read back via wall.thermal.extra on all six consoles; the facet flavour (with range) accepted on all six consoles."
+  ]
+}

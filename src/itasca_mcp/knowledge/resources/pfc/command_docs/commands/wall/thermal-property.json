@@ -1,0 +1,36 @@
+{
+  "category": "wall",
+  "search_keywords": [
+    "thermal",
+    "property",
+    "surface",
+    "heat"
+  ],
+  "description": "Assign thermal wall facet surface properties. The value a is assigned to the surface property with name s. Any number of name-value pairs can be specified.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.wall.thermal.find(id).set_prop(name, value)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall thermal property",
+  "syntax": "wall thermal property <s> <a> [<s> <a> ...] [range]",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "wall thermal property 'thres' 1000",
+      "description": "Assign a surface property consumed by thermal contact models"
+    }
+  ],
+  "notes": [
+    "Values are stored on the thermal wall facets, not on the wall."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): the value lands on the thermal facets - wall.thermal.facet.prop reads 500.0 back on all six consoles (wall.thermal.prop itself is write-only in 7.0/9.8 FISH and reads 0 on 6.00)."
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "thermal",
+    "attribute",
+    "temperature",
+    "expansion",
+    "specific-heat",
+    "power-applied",
+    "heat"
+  ],
+  "description": "Set the value of thermal clump attributes. This is a synonym for the clump thermal initialize command. Individual attributes can be listed with the clump thermal list command, and all thermal clump attributes can be visualized.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.clump.thermal.find(id) then set_temp()/set_expansion()/set_specific_heat()/set_power_app()/set_del_temp() per object - iterate for ranges"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump thermal attribute",
+  "syntax": "clump thermal attribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "expansion",
+      "syntax": "expansion <f>",
+      "description": "thermal-expansion coefficient"
+    },
+    {
+      "name": "power-applied",
+      "syntax": "power-applied <f>",
+      "description": "applied power"
+    },
+    {
+      "name": "specific-heat",
+      "syntax": "specific-heat <f>",
+      "description": "specific heat"
+    },
+    {
+      "name": "temperature",
+      "syntax": "temperature <f>",
+      "description": "temperature"
+    },
+    {
+      "name": "temperature-increment",
+      "syntax": "temperature-increment <f>",
+      "description": "temperature increment since last mechanical coupling"
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient <v> (post-value modifier)",
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin; the stored value is the base value plus gradient dot position."
+    }
+  ],
+  "examples": [
+    {
+      "command": "clump thermal attribute temperature 50",
+      "description": "Set the temperature of all thermal clumps"
+    },
+    {
+      "command": "clump thermal attribute temperature 100 gradient (2,3)",
+      "description": "Base temperature plus a linear gradient from the origin (value = 100 + 2x + 3y)"
+    }
+  ],
+  "notes": [
+    "The 7.0/9.0 manuals attach a post-value modifier block (add, gradient, gradient-x/y/z, multiply, replace) to every attribute; live, only plain 'gradient <v>' is accepted - add, multiply, replace and the gradient-x/y/z spellings are rejected on 6.00, 7.00 and 9.8 (2D and 3D). The 6.0 manual does not document the block, but 6.00 accepts 'gradient' all the same."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): expansion, power-applied, specific-heat, temperature and temperature-increment each set and read back exactly via clump.thermal.* FISH intrinsics on all six consoles; gradient read back as base value plus gradient dot position (the clump at x=3 reads 13.0 after 'temperature 10 gradient (1,1)')."
+  ]
+}
