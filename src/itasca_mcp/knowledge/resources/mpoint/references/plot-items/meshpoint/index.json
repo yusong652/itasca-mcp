@@ -3,7 +3,6 @@
   "item_types": [
     "meshpoint"
   ],
-  "dimension": "mixed",
   "search_keywords": [
     "mesh point",
     "background grid",
@@ -36,22 +35,9 @@
     }
   ],
   "notes": [
-    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9."
+    "Probe live with 'plot item create <type> ?' to list top-level keywords, then 'plot item create <type> <kw> ?' for sub-options. Do NOT probe with a bogus token: 'plot item create <type> zzbogus' creates the item and then reports 'Unused extra parameter' without ever enumerating. Keyword sets here are binary-validated against MPoint 3D 9.",
+    "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both."
   ],
-  "dimension_differences": {
-    "3d_only_keywords": [
-      "clip",
-      "cut",
-      "quality",
-      "transparency"
-    ],
-    "mpoint2d_only_keywords": [
-      "spheres"
-    ],
-    "notes": [
-      "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both."
-    ]
-  },
   "syntax": "plot item create meshpoint <keywords...>",
   "keywords": [
     {
@@ -87,24 +73,32 @@
     {
       "description": "Apply a 3D cutting plane to the item.",
       "syntax": "cut active on origin (x,y,z) normal (nx,ny,nz)",
-      "name": "cut"
+      "name": "cut",
+      "dimension": "3D"
     },
     {
       "description": "Set item transparency (0 opaque .. 100 fully transparent).",
       "syntax": "transparency <0-100>",
-      "name": "transparency"
+      "name": "transparency",
+      "dimension": "3D"
     },
     {
       "name": "clear"
     },
     {
-      "name": "clip"
+      "name": "clip",
+      "dimension": "3D"
     },
     {
       "name": "pixel-size"
     },
     {
-      "name": "quality"
+      "name": "quality",
+      "dimension": "3D"
+    },
+    {
+      "name": "spheres",
+      "dimension": "2D"
     }
   ],
   "examples": [

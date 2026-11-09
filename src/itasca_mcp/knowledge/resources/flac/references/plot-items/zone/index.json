@@ -36,25 +36,9 @@
     "Tokens like 'color-by', 'color-options' from other Itasca-style tools are NOT accepted by zone items in FLAC2D 9.0.",
     "FLAC3D 9.0 zone item ALSO accepts 'transparency <0-100>', 'clip ...', and a 3D 'cut' (plane) keyword in addition to the keywords listed in basic_keywords. These are FLAC3D-only and are rejected by FLAC2D 9.0.",
     "FLAC3D 'cut' uses a 3D plane: 'cut active on type plane origin (x,y,z) normal (nx,ny,nz) [surface on|off] [front on|off] [back on|off]'. FLAC2D uses 'cut-line width <int>' for 2D cutting.",
-    "FLAC2D-only keywords NOT accepted by FLAC3D: 'color' (flat color), 'show-zone-id', 'text', 'zone-id-max', 'zone-id-min'."
+    "FLAC2D-only keywords NOT accepted by FLAC3D: 'color' (flat color), 'show-zone-id', 'text', 'zone-id-max', 'zone-id-min'.",
+    "FLAC2D 9.0 list is the binary-validated 'top_level_keywords'; FLAC3D 9.7 list captured live. Verified against FLAC3D 9.7 via '?' probing (2026-08-13)."
   ],
-  "dimension_differences": {
-    "flac2d_only": [
-      "color",
-      "show-zone-id",
-      "text",
-      "zone-id-max",
-      "zone-id-min"
-    ],
-    "flac3d_only": [
-      "clip",
-      "cut",
-      "transparency"
-    ],
-    "notes": [
-      "FLAC2D 9.0 list is the binary-validated 'top_level_keywords'; FLAC3D 9.7 list captured live. Verified against FLAC3D 9.7 via '?' probing (2026-08-13)."
-    ]
-  },
   "syntax": "plot item create zone <keywords...>",
   "keywords": [
     {
@@ -65,7 +49,8 @@
     {
       "description": "Apply a single flat color to all zones (no field mapping).",
       "syntax": "color <Color>",
-      "name": "color"
+      "name": "color",
+      "dimension": "2D"
     },
     {
       "description": "Color zones by a scalar/vector/tensor field attribute. See sub-item 'contour'.",
@@ -105,7 +90,8 @@
     {
       "description": "Show zone ID numbers on each zone.",
       "syntax": "show-zone-id <bool>",
-      "name": "show-zone-id"
+      "name": "show-zone-id",
+      "dimension": "2D"
     },
     {
       "name": "color-list"
@@ -129,13 +115,16 @@
       "name": "selected-only"
     },
     {
-      "name": "text"
+      "name": "text",
+      "dimension": "2D"
     },
     {
-      "name": "zone-id-max"
+      "name": "zone-id-max",
+      "dimension": "2D"
     },
     {
-      "name": "zone-id-min"
+      "name": "zone-id-min",
+      "dimension": "2D"
     },
     {
       "name": "clip",

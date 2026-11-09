@@ -1,6 +1,5 @@
 {
   "name": "beam-pile",
-  "dimension": "mixed",
   "full_name": "Beam-Type and Pile Structural Properties",
   "description": "Beam elements use elastic + section properties; piles extend beam behavior with normal/shear coupling springs and optional rockbolt features. Property keyword sets are binary-validated against FLAC2D 9.0 ('structure beam property ?' / 'structure pile property ?').",
   "primary_commands": [
@@ -67,29 +66,44 @@
       "notes": [
         "Set 'rockbolt-flag true' to activate rockbolt-style coupling behavior."
       ]
+    },
+    {
+      "group_name": "beam/pile section (FLAC3D split principal-axis form)",
+      "properties": [
+        {
+          "keyword": "moi-y"
+        },
+        {
+          "keyword": "moi-z"
+        },
+        {
+          "keyword": "shear-coefficient-y"
+        },
+        {
+          "keyword": "shear-coefficient-z"
+        },
+        {
+          "keyword": "torsion-constant"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "plastic-moment-y"
+        },
+        {
+          "keyword": "plastic-moment-z"
+        },
+        {
+          "keyword": "plastic-shear-y"
+        },
+        {
+          "keyword": "plastic-shear-z"
+        }
+      ],
+      "dimension": "3D"
     }
   ],
-  "keywords_3d_only": {
-    "beam_pile_section": [
-      "moi-y",
-      "moi-z",
-      "shear-coefficient-y",
-      "shear-coefficient-z",
-      "torsion-constant",
-      "thermal-expansion",
-      "plastic-moment-y",
-      "plastic-moment-z",
-      "plastic-shear-y",
-      "plastic-shear-z"
-    ],
-    "notes": [
-      "FLAC3D beam/pile use the SPLIT principal-axis form (moi-y/-z, shear-coefficient-y/-z, plastic-moment-y/-z, plastic-shear-y/-z) and accept 'torsion-constant' + 'thermal-expansion'. FLAC2D uses the unified scalars (moi, shear-coefficient, plastic-moment, plastic-shear) and does NOT accept the -y/-z forms or 'thermal-expansion' or 'torsion-constant'.",
-      "FLAC3D 9.7 additionally accepts the UNIFIED 'plastic-moment' and 'plastic-shear' scalars alongside the split -y/-z forms (live-enumerated; sets both axes at once). The unified 'moi' and 'shear-coefficient' are still rejected in 3D.",
-      "'spacing' is FLAC2D-only (out-of-plane spacing); FLAC3D rejects it.",
-      "Property keyword sets verified against FLAC2D 9.0 binary and live FLAC3D 9.7 error enumeration ('structure beam/pile property <bogus>' with elements present).",
-      "9.x beam/pile also carry constitutive models ('structure beam cmodel assign', 5 models: concrete/elastic/mohr-coulomb/strain-softening/von-mises) -- see structure-cmodels.json for the mechanism and the elastic->plastic assignment trap."
-    ]
-  },
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/beamtypes/beamtypes.html",
   "verification": [
     "Live FLAC2D 9 re-check (2026-08-13): 'structure beam property' enumerates exactly the 10 keywords in the shared group (young/poisson/density/cross-sectional-area/moi/direction-y/shear-coefficient/spacing/plastic-moment/plastic-shear) with no -y/-z, torsion-constant, or thermal-expansion forms; 'structure pile property' adds exactly the pile-only coupling and rockbolt keywords documented here. 2D beam/pile also expose 'cmodel' (5 models) — see structure-cmodels.json."
@@ -107,5 +121,12 @@
       "command": "structure pile property rockbolt-flag true yield-tension 1e6 yield-compression 1e6 tensile-failure-strain 0.01",
       "description": "Rockbolt-style pile"
     }
+  ],
+  "notes": [
+    "FLAC3D beam/pile use the SPLIT principal-axis form (moi-y/-z, shear-coefficient-y/-z, plastic-moment-y/-z, plastic-shear-y/-z) and accept 'torsion-constant' + 'thermal-expansion'. FLAC2D uses the unified scalars (moi, shear-coefficient, plastic-moment, plastic-shear) and does NOT accept the -y/-z forms or 'thermal-expansion' or 'torsion-constant'.",
+    "FLAC3D 9.7 additionally accepts the UNIFIED 'plastic-moment' and 'plastic-shear' scalars alongside the split -y/-z forms (live-enumerated; sets both axes at once). The unified 'moi' and 'shear-coefficient' are still rejected in 3D.",
+    "'spacing' is FLAC2D-only (out-of-plane spacing); FLAC3D rejects it.",
+    "Property keyword sets verified against FLAC2D 9.0 binary and live FLAC3D 9.7 error enumeration ('structure beam/pile property <bogus>' with elements present).",
+    "9.x beam/pile also carry constitutive models ('structure beam cmodel assign', 5 models: concrete/elastic/mohr-coulomb/strain-softening/von-mises) -- see structure-cmodels.json for the mechanism and the elastic->plastic assignment trap."
   ]
 }

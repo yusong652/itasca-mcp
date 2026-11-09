@@ -94,21 +94,21 @@
       "file": "_common/references/range-elements/position-z.json",
       "short_description": "Filter by Z-coordinate range.",
       "category": "geometric",
-      "dimension": "3D only -- MPoint2D has no such element"
+      "dimension": "3D"
     },
     {
       "name": "sphere",
       "file": "_common/references/range-elements/sphere.json",
       "short_description": "Spherical region selection.",
       "category": "geometric",
-      "dimension": "3D only -- MPoint2D has no such element"
+      "dimension": "3D"
     },
     {
       "name": "cylinder",
       "file": "_common/references/range-elements/cylinder.json",
       "short_description": "Cylindrical region. Two radii create annular (holl...",
       "category": "geometric",
-      "dimension": "3D only -- MPoint2D has no such element"
+      "dimension": "3D"
     },
     {
       "name": "annulus",
@@ -281,18 +281,10 @@
     "Inapplicable element on material points: radius — reason: Material points have no radius (a ball/pebble attribute). Always 0.",
     "Inapplicable element on material points: name — reason: Always 0 on material points.",
     "Inapplicable element on material points: group-intersection — reason: Always 0 on material points.",
-    "Inapplicable element on material points: index-list — reason: Always 0 on material points."
+    "Inapplicable element on material points: index-list — reason: Always 0 on material points.",
+    "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
+    "MPoint2D-only element: circle — The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'. Syntax: circle center <v> radius <f>."
   ],
-  "mpoint2d_only_elements": {
-    "circle": {
-      "syntax": "circle center <v> radius <f>",
-      "description": "The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'.",
-      "verification": [
-        "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
-      ]
-    }
-  },
-  "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
   "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
   "verification": [
     "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
@@ -309,7 +301,8 @@
     "State-verified 'selected / deselected': 0 / 216 with nothing selected in the GUI",
     "State-verified 'radius': 'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
     "State-verified 'circle': rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)",
-    "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
+    "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall",
+    "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
   ],
   "syntax": "<command> ... range <element1> [params] <element2> [params] ...",
   "examples": [

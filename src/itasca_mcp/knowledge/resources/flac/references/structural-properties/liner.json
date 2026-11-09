@@ -1,6 +1,5 @@
 {
   "name": "liner",
-  "dimension": "mixed",
   "full_name": "Liner Structural Properties",
   "description": "Liner elements support a flexible host surface (tunnel lining, sprayed concrete, etc.) with bidirectional coupling springs to the host zones. Property keyword set is binary-validated against FLAC2D 9.0 ('structure liner property ?').",
   "primary_commands": [
@@ -59,116 +58,157 @@
         "The '-2' suffixed keywords configure the SECOND side of a double-sided liner.",
         "Activate side-2 coupling per liner with the 'effective' property keyword on the relevant create / property command."
       ]
+    },
+    {
+      "group_name": "liner (FLAC3D-only keywords)",
+      "properties": [
+        {
+          "keyword": "thickness"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "effective"
+        }
+      ],
+      "dimension": "3D"
+    },
+    {
+      "group_name": "liner (FLAC2D-only keywords)",
+      "properties": [
+        {
+          "keyword": "cross-sectional-area"
+        },
+        {
+          "keyword": "moi"
+        },
+        {
+          "keyword": "direction-y"
+        },
+        {
+          "keyword": "shear-coefficient"
+        },
+        {
+          "keyword": "spacing"
+        },
+        {
+          "keyword": "poisson"
+        },
+        {
+          "keyword": "young"
+        },
+        {
+          "keyword": "plastic-moment"
+        },
+        {
+          "keyword": "plastic-shear"
+        }
+      ],
+      "dimension": "2D"
+    },
+    {
+      "group_name": "liner coupling (shared 2D/3D)",
+      "properties": [
+        {
+          "keyword": "coupling-stiffness-normal"
+        },
+        {
+          "keyword": "coupling-stiffness-shear"
+        },
+        {
+          "keyword": "coupling-cohesion-shear"
+        },
+        {
+          "keyword": "coupling-cohesion-shear-residual"
+        },
+        {
+          "keyword": "coupling-friction-shear"
+        },
+        {
+          "keyword": "coupling-yield-normal"
+        },
+        {
+          "keyword": "coupling-stiffness-normal-2"
+        },
+        {
+          "keyword": "coupling-stiffness-shear-2"
+        },
+        {
+          "keyword": "coupling-cohesion-shear-2"
+        },
+        {
+          "keyword": "coupling-cohesion-shear-residual-2"
+        },
+        {
+          "keyword": "coupling-friction-shear-2"
+        },
+        {
+          "keyword": "coupling-yield-normal-2"
+        },
+        {
+          "keyword": "slide"
+        },
+        {
+          "keyword": "slide-tolerance"
+        }
+      ]
+    },
+    {
+      "group_name": "shell (FLAC3D-only element type)",
+      "properties": [
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "range"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        }
+      ],
+      "dimension": "3D"
+    },
+    {
+      "group_name": "geogrid (FLAC3D-only element type)",
+      "properties": [
+        {
+          "keyword": "coupling-cohesion"
+        },
+        {
+          "keyword": "coupling-friction"
+        },
+        {
+          "keyword": "coupling-stiffness"
+        },
+        {
+          "keyword": "density"
+        },
+        {
+          "keyword": "range"
+        },
+        {
+          "keyword": "slide"
+        },
+        {
+          "keyword": "slide-tolerance"
+        },
+        {
+          "keyword": "thermal-expansion"
+        },
+        {
+          "keyword": "thickness"
+        }
+      ],
+      "dimension": "3D"
     }
   ],
-  "related_3d_only": {
-    "structure_types": [
-      "shell",
-      "geogrid",
-      "dowel",
-      "hybrid"
-    ],
-    "notes": [
-      "FLAC2D 9.0 does NOT accept 'structure shell', 'structure geogrid', 'structure dowel', or 'structure hybrid' subcommands — these are 3D-only structural element types ('Bad conversion of parameter number 2').",
-      "Use FLAC3D documentation for these element-type property keyword sets."
-    ]
-  },
-  "flac3d_liner_property_set": {
-    "description": "FLAC3D liner uses a DIFFERENT property keyword set than FLAC2D liner. FLAC3D models liners as a shell-formulation surface (area-based) while FLAC2D models them as a beam-formulation line (length-based).",
-    "flac3d_only_keywords": [
-      "thickness",
-      "density",
-      "thermal-expansion",
-      "effective"
-    ],
-    "flac2d_only_keywords": [
-      "cross-sectional-area",
-      "moi",
-      "direction-y",
-      "shear-coefficient",
-      "spacing",
-      "poisson",
-      "young",
-      "plastic-moment",
-      "plastic-shear"
-    ],
-    "shared_coupling_keywords": [
-      "coupling-stiffness-normal",
-      "coupling-stiffness-shear",
-      "coupling-cohesion-shear",
-      "coupling-cohesion-shear-residual",
-      "coupling-friction-shear",
-      "coupling-yield-normal",
-      "coupling-stiffness-normal-2",
-      "coupling-stiffness-shear-2",
-      "coupling-cohesion-shear-2",
-      "coupling-cohesion-shear-residual-2",
-      "coupling-friction-shear-2",
-      "coupling-yield-normal-2",
-      "slide",
-      "slide-tolerance"
-    ],
-    "notes": [
-      "The FLAC3D liner property set: density, range, thermal-expansion, thickness, effective, slide, slide-tolerance, and all 12 coupling-* / coupling-*-2 keywords (binary-verified via 'structure liner property ?').",
-      "The FLAC2D liner property set (documented in this file's property_groups) shares only the coupling-* and slide-* keywords with FLAC3D."
-    ]
-  },
-  "flac3d_shell_property_set": {
-    "description": "FLAC3D shell property keyword set (binary-verified via 'structure shell property ?'). Shells are FLAC3D-only.",
-    "keywords": [
-      {
-        "name": "density"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "thermal-expansion"
-      },
-      {
-        "name": "thickness"
-      }
-    ],
-    "notes": [
-      "FLAC3D shells take only the basic surface-element properties WITHOUT a cmodel assigned; assigning a shell constitutive model ('structure shell cmodel assign <model>', 7 models available) EXPANDS the property keyword set with that model's material properties (e.g. elastic adds young + poisson). The same mechanism applies to liner and geogrid. See structure-cmodels.json for the per-model property sets and the elastic->plastic assignment trap. Live-verified against FLAC3D 9.7.",
-      "The FLAC3D liner and geogrid base property sets in this file were re-verified against live FLAC3D 9.7 error enumeration (exact match, including the 12 coupling-*/-2 liner keywords and geogrid's shear-only bare coupling-* names)."
-    ]
-  },
-  "flac3d_geogrid_property_set": {
-    "description": "FLAC3D geogrid property keyword set (binary-verified via 'structure geogrid property ?'). Geogrids are FLAC3D-only.",
-    "keywords": [
-      {
-        "name": "coupling-cohesion"
-      },
-      {
-        "name": "coupling-friction"
-      },
-      {
-        "name": "coupling-stiffness"
-      },
-      {
-        "name": "density"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "slide"
-      },
-      {
-        "name": "slide-tolerance"
-      },
-      {
-        "name": "thermal-expansion"
-      },
-      {
-        "name": "thickness"
-      }
-    ],
-    "notes": [
-      "Geogrids use SHEAR-only coupling (no normal direction): the bare 'coupling-cohesion / -friction / -stiffness' keywords without the '-shear' suffix."
-    ]
-  },
   "source": "https://docs.itascacg.com/itasca900/common/sel/doc/manual/sel_manual/shelltypes/shelltypes.html",
   "verification": [
     "Live FLAC2D 9 re-check (2026-08-13): 'structure liner property' enumerates the full documented 2D set (section props incl. spacing + all 12 coupling-*/-2 keywords + slide/slide-tolerance); 'thickness' and 'thermal-expansion' confirmed absent. shell/geogrid/dowel/hybrid rejections reproduced verbatim. 2D liner also exposes 'cmodel' with the 5 beam-family models — see structure-cmodels.json."
@@ -182,5 +222,18 @@
       "command": "structure liner property coupling-stiffness-normal 1e9 coupling-stiffness-shear 1e9 coupling-stiffness-normal-2 1e9 coupling-stiffness-shear-2 1e9",
       "description": "Double-sided liner"
     }
+  ],
+  "notes": [
+    "FLAC3D-only structure types: shell, geogrid, dowel, hybrid.",
+    "FLAC2D 9.0 does NOT accept 'structure shell', 'structure geogrid', 'structure dowel', or 'structure hybrid' subcommands — these are 3D-only structural element types ('Bad conversion of parameter number 2').",
+    "Use FLAC3D documentation for these element-type property keyword sets.",
+    "FLAC3D liner uses a DIFFERENT property keyword set than FLAC2D liner. FLAC3D models liners as a shell-formulation surface (area-based) while FLAC2D models them as a beam-formulation line (length-based).",
+    "The FLAC3D liner property set: density, range, thermal-expansion, thickness, effective, slide, slide-tolerance, and all 12 coupling-* / coupling-*-2 keywords (binary-verified via 'structure liner property ?').",
+    "The FLAC2D liner property set (documented in this file's property_groups) shares only the coupling-* and slide-* keywords with FLAC3D.",
+    "FLAC3D shell property keyword set (binary-verified via 'structure shell property ?'). Shells are FLAC3D-only.",
+    "FLAC3D shells take only the basic surface-element properties WITHOUT a cmodel assigned; assigning a shell constitutive model ('structure shell cmodel assign <model>', 7 models available) EXPANDS the property keyword set with that model's material properties (e.g. elastic adds young + poisson). The same mechanism applies to liner and geogrid. See structure-cmodels.json for the per-model property sets and the elastic->plastic assignment trap. Live-verified against FLAC3D 9.7.",
+    "The FLAC3D liner and geogrid base property sets in this file were re-verified against live FLAC3D 9.7 error enumeration (exact match, including the 12 coupling-*/-2 liner keywords and geogrid's shear-only bare coupling-* names).",
+    "FLAC3D geogrid property keyword set (binary-verified via 'structure geogrid property ?'). Geogrids are FLAC3D-only.",
+    "Geogrids use SHEAR-only coupling (no normal direction): the bare 'coupling-cohesion / -friction / -stiffness' keywords without the '-shear' suffix."
   ]
 }

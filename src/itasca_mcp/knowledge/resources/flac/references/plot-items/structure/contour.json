@@ -13,57 +13,9 @@
   "notes": [
     "All beam-family types accept the shared list. Beam-only and cable-only attribute groups are documented separately because they were probed type-by-type.",
     "structure-liner and structure-pile attribute lists are similar to structure-beam — probe 'plot item create structure-liner contour ?' / 'structure-pile contour ?' for type-specific extras.",
-    "For categorical coloring (group, id, model) use 'label <type>' rather than 'contour'."
+    "For categorical coloring (group, id, model) use 'label <type>' rather than 'contour'.",
+    "FLAC3D 9.7 beam-family contour attributes add -z components, angular magnitudes, per-axis link rotations, and plastic quantities (area-plastic, stress-max-plastic, stress-min-plastic), plus force-shear and moment-bending. Verified against FLAC3D 9.7 via '?' probing (2026-08-13)."
   ],
-  "dimension_differences": {
-    "flac3d_only": [
-      "acceleration-z",
-      "area-plastic",
-      "displacement-angular-z",
-      "displacement-z",
-      "force",
-      "force-magnitude",
-      "force-shear",
-      "force-x",
-      "force-y",
-      "force-z",
-      "link-displacement-rotation-x",
-      "link-displacement-rotation-y",
-      "link-displacement-rotation-z",
-      "link-displacement-z",
-      "link-force-rotation-x",
-      "link-force-rotation-y",
-      "link-force-rotation-z",
-      "link-force-z",
-      "link-gap-1-rotation-x",
-      "link-gap-1-rotation-y",
-      "link-gap-1-rotation-z",
-      "link-gap-1-z",
-      "link-gap-2-rotation-x",
-      "link-gap-2-rotation-y",
-      "link-gap-2-rotation-z",
-      "link-gap-2-z",
-      "moment",
-      "moment-bending",
-      "moment-magnitude",
-      "moment-x",
-      "moment-y",
-      "moment-z",
-      "stress-max-plastic",
-      "stress-min-plastic",
-      "velocity-angular-z",
-      "velocity-z"
-    ],
-    "flac2d_only": [
-      "link-displacement-rotation",
-      "link-force-rotation",
-      "link-gap-1-rotation",
-      "link-gap-2-rotation"
-    ],
-    "notes": [
-      "FLAC3D 9.7 beam-family contour attributes add -z components, angular magnitudes, per-axis link rotations, and plastic quantities (area-plastic, stress-max-plastic, stress-min-plastic), plus force-shear and moment-bending. Verified against FLAC3D 9.7 via '?' probing (2026-08-13)."
-    ]
-  },
   "attributes": [
     {
       "name": "acceleration",
@@ -131,7 +83,8 @@
     },
     {
       "name": "link-displacement-rotation",
-      "group": "shared"
+      "group": "shared",
+      "dimension": "2D"
     },
     {
       "name": "link-displacement-x",
@@ -147,7 +100,8 @@
     },
     {
       "name": "link-force-rotation",
-      "group": "shared"
+      "group": "shared",
+      "dimension": "2D"
     },
     {
       "name": "link-force-x",
@@ -163,7 +117,8 @@
     },
     {
       "name": "link-gap-1-rotation",
-      "group": "shared"
+      "group": "shared",
+      "dimension": "2D"
     },
     {
       "name": "link-gap-1-x",
@@ -179,7 +134,8 @@
     },
     {
       "name": "link-gap-2-rotation",
-      "group": "shared"
+      "group": "shared",
+      "dimension": "2D"
     },
     {
       "name": "link-gap-2-x",
@@ -239,43 +195,53 @@
     },
     {
       "name": "area-plastic",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force-magnitude",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force-shear",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force-x",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force-y",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "moment",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "moment-bending",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "stress-max-plastic",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "stress-min-plastic",
-      "group": "beam-only"
+      "group": "beam-only",
+      "dimension": "3D"
     },
     {
       "name": "force-axial",
@@ -300,6 +266,110 @@
     {
       "name": "stress-axial",
       "group": "cable-only"
+    },
+    {
+      "name": "acceleration-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "displacement-angular-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "displacement-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "force-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-displacement-rotation-x",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-displacement-rotation-y",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-displacement-rotation-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-displacement-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-force-rotation-x",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-force-rotation-y",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-force-rotation-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-force-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-1-rotation-x",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-1-rotation-y",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-1-rotation-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-1-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-2-rotation-x",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-2-rotation-y",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-2-rotation-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "link-gap-2-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "moment-magnitude",
+      "dimension": "3D"
+    },
+    {
+      "name": "moment-x",
+      "dimension": "3D"
+    },
+    {
+      "name": "moment-y",
+      "dimension": "3D"
+    },
+    {
+      "name": "moment-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "velocity-angular-z",
+      "dimension": "3D"
+    },
+    {
+      "name": "velocity-z",
+      "dimension": "3D"
     }
   ],
   "verification": [

@@ -602,33 +602,35 @@ def test_mpoint_fish_intrinsics_lose_only_vector_z_in_2d() -> None:
     is meaningful there -- which is why the drop is 8 and not 8 plus the tensor
     components.
     """
-    dd = FishLoader.load_index(software="mpoint")["dimension_differences"]
-    assert dd["mpoint3d_count"] == 100
-    assert dd["mpoint2d_count"] == 92
-    assert dd["mpoint2d_only"] == []
-    assert all(n.endswith(".z") for n in dd["3d_only"])
-    assert len(dd["3d_only"]) == 8
+    entries = FishLoader.entries(software="mpoint")
+    three_d_only = {n for n, e in entries.items() if n.startswith("mpoint.") and e.get("dimension") == "3D"}
+    assert all(n.endswith(".z") for n in three_d_only)
+    assert len(three_d_only) == 8
     # the tensor accessors survive
-    assert not any(".stress." in n or ".strain." in n for n in dd["3d_only"])
+    assert not any(".stress." in n or ".strain." in n for n in three_d_only)
+    assert not any(e.get("dimension") == "2D" for n, e in entries.items() if n.startswith("mpoint."))
+    index_notes = " ".join(FishLoader.load_index(software="mpoint")["notes"])
+    assert "92 of the 100" in index_notes
 
 
 def test_mpoint_dimension_flags_reach_the_point_of_use() -> None:
     """A user picking a model or keyword should not have to find the summary."""
     cm = ReferenceLoader.load_category_index("constitutive-models", software="mpoint")
-    assert cm["dimension_differences"]["mpoint2d_count"] == 39
+    assert any("mpoint2d count: 39" in n for n in cm["notes"])
     by_name = {m["name"]: m for m in cm["models"]}
     for name in ("columnar-basalt", "imass", "mohr-coulomb-tension", "orthotropic"):
-        assert "3D only" in by_name[name]["dimension"]
+        assert by_name[name]["dimension"] == "3D"
     # cavehoek is listed by MPoint2D but can never be configured for there
-    assert "cavehoek" in by_name and "dimension_caveat" in by_name["cavehoek"]
+    assert any(n.startswith("MPoint2D: ") for n in by_name["cavehoek"]["notes"])
 
     # plot keywords: the 3D-only four, and 'spheres' only on the point items
     for item, expect_spheres in (("mpoint", True), ("mpoint-hybrid", True), ("mpoint-vector", False)):
         doc = ReferenceLoader.load_item_doc("plot-items", item, software="mpoint")
         assert doc is not None
-        dd = doc["dimension_differences"]
-        assert set(dd["3d_only_keywords"]) <= {"clip", "cut", "quality", "transparency"}
-        assert bool(dd["mpoint2d_only_keywords"]) is expect_spheres
+        three_d = {k["name"] for k in doc["keywords"] if k.get("dimension") == "3D"}
+        assert three_d <= {"clip", "cut", "quality", "transparency"}
+        two_d = {k["name"] for k in doc["keywords"] if k.get("dimension") == "2D"}
+        assert (two_d == {"spheres"}) is expect_spheres
 
     # range elements carry the flag on the element entry itself
     re_cat = ReferenceLoader.load_category_index("range-elements", software="mpoint")
