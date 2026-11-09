@@ -39,11 +39,12 @@
     ]
   },
   "dimension_differences": {
-    "note": "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both.",
     "plane": {
       "mpoint2d": "x-y",
-      "note": "MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
-      "verified": "state -- 'mpoint fix ?' and 'mpoint node fix ?' on MPoint2D 9.7 list x and y only"
+      "verified": "state -- 'mpoint fix ?' and 'mpoint node fix ?' on MPoint2D 9.7 list x and y only",
+      "notes": [
+        "MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention."
+      ]
     },
     "verified": {
       "grade": "state",
@@ -59,7 +60,10 @@
         "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
         "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
       ]
-    }
+    },
+    "notes": [
+      "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both."
+    ]
   },
   "measured": {
     "experiment": "'model gravity 0 0 -9.81' + 'mpoint initialize-stresses', then szz/sxx/syy read back at the top and bottom of the point cloud.",
@@ -67,7 +71,9 @@
       {
         "command": "mpoint initialize-stresses",
         "gradient_pa_per_m": -24525.0,
-        "note": "exactly rho*g = 2500 * 9.81; sxx == szz, so the default lateral ratio is 1.0"
+        "notes": [
+          "exactly rho*g = 2500 * 9.81; sxx == szz, so the default lateral ratio is 1.0"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5",
@@ -79,35 +85,47 @@
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5 overburden -10000",
-        "note": "shifted both top and bottom szz by exactly -10000; the gradient is unchanged"
+        "notes": [
+          "shifted both top and bottom szz by exactly -10000; the gradient is unchanged"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (1,0,0)",
         "sxx": -27567.8,
         "syy": -13783.9,
-        "note": "two ratios: the first goes to the direction-x axis, the second perpendicular"
+        "notes": [
+          "two ratios: the first goes to the direction-x axis, the second perpendicular"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (0,1,0)",
         "sxx": -13783.9,
         "syy": -27567.8,
-        "note": "rotating direction-x swaps them"
+        "notes": [
+          "rotating direction-x swaps them"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5 0.25 direction-x (1,1,0)",
         "sxx": -20675.9,
         "syy": -20675.9,
-        "note": "45 degrees blends them exactly: 0.375 * szz"
+        "notes": [
+          "45 degrees blends them exactly: 0.375 * szz"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5   (pore pressure 20000 present)",
         "sxx": -17567.8,
-        "note": "0.5 * the EFFECTIVE vertical stress (-35135.6)"
+        "notes": [
+          "0.5 * the EFFECTIVE vertical stress (-35135.6)"
+        ]
       },
       {
         "command": "mpoint initialize-stresses ratio 0.5 total   (pore pressure 20000 present)",
         "sxx": -27567.8,
-        "note": "'total' switches ratio to multiply the TOTAL vertical stress (-55135.6)"
+        "notes": [
+          "'total' switches ratio to multiply the TOTAL vertical stress (-55135.6)"
+        ]
       }
     ]
   }

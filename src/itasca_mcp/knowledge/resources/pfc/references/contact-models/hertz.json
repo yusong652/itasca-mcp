@@ -39,7 +39,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Reference surface gap. Used to define initial contact configuration. Typically 0.0 for initially touching contacts."
+          "notes": [
+            "Reference surface gap. Used to define initial contact configuration. Typically 0.0 for initially touching contacts."
+          ]
         },
         {
           "keyword": "hz_shear",
@@ -50,7 +52,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Shear modulus of the material. Fundamental material property (unlike linear model's stiffness). Typical values: 1e9 - 1e11 Pa for rocks, 1e7 - 1e9 Pa for soils. Inheritance uses Mindlin-Deresiewicz effective modulus: G* = ((2-ν₁)/G₁ + (2-ν₂)/G₂)⁻¹, then G = 2G*(2-ν)."
+          "notes": [
+            "Shear modulus of the material. Fundamental material property (unlike linear model's stiffness). Typical values: 1e9 - 1e11 Pa for rocks, 1e7 - 1e9 Pa for soils. Inheritance uses Mindlin-Deresiewicz effective modulus: G* = ((2-ν₁)/G₁ + (2-ν₂)/G₂)⁻¹, then G = 2G*(2-ν)."
+          ]
         },
         {
           "keyword": "hz_poiss",
@@ -61,7 +65,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Poisson's ratio of the material. Fundamental material property. Typical values: 0.2 - 0.35 for most materials. Must be > -1.0 and ≤ 0.5. Inheritance uses Mindlin-Deresiewicz: E* and G* computed from both pieces, then ν = (4G* - E*)/(2G* - E*)."
+          "notes": [
+            "Poisson's ratio of the material. Fundamental material property. Typical values: 0.2 - 0.35 for most materials. Must be > -1.0 and ≤ 0.5. Inheritance uses Mindlin-Deresiewicz: E* and G* computed from both pieces, then ν = (4G* - E*)/(2G* - E*)."
+          ]
         },
         {
           "keyword": "fric",
@@ -72,7 +78,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Coulomb friction coefficient. Shear force limited by friction. Value of 0.0 means frictionless contact. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          "notes": [
+            "Coulomb friction coefficient. Shear force limited by friction. Value of 0.0 means frictionless contact. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          ]
         },
         {
           "keyword": "hz_mode",
@@ -83,7 +91,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls how shear stiffness scales with normal force. Affects nonlinear shear response.",
+          "notes": [
+            "Controls how shear stiffness scales with normal force. Affects nonlinear shear response."
+          ],
           "values": [
             {
               "value": 0,
@@ -104,7 +114,9 @@
           "default": "1.5",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Exponent in nonlinear force-displacement relationship: F_n^h = -h_n|g_c|^(α_h). Default 1.5 is for Hertzian sphere-sphere contact. Use 1.0-1.5 for coaxial cylinders. Controls degree of nonlinearity."
+          "notes": [
+            "Exponent in nonlinear force-displacement relationship: F_n^h = -h_n|g_c|^(α_h). Default 1.5 is for Hertzian sphere-sphere contact. Use 1.0-1.5 for coaxial cylinders. Controls degree of nonlinearity."
+          ]
         },
         {
           "keyword": "hz_slip",
@@ -115,7 +127,9 @@
           "default": "false",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only state indicator. True when contact is slipping (shear force at friction limit), false when not slipping.",
+          "notes": [
+            "Read-only state indicator. True when contact is slipping (shear force at friction limit), false when not slipping."
+          ],
           "values": [
             {
               "value": true,
@@ -136,7 +150,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Nonlinear elastic force vector in contact plane coordinates: (-F_n^h, F_ss^h, F_st^h). In 2D models: F_ss^h ≡ 0. Negative normal component indicates compression. Normal force is nonlinear in overlap.",
+          "notes": [
+            "Nonlinear elastic force vector in contact plane coordinates: (-F_n^h, F_ss^h, F_st^h). In 2D models: F_ss^h ≡ 0. Negative normal component indicates compression. Normal force is nonlinear in overlap."
+          ],
           "components": {
             "2D": "(-F_n^h, F_st^h)",
             "3D": "(-F_n^h, F_ss^h, F_st^h)"
@@ -157,7 +173,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Normal direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Essential for impact simulations to dissipate energy."
+          "notes": [
+            "Normal direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Essential for impact simulations to dissipate energy."
+          ]
         },
         {
           "keyword": "dp_sratio",
@@ -168,7 +186,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Shear direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Important for energy dissipation in dynamic simulations."
+          "notes": [
+            "Shear direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Important for energy dissipation in dynamic simulations."
+          ]
         },
         {
           "keyword": "dp_alpha",
@@ -179,7 +199,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Exponent for nonlinear dashpot behavior. Default 0.0 gives linear viscous damping. Non-zero values create nonlinear velocity-dependent damping."
+          "notes": [
+            "Exponent for nonlinear dashpot behavior. Default 0.0 gives linear viscous damping. Non-zero values create nonlinear velocity-dependent damping."
+          ]
         },
         {
           "keyword": "dp_mode",
@@ -190,7 +212,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls when dashpot forces are active.",
+          "notes": [
+            "Controls when dashpot forces are active."
+          ],
           "values": [
             {
               "value": 0,
@@ -219,7 +243,9 @@
           "default": "0",
           "modifiable": false,
           "inheritable": false,
-          "notes": "Read-only dashpot force vector in contact plane coordinates: (-F_n^d, F_ss^d, F_st^d). In 2D models: F_ss^d ≡ 0. Automatically calculated based on dp_nratio, dp_sratio, dp_alpha, and dp_mode.",
+          "notes": [
+            "Read-only dashpot force vector in contact plane coordinates: (-F_n^d, F_ss^d, F_st^d). In 2D models: F_ss^d ≡ 0. Automatically calculated based on dp_nratio, dp_sratio, dp_alpha, and dp_mode."
+          ],
           "components": {
             "2D": "(-F_n^d, F_st^d)",
             "3D": "(-F_n^d, F_ss^d, F_st^d)"

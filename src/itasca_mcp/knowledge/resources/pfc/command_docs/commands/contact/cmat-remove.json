@@ -9,12 +9,6 @@
     "available": false,
     "workaround": "itasca.command('contact cmat remove <i>') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "related_commands": [
-    "contact cmat add",
-    "contact cmat list",
-    "contact cmat default",
-    "contact cmat apply"
-  ],
   "notes": [
     "Entry index must be valid (exist in the CMAT)",
     "Subsequent entries (higher indices) are shifted down after removal",
@@ -22,69 +16,9 @@
     "Use 'contact cmat list' before and after to verify the removal",
     "Removing an entry does NOT affect existing contacts - only affects future contact creation",
     "To update existing contacts after CMAT changes, use 'contact cmat apply'",
-    "Cannot undo removal - consider using 'contact cmat list' to document before removing"
-  ],
-  "common_use_cases": [
-    {
-      "use_case": "Clean up unused CMAT entry",
-      "command": "contact cmat list\ncontact cmat remove 3",
-      "description": "List entries first to identify the correct index, then remove the unused entry"
-    },
-    {
-      "use_case": "Modify CMAT by removing and re-adding",
-      "command": "contact cmat remove 2\ncontact cmat add 2 model linearpbond property pb_kn 1e9 range group 'soil'",
-      "description": "Remove old entry and add new one at same index with updated configuration"
-    },
-    {
-      "use_case": "Simplify CMAT by removing specific rules",
-      "command": "contact cmat remove 4",
-      "description": "Remove specific rule entry to simplify CMAT logic"
-    }
-  ],
-  "typical_workflow": [
-    "1. Use 'contact cmat list' to see current CMAT entries and their indices",
-    "2. Identify the entry index to remove",
-    "3. Execute 'contact cmat remove <i>' to remove the entry",
-    "4. Verify removal with 'contact cmat list'",
-    "5. Note that subsequent entries have shifted down by one index",
-    "6. If needed, use 'contact cmat apply' to update existing contacts with new CMAT"
-  ],
-  "behavior_details": {
-    "index_shifting": "After removing entry i, all entries with indices > i are decremented by 1. For example, if you remove entry 2, the old entry 3 becomes new entry 2, old entry 4 becomes new entry 3, etc.",
-    "default_entry": "Entry 0 (default) should typically not be removed as it serves as the fallback when no other entries match. Removing it may cause unexpected behavior.",
-    "existing_contacts": "Removal only affects how new contacts are assigned. Existing contacts retain their current models and properties until 'contact cmat apply' is used.",
-    "empty_cmat": "If all entries except default are removed, only the default entry remains and will be used for all new contacts."
-  },
-  "warnings": [
-    {
-      "type": "index_shift",
-      "message": "Removing an entry causes all subsequent entries to shift down - their indices change",
-      "mitigation": "Use 'contact cmat list' after removal to verify new indices if you need to remove multiple entries"
-    },
-    {
-      "type": "default_entry",
-      "message": "Removing entry 0 (default) may cause unexpected behavior",
-      "mitigation": "Generally avoid removing the default entry. Use 'contact cmat default' to modify it instead"
-    },
-    {
-      "type": "no_undo",
-      "message": "Removal cannot be undone",
-      "mitigation": "Document CMAT configuration with 'contact cmat list' before removing entries"
-    }
-  ],
-  "troubleshooting": [
-    {
-      "issue": "Invalid index error",
-      "solution": "Use 'contact cmat list' to verify entry exists at that index before removing"
-    },
-    {
-      "issue": "Removed wrong entry",
-      "solution": "Re-add the entry using 'contact cmat add'. Use 'contact cmat list' to track indices"
-    },
-    {
-      "issue": "Contacts still using old model after removal",
-      "solution": "Removing entry only affects new contacts. Use 'contact cmat apply' to update existing contacts"
-    }
+    "Cannot undo removal - consider using 'contact cmat list' to document before removing",
+    "Related commands: contact cmat add, contact cmat list, contact cmat default, contact cmat apply",
+    "Removing entry i shifts all later entries down by one. Entry 0 is the fallback default and should normally not be removed. Removal only affects future contacts; existing contacts keep their models until contact cmat apply."
   ],
   "versions": {
     "7.0": {

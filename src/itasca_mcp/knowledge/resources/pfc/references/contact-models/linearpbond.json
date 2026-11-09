@@ -44,7 +44,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Base linear stiffness, acts in parallel with bond. Total normal force = linear force + parallel-bond force. Inheritance uses series formula: 1/kn = 1/kn(1) + 1/kn(2)."
+          "notes": [
+            "Base linear stiffness, acts in parallel with bond. Total normal force = linear force + parallel-bond force. Inheritance uses series formula: 1/kn = 1/kn(1) + 1/kn(2)."
+          ]
         },
         {
           "keyword": "ks",
@@ -55,7 +57,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Base linear stiffness, acts in parallel with bond. Total shear force = linear force + parallel-bond force. Inheritance uses series formula: 1/ks = 1/ks(1) + 1/ks(2)."
+          "notes": [
+            "Base linear stiffness, acts in parallel with bond. Total shear force = linear force + parallel-bond force. Inheritance uses series formula: 1/ks = 1/ks(1) + 1/ks(2)."
+          ]
         },
         {
           "keyword": "fric",
@@ -66,7 +70,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Coulomb friction coefficient for the linear component. Applied after bond breaks. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          "notes": [
+            "Coulomb friction coefficient for the linear component. Applied after bond breaks. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          ]
         },
         {
           "keyword": "rgap",
@@ -77,7 +83,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Reference surface gap. Used to define initial contact configuration."
+          "notes": [
+            "Reference surface gap. Used to define initial contact configuration."
+          ]
         },
         {
           "keyword": "lin_mode",
@@ -88,7 +96,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls how normal force is updated during contact.",
+          "notes": [
+            "Controls how normal force is updated during contact."
+          ],
           "values": [
             {
               "value": 0,
@@ -109,7 +119,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'deformability' method to calculate kn and ks. Not a direct property - set via method argument."
+          "notes": [
+            "Used with 'deformability' method to calculate kn and ks. Not a direct property - set via method argument."
+          ]
         },
         {
           "keyword": "kratio",
@@ -120,7 +132,9 @@
           "default": "0.0*",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'deformability' method. Defined as κ* ≡ k_n / k_s. By convention, κ* = 0.0 if either stiffness is 0."
+          "notes": [
+            "Used with 'deformability' method. Defined as κ* ≡ k_n / k_s. By convention, κ* = 0.0 if either stiffness is 0."
+          ]
         },
         {
           "keyword": "lin_slip",
@@ -131,7 +145,9 @@
           "default": "false",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only state indicator for linear component.",
+          "notes": [
+            "Read-only state indicator for linear component."
+          ],
           "values": [
             {
               "value": true,
@@ -152,7 +168,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Force from linear component only. Total force = lin_force + pb_force. In contact plane: (-F_n^l, F_ss^l, F_st^l). In 2D: F_ss^l ≡ 0.",
+          "notes": [
+            "Force from linear component only. Total force = lin_force + pb_force. In contact plane: (-F_n^l, F_ss^l, F_st^l). In 2D: F_ss^l ≡ 0."
+          ],
           "components": {
             "2D": "(-F_n^l, F_st^l)",
             "3D": "(-F_n^l, F_ss^l, F_st^l)"
@@ -167,7 +185,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "User-defined contact area. Separate from bond area (calculated from pb_radius)."
+          "notes": [
+            "User-defined contact area. Separate from bond area (calculated from pb_radius)."
+          ]
         }
       ]
     },
@@ -184,7 +204,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Normal direction damping as fraction of critical damping."
+          "notes": [
+            "Normal direction damping as fraction of critical damping."
+          ]
         },
         {
           "keyword": "dp_sratio",
@@ -195,7 +217,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Shear direction damping as fraction of critical damping."
+          "notes": [
+            "Shear direction damping as fraction of critical damping."
+          ]
         },
         {
           "keyword": "dp_mode",
@@ -206,7 +230,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls when dashpot forces are active.",
+          "notes": [
+            "Controls when dashpot forces are active."
+          ],
           "values": [
             {
               "value": 0,
@@ -235,7 +261,9 @@
           "default": "0",
           "modifiable": false,
           "inheritable": false,
-          "notes": "Read-only dashpot force vector. In 2D: F_ss^d ≡ 0.",
+          "notes": [
+            "Read-only dashpot force vector. In 2D: F_ss^d ≡ 0."
+          ],
           "components": {
             "2D": "(-F_n^d, F_st^d)",
             "3D": "(-F_n^d, F_ss^d, F_st^d)"
@@ -256,7 +284,9 @@
           "default": "1.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Bond radius = λ̄ × min(R1, R2) where R1, R2 are piece radii. Controls bond size relative to particle size. Typical: 0.5 - 1.0."
+          "notes": [
+            "Bond radius = λ̄ × min(R1, R2) where R1, R2 are piece radii. Controls bond size relative to particle size. Typical: 0.5 - 1.0."
+          ]
         },
         {
           "keyword": "pb_kn",
@@ -267,7 +297,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Stiffness per unit area of the bond. Effective bond stiffness = pb_kn × bond_area. Can be set directly or via pb_deformability method."
+          "notes": [
+            "Stiffness per unit area of the bond. Effective bond stiffness = pb_kn × bond_area. Can be set directly or via pb_deformability method."
+          ]
         },
         {
           "keyword": "pb_ks",
@@ -278,7 +310,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Stiffness per unit area of the bond. Effective bond stiffness = pb_ks × bond_area. Can be set directly or via pb_deformability method."
+          "notes": [
+            "Stiffness per unit area of the bond. Effective bond stiffness = pb_ks × bond_area. Can be set directly or via pb_deformability method."
+          ]
         },
         {
           "keyword": "pb_mcf",
@@ -289,7 +323,9 @@
           "default": "1.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Scaling factor for moment transmission. 1.0 = full moment resistance, 0.0 = no moment (force-only like linearcbond). Use to reduce rotational constraint."
+          "notes": [
+            "Scaling factor for moment transmission. 1.0 = full moment resistance, 0.0 = no moment (force-only like linearcbond). Use to reduce rotational constraint."
+          ]
         },
         {
           "keyword": "pb_ten",
@@ -300,7 +336,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Maximum tensile stress at bond periphery. Bond breaks when σ̄ > pb_ten. Typical: 1e6 - 1e8 Pa for rock-like materials."
+          "notes": [
+            "Maximum tensile stress at bond periphery. Bond breaks when σ̄ > pb_ten. Typical: 1e6 - 1e8 Pa for rock-like materials."
+          ]
         },
         {
           "keyword": "pb_coh",
@@ -311,7 +349,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Cohesive component of shear strength. Part of Mohr-Coulomb criterion: τ̄_c = c̄ + σ̄ tan(φ̄). Typical: 1e6 - 1e8 Pa."
+          "notes": [
+            "Cohesive component of shear strength. Part of Mohr-Coulomb criterion: τ̄_c = c̄ + σ̄ tan(φ̄). Typical: 1e6 - 1e8 Pa."
+          ]
         },
         {
           "keyword": "pb_fa",
@@ -322,7 +362,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Friction angle for shear strength criterion. Shear strength = c̄ + σ̄ tan(φ̄). Typical: 30-50° for rock-like materials. 0° means pure cohesion."
+          "notes": [
+            "Friction angle for shear strength criterion. Shear strength = c̄ + σ̄ tan(φ̄). Typical: 30-50° for rock-like materials. 0° means pure cohesion."
+          ]
         },
         {
           "keyword": "pb_state",
@@ -333,7 +375,9 @@
           "default": "0",
           "modifiable": false,
           "inheritable": false,
-          "notes": "Read-only state indicator showing current bond status and failure mode.",
+          "notes": [
+            "Read-only state indicator showing current bond status and failure mode."
+          ],
           "values": [
             {
               "value": 0,
@@ -362,7 +406,9 @@
           "default": "N/A",
           "modifiable": false,
           "inheritable": false,
-          "notes": "Read-only. Calculated as R̄ = λ̄ × min(R1, R2). Determines bond cross-sectional area and moment of inertia."
+          "notes": [
+            "Read-only. Calculated as R̄ = λ̄ × min(R1, R2). Determines bond cross-sectional area and moment of inertia."
+          ]
         },
         {
           "keyword": "pb_emod",
@@ -373,7 +419,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'pb_deformability' method to calculate pb_kn and pb_ks. Not a direct property - set via method argument."
+          "notes": [
+            "Used with 'pb_deformability' method to calculate pb_kn and pb_ks. Not a direct property - set via method argument."
+          ]
         },
         {
           "keyword": "pb_kratio",
@@ -384,7 +432,9 @@
           "default": "0.0*",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'pb_deformability' method. Defined as κ̄* ≡ k̄_n / k̄_s. By convention, κ̄* = 0.0 if either stiffness is 0."
+          "notes": [
+            "Used with 'pb_deformability' method. Defined as κ̄* ≡ k̄_n / k̄_s. By convention, κ̄* = 0.0 if either stiffness is 0."
+          ]
         },
         {
           "keyword": "pb_shear",
@@ -395,7 +445,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only. Calculated from Mohr-Coulomb criterion: τ̄_c = c̄ + σ̄ tan(φ̄). Current shear strength at bond periphery."
+          "notes": [
+            "Read-only. Calculated from Mohr-Coulomb criterion: τ̄_c = c̄ + σ̄ tan(φ̄). Current shear strength at bond periphery."
+          ]
         },
         {
           "keyword": "pb_sigma",
@@ -406,7 +458,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only. Current normal stress at bond periphery. Positive = tension, negative = compression. Compared against pb_ten for failure."
+          "notes": [
+            "Read-only. Current normal stress at bond periphery. Positive = tension, negative = compression. Compared against pb_ten for failure."
+          ]
         },
         {
           "keyword": "pb_tau",
@@ -417,7 +471,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only. Current maximum shear stress at bond periphery. Compared against pb_shear (τ̄_c) for failure."
+          "notes": [
+            "Read-only. Current maximum shear stress at bond periphery. Compared against pb_shear (τ̄_c) for failure."
+          ]
         },
         {
           "keyword": "pb_force",
@@ -428,7 +484,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Force from parallel bond only. Total force = lin_force + pb_force. In 2D: F̄_ss ≡ 0.",
+          "notes": [
+            "Force from parallel bond only. Total force = lin_force + pb_force. In 2D: F̄_ss ≡ 0."
+          ],
           "components": {
             "2D": "(-F̄_n, F̄_st)",
             "3D": "(-F̄_n, F̄_ss, F̄_st)"
@@ -443,7 +501,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Moment transmitted by parallel bond. Allows resistance to relative rotation. Scaled by pb_mcf. In 2D: M̄_s ≡ 0, M̄_t ≡ 0.",
+          "notes": [
+            "Moment transmitted by parallel bond. Allows resistance to relative rotation. Scaled by pb_mcf. In 2D: M̄_s ≡ 0, M̄_t ≡ 0."
+          ],
           "components": {
             "2D": "(M̄_n, 0, 0)",
             "3D": "(M̄_n, M̄_s, M̄_t)"
@@ -655,11 +715,13 @@
             "meaning": "Bond strain energy at onset of failure"
           }
         ],
-        "warning": "The official PFC 7 'rocktest' example reads the failure mode from entries(3) - that is a BUG in the example. entries(3) is the failure strength (a float), so 'mode == 1' never matches and every crack classifies as shear (or whatever the else-branch is). The failure mode is entries(2). Verified empirically on PFC2D 7.00.161 with single-bond tension and shear calibration tests: tension break -> entries(2)=1, entries(3)=pb_ten value; shear break -> entries(2)=2, entries(3)=cohesion-derived tau_c.",
         "usage_pattern": {
           "description": "Crack tracking with tension/shear classification (Brazilian/UCS tests). Tag each crack's group at creation so the fracture plot item can color by family (see itasca_browse_doc(source='reference', path='plot-items fracture')).",
           "fish": "fish define add_crack(entries)\n    local cp   = entries(1)\n    local mode = entries(2)   ; 1=tension, 2=shear  (NOT entries(3)!)\n    local dfn_label = 'crack_shear'\n    if mode = 1 then\n        dfn_label = 'crack_tension'\n    endif\n    ; ... create fracture in dfn.find(dfn_label), then:\n    ; fracture.group(frac) = dfn_label   ; enables per-family plot coloring\nend\nfish callback add add_crack event bond_break"
-        }
+        },
+        "notes": [
+          "Warning: The official PFC 7 'rocktest' example reads the failure mode from entries(3) - that is a BUG in the example. entries(3) is the failure strength (a float), so 'mode == 1' never matches and every crack classifies as shear (or whatever the else-branch is). The failure mode is entries(2). Verified empirically on PFC2D 7.00.161 with single-bond tension and shear calibration tests: tension break -> entries(2)=1, entries(3)=pb_ten value; shear break -> entries(2)=2, entries(3)=cohesion-derived tau_c."
+        ]
       }
     ]
   }

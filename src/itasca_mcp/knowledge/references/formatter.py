@@ -384,10 +384,10 @@ class ReferenceFormatter:
         parts.append("")
 
         # Notes
-        notes = target_property.get("notes", "")
+        notes = target_property.get("notes") or []
         if notes:
             parts.append("## Notes")
-            parts.append(notes)
+            parts.append("\n".join(notes) if isinstance(notes, list) else notes)
             parts.append("")
 
         # Usage context

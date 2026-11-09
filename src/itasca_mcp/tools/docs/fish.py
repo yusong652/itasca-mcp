@@ -23,7 +23,7 @@ _ENTRY_FIELDS = (
     "args",
     "settable",
     "dimension",
-    "note",
+    "notes",
     "family",
     "doc",
     "namespace",

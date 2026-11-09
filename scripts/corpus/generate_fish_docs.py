@@ -511,7 +511,7 @@ def main() -> None:
                 if st["dimension"]:
                     rec["dimension"] = st["dimension"]
                 elif st["note"]:
-                    rec["note"] = st["note"]
+                    rec["notes"] = [st["note"]]
             else:
                 rec["doc"] = None
             # The live tables outrank the manual's marker wherever a 2D build can be compared.
@@ -529,7 +529,7 @@ def main() -> None:
             elif name in inferred:
                 rec["description"] = inferred[name]
             if name in signature_fixes:
-                rec["note"] = signature_fixes[name]["note"]
+                rec["notes"] = [signature_fixes[name]["note"]]
             entries.append(rec)
         derive_component_descriptions(entries)
         target_dir = RES / ("_common" if scope == "common" else scope) / "fish_docs"
@@ -544,7 +544,10 @@ def main() -> None:
             "entries": entries,
         }
         if ns in curated["namespace_notes"]:
-            payload["notes"] = curated["namespace_notes"][ns]
+            # corpus-spec notes shape: a flat list, topic kept as a prefix.
+            payload["notes"] = [
+                f"{topic}: {line}" for topic, lines in curated["namespace_notes"][ns].items() for line in lines
+            ]
         path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         written[ns] = path
 

@@ -6,41 +6,6 @@
     "snapshot"
   ],
   "description": "Modify the usage of the wall results logic. This logic allows for a reduced version of the model state (i.e., wall geometries plus wall attributes) at different instances of time to be output as binary files. The wall result can be used to re-create the model state, acting as a utility for efficient post processing (e.g., movie generation, residence time calculations, etc.). IMPORTANT: A wall result file DOES NOT replace a PFC model state file and models re-created with this logic should not be cycled. See the model results command to specify when results files are created and how to import these files subsequently.",
-  "common_attributes": [
-    "position",
-    "position-x/y/z",
-    "displacement",
-    "displacement-x/y/z",
-    "velocity",
-    "velocity-x/y/z",
-    "spin",
-    "spin-x/y/z",
-    "rotation-center",
-    "euler (3D)",
-    "group (group variables)",
-    "extra (extra variables)"
-  ],
-  "use_cases": [
-    {
-      "use_case": "Movie generation",
-      "description": "Record wall positions and orientations at intervals to create visualization movies"
-    },
-    {
-      "use_case": "Residence time calculations",
-      "description": "Track wall attributes over time for post-processing analysis"
-    },
-    {
-      "use_case": "Efficient post-processing",
-      "description": "Save reduced model state (geometry + selected attributes) instead of full state files"
-    }
-  ],
-  "important_notes": [
-    "Wall result files are NOT full model state files",
-    "Models re-created from wall results should NOT be cycled",
-    "Use model results command to control when/how result files are created and imported",
-    "Only selected attributes are recorded (geometry + added attributes)",
-    "More efficient than full state saves for post-processing workflows"
-  ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('wall results ...') - Python SDK does not provide wall results logic control. This is a global post-processing utility"
@@ -178,5 +143,13 @@
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "Recordable attributes: position, position-x/y/z, displacement, displacement-x/y/z, velocity, velocity-x/y/z, spin, spin-x/y/z, rotation-center, euler (3D), group (group variables), extra (extra variables)",
+    "Wall result files are NOT full model state files",
+    "Models re-created from wall results should NOT be cycled",
+    "Use model results command to control when/how result files are created and imported",
+    "Only selected attributes are recorded (geometry + added attributes)",
+    "More efficient than full state saves for post-processing workflows"
+  ]
 }

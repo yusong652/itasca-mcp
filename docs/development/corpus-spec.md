@@ -112,7 +112,7 @@ and parallel list fields (`keywords_3d_only`, `mpoint2d_only_keywords`,
 - references `"mixed"` means per-member differences: the file loses its
   top-level `dimension` and tags members instead.
 
-## C. Notes and ad-hoc sections
+## C. Notes and ad-hoc sections (done 2026-11-09)
 
 Today: `note` (str) and `notes` (str or list) coexist in every tree;
 command_docs additionally has **190 distinct ad-hoc top-level keys** that
@@ -134,6 +134,12 @@ response is too large (`_COMMAND_CORE_FIELDS`).
   keeping becomes a `"<Title>: <content>"` note; sections that restate
   `keywords`/`description` or add no operative fact are deleted. Done tree by
   tree with dry-run diffs reviewed before `--write`.
+- Outcome (`scripts/corpus/migrate_notes.py`, decision table inside): of 401
+  command_docs section instances, 333 dropped, 64 folded by renderers
+  (related/important_notes/keyword-shaped lists), 33 files got hand-condensed
+  engine-fact notes, 4 left for later concerns (`plot_items`,
+  `dimension_differences`, `independent_dimensions`, `live_verification`).
+  `flag_figure_defined.py` now writes `figure_reference.notes`.
 - The related-item fields (`related_commands`, `related_models`,
   `related_modules`, `see_also`, `related`) fold into `notes` too (decided);
   entries that are not genuinely useful cross-references are dropped outright

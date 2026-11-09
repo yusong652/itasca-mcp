@@ -9,17 +9,6 @@
     "available": false,
     "workaround": "itasca.command('contact cmat modify ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "model_properties_reference": {
-    "path": "../model-properties/index.json",
-    "description": "For detailed property information for each contact model, see the model-properties reference documentation"
-  },
-  "related_commands": [
-    "contact cmat add",
-    "contact cmat list",
-    "contact cmat default",
-    "contact cmat apply",
-    "contact cmat remove"
-  ],
   "notes": [
     "Entry index i must be a valid existing entry (use 'contact cmat list' to check)",
     "Index 0 is the default entry and can be modified",
@@ -29,97 +18,9 @@
     "To update existing contacts after modifying CMAT, use 'contact cmat apply'",
     "Multiple properties can be set in a single command",
     "Multiple methods can be registered in a single command",
-    "Range specification is optional - if omitted, previous range is retained"
-  ],
-  "common_use_cases": [
-    {
-      "use_case": "Update bond strengths after calibration",
-      "command": "contact cmat modify 1 property pb_ten 2e8 pb_coh 1.5e8",
-      "description": "Adjust strength parameters based on calibration results without changing model or stiffnesses"
-    },
-    {
-      "use_case": "Change contact model for existing entry",
-      "command": "contact cmat modify 2 model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.5",
-      "description": "Switch from one model to another and set new model's properties"
-    },
-    {
-      "use_case": "Add damping to existing configuration",
-      "command": "contact cmat modify 3 property dp_nratio 0.7 dp_sratio 0.5 dp_mode 1",
-      "description": "Add dashpot damping to an existing entry for quasi-static simulations"
-    },
-    {
-      "use_case": "Update default entry (fallback behavior)",
-      "command": "contact cmat modify 0 model linear property kn 1e9 ks 5e8 fric 0.5",
-      "description": "Change the default contact model and properties"
-    },
-    {
-      "use_case": "Modify multiple aspects at once",
-      "command": "contact cmat modify 1 model linearpbond method deformability emod 5e9 kratio 1.5 method pb_deformability emod 5e10 kratio 1.5 property pb_ten 1e7 pb_coh 5e6 pb_fa 35.0",
-      "description": "Comprehensive modification including model, methods, and properties"
-    }
-  ],
-  "typical_workflow": [
-    "1. Use 'contact cmat list' to identify the entry index to modify",
-    "2. Execute 'contact cmat modify <i>' with desired changes",
-    "3. Verify modification with 'contact cmat list'",
-    "4. Note that only new contacts will use the modified entry",
-    "5. If needed, use 'contact cmat apply' to update existing contacts",
-    "6. Test contact creation to ensure modified entry works as expected"
-  ],
-  "modify_vs_other_commands": {
-    "modify_vs_add": {
-      "modify": "Updates existing entry at specific index, preserves index number",
-      "add": "Creates new entry, may insert at specified index or add to end"
-    },
-    "modify_vs_remove": {
-      "modify": "Changes entry content, entry remains in CMAT",
-      "remove": "Deletes entry completely, subsequent entries shift down"
-    },
-    "modify_vs_default": {
-      "modify": "Can modify any entry including default (index 0), requires explicit index",
-      "default": "Specifically for setting default entry, can use 'type' keyword to target specific contact types"
-    }
-  },
-  "partial_modification_behavior": {
-    "description": "When modifying an entry, only the specified keywords are updated. Unspecified properties retain their previous values.",
-    "examples": [
-      {
-        "scenario": "Entry has model=linear, kn=1e8, ks=5e7, fric=0.5",
-        "command": "contact cmat modify 1 property fric 0.6",
-        "result": "Entry now has model=linear, kn=1e8, ks=5e7, fric=0.6 (only fric updated)"
-      },
-      {
-        "scenario": "Entry has model=linear with properties",
-        "command": "contact cmat modify 1 model linearpbond property pb_ten 1e7",
-        "result": "Model changed to linearpbond, pb_ten set, but previous linear properties are lost (model change is comprehensive)"
-      }
-    ]
-  },
-  "warnings": [
-    {
-      "type": "model_change",
-      "message": "Changing the model keyword replaces the entire contact model - previous model-specific properties are lost",
-      "mitigation": "When changing models, specify all required properties for the new model"
-    },
-    {
-      "type": "existing_contacts",
-      "message": "Modifying CMAT entries does NOT affect existing contacts automatically",
-      "mitigation": "Use 'contact cmat apply' after modification to update existing contacts"
-    }
-  ],
-  "troubleshooting": [
-    {
-      "issue": "Invalid entry index error",
-      "solution": "Use 'contact cmat list' to verify entry exists at that index"
-    },
-    {
-      "issue": "Properties not taking effect",
-      "solution": "Modification only affects new contacts. Use 'contact cmat apply' to update existing contacts"
-    },
-    {
-      "issue": "Changed model but properties seem wrong",
-      "solution": "When changing models, all model-specific properties should be re-specified as previous model's properties are lost"
-    }
+    "Range specification is optional - if omitted, previous range is retained",
+    "Related commands: contact cmat add, contact cmat list, contact cmat default, contact cmat apply, contact cmat remove",
+    "Only the specified keywords change; the entry's other settings are retained - except a model change, which discards the previous model's properties."
   ],
   "versions": {
     "7.0": {

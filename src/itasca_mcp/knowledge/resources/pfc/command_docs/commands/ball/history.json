@@ -6,47 +6,6 @@
     "monitor"
   ],
   "description": "Add a history of a ball value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. The ball must be specified by either 'id' or 'position' keyword. Quantities that can be recorded include position, velocity, displacement, spin, euler, force-contact, force-unbalanced, moment-contact, moment-unbalanced, stress, ratio-local, and convergence. Live 9.7: the quantity slot was fully enumerated (Batch P1); an object selector (id <i> or position <v>) is REQUIRED after the quantity - omitting it fails with 'No object for history specified'.",
-  "quantity_categories": {
-    "position": [
-      "position-x",
-      "position-y",
-      "position-z",
-      "displacement",
-      "displacement-x/y/z"
-    ],
-    "velocity": [
-      "velocity",
-      "velocity-x",
-      "velocity-y",
-      "velocity-z",
-      "spin",
-      "spin-x/y/z"
-    ],
-    "orientation": [
-      "euler-x",
-      "euler-y",
-      "euler-z (3D)",
-      "rotation (2D)"
-    ],
-    "forces": [
-      "force-contact",
-      "force-contact-x/y/z",
-      "force-unbalanced",
-      "force-unbalanced-x/y/z"
-    ],
-    "moments": [
-      "moment-contact",
-      "moment-contact-x/y/z (3D)",
-      "moment-unbalanced",
-      "moment-unbalanced-x/y/z (3D)"
-    ],
-    "stress": [
-      "stress"
-    ],
-    "other": [
-      "extra"
-    ]
-  },
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('ball history ...') or manually record values using itasca.set_callback() with Ball getter methods"
@@ -772,6 +731,7 @@
     }
   },
   "notes": [
-    "'[ballhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (axis-angle-x, axis-angle-y, axis-angle-z, convergence, name, ratio-local)."
+    "'[ballhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (axis-angle-x, axis-angle-y, axis-angle-z, convergence, name, ratio-local).",
+    "History quantities: position: position-x, position-y, position-z, displacement, displacement-x/y/z; velocity: velocity, velocity-x, velocity-y, velocity-z, spin, spin-x/y/z; orientation: euler-x, euler-y, euler-z (3D), rotation (2D); forces: force-contact, force-contact-x/y/z, force-unbalanced, force-unbalanced-x/y/z; moments: moment-contact, moment-contact-x/y/z (3D), moment-unbalanced, moment-unbalanced-x/y/z (3D); stress: stress; other: extra"
   ]
 }

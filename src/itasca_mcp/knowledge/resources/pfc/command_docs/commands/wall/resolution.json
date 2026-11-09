@@ -6,35 +6,6 @@
     "strategy"
   ],
   "description": "Modify the contact-resolution strategy for faceted walls. By default, the resolution strategy is set to the 'reduced' state. In all cases, contact activity based on contact with active/inactive facet sides (see wall active-sides) is determined. Note: Eliciting this command does not result in an automatic 'cleaning' of the model state. See 'Faceted Walls in PFC' section for detailed explanation of resolution strategies.",
-  "resolution_comparison": [
-    {
-      "mode": "full",
-      "sliver_penetration": "Yes",
-      "cutoff_angle": "Active",
-      "proximity_contacts": "Yes (by default)",
-      "state_propagation": "Yes",
-      "performance": "Slow",
-      "accuracy": "High"
-    },
-    {
-      "mode": "reduced",
-      "sliver_penetration": "No",
-      "cutoff_angle": "Inactive",
-      "proximity_contacts": "No",
-      "state_propagation": "No",
-      "performance": "Medium",
-      "accuracy": "Medium"
-    },
-    {
-      "mode": "none",
-      "sliver_penetration": "No",
-      "cutoff_angle": "Inactive",
-      "proximity_contacts": "No",
-      "state_propagation": "No",
-      "performance": "Fast (but may create many contacts)",
-      "accuracy": "Low"
-    }
-  ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('wall resolution ...') - Python SDK does not provide wall resolution settings. This is a global contact resolution strategy"
@@ -157,5 +128,8 @@
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "full: sliver penetration handled, cutoff-angle active, proximity contacts and state propagation, slow but accurate. reduced: none of those, medium cost. none: fastest, but may create many contacts."
+  ]
 }

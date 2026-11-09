@@ -387,7 +387,7 @@ def _browse_object(
 
 
 # Fields every object page keeps when trimmed; the rest (usage examples, see-also...) are extra sections.
-_OBJECT_CORE_FIELDS = ("class", "description", "note", "namespace", "instantiation", "method_groups", "methods")
+_OBJECT_CORE_FIELDS = ("class", "description", "notes", "namespace", "instantiation", "method_groups", "methods")
 
 
 def _method_signatures(methods: list[Any]) -> list[Any]:

@@ -277,8 +277,8 @@ def test_3dec_colliding_class_names_disambiguate_by_full_path() -> None:
     # under its full path. Both keep correct, distinct method docs.
     bare = PythonAPILoader.load_object("Zone", software="3dec")
     flow = PythonAPILoader.load_object("itasca.flowplane.zone.Zone", software="3dec")
-    assert bare is not None and "block.zone" in bare["note"]
-    assert flow is not None and "flowplane.zone" in flow["note"]
+    assert bare is not None and "block.zone" in "; ".join(bare["notes"])
+    assert flow is not None and "flowplane.zone" in "; ".join(flow["notes"])
 
 
 def test_3dec_python_proprietary_modules_isolated_from_pfc_flac() -> None:
@@ -533,7 +533,7 @@ def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:
     assert {"mpoint.create", "mpoint.delete", "mpoint.stress.zz", "mpoint.node.mass.mult"} <= set(entries)
     # background-node argument-kind split must be stated, not left to be guessed
     notes = FishLoader.namespace_notes("mpoint", software="mpoint")
-    assert any("POINTER" in n and "POSITION" in n for n in notes["background-node"])
+    assert any(n.startswith("background-node:") and "POINTER" in n and "POSITION" in n for n in notes)
 
 
 def test_mpoint_borrows_common_kernel_verbatim() -> None:
@@ -679,7 +679,7 @@ def test_mpoint_demo_limits_are_measured_not_assumed() -> None:
     assert "mpoint cmodel assign" in mp["evidence"]
     assert "125000" in mp["evidence"]
     assert "background grid" in " ".join(mp).lower() or mp["not_the_background_grid"]
-    assert "erratic" in mp["caveat"]
+    assert any("erratic" in n for n in mp["notes"])
 
 
 def test_mpoint_documents_model_configure() -> None:
@@ -1288,7 +1288,7 @@ def test_massflow_constitutive_models_shared_via_common() -> None:
     doc = ReferenceLoader.load_item_doc("constitutive-models", "mohr-coulomb", software="massflow")
     assert doc == ReferenceLoader.load_item_doc("constitutive-models", "mohr-coulomb", software="flac")
     # The 5 superset models without a _common doc are disclosed, not fabricated.
-    assert "jones-wilkins-lee" in cat["note"]
+    assert "jones-wilkins-lee" in "; ".join(cat["notes"])
 
 
 def test_massflow_range_elements_shared_via_common() -> None:

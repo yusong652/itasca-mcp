@@ -6,34 +6,13 @@
     "STL"
   ],
   "description": "Export clumps to geometry sets for post-processing or STL export. If no range is specified, all clumps in the model are exported. Currently only supports export to geometry sets. Clumps with surface descriptions will use those surfaces; otherwise, a geometrical representation of each pebble is exported.",
-  "geometry_keywords": [
-    {
-      "name": "set",
-      "syntax": "set <s>",
-      "description": "Geometry set base name (default: 'set'). With 'split', creates sets named '<s>_clump<id>' for each clump. Without 'split', all clumps exported to one set with name <s>. Existing geometry objects in the set are not deleted (unless using split, which overrides existing sets with same name)"
-    },
-    {
-      "name": "resolution",
-      "syntax": "resolution <f>",
-      "description": "Facet edge resolution factor for pebble representations. Edge length < f * R where R is the ball radius (default: 0.25)"
-    },
-    {
-      "name": "split",
-      "syntax": "split",
-      "description": "Export each clump to dedicated geometry set (default: all clumps in one set). When specified, each clump is exported into a set named '<basename>_clump<id>'. Existing sets with the same name are overridden"
-    },
-    {
-      "name": "surfaces",
-      "syntax": "surfaces <b>",
-      "description": "If set to true, clump surface descriptions will be exported (when available) in place of a geometric representation of the clump pebbles. Default: true"
-    }
-  ],
   "notes": [
     "Clumps with surface descriptions use those surfaces when exported (if surfaces=true)",
     "Clumps without surface descriptions export geometrical representation of each pebble",
     "Geometry sets can be exported as STL files for use in third-party CAD software",
     "With split keyword: existing sets with same name are overridden",
-    "Without split keyword: existing geometry objects in the set are not deleted"
+    "Without split keyword: existing geometry objects in the set are not deleted",
+    "Geometry set keywords: set <s>: Geometry set base name (default: 'set'). With 'split', creates sets named '<s>_clump<id>' for each clump. Without 'split', all clumps exported to one set with name <s>. Existing geometry objects in the set are not deleted (unless using split, which overrides existing sets with same name); resolution <f>: Facet edge resolution factor for pebble representations. Edge length < f * R where R is the ball radius (default: 0.25); split: Export each clump to dedicated geometry set (default: all clumps in one set). When specified, each clump is exported into a set named '<basename>_clump<id>'. Existing sets with the same name are overridden; surfaces <b>: If set to true, clump surface descriptions will be exported (when available) in place of a geometric representation of the clump pebbles. Default: true"
   ],
   "python_sdk_alternative": {
     "available": false,
@@ -47,7 +26,7 @@
         {
           "name": "geometry",
           "syntax": "geometry {resolution <f> | set <s> | split | surfaces <b>}",
-          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. \u2018myset_clump1\u2019 for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
+          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. ‘myset_clump1’ for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
         }
       ],
       "examples": [
@@ -83,7 +62,9 @@
             "doc_path": "_images/clumpexportgeometry2.png"
           }
         ],
-        "note": "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        "notes": [
+          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        ]
       }
     },
     "6.0": {
@@ -93,7 +74,7 @@
         {
           "name": "geometry",
           "syntax": "geometry {resolution <f> | set <s> | split | surfaces <b>}",
-          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. \u2018myset_clump1\u2019 for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
+          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. ‘myset_clump1’ for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
         }
       ],
       "examples": [
@@ -129,7 +110,9 @@
             "doc_path": "_images/clumpexportgeometry2.png"
           }
         ],
-        "note": "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        "notes": [
+          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        ]
       }
     },
     "9.0": {
@@ -139,7 +122,7 @@
         {
           "name": "geometry",
           "syntax": "geometry {resolution <f> | set <s> | split | surfaces <b>}",
-          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. \u2018myset_clump1\u2019 for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
+          "description": "Options: resolution <f>: Resolution of the facet edges for the pebble representations. The number of facets is set so that the edge length is smaller than f * R , where R is the ball radius. By default, f = 0.25.; set <s>: Set the geometry set base name to s . If the split keyword is specified, then each clump is exported into a dedicated geometry set with a name corresponding to the base name to which the word clump followed by the clump ID is appended (e.g. ‘myset_clump1’ for a base name myset and the clump with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all clumps are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is set .; split: If specified, the split keyword results in each clump being exported into a dedicated geometry set. By default, all the clumps are exported into one unique geometry set (see above).; surfaces <b>: If set to true , the clump surface descriptions will be exported, when available, in place of a geometric representation of the clump pebbles. This is the default behavior."
         }
       ],
       "examples": [
@@ -175,7 +158,9 @@
             "doc_path": "_images/clumpexportgeometry2.png"
           }
         ],
-        "note": "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        "notes": [
+          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+        ]
       }
     }
   }

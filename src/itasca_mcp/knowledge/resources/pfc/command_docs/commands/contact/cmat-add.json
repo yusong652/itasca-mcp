@@ -10,12 +10,6 @@
     "available": false,
     "workaround": "itasca.command('contact cmat add ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "related_commands": [
-    "contact cmat default",
-    "contact cmat remove",
-    "contact model assign",
-    "contact property"
-  ],
   "notes": [
     "The range keyword is MANDATORY and must be specified LAST",
     "Entry index 0 is reserved for the default CMAT entry (set via 'cmat default')",
@@ -27,30 +21,8 @@
     "The 'inheritance' keyword can be specified globally or per-property",
     "Use 'mechanical' (default) or 'thermal' to specify contact type",
     "Methods registered via 'method' keyword execute automatically at contact creation",
-    "Use 'range group <name> matches 2' to require BOTH contacting pieces belong to the group"
-  ],
-  "common_use_cases": [
-    {
-      "use_case": "Default contact behavior",
-      "command": "contact cmat add model linear property kn 1e8 ks 5e7 fric 0.5 range contact"
-    },
-    {
-      "use_case": "Bonded particles in specific group",
-      "command": "contact cmat add model linearpbond property pb_kn 1e9 pb_ten 1e6 range group 'bonded'"
-    },
-    {
-      "use_case": "Different models for different contact types",
-      "command": "contact cmat add model hertz range contact type 'ball-ball'\ncontact cmat add model linear range contact type 'ball-facet'"
-    },
-    {
-      "use_case": "Automatic bond activation",
-      "command": "contact cmat add model linearpbond method bond range group 'cement'"
-    },
-    {
-      "use_case": "Multi-material mixing (glass + steel)",
-      "command": "contact cmat add 1 model hertz property hz_shear 1e9 range group 'glass' matches 2\ncontact cmat add 2 model hertz property hz_shear 2e9 range group 'steel' matches 2\ncontact cmat default type ball-ball model hertz property hz_shear 1.5e9",
-      "description": "Slot 1: glass-glass, Slot 2: steel-steel, Default: glass-steel (mixed)"
-    }
+    "Use 'range group <name> matches 2' to require BOTH contacting pieces belong to the group",
+    "Related commands: contact cmat default, contact cmat remove, contact model assign, contact property"
   ],
   "versions": {
     "7.0": {

@@ -127,7 +127,7 @@ def _build_flag(
     if deferrals:
         flag["text_incomplete"] = True
         flag["deferrals"] = deferrals[:MAX_DEFERRALS]
-    flag["note"] = NOTE_INCOMPLETE if deferrals else NOTE_NEUTRAL
+    flag["notes"] = [NOTE_INCOMPLETE if deferrals else NOTE_NEUTRAL]
     return flag
 
 

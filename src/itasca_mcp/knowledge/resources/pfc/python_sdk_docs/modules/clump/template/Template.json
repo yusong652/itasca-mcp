@@ -1,200 +1,419 @@
 {
   "class": "Template",
   "description": "Template object representing a reusable clump definition. Templates define clump geometry (pebble configuration) and inertial properties that can be instantiated multiple times efficiently. Obtained via itasca.clump.template.find(), itasca.clump.template.list(), or itasca.clump.template.make().",
-  "note": "Objects of this type should not be created (instantiated) directly in Python. Use module functions that return instances. Templates are immutable once clumps reference them.",
   "method_groups": {
-    "identification": ["id", "valid", "delete", "name"],
-    "pebble_management": ["pebbles", "add_pebble", "delete_pebble"],
-    "cloning": ["clone"],
-    "position": ["orig_pos", "orig_pos_x", "orig_pos_y", "orig_pos_z", "set_orig_pos", "set_orig_pos_x", "set_orig_pos_y", "set_orig_pos_z"],
-    "inertia": ["moi", "moi_prin", "moi_prin_x", "moi_prin_y", "moi_prin_z", "set_moi", "set_moi_prin", "set_moi_prin_x", "set_moi_prin_y", "set_moi_prin_z"],
-    "volume": ["vol", "set_vol"]
+    "identification": [
+      "id",
+      "valid",
+      "delete",
+      "name"
+    ],
+    "pebble_management": [
+      "pebbles",
+      "add_pebble",
+      "delete_pebble"
+    ],
+    "cloning": [
+      "clone"
+    ],
+    "position": [
+      "orig_pos",
+      "orig_pos_x",
+      "orig_pos_y",
+      "orig_pos_z",
+      "set_orig_pos",
+      "set_orig_pos_x",
+      "set_orig_pos_y",
+      "set_orig_pos_z"
+    ],
+    "inertia": [
+      "moi",
+      "moi_prin",
+      "moi_prin_x",
+      "moi_prin_y",
+      "moi_prin_z",
+      "set_moi",
+      "set_moi_prin",
+      "set_moi_prin_x",
+      "set_moi_prin_y",
+      "set_moi_prin_z"
+    ],
+    "volume": [
+      "vol",
+      "set_vol"
+    ]
   },
   "methods": [
     {
       "name": "id",
       "signature": "template.id() -> int",
       "description": "Get clump template ID number. Unique identifier for this template.",
-      "returns": {"type": "int", "description": "Template ID"}
+      "returns": {
+        "type": "int",
+        "description": "Template ID"
+      }
     },
     {
       "name": "valid",
       "signature": "template.valid() -> bool",
       "description": "Check if this object is a live clump template. Returns False if template has been deleted.",
-      "returns": {"type": "bool", "description": "True if template exists, False if deleted"}
+      "returns": {
+        "type": "bool",
+        "description": "True if template exists, False if deleted"
+      }
     },
     {
       "name": "delete",
       "signature": "template.delete() -> None",
       "description": "Delete this clump template. All clumps that referred to this clump template no longer refer to any clump template.",
-      "returns": {"type": "None", "description": "No return value"}
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "name",
       "signature": "template.name() -> str",
       "description": "Get the clump template name. Names are unique identifiers for templates.",
-      "returns": {"type": "str", "description": "Template name"}
+      "returns": {
+        "type": "str",
+        "description": "Template name"
+      }
     },
     {
       "name": "clone",
       "signature": "template.clone(new_template_name: str) -> Template",
       "description": "Clone this clump template. The new clump template has name new_template_name and no clumps refer to the created clump template initially.",
-      "parameters": [{"name": "new_template_name", "type": "str", "required": true, "description": "Name for the cloned template"}],
-      "returns": {"type": "Template", "description": "Newly cloned template object"}
+      "parameters": [
+        {
+          "name": "new_template_name",
+          "type": "str",
+          "required": true,
+          "description": "Name for the cloned template"
+        }
+      ],
+      "returns": {
+        "type": "Template",
+        "description": "Newly cloned template object"
+      }
     },
     {
       "name": "pebbles",
       "signature": "template.pebbles() -> tuple[TemplatePebble, ...]",
       "description": "Get the pebbles of this clump template as a tuple.",
-      "returns": {"type": "tuple[TemplatePebble, ...]", "description": "Tuple of TemplatePebble objects"}
+      "returns": {
+        "type": "tuple[TemplatePebble, ...]",
+        "description": "Tuple of TemplatePebble objects"
+      }
     },
     {
       "name": "add_pebble",
       "signature": "template.add_pebble(pebble_radius: float, pebble_position: vec, pebble_id: int = None) -> TemplatePebble",
       "description": "Add a pebble to clump template. This operation has no impact on the clump template inertial attributes. If optional argument ID not specified, ID is set to next available number.",
       "parameters": [
-        {"name": "pebble_radius", "type": "float", "required": true, "description": "Pebble radius"},
-        {"name": "pebble_position", "type": "vec", "required": true, "description": "Pebble position (x, y, z)"},
-        {"name": "pebble_id", "type": "int", "required": false, "description": "Optional pebble ID"}
+        {
+          "name": "pebble_radius",
+          "type": "float",
+          "required": true,
+          "description": "Pebble radius"
+        },
+        {
+          "name": "pebble_position",
+          "type": "vec",
+          "required": true,
+          "description": "Pebble position (x, y, z)"
+        },
+        {
+          "name": "pebble_id",
+          "type": "int",
+          "required": false,
+          "description": "Optional pebble ID"
+        }
       ],
-      "returns": {"type": "TemplatePebble", "description": "Created TemplatePebble object"}
+      "returns": {
+        "type": "TemplatePebble",
+        "description": "Created TemplatePebble object"
+      }
     },
     {
       "name": "delete_pebble",
       "signature": "template.delete_pebble(pebble: TemplatePebble) -> None",
       "description": "Delete a TemplatePebble from this template. This operation has no impact on template inertial attributes. Raises exception if any clumps refer to this template.",
-      "parameters": [{"name": "pebble", "type": "TemplatePebble", "required": true, "description": "TemplatePebble to delete"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "pebble",
+          "type": "TemplatePebble",
+          "required": true,
+          "description": "TemplatePebble to delete"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "orig_pos",
       "signature": "template.orig_pos() -> vec",
       "description": "Get clump template original position as vector (x, y, z).",
-      "returns": {"type": "vec", "description": "Original position coordinates"}
+      "returns": {
+        "type": "vec",
+        "description": "Original position coordinates"
+      }
     },
     {
       "name": "orig_pos_x",
       "signature": "template.orig_pos_x() -> float",
       "description": "Get X-component of clump template original position.",
-      "returns": {"type": "float", "description": "X coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "X coordinate"
+      }
     },
     {
       "name": "orig_pos_y",
       "signature": "template.orig_pos_y() -> float",
       "description": "Get Y-component of clump template original position.",
-      "returns": {"type": "float", "description": "Y coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "Y coordinate"
+      }
     },
     {
       "name": "orig_pos_z",
       "signature": "template.orig_pos_z() -> float",
       "description": "Get Z-component of clump template original position.",
-      "returns": {"type": "float", "description": "Z coordinate"}
+      "returns": {
+        "type": "float",
+        "description": "Z coordinate"
+      }
     },
     {
       "name": "set_orig_pos",
       "signature": "template.set_orig_pos(value: vec) -> None",
       "description": "Set clump template original position (vector).",
-      "parameters": [{"name": "value", "type": "vec", "required": true, "description": "(x, y, z) coordinates"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "(x, y, z) coordinates"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_orig_pos_x",
       "signature": "template.set_orig_pos_x(value: float) -> None",
       "description": "Set X-component of clump template original position.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "X coordinate"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "X coordinate"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_orig_pos_y",
       "signature": "template.set_orig_pos_y(value: float) -> None",
       "description": "Set Y-component of clump template original position.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "Y coordinate"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Y coordinate"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_orig_pos_z",
       "signature": "template.set_orig_pos_z(value: float) -> None",
       "description": "Set Z-component of clump template original position.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "Z coordinate"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Z coordinate"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "moi",
       "signature": "template.moi() -> tensor",
       "description": "Get clump template moment of inertia tensor. In 2D returns float (polar moment of inertia).",
-      "returns": {"type": "tensor", "description": "Moment of inertia tensor (or float in 2D)"}
+      "returns": {
+        "type": "tensor",
+        "description": "Moment of inertia tensor (or float in 2D)"
+      }
     },
     {
       "name": "set_moi",
       "signature": "template.set_moi(value: tensor) -> None",
       "description": "Set clump template moment of inertia. In 2D use float (polar moment). When modified, no other attributes change (pebble sizes, volume, etc.). Sets MOI to fixed state - won't auto-update when scaling unless user changes fix state.",
-      "parameters": [{"name": "value", "type": "tensor", "required": true, "description": "MOI tensor (or float in 2D)"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "tensor",
+          "required": true,
+          "description": "MOI tensor (or float in 2D)"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "moi_prin",
       "signature": "template.moi_prin() -> vec",
       "description": "Get clump template principal moment of inertia as vector.",
-      "returns": {"type": "vec", "description": "Principal moments (Ixx, Iyy, Izz)"}
+      "returns": {
+        "type": "vec",
+        "description": "Principal moments (Ixx, Iyy, Izz)"
+      }
     },
     {
       "name": "moi_prin_x",
       "signature": "template.moi_prin_x() -> float",
       "description": "Get X-component of clump template principal moment of inertia.",
-      "returns": {"type": "float", "description": "Principal MOI about X"}
+      "returns": {
+        "type": "float",
+        "description": "Principal MOI about X"
+      }
     },
     {
       "name": "moi_prin_y",
       "signature": "template.moi_prin_y() -> float",
       "description": "Get Y-component of clump template principal moment of inertia.",
-      "returns": {"type": "float", "description": "Principal MOI about Y"}
+      "returns": {
+        "type": "float",
+        "description": "Principal MOI about Y"
+      }
     },
     {
       "name": "moi_prin_z",
       "signature": "template.moi_prin_z() -> float",
       "description": "Get Z-component of clump template principal moment of inertia.",
-      "returns": {"type": "float", "description": "Principal MOI about Z"}
+      "returns": {
+        "type": "float",
+        "description": "Principal MOI about Z"
+      }
     },
     {
       "name": "set_moi_prin",
       "signature": "template.set_moi_prin(value: vec) -> None",
       "description": "Set clump template principal moment of inertia (vector).",
-      "parameters": [{"name": "value", "type": "vec", "required": true, "description": "Principal moments (Ixx, Iyy, Izz)"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "vec",
+          "required": true,
+          "description": "Principal moments (Ixx, Iyy, Izz)"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moi_prin_x",
       "signature": "template.set_moi_prin_x(value: float) -> None",
       "description": "Set X-component of clump template principal moment of inertia.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "Principal MOI about X"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Principal MOI about X"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moi_prin_y",
       "signature": "template.set_moi_prin_y(value: float) -> None",
       "description": "Set Y-component of clump template principal moment of inertia.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "Principal MOI about Y"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Principal MOI about Y"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "set_moi_prin_z",
       "signature": "template.set_moi_prin_z(value: float) -> None",
       "description": "Set Z-component of clump template principal moment of inertia.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "Principal MOI about Z"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "Principal MOI about Z"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     },
     {
       "name": "vol",
       "signature": "template.vol() -> float",
       "description": "Get clump template volume. In 2D this is volume per unit thickness.",
-      "returns": {"type": "float", "description": "Template volume"}
+      "returns": {
+        "type": "float",
+        "description": "Template volume"
+      }
     },
     {
       "name": "set_vol",
       "signature": "template.set_vol(value: float) -> None",
       "description": "Set clump template volume. In 2D this is volume per unit thickness.",
-      "parameters": [{"name": "value", "type": "float", "required": true, "description": "New volume"}],
-      "returns": {"type": "None", "description": "No return value"}
+      "parameters": [
+        {
+          "name": "value",
+          "type": "float",
+          "required": true,
+          "description": "New volume"
+        }
+      ],
+      "returns": {
+        "type": "None",
+        "description": "No return value"
+      }
     }
+  ],
+  "notes": [
+    "Objects of this type should not be created (instantiated) directly in Python. Use module functions that return instances. Templates are immutable once clumps reference them."
   ]
 }
