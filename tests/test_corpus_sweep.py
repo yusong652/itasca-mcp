@@ -215,7 +215,16 @@ def _entry_problems(where: str, entries: Any) -> list[str]:
 _RESOURCES = Path(__file__).resolve().parents[1] / "src" / "itasca_mcp" / "knowledge" / "resources"
 
 # Subtrees owned by later migration steps; their internals are not judged yet.
-_DEFERRED_SUBTREES = {"legacy_documentation", "dimension_differences", "independent_dimensions", "plot_items"}
+# (flac3d_liner_property_set and index_expansion: dimension step B / archetype step F.)
+_DEFERRED_SUBTREES = {
+    "legacy_documentation",
+    "dimension_differences",
+    "independent_dimensions",
+    "flac3d_liner_property_set",
+    "index_expansion",
+}
+# Whole categories owned by the dimension step.
+_DEFERRED_PATHS = ("references/dimension-differences/",)
 
 # Legacy spellings that section D retires. `source_urls` survives only inside
 # command_docs version blocks (the removed-command apparatus, step A).
@@ -234,15 +243,43 @@ _BANNED_KEYS = {
 }
 _BANNED_PREFIXES = ("live_verification", "live_enumeration", "binary_validated")
 
+# Section E: one structured keyword list. Every parallel *_keywords spelling is
+# retired except the curated search field and the range-element sub-keywords.
+_ALLOWED_KEYWORD_FIELDS = {"search_keywords", "sub_keywords"}
+_BANNED_SECTION_KEYS = {"plot_items", "condition_families", "common_keywords"}
+_KEYWORD_ENTRY_BANNED = {"keyword", "engines", "examples", "available_parameters", "required", "parameters"}
 
-def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool) -> list[str]:
+
+def _keyword_entry_problems(entries: Any, rel: str, jp: str) -> list[str]:
+    problems: list[str] = []
+    for i, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            problems.append(f"{rel} @{jp}[{i}]: keyword entry is not a dict: {entry!r}")
+            continue
+        name = entry.get("name")
+        if not (isinstance(name, str) and name.strip()):
+            problems.append(f"{rel} @{jp}[{i}]: keyword entry without a name")
+        for banned in _KEYWORD_ENTRY_BANNED & set(entry):
+            problems.append(f"{rel} @{jp}[{i}]: keyword entry field {banned!r}")
+    return problems
+
+
+def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool, parent_key: str = "") -> list[str]:
     problems: list[str] = []
     if isinstance(node, dict):
         for key, value in node.items():
             if key in _BANNED_KEYS or key.startswith(_BANNED_PREFIXES):
                 problems.append(f"{rel} @{jp}: legacy field {key!r}")
+            if key in _BANNED_SECTION_KEYS:
+                problems.append(f"{rel} @{jp}: retired section {key!r}")
+            if key.endswith("_keywords") and key not in _ALLOWED_KEYWORD_FIELDS:
+                problems.append(f"{rel} @{jp}: parallel keyword list {key!r}")
+            if key == "engines" and parent_key != "availability":
+                problems.append(f"{rel} @{jp}: bare 'engines' outside availability")
             if key == "source_urls" and not in_command_docs:
                 problems.append(f"{rel} @{jp}: legacy field 'source_urls'")
+            if key in ("keywords", "sub_keywords") and isinstance(value, list):
+                problems.extend(_keyword_entry_problems(value, rel, f"{jp}.{key}"))
             if key == "verification" and not (
                 isinstance(value, list) and value and all(isinstance(v, str) and v.strip() for v in value)
             ):
@@ -252,10 +289,10 @@ def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool) -> list
             ):
                 problems.append(f"{rel} @{jp}: 'source' is not str | list[str]")
             if key not in _DEFERRED_SUBTREES:
-                problems.extend(_shape_problems(value, rel, f"{jp}.{key}", in_command_docs))
+                problems.extend(_shape_problems(value, rel, f"{jp}.{key}", in_command_docs, key))
     elif isinstance(node, list):
         for i, value in enumerate(node):
-            problems.extend(_shape_problems(value, rel, f"{jp}[{i}]", in_command_docs))
+            problems.extend(_shape_problems(value, rel, f"{jp}[{i}]", in_command_docs, parent_key))
     return problems
 
 
@@ -263,6 +300,8 @@ def test_no_legacy_naming_or_provenance_fields_remain() -> None:
     problems: list[str] = []
     for path in sorted(_RESOURCES.rglob("*.json")):
         rel = path.relative_to(_RESOURCES).as_posix()
+        if any(deferred in rel for deferred in _DEFERRED_PATHS):
+            continue
         doc = json.loads(path.read_text(encoding="utf-8"))
         problems.extend(_shape_problems(doc, rel, "$", "/command_docs/" in f"/{rel}"))
     assert problems == []

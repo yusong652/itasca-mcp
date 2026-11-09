@@ -177,21 +177,38 @@ class CommandLoader:
         return CommandLoader._scope_keywords(resolved, software)
 
     @staticmethod
+    def _keyword_engines(keyword: Any) -> list[str] | None:
+        if not isinstance(keyword, dict):
+            return None
+        availability = keyword.get("availability")
+        engines = availability.get("engines") if isinstance(availability, dict) else None
+        return engines if isinstance(engines, list) else None
+
+    @staticmethod
     def _scope_keywords(doc: dict[str, Any], software: str) -> dict[str, Any]:
         """Keep only the keywords a shared doc tags for this engine.
 
         A ``_common`` doc lists every product's variants (``fish callback`` names zone,
-        block and ball events alike); a keyword carrying ``"engines": [...]`` is served
-        to those engines only, untagged keywords to all.
+        block and ball events alike); a keyword carrying ``availability.engines`` is
+        served to those engines only, untagged keywords to all. The engines tag is
+        consumed here: the served entry keeps any other availability content.
         """
         keywords = doc.get("keywords")
-        if not isinstance(keywords, list) or not any(isinstance(k, dict) and "engines" in k for k in keywords):
+        if not isinstance(keywords, list) or not any(CommandLoader._keyword_engines(k) for k in keywords):
             return doc
-        scoped = [
-            {key: value for key, value in k.items() if key != "engines"} if isinstance(k, dict) else k
-            for k in keywords
-            if not (isinstance(k, dict) and software not in k.get("engines", [software]))
-        ]
+        scoped = []
+        for keyword in keywords:
+            engines = CommandLoader._keyword_engines(keyword)
+            if engines is None:
+                scoped.append(keyword)
+                continue
+            if software not in engines:
+                continue
+            availability = {key: value for key, value in keyword["availability"].items() if key != "engines"}
+            served = {key: value for key, value in keyword.items() if key != "availability"}
+            if availability:
+                served["availability"] = availability
+            scoped.append(served)
         return {**doc, "keywords": scoped}
 
     @staticmethod

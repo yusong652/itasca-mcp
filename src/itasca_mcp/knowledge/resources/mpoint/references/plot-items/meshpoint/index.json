@@ -12,72 +12,24 @@
     "grid"
   ],
   "description": "Background-grid mesh points — the fixed computational grid through which material points move. Use to inspect the grid resolution and extent relative to the material-point body.",
-  "top_level_keywords": [
-    "active",
-    "clear",
-    "clip",
-    "cut",
-    "global",
-    "label",
-    "legend",
-    "map",
-    "pixel-size",
-    "quality",
-    "range",
-    "transparency"
-  ],
-  "basic_keywords": [
-    {
-      "keyword": "active",
-      "description": "Show or hide the item without removing it.",
-      "syntax": "active <bool>"
-    },
-    {
-      "keyword": "label",
-      "description": "Bare switch that turns on categorical colouring of grid nodes and opens a sub-context: 'label extra <1..128>', 'label fixity', 'label group <string>', 'label uniform'. Unlike mpoint-hybrid's 'label', it takes no string of its own -- 'label \"name\"' is rejected.",
-      "syntax": "label [extra <int> | fixity | group <string> | uniform | ...]"
-    },
-    {
-      "keyword": "global",
-      "description": "Draw across the whole model (ignore per-plot clipping).",
-      "syntax": "global <bool>"
-    },
-    {
-      "keyword": "range",
-      "description": "Filter which entities are drawn using range elements (see references/range-elements).",
-      "syntax": "range <range-element> [...]"
-    },
-    {
-      "keyword": "legend",
-      "description": "Show/configure the item legend.",
-      "syntax": "legend <sub-keyword> [<value>]"
-    },
-    {
-      "keyword": "map",
-      "description": "Configure the contour colour map (ranges, intervals, colours).",
-      "syntax": "map <sub-keyword> [<value>]"
-    },
-    {
-      "keyword": "cut",
-      "description": "Apply a 3D cutting plane to the item.",
-      "syntax": "cut active on origin (x,y,z) normal (nx,ny,nz)"
-    },
-    {
-      "keyword": "transparency",
-      "description": "Set item transparency (0 opaque .. 100 fully transparent).",
-      "syntax": "transparency <0-100>"
-    }
-  ],
   "sub_items": [
     {
       "name": "label",
       "syntax": "plot item create meshpoint label [<sub-keyword> ...]",
       "description": "Categorical colouring of grid nodes. 'label' itself takes no argument; it opens a sub-context whose keywords are NOT offered at the item's top level.",
       "keywords": [
-        "extra",
-        "fixity",
-        "group",
-        "uniform"
+        {
+          "name": "extra"
+        },
+        {
+          "name": "fixity"
+        },
+        {
+          "name": "group"
+        },
+        {
+          "name": "uniform"
+        }
       ],
       "verification": [
         "state -- MPoint3D 9.7; each sub-keyword accepted after 'label', rejected before it"
@@ -108,5 +60,59 @@
       "The split is systematic rather than per-item: 'clip', 'cut', 'quality' and 'transparency' are 3D rendering concepts and are absent from every MPoint item type in 2D, while 'spheres' is how 2D draws point entities and appears only on the point items ('mpoint', 'mpoint-hybrid', 'meshpoint'), not the vector ones. 'mpoint-tensor' has an identical keyword set in both."
     ]
   },
-  "syntax": "plot item create meshpoint <keywords...>"
+  "syntax": "plot item create meshpoint <keywords...>",
+  "keywords": [
+    {
+      "description": "Show or hide the item without removing it.",
+      "syntax": "active <bool>",
+      "name": "active"
+    },
+    {
+      "description": "Bare switch that turns on categorical colouring of grid nodes and opens a sub-context: 'label extra <1..128>', 'label fixity', 'label group <string>', 'label uniform'. Unlike mpoint-hybrid's 'label', it takes no string of its own -- 'label \"name\"' is rejected.",
+      "syntax": "label [extra <int> | fixity | group <string> | uniform | ...]",
+      "name": "label"
+    },
+    {
+      "description": "Draw across the whole model (ignore per-plot clipping).",
+      "syntax": "global <bool>",
+      "name": "global"
+    },
+    {
+      "description": "Filter which entities are drawn using range elements (see references/range-elements).",
+      "syntax": "range <range-element> [...]",
+      "name": "range"
+    },
+    {
+      "description": "Show/configure the item legend.",
+      "syntax": "legend <sub-keyword> [<value>]",
+      "name": "legend"
+    },
+    {
+      "description": "Configure the contour colour map (ranges, intervals, colours).",
+      "syntax": "map <sub-keyword> [<value>]",
+      "name": "map"
+    },
+    {
+      "description": "Apply a 3D cutting plane to the item.",
+      "syntax": "cut active on origin (x,y,z) normal (nx,ny,nz)",
+      "name": "cut"
+    },
+    {
+      "description": "Set item transparency (0 opaque .. 100 fully transparent).",
+      "syntax": "transparency <0-100>",
+      "name": "transparency"
+    },
+    {
+      "name": "clear"
+    },
+    {
+      "name": "clip"
+    },
+    {
+      "name": "pixel-size"
+    },
+    {
+      "name": "quality"
+    }
+  ]
 }

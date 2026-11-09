@@ -167,12 +167,28 @@ bans every retired spelling outside the deferred subtrees.
 | syntax line | `syntax`, `base_syntax`, `documented_syntax`, `alt_syntax` | `syntax` (single string). `base_syntax` is a rename (those files have no `syntax`). `documented_syntax` is the manual's spelling echo — delete; a trailing "(2D ONLY)" / "(engine-specific)" tag moves to dimension/availability. `alt_syntax` (6 range elements) is a real second calling form — fold into notes as "Alternate form: ...". |
 | example entry | `{command, description}` + stragglers `use_case` (386), `model` (66), `output_example` (9), and a few legacy bare-string examples | `{command, description}`; `use_case` merges into `description`, `model` becomes an `availability`-style tag only if load-bearing, else description text; bare strings become `{command}` |
 
-## E. Keywords
+## E. Keywords (done 2026-11-09)
+
+Outcome (`scripts/corpus/migrate_keywords.py`, 110 files): 49 parallel lists
+dissolved, 749 entry edits. Entry canon `{name, syntax?, description?,
+availability?, dimension?, optional?, group?}` (+ cross-cutting
+notes/verification): bare strings → `{name}`, `keyword` → `name`, keyword
+`engines` tags → `availability.engines` (loader consumes from there, fish via
+the generator), entry examples/parameters folded into entry notes. references
+`*_keywords` → one `keywords` list with `group` (management/result/shared/
+categorical/beam-family/condition families; `top_level_keywords` enumerations
+became name-only entries; `flac3d_extra_keywords` → `dimension: "3D"`).
+command index `common_keywords` dropped; `plot_items` catalogs compressed to
+notes (type list + coupled-only tag + dfn/fracture/chart-history keep-notes);
+the two rblock keyword-aid files rewritten to the phrase→API-path shape their
+siblings use. Deferred to B: `*/references/dimension-differences/`,
+`flac3d_liner_property_set`; to F: `index_expansion`.
 
 - Structured keyword entry (command_docs and references alike):
   `{name, syntax, description, availability?, dimension?, optional?}`.
-  `verified` (16) → `verification` note on the file. `kwd:` prefixes stay
-  (path addressing strips them).
+  Keyword-level `verification` lists stay on the entry (decided during D/E:
+  the fact is about that keyword; lifting it to the file loses the anchor).
+  `kwd:` prefixes stay (path addressing strips them).
 - The dozens of `*_keywords` list fields in references
   (`basic_keywords`, `top_level_keywords`, `management_keywords`,
   `beam_family_keywords`, ...) dissolve into the structured `keywords` list,
@@ -194,8 +210,8 @@ right shape (`spec-first`, 2026-11-07):
    category_name, parameters?, sub_keywords?, supports_extent?, examples,
    notes, source`.
 3. **plot/data item** (ball, clump, wall, block, zone, mpoint, marker, ...):
-   `name, parent, description, syntax, keywords, modes?, attributes?,
-   notes, verification`.
+   `name, description, syntax, keywords, modes?, attributes?,
+   notes, verification` (`parent` deleted in section D: the path carries it).
 4. **topic page** (boundary-conditions, initial-conditions,
    histories-and-results, structural-properties, file-formats, workflows,
    ...): `name, full_name, description, dimension?, primary_commands,

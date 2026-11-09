@@ -9,55 +9,6 @@
     "block fix",
     "block apply"
   ],
-  "condition_families": [
-    {
-      "family": "gridpoint velocity (prescribed)",
-      "keywords": [
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z",
-        "velocity-normal"
-      ],
-      "notes": [
-        "Applying a velocity fixes that component; use 0 to pin a boundary."
-      ]
-    },
-    {
-      "family": "gridpoint force / reaction",
-      "keywords": [
-        "force",
-        "force-x",
-        "force-y",
-        "force-z",
-        "reaction",
-        "reaction-normal",
-        "reaction-x",
-        "reaction-y",
-        "reaction-z"
-      ],
-      "notes": [
-        "'reaction' reports/holds the reaction force at constrained gridpoints; 'reaction-normal' (live-enumerated) is the face-normal variant."
-      ]
-    },
-    {
-      "family": "rigid-block fixity",
-      "keywords": [
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z",
-        "rotation",
-        "rotation-x",
-        "rotation-y",
-        "rotation-z"
-      ],
-      "notes": [
-        "'block fix velocity|rotation ...' fixes rigid-block translation/rotation;",
-        "'block apply velocity ...' drives rigid-block translation. Live 'block apply' enumeration: fish range table velocity velocity-x velocity-y velocity-z — the value can also come from a 'fish' function or 'table'."
-      ]
-    }
-  ],
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/modeling/problemsolving/boundaryconditions.html",
   "verification": [
     "Live enumeration (9.7) of 'block gridpoint apply': apply apply-remove fish force force-x force-y force-z group initialize list quiet quiet-x quiet-y quiet-z range reaction reaction-normal reaction-x reaction-y reaction-z source table temperature trace velocity velocity-normal velocity-x velocity-y velocity-z verbose viscous viscous-x viscous-y viscous-z",
@@ -65,5 +16,101 @@
     "Live enumeration (9.7) of 'block fix': range rotation rotation-x rotation-y rotation-z velocity velocity-x velocity-y velocity-z",
     "The 'block gridpoint apply' enumeration is context-free (identical under thermal/dynamic/fluid configure): quiet/viscous (dynamic), temperature (thermal) and source (fluid) are always visible — see thermal-and-dynamic and fluid-flow.",
     "There is NO 'block gridpoint history' subcommand (live 9.7 rejects it) — sample gridpoint quantities via 'block history <field> gridpointid <i>'."
+  ],
+  "keywords": [
+    {
+      "name": "velocity",
+      "group": "gridpoint velocity (prescribed)"
+    },
+    {
+      "name": "velocity-x",
+      "group": "gridpoint velocity (prescribed)"
+    },
+    {
+      "name": "velocity-y",
+      "group": "gridpoint velocity (prescribed)"
+    },
+    {
+      "name": "velocity-z",
+      "group": "gridpoint velocity (prescribed)"
+    },
+    {
+      "name": "velocity-normal",
+      "group": "gridpoint velocity (prescribed)"
+    },
+    {
+      "name": "force",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "force-x",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "force-y",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "force-z",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "reaction",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "reaction-normal",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "reaction-x",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "reaction-y",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "reaction-z",
+      "group": "gridpoint force / reaction"
+    },
+    {
+      "name": "velocity",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "velocity-x",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "velocity-y",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "velocity-z",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "rotation",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "rotation-x",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "rotation-y",
+      "group": "rigid-block fixity"
+    },
+    {
+      "name": "rotation-z",
+      "group": "rigid-block fixity"
+    }
+  ],
+  "notes": [
+    "Applying a velocity fixes that component; use 0 to pin a boundary.",
+    "'reaction' reports/holds the reaction force at constrained gridpoints; 'reaction-normal' (live-enumerated) is the face-normal variant.",
+    "'block fix velocity|rotation ...' fixes rigid-block translation/rotation;",
+    "'block apply velocity ...' drives rigid-block translation. Live 'block apply' enumeration: fish range table velocity velocity-x velocity-y velocity-z — the value can also come from a 'fish' function or 'table'."
   ]
 }

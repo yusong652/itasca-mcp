@@ -788,15 +788,15 @@ def test_mpoint_plot_item_label_differs_per_item_type() -> None:
     hybrid = ReferenceLoader.load_item_doc("plot-items", "mpoint-hybrid", software="mpoint")
     mesh = ReferenceLoader.load_item_doc("plot-items", "meshpoint", software="mpoint")
     assert hybrid is not None and mesh is not None
-    assert hybrid["top_level_keywords"] == mesh["top_level_keywords"]
+    assert {k["name"] for k in hybrid["keywords"]} == {k["name"] for k in mesh["keywords"]}
 
     def label_syntax(doc: dict) -> str:  # type: ignore[type-arg]
-        return next(k for k in doc["basic_keywords"] if k["keyword"] == "label")["syntax"]
+        return next(k for k in doc["keywords"] if k["name"] == "label")["syntax"]
 
     assert label_syntax(hybrid) == "label <string>"
     assert label_syntax(mesh) != label_syntax(hybrid)
     sub = next(s for s in mesh["sub_items"] if s["name"] == "label")
-    assert set(sub["keywords"]) == {"extra", "fixity", "group", "uniform"}
+    assert {k["name"] for k in sub["keywords"]} == {"extra", "fixity", "group", "uniform"}
 
 
 def test_mpoint_plot_items_document_argument_types_and_hidden_modifier() -> None:
@@ -974,7 +974,7 @@ def test_mpoint_boundary_conditions_use_mpoint_syntax() -> None:
     node = ReferenceLoader.load_item_doc("boundary-conditions", "grid-node-fixity", software="mpoint")
     # MPM grid-node fixity, not FLAC's 'zone gridpoint fix'.
     assert "mpoint node fix" in node["primary_commands"]
-    fams = {f["family"] for f in node["condition_families"]}
+    fams = {k.get("group") for k in node["keywords"]}
     assert "prescribed fluid velocity" in fams
 
 
@@ -1467,7 +1467,7 @@ def test_massflow_plot_items_cover_the_chart_types() -> None:
     assert {"chart-table", "chart-history"} <= names
     table = ReferenceLoader.load_item_doc("plot-items", "chart-table", software="massflow")
     assert table is not None
-    kw = {k["keyword"] for k in table["basic_keywords"]}
+    kw = {k["name"] for k in table["keywords"]}
     assert {"table", "axis-x", "axis-y"} <= kw
 
 

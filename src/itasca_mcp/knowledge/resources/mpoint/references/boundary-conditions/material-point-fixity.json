@@ -7,40 +7,6 @@
     "mpoint fix",
     "mpoint free"
   ],
-  "condition_families": [
-    {
-      "family": "prescribed velocity",
-      "keywords": [
-        "velocity",
-        "velocity-x",
-        "velocity-y",
-        "velocity-z"
-      ],
-      "notes": [
-        "'mpoint fix velocity-x 0 range ...' restrains but does not pin -- see 'live_verification' for the measured comparison against 'mpoint node fix'.",
-        "The value is optional: 'mpoint fix velocity-x' sets the fixity flag alone."
-      ]
-    },
-    {
-      "family": "pore pressure (fluid)",
-      "keywords": [
-        "pore-pressure"
-      ],
-      "notes": [
-        "Fix pore pressure for the hydro-mechanical / fluid-coupled solution."
-      ]
-    },
-    {
-      "family": "modifiers",
-      "keywords": [
-        "multiplier",
-        "range"
-      ],
-      "notes": [
-        "'multiplier' applies a time-varying factor and takes a float between 1 and 100; 'range' scopes which material points are affected."
-      ]
-    }
-  ],
   "dimension_differences": {
     "plane": {
       "mpoint2d": "x-y",
@@ -96,5 +62,41 @@
     "Trap: 'mpoint initialize-stresses ?' refuses to enumerate until 'model gravity' is set.",
     "Trap: 'ratio' accepts TWO values but '?' reports only one float; the second is invisible until you pass it. A third is rejected.",
     "Trap: 'mpoint fix velocity-x' takes an OPTIONAL value -- after the keyword the parser offers either a float or more keywords."
+  ],
+  "keywords": [
+    {
+      "name": "velocity",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-x",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-y",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "velocity-z",
+      "group": "prescribed velocity"
+    },
+    {
+      "name": "pore-pressure",
+      "group": "pore pressure (fluid)"
+    },
+    {
+      "name": "multiplier",
+      "group": "modifiers"
+    },
+    {
+      "name": "range",
+      "group": "modifiers"
+    }
+  ],
+  "notes": [
+    "'mpoint fix velocity-x 0 range ...' restrains but does not pin -- see 'live_verification' for the measured comparison against 'mpoint node fix'.",
+    "The value is optional: 'mpoint fix velocity-x' sets the fixity flag alone.",
+    "Fix pore pressure for the hydro-mechanical / fluid-coupled solution.",
+    "'multiplier' applies a time-varying factor and takes a float between 1 and 100; 'range' scopes which material points are affected."
   ]
 }

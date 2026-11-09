@@ -177,8 +177,8 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
             "description": item_doc.get("description", ""),
             "syntax": item_doc.get("syntax", ""),
         }
-        if "basic_keywords" in item_doc:
-            overview["basic_keywords"] = item_doc["basic_keywords"]
+        if "keywords" in item_doc:
+            overview["keywords"] = item_doc["keywords"]
         if "common_usage_patterns" in item_doc:
             overview["common_usage_patterns"] = item_doc["common_usage_patterns"]
         overview["sub_items"] = [{"name": s["name"], "description": s.get("description", "")} for s in sub_items]

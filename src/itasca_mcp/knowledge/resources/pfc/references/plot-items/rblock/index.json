@@ -12,34 +12,6 @@
     "volume"
   ],
   "description": "Configuration keywords for 'plot item create rblock'. Controls rigid block rendering, coloring by attributes, cut planes, and legend display.",
-  "basic_keywords": [
-    {
-      "keyword": "active on",
-      "description": "Show item in plot (default when created)",
-      "syntax": "active on"
-    },
-    {
-      "keyword": "active off",
-      "description": "Hide item without removing it",
-      "syntax": "active off"
-    },
-    {
-      "keyword": "legend active on",
-      "description": "Show color legend for this item",
-      "syntax": "legend active on",
-      "notes": [
-        "Recommended when using color-by or cut"
-      ]
-    },
-    {
-      "keyword": "color-options",
-      "description": "Configure color scale for numeric/vector attributes",
-      "syntax": "color-options scaled ramp rainbow minimum automatic maximum automatic",
-      "notes": [
-        "Goes with color-by for continuous color mapping; never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by). Verified on PFC3D 6.00.30, 7.00.161 and 9.8.54 (2026-10-29)."
-      ]
-    }
-  ],
   "sub_items": [
     {
       "name": "color-by",
@@ -73,5 +45,33 @@
     "First-slot keywords on PFC3D 9.7: active both-directions clip color-by color-options cut ghosts legend map orientation range scale-by-magnitude selected-only shape template transparency.",
     "rblock 'shape' drill-down (live 9.7): arrow ball core facet rblock + cell-extent/minimum-extent/shrink-factor sizing keywords."
   ],
-  "syntax": "plot item create rblock <keywords...>"
+  "syntax": "plot item create rblock <keywords...>",
+  "keywords": [
+    {
+      "description": "Show item in plot (default when created)",
+      "syntax": "active on",
+      "name": "active on"
+    },
+    {
+      "description": "Hide item without removing it",
+      "syntax": "active off",
+      "name": "active off"
+    },
+    {
+      "description": "Show color legend for this item",
+      "syntax": "legend active on",
+      "notes": [
+        "Recommended when using color-by or cut"
+      ],
+      "name": "legend active on"
+    },
+    {
+      "description": "Configure color scale for numeric/vector attributes",
+      "syntax": "color-options scaled ramp rainbow minimum automatic maximum automatic",
+      "notes": [
+        "Goes with color-by for continuous color mapping; never as the last clause: on PFC 6.0, 7.0 and 9.8 a color-options that ends the command silently drops the color-by and the item falls back to a plain color (follow it with e.g. 'legend active on', or put it before color-by). Verified on PFC3D 6.00.30, 7.00.161 and 9.8.54 (2026-10-29)."
+      ],
+      "name": "color-options"
+    }
+  ]
 }
