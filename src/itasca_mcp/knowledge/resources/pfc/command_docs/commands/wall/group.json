@@ -9,175 +9,93 @@
     "available": true,
     "workaround": "Wall.set_group(group_name, slot) or Facet.set_group(group_name, slot) for setting; Wall.group_remove(group_name, slot) or Facet.group_remove(group_name, slot) for removing - requires iteration over wall/facet range"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall group",
-      "syntax": "wall group <s> keyword ... [facet] [range]",
-      "keywords": [
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Assign s to the next available slot."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from all slots."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Set group slot slot to s . By default, slot Default is used."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall group 'boundary'",
-          "description": "Assign all walls to group 'boundary' in default slot"
-        },
-        {
-          "command": "wall group 'facetassembly' facet",
-          "description": "Assign all facets to group 'facetassembly' in default slot"
-        },
-        {
-          "command": "wall group 'container' slot 'A'",
-          "description": "Assign all walls to group 'container' in slot 'A'"
-        },
-        {
-          "command": "wall group 'walls' range id 1 10",
-          "description": "Assign walls with IDs 1-10 to group 'walls' in default slot"
-        },
-        {
-          "command": "wall group 'oldgroup' remove",
-          "description": "Remove group 'oldgroup' from all slots for all walls"
-        },
-        {
-          "command": "wall group 'top' facet range position-z 9 10",
-          "description": "Assign facets at z-position 9-10 to group 'top' in default slot"
-        },
-        {
-          "command": "wall group 'layer1' slot 'layer' range name 'foundation'",
-          "description": "Assign walls named 'foundation' to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "wall group 'bot' range group 'top' not",
-          "description": "Assign walls NOT in group 'top' to group 'bot' (from official docs)"
-        }
-      ],
-      "notes": [
-        "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall group",
+  "syntax": "wall group <s> keyword ... [facet] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "wall group",
-      "syntax": "wall group <s> keyword ... [facet] [range]",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the walls or facets. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s . The default slot name is Default ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall group 'boundary'",
-          "description": "Assign all walls to group 'boundary' in default slot"
-        },
-        {
-          "command": "wall group 'facetassembly' facet",
-          "description": "Assign all facets to group 'facetassembly' in default slot"
-        },
-        {
-          "command": "wall group 'container' slot 'A'",
-          "description": "Assign all walls to group 'container' in slot 'A'"
-        },
-        {
-          "command": "wall group 'walls' range id 1 10",
-          "description": "Assign walls with IDs 1-10 to group 'walls' in default slot"
-        },
-        {
-          "command": "wall group 'oldgroup' remove",
-          "description": "Remove group 'oldgroup' from all slots for all walls"
-        },
-        {
-          "command": "wall group 'top' facet range position-z 9 10",
-          "description": "Assign facets at z-position 9-10 to group 'top' in default slot"
-        },
-        {
-          "command": "wall group 'layer1' slot 'layer' range name 'foundation'",
-          "description": "Assign walls named 'foundation' to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "wall group 'bot' range group 'top' not",
-          "description": "Assign walls NOT in group 'top' to group 'bot' (from official docs)"
-        }
-      ],
-      "notes": [
-        "Live 6.00: the first slot is the group name (String); modifiers follow the name."
-      ]
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": {
+        "6.0": "Remove s from the walls or facets. If a slot is not specified, the group name is removed from all slots it is found in.",
+        "7.0": "Remove s from all slots.",
+        "9.0": "Remove s from all slots."
+      }
     },
-    "9.0": {
-      "command": "wall group",
-      "syntax": "wall group <s> keyword ... [facet] [range]",
-      "keywords": [
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Assign s to the next available slot."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from all slots."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <slot>",
-          "description": "Set group slot slot to s . By default, slot Default is used."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall group 'boundary'",
-          "description": "Assign all walls to group 'boundary' in default slot"
-        },
-        {
-          "command": "wall group 'facetassembly' facet",
-          "description": "Assign all facets to group 'facetassembly' in default slot"
-        },
-        {
-          "command": "wall group 'container' slot 'A'",
-          "description": "Assign all walls to group 'container' in slot 'A'"
-        },
-        {
-          "command": "wall group 'walls' range id 1 10",
-          "description": "Assign walls with IDs 1-10 to group 'walls' in default slot"
-        },
-        {
-          "command": "wall group 'oldgroup' remove",
-          "description": "Remove group 'oldgroup' from all slots for all walls"
-        },
-        {
-          "command": "wall group 'top' facet range position-z 9 10",
-          "description": "Assign facets at z-position 9-10 to group 'top' in default slot"
-        },
-        {
-          "command": "wall group 'layer1' slot 'layer' range name 'foundation'",
-          "description": "Assign walls named 'foundation' to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "wall group 'bot' range group 'top' not",
-          "description": "Assign walls NOT in group 'top' to group 'bot' (from official docs)"
-        }
-      ],
-      "notes": [
-        "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
-      ]
+    {
+      "name": "slot",
+      "syntax": {
+        "6.0": "slot <s>",
+        "7.0": "slot <slot>",
+        "9.0": "slot <slot>"
+      },
+      "description": {
+        "6.0": "Assign the group to the slot named s . The default slot name is Default .",
+        "7.0": "Set group slot slot to s . By default, slot Default is used.",
+        "9.0": "Set group slot slot to s . By default, slot Default is used."
+      }
     }
+  ],
+  "examples": [
+    {
+      "command": "wall group 'boundary'",
+      "description": "Assign all walls to group 'boundary' in default slot"
+    },
+    {
+      "command": "wall group 'facetassembly' facet",
+      "description": "Assign all facets to group 'facetassembly' in default slot"
+    },
+    {
+      "command": "wall group 'container' slot 'A'",
+      "description": "Assign all walls to group 'container' in slot 'A'"
+    },
+    {
+      "command": "wall group 'walls' range id 1 10",
+      "description": "Assign walls with IDs 1-10 to group 'walls' in default slot"
+    },
+    {
+      "command": "wall group 'oldgroup' remove",
+      "description": "Remove group 'oldgroup' from all slots for all walls"
+    },
+    {
+      "command": "wall group 'top' facet range position-z 9 10",
+      "description": "Assign facets at z-position 9-10 to group 'top' in default slot"
+    },
+    {
+      "command": "wall group 'layer1' slot 'layer' range name 'foundation'",
+      "description": "Assign walls named 'foundation' to group 'layer1' in slot 'layer'"
+    },
+    {
+      "command": "wall group 'bot' range group 'top' not",
+      "description": "Assign walls NOT in group 'top' to group 'bot' (from official docs)"
+    }
+  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00: the first slot is the group name (String); modifiers follow the name."
+    ],
+    "7.0": [
+      "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+    ],
+    "9.0": [
+      "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+    ]
   }
 }

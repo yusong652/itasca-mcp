@@ -6,322 +6,158 @@
     "single"
   ],
   "description": "Create a single clump from a template. If no size measure is given, then the clump template volume is retained. If the density keyword is not given, then the clump is given unit density. This command creates a single clump instance, contrasting with clump generate which creates multiple clumps.",
-  "notes": [
-    "A model domain must be specified prior to clump replication",
-    "The replicated clump must fall entirely within the model domain",
-    "While cycling, clumps can only be created before cycle point 0 (i.e., when the timestep is calculated)",
-    "If no size measure is given, the clump template volume is retained",
-    "Default density is 1.0 if not specified",
-    "Cannot use both position and original-position keywords simultaneously",
-    "Rotation is applied via angle and axis keywords using right-hand rule"
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00 verified: template is named via the 'template <s>' keyword form."
+    ],
+    "7.0": [
+      "Live 7.00 verified: template is named via the 'template <s>' keyword form."
+    ],
+    "9.0": [
+      "Live 9.7 verified: template is named via the 'template <s>' keyword form."
+    ]
+  },
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('clump replicate ...') - Python SDK cannot directly replicate clumps from templates"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump replicate",
-      "syntax": "clump replicate keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the clump in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs in the out-of-plane direction."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the clump. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the clump that is 1 by default."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [pebble]",
-          "description": "The group slot slot is set to s for the newly created clump. If slot is not specified, then s is assigned to the group slot Default . The pebble keyword specifies that the group is assigned to the pebbles and not to the clump."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Clump ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the clump centroid will be set to the original position of the clump template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Clump position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The \\(x\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The \\(y\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz>",
-          "description": "The \\(z\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the clump template to be replicated."
-        },
-        {
-          "name": "size",
-          "syntax": "size <fvol>",
-          "description": "Scale the clump to have a volume of fvol . In 2D, the volume assumes disk with unit thickness."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump replicate diameter [r2 * 2.0] name 'ball1'",
-          "description": "Create a clump from template 'ball1'. Size set from diameter of equivalent circle (2D) or sphere (3D)"
-        },
-        {
-          "command": "clump replicate name 'rock1' pos (2,2,2) diameter 2.0",
-          "description": "Create a clump from template 'rock1' with size from equivalent sphere diameter and specified position"
-        },
-        {
-          "command": "clump replicate name 'triad' position 0.5 0.5 1.5 diameter 0.25 axis 0 1 1 angle 45",
-          "description": "Create a clump from template 'triad' with position, size, and orientation (rotated 45° about axis (0,1,1))"
-        },
-        {
-          "command": "clump replicate name 'template1' original-position density 2500 id 100",
-          "description": "Create clump at template's original position with density 2500 and ID 100"
-        },
-        {
-          "command": "clump replicate name 'rock' size 1.5 group 'aggregate' slot 'material'",
-          "description": "Create clump with volume 1.5, assign to group 'aggregate' in slot 'material'"
-        }
-      ],
-      "notes": [
-        "Live 7.00 verified: template is named via the 'template <s>' keyword form."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump replicate",
+  "syntax": "clump replicate keyword ...",
+  "keywords": [
+    {
+      "name": "angle",
+      "syntax": "angle <fang>",
+      "description": "Angle about which to rotate the clump in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs in the out-of-plane direction."
     },
-    "6.0": {
-      "command": "clump replicate",
-      "syntax": "clump replicate keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the clump in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs in the out-of-plane direction."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the clump. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the clump that is 1 by default."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function with name sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [pebble]",
-          "description": "The group slot slot is set to s for the newly created clump. If slot is not specified, then s is assigned to the group slot Default . The pebble keyword specifies that the group is assigned to the pebbles and not to the clump."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Clump ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the clump centroid will be set to the original position of the clump template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Clump position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The x -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The y -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz>",
-          "description": "The z -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the clump template to be replicated."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <fvol>",
-          "description": "Scale the clump to have a volume of fvol . In 2D, the volume assumes disk with unit thickness."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump replicate diameter [r2 * 2.0] name 'ball1'",
-          "description": "Create a clump from template 'ball1'. Size set from diameter of equivalent circle (2D) or sphere (3D)"
-        },
-        {
-          "command": "clump replicate name 'rock1' pos (2,2,2) diameter 2.0",
-          "description": "Create a clump from template 'rock1' with size from equivalent sphere diameter and specified position"
-        },
-        {
-          "command": "clump replicate name 'triad' position 0.5 0.5 1.5 diameter 0.25 axis 0 1 1 angle 45",
-          "description": "Create a clump from template 'triad' with position, size, and orientation (rotated 45° about axis (0,1,1))"
-        },
-        {
-          "command": "clump replicate name 'template1' original-position density 2500 id 100",
-          "description": "Create clump at template's original position with density 2500 and ID 100"
-        },
-        {
-          "command": "clump replicate name 'rock' size 1.5 group 'aggregate' slot 'material'",
-          "description": "Create clump with volume 1.5, assign to group 'aggregate' in slot 'material'"
-        }
-      ],
-      "notes": [
-        "Live 6.00 verified: template is named via the 'template <s>' keyword form."
-      ]
+    {
+      "name": "axis",
+      "syntax": "axis <vaxis>",
+      "description": "Axis about which to rotate the clump. If no axis is specified, then no rotation occurs."
     },
-    "9.0": {
-      "command": "clump replicate",
-      "syntax": "clump replicate keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the clump in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs in the out-of-plane direction."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the clump. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the clump that is 1 by default."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [pebble]",
-          "description": "The group slot slot is set to s for the newly created clump. If slot is not specified, then s is assigned to the group slot Default . The pebble keyword specifies that the group is assigned to the pebbles and not to the clump."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Clump ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the clump centroid will be set to the original position of the clump template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Clump position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The \\(x\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The \\(y\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz> 3D ONLY",
-          "description": "The \\(z\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the clump template to be replicated."
-        },
-        {
-          "name": "size",
-          "syntax": "size <fvol>",
-          "description": "Scale the clump to have a volume of fvol . In 2D, the volume assumes disk with unit thickness."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump replicate diameter [r2 * 2.0] name 'ball1'",
-          "description": "Create a clump from template 'ball1'. Size set from diameter of equivalent circle (2D) or sphere (3D)"
-        },
-        {
-          "command": "clump replicate name 'rock1' pos (2,2,2) diameter 2.0",
-          "description": "Create a clump from template 'rock1' with size from equivalent sphere diameter and specified position"
-        },
-        {
-          "command": "clump replicate name 'triad' position 0.5 0.5 1.5 diameter 0.25 axis 0 1 1 angle 45",
-          "description": "Create a clump from template 'triad' with position, size, and orientation (rotated 45° about axis (0,1,1))"
-        },
-        {
-          "command": "clump replicate name 'template1' original-position density 2500 id 100",
-          "description": "Create clump at template's original position with density 2500 and ID 100"
-        },
-        {
-          "command": "clump replicate name 'rock' size 1.5 group 'aggregate' slot 'material'",
-          "description": "Create clump with volume 1.5, assign to group 'aggregate' in slot 'material'"
-        }
-      ],
-      "notes": [
-        "Live 9.7 verified: template is named via the 'template <s>' keyword form."
-      ]
+    {
+      "name": "density",
+      "syntax": "density <fden>",
+      "description": "Density of the clump that is 1 by default."
+    },
+    {
+      "name": "diameter",
+      "syntax": "diameter <fdiam>",
+      "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
+    },
+    {
+      "name": "fish-size",
+      "syntax": "fish-size <sfname> <fval>",
+      "description": {
+        "6.0": "Use the FISH function with name sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size.",
+        "7.0": "Use the FISH function sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size.",
+        "9.0": "Use the FISH function sfname to scale the “size” of the clump template to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
+      }
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>] [pebble]",
+      "description": "The group slot slot is set to s for the newly created clump. If slot is not specified, then s is assigned to the group slot Default . The pebble keyword specifies that the group is assigned to the pebbles and not to the clump."
+    },
+    {
+      "name": "id",
+      "syntax": "id <id>",
+      "description": "Clump ID that is the next available ID by default."
+    },
+    {
+      "name": "original-position",
+      "syntax": "original-position",
+      "description": "Specify that the clump centroid will be set to the original position of the clump template when it was created."
+    },
+    {
+      "name": "position",
+      "syntax": "position <vpos>",
+      "description": "Clump position that is the origin by default. This keyword cannot be given with the original-position keyword."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <fposx>",
+      "description": {
+        "6.0": "The x -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "7.0": "The \\(x\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "9.0": "The \\(x\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <fposy>",
+      "description": {
+        "6.0": "The y -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "7.0": "The \\(y\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "9.0": "The \\(y\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z <fposz>",
+        "7.0": "position-z <fposz>",
+        "9.0": "position-z <fposz> 3D ONLY"
+      },
+      "description": {
+        "6.0": "The z -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "7.0": "The \\(z\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords.",
+        "9.0": "The \\(z\\) -component of the clump position that is 0 by default. This keyword cannot be given with the calculate or origposition keywords."
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Name of the clump template to be replicated."
+    },
+    {
+      "name": "size",
+      "syntax": "size <fvol>",
+      "description": "Scale the clump to have a volume of fvol . In 2D, the volume assumes disk with unit thickness.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "volume",
+      "syntax": "volume <fvol>",
+      "description": "Scale the clump to have a volume of fvol . In 2D, the volume assumes disk with unit thickness.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump replicate diameter [r2 * 2.0] name 'ball1'",
+      "description": "Create a clump from template 'ball1'. Size set from diameter of equivalent circle (2D) or sphere (3D)"
+    },
+    {
+      "command": "clump replicate name 'rock1' pos (2,2,2) diameter 2.0",
+      "description": "Create a clump from template 'rock1' with size from equivalent sphere diameter and specified position"
+    },
+    {
+      "command": "clump replicate name 'triad' position 0.5 0.5 1.5 diameter 0.25 axis 0 1 1 angle 45",
+      "description": "Create a clump from template 'triad' with position, size, and orientation (rotated 45° about axis (0,1,1))"
+    },
+    {
+      "command": "clump replicate name 'template1' original-position density 2500 id 100",
+      "description": "Create clump at template's original position with density 2500 and ID 100"
+    },
+    {
+      "command": "clump replicate name 'rock' size 1.5 group 'aggregate' slot 'material'",
+      "description": "Create clump with volume 1.5, assign to group 'aggregate' in slot 'material'"
+    }
+  ]
 }

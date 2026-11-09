@@ -9,63 +9,56 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure dynamic damping",
-      "syntax": "structure dynamic damping keyword ... [range]",
-      "keywords": [
-        {
-          "name": "combined-local",
-          "syntax": "combined-local <f1>",
-          "description": "sets the damping scheme used by the structural element logic to combined-local damping. The local damping factor is f1 ."
-        },
-        {
-          "name": "local",
-          "syntax": "local <f1>",
-          "description": "sets the damping scheme used by the structural element logic to local damping. This is the default setting for static mode . The local damping factor is f1 ."
-        },
-        {
-          "name": "none",
-          "syntax": "none",
-          "description": "sets the damping scheme used by the structural element logic to no damping. This is the default setting for dynamic mode ."
-        },
-        {
-          "name": "rayleigh",
-          "syntax": "rayleigh <f1> <f2>",
-          "description": "sets the damping scheme used by the structural element logic to Rayleigh damping. The stiffness-proportional constant is f1 = beta , and the mass-proportional constant is f2 = alpha . This command must be used when the dynamic option is configured and turned on."
-        }
-      ]
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure dynamic damping",
+  "syntax": "structure dynamic damping keyword ... [range]",
+  "keywords": [
+    {
+      "name": "combined-local",
+      "syntax": "combined-local <f1>",
+      "description": {
+        "7.0": "sets the damping scheme used by the structural element logic to combined-local damping. The local damping factor is f1 .",
+        "9.0": "combined damping (see Local Damping ) for all nodes in the range. The combined damping factor is f1 ."
+      }
     },
-    "9.0": {
-      "command": "structure dynamic damping",
-      "syntax": "structure dynamic damping keyword ... [range]",
-      "keywords": [
-        {
-          "name": "combined-local",
-          "syntax": "combined-local <f1>",
-          "description": "combined damping (see Local Damping ) for all nodes in the range. The combined damping factor is f1 ."
-        },
-        {
-          "name": "local",
-          "syntax": "local <f1>",
-          "description": "local damping (see Local Damping ) for all nodes in the range. The local damping factor is f1 ."
-        },
-        {
-          "name": "maxwell",
-          "syntax": "maxwell <fd1> <f1> <fd2> <f2> <fd3> <f3> [off-when-yield <b>]",
-          "description": "Maxwell damping (see Maxwell Damping ) for all structural elements in the range. f1 is the center frequency of the first Maxwell component and fd1 is the maximum damping ratio of the first Maxwell component; f2 is the center frequency of the second Maxwell component and fd2 is the maximum damping ratio of the second Maxwell component; f3 is the center frequency of the third Maxwell component and fd3 is the maximum damping ratio of the third Maxwell component. This command must be issued when the dynamic option is configured and turned on. If off-when-yield = on/yes/true (default), the Maxwell damping will be inactivated when the constitutive model is yielding; If off-when-yield = off/no/false , the Maxwell damping will still be active when the constitutive model is yielding. This damping automatically transfers to the conformable link whose source node belong to the structure element in the range. To separately assign or modify the dynamic damping for deformable links, see the command structure link dynamic-damping ."
-        },
-        {
-          "name": "none",
-          "syntax": "none",
-          "description": "no damping for all nodes in the range. This is the default setting for dynamic mode ."
-        },
-        {
-          "name": "rayleigh",
-          "syntax": "rayleigh <f1> <f2>",
-          "description": "Rayleigh damping (see Rayleigh Damping ) for all nodes in the range. The stiffness-proportional constant is f1 = beta , and the mass-proportional constant is f2 = alpha . This command must be issued when the dynamic option is configured and turned on."
-        }
-      ]
+    {
+      "name": "local",
+      "syntax": "local <f1>",
+      "description": {
+        "7.0": "sets the damping scheme used by the structural element logic to local damping. This is the default setting for static mode . The local damping factor is f1 .",
+        "9.0": "local damping (see Local Damping ) for all nodes in the range. The local damping factor is f1 ."
+      }
+    },
+    {
+      "name": "maxwell",
+      "syntax": "maxwell <fd1> <f1> <fd2> <f2> <fd3> <f3> [off-when-yield <b>]",
+      "description": "Maxwell damping (see Maxwell Damping ) for all structural elements in the range. f1 is the center frequency of the first Maxwell component and fd1 is the maximum damping ratio of the first Maxwell component; f2 is the center frequency of the second Maxwell component and fd2 is the maximum damping ratio of the second Maxwell component; f3 is the center frequency of the third Maxwell component and fd3 is the maximum damping ratio of the third Maxwell component. This command must be issued when the dynamic option is configured and turned on. If off-when-yield = on/yes/true (default), the Maxwell damping will be inactivated when the constitutive model is yielding; If off-when-yield = off/no/false , the Maxwell damping will still be active when the constitutive model is yielding. This damping automatically transfers to the conformable link whose source node belong to the structure element in the range. To separately assign or modify the dynamic damping for deformable links, see the command structure link dynamic-damping .",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "none",
+      "syntax": "none",
+      "description": {
+        "7.0": "sets the damping scheme used by the structural element logic to no damping. This is the default setting for dynamic mode .",
+        "9.0": "no damping for all nodes in the range. This is the default setting for dynamic mode ."
+      }
+    },
+    {
+      "name": "rayleigh",
+      "syntax": "rayleigh <f1> <f2>",
+      "description": {
+        "7.0": "sets the damping scheme used by the structural element logic to Rayleigh damping. The stiffness-proportional constant is f1 = beta , and the mass-proportional constant is f2 = alpha . This command must be used when the dynamic option is configured and turned on.",
+        "9.0": "Rayleigh damping (see Rayleigh Damping ) for all nodes in the range. The stiffness-proportional constant is f1 = beta , and the mass-proportional constant is f2 = alpha . This command must be issued when the dynamic option is configured and turned on."
+      }
     }
-  }
+  ]
 }

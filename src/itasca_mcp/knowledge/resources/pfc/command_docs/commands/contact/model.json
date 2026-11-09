@@ -48,435 +48,238 @@
       "Use range specification in command interface to avoid Python iteration"
     ]
   },
-  "notes": [
-    "WARNING: Changing model COMPLETELY REPLACES the contact model - all previous model data is LOST",
-    "Affects EXISTING contacts, not future contact creation (unlike CMAT commands)",
-    "After changing model, you must set the new model's properties using 'contact property'",
-    "If no range specified, ALL contacts are affected",
-    "Can assign built-in models or custom plug-in models (registered with 'program load')",
-    "Use 'null' model to effectively disable contacts without deleting them",
-    "Model assignment takes effect immediately",
-    "More efficient than Python iteration for bulk model changes",
-    "Related commands: contact property, contact cmat add, contact cmat default, contact cmat apply",
-    "Assigning a model replaces the previous one and discards all of its property data; set the new model's properties afterwards."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact model",
-      "syntax": "contact model keyword [range]",
-      "keywords": [
-        {
-          "name": "arrlinear",
-          "syntax": "arrlinear",
-          "description": "Specify the Adhesive Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "beam",
-          "syntax": "beam",
-          "description": ""
-        },
-        {
-          "name": "bilinear",
-          "syntax": "bilinear",
-          "description": "Specify the Bilinear Contact Model contact model."
-        },
-        {
-          "name": "burger",
-          "syntax": "burger",
-          "description": "Specify the Burger’s Model contact model."
-        },
-        {
-          "name": "eepa",
-          "syntax": "eepa",
-          "description": ""
-        },
-        {
-          "name": "fish",
-          "syntax": "fish",
-          "description": "Specify the FISH Model contact model."
-        },
-        {
-          "name": "flatjoint",
-          "syntax": "flatjoint",
-          "description": "Specify the Flat-Joint Model contact model."
-        },
-        {
-          "name": "hertz",
-          "syntax": "hertz",
-          "description": "Specify the Hertz Model contact model."
-        },
-        {
-          "name": "hill",
-          "syntax": "hill",
-          "description": ""
-        },
-        {
-          "name": "hysteretic",
-          "syntax": "hysteretic",
-          "description": "Specify the Hysteretic Model contact model."
-        },
-        {
-          "name": "jkr",
-          "syntax": "jkr",
-          "description": ""
-        },
-        {
-          "name": "linear",
-          "syntax": "linear",
-          "description": "Specify the Linear Model contact model."
-        },
-        {
-          "name": "linearcbond",
-          "syntax": "linearcbond",
-          "description": "Specify the Linear Contact Bond Model contact model."
-        },
-        {
-          "name": "lineardipole",
-          "syntax": "lineardipole 3D ONLY",
-          "description": "Specify the Linear Dipole Model contact model."
-        },
-        {
-          "name": "linearpbond",
-          "syntax": "linearpbond",
-          "description": "Specify the Linear Parallel Bond Model contact model."
-        },
-        {
-          "name": "mohr",
-          "syntax": "mohr",
-          "description": ""
-        },
-        {
-          "name": "null",
-          "syntax": "null",
-          "description": "Specify the Null Model contact model."
-        },
-        {
-          "name": "rrlinear",
-          "syntax": "rrlinear",
-          "description": "Specify the Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "smoothjoint",
-          "syntax": "smoothjoint",
-          "description": "Specify the Smooth-Joint Model contact model."
-        },
-        {
-          "name": "softbond",
-          "syntax": "softbond",
-          "description": "Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "springnetwork",
-          "syntax": "springnetwork",
-          "description": "Specify the Spring Network Model contact model."
-        },
-        {
-          "name": "subspringnetwork",
-          "syntax": "subspringnetwork",
-          "description": "Specify the Subspring Network Model contact model."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact model null range group 'bottom-platen' match 2",
-          "description": "Disable contacts in 'bottom-platen' group with match count of 2 (from BBM example) (model: null)."
-        },
-        {
-          "command": "contact model 'linearpbond' range contact type 'ball-ball'",
-          "description": "Change all ball-ball contacts to linearpbond model (from CMAT example) (model: linearpbond)."
-        },
-        {
-          "command": "contact model flatjoint",
-          "description": "Assign flatjoint model to all contacts (from rock testing example) (model: flatjoint)."
-        },
-        {
-          "command": "contact model linear range group 'soil'",
-          "description": "Change contacts in 'soil' group to linear model (model: linear)."
-        },
-        {
-          "command": "contact model hertz range contact type 'ball-ball'",
-          "description": "Switch ball-ball contacts to nonlinear Hertz model (model: hertz)."
-        },
-        {
-          "command": "contact model linearcbond range contact",
-          "description": "Change all contacts to linearcbond model for point-based bonding (model: linearcbond)."
-        },
-        {
-          "command": "contact model mechanical linear",
-          "description": "Explicitly assign linear model to mechanical contacts (model: linear)."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
-      ]
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact model",
+  "syntax": {
+    "6.0": "contact [<sprocess>] model keyword [range]",
+    "7.0": "contact model keyword [range]",
+    "9.0": "contact model keyword [range]"
+  },
+  "keywords": [
+    {
+      "name": "arrlinear",
+      "syntax": "arrlinear",
+      "description": "Specify the Adhesive Rolling Resistance Linear Model contact model."
     },
-    "6.0": {
-      "command": "contact model",
-      "syntax": "contact [<sprocess>] model keyword [range]",
-      "keywords": [
-        {
-          "name": "arrlinear",
-          "syntax": "arrlinear",
-          "description": "Specify the Adhesive Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "beam",
-          "syntax": "beam",
-          "description": ""
-        },
-        {
-          "name": "burger",
-          "syntax": "burger",
-          "description": "Specify the Burger’s Model contact model."
-        },
-        {
-          "name": "flatjoint",
-          "syntax": "flatjoint",
-          "description": "Specify the Flat-Joint Model contact model."
-        },
-        {
-          "name": "hertz",
-          "syntax": "hertz",
-          "description": "Specify the Hertz Model contact model."
-        },
-        {
-          "name": "hill",
-          "syntax": "hill",
-          "description": ""
-        },
-        {
-          "name": "hysteretic",
-          "syntax": "hysteretic",
-          "description": "Specify the Hysteretic Model contact model."
-        },
-        {
-          "name": "linear",
-          "syntax": "linear",
-          "description": "Specify the Linear Model contact model."
-        },
-        {
-          "name": "linearcbond",
-          "syntax": "linearcbond",
-          "description": "Specify the Linear Contact Bond Model contact model."
-        },
-        {
-          "name": "linearpbond",
-          "syntax": "linearpbond",
-          "description": "Specify the Linear Parallel Bond Model contact model."
-        },
-        {
-          "name": "null",
-          "syntax": "null",
-          "description": "Specify the Null Model contact model."
-        },
-        {
-          "name": "rrlinear",
-          "syntax": "rrlinear",
-          "description": "Specify the Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "smoothjoint",
-          "syntax": "smoothjoint",
-          "description": "Specify the Smooth-Joint Model contact model."
-        },
-        {
-          "name": "softbond",
-          "syntax": "softbond",
-          "description": "Specify the Soft-Bond Model contact model."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact model null range group 'bottom-platen' match 2",
-          "description": "Disable contacts in 'bottom-platen' group with match count of 2 (from BBM example) (model: null)."
-        },
-        {
-          "command": "contact model 'linearpbond' range contact type 'ball-ball'",
-          "description": "Change all ball-ball contacts to linearpbond model (from CMAT example) (model: linearpbond)."
-        },
-        {
-          "command": "contact model flatjoint",
-          "description": "Assign flatjoint model to all contacts (from rock testing example) (model: flatjoint)."
-        },
-        {
-          "command": "contact model linear range group 'soil'",
-          "description": "Change contacts in 'soil' group to linear model (model: linear)."
-        },
-        {
-          "command": "contact model hertz range contact type 'ball-ball'",
-          "description": "Switch ball-ball contacts to nonlinear Hertz model (model: hertz)."
-        },
-        {
-          "command": "contact model linearcbond range contact",
-          "description": "Change all contacts to linearcbond model for point-based bonding (model: linearcbond)."
-        },
-        {
-          "command": "contact model mechanical linear",
-          "description": "Explicitly assign linear model to mechanical contacts (model: linear)."
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
-      ]
+    {
+      "name": "beam",
+      "syntax": "beam",
+      "description": ""
     },
-    "9.0": {
-      "command": "contact model",
-      "syntax": "contact model keyword [range]",
-      "keywords": [
-        {
-          "name": "arrlinear",
-          "syntax": "arrlinear",
-          "description": "Specify the Adhesive Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "beam",
-          "syntax": "beam",
-          "description": ""
-        },
-        {
-          "name": "bilinear",
-          "syntax": "bilinear",
-          "description": "Specify the Bilinear Contact Model contact model."
-        },
-        {
-          "name": "bisubspringnetwork",
-          "syntax": "bisubspringnetwork",
-          "description": ""
-        },
-        {
-          "name": "burger",
-          "syntax": "burger",
-          "description": "Specify the Burger’s Model contact model."
-        },
-        {
-          "name": "eepa",
-          "syntax": "eepa",
-          "description": ""
-        },
-        {
-          "name": "fish",
-          "syntax": "fish",
-          "description": "Specify the FISH Model contact model."
-        },
-        {
-          "name": "flatjoint",
-          "syntax": "flatjoint",
-          "description": "Specify the Flat-Joint Model contact model."
-        },
-        {
-          "name": "hertz",
-          "syntax": "hertz",
-          "description": "Specify the Hertz Model contact model."
-        },
-        {
-          "name": "hill",
-          "syntax": "hill",
-          "description": ""
-        },
-        {
-          "name": "hysteretic",
-          "syntax": "hysteretic",
-          "description": "Specify the Hysteretic Model contact model."
-        },
-        {
-          "name": "jkr",
-          "syntax": "jkr",
-          "description": ""
-        },
-        {
-          "name": "linear",
-          "syntax": "linear",
-          "description": "Specify the Linear Model contact model."
-        },
-        {
-          "name": "linearcbond",
-          "syntax": "linearcbond",
-          "description": "Specify the Linear Contact Bond Model contact model."
-        },
-        {
-          "name": "lineardipole",
-          "syntax": "lineardipole 3D ONLY",
-          "description": "Specify the Linear Dipole Model contact model."
-        },
-        {
-          "name": "linearpbond",
-          "syntax": "linearpbond",
-          "description": "Specify the Linear Parallel Bond Model contact model."
-        },
-        {
-          "name": "mohr",
-          "syntax": "mohr",
-          "description": ""
-        },
-        {
-          "name": "null",
-          "syntax": "null",
-          "description": "Specify the Null Model contact model."
-        },
-        {
-          "name": "rrhertz",
-          "syntax": "rrhertz",
-          "description": ""
-        },
-        {
-          "name": "rrlinear",
-          "syntax": "rrlinear",
-          "description": "Specify the Rolling Resistance Linear Model contact model."
-        },
-        {
-          "name": "smoothjoint",
-          "syntax": "smoothjoint",
-          "description": "Specify the Smooth-Joint Model contact model."
-        },
-        {
-          "name": "softbond",
-          "syntax": "softbond",
-          "description": "Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "springnetwork",
-          "syntax": "springnetwork",
-          "description": "Specify the Spring Network Model contact model."
-        },
-        {
-          "name": "subspringnetwork",
-          "syntax": "subspringnetwork",
-          "description": "Specify the Subspring Network Model contact model."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact model null range group 'bottom-platen' match 2",
-          "description": "Disable contacts in 'bottom-platen' group with match count of 2 (from BBM example) (model: null)."
-        },
-        {
-          "command": "contact model 'linearpbond' range contact type 'ball-ball'",
-          "description": "Change all ball-ball contacts to linearpbond model (from CMAT example) (model: linearpbond)."
-        },
-        {
-          "command": "contact model flatjoint",
-          "description": "Assign flatjoint model to all contacts (from rock testing example) (model: flatjoint)."
-        },
-        {
-          "command": "contact model linear range group 'soil'",
-          "description": "Change contacts in 'soil' group to linear model (model: linear)."
-        },
-        {
-          "command": "contact model hertz range contact type 'ball-ball'",
-          "description": "Switch ball-ball contacts to nonlinear Hertz model (model: hertz)."
-        },
-        {
-          "command": "contact model linearcbond range contact",
-          "description": "Change all contacts to linearcbond model for point-based bonding (model: linearcbond)."
-        },
-        {
-          "command": "contact model mechanical linear",
-          "description": "Explicitly assign linear model to mechanical contacts (model: linear)."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. Model names: see the contact-models reference."
-      ]
+    {
+      "name": "bilinear",
+      "syntax": "bilinear",
+      "description": "Specify the Bilinear Contact Model contact model.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "bisubspringnetwork",
+      "syntax": "bisubspringnetwork",
+      "description": "",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "burger",
+      "syntax": "burger",
+      "description": "Specify the Burger’s Model contact model."
+    },
+    {
+      "name": "eepa",
+      "syntax": "eepa",
+      "description": "",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "fish",
+      "syntax": "fish",
+      "description": "Specify the FISH Model contact model.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "flatjoint",
+      "syntax": "flatjoint",
+      "description": "Specify the Flat-Joint Model contact model."
+    },
+    {
+      "name": "hertz",
+      "syntax": "hertz",
+      "description": "Specify the Hertz Model contact model."
+    },
+    {
+      "name": "hill",
+      "syntax": "hill",
+      "description": ""
+    },
+    {
+      "name": "hysteretic",
+      "syntax": "hysteretic",
+      "description": "Specify the Hysteretic Model contact model."
+    },
+    {
+      "name": "jkr",
+      "syntax": "jkr",
+      "description": "",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "linear",
+      "syntax": "linear",
+      "description": "Specify the Linear Model contact model."
+    },
+    {
+      "name": "linearcbond",
+      "syntax": "linearcbond",
+      "description": "Specify the Linear Contact Bond Model contact model."
+    },
+    {
+      "name": "lineardipole",
+      "syntax": "lineardipole 3D ONLY",
+      "description": "Specify the Linear Dipole Model contact model.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "linearpbond",
+      "syntax": "linearpbond",
+      "description": "Specify the Linear Parallel Bond Model contact model."
+    },
+    {
+      "name": "mohr",
+      "syntax": "mohr",
+      "description": "",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "syntax": "null",
+      "description": "Specify the Null Model contact model."
+    },
+    {
+      "name": "rrhertz",
+      "syntax": "rrhertz",
+      "description": "",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "rrlinear",
+      "syntax": "rrlinear",
+      "description": "Specify the Rolling Resistance Linear Model contact model."
+    },
+    {
+      "name": "smoothjoint",
+      "syntax": "smoothjoint",
+      "description": "Specify the Smooth-Joint Model contact model."
+    },
+    {
+      "name": "softbond",
+      "syntax": "softbond",
+      "description": "Specify the Soft-Bond Model contact model."
+    },
+    {
+      "name": "springnetwork",
+      "syntax": "springnetwork",
+      "description": "Specify the Spring Network Model contact model.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "subspringnetwork",
+      "syntax": "subspringnetwork",
+      "description": "Specify the Subspring Network Model contact model.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "contact model null range group 'bottom-platen' match 2",
+      "description": "Disable contacts in 'bottom-platen' group with match count of 2 (from BBM example) (model: null)."
+    },
+    {
+      "command": "contact model 'linearpbond' range contact type 'ball-ball'",
+      "description": "Change all ball-ball contacts to linearpbond model (from CMAT example) (model: linearpbond)."
+    },
+    {
+      "command": "contact model flatjoint",
+      "description": "Assign flatjoint model to all contacts (from rock testing example) (model: flatjoint)."
+    },
+    {
+      "command": "contact model linear range group 'soil'",
+      "description": "Change contacts in 'soil' group to linear model (model: linear)."
+    },
+    {
+      "command": "contact model hertz range contact type 'ball-ball'",
+      "description": "Switch ball-ball contacts to nonlinear Hertz model (model: hertz)."
+    },
+    {
+      "command": "contact model linearcbond range contact",
+      "description": "Change all contacts to linearcbond model for point-based bonding (model: linearcbond)."
+    },
+    {
+      "command": "contact model mechanical linear",
+      "description": "Explicitly assign linear model to mechanical contacts (model: linear)."
+    }
+  ]
 }

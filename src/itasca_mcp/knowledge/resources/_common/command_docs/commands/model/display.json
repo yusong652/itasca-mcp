@@ -19,171 +19,64 @@
     "available": false,
     "workaround": "itasca.command('model display ...') - Python SDK does not provide display control. For monitoring, use print statements or logging in Python loop with itasca.cycle() and itasca.fish.get()"
   },
-  "versions": {
-    "7.0": {
-      "command": "model display",
-      "syntax": "model display keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Turn off or on the additional information in the cycle information. This is set to on automatically when one of the other keywords is specified."
-        },
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Add the value of the FISH symbol s to the cycle output. A leading “@” is optional."
-        },
-        {
-          "name": "history",
-          "syntax": "history <i>",
-          "description": "Add the tabulated value of the history with ID i to the cycle output. Only the result of one history can be shown."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model display active on",
-          "description": "Enable additional cycle information display"
-        },
-        {
-          "command": "model display active off",
-          "description": "Disable additional cycle information display"
-        },
-        {
-          "command": "model display fish unbalanced_force",
-          "description": "Display FISH variable 'unbalanced_force' during cycling"
-        },
-        {
-          "command": "model display fish @my_variable",
-          "description": "Display FISH variable with explicit '@' prefix (optional)"
-        },
-        {
-          "command": "model display history 1",
-          "description": "Display history ID 1 values during cycling"
-        },
-        {
-          "command": "fish define max_velocity\n  max_velocity = ball.vel.max\nend\nmodel display fish max_velocity\nmodel cycle 1000",
-          "description": "Define FISH function, display its value during cycling"
-        },
-        {
-          "command": "history id 1 unbalanced\nmodel display history 1\nmodel solve",
-          "description": "Create history, display it during solve"
-        },
-        {
-          "command": "model display fish ratio\nmodel cycle 10000",
-          "description": "Monitor unbalanced force ratio during cycling"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model display",
+  "syntax": "model display keyword",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Turn off or on the additional information in the cycle information. This is set to on automatically when one of the other keywords is specified."
     },
-    "6.0": {
-      "command": "model display",
-      "syntax": "model display keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Turn off or on the additional information in the cycle information. This is set to on automatically when one of the other keywords is specified."
-        },
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Add the value of the FISH symbol s to the cycle output. A leading “@” is optional."
-        },
-        {
-          "name": "history",
-          "syntax": "history <i>",
-          "description": "Add the tabulated value of the history with ID i to the cycle output. Only the result of one history can be shown."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model display active on",
-          "description": "Enable additional cycle information display"
-        },
-        {
-          "command": "model display active off",
-          "description": "Disable additional cycle information display"
-        },
-        {
-          "command": "model display fish unbalanced_force",
-          "description": "Display FISH variable 'unbalanced_force' during cycling"
-        },
-        {
-          "command": "model display fish @my_variable",
-          "description": "Display FISH variable with explicit '@' prefix (optional)"
-        },
-        {
-          "command": "model display history 1",
-          "description": "Display history ID 1 values during cycling"
-        },
-        {
-          "command": "fish define max_velocity\n  max_velocity = ball.vel.max\nend\nmodel display fish max_velocity\nmodel cycle 1000",
-          "description": "Define FISH function, display its value during cycling"
-        },
-        {
-          "command": "history id 1 unbalanced\nmodel display history 1\nmodel solve",
-          "description": "Create history, display it during solve"
-        },
-        {
-          "command": "model display fish ratio\nmodel cycle 10000",
-          "description": "Monitor unbalanced force ratio during cycling"
-        }
-      ]
+    {
+      "name": "fish",
+      "syntax": "fish <s>",
+      "description": "Add the value of the FISH symbol s to the cycle output. A leading “@” is optional."
     },
-    "9.0": {
-      "command": "model display",
-      "syntax": "model display keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Turn off or on the additional information in the cycle information. This is set to on automatically when one of the other keywords is specified."
-        },
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Add the value of the FISH symbol s to the cycle output. A leading “@” is optional."
-        },
-        {
-          "name": "history",
-          "syntax": "history <i>",
-          "description": "Add the tabulated value of the history with ID i to the cycle output. Only the result of one history can be shown."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model display active on",
-          "description": "Enable additional cycle information display"
-        },
-        {
-          "command": "model display active off",
-          "description": "Disable additional cycle information display"
-        },
-        {
-          "command": "model display fish unbalanced_force",
-          "description": "Display FISH variable 'unbalanced_force' during cycling"
-        },
-        {
-          "command": "model display fish @my_variable",
-          "description": "Display FISH variable with explicit '@' prefix (optional)"
-        },
-        {
-          "command": "model display history 1",
-          "description": "Display history ID 1 values during cycling"
-        },
-        {
-          "command": "fish define max_velocity\n  max_velocity = ball.vel.max\nend\nmodel display fish max_velocity\nmodel cycle 1000",
-          "description": "Define FISH function, display its value during cycling"
-        },
-        {
-          "command": "history id 1 unbalanced\nmodel display history 1\nmodel solve",
-          "description": "Create history, display it during solve"
-        },
-        {
-          "command": "model display fish ratio\nmodel cycle 10000",
-          "description": "Monitor unbalanced force ratio during cycling"
-        }
-      ]
+    {
+      "name": "history",
+      "syntax": "history <i>",
+      "description": "Add the tabulated value of the history with ID i to the cycle output. Only the result of one history can be shown."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model display active on",
+      "description": "Enable additional cycle information display"
+    },
+    {
+      "command": "model display active off",
+      "description": "Disable additional cycle information display"
+    },
+    {
+      "command": "model display fish unbalanced_force",
+      "description": "Display FISH variable 'unbalanced_force' during cycling"
+    },
+    {
+      "command": "model display fish @my_variable",
+      "description": "Display FISH variable with explicit '@' prefix (optional)"
+    },
+    {
+      "command": "model display history 1",
+      "description": "Display history ID 1 values during cycling"
+    },
+    {
+      "command": "fish define max_velocity\n  max_velocity = ball.vel.max\nend\nmodel display fish max_velocity\nmodel cycle 1000",
+      "description": "Define FISH function, display its value during cycling"
+    },
+    {
+      "command": "history id 1 unbalanced\nmodel display history 1\nmodel solve",
+      "description": "Create history, display it during solve"
+    },
+    {
+      "command": "model display fish ratio\nmodel cycle 10000",
+      "description": "Monitor unbalanced force ratio during cycling"
+    }
+  ]
 }

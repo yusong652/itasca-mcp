@@ -9,68 +9,64 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone gridpoint system",
-      "syntax": "zone gridpoint system keyword",
-      "description": "Set the local coordinate system for gridpoints within the range. By default all gridpoints use the global coordinate system. The zone face apply logic may set gridpoint local systems when necessary to resolve velocity or acceleration conditions.",
-      "keywords": [
-        {
-          "name": "global",
-          "syntax": "global",
-          "description": "Set gridpoints in the range to use global coordinates."
-        },
-        {
-          "name": "local",
-          "syntax": "local {direction-x <v> | direction-y <v> | direction-z <v>} ...",
-          "description": "Set gridpoints in the range to use the local coordinate system. If only one direction is specified the other two will be determined automatically. If two directions are specified the second will be adjusted to ensure orthogonality and the third will be determined automatically. If three directions are specified the second and third will be adjusted to ensure orthogonality. Options: direction-x <v>: Set the x-direction of the plane that defines the local coordinate system.; direction-y <v>: Set the y-direction of the plane that defines the local coordinate system.; direction-z <v>: Set the z-direction of the plane that defines the local coordinate system."
-        },
-        {
-          "name": "local-direction-x",
-          "syntax": "direction-x <v>",
-          "description": "Set the x-direction of the plane that defines the local coordinate system."
-        },
-        {
-          "name": "local-direction-y",
-          "syntax": "direction-y <v>",
-          "description": "Set the y-direction of the plane that defines the local coordinate system."
-        },
-        {
-          "name": "local-direction-z",
-          "syntax": "direction-z <v>",
-          "description": "Set the z-direction of the plane that defines the local coordinate system."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.system.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone gridpoint system",
+  "syntax": "zone gridpoint system keyword",
+  "keywords": [
+    {
+      "name": "global",
+      "syntax": "global",
+      "description": "Set gridpoints in the range to use global coordinates."
+    },
+    {
+      "name": "local",
+      "syntax": {
+        "7.0": "local {direction-x <v> | direction-y <v> | direction-z <v>} ...",
+        "9.0": "local direction-x <v> direction-y <v> [direction-z <v>]"
+      },
+      "description": {
+        "7.0": "Set gridpoints in the range to use the local coordinate system. If only one direction is specified the other two will be determined automatically. If two directions are specified the second will be adjusted to ensure orthogonality and the third will be determined automatically. If three directions are specified the second and third will be adjusted to ensure orthogonality. Options: direction-x <v>: Set the x-direction of the plane that defines the local coordinate system.; direction-y <v>: Set the y-direction of the plane that defines the local coordinate system.; direction-z <v>: Set the z-direction of the plane that defines the local coordinate system.",
+        "9.0": "assign a local coordinate system to gridpoints in the range. Specify the local axes with the direction-x, direction-y, and direction-z sub-keywords (at least one axis direction must be specified)."
       }
     },
-    "9.0": {
-      "command": "zone gridpoint system",
-      "syntax": "zone gridpoint system keyword",
-      "keywords": [
-        {
-          "name": "global",
-          "syntax": "global",
-          "description": "Set gridpoints in the range to use global coordinates."
-        },
-        {
-          "name": "local-direction-z",
-          "syntax": "direction-z <v> (3D ONLY)",
-          "description": "Set gridpoints in the range to use the local coordinate system. If only one direction is specified the other two will be determined automatically. If two directions are specified the second will be adjusted to ensure orthogonality and the third will be determined automatically. If three directions are specified the second and third will be adjusted to ensure orthogonality. At least one direction must be specified. Set the x-direction of the plane that defines the local coordinate system. Set the y-direction of the plane that defines the local coordinate system. Set the z-direction of the plane that defines the local coordinate system."
-        },
-        {
-          "name": "local",
-          "syntax": "local direction-x <v> direction-y <v> [direction-z <v>]",
-          "description": "assign a local coordinate system to gridpoints in the range. Specify the local axes with the direction-x, direction-y, and direction-z sub-keywords (at least one axis direction must be specified)."
-        }
-      ]
+    {
+      "name": "local-direction-x",
+      "syntax": "direction-x <v>",
+      "description": "Set the x-direction of the plane that defines the local coordinate system.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "local-direction-y",
+      "syntax": "direction-y <v>",
+      "description": "Set the y-direction of the plane that defines the local coordinate system.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "local-direction-z",
+      "syntax": {
+        "7.0": "direction-z <v>",
+        "9.0": "direction-z <v> (3D ONLY)"
+      },
+      "description": {
+        "7.0": "Set the z-direction of the plane that defines the local coordinate system.",
+        "9.0": "Set gridpoints in the range to use the local coordinate system. If only one direction is specified the other two will be determined automatically. If two directions are specified the second will be adjusted to ensure orthogonality and the third will be determined automatically. If three directions are specified the second and third will be adjusted to ensure orthogonality. At least one direction must be specified. Set the x-direction of the plane that defines the local coordinate system. Set the y-direction of the plane that defines the local coordinate system. Set the z-direction of the plane that defines the local coordinate system."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.system.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

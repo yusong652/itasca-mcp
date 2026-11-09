@@ -44,222 +44,101 @@
       "python": "# Python SDK approach - consult PFC documentation for exact syntax\n# itasca.measure module provides measurement functionality"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "measure create",
-      "syntax": "measure create keyword ...",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Specify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the {area in 2D; volume in 3D} equivalent {circle in 2D; sphere in 3D} diameters. The cumulative volume percentage (between 0 and 1) of bodies is calculated and can be exported to a table with the measure dump command. Table entries hold the average values of each pair of bin boundaries and the corresponding computed percentages."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Measurement ID. If not specified, the next available ID is assigned."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement object. Default to the origin of the global axis system."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement object. Default is 1.0"
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Specify the relative tolerance for accumulating the volume of bodies that intersect the measurement region in the porosity calculation. The volumes of bodies that fall completely within the measurement region are summed as \\(V_s\\) ; \\(V_{\\cap}\\) holds the sum of body volumes that intersect the measurement region and a list, intersectList , of these bodies is created. The bodies in intersectList are revisited in order of greatest volume. When visiting a body in intersectList , the volume of the body is removed from \\(V_{\\cap}\\) and the volume of intersection is added to \\(V_s\\) . When \\(V_{\\cap} / (V - V_s) \\leq f\\) , then no more intersecting bodies are visited. This guarantees that the actual porosity will be within a relative tolerance of f from the calculated value. For f , not 0, the porosity will generally be slightly overestimated. By default, f = 0.01. For clumps, a voxelization approach is used to calculate the volume of intersection. The {square in 2D; cubical in 3D} axis-aligned bounding box enclosing all pebbles is recursively bisected into boxes five times. At each level, each box is tested for inclusion in both the clump and the measurement region. Retained for further refinement are boxes that are inside the measurement region and intersect the clump surface, those that are inside the clump and intersect the measurement region surface, and those that intersect both the measurement region surface and clump surface. The volumes of the boxes that fall completely within the clump and measurement region are added to the intersection sum. A correction is applied based on the convergence of the volume with each level of refinement (using a relationship for the logarithm of the length of a side of a box at the current refinement level and the accumulated volume to that level) to estimate the intersection volume in an efficient and accurate way. Thus low percentage values will not translate into more accurate estimations of the volume of intersection, as such calculations can be very time consuming."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "\\(x\\) -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "\\(y\\) -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "\\(z\\) -coordinate of the center of the measurement object. Default is 0.0"
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create radius 4.0 tolerance 0.001",
-          "description": "Create measurement region with radius 4.0 at origin, high accuracy porosity (0.1% tolerance). Use case: Measure porosity, coordination number, stress, and strain with high precision."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0",
-          "description": "Create measurement with ID 1, 100 bins from 0.0 to 0.5 diameter, radius 4.0. Use case: Generate particle size distribution curve for analysis."
-        },
-        {
-          "command": "measure create position (5.0, 3.0, 2.0) radius 2.5",
-          "description": "Create measurement region centered at (5.0, 3.0, 2.0) with radius 2.5. Use case: Measure properties at specific location in model."
-        },
-        {
-          "command": "measure create position-x 10.0 position-y 5.0 position-z 3.0 radius 3.0",
-          "description": "Create measurement region using individual coordinate specifications. Use case: Alternative syntax for specifying measurement position."
-        },
-        {
-          "command": "measure create id 5 radius 1.0 bins 50 0.1 1.0 tolerance 0.005",
-          "description": "Comprehensive measurement setup with all major parameters. Use case: Complete measurement configuration for detailed analysis."
-        },
-        {
-          "command": "measure create radius 5.0\nmodel clean\nmeasure list",
-          "description": "Create measurement, trigger calculation, then list results. Use case: Basic measurement workflow."
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "measure create",
+  "syntax": {
+    "6.0": "measure create keyword",
+    "7.0": "measure create keyword ...",
+    "9.0": "measure create keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "bins",
+      "syntax": "bins <i> <fl> <fh>",
+      "description": "Specify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the {area in 2D; volume in 3D} equivalent {circle in 2D; sphere in 3D} diameters. The cumulative volume percentage (between 0 and 1) of bodies is calculated and can be exported to a table with the measure dump command. Table entries hold the average values of each pair of bin boundaries and the corresponding computed percentages."
     },
-    "6.0": {
-      "command": "measure create",
-      "syntax": "measure create keyword",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Specify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the {area in 2D; volume in 3D} equivalent {circle in 2D; sphere in 3D} diameters. The cumulative volume percentage (between 0 and 1) of bodies is calculated and can be exported to a table with the measure dump command. Table entries hold the average values of each pair of bin boundaries and the corresponding computed percentages."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Measurement ID. If not specified, the next available ID is assigned."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement object. Default to the origin of the global axis system."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement object. Default is 1.0"
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Specify the relative tolerance for accumulating the volume of bodies that intersect the measurement region in the porosity calculation. The volumes of bodies that fall completely within the measurement region are summed as \\(V_s\\) ; \\(V_{\\cap}\\) holds the sum of body volumes that intersect the measurement region and a list, intersectList , of these bodies is created. The bodies in intersectList are revisited in order of greatest volume. When visiting a body in intersectList , the volume of the body is removed from \\(V_{\\cap}\\) and the volume of intersection is added to \\(V_s\\) . When \\(V_{\\cap} / (V - V_s) \\leq f\\) , then no more intersecting bodies are visited. This guarantees that the actual porosity will be within a relative tolerance of f from the calculated value. For f , not 0, the porosity will generally be slightly overestimated. By default, f = 0.01. For clumps, a voxelization approach is used to calculate the volume of intersection. The {square in 2D; cubical in 3D} axis-aligned bounding box enclosing all pebbles is recursively bisected into boxes five times. At each level, each box is tested for inclusion in both the clump and the measurement region. Retained for further refinement are boxes that are inside the measurement region and intersect the clump surface, those that are inside the clump and intersect the measurement region surface, and those that intersect both the measurement region surface and clump surface. The volumes of the boxes that fall completely within the clump and measurement region are added to the intersection sum. A correction is applied based on the convergence of the volume with each level of refinement (using a relationship for the logarithm of the length of a side of a box at the current refinement level and the accumulated volume to that level) to estimate the intersection volume in an efficient and accurate way. Thus low percentage values will not translate into more accurate estimations of the volume of intersection, as such calculations can be very time consuming."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "x -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "y -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "z -coordinate of the center of the measurement object. Default is 0.0"
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create radius 4.0 tolerance 0.001",
-          "description": "Create measurement region with radius 4.0 at origin, high accuracy porosity (0.1% tolerance). Use case: Measure porosity, coordination number, stress, and strain with high precision."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0",
-          "description": "Create measurement with ID 1, 100 bins from 0.0 to 0.5 diameter, radius 4.0. Use case: Generate particle size distribution curve for analysis."
-        },
-        {
-          "command": "measure create position (5.0, 3.0, 2.0) radius 2.5",
-          "description": "Create measurement region centered at (5.0, 3.0, 2.0) with radius 2.5. Use case: Measure properties at specific location in model."
-        },
-        {
-          "command": "measure create position-x 10.0 position-y 5.0 position-z 3.0 radius 3.0",
-          "description": "Create measurement region using individual coordinate specifications. Use case: Alternative syntax for specifying measurement position."
-        },
-        {
-          "command": "measure create id 5 radius 1.0 bins 50 0.1 1.0 tolerance 0.005",
-          "description": "Comprehensive measurement setup with all major parameters. Use case: Complete measurement configuration for detailed analysis."
-        },
-        {
-          "command": "measure create radius 5.0\nmodel clean\nmeasure list",
-          "description": "Create measurement, trigger calculation, then list results. Use case: Basic measurement workflow."
-        }
-      ]
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Measurement ID. If not specified, the next available ID is assigned."
     },
-    "9.0": {
-      "command": "measure create",
-      "syntax": "measure create keyword ...",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Specify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the {area in 2D; volume in 3D} equivalent {circle in 2D; sphere in 3D} diameters. The cumulative volume percentage (between 0 and 1) of bodies is calculated and can be exported to a table with the measure dump command. Table entries hold the average values of each pair of bin boundaries and the corresponding computed percentages."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Measurement ID. If not specified, the next available ID is assigned."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement object. Default to the origin of the global axis system."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement object. Default is 1.0"
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Specify the relative tolerance for accumulating the volume of bodies that intersect the measurement region in the porosity calculation. The volumes of bodies that fall completely within the measurement region are summed as \\(V_s\\) ; \\(V_{\\cap}\\) holds the sum of body volumes that intersect the measurement region and a list, intersectList , of these bodies is created. The bodies in intersectList are revisited in order of greatest volume. When visiting a body in intersectList , the volume of the body is removed from \\(V_{\\cap}\\) and the volume of intersection is added to \\(V_s\\) . When \\(V_{\\cap} / (V - V_s) \\leq f\\) , then no more intersecting bodies are visited. This guarantees that the actual porosity will be within a relative tolerance of f from the calculated value. For f , not 0, the porosity will generally be slightly overestimated. By default, f = 0.01. For clumps, a voxelization approach is used to calculate the volume of intersection. The {square in 2D; cubical in 3D} axis-aligned bounding box enclosing all pebbles is recursively bisected into boxes five times. At each level, each box is tested for inclusion in both the clump and the measurement region. Retained for further refinement are boxes that are inside the measurement region and intersect the clump surface, those that are inside the clump and intersect the measurement region surface, and those that intersect both the measurement region surface and clump surface. The volumes of the boxes that fall completely within the clump and measurement region are added to the intersection sum. A correction is applied based on the convergence of the volume with each level of refinement (using a relationship for the logarithm of the length of a side of a box at the current refinement level and the accumulated volume to that level) to estimate the intersection volume in an efficient and accurate way. Thus low percentage values will not translate into more accurate estimations of the volume of intersection, as such calculations can be very time consuming."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "\\(x\\) -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "\\(y\\) -coordinate of the center of the measurement object. Default is 0.0"
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> 3D ONLY",
-          "description": "\\(z\\) -coordinate of the center of the measurement object. Default is 0.0"
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create radius 4.0 tolerance 0.001",
-          "description": "Create measurement region with radius 4.0 at origin, high accuracy porosity (0.1% tolerance). Use case: Measure porosity, coordination number, stress, and strain with high precision."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0",
-          "description": "Create measurement with ID 1, 100 bins from 0.0 to 0.5 diameter, radius 4.0. Use case: Generate particle size distribution curve for analysis."
-        },
-        {
-          "command": "measure create position (5.0, 3.0, 2.0) radius 2.5",
-          "description": "Create measurement region centered at (5.0, 3.0, 2.0) with radius 2.5. Use case: Measure properties at specific location in model."
-        },
-        {
-          "command": "measure create position-x 10.0 position-y 5.0 position-z 3.0 radius 3.0",
-          "description": "Create measurement region using individual coordinate specifications. Use case: Alternative syntax for specifying measurement position."
-        },
-        {
-          "command": "measure create id 5 radius 1.0 bins 50 0.1 1.0 tolerance 0.005",
-          "description": "Comprehensive measurement setup with all major parameters. Use case: Complete measurement configuration for detailed analysis."
-        },
-        {
-          "command": "measure create radius 5.0\nmodel clean\nmeasure list",
-          "description": "Create measurement, trigger calculation, then list results. Use case: Basic measurement workflow."
-        }
-      ]
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Position of the center of the measurement object. Default to the origin of the global axis system."
+    },
+    {
+      "name": "radius",
+      "syntax": "radius <f>",
+      "description": "Radius of the measurement object. Default is 1.0"
+    },
+    {
+      "name": "tolerance",
+      "syntax": "tolerance <f>",
+      "description": "Specify the relative tolerance for accumulating the volume of bodies that intersect the measurement region in the porosity calculation. The volumes of bodies that fall completely within the measurement region are summed as \\(V_s\\) ; \\(V_{\\cap}\\) holds the sum of body volumes that intersect the measurement region and a list, intersectList , of these bodies is created. The bodies in intersectList are revisited in order of greatest volume. When visiting a body in intersectList , the volume of the body is removed from \\(V_{\\cap}\\) and the volume of intersection is added to \\(V_s\\) . When \\(V_{\\cap} / (V - V_s) \\leq f\\) , then no more intersecting bodies are visited. This guarantees that the actual porosity will be within a relative tolerance of f from the calculated value. For f , not 0, the porosity will generally be slightly overestimated. By default, f = 0.01. For clumps, a voxelization approach is used to calculate the volume of intersection. The {square in 2D; cubical in 3D} axis-aligned bounding box enclosing all pebbles is recursively bisected into boxes five times. At each level, each box is tested for inclusion in both the clump and the measurement region. Retained for further refinement are boxes that are inside the measurement region and intersect the clump surface, those that are inside the clump and intersect the measurement region surface, and those that intersect both the measurement region surface and clump surface. The volumes of the boxes that fall completely within the clump and measurement region are added to the intersection sum. A correction is applied based on the convergence of the volume with each level of refinement (using a relationship for the logarithm of the length of a side of a box at the current refinement level and the accumulated volume to that level) to estimate the intersection volume in an efficient and accurate way. Thus low percentage values will not translate into more accurate estimations of the volume of intersection, as such calculations can be very time consuming."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <f>",
+      "description": {
+        "6.0": "x -coordinate of the center of the measurement object. Default is 0.0",
+        "7.0": "\\(x\\) -coordinate of the center of the measurement object. Default is 0.0",
+        "9.0": "\\(x\\) -coordinate of the center of the measurement object. Default is 0.0"
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <f>",
+      "description": {
+        "6.0": "y -coordinate of the center of the measurement object. Default is 0.0",
+        "7.0": "\\(y\\) -coordinate of the center of the measurement object. Default is 0.0",
+        "9.0": "\\(y\\) -coordinate of the center of the measurement object. Default is 0.0"
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z <f>",
+        "7.0": "position-z <f>",
+        "9.0": "position-z <f> 3D ONLY"
+      },
+      "description": {
+        "6.0": "z -coordinate of the center of the measurement object. Default is 0.0",
+        "7.0": "\\(z\\) -coordinate of the center of the measurement object. Default is 0.0",
+        "9.0": "\\(z\\) -coordinate of the center of the measurement object. Default is 0.0"
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "measure create radius 4.0 tolerance 0.001",
+      "description": "Create measurement region with radius 4.0 at origin, high accuracy porosity (0.1% tolerance). Use case: Measure porosity, coordination number, stress, and strain with high precision."
+    },
+    {
+      "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0",
+      "description": "Create measurement with ID 1, 100 bins from 0.0 to 0.5 diameter, radius 4.0. Use case: Generate particle size distribution curve for analysis."
+    },
+    {
+      "command": "measure create position (5.0, 3.0, 2.0) radius 2.5",
+      "description": "Create measurement region centered at (5.0, 3.0, 2.0) with radius 2.5. Use case: Measure properties at specific location in model."
+    },
+    {
+      "command": "measure create position-x 10.0 position-y 5.0 position-z 3.0 radius 3.0",
+      "description": "Create measurement region using individual coordinate specifications. Use case: Alternative syntax for specifying measurement position."
+    },
+    {
+      "command": "measure create id 5 radius 1.0 bins 50 0.1 1.0 tolerance 0.005",
+      "description": "Comprehensive measurement setup with all major parameters. Use case: Complete measurement configuration for detailed analysis."
+    },
+    {
+      "command": "measure create radius 5.0\nmodel clean\nmeasure list",
+      "description": "Create measurement, trigger calculation, then list results. Use case: Basic measurement workflow."
+    }
+  ]
 }

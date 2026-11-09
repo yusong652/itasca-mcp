@@ -18,197 +18,230 @@
     "spacing",
     "torsion-constant"
   ],
-  "description": "Assigns properties to beam elements in the range. Properties include density, young, poisson, plastic-moment, thermal-expansion, cross-sectional-area, moi, moi-polar, direction, plastic-shear, shear-coefficient, spacing, torsion-constant. The properties consist of constitutive model properties, and additional properties of beam-type elements. The constitutive model property names are primary keywords, but are not included in the list above. The following properties are available, with the constitutive model properties listed first.",
+  "description": {
+    "7.0": "Assigns a property to elements in the range. The following properties are available.",
+    "9.0": "Assigns properties to beam elements in the range. Properties include density, young, poisson, plastic-moment, thermal-expansion, cross-sectional-area, moi, moi-polar, direction, plastic-shear, shear-coefficient, spacing, torsion-constant. The properties consist of constitutive model properties, and additional properties of beam-type elements. The constitutive model property names are primary keywords, but are not included in the list above. The following properties are available, with the constitutive model properties listed first."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure beam property",
-      "syntax": "structure beam property keyword... [range]",
-      "description": "Assigns a property to elements in the range. The following properties are available.",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "density (needed if dynamic mode or gravity are active), \\(ρ\\)"
-        },
-        {
-          "name": "young",
-          "syntax": "young <f>",
-          "description": "Young’s modulus, \\(E\\) CORRECTED: the official FLAC3D 7.0 documentation spells this 'youngs', but the live 7.0 engine REJECTS 'youngs' and accepts 'young'. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "poisson",
-          "syntax": "poisson <f>",
-          "description": "Poisson’s ratio, \\(ν\\)"
-        },
-        {
-          "name": "plastic-moment",
-          "syntax": "plastic-moment <f>",
-          "description": "plastic moment capacity, \\(M^P\\)"
-        },
-        {
-          "name": "thermal-expansion",
-          "syntax": "thermal-expansion <f>",
-          "description": "thermal expansion coefficient, \\(α_t\\)"
-        },
-        {
-          "name": "cross-sectional-area",
-          "syntax": "cross-sectional-area <f>",
-          "description": "cross-sectional area, \\(A\\)"
-        },
-        {
-          "name": "moi-y",
-          "syntax": "moi-y <f>",
-          "description": "second moment with respect to local \\(y\\)-axis, \\(I_y\\)"
-        },
-        {
-          "name": "moi-z",
-          "syntax": "moi-z <f>",
-          "description": "second moment with respect to local \\(z\\)-axis, \\(I_z\\)"
-        },
-        {
-          "name": "moi-polar",
-          "syntax": "moi-polar <f>",
-          "description": "polar moment of inertia, \\(J\\)"
-        },
-        {
-          "name": "direction-y",
-          "syntax": "direction-y <v>",
-          "description": "\\(y\\)-axis vector components (Yx, Yy, Yz) whose projection onto the element cross-section defines the \\(y\\)-axis of the element system"
-        },
-        {
-          "name": "plastic-moment-y",
-          "syntax": "plastic-moment-y <f>",
-          "description": "Plastic moment about local y. Missing from the official 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "plastic-moment-z",
-          "syntax": "plastic-moment-z <f>",
-          "description": "Plastic moment about local z. Missing from the official 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.property.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure beam property",
+  "syntax": {
+    "7.0": "structure beam property keyword... [range]",
+    "9.0": "structure beam property keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density <f>",
+      "description": {
+        "7.0": "density (needed if dynamic mode or gravity are active), \\(ρ\\)",
+        "9.0": "mass density"
       }
     },
-    "9.0": {
-      "command": "structure beam property",
-      "syntax": "structure beam property keyword ... [range]",
-      "keywords": [
-        {
-          "name": "cross-sectional-area",
-          "syntax": "cross-sectional-area <f>",
-          "description": "cross-sectional area"
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "mass density"
-        },
-        {
-          "name": "direction-y",
-          "syntax": "direction-y <v>",
-          "description": "direction-y vector whose projection onto the element cross-section defines the \\(y\\) -axis of the element coordinate system"
-        },
-        {
-          "name": "moi",
-          "syntax": "moi <f> (2D ONLY)",
-          "description": "second moment"
-        },
-        {
-          "name": "moi-y",
-          "syntax": "moi-y <f> (3D ONLY)",
-          "description": "moment of inertia with respect to element \\(y\\) -axis"
-        },
-        {
-          "name": "moi-z",
-          "syntax": "moi-z <f> (3D ONLY)",
-          "description": "moment of inertia with respect to element \\(z\\) -axis"
-        },
-        {
-          "name": "plastic-moment",
-          "syntax": "plastic-moment <f>",
-          "description": "plastic moment capacity in Y and Z"
-        },
-        {
-          "name": "plastic-moment-y",
-          "syntax": "plastic-moment-y <f> (3D ONLY)",
-          "description": "plastic moment capacity in Y"
-        },
-        {
-          "name": "plastic-moment-z",
-          "syntax": "plastic-moment-z <f> (3D ONLY)",
-          "description": "plastic moment capacity in Z"
-        },
-        {
-          "name": "plastic-shear",
-          "syntax": "plastic-shear <f>",
-          "description": "plastic shear capacity in Y and Z"
-        },
-        {
-          "name": "plastic-shear-y",
-          "syntax": "plastic-shear-y <f> (3D ONLY)",
-          "description": "plastic shear capacity in Y"
-        },
-        {
-          "name": "plastic-shear-z",
-          "syntax": "plastic-shear-z <f> (3D ONLY)",
-          "description": "plastic shear capacity in Z"
-        },
-        {
-          "name": "poisson",
-          "syntax": "poisson <f>",
-          "description": "Poisson's ratio, \\(\\nu\\)"
-        },
-        {
-          "name": "shear-coefficient",
-          "syntax": "shear-coefficient <f> (2D ONLY)",
-          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only)"
-        },
-        {
-          "name": "shear-coefficient-y",
-          "syntax": "shear-coefficient-y <f> (3D ONLY)",
-          "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only)"
-        },
-        {
-          "name": "shear-coefficient-z",
-          "syntax": "shear-coefficient-z <f> (3D ONLY)",
-          "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam element only)"
-        },
-        {
-          "name": "spacing",
-          "syntax": "spacing <f> (2D ONLY)",
-          "description": "out-of-plane distance between beam-type elements",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "thermal-expansion",
-          "syntax": "thermal-expansion <f>",
-          "description": "thermal-expansion coefficient"
-        },
-        {
-          "name": "torsion-constant",
-          "syntax": "torsion-constant <f> (3D ONLY)",
-          "description": "torsion constant"
-        },
-        {
-          "name": "young",
-          "syntax": "young <f>",
-          "description": "Young's modulus, \\(E\\)"
-        }
-      ]
+    {
+      "name": "young",
+      "syntax": "young <f>",
+      "description": {
+        "7.0": "Young’s modulus, \\(E\\) CORRECTED: the official FLAC3D 7.0 documentation spells this 'youngs', but the live 7.0 engine REJECTS 'youngs' and accepts 'young'. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Young's modulus, \\(E\\)"
+      }
+    },
+    {
+      "name": "poisson",
+      "syntax": "poisson <f>",
+      "description": {
+        "7.0": "Poisson’s ratio, \\(ν\\)",
+        "9.0": "Poisson's ratio, \\(\\nu\\)"
+      }
+    },
+    {
+      "name": "shear-coefficient",
+      "syntax": "shear-coefficient <f> (2D ONLY)",
+      "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "shear-coefficient-y",
+      "syntax": "shear-coefficient-y <f> (3D ONLY)",
+      "description": "shear coefficient for transverse shear deformation in the \\(y\\) -direction (Timoshenko beam element only)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "shear-coefficient-z",
+      "syntax": "shear-coefficient-z <f> (3D ONLY)",
+      "description": "shear coefficient for transverse shear deformation in the \\(z\\) -direction (Timoshenko beam element only)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "spacing",
+      "syntax": "spacing <f> (2D ONLY)",
+      "description": "out-of-plane distance between beam-type elements",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "plastic-moment",
+      "syntax": "plastic-moment <f>",
+      "description": {
+        "7.0": "plastic moment capacity, \\(M^P\\)",
+        "9.0": "plastic moment capacity in Y and Z"
+      }
+    },
+    {
+      "name": "thermal-expansion",
+      "syntax": "thermal-expansion <f>",
+      "description": {
+        "7.0": "thermal expansion coefficient, \\(α_t\\)",
+        "9.0": "thermal-expansion coefficient"
+      }
+    },
+    {
+      "name": "torsion-constant",
+      "syntax": "torsion-constant <f> (3D ONLY)",
+      "description": "torsion constant",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "cross-sectional-area",
+      "syntax": "cross-sectional-area <f>",
+      "description": {
+        "7.0": "cross-sectional area, \\(A\\)",
+        "9.0": "cross-sectional area"
+      }
+    },
+    {
+      "name": "moi-y",
+      "syntax": {
+        "7.0": "moi-y <f>",
+        "9.0": "moi-y <f> (3D ONLY)"
+      },
+      "description": {
+        "7.0": "second moment with respect to local \\(y\\)-axis, \\(I_y\\)",
+        "9.0": "moment of inertia with respect to element \\(y\\) -axis"
+      }
+    },
+    {
+      "name": "moi-z",
+      "syntax": {
+        "7.0": "moi-z <f>",
+        "9.0": "moi-z <f> (3D ONLY)"
+      },
+      "description": {
+        "7.0": "second moment with respect to local \\(z\\)-axis, \\(I_z\\)",
+        "9.0": "moment of inertia with respect to element \\(z\\) -axis"
+      }
+    },
+    {
+      "name": "moi-polar",
+      "syntax": "moi-polar <f>",
+      "description": "polar moment of inertia, \\(J\\)",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "direction-y",
+      "syntax": "direction-y <v>",
+      "description": {
+        "7.0": "\\(y\\)-axis vector components (Yx, Yy, Yz) whose projection onto the element cross-section defines the \\(y\\)-axis of the element system",
+        "9.0": "direction-y vector whose projection onto the element cross-section defines the \\(y\\) -axis of the element coordinate system"
+      }
+    },
+    {
+      "name": "moi",
+      "syntax": "moi <f> (2D ONLY)",
+      "description": "second moment",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "plastic-moment-y",
+      "syntax": {
+        "7.0": "plastic-moment-y <f>",
+        "9.0": "plastic-moment-y <f> (3D ONLY)"
+      },
+      "description": {
+        "7.0": "Plastic moment about local y. Missing from the official 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "plastic moment capacity in Y"
+      }
+    },
+    {
+      "name": "plastic-moment-z",
+      "syntax": {
+        "7.0": "plastic-moment-z <f>",
+        "9.0": "plastic-moment-z <f> (3D ONLY)"
+      },
+      "description": {
+        "7.0": "Plastic moment about local z. Missing from the official 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "plastic moment capacity in Z"
+      }
+    },
+    {
+      "name": "plastic-shear",
+      "syntax": "plastic-shear <f>",
+      "description": "plastic shear capacity in Y and Z",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "plastic-shear-y",
+      "syntax": "plastic-shear-y <f> (3D ONLY)",
+      "description": "plastic shear capacity in Y",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "plastic-shear-z",
+      "syntax": "plastic-shear-z <f> (3D ONLY)",
+      "description": "plastic shear capacity in Z",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.property.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

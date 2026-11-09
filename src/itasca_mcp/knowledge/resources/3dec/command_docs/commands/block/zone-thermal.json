@@ -11,30 +11,29 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "block zone thermal",
-      "syntax": "block zone thermal property keyword <f> ... [range]",
-      "keywords": [
-        {
-          "name": "property",
-          "syntax": "property keyword <f> ...",
-          "description": "Set thermal properties of the block zone constitutive model. Property names (official 9.7 page; conductivity state-verified live: 'Thermal property conductivity set in 48 zones'): conductivity, conductivity-x, conductivity-y, conductivity-z, specific-heat, expansion."
-        }
-      ],
-      "examples": []
-    },
-    "7.0": {
-      "command": "block zone thermal",
-      "syntax": "block zone thermal keyword [range]",
-      "keywords": [
-        {
-          "name": "property",
-          "syntax": "property {conductivity <f> {conductivity-x <f> | conductivity-y <f> | conductivity-z <f>} | specific-heat <f> | expansion <f>} ...",
-          "description": "Options: conductivity <f> {conductivity-x <f> | conductivity-y <f> | conductivity-z <f>}: Set thermal conductivity (isotropic). Set thermal conductivity in x direction for anistropic conductivity. Set thermal conductivity in y direction for anistropic conductivity. Set thermal conductivity in z direction for anistropic conductivity. Options: conductivity-x <f>; conductivity-y <f>; conductivity-z <f>; specific-heat <f>: Set specific heat.; expansion <f>: Set thermal expansion coefficient."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "block zone thermal",
+  "syntax": {
+    "7.0": "block zone thermal keyword [range]",
+    "9.0": "block zone thermal property keyword <f> ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "property",
+      "syntax": {
+        "7.0": "property {conductivity <f> {conductivity-x <f> | conductivity-y <f> | conductivity-z <f>} | specific-heat <f> | expansion <f>} ...",
+        "9.0": "property keyword <f> ..."
+      },
+      "description": {
+        "7.0": "Options: conductivity <f> {conductivity-x <f> | conductivity-y <f> | conductivity-z <f>}: Set thermal conductivity (isotropic). Set thermal conductivity in x direction for anistropic conductivity. Set thermal conductivity in y direction for anistropic conductivity. Set thermal conductivity in z direction for anistropic conductivity. Options: conductivity-x <f>; conductivity-y <f>; conductivity-z <f>; specific-heat <f>: Set specific heat.; expansion <f>: Set thermal expansion coefficient.",
+        "9.0": "Set thermal properties of the block zone constitutive model. Property names (official 9.7 page; conductivity state-verified live: 'Thermal property conductivity set in 48 zones'): conductivity, conductivity-x, conductivity-y, conductivity-z, specific-heat, expansion."
+      }
     }
-  }
+  ],
+  "examples": []
 }

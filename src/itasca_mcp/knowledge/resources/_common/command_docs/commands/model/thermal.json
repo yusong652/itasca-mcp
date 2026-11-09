@@ -24,264 +24,119 @@
     "available": false,
     "workaround": "itasca.command('model thermal ...') - Python SDK does not provide direct thermal configuration. For thermal time: itasca.thermal_time() may be available depending on version"
   },
-  "versions": {
-    "7.0": {
-      "command": "model thermal",
-      "syntax": "model thermal [<b>] keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The thermal process is on , by default, when the model configure thermal command is given. Specify active off to suppress thermal calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display thermal calculation-mode information."
-        },
-        {
-          "name": "slave",
-          "syntax": "slave <b>",
-          "description": "Specifies that thermal mode is to be considered a slave, and cycled to equilibrium after each master step has been taken. This particular option is provided for completeness, but is rarely useful in thermal calculations."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specifies the maximum number of steps the thermal process will take when solving with slave on ."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated thermal time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05 . The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 0.8 .; update <i>: This value is not used in FLAC3D thermal timestep calculations."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model configure thermal\nmodel thermal active on",
-          "description": "Configure thermal mode and ensure thermal process is active"
-        },
-        {
-          "command": "model thermal active off",
-          "description": "Suppress thermal calculations (while keeping thermal configured)"
-        },
-        {
-          "command": "model thermal list",
-          "description": "Display thermal calculation-mode information"
-        },
-        {
-          "command": "model thermal time-total 0.0",
-          "description": "Reset accumulated thermal time to zero"
-        },
-        {
-          "command": "model thermal timestep automatic",
-          "description": "Use automatic thermal timestep calculation (default)"
-        },
-        {
-          "command": "model thermal timestep fix 1e-3",
-          "description": "Set fixed thermal timestep to 1e-3"
-        },
-        {
-          "command": "model thermal timestep increment 1.1",
-          "description": "Allow thermal timestep to increase by 10% per cycle"
-        },
-        {
-          "command": "model thermal timestep maximum 1e-2",
-          "description": "Set maximum thermal timestep to 1e-2"
-        },
-        {
-          "command": "model thermal timestep safety-factor 0.9",
-          "description": "Use 90% of calculated stable timestep (default is 0.8)"
-        },
-        {
-          "command": "model configure thermal\nmodel thermal timestep automatic\nmodel thermal timestep safety-factor 0.8\nmodel thermal timestep maximum 1e-2",
-          "description": "Configure thermal with automatic timestep, safety factor, and maximum limit"
-        },
-        {
-          "command": "model thermal slave on\nmodel thermal substep 500",
-          "description": "Set thermal mode as slave with max 500 substeps (rarely used)"
-        },
-        {
-          "command": "model configure thermal\n; ... setup thermal properties ...\nmodel solve thermal ratio 1e-5",
-          "description": "Configure thermal and solve thermal process to equilibrium"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model thermal",
+  "syntax": {
+    "6.0": "model thermal keyword",
+    "7.0": "model thermal [<b>] keyword",
+    "9.0": "model thermal [<b>] keyword"
+  },
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "The thermal process is on , by default, when the model configure thermal command is given. Specify active off to suppress thermal calculations."
     },
-    "6.0": {
-      "command": "model thermal",
-      "syntax": "model thermal keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The thermal process is on , by default, when the model configure thermal command is given. Specify active off to suppress thermal calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display thermal calculation-mode information."
-        },
-        {
-          "name": "slave",
-          "syntax": "slave <b>",
-          "description": "Specifies that thermal mode is to be considered a slave, and cycled to equilibrium after each master step has been taken. This particular option is provided for completeness, but is rarely useful in thermal calculations."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specifies the maximum number of steps the thermal process will take when solving with slave on ."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated thermal time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05 . The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 0.8 .; update <i>: This value is not used in FLAC3D thermal timestep calculations."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model configure thermal\nmodel thermal active on",
-          "description": "Configure thermal mode and ensure thermal process is active"
-        },
-        {
-          "command": "model thermal active off",
-          "description": "Suppress thermal calculations (while keeping thermal configured)"
-        },
-        {
-          "command": "model thermal list",
-          "description": "Display thermal calculation-mode information"
-        },
-        {
-          "command": "model thermal time-total 0.0",
-          "description": "Reset accumulated thermal time to zero"
-        },
-        {
-          "command": "model thermal timestep automatic",
-          "description": "Use automatic thermal timestep calculation (default)"
-        },
-        {
-          "command": "model thermal timestep fix 1e-3",
-          "description": "Set fixed thermal timestep to 1e-3"
-        },
-        {
-          "command": "model thermal timestep increment 1.1",
-          "description": "Allow thermal timestep to increase by 10% per cycle"
-        },
-        {
-          "command": "model thermal timestep maximum 1e-2",
-          "description": "Set maximum thermal timestep to 1e-2"
-        },
-        {
-          "command": "model thermal timestep safety-factor 0.9",
-          "description": "Use 90% of calculated stable timestep (default is 0.8)"
-        },
-        {
-          "command": "model configure thermal\nmodel thermal timestep automatic\nmodel thermal timestep safety-factor 0.8\nmodel thermal timestep maximum 1e-2",
-          "description": "Configure thermal with automatic timestep, safety factor, and maximum limit"
-        },
-        {
-          "command": "model thermal slave on\nmodel thermal substep 500",
-          "description": "Set thermal mode as slave with max 500 substeps (rarely used)"
-        },
-        {
-          "command": "model configure thermal\n; ... setup thermal properties ...\nmodel solve thermal ratio 1e-5",
-          "description": "Configure thermal and solve thermal process to equilibrium"
-        }
-      ]
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "Display thermal calculation-mode information."
     },
-    "9.0": {
-      "command": "model thermal",
-      "syntax": "model thermal [<b>] keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The thermal process is on , by default, when the model configure thermal command is given. Specify active off to suppress thermal calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display thermal calculation-mode information."
-        },
-        {
-          "name": "follower",
-          "syntax": "follower <b>",
-          "description": "Specifies that thermal mode is to be considered a follower, and cycled to equilibrium after each leader step has been taken. This particular option is provided for completeness, but is rarely useful in thermal calculations."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specifies the maximum number of steps the thermal process will take when solving with follower on ."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated thermal time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05 . The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 0.8 .; update <i>: This value is not used in FLAC3D thermal timestep calculations."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model configure thermal\nmodel thermal active on",
-          "description": "Configure thermal mode and ensure thermal process is active"
-        },
-        {
-          "command": "model thermal active off",
-          "description": "Suppress thermal calculations (while keeping thermal configured)"
-        },
-        {
-          "command": "model thermal list",
-          "description": "Display thermal calculation-mode information"
-        },
-        {
-          "command": "model thermal time-total 0.0",
-          "description": "Reset accumulated thermal time to zero"
-        },
-        {
-          "command": "model thermal timestep automatic",
-          "description": "Use automatic thermal timestep calculation (default)"
-        },
-        {
-          "command": "model thermal timestep fix 1e-3",
-          "description": "Set fixed thermal timestep to 1e-3"
-        },
-        {
-          "command": "model thermal timestep increment 1.1",
-          "description": "Allow thermal timestep to increase by 10% per cycle"
-        },
-        {
-          "command": "model thermal timestep maximum 1e-2",
-          "description": "Set maximum thermal timestep to 1e-2"
-        },
-        {
-          "command": "model thermal timestep safety-factor 0.9",
-          "description": "Use 90% of calculated stable timestep (default is 0.8)"
-        },
-        {
-          "command": "model configure thermal\nmodel thermal timestep automatic\nmodel thermal timestep safety-factor 0.8\nmodel thermal timestep maximum 1e-2",
-          "description": "Configure thermal with automatic timestep, safety factor, and maximum limit"
-        },
-        {
-          "command": "model thermal slave on\nmodel thermal substep 500",
-          "description": "Set thermal mode as slave with max 500 substeps (rarely used)"
-        },
-        {
-          "command": "model configure thermal\n; ... setup thermal properties ...\nmodel solve thermal ratio 1e-5",
-          "description": "Configure thermal and solve thermal process to equilibrium"
-        }
-      ]
+    {
+      "name": "follower",
+      "syntax": "follower <b>",
+      "description": "Specifies that thermal mode is to be considered a follower, and cycled to equilibrium after each leader step has been taken. This particular option is provided for completeness, but is rarely useful in thermal calculations.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "slave",
+      "syntax": "slave <b>",
+      "description": "Specifies that thermal mode is to be considered a slave, and cycled to equilibrium after each master step has been taken. This particular option is provided for completeness, but is rarely useful in thermal calculations.",
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "substep",
+      "syntax": "substep <i>",
+      "description": {
+        "6.0": "Specifies the maximum number of steps the thermal process will take when solving with slave on .",
+        "7.0": "Specifies the maximum number of steps the thermal process will take when solving with slave on .",
+        "9.0": "Specifies the maximum number of steps the thermal process will take when solving with follower on ."
+      }
+    },
+    {
+      "name": "time-total",
+      "syntax": "time-total <f>",
+      "description": "f is the accumulated thermal time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
+    },
+    {
+      "name": "timestep",
+      "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
+      "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05 . The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 0.8 .; update <i>: This value is not used in FLAC3D thermal timestep calculations."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model configure thermal\nmodel thermal active on",
+      "description": "Configure thermal mode and ensure thermal process is active"
+    },
+    {
+      "command": "model thermal active off",
+      "description": "Suppress thermal calculations (while keeping thermal configured)"
+    },
+    {
+      "command": "model thermal list",
+      "description": "Display thermal calculation-mode information"
+    },
+    {
+      "command": "model thermal time-total 0.0",
+      "description": "Reset accumulated thermal time to zero"
+    },
+    {
+      "command": "model thermal timestep automatic",
+      "description": "Use automatic thermal timestep calculation (default)"
+    },
+    {
+      "command": "model thermal timestep fix 1e-3",
+      "description": "Set fixed thermal timestep to 1e-3"
+    },
+    {
+      "command": "model thermal timestep increment 1.1",
+      "description": "Allow thermal timestep to increase by 10% per cycle"
+    },
+    {
+      "command": "model thermal timestep maximum 1e-2",
+      "description": "Set maximum thermal timestep to 1e-2"
+    },
+    {
+      "command": "model thermal timestep safety-factor 0.9",
+      "description": "Use 90% of calculated stable timestep (default is 0.8)"
+    },
+    {
+      "command": "model configure thermal\nmodel thermal timestep automatic\nmodel thermal timestep safety-factor 0.8\nmodel thermal timestep maximum 1e-2",
+      "description": "Configure thermal with automatic timestep, safety factor, and maximum limit"
+    },
+    {
+      "command": "model thermal slave on\nmodel thermal substep 500",
+      "description": "Set thermal mode as slave with max 500 substeps (rarely used)"
+    },
+    {
+      "command": "model configure thermal\n; ... setup thermal properties ...\nmodel solve thermal ratio 1e-5",
+      "description": "Configure thermal and solve thermal process to equilibrium"
+    }
+  ]
 }

@@ -5,61 +5,44 @@
     "zone",
     "time-total"
   ],
-  "description": "Sets parameters for a time-dependent creep material analysis (only available with the creep model option – see Section 1 in Creep Material Models). Settings include time-total. These parameters apply to zones only, other model elements may have different values.",
+  "description": {
+    "7.0": "This command sets parameters for a time-dependent creep material analysis (only available with the creep model option – see Section 1 in Creep Material Models). These parameters apply to zones only, other model elements may have different values.",
+    "9.0": "Sets parameters for a time-dependent creep material analysis (only available with the creep model option – see Section 1 in Creep Material Models). Settings include time-total. These parameters apply to zones only, other model elements may have different values."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone creep",
-      "syntax": "zone creep keyword",
-      "description": "This command sets parameters for a time-dependent creep material analysis (only available with the creep model option – see Section 1 in Creep Material Models). These parameters apply to zones only, other model elements may have different values.",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>"
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display creep calculation-mode information."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "Specifies the accumulated zone creep time, defined as the sum of all the timesteps over which zone creep is active. Once set, creep time will continue to accumulate with subsequent cycles."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.creep.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone creep",
+  "syntax": "zone creep keyword",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": {
+        "9.0": "Set the creep process on for zones. This setting is on by default when the model configure creep command is given. Generally this setting is unnecessary and is inherent in to the model configure creep setting. Specify active off to suppress the creep calculation for zones."
       }
     },
-    "9.0": {
-      "command": "zone creep",
-      "syntax": "zone creep keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the creep process on for zones. This setting is on by default when the model configure creep command is given. Generally this setting is unnecessary and is inherent in to the model configure creep setting. Specify active off to suppress the creep calculation for zones."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display creep calculation-mode information."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "Specify the accumulated zone creep time, defined as the sum of all the timesteps over which zone creep is active. Once set, creep time will continue to accumulate with subsequent cycles."
-        }
-      ]
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "Display creep calculation-mode information."
+    },
+    {
+      "name": "time-total",
+      "syntax": "time-total <f>",
+      "description": {
+        "7.0": "Specifies the accumulated zone creep time, defined as the sum of all the timesteps over which zone creep is active. Once set, creep time will continue to accumulate with subsequent cycles.",
+        "9.0": "Specify the accumulated zone creep time, defined as the sum of all the timesteps over which zone creep is active. Once set, creep time will continue to accumulate with subsequent cycles."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.creep.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

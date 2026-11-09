@@ -29,234 +29,85 @@
     "available": false,
     "workaround": "itasca.command('model save \"filename.sav\"') or itasca.command('model save \"filename\" compress') - Python SDK does not provide direct save function. Note: Use double quotes around filename in command string if path contains spaces"
   },
-  "versions": {
-    "7.0": {
-      "command": "model save",
-      "syntax": "model save <s> [keyword]",
-      "keywords": [
-        {
-          "name": "compress",
-          "syntax": "compress",
-          "description": "Automatically compresses the save file after creation. This takes additional time, but can remove up to 75% of the file on disk. The file will be automatically uncompressed on restore."
-        },
-        {
-          "name": "nocompress",
-          "syntax": "nocompress",
-          "description": "If a save file that was previously compressed is over-written, it will be automatically compressed again. Use this option to suppress that and save an uncompressed file over it."
-        },
-        {
-          "name": "readonly",
-          "syntax": "readonly",
-          "description": "If the optional readonly keyword is used, the save file is marked as read only. If restored, the model will be restricted from cycling and certain other modifications."
-        },
-        {
-          "name": "text",
-          "syntax": "text",
-          "description": "If the optional text keyword is used, the save file will be output as a Unicode text file in JSON format. Note that this will significantly increase both the size of the file and the amount of time required to save and restore the model. This option is incompatible with the readonly and compress keywords."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model save 'checkpoint.sav'",
-          "description": "Save model to checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model save 'checkpoint'",
-          "description": "Save model (extension '.sav' added automatically)"
-        },
-        {
-          "command": "model save 'checkpoint' compress",
-          "description": "Save and compress (reduces file size by up to 75%)"
-        },
-        {
-          "command": "model save 'final_results' readonly",
-          "description": "Save as read-only for archival (cannot cycle after restore)"
-        },
-        {
-          "command": "model save 'debug_state' text",
-          "description": "Save as human-readable JSON text (large file, slow)"
-        },
-        {
-          "command": "model save 'equilibrium' compress",
-          "description": "Save compressed equilibrium state"
-        },
-        {
-          "command": "model save 'state_uncompressed' nocompress",
-          "description": "Overwrite previously compressed file without compression"
-        },
-        {
-          "command": "model solve\nmodel save 'after_solve_equilibrium'",
-          "description": "Solve to equilibrium and save state"
-        },
-        {
-          "command": "model cycle 1000\nmodel save 'checkpoint_1000'\nmodel cycle 1000\nmodel save 'checkpoint_2000'",
-          "description": "Save checkpoints at different cycle counts"
-        },
-        {
-          "command": "model save 'C:/simulations/results/final_state.sav' compress",
-          "description": "Save to absolute path with compression"
-        },
-        {
-          "command": "model save './saves/backup' inputdir",
-          "description": "Save relative to calling file location"
-        },
-        {
-          "command": "model save 'archive/production_run' localdir readonly compress",
-          "description": "Save relative to project, read-only and compressed for archival"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model save",
+  "syntax": "model save <s> [keyword]",
+  "keywords": [
+    {
+      "name": "compress",
+      "syntax": "compress",
+      "description": "Automatically compresses the save file after creation. This takes additional time, but can remove up to 75% of the file on disk. The file will be automatically uncompressed on restore."
     },
-    "6.0": {
-      "command": "model save",
-      "syntax": "model save <s> [keyword]",
-      "keywords": [
-        {
-          "name": "compress",
-          "syntax": "compress",
-          "description": "Automatically compresses the save file after creation. This takes additional time, but can remove up to 75% of the file on disk. The file will be automatically uncompressed on restore."
-        },
-        {
-          "name": "nocompress",
-          "syntax": "nocompress",
-          "description": "If a save file that was previously compressed is over-written, it will be automatically compressed again. Use this option to suppress that and save an uncompressed file over it."
-        },
-        {
-          "name": "readonly",
-          "syntax": "readonly",
-          "description": "If the optional readonly keyword is used, the save file is marked as read only. If restored, the model will be restricted from cycling and certain other modifications."
-        },
-        {
-          "name": "text",
-          "syntax": "text",
-          "description": "If the optional text keyword is used, the save file will be output as a Unicode text file in JSON format. Note that this will significantly increase both the size of the file and the amount of time required to save and restore the model. This option is incompatible with the readonly and compress keywords."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model save 'checkpoint.sav'",
-          "description": "Save model to checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model save 'checkpoint'",
-          "description": "Save model (extension '.sav' added automatically)"
-        },
-        {
-          "command": "model save 'checkpoint' compress",
-          "description": "Save and compress (reduces file size by up to 75%)"
-        },
-        {
-          "command": "model save 'final_results' readonly",
-          "description": "Save as read-only for archival (cannot cycle after restore)"
-        },
-        {
-          "command": "model save 'debug_state' text",
-          "description": "Save as human-readable JSON text (large file, slow)"
-        },
-        {
-          "command": "model save 'equilibrium' compress",
-          "description": "Save compressed equilibrium state"
-        },
-        {
-          "command": "model save 'state_uncompressed' nocompress",
-          "description": "Overwrite previously compressed file without compression"
-        },
-        {
-          "command": "model solve\nmodel save 'after_solve_equilibrium'",
-          "description": "Solve to equilibrium and save state"
-        },
-        {
-          "command": "model cycle 1000\nmodel save 'checkpoint_1000'\nmodel cycle 1000\nmodel save 'checkpoint_2000'",
-          "description": "Save checkpoints at different cycle counts"
-        },
-        {
-          "command": "model save 'C:/simulations/results/final_state.sav' compress",
-          "description": "Save to absolute path with compression"
-        },
-        {
-          "command": "model save './saves/backup' inputdir",
-          "description": "Save relative to calling file location"
-        },
-        {
-          "command": "model save 'archive/production_run' localdir readonly compress",
-          "description": "Save relative to project, read-only and compressed for archival"
-        }
-      ]
+    {
+      "name": "nocompress",
+      "syntax": "nocompress",
+      "description": "If a save file that was previously compressed is over-written, it will be automatically compressed again. Use this option to suppress that and save an uncompressed file over it."
     },
-    "9.0": {
-      "command": "model save",
-      "syntax": "model save <s> [keyword]",
-      "keywords": [
-        {
-          "name": "compress",
-          "syntax": "compress",
-          "description": "Automatically compresses the save file after creation. This takes additional time, but can remove up to 75% of the file on disk. The file will be automatically uncompressed on restore."
-        },
-        {
-          "name": "nocompress",
-          "syntax": "nocompress",
-          "description": "If a save file that was previously compressed is over-written, it will be automatically compressed again. Use this option to suppress that and save an uncompressed file over it."
-        },
-        {
-          "name": "readonly",
-          "syntax": "readonly",
-          "description": "If the optional readonly keyword is used, the save file is marked as read only. If restored, the model will be restricted from cycling and certain other modifications."
-        },
-        {
-          "name": "text",
-          "syntax": "text",
-          "description": "If the optional text keyword is used, the save file will be output as a Unicode text file in JSON format. Note that this will significantly increase both the size of the file and the amount of time required to save and restore the model. This option is incompatible with the readonly and compress keywords."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model save 'checkpoint.sav'",
-          "description": "Save model to checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model save 'checkpoint'",
-          "description": "Save model (extension '.sav' added automatically)"
-        },
-        {
-          "command": "model save 'checkpoint' compress",
-          "description": "Save and compress (reduces file size by up to 75%)"
-        },
-        {
-          "command": "model save 'final_results' readonly",
-          "description": "Save as read-only for archival (cannot cycle after restore)"
-        },
-        {
-          "command": "model save 'debug_state' text",
-          "description": "Save as human-readable JSON text (large file, slow)"
-        },
-        {
-          "command": "model save 'equilibrium' compress",
-          "description": "Save compressed equilibrium state"
-        },
-        {
-          "command": "model save 'state_uncompressed' nocompress",
-          "description": "Overwrite previously compressed file without compression"
-        },
-        {
-          "command": "model solve\nmodel save 'after_solve_equilibrium'",
-          "description": "Solve to equilibrium and save state"
-        },
-        {
-          "command": "model cycle 1000\nmodel save 'checkpoint_1000'\nmodel cycle 1000\nmodel save 'checkpoint_2000'",
-          "description": "Save checkpoints at different cycle counts"
-        },
-        {
-          "command": "model save 'C:/simulations/results/final_state.sav' compress",
-          "description": "Save to absolute path with compression"
-        },
-        {
-          "command": "model save './saves/backup' inputdir",
-          "description": "Save relative to calling file location"
-        },
-        {
-          "command": "model save 'archive/production_run' localdir readonly compress",
-          "description": "Save relative to project, read-only and compressed for archival"
-        }
-      ]
+    {
+      "name": "readonly",
+      "syntax": "readonly",
+      "description": "If the optional readonly keyword is used, the save file is marked as read only. If restored, the model will be restricted from cycling and certain other modifications."
+    },
+    {
+      "name": "text",
+      "syntax": "text",
+      "description": "If the optional text keyword is used, the save file will be output as a Unicode text file in JSON format. Note that this will significantly increase both the size of the file and the amount of time required to save and restore the model. This option is incompatible with the readonly and compress keywords."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model save 'checkpoint.sav'",
+      "description": "Save model to checkpoint file (explicit extension)"
+    },
+    {
+      "command": "model save 'checkpoint'",
+      "description": "Save model (extension '.sav' added automatically)"
+    },
+    {
+      "command": "model save 'checkpoint' compress",
+      "description": "Save and compress (reduces file size by up to 75%)"
+    },
+    {
+      "command": "model save 'final_results' readonly",
+      "description": "Save as read-only for archival (cannot cycle after restore)"
+    },
+    {
+      "command": "model save 'debug_state' text",
+      "description": "Save as human-readable JSON text (large file, slow)"
+    },
+    {
+      "command": "model save 'equilibrium' compress",
+      "description": "Save compressed equilibrium state"
+    },
+    {
+      "command": "model save 'state_uncompressed' nocompress",
+      "description": "Overwrite previously compressed file without compression"
+    },
+    {
+      "command": "model solve\nmodel save 'after_solve_equilibrium'",
+      "description": "Solve to equilibrium and save state"
+    },
+    {
+      "command": "model cycle 1000\nmodel save 'checkpoint_1000'\nmodel cycle 1000\nmodel save 'checkpoint_2000'",
+      "description": "Save checkpoints at different cycle counts"
+    },
+    {
+      "command": "model save 'C:/simulations/results/final_state.sav' compress",
+      "description": "Save to absolute path with compression"
+    },
+    {
+      "command": "model save './saves/backup' inputdir",
+      "description": "Save relative to calling file location"
+    },
+    {
+      "command": "model save 'archive/production_run' localdir readonly compress",
+      "description": "Save relative to project, read-only and compressed for archival"
+    }
+  ]
 }

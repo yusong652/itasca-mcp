@@ -11,166 +11,152 @@
     "ipstress",
     "integration-point"
   ],
-  "description": "Sample beam responses. Quantities that can be recorded include force, moment, component-id, end, ipstress, integration-point. Quantities for sampling include the force and moment at one end of the beam and the axial stress for elements with a plastic material model. The force and moment are expressed using the force-moment sign convention .",
+  "description": {
+    "7.0": "Samples beam responses that include force and moment carried by the beam. The force and moment vectors are expressed in the element local coordinate system (see Figure 1.17 for sign convention). If a beam is created using the structure beam create command, then the nodes of each element so created will be ordered such that the overall beam direction goes from the first point to the second point (i.e., the nodal connectivity of each element will be ordered such that the direction from end-1 to end-2 corresponds with the direction from the first point to the second point).",
+    "9.0": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure beam history",
-      "syntax": "structure beam history [name <s>] keyword",
-      "description": "Samples beam responses that include force and moment carried by the beam. The force and moment vectors are expressed in the element local coordinate system (see Figure 1.17 for sign convention). If a beam is created using the structure beam create command, then the nodes of each element so created will be ordered such that the overall beam direction goes from the first point to the second point (i.e., the nodal connectivity of each element will be ordered such that the direction from end-1 to end-2 corresponds with the direction from the first point to the second point).",
-      "keywords": [
-        {
-          "name": "force",
-          "syntax": "force [beamhistoryblock]",
-          "description": "request a history of beam force magnitude"
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [beamhistoryblock]",
-          "description": "request a history of beam forces in the \\(x\\)-direction"
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [beamhistoryblock]",
-          "description": "request a history of beam forces in the \\(y\\)-direction"
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [beamhistoryblock]",
-          "description": "request a history of beam forces in the \\(z\\)-direction"
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [beamhistoryblock]",
-          "description": "request a history of beam bending moment magnitude"
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [beamhistoryblock]",
-          "description": "request a history of beam bending moment in the \\(x\\)-direction"
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [beamhistoryblock]",
-          "description": "request a history of beam bending moment in the \\(y\\)-direction"
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [beamhistoryblock]",
-          "description": "request a history of beam bending moment in the \\(z\\)-direction"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the particular element is identified by the component ID number. If this keyword is used, position should not be used."
-        },
-        {
-          "name": "end",
-          "syntax": "end <i>",
-          "description": "the quantity will be sampled at end i (where i is 1 or 2), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the particular element is identified by (v) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.history.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure beam history",
-      "syntax": "structure beam history [name <s>] keyword",
-      "keywords": [
-        {
-          "name": "force",
-          "syntax": "force [beamhistoryblock]",
-          "description": "force magnitude"
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [beamhistoryblock]",
-          "description": "force ( \\(x\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [beamhistoryblock]",
-          "description": "force ( \\(y\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z (3D ONLY) [beamhistoryblock]",
-          "description": "force ( \\(z\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "ipstress",
-          "syntax": "ipstress (3D ONLY) [beamhistoryblock]",
-          "description": "axial stress ( \\(\\sigma_{xx}\\) ) for an element with a plastic material model. Uses the integration-point keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [beamhistoryblock]",
-          "description": "moment magnitude"
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x (3D ONLY) [beamhistoryblock]",
-          "description": "moment ( \\(x\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y (3D ONLY) [beamhistoryblock]",
-          "description": "moment ( \\(y\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z (3D ONLY) [beamhistoryblock]",
-          "description": "moment ( \\(z\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "assign a name s to the history record (used to reference the history elsewhere)"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the particular element is identified by the component ID number. If this keyword is used, position should not be used."
-        },
-        {
-          "name": "end",
-          "syntax": "end <i>",
-          "description": "the quantity will be sampled at end i (where i is 1 or 2 ), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
-        },
-        {
-          "name": "integration-point",
-          "syntax": "integration-point <ind> (3D ONLY)",
-          "description": "the integration point at which the axial stress is sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration' (cross-section layout and along-length count); the layout figures are on the official Structural Elements formulation pages (the original hyperlink targets, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the particular element is identified by ( v ) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
-        }
-      ],
-      "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
-    }
-  },
   "notes": [
     "'[beamhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, end, position, name)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure beam history",
+  "syntax": "structure beam history [name <s>] keyword",
+  "keywords": [
+    {
+      "name": "force",
+      "syntax": "force [beamhistoryblock]",
+      "description": {
+        "7.0": "request a history of beam force magnitude",
+        "9.0": "force magnitude"
+      }
+    },
+    {
+      "name": "force-x",
+      "syntax": "force-x [beamhistoryblock]",
+      "description": {
+        "7.0": "request a history of beam forces in the \\(x\\)-direction",
+        "9.0": "force ( \\(x\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "force-y",
+      "syntax": "force-y [beamhistoryblock]",
+      "description": {
+        "7.0": "request a history of beam forces in the \\(y\\)-direction",
+        "9.0": "force ( \\(y\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "force-z",
+      "syntax": {
+        "7.0": "force-z [beamhistoryblock]",
+        "9.0": "force-z (3D ONLY) [beamhistoryblock]"
+      },
+      "description": {
+        "7.0": "request a history of beam forces in the \\(z\\)-direction",
+        "9.0": "force ( \\(z\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "ipstress",
+      "syntax": "ipstress (3D ONLY) [beamhistoryblock]",
+      "description": "axial stress ( \\(\\sigma_{xx}\\) ) for an element with a plastic material model. Uses the integration-point keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": "moment [beamhistoryblock]",
+      "description": {
+        "7.0": "request a history of beam bending moment magnitude",
+        "9.0": "moment magnitude"
+      }
+    },
+    {
+      "name": "moment-x",
+      "syntax": {
+        "7.0": "moment-x [beamhistoryblock]",
+        "9.0": "moment-x (3D ONLY) [beamhistoryblock]"
+      },
+      "description": {
+        "7.0": "request a history of beam bending moment in the \\(x\\)-direction",
+        "9.0": "moment ( \\(x\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "moment-y",
+      "syntax": {
+        "7.0": "moment-y [beamhistoryblock]",
+        "9.0": "moment-y (3D ONLY) [beamhistoryblock]"
+      },
+      "description": {
+        "7.0": "request a history of beam bending moment in the \\(y\\)-direction",
+        "9.0": "moment ( \\(y\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "moment-z",
+      "syntax": {
+        "7.0": "moment-z [beamhistoryblock]",
+        "9.0": "moment-z (3D ONLY) [beamhistoryblock]"
+      },
+      "description": {
+        "7.0": "request a history of beam bending moment in the \\(z\\)-direction",
+        "9.0": "moment ( \\(z\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "component-id",
+      "syntax": "component-id <i>",
+      "description": "the particular element is identified by the component ID number. If this keyword is used, position should not be used."
+    },
+    {
+      "name": "end",
+      "syntax": "end <i>",
+      "description": {
+        "7.0": "the quantity will be sampled at end i (where i is 1 or 2), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied.",
+        "9.0": "the quantity will be sampled at end i (where i is 1 or 2 ), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
+      }
+    },
+    {
+      "name": "integration-point",
+      "syntax": "integration-point <ind> (3D ONLY)",
+      "description": "the integration point at which the axial stress is sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration' (cross-section layout and along-length count); the layout figures are on the official Structural Elements formulation pages (the original hyperlink targets, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": {
+        "7.0": "the particular element is identified by (v) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used.",
+        "9.0": "the particular element is identified by ( v ) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "assign a name s to the history record (used to reference the history elsewhere)"
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/beams/commands/cmd_structure.beam.history.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

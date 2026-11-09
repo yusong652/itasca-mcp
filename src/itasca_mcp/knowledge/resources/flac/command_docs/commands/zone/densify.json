@@ -4,112 +4,97 @@
     "densify",
     "zone"
   ],
-  "description": "Find all zones in the range and subdivide them into smaller zones that fill the same volume. This creates new zones, and in general creates new gridpoints. The new zones inherit the group assignments of the originals.",
+  "description": {
+    "7.0": "This command finds all zones in the range and subdivides them into smaller zones filling the same volume. This will create new zones, and in general will create new gridpoints. The new zones will copy the group assignments of the original.",
+    "9.0": "Find all zones in the range and subdivide them into smaller zones that fill the same volume. This creates new zones, and in general creates new gridpoints. The new zones inherit the group assignments of the originals."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone densify",
-      "syntax": "zone densify keyword... [range]",
-      "description": "This command finds all zones in the range and subdivides them into smaller zones filling the same volume. This will create new zones, and in general will create new gridpoints. The new zones will copy the group assignments of the original.",
-      "keywords": [
-        {
-          "name": "aspect-ratio",
-          "syntax": "aspect-ratio <f>",
-          "description": "This option currently only works on hexahedral (brick) type zones. Attempting to use it on other types will cause an error."
-        },
-        {
-          "name": "edge-limit",
-          "syntax": "edge-limit <f>",
-          "description": "If the maximum edge length of the zone falls above this value, then it will be densified using the segments multiplier in all three directions. If it falls below this value it will be ignored. This value may be used in combination with repeat to systematically subdivide zones until the maximum edge length is less than the limit."
-        },
-        {
-          "name": "global",
-          "syntax": "global",
-          "description": "This specifies that the zone edges to which the segments keyword applies are the ones that most closely correspond to the global x, y and z axes."
-        },
-        {
-          "name": "gradient-limit",
-          "syntax": "gradient-limit",
-          "description": "Zones chosen for densification will be checked to attempt to ensure that adjacent zones differ by, at most, one level of densification. This may mean more zones will be densified than actually fall into the range."
-        },
-        {
-          "name": "local",
-          "syntax": "local",
-          "description": "This is to set the zones to be densified in a local segment order. The local segment order is along the edges of e1, e2 and e3, where e1, e2 and e3 are the edges of the first and second, first and third, and first and fourth gridpoints of this zone. This is the default setting."
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f1> [f2 <f3>]",
-          "description": "This specifies the maximum edge lengths to be densified, in order of local or global x, y, or z direction. If f2 and f3 are not specified, they will be set to the same number as f1. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…)."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i1> [i2 <i3>]",
-          "description": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1."
-        },
-        {
-          "name": "repeat",
-          "syntax": "repeat <i>",
-          "description": "Repeats the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then FLAC3D will repeat until the edge-limit is reached, applying the division specified in segments each time."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.densify.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone densify",
+  "syntax": {
+    "7.0": "zone densify keyword... [range]",
+    "9.0": "zone densify keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "aspect-ratio",
+      "syntax": "aspect-ratio <f>",
+      "description": {
+        "7.0": "This option currently only works on hexahedral (brick) type zones. Attempting to use it on other types will cause an error.",
+        "9.0": "This option currently works only on hexahedral (brick) type zones in 3D and quadrilateral zones in 2D. Attempting to use it on other types will cause an error. If a zone is determined to have an aspect ratio above this limit, it is densified in that direction only using the multiplier value given for that degree-of-freedom. This can be used with the repeat keyword to divide zones systematically along the longest direction until the aspect ratio falls below the desired value."
       }
     },
-    "9.0": {
-      "command": "zone densify",
-      "syntax": "zone densify keyword ... [range]",
-      "keywords": [
-        {
-          "name": "aspect-ratio",
-          "syntax": "aspect-ratio <f>",
-          "description": "This option currently works only on hexahedral (brick) type zones in 3D and quadrilateral zones in 2D. Attempting to use it on other types will cause an error. If a zone is determined to have an aspect ratio above this limit, it is densified in that direction only using the multiplier value given for that degree-of-freedom. This can be used with the repeat keyword to divide zones systematically along the longest direction until the aspect ratio falls below the desired value."
-        },
-        {
-          "name": "edge-limit",
-          "syntax": "edge-limit <f>",
-          "description": "If the maximum edge length of the zone falls above this value, then it will be densified using the segments multiplier in all three directions. If it falls below this value it will be ignored. This value may be used in combination with repeat to subdivide zones systematically until the maximum edge length is less than the limit. Note that this behavior is different than the maximum-length keyword, which will calculate the number of subdivisions dynamically. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
-        },
-        {
-          "name": "global",
-          "syntax": "global",
-          "description": "This specifies that the segments keyword applies to the zone edges (in 3D) or faces (in 2D) that most closely correspond to the global \\(x\\) -, \\(y\\) -, and \\(z\\) -axes (in 3D). For FLAC3D : This option currently works only on hexahedral (brick) type zones. For FLAC2D : This is the default setting when neither global nor local keywords are provided."
-        },
-        {
-          "name": "gradient-limit",
-          "syntax": "gradient-limit",
-          "description": "Zones chosen for densification will be checked to attempt to ensure that adjacent zones differ by, at most, one level of densification. This may mean more zones will be densified than actually fall into the range."
-        },
-        {
-          "name": "local",
-          "syntax": "local",
-          "description": "This is to set the zones to be densified in a local segment order. For FLAC3D : This is the default setting when neither global nor local keywords are provided. The local segment order is along the edges of e1, e2 and e3, where e1, e2 and e3 are the edges of the first and second, first and third, and first and fourth gridpoints of this zone. For FLAC2D : The local segment order is along the faces between the first and second and first and third gridpoints of this zone."
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f1> [<f2> [<f3>]]",
-          "description": "This specifies the maximum edge lengths to be densified, in order of local or global \\(x\\) -, \\(y\\) -, or \\(z\\) - direction. If f2 and f3 are not specified, they will be set to the same number as f1 . The value f3 is used in 3D only. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…). Note that this differs from the behavior of the edge-limit keyword, which will use the divisions specified in the segments keyword. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i1> [<i2> [<i3>]]",
-          "description": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1 . The value i3 is used in 3D only. Note that using non-uniform segment values is not recommended on very irregular starting meshes—in particular the kind resulting from mesh generation tools like Griddle . Adjacent zones may have very different local orientations. Use of the global keyword may mitigate these effects but it will not eliminate them. If using non-uniform segment values, choose choose numbers that are multiples of each other. For example 1,2,4 will tend to produce better meshes than 2,3,5."
-        },
-        {
-          "name": "repeat",
-          "syntax": "repeat [<i>]",
-          "description": "Repeats the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then FLAC will repeat until the edge-limit is reached, applying the division specified in segments each time."
-        }
-      ]
+    {
+      "name": "edge-limit",
+      "syntax": "edge-limit <f>",
+      "description": {
+        "7.0": "If the maximum edge length of the zone falls above this value, then it will be densified using the segments multiplier in all three directions. If it falls below this value it will be ignored. This value may be used in combination with repeat to systematically subdivide zones until the maximum edge length is less than the limit.",
+        "9.0": "If the maximum edge length of the zone falls above this value, then it will be densified using the segments multiplier in all three directions. If it falls below this value it will be ignored. This value may be used in combination with repeat to subdivide zones systematically until the maximum edge length is less than the limit. Note that this behavior is different than the maximum-length keyword, which will calculate the number of subdivisions dynamically. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
+      }
+    },
+    {
+      "name": "global",
+      "syntax": "global",
+      "description": {
+        "7.0": "This specifies that the zone edges to which the segments keyword applies are the ones that most closely correspond to the global x, y and z axes.",
+        "9.0": "This specifies that the segments keyword applies to the zone edges (in 3D) or faces (in 2D) that most closely correspond to the global \\(x\\) -, \\(y\\) -, and \\(z\\) -axes (in 3D). For FLAC3D : This option currently works only on hexahedral (brick) type zones. For FLAC2D : This is the default setting when neither global nor local keywords are provided."
+      }
+    },
+    {
+      "name": "gradient-limit",
+      "syntax": "gradient-limit",
+      "description": "Zones chosen for densification will be checked to attempt to ensure that adjacent zones differ by, at most, one level of densification. This may mean more zones will be densified than actually fall into the range."
+    },
+    {
+      "name": "local",
+      "syntax": "local",
+      "description": {
+        "7.0": "This is to set the zones to be densified in a local segment order. The local segment order is along the edges of e1, e2 and e3, where e1, e2 and e3 are the edges of the first and second, first and third, and first and fourth gridpoints of this zone. This is the default setting.",
+        "9.0": "This is to set the zones to be densified in a local segment order. For FLAC3D : This is the default setting when neither global nor local keywords are provided. The local segment order is along the edges of e1, e2 and e3, where e1, e2 and e3 are the edges of the first and second, first and third, and first and fourth gridpoints of this zone. For FLAC2D : The local segment order is along the faces between the first and second and first and third gridpoints of this zone."
+      }
+    },
+    {
+      "name": "maximum-length",
+      "syntax": {
+        "7.0": "maximum-length <f1> [f2 <f3>]",
+        "9.0": "maximum-length <f1> [<f2> [<f3>]]"
+      },
+      "description": {
+        "7.0": "This specifies the maximum edge lengths to be densified, in order of local or global x, y, or z direction. If f2 and f3 are not specified, they will be set to the same number as f1. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…).",
+        "9.0": "This specifies the maximum edge lengths to be densified, in order of local or global \\(x\\) -, \\(y\\) -, or \\(z\\) - direction. If f2 and f3 are not specified, they will be set to the same number as f1 . The value f3 is used in 3D only. The number of divisions (used instead of what can specified with the segments keyword) is calculated for each zone in order to bring the resulting edge length below the maximum. The divisions resulting are constrained to fall in powers of 2 (1,2,4,8,…). Note that this differs from the behavior of the edge-limit keyword, which will use the divisions specified in the segments keyword. When the repeat keyword is used the difference is only that the maximum-length keyword allows different length limits in different directions."
+      }
+    },
+    {
+      "name": "segments",
+      "syntax": {
+        "7.0": "segments <i1> [i2 <i3>]",
+        "9.0": "segments <i1> [<i2> [<i3>]]"
+      },
+      "description": {
+        "7.0": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1.",
+        "9.0": "This specifies the subdivision number of zones to be densified, in order. If i2 and i3 are not specified, they will be set to the same number as i1 . The value i3 is used in 3D only. Note that using non-uniform segment values is not recommended on very irregular starting meshes—in particular the kind resulting from mesh generation tools like Griddle . Adjacent zones may have very different local orientations. Use of the global keyword may mitigate these effects but it will not eliminate them. If using non-uniform segment values, choose choose numbers that are multiples of each other. For example 1,2,4 will tend to produce better meshes than 2,3,5."
+      }
+    },
+    {
+      "name": "repeat",
+      "syntax": {
+        "7.0": "repeat <i>",
+        "9.0": "repeat [<i>]"
+      },
+      "description": {
+        "7.0": "Repeats the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then FLAC3D will repeat until the edge-limit is reached, applying the division specified in segments each time.",
+        "9.0": "Repeats the densification i times, causing a recursive application of the range and densification settings. This can, for example, be used to create an octree grid. Note that if no number is given, then FLAC will repeat until the edge-limit is reached, applying the division specified in segments each time."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.densify.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

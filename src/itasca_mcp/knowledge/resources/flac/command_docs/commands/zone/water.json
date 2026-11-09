@@ -8,162 +8,140 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone water",
-      "syntax": "zone water keyword",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density <f> keyword [range]",
-          "description": "fluid density, \\(ρ_w\\) [SI units: kg/m3]. This will force a recalculation of pore pressures on all gridpoints in the range. Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; skip-assignment: If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given."
-        },
-        {
-          "name": "density-effective",
-          "syntax": "effective",
-          "description": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant."
-        },
-        {
-          "name": "density-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Lists the current water table settings. This includes the assumed fluid density, the geometric set to use (if any), and the water table plane last specified."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s> keyword [range]",
-          "description": "Specify the geometric set used to determine water surface location. By default, the name is Water Surface. Specifying a new set name causes a recalculation of gridpoint pore pressures for all gridpoints below polygons in that set that are also in the range. See the geometry command. Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; skip-assignment: If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given."
-        },
-        {
-          "name": "set-effective",
-          "syntax": "effective",
-          "description": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant."
-        },
-        {
-          "name": "set-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {effective | normal <v> | origin <v> [keyword] | skip-assignment} [range]",
-          "description": "Specify a water table plane. The water table sets pore pressure for all gridpoints (and, hence, zones) below the water table. The pore-pressure gradient is given by the direction of the gravity vector, which can be arbitrary (see the model gravity command). Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; normal <v>: normal direction to the plane, defined by unit vector v and pointing in the direction of increasing pore pressure.; origin <v>[keyword]: one point at coordinate location ( v ) on the plane; skip-assignment: the plane to use for the purpose of calculate pore pressures is specified, but pore pressures are not actually assigned to gridpoints in the range."
-        },
-        {
-          "name": "plane-effective",
-          "syntax": "effective",
-          "description": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant."
-        },
-        {
-          "name": "plane-normal",
-          "syntax": "normal <v>",
-          "description": "normal direction to the plane, defined by unit vector v and pointing in the direction of increasing pore pressure."
-        },
-        {
-          "name": "plane-origin",
-          "syntax": "origin <v> [keyword]",
-          "description": "one point at coordinate location (v) on the plane"
-        },
-        {
-          "name": "plane-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "the plane to use for the purpose of calculate pore pressures is specified, but pore pressures are not actually assigned to gridpoints in the range."
-        },
-        {
-          "name": "clear",
-          "syntax": "clear",
-          "description": "Remove the water table. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.water.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone water",
+  "syntax": "zone water keyword",
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": {
+        "7.0": "density <f> keyword [range]",
+        "9.0": "density <f> [keyword] [range]"
+      },
+      "description": {
+        "7.0": "fluid density, \\(ρ_w\\) [SI units: kg/m3]. This will force a recalculation of pore pressures on all gridpoints in the range. Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; skip-assignment: If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given.",
+        "9.0": "Assign water density f to zones in the range. Sub-keywords: effective, skip-assignment."
       }
     },
-    "9.0": {
-      "command": "zone water",
-      "syntax": "zone water keyword",
-      "keywords": [
-        {
-          "name": "clear",
-          "syntax": "clear",
-          "description": "Clear all water-table settings (density, set, plane, table) and reset the module to defaults."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the current water-table settings (density, water-surface mode, table assignments)."
-        },
-        {
-          "name": "table",
-          "syntax": "table keyword [range]",
-          "description": "Use a named table to define the water surface elevation as a function of position. (Stub for the 9.0 table-driven water surface API.)"
-        },
-        {
-          "name": "density",
-          "syntax": "density <f> [keyword] [range]",
-          "description": "Assign water density f to zones in the range. Sub-keywords: effective, skip-assignment."
-        },
-        {
-          "name": "density-effective",
-          "syntax": "effective",
-          "description": "Apply the density assignment using the effective-stress formulation (subtract pore-pressure-equivalent body force)."
-        },
-        {
-          "name": "density-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "Skip applying the density change to gridpoint body-force contributions; useful when only the constitutive-model density is intended to change."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s> [keyword] [range]",
-          "description": "Set the water level via named gridpoint set s. Sub-keywords: effective, skip-assignment."
-        },
-        {
-          "name": "set-effective",
-          "syntax": "effective",
-          "description": "Apply the set using the effective-stress formulation."
-        },
-        {
-          "name": "set-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "Skip applying the resulting density/body-force change to gridpoints; only update the recorded set."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane keyword [range]",
-          "description": "Define the water surface as a plane. Sub-keywords: effective, normal v, origin v, skip-assignment."
-        },
-        {
-          "name": "plane-effective",
-          "syntax": "effective",
-          "description": "Apply the planar water surface using the effective-stress formulation."
-        },
-        {
-          "name": "plane-normal",
-          "syntax": "normal <v>",
-          "description": "Normal vector of the water-surface plane."
-        },
-        {
-          "name": "plane-origin",
-          "syntax": "origin <v> [keyword]",
-          "description": "Origin point of the water-surface plane (a point that lies on the plane)."
-        },
-        {
-          "name": "plane-skip-assignment",
-          "syntax": "skip-assignment",
-          "description": "Skip applying the resulting body-force change to gridpoints; only record the plane."
-        }
-      ]
+    {
+      "name": "density-effective",
+      "syntax": "effective",
+      "description": {
+        "7.0": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.",
+        "9.0": "Apply the density assignment using the effective-stress formulation (subtract pore-pressure-equivalent body force)."
+      }
+    },
+    {
+      "name": "density-skip-assignment",
+      "syntax": "skip-assignment",
+      "description": {
+        "7.0": "If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given.",
+        "9.0": "Skip applying the density change to gridpoint body-force contributions; useful when only the constitutive-model density is intended to change."
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": {
+        "7.0": "Lists the current water table settings. This includes the assumed fluid density, the geometric set to use (if any), and the water table plane last specified.",
+        "9.0": "List the current water-table settings (density, water-surface mode, table assignments)."
+      }
+    },
+    {
+      "name": "table",
+      "syntax": "table keyword [range]",
+      "description": "Use a named table to define the water surface elevation as a function of position. (Stub for the 9.0 table-driven water surface API.)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "set",
+      "syntax": {
+        "7.0": "set <s> keyword [range]",
+        "9.0": "set <s> [keyword] [range]"
+      },
+      "description": {
+        "7.0": "Specify the geometric set used to determine water surface location. By default, the name is Water Surface. Specifying a new set name causes a recalculation of gridpoint pore pressures for all gridpoints below polygons in that set that are also in the range. See the geometry command. Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; skip-assignment: If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given.",
+        "9.0": "Set the water level via named gridpoint set s. Sub-keywords: effective, skip-assignment."
+      }
+    },
+    {
+      "name": "set-effective",
+      "syntax": "effective",
+      "description": {
+        "7.0": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.",
+        "9.0": "Apply the set using the effective-stress formulation."
+      }
+    },
+    {
+      "name": "set-skip-assignment",
+      "syntax": "skip-assignment",
+      "description": {
+        "7.0": "If this keyword is specified, then the values used to calculate pore-pressures is changed to pore-pressures are not actually assigned to any gridpoints. The values specified will remain until the next zone water command is given.",
+        "9.0": "Skip applying the resulting density/body-force change to gridpoints; only update the recorded set."
+      }
+    },
+    {
+      "name": "plane",
+      "syntax": {
+        "7.0": "plane {effective | normal <v> | origin <v> [keyword] | skip-assignment} [range]",
+        "9.0": "plane keyword [range]"
+      },
+      "description": {
+        "7.0": "Specify a water table plane. The water table sets pore pressure for all gridpoints (and, hence, zones) below the water table. The pore-pressure gradient is given by the direction of the gravity vector, which can be arbitrary (see the model gravity command). Options: effective: If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.; normal <v>: normal direction to the plane, defined by unit vector v and pointing in the direction of increasing pore pressure.; origin <v>[keyword]: one point at coordinate location ( v ) on the plane; skip-assignment: the plane to use for the purpose of calculate pore pressures is specified, but pore pressures are not actually assigned to gridpoints in the range.",
+        "9.0": "Define the water surface as a plane. Sub-keywords: effective, normal v, origin v, skip-assignment."
+      }
+    },
+    {
+      "name": "plane-effective",
+      "syntax": "effective",
+      "description": {
+        "7.0": "If this keyword is specified, then the total stresses in all zones connected to gridpoints in the range will be adjusted to keep the effective stress constant.",
+        "9.0": "Apply the planar water surface using the effective-stress formulation."
+      }
+    },
+    {
+      "name": "plane-normal",
+      "syntax": "normal <v>",
+      "description": {
+        "7.0": "normal direction to the plane, defined by unit vector v and pointing in the direction of increasing pore pressure.",
+        "9.0": "Normal vector of the water-surface plane."
+      }
+    },
+    {
+      "name": "plane-origin",
+      "syntax": "origin <v> [keyword]",
+      "description": {
+        "7.0": "one point at coordinate location (v) on the plane",
+        "9.0": "Origin point of the water-surface plane (a point that lies on the plane)."
+      }
+    },
+    {
+      "name": "plane-skip-assignment",
+      "syntax": "skip-assignment",
+      "description": {
+        "7.0": "the plane to use for the purpose of calculate pore pressures is specified, but pore pressures are not actually assigned to gridpoints in the range.",
+        "9.0": "Skip applying the resulting body-force change to gridpoints; only record the plane."
+      }
+    },
+    {
+      "name": "clear",
+      "syntax": "clear",
+      "description": {
+        "7.0": "Remove the water table. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Clear all water-table settings (density, set, plane, table) and reset the module to defaults."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.water.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

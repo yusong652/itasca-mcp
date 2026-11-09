@@ -6,23 +6,17 @@
     "monitor"
   ],
   "description": "Add a measurement history. A history is a floating point variable that can be sampled and stored during a model run, allowing tracking of measurement quantities over time. The history records values such as porosity, coordination number, stress, strain rate, position, or radius from a specified measurement object as the simulation progresses. Live 9.7: the quantity slot was fully enumerated (Batch P1); an object selector (id <i> or position <v>) is REQUIRED after the quantity - omitting it fails with 'No object for history specified'.",
-  "notes": [
-    "History records floating point values sampled during model run",
-    "Allows tracking measurement quantities over time (e.g., porosity evolution)",
-    "Optional history ID - if omitted, next available ID used automatically",
-    "Measurement ID (second 'id') is REQUIRED to specify which measurement to track",
-    "Multiple histories can track different quantities from same measurement",
-    "Multiple histories can track same quantity from different measurements",
-    "Histories are sampled automatically during model cycle/solve",
-    "Use common history commands to manipulate histories (export, plot, etc.)",
-    "Stress and strain rate have both component-specific keywords (stress-xx) and general keywords (stress)",
-    "3D-only components: zz, xz, yz, zx, zy (not available in 2D models)",
-    "History data can be exported, plotted, or queried with standard PFC history commands",
-    "'[measurehistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (name).",
-    "Related commands: measure create, measure list, model cycle, model solve, history export, history list, history delete",
-    "Two id keywords: the first (right after history) is the optional history ID, the second (after the quantity) is the measurement ID.",
-    "3D-only tensor components (zz, xz, yz, zx, zy) are errors in 2D models."
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
+    ],
+    "7.0": [
+      "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
+    ],
+    "9.0": [
+      "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz/rotation) are rejected per-keyword on live 9.7."
+    ]
+  },
   "python_sdk_alternative": {
     "available": true,
     "notes": [
@@ -36,518 +30,304 @@
       "python": "# Python SDK can access history data\n# Consult PFC documentation for history access methods"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "measure history",
-      "syntax": "measure history [id <id>] keyword ...",
-      "keywords": [
-        {
-          "name": "coordination",
-          "syntax": "coordination [measurehistoryblock]",
-          "description": "Coordination, or average number of contacts per body, inside the measurement object."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity [measurehistoryblock]",
-          "description": "Porosity inside the measurement object."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [measurehistoryblock]",
-          "description": "\\(x\\) -position of the measurement object."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [measurehistoryblock]",
-          "description": "\\(y\\) -position of the measurement object."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D only [measurehistoryblock]",
-          "description": "\\(z\\) -position of the measurement object."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius [measurehistoryblock]",
-          "description": "Radius of the measurement object."
-        },
-        {
-          "name": "strainrate",
-          "syntax": "strainrate [measurehistoryblock]",
-          "description": "The measurement strain rate. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "strainrate-xx",
-          "syntax": "strainrate-xx [measurehistoryblock]",
-          "description": "xx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xy",
-          "syntax": "strainrate-xy [measurehistoryblock]",
-          "description": "xy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xz",
-          "syntax": "strainrate-xz 3D only [measurehistoryblock]",
-          "description": "xz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yx",
-          "syntax": "strainrate-yx [measurehistoryblock]",
-          "description": "yx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yy",
-          "syntax": "strainrate-yy [measurehistoryblock]",
-          "description": "yy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yz",
-          "syntax": "strainrate-yz 3D only [measurehistoryblock]",
-          "description": "yz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zx",
-          "syntax": "strainrate-zx 3D only [measurehistoryblock]",
-          "description": "zx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zy",
-          "syntax": "strainrate-zy 3D only [measurehistoryblock]",
-          "description": "zy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zz",
-          "syntax": "strainrate-zz 3D only [measurehistoryblock]",
-          "description": "zz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [measurehistoryblock]",
-          "description": "The measure stress. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [measurehistoryblock]",
-          "description": "xx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [measurehistoryblock]",
-          "description": "xy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz 3D only [measurehistoryblock]",
-          "description": "xz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yx",
-          "syntax": "stress-yx [measurehistoryblock]",
-          "description": "yx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [measurehistoryblock]",
-          "description": "yy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz 3D only [measurehistoryblock]",
-          "description": "yz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zx",
-          "syntax": "stress-zx 3D only [measurehistoryblock]",
-          "description": "zx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zy",
-          "syntax": "stress-zy 3D only [measurehistoryblock]",
-          "description": "zy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz 3D only [measurehistoryblock]",
-          "description": "zz -component of the stress inside the measurement object."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure history porosity id 1",
-          "description": "Track porosity of measurement 1 over time (auto-assign history ID). Use case: Monitor void fraction evolution during compaction."
-        },
-        {
-          "command": "measure history id 10 coordination id 1",
-          "description": "Create history with ID 10 to track coordination number of measurement 1. Use case: Explicit history ID for organization."
-        },
-        {
-          "command": "measure history stress-zz id 1",
-          "description": "Track vertical stress (zz-component) in measurement 1. Use case: Monitor vertical stress during loading."
-        },
-        {
-          "command": "measure history strainrate-xx id 2",
-          "description": "Track xx-component of strain rate in measurement 2. Use case: Monitor deformation rate during shearing."
-        },
-        {
-          "command": "measure create id 1 radius 5.0\nmeasure history porosity id 1\nmeasure history coordination id 1\nmeasure history stress-zz id 1\nmodel cycle 10000",
-          "description": "Create measurement, setup multiple histories, run simulation. Use case: Complete workflow to track porosity, coordination, and stress during simulation."
-        },
-        {
-          "command": "measure history position-x id 1\nmeasure history position-y id 1",
-          "description": "Track x and y coordinates of measurement center. Use case: Monitor if measurement region is moving (e.g., tracking a moving particle cluster)."
-        },
-        {
-          "command": "measure history id 1 porosity id 1\nmeasure history id 2 porosity id 2\nmodel solve",
-          "description": "Track porosity in two different measurement regions. Use case: Compare porosity evolution at different locations."
-        }
-      ],
-      "notes": [
-        "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "measure history",
+  "syntax": {
+    "6.0": "measure history [id <id>] keyword id <id2> or <v>",
+    "7.0": "measure history [id <id>] keyword ...",
+    "9.0": "measure history [id <id>] keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "coordination",
+      "syntax": {
+        "6.0": "coordination",
+        "7.0": "coordination [measurehistoryblock]",
+        "9.0": "coordination [measurehistoryblock]"
+      },
+      "description": "Coordination, or average number of contacts per body, inside the measurement object."
     },
-    "6.0": {
-      "command": "measure history",
-      "syntax": "measure history [id <id>] keyword id <id2> or <v>",
-      "keywords": [
-        {
-          "name": "coordination",
-          "syntax": "coordination",
-          "description": "Coordination, or average number of contacts per body, inside the measurement object."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity",
-          "description": "Porosity inside the measurement object."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x",
-          "description": "x -position of the measurement object."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y",
-          "description": "y -position of the measurement object."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z",
-          "description": "z -position of the measurement object."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius",
-          "description": "Radius of the measurement object."
-        },
-        {
-          "name": "strainrate-xx",
-          "syntax": "strainrate-xx",
-          "description": "xx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xy",
-          "syntax": "strainrate-xy",
-          "description": "xy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xz",
-          "syntax": "strainrate-xz",
-          "description": "xz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yx",
-          "syntax": "strainrate-yx",
-          "description": "yx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yy",
-          "syntax": "strainrate-yy",
-          "description": "yy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yz",
-          "syntax": "strainrate-yz",
-          "description": "yz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zx",
-          "syntax": "strainrate-zx",
-          "description": "zx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zy",
-          "syntax": "strainrate-zy",
-          "description": "zy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zz",
-          "syntax": "strainrate-zz",
-          "description": "zz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx",
-          "description": "xx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy",
-          "description": "xy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz",
-          "description": "xz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yx",
-          "syntax": "stress-yx",
-          "description": "yx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy",
-          "description": "yy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz",
-          "description": "yz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zx",
-          "syntax": "stress-zx",
-          "description": "zx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zy",
-          "syntax": "stress-zy",
-          "description": "zy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz",
-          "description": "zz -component of the stress inside the measurement object."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure history porosity id 1",
-          "description": "Track porosity of measurement 1 over time (auto-assign history ID). Use case: Monitor void fraction evolution during compaction."
-        },
-        {
-          "command": "measure history id 10 coordination id 1",
-          "description": "Create history with ID 10 to track coordination number of measurement 1. Use case: Explicit history ID for organization."
-        },
-        {
-          "command": "measure history stress-zz id 1",
-          "description": "Track vertical stress (zz-component) in measurement 1. Use case: Monitor vertical stress during loading."
-        },
-        {
-          "command": "measure history strainrate-xx id 2",
-          "description": "Track xx-component of strain rate in measurement 2. Use case: Monitor deformation rate during shearing."
-        },
-        {
-          "command": "measure create id 1 radius 5.0\nmeasure history porosity id 1\nmeasure history coordination id 1\nmeasure history stress-zz id 1\nmodel cycle 10000",
-          "description": "Create measurement, setup multiple histories, run simulation. Use case: Complete workflow to track porosity, coordination, and stress during simulation."
-        },
-        {
-          "command": "measure history position-x id 1\nmeasure history position-y id 1",
-          "description": "Track x and y coordinates of measurement center. Use case: Monitor if measurement region is moving (e.g., tracking a moving particle cluster)."
-        },
-        {
-          "command": "measure history id 1 porosity id 1\nmeasure history id 2 porosity id 2\nmodel solve",
-          "description": "Track porosity in two different measurement regions. Use case: Compare porosity evolution at different locations."
-        }
-      ],
-      "notes": [
-        "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
-      ]
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
     },
-    "9.0": {
-      "command": "measure history",
-      "syntax": "measure history [id <id>] keyword ...",
-      "keywords": [
-        {
-          "name": "coordination",
-          "syntax": "coordination [measurehistoryblock]",
-          "description": "Coordination, or average number of contacts per body, inside the measurement object."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity [measurehistoryblock]",
-          "description": "Porosity inside the measurement object."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [measurehistoryblock]",
-          "description": "\\(x\\) -position of the measurement object."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [measurehistoryblock]",
-          "description": "\\(y\\) -position of the measurement object."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D only [measurehistoryblock]",
-          "description": "\\(z\\) -position of the measurement object."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius [measurehistoryblock]",
-          "description": "Radius of the measurement object."
-        },
-        {
-          "name": "strainrate",
-          "syntax": "strainrate [measurehistoryblock]",
-          "description": "The measurement strain rate. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "strainrate-xx",
-          "syntax": "strainrate-xx [measurehistoryblock]",
-          "description": "xx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xy",
-          "syntax": "strainrate-xy [measurehistoryblock]",
-          "description": "xy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-xz",
-          "syntax": "strainrate-xz 3D only [measurehistoryblock]",
-          "description": "xz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yx",
-          "syntax": "strainrate-yx [measurehistoryblock]",
-          "description": "yx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yy",
-          "syntax": "strainrate-yy [measurehistoryblock]",
-          "description": "yy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-yz",
-          "syntax": "strainrate-yz 3D only [measurehistoryblock]",
-          "description": "yz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zx",
-          "syntax": "strainrate-zx 3D only [measurehistoryblock]",
-          "description": "zx -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zy",
-          "syntax": "strainrate-zy 3D only [measurehistoryblock]",
-          "description": "zy -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "strainrate-zz",
-          "syntax": "strainrate-zz 3D only [measurehistoryblock]",
-          "description": "zz -component of the strain rate inside the measurement object."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [measurehistoryblock]",
-          "description": "The measure stress. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [measurehistoryblock]",
-          "description": "xx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [measurehistoryblock]",
-          "description": "xy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz 3D only [measurehistoryblock]",
-          "description": "xz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yx",
-          "syntax": "stress-yx [measurehistoryblock]",
-          "description": "yx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [measurehistoryblock]",
-          "description": "yy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz 3D only [measurehistoryblock]",
-          "description": "yz -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zx",
-          "syntax": "stress-zx 3D only [measurehistoryblock]",
-          "description": "zx -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zy",
-          "syntax": "stress-zy 3D only [measurehistoryblock]",
-          "description": "zy -component of the stress inside the measurement object."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz 3D only [measurehistoryblock]",
-          "description": "zz -component of the stress inside the measurement object."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure history porosity id 1",
-          "description": "Track porosity of measurement 1 over time (auto-assign history ID). Use case: Monitor void fraction evolution during compaction."
-        },
-        {
-          "command": "measure history id 10 coordination id 1",
-          "description": "Create history with ID 10 to track coordination number of measurement 1. Use case: Explicit history ID for organization."
-        },
-        {
-          "command": "measure history stress-zz id 1",
-          "description": "Track vertical stress (zz-component) in measurement 1. Use case: Monitor vertical stress during loading."
-        },
-        {
-          "command": "measure history strainrate-xx id 2",
-          "description": "Track xx-component of strain rate in measurement 2. Use case: Monitor deformation rate during shearing."
-        },
-        {
-          "command": "measure create id 1 radius 5.0\nmeasure history porosity id 1\nmeasure history coordination id 1\nmeasure history stress-zz id 1\nmodel cycle 10000",
-          "description": "Create measurement, setup multiple histories, run simulation. Use case: Complete workflow to track porosity, coordination, and stress during simulation."
-        },
-        {
-          "command": "measure history position-x id 1\nmeasure history position-y id 1",
-          "description": "Track x and y coordinates of measurement center. Use case: Monitor if measurement region is moving (e.g., tracking a moving particle cluster)."
-        },
-        {
-          "command": "measure history id 1 porosity id 1\nmeasure history id 2 porosity id 2\nmodel solve",
-          "description": "Track porosity in two different measurement regions. Use case: Compare porosity evolution at different locations."
-        }
-      ],
-      "notes": [
-        "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz/rotation) are rejected per-keyword on live 9.7."
-      ]
+    {
+      "name": "porosity",
+      "syntax": {
+        "6.0": "porosity",
+        "7.0": "porosity [measurehistoryblock]",
+        "9.0": "porosity [measurehistoryblock]"
+      },
+      "description": "Porosity inside the measurement object."
+    },
+    {
+      "name": "position-x",
+      "syntax": {
+        "6.0": "position-x",
+        "7.0": "position-x [measurehistoryblock]",
+        "9.0": "position-x [measurehistoryblock]"
+      },
+      "description": {
+        "6.0": "x -position of the measurement object.",
+        "7.0": "\\(x\\) -position of the measurement object.",
+        "9.0": "\\(x\\) -position of the measurement object."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": {
+        "6.0": "position-y",
+        "7.0": "position-y [measurehistoryblock]",
+        "9.0": "position-y [measurehistoryblock]"
+      },
+      "description": {
+        "6.0": "y -position of the measurement object.",
+        "7.0": "\\(y\\) -position of the measurement object.",
+        "9.0": "\\(y\\) -position of the measurement object."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z",
+        "7.0": "position-z 3D only [measurehistoryblock]",
+        "9.0": "position-z 3D only [measurehistoryblock]"
+      },
+      "description": {
+        "6.0": "z -position of the measurement object.",
+        "7.0": "\\(z\\) -position of the measurement object.",
+        "9.0": "\\(z\\) -position of the measurement object."
+      }
+    },
+    {
+      "name": "radius",
+      "syntax": {
+        "6.0": "radius",
+        "7.0": "radius [measurehistoryblock]",
+        "9.0": "radius [measurehistoryblock]"
+      },
+      "description": "Radius of the measurement object."
+    },
+    {
+      "name": "strainrate",
+      "syntax": "strainrate [measurehistoryblock]",
+      "description": "The measurement strain rate. Use the quantity keyword to specify the quantity to be recorded.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strainrate-xx",
+      "syntax": {
+        "6.0": "strainrate-xx",
+        "7.0": "strainrate-xx [measurehistoryblock]",
+        "9.0": "strainrate-xx [measurehistoryblock]"
+      },
+      "description": "xx -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-xy",
+      "syntax": {
+        "6.0": "strainrate-xy",
+        "7.0": "strainrate-xy [measurehistoryblock]",
+        "9.0": "strainrate-xy [measurehistoryblock]"
+      },
+      "description": "xy -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-xz",
+      "syntax": {
+        "6.0": "strainrate-xz",
+        "7.0": "strainrate-xz 3D only [measurehistoryblock]",
+        "9.0": "strainrate-xz 3D only [measurehistoryblock]"
+      },
+      "description": "xz -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-yx",
+      "syntax": {
+        "6.0": "strainrate-yx",
+        "7.0": "strainrate-yx [measurehistoryblock]",
+        "9.0": "strainrate-yx [measurehistoryblock]"
+      },
+      "description": "yx -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-yy",
+      "syntax": {
+        "6.0": "strainrate-yy",
+        "7.0": "strainrate-yy [measurehistoryblock]",
+        "9.0": "strainrate-yy [measurehistoryblock]"
+      },
+      "description": "yy -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-yz",
+      "syntax": {
+        "6.0": "strainrate-yz",
+        "7.0": "strainrate-yz 3D only [measurehistoryblock]",
+        "9.0": "strainrate-yz 3D only [measurehistoryblock]"
+      },
+      "description": "yz -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-zx",
+      "syntax": {
+        "6.0": "strainrate-zx",
+        "7.0": "strainrate-zx 3D only [measurehistoryblock]",
+        "9.0": "strainrate-zx 3D only [measurehistoryblock]"
+      },
+      "description": "zx -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-zy",
+      "syntax": {
+        "6.0": "strainrate-zy",
+        "7.0": "strainrate-zy 3D only [measurehistoryblock]",
+        "9.0": "strainrate-zy 3D only [measurehistoryblock]"
+      },
+      "description": "zy -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "strainrate-zz",
+      "syntax": {
+        "6.0": "strainrate-zz",
+        "7.0": "strainrate-zz 3D only [measurehistoryblock]",
+        "9.0": "strainrate-zz 3D only [measurehistoryblock]"
+      },
+      "description": "zz -component of the strain rate inside the measurement object."
+    },
+    {
+      "name": "stress",
+      "syntax": "stress [measurehistoryblock]",
+      "description": "The measure stress. Use the quantity keyword to specify the quantity to be recorded.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-xx",
+      "syntax": {
+        "6.0": "stress-xx",
+        "7.0": "stress-xx [measurehistoryblock]",
+        "9.0": "stress-xx [measurehistoryblock]"
+      },
+      "description": "xx -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-xy",
+      "syntax": {
+        "6.0": "stress-xy",
+        "7.0": "stress-xy [measurehistoryblock]",
+        "9.0": "stress-xy [measurehistoryblock]"
+      },
+      "description": "xy -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-xz",
+      "syntax": {
+        "6.0": "stress-xz",
+        "7.0": "stress-xz 3D only [measurehistoryblock]",
+        "9.0": "stress-xz 3D only [measurehistoryblock]"
+      },
+      "description": "xz -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-yx",
+      "syntax": {
+        "6.0": "stress-yx",
+        "7.0": "stress-yx [measurehistoryblock]",
+        "9.0": "stress-yx [measurehistoryblock]"
+      },
+      "description": "yx -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-yy",
+      "syntax": {
+        "6.0": "stress-yy",
+        "7.0": "stress-yy [measurehistoryblock]",
+        "9.0": "stress-yy [measurehistoryblock]"
+      },
+      "description": "yy -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-yz",
+      "syntax": {
+        "6.0": "stress-yz",
+        "7.0": "stress-yz 3D only [measurehistoryblock]",
+        "9.0": "stress-yz 3D only [measurehistoryblock]"
+      },
+      "description": "yz -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-zx",
+      "syntax": {
+        "6.0": "stress-zx",
+        "7.0": "stress-zx 3D only [measurehistoryblock]",
+        "9.0": "stress-zx 3D only [measurehistoryblock]"
+      },
+      "description": "zx -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-zy",
+      "syntax": {
+        "6.0": "stress-zy",
+        "7.0": "stress-zy 3D only [measurehistoryblock]",
+        "9.0": "stress-zy 3D only [measurehistoryblock]"
+      },
+      "description": "zy -component of the stress inside the measurement object."
+    },
+    {
+      "name": "stress-zz",
+      "syntax": {
+        "6.0": "stress-zz",
+        "7.0": "stress-zz 3D only [measurehistoryblock]",
+        "9.0": "stress-zz 3D only [measurehistoryblock]"
+      },
+      "description": "zz -component of the stress inside the measurement object."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "measure history porosity id 1",
+      "description": "Track porosity of measurement 1 over time (auto-assign history ID). Use case: Monitor void fraction evolution during compaction."
+    },
+    {
+      "command": "measure history id 10 coordination id 1",
+      "description": "Create history with ID 10 to track coordination number of measurement 1. Use case: Explicit history ID for organization."
+    },
+    {
+      "command": "measure history stress-zz id 1",
+      "description": "Track vertical stress (zz-component) in measurement 1. Use case: Monitor vertical stress during loading."
+    },
+    {
+      "command": "measure history strainrate-xx id 2",
+      "description": "Track xx-component of strain rate in measurement 2. Use case: Monitor deformation rate during shearing."
+    },
+    {
+      "command": "measure create id 1 radius 5.0\nmeasure history porosity id 1\nmeasure history coordination id 1\nmeasure history stress-zz id 1\nmodel cycle 10000",
+      "description": "Create measurement, setup multiple histories, run simulation. Use case: Complete workflow to track porosity, coordination, and stress during simulation."
+    },
+    {
+      "command": "measure history position-x id 1\nmeasure history position-y id 1",
+      "description": "Track x and y coordinates of measurement center. Use case: Monitor if measurement region is moving (e.g., tracking a moving particle cluster)."
+    },
+    {
+      "command": "measure history id 1 porosity id 1\nmeasure history id 2 porosity id 2\nmodel solve",
+      "description": "Track porosity in two different measurement regions. Use case: Compare porosity evolution at different locations."
+    }
+  ]
 }

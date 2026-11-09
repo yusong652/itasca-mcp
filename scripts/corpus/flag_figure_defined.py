@@ -94,15 +94,23 @@ def _find_deferrals(text: str) -> list[str]:
     return hits
 
 
-def _collect_deferrals(doc: dict[str, Any], version_doc: dict[str, Any]) -> list[str]:
-    texts: list[str] = []
-    if isinstance(doc.get("description"), str):
-        texts.append(doc["description"])
-    if isinstance(version_doc.get("description"), str):
-        texts.append(version_doc["description"])
-    for kw in version_doc.get("keywords", []) or []:
-        if isinstance(kw, dict) and isinstance(kw.get("description"), str):
-            texts.append(kw["description"])
+def _texts(value: Any) -> list[str]:
+    """A field's prose: the string itself, or every branch of a version map."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [v for v in value.values() if isinstance(v, str)]
+    return []
+
+
+def _collect_deferrals(doc: dict[str, Any]) -> list[str]:
+    texts: list[str] = _texts(doc.get("description"))
+    keywords = doc.get("keywords") or []
+    keyword_lists = keywords.values() if isinstance(keywords, dict) else [keywords]
+    for keyword_list in keyword_lists:
+        for kw in keyword_list or []:
+            if isinstance(kw, dict):
+                texts.extend(_texts(kw.get("description")))
 
     deferrals: list[str] = []
     seen: set[str] = set()
@@ -142,40 +150,21 @@ def _set_or_clear(target: dict[str, Any], flag: dict[str, Any] | None) -> bool:
 
 def _apply_to_doc(doc: dict[str, Any], manifest: dict[str, list[dict[str, str]]]) -> bool:
     """Annotate ``doc`` in place. Return True if anything changed."""
-    changed = False
-    versions = doc.get("versions")
-
-    if isinstance(versions, dict):
-        for version_doc in versions.values():
-            if not isinstance(version_doc, dict):
-                continue
-            if version_doc.get("available") is False:
-                # No content for this version; never carries a flag.
-                changed |= version_doc.pop(FLAG_KEY, None) is not None
-                continue
-            command = version_doc.get("command") or doc.get("command") or ""
-            figures = manifest.get(command)
-            deferrals = _collect_deferrals(doc, version_doc)
-            changed |= _set_or_clear(version_doc, _build_flag(figures, deferrals))
-    else:
-        command = doc.get("command") or ""
-        figures = manifest.get(command)
-        deferrals = _collect_deferrals(doc, doc)
-        changed |= _set_or_clear(doc, _build_flag(figures, deferrals))
-
-    return changed
+    if doc.get("available") is False:
+        # No served content; never carries a flag.
+        return doc.pop(FLAG_KEY, None) is not None
+    figures = None
+    for command in sorted(_command_names(doc)):
+        figures = figures or manifest.get(command)
+    deferrals = _collect_deferrals(doc)
+    return _set_or_clear(doc, _build_flag(figures, deferrals))
 
 
 def _command_names(doc: dict[str, Any]) -> set[str]:
-    names: set[str] = set()
-    versions = doc.get("versions")
-    if isinstance(versions, dict):
-        for vdoc in versions.values():
-            if isinstance(vdoc, dict) and vdoc.get("command"):
-                names.add(vdoc["command"])
-    if doc.get("command"):
-        names.add(doc["command"])
-    return names
+    command = doc.get("command")
+    if isinstance(command, dict):  # version map: the spelling changed between versions
+        return {str(v) for v in command.values()}
+    return {command} if command else set()
 
 
 def iter_command_docs() -> list[Path]:
@@ -218,9 +207,6 @@ def main(argv: list[str]) -> int:
 
 
 def _doc_is_flagged(doc: dict[str, Any]) -> bool:
-    versions = doc.get("versions")
-    if isinstance(versions, dict):
-        return any(isinstance(v, dict) and FLAG_KEY in v for v in versions.values())
     return FLAG_KEY in doc
 
 

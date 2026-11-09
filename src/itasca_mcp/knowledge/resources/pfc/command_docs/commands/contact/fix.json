@@ -13,98 +13,51 @@
       "Contact force values can be read via contact.force_global(), contact.force_local(), etc., but fixing forces must be done via command interface."
     ]
   },
-  "notes": [
-    "Fixed contact forces remain constant regardless of piece movements",
-    "Forces are frozen at their values when 'fix on' is executed",
-    "Normal force calculation is suspended for fixed contacts",
-    "Contact model logic still runs but cannot change forces",
-    "Use 'fix off' or 'contact free' to restore normal force calculation",
-    "More efficient than Python iteration for bulk fixing",
-    "Range specification is REQUIRED",
-    "Fixing does not prevent contact deletion by contact detection",
-    "Typically used for boundary conditions or special analyses",
-    "Related commands: ball fix, wall fix, contact property, contact model, contact free",
-    "fix on freezes all force components at their current values until fix off; the model still evaluates but cannot update them. Unfixing can make forces jump to match the current configuration."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact fix",
-      "syntax": "contact fix <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact fix on range position-x 1.1 1.9",
-          "description": "Fix contacts in x-position range 1.1 to 1.9 (from official example). Use case: Apply constant forces from boundary contacts."
-        },
-        {
-          "command": "contact fix range contact gap 0 100",
-          "description": "Fix contacts with gap between 0 and 100 (from official example). Use case: Freeze forces for contacts in specific gap range."
-        },
-        {
-          "command": "contact fix true range group 'boundary'",
-          "description": "Fix all contacts in 'boundary' group. Use case: Apply constant boundary forces."
-        },
-        {
-          "command": "contact fix false range contact",
-          "description": "Unfix all contacts, restore normal force calculation. Use case: Return to dynamic force calculation after fixed phase."
-        },
-        {
-          "command": "contact fix on range contact type 'ball-facet'",
-          "description": "Fix all ball-facet (ball-wall) contacts. Use case: Apply constant wall forces."
-        },
-        {
-          "command": "contact fix true mechanical range contact active",
-          "description": "Fix all active mechanical contacts. Use case: Freeze current force state."
-        },
-        {
-          "command": "contact fix off range model linearpbond",
-          "description": "Unfix linearpbond contacts, restore dynamic bonding forces. Use case: Re-enable force calculation for bond contacts."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact fix",
+  "syntax": "contact fix <bval> [keyword] [range]",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "contact fix on range position-x 1.1 1.9",
+      "description": "Fix contacts in x-position range 1.1 to 1.9 (from official example). Use case: Apply constant forces from boundary contacts."
     },
-    "6.0": {
-      "available": false
+    {
+      "command": "contact fix range contact gap 0 100",
+      "description": "Fix contacts with gap between 0 and 100 (from official example). Use case: Freeze forces for contacts in specific gap range."
     },
-    "9.0": {
-      "command": "contact fix",
-      "syntax": "contact fix <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact fix on range position-x 1.1 1.9",
-          "description": "Fix contacts in x-position range 1.1 to 1.9 (from official example). Use case: Apply constant forces from boundary contacts."
-        },
-        {
-          "command": "contact fix range contact gap 0 100",
-          "description": "Fix contacts with gap between 0 and 100 (from official example). Use case: Freeze forces for contacts in specific gap range."
-        },
-        {
-          "command": "contact fix true range group 'boundary'",
-          "description": "Fix all contacts in 'boundary' group. Use case: Apply constant boundary forces."
-        },
-        {
-          "command": "contact fix false range contact",
-          "description": "Unfix all contacts, restore normal force calculation. Use case: Return to dynamic force calculation after fixed phase."
-        },
-        {
-          "command": "contact fix on range contact type 'ball-facet'",
-          "description": "Fix all ball-facet (ball-wall) contacts. Use case: Apply constant wall forces."
-        },
-        {
-          "command": "contact fix true mechanical range contact active",
-          "description": "Fix all active mechanical contacts. Use case: Freeze current force state."
-        },
-        {
-          "command": "contact fix off range model linearpbond",
-          "description": "Unfix linearpbond contacts, restore dynamic bonding forces. Use case: Re-enable force calculation for bond contacts."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact fix true range group 'boundary'",
+      "description": "Fix all contacts in 'boundary' group. Use case: Apply constant boundary forces."
+    },
+    {
+      "command": "contact fix false range contact",
+      "description": "Unfix all contacts, restore normal force calculation. Use case: Return to dynamic force calculation after fixed phase."
+    },
+    {
+      "command": "contact fix on range contact type 'ball-facet'",
+      "description": "Fix all ball-facet (ball-wall) contacts. Use case: Apply constant wall forces."
+    },
+    {
+      "command": "contact fix true mechanical range contact active",
+      "description": "Fix all active mechanical contacts. Use case: Freeze current force state."
+    },
+    {
+      "command": "contact fix off range model linearpbond",
+      "description": "Unfix linearpbond contacts, restore dynamic bonding forces. Use case: Re-enable force calculation for bond contacts."
     }
-  }
+  ]
 }

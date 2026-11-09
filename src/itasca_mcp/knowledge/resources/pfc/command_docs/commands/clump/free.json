@@ -15,198 +15,113 @@
     "available": true,
     "workaround": "Clump.set_fix(component, False) where component (1-based): 3D 1=X, 2=Y, 3=Z, 4=RX, 5=RY, 6=RZ; 2D 1=X, 2=Y, 3=spin - requires iteration: for c in itasca.clump.list(): c.set_fix(component, False)"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump free",
-      "syntax": "clump free keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is freed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Free the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Free the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Free the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is freed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Free the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Free the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Free the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump free velocity spin",
-          "description": "Free all translational and angular velocity components for all clumps"
-        },
-        {
-          "command": "clump free velocity-x range group 'left_clumps'",
-          "description": "Free x-velocity for clumps in 'left_clumps' group"
-        },
-        {
-          "command": "clump free velocity-z range position-z 0 10",
-          "description": "Free z-velocity for clumps in z-position range (allow vertical motion)"
-        },
-        {
-          "command": "clump free velocity range id 1 100",
-          "description": "Free all translational velocities for clumps 1-100"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump free",
+  "syntax": "clump free keyword ... [range]",
+  "keywords": [
+    {
+      "name": "spin",
+      "syntax": "spin",
+      "description": "The angular velocity is freed."
     },
-    "6.0": {
-      "command": "clump free",
-      "syntax": "clump free keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is freed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Free the x -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Free the y -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Free the z -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is freed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Free the x -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Free the y -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Free the z -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump free velocity spin",
-          "description": "Free all translational and angular velocity components for all clumps"
-        },
-        {
-          "command": "clump free velocity-x range group 'left_clumps'",
-          "description": "Free x-velocity for clumps in 'left_clumps' group"
-        },
-        {
-          "command": "clump free velocity-z range position-z 0 10",
-          "description": "Free z-velocity for clumps in z-position range (allow vertical motion)"
-        },
-        {
-          "command": "clump free velocity range id 1 100",
-          "description": "Free all translational velocities for clumps 1-100"
-        }
-      ]
+    {
+      "name": "spin-x",
+      "syntax": {
+        "6.0": "spin-x",
+        "7.0": "spin-x",
+        "9.0": "spin-x 3D ONLY"
+      },
+      "description": {
+        "6.0": "Free the x -component of the angular velocity.",
+        "7.0": "Free the \\(x\\) -component of the angular velocity.",
+        "9.0": "Free the \\(x\\) -component of the angular velocity."
+      }
     },
-    "9.0": {
-      "command": "clump free",
-      "syntax": "clump free keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is freed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY",
-          "description": "Free the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY",
-          "description": "Free the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY",
-          "description": "Free the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is freed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Free the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Free the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY",
-          "description": "Free the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump free velocity spin",
-          "description": "Free all translational and angular velocity components for all clumps"
-        },
-        {
-          "command": "clump free velocity-x range group 'left_clumps'",
-          "description": "Free x-velocity for clumps in 'left_clumps' group"
-        },
-        {
-          "command": "clump free velocity-z range position-z 0 10",
-          "description": "Free z-velocity for clumps in z-position range (allow vertical motion)"
-        },
-        {
-          "command": "clump free velocity range id 1 100",
-          "description": "Free all translational velocities for clumps 1-100"
-        }
-      ]
+    {
+      "name": "spin-y",
+      "syntax": {
+        "6.0": "spin-y",
+        "7.0": "spin-y",
+        "9.0": "spin-y 3D ONLY"
+      },
+      "description": {
+        "6.0": "Free the y -component of the angular velocity.",
+        "7.0": "Free the \\(y\\) -component of the angular velocity.",
+        "9.0": "Free the \\(y\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": {
+        "6.0": "spin-z",
+        "7.0": "spin-z",
+        "9.0": "spin-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Free the z -component of the angular velocity.",
+        "7.0": "Free the \\(z\\) -component of the angular velocity.",
+        "9.0": "Free the \\(z\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity",
+      "description": "The translational velocity is freed."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x",
+      "description": {
+        "6.0": "Free the x -component of the translational velocity.",
+        "7.0": "Free the \\(x\\) -component of the translational velocity.",
+        "9.0": "Free the \\(x\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y",
+      "description": {
+        "6.0": "Free the y -component of the translational velocity.",
+        "7.0": "Free the \\(y\\) -component of the translational velocity.",
+        "9.0": "Free the \\(y\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z",
+        "7.0": "velocity-z",
+        "9.0": "velocity-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Free the z -component of the translational velocity.",
+        "7.0": "Free the \\(z\\) -component of the translational velocity.",
+        "9.0": "Free the \\(z\\) -component of the translational velocity."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump free velocity spin",
+      "description": "Free all translational and angular velocity components for all clumps"
+    },
+    {
+      "command": "clump free velocity-x range group 'left_clumps'",
+      "description": "Free x-velocity for clumps in 'left_clumps' group"
+    },
+    {
+      "command": "clump free velocity-z range position-z 0 10",
+      "description": "Free z-velocity for clumps in z-position range (allow vertical motion)"
+    },
+    {
+      "command": "clump free velocity range id 1 100",
+      "description": "Free all translational velocities for clumps 1-100"
+    }
+  ]
 }

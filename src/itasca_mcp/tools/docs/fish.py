@@ -17,7 +17,6 @@ _ENTRY_FIELDS = (
     "name",
     "signature",
     "description",
-    "signature_7.0",
     "signature_source",
     "returns",
     "args",
@@ -67,12 +66,12 @@ def browse(software: str, path: str | None, version: str) -> dict[str, Any]:
 
     entries: list[dict[str, Any]] = []
     if entry is not None and self_available:
-        entries.append(_entry_record(entry))
+        entries.append(_entry_record(entry, version))
     for child in children:
         item: dict[str, Any] = {"name": child}
         child_entry = FishLoader.get(child, software=software)
         if child_entry is not None and FishLoader.available(child_entry, version):
-            item["signature"] = child_entry.get("signature")
+            item["signature"] = FishLoader.signature(child_entry, version)
             if child_entry.get("dimension"):
                 item["dimension"] = child_entry["dimension"]
         grandchildren = _available_children(child, software, version)
@@ -122,8 +121,10 @@ def _browse_root(software: str, version: str) -> dict[str, Any]:
     )
 
 
-def _entry_record(entry: dict[str, Any]) -> dict[str, Any]:
+def _entry_record(entry: dict[str, Any], version: str) -> dict[str, Any]:
     record = {key: entry[key] for key in _ENTRY_FIELDS if key in entry}
+    if "signature" in record:
+        record["signature"] = FishLoader.signature(entry, version)
     record["available_in"] = FishLoader.available_in(entry)
     return record
 

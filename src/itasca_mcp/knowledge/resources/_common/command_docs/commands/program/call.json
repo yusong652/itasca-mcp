@@ -8,86 +8,47 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "program call",
-      "syntax": "program call <s> [keyword] ...",
-      "keywords": [
-        {
-          "name": "call",
-          "syntax": "call <s> [keyword] ...",
-          "description": "Using two or more call keywords allows multiple files to be called on one line. The called files will processed in the order that they appear in the command, from last to first . Multiple-file calls each start with the program call command word — the multiple-file call is, in effect, a string of individual calls. The keywords available for each are the same as allowed for the program call command."
-        },
-        {
-          "name": "line",
-          "syntax": "line <i>",
-          "description": "If the line keyword is specified, then the data file starts reading at the line i . If the line is past the end of the file, the file returns instantly, as if you had processed to the end of the file. This cannot be used with the label option."
-        },
-        {
-          "name": "label",
-          "syntax": "label <sl>",
-          "description": "If the label keyword is specified, then the data file starts reading at the label sl . To place a label in a data file, use the syntax “ :label ” (where the colon must be the first character in the line). The data file will be read starting with the first line after the label. Lines containing a label are ignored (as if the colon were a comment). If the label is not found in the data file, an error is indicated. This cannot be used with the line option."
-        },
-        {
-          "name": "suppress",
-          "syntax": "suppress",
-          "description": "If the optional keyword suppress is added once in a command, then the command processor will not echo the contents of the called file(s) to the screen while it processes the file(s) (and any files called by it/them)."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "program call",
+  "syntax": {
+    "6.0": "program call <s> [keyword] ...",
+    "7.0": "program call <s> [keyword ...]",
+    "9.0": "program call <s> [keyword ...]"
+  },
+  "keywords": [
+    {
+      "name": "call",
+      "syntax": {
+        "6.0": "call <s> [keyword] ...",
+        "7.0": "call <s> [keyword ...]",
+        "9.0": "call <s> [keyword ...]"
+      },
+      "description": "Using two or more call keywords allows multiple files to be called on one line. The called files will processed in the order that they appear in the command, from last to first . Multiple-file calls each start with the program call command word — the multiple-file call is, in effect, a string of individual calls. The keywords available for each are the same as allowed for the program call command."
     },
-    "7.0": {
-      "command": "program call",
-      "syntax": "program call <s> [keyword ...]",
-      "keywords": [
-        {
-          "name": "call",
-          "syntax": "call <s> [keyword ...]",
-          "description": "Using two or more call keywords allows multiple files to be called on one line. The called files will processed in the order that they appear in the command, from last to first . Multiple-file calls each start with the program call command word — the multiple-file call is, in effect, a string of individual calls. The keywords available for each are the same as allowed for the program call command."
-        },
-        {
-          "name": "line",
-          "syntax": "line <i>",
-          "description": "If the line keyword is specified, then the data file starts reading at the line i . If the line is past the end of the file, the file returns instantly, as if you had processed to the end of the file. This cannot be used with the label option."
-        },
-        {
-          "name": "label",
-          "syntax": "label <sl>",
-          "description": "If the label keyword is specified, then the data file starts reading at the label sl . To place a label in a data file, use the syntax “ :label ” (where the colon must be the first character in the line). The data file will be read starting with the first line after the label. Lines containing a label are ignored (as if the colon were a comment). If the label is not found in the data file, an error is indicated. This cannot be used with the line option."
-        },
-        {
-          "name": "suppress",
-          "syntax": "suppress",
-          "description": "If the optional keyword suppress is added once in a command, then the command processor will not echo the contents of the called file(s) to the screen while it processes the file(s) (and any files called by it/them)."
-        }
-      ]
+    {
+      "name": "line",
+      "syntax": "line <i>",
+      "description": "If the line keyword is specified, then the data file starts reading at the line i . If the line is past the end of the file, the file returns instantly, as if you had processed to the end of the file. This cannot be used with the label option."
     },
-    "9.0": {
-      "command": "program call",
-      "syntax": "program call <s> [keyword ...]",
-      "keywords": [
-        {
-          "name": "call",
-          "syntax": "call <s> [keyword ...]",
-          "description": "Using two or more call keywords allows multiple files to be called on one line. The called files will processed in the order that they appear in the command, from last to first . Multiple-file calls each start with the program call command word — the multiple-file call is, in effect, a string of individual calls. The keywords available for each are the same as allowed for the program call command."
-        },
-        {
-          "name": "line",
-          "syntax": "line <i>",
-          "description": "If the line keyword is specified, then the data file starts reading at the line i . If the line is past the end of the file, the file returns instantly, as if you had processed to the end of the file. This cannot be used with the label option."
-        },
-        {
-          "name": "label",
-          "syntax": "label <sl>",
-          "description": "If the label keyword is specified, then the data file starts reading at the label sl . To place a label in a data file, use the syntax “ :label ” (where the colon must be the first character in the line). The data file will be read starting with the first line after the label. Lines containing a label are ignored (as if the colon were a comment). If the label is not found in the data file, an error is indicated. This cannot be used with the line option."
-        },
-        {
-          "name": "suppress",
-          "syntax": "suppress",
-          "description": "If the optional keyword suppress is added once in a command, then the command processor will not echo the contents of the called file(s) to the screen while it processes the file(s) (and any files called by it/them)."
-        }
-      ],
-      "examples": []
+    {
+      "name": "label",
+      "syntax": "label <sl>",
+      "description": "If the label keyword is specified, then the data file starts reading at the label sl . To place a label in a data file, use the syntax “ :label ” (where the colon must be the first character in the line). The data file will be read starting with the first line after the label. Lines containing a label are ignored (as if the colon were a comment). If the label is not found in the data file, an error is indicated. This cannot be used with the line option."
+    },
+    {
+      "name": "suppress",
+      "syntax": "suppress",
+      "description": "If the optional keyword suppress is added once in a command, then the command processor will not echo the contents of the called file(s) to the screen while it processes the file(s) (and any files called by it/them)."
     }
+  ],
+  "examples": {
+    "6.0": [],
+    "9.0": []
   }
 }

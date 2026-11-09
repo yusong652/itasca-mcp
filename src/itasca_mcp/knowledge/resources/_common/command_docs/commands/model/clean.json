@@ -22,117 +22,54 @@
     "available": false,
     "workaround": "itasca.command('model clean') or itasca.command('model clean all') - Python SDK does not provide direct clean method"
   },
-  "versions": {
-    "7.0": {
-      "command": "model clean",
-      "syntax": "model clean [keyword]",
-      "keywords": [
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "If this keyword is given then the PFC objects are remapped in the cellspace and cell extents are updated."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model clean",
-          "description": "Clean model - create contacts, initialize properties, update spatial data structures"
-        },
-        {
-          "command": "model clean all",
-          "description": "Clean model with full cellspace remapping and cell extent updates"
-        },
-        {
-          "command": "ball generate number 1000 radius 0.5 box -10 10\nmodel clean\nmodel cycle 1000",
-          "description": "Generate balls, clean to create contacts, then cycle"
-        },
-        {
-          "command": "fracture model linear\nmodel clean",
-          "description": "Set fracture model BEFORE clean to ensure DFN contacts get fracture IDs"
-        },
-        {
-          "command": "model restore 'saved.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "wall generate box -5 5\nball generate number 500 radius 0.3\nmodel clean\nmodel solve",
-          "description": "Create geometry, clean to initialize, then solve to equilibrium"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "model clean",
-      "syntax": "model clean [all]",
-      "keywords": [
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "If this keyword is given, then the PFC objects are remapped in the cellspace and cell extents are updated"
-        }
-      ],
-      "examples": [
-        {
-          "command": "model clean",
-          "description": "Clean model - create contacts, initialize properties, update spatial data structures"
-        },
-        {
-          "command": "model clean all",
-          "description": "Clean model with full cellspace remapping and cell extent updates"
-        },
-        {
-          "command": "ball generate number 1000 radius 0.5 box -10 10\nmodel clean\nmodel cycle 1000",
-          "description": "Generate balls, clean to create contacts, then cycle"
-        },
-        {
-          "command": "fracture model linear\nmodel clean",
-          "description": "Set fracture model BEFORE clean to ensure DFN contacts get fracture IDs"
-        },
-        {
-          "command": "model restore 'saved.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "wall generate box -5 5\nball generate number 500 radius 0.3\nmodel clean\nmodel solve",
-          "description": "Create geometry, clean to initialize, then solve to equilibrium"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "model clean",
-      "syntax": "model clean [keyword]",
-      "keywords": [
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "If this keyword is given then the PFC objects are remapped in the cellspace and cell extents are updated."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model clean",
-          "description": "Clean model - create contacts, initialize properties, update spatial data structures"
-        },
-        {
-          "command": "model clean all",
-          "description": "Clean model with full cellspace remapping and cell extent updates"
-        },
-        {
-          "command": "ball generate number 1000 radius 0.5 box -10 10\nmodel clean\nmodel cycle 1000",
-          "description": "Generate balls, clean to create contacts, then cycle"
-        },
-        {
-          "command": "fracture model linear\nmodel clean",
-          "description": "Set fracture model BEFORE clean to ensure DFN contacts get fracture IDs"
-        },
-        {
-          "command": "model restore 'saved.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "wall generate box -5 5\nball generate number 500 radius 0.3\nmodel clean\nmodel solve",
-          "description": "Create geometry, clean to initialize, then solve to equilibrium"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model clean",
+  "syntax": {
+    "6.0": "model clean [all]",
+    "7.0": "model clean [keyword]",
+    "9.0": "model clean [keyword]"
+  },
+  "keywords": [
+    {
+      "name": "all",
+      "syntax": "all",
+      "description": {
+        "6.0": "If this keyword is given, then the PFC objects are remapped in the cellspace and cell extents are updated",
+        "7.0": "If this keyword is given then the PFC objects are remapped in the cellspace and cell extents are updated.",
+        "9.0": "If this keyword is given then the PFC objects are remapped in the cellspace and cell extents are updated."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model clean",
+      "description": "Clean model - create contacts, initialize properties, update spatial data structures"
+    },
+    {
+      "command": "model clean all",
+      "description": "Clean model with full cellspace remapping and cell extent updates"
+    },
+    {
+      "command": "ball generate number 1000 radius 0.5 box -10 10\nmodel clean\nmodel cycle 1000",
+      "description": "Generate balls, clean to create contacts, then cycle"
+    },
+    {
+      "command": "fracture model linear\nmodel clean",
+      "description": "Set fracture model BEFORE clean to ensure DFN contacts get fracture IDs"
+    },
+    {
+      "command": "model restore 'saved.sav'\nmodel clean\nclump tolerance extent 0.02",
+      "description": "After restore, must clean before modifying extent tolerances"
+    },
+    {
+      "command": "wall generate box -5 5\nball generate number 500 radius 0.3\nmodel clean\nmodel solve",
+      "description": "Create geometry, clean to initialize, then solve to equilibrium"
+    }
+  ]
 }

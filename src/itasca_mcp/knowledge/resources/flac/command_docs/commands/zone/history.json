@@ -45,1038 +45,1136 @@
     "oob-flow",
     "porosity"
   ],
-  "description": "Add a zone history . Quantities that can be recorded include acceleration, condition, density, displacement, extra, factor-of-safety, pore-pressure, property, property-fluid, property-thermal, ratio, saturation, strain-increment, strain-rate, stress, strength-stress-ratio, stress-effective, temperature, timestep-dynamic, unbalanced-force, velocity, source-gridpoint, source-zone, velocity-limit, convergence, density-fluid, fluid-biot-modulus, multiplier, ratio-target, fluid-bulk-modulus, and more. The history can be assigned a name for later reference with the optional name keyword; if not, the history will be given a default name based on its internally assigned id number.",
+  "description": {
+    "7.0": "Adds a history of a zone value. See the history command. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number.",
+    "9.0": "Add a zone history . Quantities that can be recorded include acceleration, condition, density, displacement, extra, factor-of-safety, pore-pressure, property, property-fluid, property-thermal, ratio, saturation, strain-increment, strain-rate, stress, strength-stress-ratio, stress-effective, temperature, timestep-dynamic, unbalanced-force, velocity, source-gridpoint, source-zone, velocity-limit, convergence, density-fluid, fluid-biot-modulus, multiplier, ratio-target, fluid-bulk-modulus, and more. The history can be assigned a name for later reference with the optional name keyword; if not, the history will be given a default name based on its internally assigned id number."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone history",
-      "syntax": "zone history [name <s>] keyword",
-      "description": "Adds a history of a zone value. See the history command. The history can be assigned a name for later reference with the optional name keyword, if not the history will be given a default name based on its internally assigned id number.",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration [zonehistoryblock]"
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x [zonehistoryblock]"
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y [zonehistoryblock]"
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z [zonehistoryblock]"
-        },
-        {
-          "name": "condition",
-          "syntax": "condition [zonehistoryblock]",
-          "description": "a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up"
-        },
-        {
-          "name": "density",
-          "syntax": "density [zonehistoryblock]",
-          "description": "The density of the zone."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [zonehistoryblock]",
-          "description": "displacement magnitude at the gridpoint"
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [zonehistoryblock]",
-          "description": "\\(x\\)-displacement at the gridpoint"
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [zonehistoryblock]",
-          "description": "\\(y\\)-displacement at the gridpoint"
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z [zonehistoryblock]",
-          "description": "\\(z\\)-displacement at the gridpoint"
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [zonehistoryblock]",
-          "description": "extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the grid point extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "factor-of-safety",
-          "syntax": "factor-of-safety [zonehistoryblock]",
-          "description": "The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure [zonehistoryblock]",
-          "description": "By default this will be the grid point pore pressure, but the zone average pore pressure can be specified by using the source keyword modifier."
-        },
-        {
-          "name": "property",
-          "syntax": "property name <s> [zonehistoryblock]",
-          "description": "a property of the mechanical constitutive model of the zone. The value s is the keyword for the desired property, supplied as a string—for example, the property keyword bulk becomes 'bulk' in this command (quotes required). By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword (one of the keywords available in the zone history Keyword Block)."
-        },
-        {
-          "name": "property-fluid",
-          "syntax": "property-fluid name <s> [zonehistoryblock]",
-          "description": "a property of the fluid constitutive model of the zone. The value s is the keyword for the desired property, supplied as a string (see property above). By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword (one of the keywords available in the zone history Keyword Block)."
-        },
-        {
-          "name": "property-thermal",
-          "syntax": "property-thermal name <s> [zonehistoryblock]"
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local [zonehistoryblock]",
-          "description": "the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the:lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "saturation",
-          "syntax": "saturation [zonehistoryblock]"
-        },
-        {
-          "name": "strain-increment",
-          "syntax": "strain-increment [zonehistoryblock]",
-          "description": "the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-rate",
-          "syntax": "strain-rate [zonehistoryblock]",
-          "description": "the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [zonehistoryblock]",
-          "description": "the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strength-stress-ratio",
-          "syntax": "strength-stress-ratio [zonehistoryblock]",
-          "description": "the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10."
-        },
-        {
-          "name": "stress-effective",
-          "syntax": "stress-effective [zonehistoryblock]",
-          "description": "the effective stress tensor of the zone, determined by the weighted average of the subzone stresses minus the zone averaged pore pressure. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature [zonehistoryblock]",
-          "description": "the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead."
-        },
-        {
-          "name": "timestep-dynamic",
-          "syntax": "timestep-dynamic [zonehistoryblock]"
-        },
-        {
-          "name": "unbalanced-force",
-          "syntax": "unbalanced-force [zonehistoryblock]",
-          "description": "the unbalanced force magnitude at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-x",
-          "syntax": "unbalanced-force-x [zonehistoryblock]",
-          "description": "\\(x\\)-unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-y",
-          "syntax": "unbalanced-force-y [zonehistoryblock]",
-          "description": "\\(y\\)-unbalanced force at the gridpoint"
-        },
-        {
-          "name": "unbalanced-force-z",
-          "syntax": "unbalanced-force-z [zonehistoryblock]",
-          "description": "\\(z\\)-unbalanced force at the gridpoint"
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [zonehistoryblock]",
-          "description": "the velocity magnitude at the gridpoint"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [zonehistoryblock]",
-          "description": "\\(x\\)-velocity at the gridpoint"
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [zonehistoryblock]",
-          "description": "\\(y\\)-velocity at the gridpoint"
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z [zonehistoryblock]",
-          "description": "\\(z\\)-velocity at the gridpoint"
-        },
-        {
-          "name": "component",
-          "syntax": "component keyword",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are:"
-        },
-        {
-          "name": "component-x",
-          "syntax": "x"
-        },
-        {
-          "name": "component-y",
-          "syntax": "y"
-        },
-        {
-          "name": "component-z",
-          "syntax": "z"
-        },
-        {
-          "name": "component-magnitude",
-          "syntax": "magnitude"
-        },
-        {
-          "name": "index",
-          "syntax": "index <i>",
-          "description": "For keywords that require it (most notably extra), this specifies the index that should be used. The default value will be 1."
-        },
-        {
-          "name": "gravity",
-          "syntax": "gravity <b>",
-          "description": "If on, then gravitational forces are included in the returned applied force. The default is off."
-        },
-        {
-          "name": "gridpointid",
-          "syntax": "gridpointid <i>",
-          "description": "Specifies the location of the history by the location of the gridpoint with ID number i."
-        },
-        {
-          "name": "label",
-          "syntax": "label <s>",
-          "description": "Assigns a label to the history, used in prints and plots."
-        },
-        {
-          "name": "log",
-          "syntax": "log <b>",
-          "description": "If on, the returned number is the base 10 log of the absolute value of the original value. The default is off."
-        },
-        {
-          "name": "method",
-          "syntax": "method",
-          "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions)."
-        },
-        {
-          "name": "method-constant",
-          "syntax": "constant",
-          "description": "Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use."
-        },
-        {
-          "name": "method-average",
-          "syntax": "average",
-          "description": "This uses an volume weighted average of all the zones connected to the gridpoint."
-        },
-        {
-          "name": "method-inverse-distance-weight",
-          "syntax": "inverse-distance-weight",
-          "description": "This uses an weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point."
-        },
-        {
-          "name": "method-inverse-distance-weight-power",
-          "syntax": "power <f>",
-          "description": "Specifies the power of the distance used to weight values. The default power is 3.0."
-        },
-        {
-          "name": "method-inverse-distance-weight-radius-ratio",
-          "syntax": "radius-ratio <f>",
-          "description": "Specifies the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75."
-        },
-        {
-          "name": "method-polynomial",
-          "syntax": "polynomial [tolerance <f>]",
-          "description": "Uses a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>"
-        },
-        {
-          "name": "null",
-          "syntax": "null",
-          "description": "Specifies the criteria used to ignore zone values. By default mechanical null zones are ignored."
-        },
-        {
-          "name": "null-fluid",
-          "syntax": "fluid <b>",
-          "description": "Zones with a null fluid constitutive model are also ignored if this is set to on."
-        },
-        {
-          "name": "null-mechanical",
-          "syntax": "mechanical <b>",
-          "description": "Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default)."
-        },
-        {
-          "name": "null-thermal",
-          "syntax": "thermal <b>",
-          "description": "Zones with a null thermal constitutive model are ignored if this is set to on."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Specifies the location of the history at v. This location must be inside a zone."
-        },
-        {
-          "name": "quantity",
-          "syntax": "quantity keyword",
-          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are:"
-        },
-        {
-          "name": "quantity-intermediate",
-          "syntax": "intermediate",
-          "description": "intermediate principal stress"
-        },
-        {
-          "name": "quantity-maximum",
-          "syntax": "maximum",
-          "description": "the maximum (most positive) value of principal stress. Note that in FLAC3D compressive stresses are negative."
-        },
-        {
-          "name": "quantity-mean",
-          "syntax": "mean",
-          "description": "The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure."
-        },
-        {
-          "name": "quantity-minimum",
-          "syntax": "minimum",
-          "description": "The minimum (most negative) principal stress. Note that in FLAC3D compressive stresses are negative."
-        },
-        {
-          "name": "quantity-norm",
-          "syntax": "norm",
-          "description": "The norm of the strain rate; see the equation in Zone Field Data Names"
-        },
-        {
-          "name": "quantity-octahedral",
-          "syntax": "octahedral",
-          "description": "octahedral stress; see the equation in Zone Field Data Names"
-        },
-        {
-          "name": "quantity-shear-maximum",
-          "syntax": "shear-maximum",
-          "description": "maximum shear stress"
-        },
-        {
-          "name": "quantity-total-measure",
-          "syntax": "total-measure",
-          "description": "distance of tensor value to the origin in principal space"
-        },
-        {
-          "name": "quantity-volumetric",
-          "syntax": "volumetric",
-          "description": "volumetric change, or trace"
-        },
-        {
-          "name": "quantity-von-mises",
-          "syntax": "von-mises",
-          "description": "Von Mises measure; see the equation in Zone Field Data Names"
-        },
-        {
-          "name": "quantity-xx",
-          "syntax": "xx",
-          "description": "xx-component of the tensor"
-        },
-        {
-          "name": "quantity-xy",
-          "syntax": "xy",
-          "description": "xy-component of the tensor"
-        },
-        {
-          "name": "quantity-xz",
-          "syntax": "xz",
-          "description": "xz-component of the tensor"
-        },
-        {
-          "name": "quantity-yy",
-          "syntax": "yy",
-          "description": "yy-component of the tensor"
-        },
-        {
-          "name": "quantity-yz",
-          "syntax": "yz",
-          "description": "yz-component of the tensor"
-        },
-        {
-          "name": "quantity-zz",
-          "syntax": "zz",
-          "description": "zz-component of the tensor"
-        },
-        {
-          "name": "source",
-          "syntax": "source keyword",
-          "description": "Certain keywords (like extra and pore-pressure) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint."
-        },
-        {
-          "name": "source-gridpoint",
-          "syntax": "gridpoint",
-          "description": "Values are retrieved directly from the gridpoint."
-        },
-        {
-          "name": "source-zone",
-          "syntax": "zone",
-          "description": "Values are retrieved from the zone."
-        },
-        {
-          "name": "type",
-          "syntax": "type keyword",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned."
-        },
-        {
-          "name": "type-scalar",
-          "syntax": "scalar",
-          "description": "A scalar float type. This is the default."
-        },
-        {
-          "name": "type-vector",
-          "syntax": "vector",
-          "description": "A vector type."
-        },
-        {
-          "name": "type-tensor",
-          "syntax": "tensor",
-          "description": "A tensor type."
-        },
-        {
-          "name": "velocity-limit",
-          "syntax": "velocity-limit <f>",
-          "description": "Specifies the velocity limit used to determine if an object is stable or not for the factor-of-safety value. The default value is 1e-4."
-        },
-        {
-          "name": "zoneid",
-          "syntax": "zoneid <i>",
-          "description": "Specifies the location of the history is at the centroid of zone with ID i."
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "density-fluid",
-          "syntax": "density-fluid",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "fluid-biot-modulus",
-          "syntax": "fluid-biot-modulus",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "multiplier",
-          "syntax": "multiplier",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "fluid-bulk-modulus",
-          "syntax": "fluid-bulk-modulus [zonehistoryblock]",
-          "description": "Bulk modulus of the pore fluid."
-        },
-        {
-          "name": "strain-increment-xx",
-          "syntax": "strain-increment-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-xy",
-          "syntax": "strain-increment-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-xz",
-          "syntax": "strain-increment-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-yy",
-          "syntax": "strain-increment-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-yz",
-          "syntax": "strain-increment-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-zz",
-          "syntax": "strain-increment-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-rate-xx",
-          "syntax": "strain-rate-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-xy",
-          "syntax": "strain-rate-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-xz",
-          "syntax": "strain-rate-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-yy",
-          "syntax": "strain-rate-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-yz",
-          "syntax": "strain-rate-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-zz",
-          "syntax": "strain-rate-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the strain-rate tensor."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the stress tensor."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the stress tensor."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the stress tensor."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the stress tensor."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the stress tensor."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the stress tensor."
-        },
-        {
-          "name": "stress-effective-xx",
-          "syntax": "stress-effective-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-xy",
-          "syntax": "stress-effective-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-xz",
-          "syntax": "stress-effective-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-yy",
-          "syntax": "stress-effective-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-yz",
-          "syntax": "stress-effective-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-zz",
-          "syntax": "stress-effective-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the stress-effective tensor."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.history.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "zone history",
-      "syntax": "zone history [name <s>] keyword",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration [zonehistoryblock]",
-          "description": "Translational acceleration magnitude (dynamic config)."
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x [zonehistoryblock]",
-          "description": "Translational acceleration, x-component (dynamic config)."
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y [zonehistoryblock]",
-          "description": "Translational acceleration, y-component (dynamic config)."
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z [zonehistoryblock]",
-          "description": "Translational acceleration, z-component (dynamic config, 3D only)."
-        },
-        {
-          "name": "condition",
-          "syntax": "condition [zonehistoryblock]",
-          "description": "Zone condition / activity flag."
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence [zonehistoryblock]",
-          "description": "Per-step convergence indicator used by the solver."
-        },
-        {
-          "name": "density",
-          "syntax": "density [zonehistoryblock]",
-          "description": "Zone mass density."
-        },
-        {
-          "name": "density-fluid",
-          "syntax": "density-fluid [zonehistoryblock]",
-          "description": "Pore-fluid mass density (fluid config)."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [zonehistoryblock]",
-          "description": "Translational displacement magnitude."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [zonehistoryblock]",
-          "description": "Translational displacement, x-component."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [zonehistoryblock]",
-          "description": "Translational displacement, y-component."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z [zonehistoryblock]",
-          "description": "Translational displacement, z-component (3D only)."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [zonehistoryblock]",
-          "description": "User-defined extra scalar slot (use the `index <i>` keyword to pick which slot)."
-        },
-        {
-          "name": "factor-of-safety",
-          "syntax": "factor-of-safety [zonehistoryblock]",
-          "description": "Local factor-of-safety estimate (strength-stress ratio sample)."
-        },
-        {
-          "name": "fluid-biot-modulus",
-          "syntax": "fluid-biot-modulus [zonehistoryblock]",
-          "description": "Biot modulus of the fluid constitutive model."
-        },
-        {
-          "name": "fluid-head",
-          "syntax": "fluid-head [zonehistoryblock]",
-          "description": "Fluid head (pore pressure expressed as head, fluid config)."
-        },
-        {
-          "name": "multiplier",
-          "syntax": "multiplier [zonehistoryblock]",
-          "description": "Apply-multiplier value sampled by the history (when name-driven)."
-        },
-        {
-          "name": "permeability-ratio",
-          "syntax": "permeability-ratio [zonehistoryblock]",
-          "description": "Ratio of current to reference permeability."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure [zonehistoryblock]",
-          "description": "Zone pore pressure."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local [zonehistoryblock]",
-          "description": "Local convergence ratio for the zone."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target [zonehistoryblock]",
-          "description": "Target convergence ratio."
-        },
-        {
-          "name": "saturation",
-          "syntax": "saturation [zonehistoryblock]",
-          "description": "Pore-water saturation."
-        },
-        {
-          "name": "saturation-apparent",
-          "syntax": "saturation-apparent [zonehistoryblock]",
-          "description": "Apparent saturation accounting for Pcut mode."
-        },
-        {
-          "name": "strain-increment",
-          "syntax": "strain-increment [zonehistoryblock]",
-          "description": "Per-cycle strain-increment norm."
-        },
-        {
-          "name": "strain-rate",
-          "syntax": "strain-rate [zonehistoryblock]",
-          "description": "Strain-rate norm."
-        },
-        {
-          "name": "strength-stress-ratio",
-          "syntax": "strength-stress-ratio [zonehistoryblock]",
-          "description": "Strength-to-stress ratio."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [zonehistoryblock]",
-          "description": "Stress tensor magnitude (use `quantity` to pick the scalar projection; default magnitude)."
-        },
-        {
-          "name": "stress-effective",
-          "syntax": "stress-effective [zonehistoryblock]",
-          "description": "Effective stress (total stress minus pore-pressure contribution)."
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature [zonehistoryblock]",
-          "description": "Zone temperature (thermal config)."
-        },
-        {
-          "name": "timestep-dynamic",
-          "syntax": "timestep-dynamic [zonehistoryblock]",
-          "description": "Current dynamic timestep."
-        },
-        {
-          "name": "unbalanced-force",
-          "syntax": "unbalanced-force [zonehistoryblock]",
-          "description": "Magnitude of the unbalanced nodal force at the sample point."
-        },
-        {
-          "name": "unbalanced-force-x",
-          "syntax": "unbalanced-force-x [zonehistoryblock]",
-          "description": "Unbalanced force, x-component."
-        },
-        {
-          "name": "unbalanced-force-y",
-          "syntax": "unbalanced-force-y [zonehistoryblock]",
-          "description": "Unbalanced force, y-component."
-        },
-        {
-          "name": "unbalanced-force-z",
-          "syntax": "unbalanced-force-z [zonehistoryblock]",
-          "description": "Unbalanced force, z-component (3D only)."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [zonehistoryblock]",
-          "description": "Translational velocity magnitude."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [zonehistoryblock]",
-          "description": "Translational velocity, x-component."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [zonehistoryblock]",
-          "description": "Translational velocity, y-component."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z [zonehistoryblock]",
-          "description": "Translational velocity, z-component (3D only)."
-        },
-        {
-          "name": "strain-increment-xx",
-          "syntax": "strain-increment-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-xy",
-          "syntax": "strain-increment-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-xz",
-          "syntax": "strain-increment-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-yy",
-          "syntax": "strain-increment-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-yz",
-          "syntax": "strain-increment-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-increment-zz",
-          "syntax": "strain-increment-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the strain-increment tensor."
-        },
-        {
-          "name": "strain-rate-xx",
-          "syntax": "strain-rate-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-xy",
-          "syntax": "strain-rate-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-xz",
-          "syntax": "strain-rate-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-yy",
-          "syntax": "strain-rate-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-yz",
-          "syntax": "strain-rate-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the strain-rate tensor."
-        },
-        {
-          "name": "strain-rate-zz",
-          "syntax": "strain-rate-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the strain-rate tensor."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the stress tensor."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the stress tensor."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the stress tensor."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the stress tensor."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the stress tensor."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the stress tensor."
-        },
-        {
-          "name": "stress-effective-xx",
-          "syntax": "stress-effective-xx [zonehistoryblock]",
-          "description": "Per-axis component (xx) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-xy",
-          "syntax": "stress-effective-xy [zonehistoryblock]",
-          "description": "Per-axis component (xy) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-xz",
-          "syntax": "stress-effective-xz [zonehistoryblock]",
-          "description": "Per-axis component (xz) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-yy",
-          "syntax": "stress-effective-yy [zonehistoryblock]",
-          "description": "Per-axis component (yy) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-yz",
-          "syntax": "stress-effective-yz [zonehistoryblock]",
-          "description": "Per-axis component (yz) of the stress-effective tensor."
-        },
-        {
-          "name": "stress-effective-zz",
-          "syntax": "stress-effective-zz [zonehistoryblock]",
-          "description": "Per-axis component (zz) of the stress-effective tensor."
-        },
-        {
-          "name": "property",
-          "syntax": "property name <s> [zonehistoryblock]",
-          "description": "Sample the named constitutive-model property in the selected zone(s) (use the name sub-keyword to pick which property)."
-        },
-        {
-          "name": "property-fluid",
-          "syntax": "property-fluid name <s> [zonehistoryblock]",
-          "description": "Sample the named fluid-model property."
-        },
-        {
-          "name": "property-thermal",
-          "syntax": "property-thermal name <s> [zonehistoryblock]",
-          "description": "Sample the named thermal-model property."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a name to the history record so it can be referenced (e.g. by zone history list)."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Sample location for the quantity."
-        },
-        {
-          "name": "gridpointid",
-          "syntax": "gridpointid <i>",
-          "description": "Sample by gridpoint id."
-        },
-        {
-          "name": "zoneid",
-          "syntax": "zoneid <i>",
-          "description": "Sample by zone id."
-        },
-        {
-          "name": "index",
-          "syntax": "index <i>",
-          "description": "When the selected quantity is a multi-slot quantity (e.g. extra), index selects which slot to sample."
-        },
-        {
-          "name": "label",
-          "syntax": "label <s>",
-          "description": "Free-form label attached to the history record."
-        },
-        {
-          "name": "gravity",
-          "syntax": "gravity <b>",
-          "description": "If on, include the gravitational body-force contribution when sampling stress quantities."
-        },
-        {
-          "name": "log",
-          "syntax": "log <b>",
-          "description": "Log the sampled value (log10) before storing."
-        },
-        {
-          "name": "velocity-limit",
-          "syntax": "velocity-limit <f>",
-          "description": "Clamp sampled velocity values at +/- f."
-        },
-        {
-          "name": "kwd:method",
-          "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>] 3D Only}",
-          "description": "Specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assume values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: Use a volume-weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: Use a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>] 3D Only: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degeneracy. The default value is 1e-7 ."
-        },
-        {
-          "name": "kwd:null",
-          "syntax": "null [{fluid <b> | mechanical <b> | thermal <b>}]",
-          "description": "Specify the criteria used to ignore zone values. By default, mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
-        },
-        {
-          "name": "kwd:type",
-          "syntax": "type {scalar | vector | tensor}",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows specifying which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: A scalar float type. This is the default.; vector: A vector type.; tensor: A tensor type."
-        },
-        {
-          "name": "kwd:source",
-          "syntax": "source {gridpoint | zone}",
-          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
-        },
-        {
-          "name": "kwd:component",
-          "syntax": "component {x | y | z 3D Only | magnitude}",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Options: x: \\(x\\) -component of the vector.; y: \\(y\\) -component of the vector.; z 3D Only: \\(z\\) -component of the vector.; magnitude: Vector magnitude."
-        },
-        {
-          "name": "kwd:quantity",
-          "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz 3D Only | yy | yz 3D Only | zz}",
-          "description": "Select which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Intermediate principal stress.; maximum: The maximum (most positive) value of principal stress. Note that in FLAC compressive stresses are negative .; mean: The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: The minimum (most negative) principal stress. Note that in FLAC compressive stresses are negative .; norm: The norm of the strain rate; see the equation in Zone Field Data Names; octahedral: Octahedral stress; see the equation in Zone Field Data Names .; shear-maximum: Maximum shear stress.; total-measure: Distance of tensor value to the origin in principal space.; volumetric: Volumetric change, or trace.; von-mises: Von Mises measure; see the equation in Zone Field Data Names .; xx: xx -component of the tensor.; xy: xy -component of the tensor.; xz 3D Only: xz -component of the tensor.; yy: yy -component of the tensor.; yz 3D Only: yz -component of the tensor.; zz: zz -component of the tensor."
-        },
-        {
-          "name": "balloon",
-          "syntax": "balloon",
-          "description": "Balloon-interpolated field sampling. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "density-wet",
-          "syntax": "density-wet",
-          "description": "Wet density. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "mobility-coefficient",
-          "syntax": "mobility-coefficient [keyword]",
-          "description": "Mobility coefficient (also -xx/-xy/-xz/-yy/-yz/-zz components). Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "oob-flow",
-          "syntax": "oob-flow",
-          "description": "Out-of-balance flow. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity",
-          "description": "Porosity. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "mobility-coefficient-xx",
-          "syntax": "mobility-coefficient-xx [zonehistoryblock]",
-          "description": "xx-component of the mobility coefficient tensor."
-        },
-        {
-          "name": "mobility-coefficient-xy",
-          "syntax": "mobility-coefficient-xy [zonehistoryblock]",
-          "description": "xy-component of the mobility coefficient tensor."
-        },
-        {
-          "name": "mobility-coefficient-xz",
-          "syntax": "mobility-coefficient-xz 3D ONLY [zonehistoryblock]",
-          "description": "xz-component of the mobility coefficient tensor."
-        },
-        {
-          "name": "mobility-coefficient-yy",
-          "syntax": "mobility-coefficient-yy [zonehistoryblock]",
-          "description": "yy-component of the mobility coefficient tensor."
-        },
-        {
-          "name": "mobility-coefficient-yz",
-          "syntax": "mobility-coefficient-yz 3D ONLY [zonehistoryblock]",
-          "description": "yz-component of the mobility coefficient tensor."
-        },
-        {
-          "name": "mobility-coefficient-zz",
-          "syntax": "mobility-coefficient-zz [zonehistoryblock]",
-          "description": "zz-component of the mobility coefficient tensor."
-        }
-      ]
-    }
-  },
   "notes": [
     "'[zonehistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone history",
+  "syntax": "zone history [name <s>] keyword",
+  "keywords": [
+    {
+      "name": "acceleration",
+      "syntax": "acceleration [zonehistoryblock]",
+      "description": {
+        "9.0": "Translational acceleration magnitude (dynamic config)."
+      }
+    },
+    {
+      "name": "acceleration-x",
+      "syntax": "acceleration-x [zonehistoryblock]",
+      "description": {
+        "9.0": "Translational acceleration, x-component (dynamic config)."
+      }
+    },
+    {
+      "name": "acceleration-y",
+      "syntax": "acceleration-y [zonehistoryblock]",
+      "description": {
+        "9.0": "Translational acceleration, y-component (dynamic config)."
+      }
+    },
+    {
+      "name": "acceleration-z",
+      "syntax": "acceleration-z [zonehistoryblock]",
+      "description": {
+        "9.0": "Translational acceleration, z-component (dynamic config, 3D only)."
+      }
+    },
+    {
+      "name": "condition",
+      "syntax": "condition [zonehistoryblock]",
+      "description": {
+        "7.0": "a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up",
+        "9.0": "Zone condition / activity flag."
+      }
+    },
+    {
+      "name": "density",
+      "syntax": "density [zonehistoryblock]",
+      "description": {
+        "7.0": "The density of the zone.",
+        "9.0": "Zone mass density."
+      }
+    },
+    {
+      "name": "displacement",
+      "syntax": "displacement [zonehistoryblock]",
+      "description": {
+        "7.0": "displacement magnitude at the gridpoint",
+        "9.0": "Translational displacement magnitude."
+      }
+    },
+    {
+      "name": "displacement-x",
+      "syntax": "displacement-x [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(x\\)-displacement at the gridpoint",
+        "9.0": "Translational displacement, x-component."
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": "displacement-y [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(y\\)-displacement at the gridpoint",
+        "9.0": "Translational displacement, y-component."
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": "displacement-z [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(z\\)-displacement at the gridpoint",
+        "9.0": "Translational displacement, z-component (3D only)."
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": "extra [zonehistoryblock]",
+      "description": {
+        "7.0": "extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the grid point extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword.",
+        "9.0": "User-defined extra scalar slot (use the `index <i>` keyword to pick which slot)."
+      }
+    },
+    {
+      "name": "factor-of-safety",
+      "syntax": "factor-of-safety [zonehistoryblock]",
+      "description": {
+        "7.0": "The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety.",
+        "9.0": "Local factor-of-safety estimate (strength-stress ratio sample)."
+      }
+    },
+    {
+      "name": "pore-pressure",
+      "syntax": "pore-pressure [zonehistoryblock]",
+      "description": {
+        "7.0": "By default this will be the grid point pore pressure, but the zone average pore pressure can be specified by using the source keyword modifier.",
+        "9.0": "Zone pore pressure."
+      }
+    },
+    {
+      "name": "property",
+      "syntax": "property name <s> [zonehistoryblock]",
+      "description": {
+        "7.0": "a property of the mechanical constitutive model of the zone. The value s is the keyword for the desired property, supplied as a string—for example, the property keyword bulk becomes 'bulk' in this command (quotes required). By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword (one of the keywords available in the zone history Keyword Block).",
+        "9.0": "Sample the named constitutive-model property in the selected zone(s) (use the name sub-keyword to pick which property)."
+      }
+    },
+    {
+      "name": "property-fluid",
+      "syntax": "property-fluid name <s> [zonehistoryblock]",
+      "description": {
+        "7.0": "a property of the fluid constitutive model of the zone. The value s is the keyword for the desired property, supplied as a string (see property above). By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword (one of the keywords available in the zone history Keyword Block).",
+        "9.0": "Sample the named fluid-model property."
+      }
+    },
+    {
+      "name": "property-thermal",
+      "syntax": "property-thermal name <s> [zonehistoryblock]",
+      "description": {
+        "9.0": "Sample the named thermal-model property."
+      }
+    },
+    {
+      "name": "ratio-local",
+      "syntax": "ratio-local [zonehistoryblock]",
+      "description": {
+        "7.0": "the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the:lkwd:’log’ keyword modifier.",
+        "9.0": "Local convergence ratio for the zone."
+      }
+    },
+    {
+      "name": "saturation",
+      "syntax": "saturation [zonehistoryblock]",
+      "description": {
+        "9.0": "Pore-water saturation."
+      }
+    },
+    {
+      "name": "saturation-apparent",
+      "syntax": "saturation-apparent [zonehistoryblock]",
+      "description": "Apparent saturation accounting for Pcut mode.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment",
+      "syntax": "strain-increment [zonehistoryblock]",
+      "description": {
+        "7.0": "the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "9.0": "Per-cycle strain-increment norm."
+      }
+    },
+    {
+      "name": "strain-rate",
+      "syntax": "strain-rate [zonehistoryblock]",
+      "description": {
+        "7.0": "the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "9.0": "Strain-rate norm."
+      }
+    },
+    {
+      "name": "stress",
+      "syntax": "stress [zonehistoryblock]",
+      "description": {
+        "7.0": "the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "9.0": "Stress tensor magnitude (use `quantity` to pick the scalar projection; default magnitude)."
+      }
+    },
+    {
+      "name": "strength-stress-ratio",
+      "syntax": "strength-stress-ratio [zonehistoryblock]",
+      "description": {
+        "7.0": "the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10.",
+        "9.0": "Strength-to-stress ratio."
+      }
+    },
+    {
+      "name": "stress-effective",
+      "syntax": "stress-effective [zonehistoryblock]",
+      "description": {
+        "7.0": "the effective stress tensor of the zone, determined by the weighted average of the subzone stresses minus the zone averaged pore pressure. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "9.0": "Effective stress (total stress minus pore-pressure contribution)."
+      }
+    },
+    {
+      "name": "temperature",
+      "syntax": "temperature [zonehistoryblock]",
+      "description": {
+        "7.0": "the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead.",
+        "9.0": "Zone temperature (thermal config)."
+      }
+    },
+    {
+      "name": "timestep-dynamic",
+      "syntax": "timestep-dynamic [zonehistoryblock]",
+      "description": {
+        "9.0": "Current dynamic timestep."
+      }
+    },
+    {
+      "name": "unbalanced-force",
+      "syntax": "unbalanced-force [zonehistoryblock]",
+      "description": {
+        "7.0": "the unbalanced force magnitude at the gridpoint.",
+        "9.0": "Magnitude of the unbalanced nodal force at the sample point."
+      }
+    },
+    {
+      "name": "unbalanced-force-x",
+      "syntax": "unbalanced-force-x [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(x\\)-unbalanced force at the gridpoint.",
+        "9.0": "Unbalanced force, x-component."
+      }
+    },
+    {
+      "name": "unbalanced-force-y",
+      "syntax": "unbalanced-force-y [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(y\\)-unbalanced force at the gridpoint",
+        "9.0": "Unbalanced force, y-component."
+      }
+    },
+    {
+      "name": "unbalanced-force-z",
+      "syntax": "unbalanced-force-z [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(z\\)-unbalanced force at the gridpoint",
+        "9.0": "Unbalanced force, z-component (3D only)."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity [zonehistoryblock]",
+      "description": {
+        "7.0": "the velocity magnitude at the gridpoint",
+        "9.0": "Translational velocity magnitude."
+      }
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(x\\)-velocity at the gridpoint",
+        "9.0": "Translational velocity, x-component."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(y\\)-velocity at the gridpoint",
+        "9.0": "Translational velocity, y-component."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z [zonehistoryblock]",
+      "description": {
+        "7.0": "\\(z\\)-velocity at the gridpoint",
+        "9.0": "Translational velocity, z-component (3D only)."
+      }
+    },
+    {
+      "name": "component",
+      "syntax": "component keyword",
+      "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are:",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "component-x",
+      "syntax": "x",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "component-y",
+      "syntax": "y",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "component-z",
+      "syntax": "z",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "component-magnitude",
+      "syntax": "magnitude",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "index",
+      "syntax": "index <i>",
+      "description": {
+        "7.0": "For keywords that require it (most notably extra), this specifies the index that should be used. The default value will be 1.",
+        "9.0": "When the selected quantity is a multi-slot quantity (e.g. extra), index selects which slot to sample."
+      }
+    },
+    {
+      "name": "gravity",
+      "syntax": "gravity <b>",
+      "description": {
+        "7.0": "If on, then gravitational forces are included in the returned applied force. The default is off.",
+        "9.0": "If on, include the gravitational body-force contribution when sampling stress quantities."
+      }
+    },
+    {
+      "name": "gridpointid",
+      "syntax": "gridpointid <i>",
+      "description": {
+        "7.0": "Specifies the location of the history by the location of the gridpoint with ID number i.",
+        "9.0": "Sample by gridpoint id."
+      }
+    },
+    {
+      "name": "label",
+      "syntax": "label <s>",
+      "description": {
+        "7.0": "Assigns a label to the history, used in prints and plots.",
+        "9.0": "Free-form label attached to the history record."
+      }
+    },
+    {
+      "name": "log",
+      "syntax": "log <b>",
+      "description": {
+        "7.0": "If on, the returned number is the base 10 log of the absolute value of the original value. The default is off.",
+        "9.0": "Log the sampled value (log10) before storing."
+      }
+    },
+    {
+      "name": "method",
+      "syntax": "method",
+      "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions).",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-constant",
+      "syntax": "constant",
+      "description": "Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-average",
+      "syntax": "average",
+      "description": "This uses an volume weighted average of all the zones connected to the gridpoint.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-inverse-distance-weight",
+      "syntax": "inverse-distance-weight",
+      "description": "This uses an weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-inverse-distance-weight-power",
+      "syntax": "power <f>",
+      "description": "Specifies the power of the distance used to weight values. The default power is 3.0.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-inverse-distance-weight-radius-ratio",
+      "syntax": "radius-ratio <f>",
+      "description": "Specifies the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "method-polynomial",
+      "syntax": "polynomial [tolerance <f>]",
+      "description": "Uses a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": {
+        "9.0": "Assign a name to the history record so it can be referenced (e.g. by zone history list)."
+      }
+    },
+    {
+      "name": "null",
+      "syntax": "null",
+      "description": "Specifies the criteria used to ignore zone values. By default mechanical null zones are ignored.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "null-fluid",
+      "syntax": "fluid <b>",
+      "description": "Zones with a null fluid constitutive model are also ignored if this is set to on.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "null-mechanical",
+      "syntax": "mechanical <b>",
+      "description": "Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "null-thermal",
+      "syntax": "thermal <b>",
+      "description": "Zones with a null thermal constitutive model are ignored if this is set to on.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": {
+        "7.0": "Specifies the location of the history at v. This location must be inside a zone.",
+        "9.0": "Sample location for the quantity."
+      }
+    },
+    {
+      "name": "quantity",
+      "syntax": "quantity keyword",
+      "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are:",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-intermediate",
+      "syntax": "intermediate",
+      "description": "intermediate principal stress",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-maximum",
+      "syntax": "maximum",
+      "description": "the maximum (most positive) value of principal stress. Note that in FLAC3D compressive stresses are negative.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-mean",
+      "syntax": "mean",
+      "description": "The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-minimum",
+      "syntax": "minimum",
+      "description": "The minimum (most negative) principal stress. Note that in FLAC3D compressive stresses are negative.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-norm",
+      "syntax": "norm",
+      "description": "The norm of the strain rate; see the equation in Zone Field Data Names",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-octahedral",
+      "syntax": "octahedral",
+      "description": "octahedral stress; see the equation in Zone Field Data Names",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-shear-maximum",
+      "syntax": "shear-maximum",
+      "description": "maximum shear stress",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-total-measure",
+      "syntax": "total-measure",
+      "description": "distance of tensor value to the origin in principal space",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-volumetric",
+      "syntax": "volumetric",
+      "description": "volumetric change, or trace",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-von-mises",
+      "syntax": "von-mises",
+      "description": "Von Mises measure; see the equation in Zone Field Data Names",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-xx",
+      "syntax": "xx",
+      "description": "xx-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-xy",
+      "syntax": "xy",
+      "description": "xy-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-xz",
+      "syntax": "xz",
+      "description": "xz-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-yy",
+      "syntax": "yy",
+      "description": "yy-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-yz",
+      "syntax": "yz",
+      "description": "yz-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "quantity-zz",
+      "syntax": "zz",
+      "description": "zz-component of the tensor",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "source",
+      "syntax": "source keyword",
+      "description": "Certain keywords (like extra and pore-pressure) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "source-gridpoint",
+      "syntax": "gridpoint",
+      "description": "Values are retrieved directly from the gridpoint.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "source-zone",
+      "syntax": "zone",
+      "description": "Values are retrieved from the zone.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "type",
+      "syntax": "type keyword",
+      "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "type-scalar",
+      "syntax": "scalar",
+      "description": "A scalar float type. This is the default.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "type-vector",
+      "syntax": "vector",
+      "description": "A vector type.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "type-tensor",
+      "syntax": "tensor",
+      "description": "A tensor type.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "velocity-limit",
+      "syntax": "velocity-limit <f>",
+      "description": {
+        "7.0": "Specifies the velocity limit used to determine if an object is stable or not for the factor-of-safety value. The default value is 1e-4.",
+        "9.0": "Clamp sampled velocity values at +/- f."
+      }
+    },
+    {
+      "name": "kwd:method",
+      "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>] 3D Only}",
+      "description": "Specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assume values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: Use a volume-weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: Use a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>] 3D Only: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degeneracy. The default value is 1e-7 .",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:null",
+      "syntax": "null [{fluid <b> | mechanical <b> | thermal <b>}]",
+      "description": "Specify the criteria used to ignore zone values. By default, mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on .",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:type",
+      "syntax": "type {scalar | vector | tensor}",
+      "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows specifying which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: A scalar float type. This is the default.; vector: A vector type.; tensor: A tensor type.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:source",
+      "syntax": "source {gridpoint | zone}",
+      "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:component",
+      "syntax": "component {x | y | z 3D Only | magnitude}",
+      "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not a vector, this setting is ignored. The available options are: Options: x: \\(x\\) -component of the vector.; y: \\(y\\) -component of the vector.; z 3D Only: \\(z\\) -component of the vector.; magnitude: Vector magnitude.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:quantity",
+      "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz 3D Only | yy | yz 3D Only | zz}",
+      "description": "Select which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Intermediate principal stress.; maximum: The maximum (most positive) value of principal stress. Note that in FLAC compressive stresses are negative .; mean: The mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: The minimum (most negative) principal stress. Note that in FLAC compressive stresses are negative .; norm: The norm of the strain rate; see the equation in Zone Field Data Names; octahedral: Octahedral stress; see the equation in Zone Field Data Names .; shear-maximum: Maximum shear stress.; total-measure: Distance of tensor value to the origin in principal space.; volumetric: Volumetric change, or trace.; von-mises: Von Mises measure; see the equation in Zone Field Data Names .; xx: xx -component of the tensor.; xy: xy -component of the tensor.; xz 3D Only: xz -component of the tensor.; yy: yy -component of the tensor.; yz 3D Only: yz -component of the tensor.; zz: zz -component of the tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "balloon",
+      "syntax": "balloon",
+      "description": "Balloon-interpolated field sampling. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "density-wet",
+      "syntax": "density-wet",
+      "description": "Wet density. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient",
+      "syntax": "mobility-coefficient [keyword]",
+      "description": "Mobility coefficient (also -xx/-xy/-xz/-yy/-yz/-zz components). Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "oob-flow",
+      "syntax": "oob-flow",
+      "description": "Out-of-balance flow. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "porosity",
+      "syntax": "porosity",
+      "description": "Porosity. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-xx",
+      "syntax": "mobility-coefficient-xx [zonehistoryblock]",
+      "description": "xx-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-xy",
+      "syntax": "mobility-coefficient-xy [zonehistoryblock]",
+      "description": "xy-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-xz",
+      "syntax": "mobility-coefficient-xz 3D ONLY [zonehistoryblock]",
+      "description": "xz-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-yy",
+      "syntax": "mobility-coefficient-yy [zonehistoryblock]",
+      "description": "yy-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-yz",
+      "syntax": "mobility-coefficient-yz 3D ONLY [zonehistoryblock]",
+      "description": "yz-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mobility-coefficient-zz",
+      "syntax": "mobility-coefficient-zz [zonehistoryblock]",
+      "description": "zz-component of the mobility coefficient tensor.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "zoneid",
+      "syntax": "zoneid <i>",
+      "description": {
+        "7.0": "Specifies the location of the history is at the centroid of zone with ID i.",
+        "9.0": "Sample by zone id."
+      }
+    },
+    {
+      "name": "convergence",
+      "syntax": {
+        "7.0": "convergence",
+        "9.0": "convergence [zonehistoryblock]"
+      },
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Per-step convergence indicator used by the solver."
+      }
+    },
+    {
+      "name": "density-fluid",
+      "syntax": {
+        "7.0": "density-fluid",
+        "9.0": "density-fluid [zonehistoryblock]"
+      },
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Pore-fluid mass density (fluid config)."
+      }
+    },
+    {
+      "name": "fluid-biot-modulus",
+      "syntax": {
+        "7.0": "fluid-biot-modulus",
+        "9.0": "fluid-biot-modulus [zonehistoryblock]"
+      },
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Biot modulus of the fluid constitutive model."
+      }
+    },
+    {
+      "name": "fluid-head",
+      "syntax": "fluid-head [zonehistoryblock]",
+      "description": "Fluid head (pore pressure expressed as head, fluid config).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "multiplier",
+      "syntax": {
+        "7.0": "multiplier",
+        "9.0": "multiplier [zonehistoryblock]"
+      },
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Apply-multiplier value sampled by the history (when name-driven)."
+      }
+    },
+    {
+      "name": "permeability-ratio",
+      "syntax": "permeability-ratio [zonehistoryblock]",
+      "description": "Ratio of current to reference permeability.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "ratio-target",
+      "syntax": {
+        "7.0": "ratio-target",
+        "9.0": "ratio-target [zonehistoryblock]"
+      },
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Target convergence ratio."
+      }
+    },
+    {
+      "name": "fluid-bulk-modulus",
+      "syntax": "fluid-bulk-modulus [zonehistoryblock]",
+      "description": "Bulk modulus of the pore fluid.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-xx",
+      "syntax": "strain-increment-xx [zonehistoryblock]",
+      "description": "Per-axis component (xx) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-increment-xy",
+      "syntax": "strain-increment-xy [zonehistoryblock]",
+      "description": "Per-axis component (xy) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-increment-xz",
+      "syntax": "strain-increment-xz [zonehistoryblock]",
+      "description": "Per-axis component (xz) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-increment-yy",
+      "syntax": "strain-increment-yy [zonehistoryblock]",
+      "description": "Per-axis component (yy) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-increment-yz",
+      "syntax": "strain-increment-yz [zonehistoryblock]",
+      "description": "Per-axis component (yz) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-increment-zz",
+      "syntax": "strain-increment-zz [zonehistoryblock]",
+      "description": "Per-axis component (zz) of the strain-increment tensor."
+    },
+    {
+      "name": "strain-rate-xx",
+      "syntax": "strain-rate-xx [zonehistoryblock]",
+      "description": "Per-axis component (xx) of the strain-rate tensor."
+    },
+    {
+      "name": "strain-rate-xy",
+      "syntax": "strain-rate-xy [zonehistoryblock]",
+      "description": "Per-axis component (xy) of the strain-rate tensor."
+    },
+    {
+      "name": "strain-rate-xz",
+      "syntax": "strain-rate-xz [zonehistoryblock]",
+      "description": "Per-axis component (xz) of the strain-rate tensor."
+    },
+    {
+      "name": "strain-rate-yy",
+      "syntax": "strain-rate-yy [zonehistoryblock]",
+      "description": "Per-axis component (yy) of the strain-rate tensor."
+    },
+    {
+      "name": "strain-rate-yz",
+      "syntax": "strain-rate-yz [zonehistoryblock]",
+      "description": "Per-axis component (yz) of the strain-rate tensor."
+    },
+    {
+      "name": "strain-rate-zz",
+      "syntax": "strain-rate-zz [zonehistoryblock]",
+      "description": "Per-axis component (zz) of the strain-rate tensor."
+    },
+    {
+      "name": "stress-xx",
+      "syntax": "stress-xx [zonehistoryblock]",
+      "description": "Per-axis component (xx) of the stress tensor."
+    },
+    {
+      "name": "stress-xy",
+      "syntax": "stress-xy [zonehistoryblock]",
+      "description": "Per-axis component (xy) of the stress tensor."
+    },
+    {
+      "name": "stress-xz",
+      "syntax": "stress-xz [zonehistoryblock]",
+      "description": "Per-axis component (xz) of the stress tensor."
+    },
+    {
+      "name": "stress-yy",
+      "syntax": "stress-yy [zonehistoryblock]",
+      "description": "Per-axis component (yy) of the stress tensor."
+    },
+    {
+      "name": "stress-yz",
+      "syntax": "stress-yz [zonehistoryblock]",
+      "description": "Per-axis component (yz) of the stress tensor."
+    },
+    {
+      "name": "stress-zz",
+      "syntax": "stress-zz [zonehistoryblock]",
+      "description": "Per-axis component (zz) of the stress tensor."
+    },
+    {
+      "name": "stress-effective-xx",
+      "syntax": "stress-effective-xx [zonehistoryblock]",
+      "description": "Per-axis component (xx) of the stress-effective tensor."
+    },
+    {
+      "name": "stress-effective-xy",
+      "syntax": "stress-effective-xy [zonehistoryblock]",
+      "description": "Per-axis component (xy) of the stress-effective tensor."
+    },
+    {
+      "name": "stress-effective-xz",
+      "syntax": "stress-effective-xz [zonehistoryblock]",
+      "description": "Per-axis component (xz) of the stress-effective tensor."
+    },
+    {
+      "name": "stress-effective-yy",
+      "syntax": "stress-effective-yy [zonehistoryblock]",
+      "description": "Per-axis component (yy) of the stress-effective tensor."
+    },
+    {
+      "name": "stress-effective-yz",
+      "syntax": "stress-effective-yz [zonehistoryblock]",
+      "description": "Per-axis component (yz) of the stress-effective tensor."
+    },
+    {
+      "name": "stress-effective-zz",
+      "syntax": "stress-effective-zz [zonehistoryblock]",
+      "description": "Per-axis component (zz) of the stress-effective tensor."
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.history.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

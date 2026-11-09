@@ -10,231 +10,96 @@
     "available": false,
     "workaround": "Use itasca.command('rblock replicate ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock replicate",
-      "syntax": "rblock replicate <s> keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the rigid block in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs about the out-of-plane direction in a counter-clockwise sense."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the rigid block. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the rigid block."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function with name sfname to scale the “size” of the rigid block template to fval . The FISH function must take a single argument that is a rigid block pointer and return a floating point value corresponding to a linear measure of the rigid block size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the newly created rigid block. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Rigid block ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the rigid block centroid will be set to the original position of the rigid block template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Rigid block position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The x -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The y -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz>",
-          "description": "The z -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Scale the rigid block to have {area f in 2D; volume f in 3D};"
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "The first slot is the template name as a QUOTED String: rblock replicate 'name' keyword ... . Live 6.00: a quoted unknown name gives the semantic 'template named ... does not exist', while any unquoted token (including keyword names) fails with Bad conversion at parameter 3 - which is why bare-token sweep probes were rejected on every version. Keyword set as documented."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock replicate",
+  "syntax": "rblock replicate <s> keyword ...",
+  "keywords": [
+    {
+      "name": "angle",
+      "syntax": "angle <fang>",
+      "description": "Angle about which to rotate the rigid block in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs about the out-of-plane direction in a counter-clockwise sense."
     },
-    "7.0": {
-      "command": "rblock replicate",
-      "syntax": "rblock replicate <s> keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the rigid block in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs about the out-of-plane direction in a counter-clockwise sense."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the rigid block. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the rigid block."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function with name sfname to scale the “size” of the rigid block template to fval . The FISH function must take a single argument that is a rigid block pointer and return a floating point value corresponding to a linear measure of the rigid block size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the newly created rigid block. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Rigid block ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the rigid block centroid will be set to the original position of the rigid block template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Rigid block position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The \\(x\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The \\(y\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz>",
-          "description": "The \\(z\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Scale the rigid block to have {area f in 2D; volume f in 3D};"
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "The first slot is the template name as a QUOTED String: rblock replicate 'name' keyword ... . Live 6.00: a quoted unknown name gives the semantic 'template named ... does not exist', while any unquoted token (including keyword names) fails with Bad conversion at parameter 3 - which is why bare-token sweep probes were rejected on every version. Keyword set as documented."
-      ]
+    {
+      "name": "axis",
+      "syntax": "axis <vaxis>",
+      "description": "Axis about which to rotate the rigid block. If no axis is specified, then no rotation occurs."
     },
-    "9.0": {
-      "command": "rblock replicate",
-      "syntax": "rblock replicate <s> keyword ...",
-      "keywords": [
-        {
-          "name": "angle",
-          "syntax": "angle <fang>",
-          "description": "Angle about which to rotate the rigid block in degrees via the right-hand rule. If no angle is specified, then no rotation will occur. In 2D, rotation occurs about the out-of-plane direction in a counter-clockwise sense."
-        },
-        {
-          "name": "axis",
-          "syntax": "axis <vaxis>",
-          "description": "Axis about which to rotate the rigid block. If no axis is specified, then no rotation occurs."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fden>",
-          "description": "Density of the rigid block."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname> <fval>",
-          "description": "Use the FISH function with name sfname to scale the “size” of the rigid block template to fval . The FISH function must take a single argument that is a rigid block pointer and return a floating point value corresponding to a linear measure of the rigid block size."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the newly created rigid block. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Rigid block ID that is the next available ID by default."
-        },
-        {
-          "name": "original-position",
-          "syntax": "original-position",
-          "description": "Specify that the rigid block centroid will be set to the original position of the rigid block template when it was created."
-        },
-        {
-          "name": "position",
-          "syntax": "position <vpos>",
-          "description": "Rigid block position that is the origin by default. This keyword cannot be given with the original-position keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <fposx>",
-          "description": "The \\(x\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <fposy>",
-          "description": "The \\(y\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <fposz>",
-          "description": "The \\(z\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Scale the rigid block to have {area f in 2D; volume f in 3D};"
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "The first slot is the template name as a QUOTED String: rblock replicate 'name' keyword ... . Live 6.00: a quoted unknown name gives the semantic 'template named ... does not exist', while any unquoted token (including keyword names) fails with Bad conversion at parameter 3 - which is why bare-token sweep probes were rejected on every version. Keyword set as documented."
-      ]
+    {
+      "name": "density",
+      "syntax": "density <fden>",
+      "description": "Density of the rigid block."
+    },
+    {
+      "name": "diameter",
+      "syntax": "diameter <fdiam>",
+      "description": "Volume is set to be the equivalent to the volume of a {disk of unit thickness in 2D; sphere in 3D} with diameter fdiam ."
+    },
+    {
+      "name": "fish-size",
+      "syntax": "fish-size <sfname> <fval>",
+      "description": "Use the FISH function with name sfname to scale the “size” of the rigid block template to fval . The FISH function must take a single argument that is a rigid block pointer and return a floating point value corresponding to a linear measure of the rigid block size."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>]",
+      "description": "The group slot slot is set to s for the newly created rigid block. If slot is not specified, then s is assigned to the group slot Default ."
+    },
+    {
+      "name": "id",
+      "syntax": "id <id>",
+      "description": "Rigid block ID that is the next available ID by default."
+    },
+    {
+      "name": "original-position",
+      "syntax": "original-position",
+      "description": "Specify that the rigid block centroid will be set to the original position of the rigid block template when it was created."
+    },
+    {
+      "name": "position",
+      "syntax": "position <vpos>",
+      "description": "Rigid block position that is the origin by default. This keyword cannot be given with the original-position keyword."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <fposx>",
+      "description": {
+        "6.0": "The x -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "7.0": "The \\(x\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "9.0": "The \\(x\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <fposy>",
+      "description": {
+        "6.0": "The y -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "7.0": "The \\(y\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "9.0": "The \\(y\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": "position-z <fposz>",
+      "description": {
+        "6.0": "The z -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "7.0": "The \\(z\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords.",
+        "9.0": "The \\(z\\) -component of the rigid block position that is 0 by default. This keyword cannot be given with the original-position keywords."
+      }
+    },
+    {
+      "name": "size",
+      "syntax": "size <f>",
+      "description": "Scale the rigid block to have {area f in 2D; volume f in 3D};"
     }
-  }
+  ],
+  "examples": [],
+  "notes": [
+    "The first slot is the template name as a QUOTED String: rblock replicate 'name' keyword ... . Live 6.00: a quoted unknown name gives the semantic 'template named ... does not exist', while any unquoted token (including keyword names) fails with Bad conversion at parameter 3 - which is why bare-token sweep probes were rejected on every version. Keyword set as documented."
+  ]
 }

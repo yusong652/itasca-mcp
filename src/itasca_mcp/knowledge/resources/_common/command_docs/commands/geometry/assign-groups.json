@@ -11,153 +11,143 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "geometry assign-groups",
-      "syntax": "geometry assign-groups keyword [range]",
-      "keywords": [
-        {
-          "name": "data",
-          "syntax": "data {scalar keyword | tensor keyword | vector keyword}",
-          "description": "This assigns group names to the set of user-define data based on their location. Options: scalar keyword: Assign groups to the user-defined scalar data using one or more of the common option keywords (see below).; tensor keyword: Assign groups to the user-defined tensors data using one or more of the common option keywords (see below).; vector keyword: Assign groups to the user-defined vectors data using one or more of the common option keywords (see below)."
-        },
-        {
-          "name": "structure",
-          "syntax": "structure {beam keyword | cable keyword | geogrid keyword | liner keyword | link keyword | node keyword | pile keyword | shell keyword}",
-          "description": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam keyword: Assign groups to beams using one or more of the common option keywords (see below).; cable keyword: Assign groups to cables using one or more of the common option keywords (see below).; geogrid keyword: Assign groups to geogrids using one or more of the common option keywords (see below).; liner keyword: Assign groups to liners using one or more of the common option keywords (see below).; link keyword: Assign groups to links using one or more of the common option keywords (see below).; node keyword: Assign groups to nodes using one or more of the common option keywords (see below).; pile keyword: Assign groups to piles using one or more of the common option keywords (see below).; shell keyword: Assign groups to shells using one or more of the common option keywords (see below)."
-        },
-        {
-          "name": "zone",
-          "syntax": "zone [grid-point] keyword",
-          "description": "Assign groups to zones (or grid points if the option grid-point keyword is given) using a \\(Type Block\\) keyword."
-        },
-        {
-          "name": "projection",
-          "syntax": "projection <v>",
-          "description": "Specifies the direction the projection is made from each location considered. By default this direction is (0,0,1) ."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "Specifies the name of the set to use. More than one set name may be specified. By default, the current selected set is used."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <i>",
-          "description": "Specifies the slot that the group names will be assigned in. If not specified the slot name is ‘Default’."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "geometry assign-groups",
+  "syntax": {
+    "6.0": "geometry assign-groups keyword [range]",
+    "7.0": "geometry assign-groups keyword ... [range]",
+    "9.0": "geometry assign-groups keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "data",
+      "syntax": {
+        "6.0": "data {scalar keyword | tensor keyword | vector keyword}",
+        "7.0": "data {scalar | tensor | vector}",
+        "9.0": "data {scalar [assignoptions] | tensor [assignoptions] | vector [assignoptions]}"
+      },
+      "description": {
+        "6.0": "This assigns group names to the set of user-define data based on their location. Options: scalar keyword: Assign groups to the user-defined scalar data using one or more of the common option keywords (see below).; tensor keyword: Assign groups to the user-defined tensors data using one or more of the common option keywords (see below).; vector keyword: Assign groups to the user-defined vectors data using one or more of the common option keywords (see below).",
+        "7.0": "This assigns group names to the set of user-define data based on their location. Options: scalar: Assign groups to the user-defined scalar data using a \\(Type Block\\) keyword.; tensor: Assign groups to the user-defined tensors data using a \\(Type Block\\) keyword.; vector: Assign groups to the user-defined vectors data using a \\(Type Block\\) keyword.",
+        "9.0": "This assigns group names to the set of user-define data based on their location. Options: scalar [assignoptions]: Assign groups to the user-defined scalar data using a \\(Type Block\\) keyword.; tensor [assignoptions]: Assign groups to the user-defined tensors data using a \\(Type Block\\) keyword.; vector [assignoptions]: Assign groups to the user-defined vectors data using a \\(Type Block\\) keyword."
+      }
     },
-    "7.0": {
-      "command": "geometry assign-groups",
-      "syntax": "geometry assign-groups keyword ... [range]",
-      "keywords": [
-        {
-          "name": "data",
-          "syntax": "data {scalar | tensor | vector}",
-          "description": "This assigns group names to the set of user-define data based on their location. Options: scalar: Assign groups to the user-defined scalar data using a \\(Type Block\\) keyword.; tensor: Assign groups to the user-defined tensors data using a \\(Type Block\\) keyword.; vector: Assign groups to the user-defined vectors data using a \\(Type Block\\) keyword."
-        },
-        {
-          "name": "structure",
-          "syntax": "structure {beam | cable | geogrid | liner | link | node | pile | shell}",
-          "description": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam: Assign groups to beams using a \\(Type Block\\) keyword.; cable: Assign groups to cables using a \\(Type Block\\) keyword.; geogrid: Assign groups to geogrids using a \\(Type Block\\) keyword.; liner: Assign groups to liners using a \\(Type Block\\) keyword.; link: Assign groups to links using a \\(Type Block\\) keyword.; node: Assign groups to nodes using a \\(Type Block\\) keyword.; pile: Assign groups to piles using a \\(Type Block\\) keyword.; shell: Assign groups to shells using a \\(Type Block\\) keyword."
-        },
-        {
-          "name": "block",
-          "syntax": "block",
-          "description": "Assign groups to blocks from their position relative to the geometry. A block with no intersection gets the group 'No Intersections'.",
-          "availability": {
-            "engines": [
-              "3dec"
-            ]
-          }
-        },
-        {
-          "name": "zone",
-          "syntax": "zone [grid-point]",
-          "description": "Assign groups to zones (or grid points if the option grid-point keyword is given) using a \\(Type Block\\) keyword.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "mpoint",
-              "massflow"
-            ]
-          }
-        },
-        {
-          "name": "kwd:projection",
-          "syntax": "projection <v>",
-          "description": "Specifies the direction the projection is made from each location considered. By default this direction is (0,0,1) ."
-        },
-        {
-          "name": "kwd:set",
-          "syntax": "set <s>",
-          "description": "Specifies the name of the set to use. More than one set name may be specified. By default, the current geometry set is used."
-        },
-        {
-          "name": "kwd:slot",
-          "syntax": "slot <s>",
-          "description": "Specifies the slot that the group names will be assigned in. If not specified the slot name is ‘Default’."
-        }
-      ],
-      "examples": []
+    {
+      "name": "structure",
+      "syntax": {
+        "6.0": "structure {beam keyword | cable keyword | geogrid keyword | liner keyword | link keyword | node keyword | pile keyword | shell keyword}",
+        "7.0": "structure {beam | cable | geogrid | liner | link | node | pile | shell}",
+        "9.0": "structure {beam [assignoptions] | cable [assignoptions] | geogrid [assignoptions] | liner [assignoptions] | link [assignoptions] | node [assignoptions] | pile [assignoptions] | shell [assignoptions]}"
+      },
+      "description": {
+        "6.0": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam keyword: Assign groups to beams using one or more of the common option keywords (see below).; cable keyword: Assign groups to cables using one or more of the common option keywords (see below).; geogrid keyword: Assign groups to geogrids using one or more of the common option keywords (see below).; liner keyword: Assign groups to liners using one or more of the common option keywords (see below).; link keyword: Assign groups to links using one or more of the common option keywords (see below).; node keyword: Assign groups to nodes using one or more of the common option keywords (see below).; pile keyword: Assign groups to piles using one or more of the common option keywords (see below).; shell keyword: Assign groups to shells using one or more of the common option keywords (see below).",
+        "7.0": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam: Assign groups to beams using a \\(Type Block\\) keyword.; cable: Assign groups to cables using a \\(Type Block\\) keyword.; geogrid: Assign groups to geogrids using a \\(Type Block\\) keyword.; liner: Assign groups to liners using a \\(Type Block\\) keyword.; link: Assign groups to links using a \\(Type Block\\) keyword.; node: Assign groups to nodes using a \\(Type Block\\) keyword.; pile: Assign groups to piles using a \\(Type Block\\) keyword.; shell: Assign groups to shells using a \\(Type Block\\) keyword.",
+        "9.0": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam [assignoptions]: Assign groups to beams using a \\(Type Block\\) keyword.; cable [assignoptions]: Assign groups to cables using a \\(Type Block\\) keyword.; geogrid [assignoptions]: Assign groups to geogrids using a \\(Type Block\\) keyword.; liner [assignoptions]: Assign groups to liners using a \\(Type Block\\) keyword.; link [assignoptions]: Assign groups to links using a \\(Type Block\\) keyword.; node [assignoptions]: Assign groups to nodes using a \\(Type Block\\) keyword.; pile [assignoptions]: Assign groups to piles using a \\(Type Block\\) keyword.; shell [assignoptions]: Assign groups to shells using a \\(Type Block\\) keyword."
+      }
     },
-    "9.0": {
-      "command": "geometry assign-groups",
-      "syntax": "geometry assign-groups keyword ... [range]",
-      "keywords": [
-        {
-          "name": "data",
-          "syntax": "data {scalar [assignoptions] | tensor [assignoptions] | vector [assignoptions]}",
-          "description": "This assigns group names to the set of user-define data based on their location. Options: scalar [assignoptions]: Assign groups to the user-defined scalar data using a \\(Type Block\\) keyword.; tensor [assignoptions]: Assign groups to the user-defined tensors data using a \\(Type Block\\) keyword.; vector [assignoptions]: Assign groups to the user-defined vectors data using a \\(Type Block\\) keyword."
-        },
-        {
-          "name": "structure",
-          "syntax": "structure {beam [assignoptions] | cable [assignoptions] | geogrid [assignoptions] | liner [assignoptions] | link [assignoptions] | node [assignoptions] | pile [assignoptions] | shell [assignoptions]}",
-          "description": "This assigns group names to structural data (elements, nodes, or links). Elements are checked at their centroids. Options: beam [assignoptions]: Assign groups to beams using a \\(Type Block\\) keyword.; cable [assignoptions]: Assign groups to cables using a \\(Type Block\\) keyword.; geogrid [assignoptions]: Assign groups to geogrids using a \\(Type Block\\) keyword.; liner [assignoptions]: Assign groups to liners using a \\(Type Block\\) keyword.; link [assignoptions]: Assign groups to links using a \\(Type Block\\) keyword.; node [assignoptions]: Assign groups to nodes using a \\(Type Block\\) keyword.; pile [assignoptions]: Assign groups to piles using a \\(Type Block\\) keyword.; shell [assignoptions]: Assign groups to shells using a \\(Type Block\\) keyword."
-        },
-        {
-          "name": "block",
-          "syntax": "block [assignoptions]",
-          "description": "Assign groups to blocks from their position relative to the geometry. A block with no intersection gets the group 'No Intersections'.",
-          "availability": {
-            "engines": [
-              "3dec"
-            ]
-          }
-        },
-        {
-          "name": "zone",
-          "syntax": "zone [grid-point] [assignoptions]",
-          "description": "Assign groups to zones (or grid points if the option grid-point keyword is given) using a \\(Type Block\\) keyword.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "mpoint",
-              "massflow"
-            ]
-          }
-        },
-        {
-          "name": "kwd:projection",
-          "syntax": "projection <v>",
-          "description": "Specifies the direction the projection is made from each location considered. By default this direction is (0,0,1) ."
-        },
-        {
-          "name": "kwd:set",
-          "syntax": "set <s>",
-          "description": "Specifies the name of the set to use. More than one set name may be specified. By default, the current geometry set is used."
-        },
-        {
-          "name": "kwd:slot",
-          "syntax": "slot <s>",
-          "description": "Specifies the slot that the group names will be assigned in. If not specified the slot name is ‘Default’."
-        }
-      ],
-      "examples": []
+    {
+      "name": "block",
+      "syntax": {
+        "7.0": "block",
+        "9.0": "block [assignoptions]"
+      },
+      "description": "Assign groups to blocks from their position relative to the geometry. A block with no intersection gets the group 'No Intersections'.",
+      "availability": {
+        "engines": [
+          "3dec"
+        ],
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "zone",
+      "syntax": {
+        "6.0": "zone [grid-point] keyword",
+        "7.0": "zone [grid-point]",
+        "9.0": "zone [grid-point] [assignoptions]"
+      },
+      "description": "Assign groups to zones (or grid points if the option grid-point keyword is given) using a \\(Type Block\\) keyword.",
+      "availability": {
+        "engines": [
+          "pfc",
+          "flac",
+          "mpoint",
+          "massflow"
+        ]
+      }
+    },
+    {
+      "name": "kwd:projection",
+      "syntax": "projection <v>",
+      "description": "Specifies the direction the projection is made from each location considered. By default this direction is (0,0,1) .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:set",
+      "syntax": "set <s>",
+      "description": "Specifies the name of the set to use. More than one set name may be specified. By default, the current geometry set is used.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:slot",
+      "syntax": "slot <s>",
+      "description": "Specifies the slot that the group names will be assigned in. If not specified the slot name is ‘Default’.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "projection",
+      "syntax": "projection <v>",
+      "description": "Specifies the direction the projection is made from each location considered. By default this direction is (0,0,1) .",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "set",
+      "syntax": "set <s>",
+      "description": "Specifies the name of the set to use. More than one set name may be specified. By default, the current selected set is used.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <i>",
+      "description": "Specifies the slot that the group names will be assigned in. If not specified the slot name is ‘Default’.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

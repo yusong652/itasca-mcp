@@ -24,349 +24,157 @@
     "available": false,
     "workaround": "itasca.command('plot view <keyword> <value>') - no direct Python SDK method"
   },
-  "versions": {
-    "7.0": {
-      "command": "plot view",
-      "syntax": "plot [<s>] view keyword ...",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center <v>",
-          "description": "the center of the view. The camera always points from the eye position to the view center. In model mode (the default) the eye rotates around the view center when the view is rotated."
-        },
-        {
-          "name": "clip-back",
-          "syntax": "clip-back <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to 1e10 so to be not a constraint. If the default view depth setting is causing objects that are very far away to reduce the resolution of the depth buffer, you can adjust this parameter bring it forward."
-        },
-        {
-          "name": "clip-front",
-          "syntax": "clip-front <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to -1e10 so to be not a constraint. If the default view depth setting is causing objects that are very close to reduce the resolution of the depth buffer, you can adjust this parameter bring it back."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip direction."
-        },
-        {
-          "name": "distance",
-          "syntax": "distance <f>",
-          "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <v2> <v2>",
-          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
-        },
-        {
-          "name": "eye",
-          "syntax": "eye <v>",
-          "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
-        },
-        {
-          "name": "isometric",
-          "syntax": "isometric",
-          "description": "Reset to plot isometric view. If a view name s is not specified, the current view is assumed. This command is equivalent to the keystroke [I]."
-        },
-        {
-          "name": "magnification",
-          "syntax": "magnification <f>",
-          "description": "sets the current view magnification. The default value is 1.0, which represents a field of view angle of 45 degrees. Increasing the magnification decreases the field of view angle."
-        },
-        {
-          "name": "projection",
-          "syntax": "projection {parallel | perspective}",
-          "description": "sets if the view includes perspective distortion or if it is an orthographic (parallel) projection. The available keywords are: Options: parallel: Sets the view to be a orthographic or parallel projection. Objects do not get smaller as they get farther away. The distance parameter has no immediate effect on the view, except to change the result of interactive controls.; perspective: Sets the view to be a perspective view based on the current eye position with a field of view determined by the current magnification . This is the default value."
-        },
-        {
-          "name": "reset",
-          "syntax": "reset",
-          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]. With 'extent', one of the only two keywords accepted by 2D products."
-        },
-        {
-          "name": "roll",
-          "syntax": "roll <f>",
-          "description": "Sets the current roll, in degrees. Roll defines which direction is towards the top of the screen. The camera always faces from the eye position to the view center. Roll is defined by the angle from the vector pointing to the top of the screen to the global z direction projected onto the screen. The global x direction is used if the view is entirely along the z-axis, and therefore has no projection."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation [<v>]",
-          "description": "The plot view is rotated by the vector < v >. If a plot view name s is not specified, the current plot is assumed. The first component of < v > is the yaw rotation angle. The second component of < v > is the pitch rotation angle. The third component of < v > is the roll rotation angle."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot view isometric",
-          "description": "Reset current plot to isometric view"
-        },
-        {
-          "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin (3D products)"
-        },
-        {
-          "command": "plot view extent (0,0) (10,10)",
-          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
-        },
-        {
-          "command": "plot view eye (10,10,10)",
-          "description": "Set camera position to (10,10,10)"
-        },
-        {
-          "command": "plot view magnification 2.0",
-          "description": "Zoom in by factor of 2"
-        },
-        {
-          "command": "plot view projection parallel",
-          "description": "Switch to orthographic projection"
-        },
-        {
-          "command": "plot view projection perspective",
-          "description": "Switch to perspective projection"
-        },
-        {
-          "command": "plot view roll 45",
-          "description": "Roll camera 45 degrees"
-        },
-        {
-          "command": "plot 'myplot' view center (5,5,5) eye (15,15,15)",
-          "description": "Set both center and eye position for plot 'myplot'"
-        },
-        {
-          "command": "plot view reset",
-          "description": "Reset view to default settings"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "plot view",
-      "syntax": "plot [<s>] view keyword ...",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center <v>",
-          "description": "the center of the view. The camera always points from the eye position to the view center. In model mode (the default) the eye rotates around the view center when the view is rotated."
-        },
-        {
-          "name": "clip-back",
-          "syntax": "clip-back <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to 1e10 so to be not a constraint. If the default view depth setting is causing objects that are very far away to reduce the resolution of the depth buffer, you can adjust this parameter bring it forward."
-        },
-        {
-          "name": "clip-front",
-          "syntax": "clip-front <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to -1e10 so to be not a constraint. If the default view depth setting is causing objects that are very close to reduce the resolution of the depth buffer, you can adjust this parameter bring it back."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip direction."
-        },
-        {
-          "name": "distance",
-          "syntax": "distance <f>",
-          "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <v2> <v2>",
-          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
-        },
-        {
-          "name": "eye",
-          "syntax": "eye <v>",
-          "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
-        },
-        {
-          "name": "magnification",
-          "syntax": "magnification <f>",
-          "description": "sets the current view magnification. The default value is 1.0, which represents a field of view angle of 45 degrees. Increasing the magnification decreases the field of view angle."
-        },
-        {
-          "name": "projection",
-          "syntax": "projection {parallel | perspective}",
-          "description": "sets if the view includes perspective distortion or if it is an orthographic (parallel) projection. The available keywords are: Options: parallel: Sets the view to be a orthographic or parallel projection. Objects do not get smaller as they get farther away. The distance parameter has no immediate effect on the view, except to change the result of interactive controls.; perspective: Sets the view to be a perspective view based on the current eye position with a field of view determined by the current magnification . This is the default value."
-        },
-        {
-          "name": "roll",
-          "syntax": "roll <f>",
-          "description": "Sets the current roll, in degrees. Roll defines which direction is towards the top of the screen. The camera always faces from the eye position to the view center. Roll is defined by the angle from the vector pointing to the top of the screen to the global z direction projected onto the screen. The global x direction is used if the view is entirely along the z-axis, and therefore has no projection."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot view isometric",
-          "description": "Reset current plot to isometric view"
-        },
-        {
-          "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin (3D products)"
-        },
-        {
-          "command": "plot view extent (0,0) (10,10)",
-          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
-        },
-        {
-          "command": "plot view eye (10,10,10)",
-          "description": "Set camera position to (10,10,10)"
-        },
-        {
-          "command": "plot view magnification 2.0",
-          "description": "Zoom in by factor of 2"
-        },
-        {
-          "command": "plot view projection parallel",
-          "description": "Switch to orthographic projection"
-        },
-        {
-          "command": "plot view projection perspective",
-          "description": "Switch to perspective projection"
-        },
-        {
-          "command": "plot view roll 45",
-          "description": "Roll camera 45 degrees"
-        },
-        {
-          "command": "plot 'myplot' view center (5,5,5) eye (15,15,15)",
-          "description": "Set both center and eye position for plot 'myplot'"
-        },
-        {
-          "command": "plot view reset",
-          "description": "Reset view to default settings"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "plot view",
-      "syntax": "plot [<s>] view keyword ...",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center <v>",
-          "description": "the center of the view. The camera always points from the eye position to the view center. In model mode (the default) the eye rotates around the view center when the view is rotated."
-        },
-        {
-          "name": "clip-back",
-          "syntax": "clip-back <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to 1e10 so to be not a constraint. If the default view depth setting is causing objects that are very far away to reduce the resolution of the depth buffer, you can adjust this parameter bring it forward."
-        },
-        {
-          "name": "clip-front",
-          "syntax": "clip-front <f>",
-          "description": "the limiting distance to the back clipping plane. This is by default set to -1e10 so to be not a constraint. If the default view depth setting is causing objects that are very close to reduce the resolution of the depth buffer, you can adjust this parameter bring it back."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip direction."
-        },
-        {
-          "name": "distance",
-          "syntax": "distance <f>",
-          "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <v2> <v2>",
-          "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
-        },
-        {
-          "name": "eye",
-          "syntax": "eye <v>",
-          "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
-        },
-        {
-          "name": "isometric",
-          "syntax": "isometric",
-          "description": "Reset to plot isometric view. If a view name s is not specified, the current view is assumed. This command is equivalent to the keystroke [I]."
-        },
-        {
-          "name": "magnification",
-          "syntax": "magnification <f>",
-          "description": "sets the current view magnification. The default value is 1.0, which represents a field of view angle of 45 degrees. Increasing the magnification decreases the field of view angle."
-        },
-        {
-          "name": "projection",
-          "syntax": "projection <parallel|perspective>",
-          "description": "Set the view projection mode. 'projection parallel' gives an orthographic view (objects do not shrink with distance; the distance parameter only affects interactive controls); 'projection perspective' (the default) gives a perspective view from the current eye position with field of view set by the current magnification. In 9.x this REPLACES the 7.0 'perspective' keyword, which the 9.x parser rejects. Verified against FLAC3D 9.7 ('plot view projection ?' enumerates parallel/perspective)."
-        },
-        {
-          "name": "reset",
-          "syntax": "reset",
-          "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]. With 'extent', one of the only two keywords accepted by 2D products."
-        },
-        {
-          "name": "roll",
-          "syntax": "roll <f>",
-          "description": "Sets the current roll, in degrees. Roll defines which direction is towards the top of the screen. The camera always faces from the eye position to the view center. Roll is defined by the angle from the vector pointing to the top of the screen to the global z direction projected onto the screen. The global x direction is used if the view is entirely along the z-axis, and therefore has no projection."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation [<v>]",
-          "description": "The plot view is rotated by the vector < v >. If a plot view name s is not specified, the current plot is assumed. The first component of < v > is the yaw rotation angle. The second component of < v > is the pitch rotation angle. The third component of < v > is the roll rotation angle."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot view isometric",
-          "description": "Reset current plot to isometric view"
-        },
-        {
-          "command": "plot view center (0,0,0)",
-          "description": "Set view center to origin (3D products)"
-        },
-        {
-          "command": "plot view extent (0,0) (10,10)",
-          "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
-        },
-        {
-          "command": "plot view eye (10,10,10)",
-          "description": "Set camera position to (10,10,10)"
-        },
-        {
-          "command": "plot view magnification 2.0",
-          "description": "Zoom in by factor of 2"
-        },
-        {
-          "command": "plot view projection parallel",
-          "description": "Switch to orthographic projection"
-        },
-        {
-          "command": "plot view projection perspective",
-          "description": "Switch to perspective projection"
-        },
-        {
-          "command": "plot view roll 45",
-          "description": "Roll camera 45 degrees"
-        },
-        {
-          "command": "plot 'myplot' view center (5,5,5) eye (15,15,15)",
-          "description": "Set both center and eye position for plot 'myplot'"
-        },
-        {
-          "command": "plot view reset",
-          "description": "Reset view to default settings"
-        }
-      ]
-    }
-  },
   "notes": [
     "For detailed plot item keywords (color-by, cut, transparency, legend), use itasca_browse_doc(source=\"reference\", path=\"plot-items\") to list item types and itasca_browse_doc(source=\"reference\", path=\"plot-items ball\") for full syntax.",
     "2D products: verified in PFC2D 7.0 (2026-08) that 'plot view ?' enumerates only 'extent reset'; every camera keyword (center, eye, magnification, distance, dip, dip-direction, roll, rotation, perspective, projection, clip-front, clip-back, isometric) fails with 'Unused extra parameter 3'. 'plot view extent <v2> <v2>' takes lower-left then upper-right corner of the visible window in model coordinates (confirmed by exporting bitmaps of known ball positions). The 'extent' keyword is absent from the official manual - in-product '?' enumeration is the only way to discover it."
+  ],
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot view",
+  "syntax": "plot [<s>] view keyword ...",
+  "keywords": [
+    {
+      "name": "center",
+      "syntax": "center <v>",
+      "description": "the center of the view. The camera always points from the eye position to the view center. In model mode (the default) the eye rotates around the view center when the view is rotated."
+    },
+    {
+      "name": "clip-back",
+      "syntax": "clip-back <f>",
+      "description": "the limiting distance to the back clipping plane. This is by default set to 1e10 so to be not a constraint. If the default view depth setting is causing objects that are very far away to reduce the resolution of the depth buffer, you can adjust this parameter bring it forward."
+    },
+    {
+      "name": "clip-front",
+      "syntax": "clip-front <f>",
+      "description": "the limiting distance to the back clipping plane. This is by default set to -1e10 so to be not a constraint. If the default view depth setting is causing objects that are very close to reduce the resolution of the depth buffer, you can adjust this parameter bring it back."
+    },
+    {
+      "name": "dip",
+      "syntax": "dip <f>",
+      "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip."
+    },
+    {
+      "name": "dip-direction",
+      "syntax": "dip-direction <f>",
+      "description": "sets the orientation of the view plane, in degrees. The current view center and distance is kept constant and the eye is rotated about the center until the vector from the eye to the view center is normal to the plane with this dip direction."
+    },
+    {
+      "name": "distance",
+      "syntax": "distance <f>",
+      "description": "sets the distance from the eye to the view center. The direction of the current vector from the eye position to the view center is held constant, but the eye is moved so that the distance between them is this value."
+    },
+    {
+      "name": "extent",
+      "syntax": "extent <v2> <v2>",
+      "description": "(2D products only) sets the visible window in model coordinates: the first vector is the lower-left corner, the second the upper-right corner. This is the 2D replacement for center/eye/magnification-style camera control. Not listed in the official manual; discoverable in-product via 'plot view ?'. Verified in PFC2D 7.0; rejected by 3D products."
+    },
+    {
+      "name": "eye",
+      "syntax": "eye <v>",
+      "description": "sets the current eye position. The viewing direction is always from the eye position to the view center. The direction of “up” is determined by the current roll , which is held constant."
+    },
+    {
+      "name": "isometric",
+      "syntax": "isometric",
+      "description": "Reset to plot isometric view. If a view name s is not specified, the current view is assumed. This command is equivalent to the keystroke [I].",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "magnification",
+      "syntax": "magnification <f>",
+      "description": "sets the current view magnification. The default value is 1.0, which represents a field of view angle of 45 degrees. Increasing the magnification decreases the field of view angle."
+    },
+    {
+      "name": "projection",
+      "syntax": {
+        "6.0": "projection {parallel | perspective}",
+        "7.0": "projection {parallel | perspective}",
+        "9.0": "projection <parallel|perspective>"
+      },
+      "description": {
+        "6.0": "sets if the view includes perspective distortion or if it is an orthographic (parallel) projection. The available keywords are: Options: parallel: Sets the view to be a orthographic or parallel projection. Objects do not get smaller as they get farther away. The distance parameter has no immediate effect on the view, except to change the result of interactive controls.; perspective: Sets the view to be a perspective view based on the current eye position with a field of view determined by the current magnification . This is the default value.",
+        "7.0": "sets if the view includes perspective distortion or if it is an orthographic (parallel) projection. The available keywords are: Options: parallel: Sets the view to be a orthographic or parallel projection. Objects do not get smaller as they get farther away. The distance parameter has no immediate effect on the view, except to change the result of interactive controls.; perspective: Sets the view to be a perspective view based on the current eye position with a field of view determined by the current magnification . This is the default value.",
+        "9.0": "Set the view projection mode. 'projection parallel' gives an orthographic view (objects do not shrink with distance; the distance parameter only affects interactive controls); 'projection perspective' (the default) gives a perspective view from the current eye position with field of view set by the current magnification. In 9.x this REPLACES the 7.0 'perspective' keyword, which the 9.x parser rejects. Verified against FLAC3D 9.7 ('plot view projection ?' enumerates parallel/perspective)."
+      }
+    },
+    {
+      "name": "reset",
+      "syntax": "reset",
+      "description": "Resets the view settings to default values, forcing a recalculation of an initial view. The current list of plot items is not changed. If a plot name s is not specified, the current view is assumed. This command is equivalent to the keystroke “shift” + [R]. With 'extent', one of the only two keywords accepted by 2D products.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "roll",
+      "syntax": "roll <f>",
+      "description": "Sets the current roll, in degrees. Roll defines which direction is towards the top of the screen. The camera always faces from the eye position to the view center. Roll is defined by the angle from the vector pointing to the top of the screen to the global z direction projected onto the screen. The global x direction is used if the view is entirely along the z-axis, and therefore has no projection."
+    },
+    {
+      "name": "rotation",
+      "syntax": "rotation [<v>]",
+      "description": "The plot view is rotated by the vector < v >. If a plot view name s is not specified, the current plot is assumed. The first component of < v > is the yaw rotation angle. The second component of < v > is the pitch rotation angle. The third component of < v > is the roll rotation angle.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "command": "plot view isometric",
+      "description": "Reset current plot to isometric view"
+    },
+    {
+      "command": "plot view center (0,0,0)",
+      "description": "Set view center to origin (3D products)"
+    },
+    {
+      "command": "plot view extent (0,0) (10,10)",
+      "description": "2D products only: show the model-coordinate window from lower-left (0,0) to upper-right (10,10)"
+    },
+    {
+      "command": "plot view eye (10,10,10)",
+      "description": "Set camera position to (10,10,10)"
+    },
+    {
+      "command": "plot view magnification 2.0",
+      "description": "Zoom in by factor of 2"
+    },
+    {
+      "command": "plot view projection parallel",
+      "description": "Switch to orthographic projection"
+    },
+    {
+      "command": "plot view projection perspective",
+      "description": "Switch to perspective projection"
+    },
+    {
+      "command": "plot view roll 45",
+      "description": "Roll camera 45 degrees"
+    },
+    {
+      "command": "plot 'myplot' view center (5,5,5) eye (15,15,15)",
+      "description": "Set both center and eye position for plot 'myplot'"
+    },
+    {
+      "command": "plot view reset",
+      "description": "Reset view to default settings"
+    }
   ]
 }

@@ -25,396 +25,339 @@
     "ipstress",
     "integration-point"
   ],
-  "description": "Sample geogrid responses. Quantities that can be recorded include coupling-displacement, coupling-stress, coupling-yield, force, moment, resultant-mx, resultant-my, resultant-mxy, resultant-nx, resultant-ny, resultant-nxy, resultant-qx, resultant-qy, stress, component-id, depth-factor, node, surface, ipstress, integration-point.",
+  "description": {
+    "7.0": "Sample geogrid responses. The nodes of an element will be ordered counterclockwise with respect to the outside of the zone faces upon which the geogrid was created.",
+    "9.0": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure geogrid history",
-      "syntax": "structure geogrid history keyword",
-      "description": "Sample geogrid responses. The nodes of an element will be ordered counterclockwise with respect to the outside of the zone faces upon which the geogrid was created.",
-      "keywords": [
-        {
-          "name": "coupling-displacement",
-          "syntax": "coupling-displacement [geogridhistoryblock]",
-          "description": "displacement magnitude (always positive) in coupling springs at the node of the element. This option uses the node keyword."
-        },
-        {
-          "name": "coupling-stress",
-          "syntax": "coupling-stress [geogridhistoryblock]",
-          "description": "stress magnitude (always positive) in coupling spring at the node of the element. This option uses the node keyword."
-        },
-        {
-          "name": "coupling-yield",
-          "syntax": "coupling-yield [geogridhistoryblock]",
-          "description": "yield state in coupling spring at the node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node keyword."
-        },
-        {
-          "name": "force",
-          "syntax": "force [geogridhistoryblock]",
-          "description": "force magnitude, global system. This option uses the node keyword."
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [geogridhistoryblock]",
-          "description": "nodal force (\\(x\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [geogridhistoryblock]",
-          "description": "nodal force (\\(y\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [geogridhistoryblock]",
-          "description": "nodal force (\\(z\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [geogridhistoryblock]",
-          "description": "moment magnitude, global system. This option uses the node keyword."
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [geogridhistoryblock]",
-          "description": "nodal moment (\\(x\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [geogridhistoryblock]",
-          "description": "nodal moment (\\(y\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [geogridhistoryblock]",
-          "description": "nodal moment (\\(z\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "resultant-mx",
-          "syntax": "resultant-mx [geogridhistoryblock]",
-          "description": "stress resultant \\(M_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-my",
-          "syntax": "resultant-my [geogridhistoryblock]",
-          "description": "stress resultant \\(M_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-mxy",
-          "syntax": "resultant-mxy [geogridhistoryblock]",
-          "description": "stress resultant \\(M_{xy}\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-nx",
-          "syntax": "resultant-nx [geogridhistoryblock]",
-          "description": "stress resultant \\(N_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-ny",
-          "syntax": "resultant-ny [geogridhistoryblock]",
-          "description": "stress resultant \\(N_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-nxy",
-          "syntax": "resultant-nxy [geogridhistoryblock]",
-          "description": "stress resultant \\(N_{xy}\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qx",
-          "syntax": "resultant-qx [geogridhistoryblock]",
-          "description": "stress resultant \\(Q_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qy",
-          "syntax": "resultant-qy [geogridhistoryblock]",
-          "description": "stress resultant \\(Q_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "stress-intermediate",
-          "syntax": "stress-intermediate [geogridhistoryblock]",
-          "description": "principal intermediate stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-intermediate'; 'principal-intermediate' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-maximum",
-          "syntax": "stress-maximum [geogridhistoryblock]",
-          "description": "principal maximum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-maximum'; 'principal-maximum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-minimum",
-          "syntax": "stress-minimum [geogridhistoryblock]",
-          "description": "principal minimum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-minimum'; 'principal-minimum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [geogridhistoryblock]",
-          "description": "stress \\(xx\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [geogridhistoryblock]",
-          "description": "stress \\(xy\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [geogridhistoryblock]",
-          "description": "stress \\(xz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [geogridhistoryblock]",
-          "description": "stress \\(yy\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [geogridhistoryblock]",
-          "description": "stress \\(yz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [geogridhistoryblock]",
-          "description": "stress \\(zz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the element is selected by its individual component ID number"
-        },
-        {
-          "name": "depth-factor",
-          "syntax": "depth-factor <f>",
-          "description": "the depth factor used to determine element stresses. Only available if noted."
-        },
-        {
-          "name": "node",
-          "syntax": "node <i>",
-          "description": "the node location to use when retrieving values from the element. Must be from 1 to 3. Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the element with a centroid closest to v is selected"
-        },
-        {
-          "name": "surface-x",
-          "syntax": "surface-x <v>",
-          "description": "the local \\(x\\)-direction used to determine the local surface coordinate system. Only available if noted."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.history.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure geogrid history",
-      "syntax": "structure geogrid history keyword",
-      "keywords": [
-        {
-          "name": "coupling-displacement",
-          "syntax": "coupling-displacement [geogridhistoryblock]",
-          "description": "displacement magnitude (always positive) in shear coupling springs at the node of the element. This option uses the node keyword."
-        },
-        {
-          "name": "coupling-stress",
-          "syntax": "coupling-stress [geogridhistoryblock]",
-          "description": "stress magnitude (always positive) in shear coupling spring at the node of the element. This option uses the node keyword."
-        },
-        {
-          "name": "coupling-yield",
-          "syntax": "coupling-yield [geogridhistoryblock]",
-          "description": "yield state in coupling spring at the node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node keyword."
-        },
-        {
-          "name": "force",
-          "syntax": "force [geogridhistoryblock]",
-          "description": "nodal force magnitude. Uses the node keyword."
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [geogridhistoryblock]",
-          "description": "nodal force ( \\(x\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [geogridhistoryblock]",
-          "description": "nodal force ( \\(y\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [geogridhistoryblock]",
-          "description": "nodal force ( \\(z\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "ipstress-xx",
-          "syntax": "ipstress-xx [geogridhistoryblock]",
-          "description": "stress ( \\(xx\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "ipstress-yy",
-          "syntax": "ipstress-yy [geogridhistoryblock]",
-          "description": "stress ( \\(yy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "ipstress-xy",
-          "syntax": "ipstress-xy [geogridhistoryblock]",
-          "description": "stress ( \\(xy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [geogridhistoryblock]",
-          "description": "nodal moment magnitude. Uses the node keyword."
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [geogridhistoryblock]",
-          "description": "nodal moment ( \\(x\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [geogridhistoryblock]",
-          "description": "nodal moment ( \\(y\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [geogridhistoryblock]",
-          "description": "nodal moment ( \\(z\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "resultant-mx",
-          "syntax": "resultant-mx [geogridhistoryblock]",
-          "description": "stress resultant \\(M_x\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-my",
-          "syntax": "resultant-my [geogridhistoryblock]",
-          "description": "stress resultant \\(M_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-mxy",
-          "syntax": "resultant-mxy [geogridhistoryblock]",
-          "description": "stress resultant \\(M_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-nx",
-          "syntax": "resultant-nx [geogridhistoryblock]",
-          "description": "stress resultant \\(N_x\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-ny",
-          "syntax": "resultant-ny [geogridhistoryblock]",
-          "description": "stress resultant \\(N_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-nxy",
-          "syntax": "resultant-nxy [geogridhistoryblock]",
-          "description": "stress resultant \\(N_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-qx",
-          "syntax": "resultant-qx [geogridhistoryblock]",
-          "description": "stress resultant \\(Q_x\\) (surface system) at element centroid. Uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qy",
-          "syntax": "resultant-qy [geogridhistoryblock]",
-          "description": "stress resultant \\(Q_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "stress-intermediate",
-          "syntax": "stress-intermediate [geogridhistoryblock]",
-          "description": "principal intermediate stress \\((\\sigma_2)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-maximum",
-          "syntax": "stress-maximum [geogridhistoryblock]",
-          "description": "principal maximum stress \\((\\sigma_1)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-minimum",
-          "syntax": "stress-minimum [geogridhistoryblock]",
-          "description": "principal minimum stress \\((\\sigma_3)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [geogridhistoryblock]",
-          "description": "stress ( \\(xx\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [geogridhistoryblock]",
-          "description": "stress ( \\(xy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [geogridhistoryblock]",
-          "description": "stress ( \\(xz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [geogridhistoryblock]",
-          "description": "stress ( \\(yy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [geogridhistoryblock]",
-          "description": "stress ( \\(yz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [geogridhistoryblock]",
-          "description": "stress ( \\(zz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "assign a name s to the history record (used to reference the history elsewhere)"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <ind>",
-          "description": "the element with component ID ind is selected."
-        },
-        {
-          "name": "depth-factor",
-          "syntax": "depth-factor <f>",
-          "description": "the depth factor at which elastic element stresses are computed (see the structure geogrid recover stress command). If this keyword is not specified, then the depth factor is set to +1. Only available if noted."
-        },
-        {
-          "name": "integration-point",
-          "syntax": "integration-point <ind>",
-          "description": "the integration point at which stresses are sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration'; the layout figure is on the official Structural Elements formulation pages (the original hyperlink target, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted."
-        },
-        {
-          "name": "node",
-          "syntax": "node <ind>",
-          "description": "the node location to use when retrieving values from the element. Must be from 1 to 3 . If this keyword is not specified, then the node location is set to 1 . Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the element with a centroid closest to v is selected"
-        },
-        {
-          "name": "surface-x",
-          "syntax": "surface-x <v>",
-          "description": "the surface-x vector whose projection onto the element plane defines the x-direction of the surface coordinate system (see the structure geogrid recover surface command). If this keyword is specified, then the surface coordinate system of the three nodes used by the element will be modified."
-        }
-      ],
-      "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
-    }
-  },
   "notes": [
     "'[geogridhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, depth-factor, node, position, surface-x, name)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure geogrid history",
+  "syntax": "structure geogrid history keyword",
+  "keywords": [
+    {
+      "name": "coupling-displacement",
+      "syntax": "coupling-displacement [geogridhistoryblock]",
+      "description": {
+        "7.0": "displacement magnitude (always positive) in coupling springs at the node of the element. This option uses the node keyword.",
+        "9.0": "displacement magnitude (always positive) in shear coupling springs at the node of the element. This option uses the node keyword."
+      }
+    },
+    {
+      "name": "coupling-stress",
+      "syntax": "coupling-stress [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress magnitude (always positive) in coupling spring at the node of the element. This option uses the node keyword.",
+        "9.0": "stress magnitude (always positive) in shear coupling spring at the node of the element. This option uses the node keyword."
+      }
+    },
+    {
+      "name": "coupling-yield",
+      "syntax": "coupling-yield [geogridhistoryblock]",
+      "description": "yield state in coupling spring at the node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node keyword."
+    },
+    {
+      "name": "force",
+      "syntax": "force [geogridhistoryblock]",
+      "description": {
+        "7.0": "force magnitude, global system. This option uses the node keyword.",
+        "9.0": "nodal force magnitude. Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-x",
+      "syntax": "force-x [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(x\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(x\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-y",
+      "syntax": "force-y [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(y\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(y\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-z",
+      "syntax": "force-z [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(z\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(z\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "ipstress-xx",
+      "syntax": "ipstress-xx [geogridhistoryblock]",
+      "description": "stress ( \\(xx\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "ipstress-yy",
+      "syntax": "ipstress-yy [geogridhistoryblock]",
+      "description": "stress ( \\(yy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "ipstress-xy",
+      "syntax": "ipstress-xy [geogridhistoryblock]",
+      "description": "stress ( \\(xy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": "moment [geogridhistoryblock]",
+      "description": {
+        "7.0": "moment magnitude, global system. This option uses the node keyword.",
+        "9.0": "nodal moment magnitude. Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-x",
+      "syntax": "moment-x [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(x\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(x\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-y",
+      "syntax": "moment-y [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(y\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(y\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-z",
+      "syntax": "moment-z [geogridhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(z\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(z\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "resultant-mx",
+      "syntax": "resultant-mx [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_x\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-my",
+      "syntax": "resultant-my [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-mxy",
+      "syntax": "resultant-mxy [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_{xy}\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-nx",
+      "syntax": "resultant-nx [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_x\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-ny",
+      "syntax": "resultant-ny [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-nxy",
+      "syntax": "resultant-nxy [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_{xy}\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-qx",
+      "syntax": "resultant-qx [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(Q_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(Q_x\\) (surface system) at element centroid. Uses the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-qy",
+      "syntax": "resultant-qy [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(Q_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(Q_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-intermediate",
+      "syntax": "stress-intermediate [geogridhistoryblock]",
+      "description": {
+        "7.0": "principal intermediate stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-intermediate'; 'principal-intermediate' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal intermediate stress \\((\\sigma_2)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-maximum",
+      "syntax": "stress-maximum [geogridhistoryblock]",
+      "description": {
+        "7.0": "principal maximum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-maximum'; 'principal-maximum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal maximum stress \\((\\sigma_1)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-minimum",
+      "syntax": "stress-minimum [geogridhistoryblock]",
+      "description": {
+        "7.0": "principal minimum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-minimum'; 'principal-minimum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal minimum stress \\((\\sigma_3)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xx",
+      "syntax": "stress-xx [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xx\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xx\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xy",
+      "syntax": "stress-xy [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xy\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xz",
+      "syntax": "stress-xz [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-yy",
+      "syntax": "stress-yy [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(yy\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(yy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-yz",
+      "syntax": "stress-yz [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(yz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(yz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-zz",
+      "syntax": "stress-zz [geogridhistoryblock]",
+      "description": {
+        "7.0": "stress \\(zz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(zz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "component-id",
+      "syntax": {
+        "7.0": "component-id <i>",
+        "9.0": "component-id <ind>"
+      },
+      "description": {
+        "7.0": "the element is selected by its individual component ID number",
+        "9.0": "the element with component ID ind is selected."
+      }
+    },
+    {
+      "name": "depth-factor",
+      "syntax": "depth-factor <f>",
+      "description": {
+        "7.0": "the depth factor used to determine element stresses. Only available if noted.",
+        "9.0": "the depth factor at which elastic element stresses are computed (see the structure geogrid recover stress command). If this keyword is not specified, then the depth factor is set to +1. Only available if noted."
+      }
+    },
+    {
+      "name": "integration-point",
+      "syntax": "integration-point <ind>",
+      "description": "the integration point at which stresses are sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration'; the layout figure is on the official Structural Elements formulation pages (the original hyperlink target, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "node",
+      "syntax": {
+        "7.0": "node <i>",
+        "9.0": "node <ind>"
+      },
+      "description": {
+        "7.0": "the node location to use when retrieving values from the element. Must be from 1 to 3. Only available if noted.",
+        "9.0": "the node location to use when retrieving values from the element. Must be from 1 to 3 . If this keyword is not specified, then the node location is set to 1 . Only available if noted."
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "the element with a centroid closest to v is selected"
+    },
+    {
+      "name": "surface-x",
+      "syntax": "surface-x <v>",
+      "description": {
+        "7.0": "the local \\(x\\)-direction used to determine the local surface coordinate system. Only available if noted.",
+        "9.0": "the surface-x vector whose projection onto the element plane defines the x-direction of the surface coordinate system (see the structure geogrid recover surface command). If this keyword is specified, then the surface coordinate system of the three nodes used by the element will be modified."
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "assign a name s to the history record (used to reference the history elsewhere)"
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.history.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

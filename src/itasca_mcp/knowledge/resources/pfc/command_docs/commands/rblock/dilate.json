@@ -10,67 +10,48 @@
     "available": false,
     "workaround": "Use itasca.command('rblock dilate ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock dilate",
-      "syntax": "rblock dilate [keyword] <f> [keyword] [range]",
-      "keywords": [
-        {
-          "name": "keep-inertial",
-          "syntax": "keep-inertial",
-          "description": "Do not adjust the inertial properties as a result of dilation. This may be advantageous when the rounding distance is small."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock dilate",
+  "syntax": {
+    "6.0": "rblock dilate [keyword] <f> [keyword] [range]",
+    "7.0": "rblock dilate keyword ... [range]",
+    "9.0": "rblock dilate keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "expand",
+      "syntax": "expand <f> {relative}",
+      "description": {
+        "7.0": "Dilate the core shape by f without rounding. By default this is an absolute distance, so all core shapes are dilated by the same amount. with the same size as the rigid block. Thus the expansion varies per rigid block. Options: relative: The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D}",
+        "9.0": "Dilate the core shape by f without rounding. By default this is an absolute distance, so all core shapes are dilated by the same amount. Options: relative: The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. Thus the expansion varies per rigid block."
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "7.0": {
-      "command": "rblock dilate",
-      "syntax": "rblock dilate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "expand",
-          "syntax": "expand <f> {relative}",
-          "description": "Dilate the core shape by f without rounding. By default this is an absolute distance, so all core shapes are dilated by the same amount. with the same size as the rigid block. Thus the expansion varies per rigid block. Options: relative: The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D}"
-        },
-        {
-          "name": "keep-inertial",
-          "syntax": "keep-inertial",
-          "description": "Do not adjust the inertial properties as a result of dilation. This may be advantageous when the rounding distance is small."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        }
-      ],
-      "examples": []
+    {
+      "name": "keep-inertial",
+      "syntax": "keep-inertial",
+      "description": "Do not adjust the inertial properties as a result of dilation. This may be advantageous when the rounding distance is small."
     },
-    "9.0": {
-      "command": "rblock dilate",
-      "syntax": "rblock dilate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "expand",
-          "syntax": "expand <f> {relative}",
-          "description": "Dilate the core shape by f without rounding. By default this is an absolute distance, so all core shapes are dilated by the same amount. Options: relative: The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. Thus the expansion varies per rigid block."
-        },
-        {
-          "name": "keep-inertial",
-          "syntax": "keep-inertial",
-          "description": "Do not adjust the inertial properties as a result of dilation. This may be advantageous when the rounding distance is small."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        }
-      ],
-      "examples": []
+    {
+      "name": "relative",
+      "syntax": {
+        "6.0": "relative",
+        "7.0": "relative <f>",
+        "9.0": "relative <f>"
+      },
+      "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
     }
-  }
+  ],
+  "examples": []
 }

@@ -6,113 +6,48 @@
   ],
   "description": "Assign clump or pebble surface properties used in contact models. Properties are surface conditions (e.g., stiffness, friction) distinct from clump attributes (position, velocity). Property names depend on the active contact model. Pebble properties are applied to all pebbles in the clump. See Contact Models documentation for available properties per model.",
   "notes": [
-    "Pebble properties are surface properties that are used to fill contact model properties",
-    "These are distinct from clump attributes (modified with clump attribute command) that are characteristics of clumps, such as position or size",
-    "Properties are applied to pebbles within the clump",
-    "The list of mechanical contact models is given in the Contact Models documentation section",
-    "Be aware of the distinction between attributes and properties! See tutorial 'Attributes and Properties' for details",
-    "Common properties per model: linear_model: kn (normal stiffness), ks (shear stiffness), friction; linear_contact_bond: cb_kn, cb_ks, cb_coh (cohesion), cb_ten (tensile strength); linear_parallel_bond: pb_kn, pb_ks, pb_coh (cohesion), pb_ten (tensile strength); hertz_model: hz_kn, hz_ks, friction; flat_joint: fj_kn, fj_ks, fj_coh, fj_ten, fj_fa (friction angle); smooth_joint: sj_kn, sj_ks, sj_friction"
+    "Other property names are free String tokens (surface-property names)."
   ],
   "python_sdk_alternative": {
     "available": true,
     "workaround": "For pebbles: iterate over clumps, then over pebbles (balls) in each clump, and use Ball.set_prop(property_name, value). Example: for c in itasca.clump.list(): for p in c.pebbles(): p.set_prop('kn', 1e8)"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump property",
-      "syntax": "clump property <s> <a> [<s1> <a1> ...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump property kn 1e6",
-          "description": "Set normal stiffness to 1e6 for all clump pebbles (linear contact model)"
-        },
-        {
-          "command": "clump property kn 1e10 ks 1e10 friction 0.05",
-          "description": "Set normal stiffness, shear stiffness, and friction coefficient for all clump pebbles"
-        },
-        {
-          "command": "clump property 'fric' 0.5 range group 'aggregate'",
-          "description": "Set friction coefficient for pebbles in clumps of group 'aggregate'"
-        },
-        {
-          "command": "clump property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range id 1 100",
-          "description": "Set parallel bond properties for pebbles in clumps 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
-    },
-    "6.0": {
-      "command": "clump property",
-      "syntax": "clump property <s> a[<s1> a1...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump property kn 1e6",
-          "description": "Set normal stiffness to 1e6 for all clump pebbles (linear contact model)"
-        },
-        {
-          "command": "clump property kn 1e10 ks 1e10 friction 0.05",
-          "description": "Set normal stiffness, shear stiffness, and friction coefficient for all clump pebbles"
-        },
-        {
-          "command": "clump property 'fric' 0.5 range group 'aggregate'",
-          "description": "Set friction coefficient for pebbles in clumps of group 'aggregate'"
-        },
-        {
-          "command": "clump property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range id 1 100",
-          "description": "Set parallel bond properties for pebbles in clumps 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
-    },
-    "9.0": {
-      "command": "clump property",
-      "syntax": "clump property <s> <a> [<s1> <a1> ...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump property kn 1e6",
-          "description": "Set normal stiffness to 1e6 for all clump pebbles (linear contact model)"
-        },
-        {
-          "command": "clump property kn 1e10 ks 1e10 friction 0.05",
-          "description": "Set normal stiffness, shear stiffness, and friction coefficient for all clump pebbles"
-        },
-        {
-          "command": "clump property 'fric' 0.5 range group 'aggregate'",
-          "description": "Set friction coefficient for pebbles in clumps of group 'aggregate'"
-        },
-        {
-          "command": "clump property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range id 1 100",
-          "description": "Set parallel bond properties for pebbles in clumps 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump property",
+  "syntax": {
+    "6.0": "clump property <s> a[<s1> a1...] [range]",
+    "7.0": "clump property <s> <a> [<s1> <a1> ...] [range]",
+    "9.0": "clump property <s> <a> [<s1> <a1> ...] [range]"
+  },
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density",
+      "description": ""
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump property kn 1e6",
+      "description": "Set normal stiffness to 1e6 for all clump pebbles (linear contact model)"
+    },
+    {
+      "command": "clump property kn 1e10 ks 1e10 friction 0.05",
+      "description": "Set normal stiffness, shear stiffness, and friction coefficient for all clump pebbles"
+    },
+    {
+      "command": "clump property 'fric' 0.5 range group 'aggregate'",
+      "description": "Set friction coefficient for pebbles in clumps of group 'aggregate'"
+    },
+    {
+      "command": "clump property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range id 1 100",
+      "description": "Set parallel bond properties for pebbles in clumps 1-100"
+    }
+  ]
 }

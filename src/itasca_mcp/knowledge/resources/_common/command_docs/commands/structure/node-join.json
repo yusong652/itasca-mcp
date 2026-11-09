@@ -5,62 +5,48 @@
     "join",
     "structure"
   ],
-  "description": "Create node-to-node links on all nodes in the range by attempting to find another node in the range that is at the same position. If found, and if the node does not already possess a node-to-node link, then any existing link is deleted and a new node-to-node link is created. The source node is rigidly attached in all six degrees-of-freedom to the target node. Any links that exist on the target node are not modified.",
+  "description": {
+    "7.0": "This command creates node-to-node links on all nodes in the range by attempting to find another node in the range that is at the same position. If found, and if the node does not already possess a node-to-node link, then any existing link is deleted and a new node-to-node link is created. The new link is rigidly attached in all six degrees-of-freedom to the target node.",
+    "9.0": "Create node-to-node links on all nodes in the range by attempting to find another node in the range that is at the same position. If found, and if the node does not already possess a node-to-node link, then any existing link is deleted and a new node-to-node link is created. The source node is rigidly attached in all six degrees-of-freedom to the target node. Any links that exist on the target node are not modified."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure node join",
-      "syntax": "structure node join [keyword] [range]",
-      "description": "This command creates node-to-node links on all nodes in the range by attempting to find another node in the range that is at the same position. If found, and if the node does not already possess a node-to-node link, then any existing link is deleted and a new node-to-node link is created. The new link is rigidly attached in all six degrees-of-freedom to the target node.",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group <s> [slot slot]",
-          "description": "Specify a group assignment that will be made to all links created with this command. The slot keyword can be used to specify the slot used, otherwise the slot will be Default. Use of the group logic is described in Groups."
-        },
-        {
-          "name": "range-target",
-          "syntax": "range-target range",
-          "description": "Specify a range (as with the <range> phrase) that is used to select target nodes. Target nodes must fall within this range to be considered. Note that both a range-target and a range may be given at the same time."
-        },
-        {
-          "name": "side",
-          "syntax": "side <i>",
-          "description": "Specify that any links created will be in side i of the element. This only applies to nodes attached to liner elements created with the embedded keyword. By default, links are created in side 1."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.join.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure node join",
+  "syntax": "structure node join [keyword] [range]",
+  "keywords": [
+    {
+      "name": "group",
+      "syntax": {
+        "7.0": "group <s> [slot slot]",
+        "9.0": "group <s> [slot <slot>]"
+      },
+      "description": {
+        "7.0": "Specify a group assignment that will be made to all links created with this command. The slot keyword can be used to specify the slot used, otherwise the slot will be Default. Use of the group logic is described in Groups.",
+        "9.0": "Specify a group assignment that will be made to all links created with this command. The slot keyword can be used to specify the slot used, otherwise the slot will be Default . Use of the group logic is described in Groups ."
       }
     },
-    "9.0": {
-      "command": "structure node join",
-      "syntax": "structure node join [keyword] [range]",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Specify a group assignment that will be made to all links created with this command. The slot keyword can be used to specify the slot used, otherwise the slot will be Default . Use of the group logic is described in Groups ."
-        },
-        {
-          "name": "range-target",
-          "syntax": "range-target range",
-          "description": "Specify a range (as with the <range> phrase) that is used to select target nodes. Target nodes must fall within this range to be considered. Note that both a range-target and a range may be given at the same time."
-        },
-        {
-          "name": "side",
-          "syntax": "side <i>",
-          "description": "Specify that any links created will be on side i of the element. This applies only to nodes attached to liner elements created with the embedded keyword. By default, links are created on side 1 ."
-        }
-      ]
+    {
+      "name": "range-target",
+      "syntax": "range-target range",
+      "description": "Specify a range (as with the <range> phrase) that is used to select target nodes. Target nodes must fall within this range to be considered. Note that both a range-target and a range may be given at the same time."
+    },
+    {
+      "name": "side",
+      "syntax": "side <i>",
+      "description": {
+        "7.0": "Specify that any links created will be in side i of the element. This only applies to nodes attached to liner elements created with the embedded keyword. By default, links are created in side 1.",
+        "9.0": "Specify that any links created will be on side i of the element. This applies only to nodes attached to liner elements created with the embedded keyword. By default, links are created on side 1 ."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.join.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

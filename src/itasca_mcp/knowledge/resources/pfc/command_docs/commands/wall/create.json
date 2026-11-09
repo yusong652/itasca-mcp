@@ -18,183 +18,72 @@
     "For complex surfaces: Use 'wall generate box/plane/polygon' instead of manual vertex specification",
     "Vertex order matters for facet normal direction - affects contact detection"
   ],
-  "versions": {
-    "7.0": {
-      "command": "wall create",
-      "syntax": "wall create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group",
-          "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, then the next available ID is used."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Wall name. If not specified, then the name is set to wallXX , where XX is the ID."
-        },
-        {
-          "name": "vertices",
-          "syntax": "vertices <vert1> ...",
-          "description": "List of vertex positions. The vertex keyword is given once followed by the vertex list. The facet vertices are taken in the order input (e.g., the first {2 in 2D; 3 in 3D} vector positions are taken to form a facet and the following {2 in 2D; 3 in 3D} vertex positions form a separate facet."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall create vertices -0.25 0.0 0.0 0.25 0.0 0.0 0.0 0.0 0.25",
-          "description": "Create single triangular facet with three vertices (3D)"
-        },
-        {
-          "command": "wall create name 'bottom' vertices -3 -3 0 3 -3 0 3 3 0 -3 -3 0 3 3 0 -3 3 0",
-          "description": "Create rectangular base at z=0 (3D) using 2 triangular facets: triangle 1 (-3,-3,0)(3,-3,0)(3,3,0) and triangle 2 (-3,-3,0)(3,3,0)(-3,3,0). Total 6 vertices (2 facets × 3 vertices)"
-        },
-        {
-          "command": "wall create name 'mywall' id 100 vertices (0,0,0) (1,0,0) (0,1,0)",
-          "description": "Create wall with ID 100 and name 'mywall' using vector notation"
-        },
-        {
-          "command": "wall create name 'roof' group name 'boundary' vertices [x1] [y1] [z1] [x2] [y2] [z2] [x3] [y3] [z3]",
-          "description": "Create wall named 'roof' in group 'boundary' using FISH variables for vertex positions"
-        },
-        {
-          "command": "wall create group name 'walls' facet vertices -5 -5 0 5 -5 0 5 5 0 -5 5 0",
-          "description": "Create wall with group assigned to facets (not wall) - 2D example with 2 facets"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "wallcreate1.png",
-            "doc_path": "_images/wallcreate1.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      }
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall create",
+  "syntax": "wall create keyword ...",
+  "keywords": [
+    {
+      "name": "group",
+      "syntax": "group",
+      "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
     },
-    "6.0": {
-      "command": "wall create",
-      "syntax": "wall create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group",
-          "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, then the next available ID is used."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Wall name. If not specified, then the name is set to wallXX , where XX is the ID."
-        },
-        {
-          "name": "vertices",
-          "syntax": "vertices <vert1>",
-          "description": "List of vertex positions. The vertex keyword is given once followed by the vertex list. The facet vertices are taken in the order input (e.g., the first {2 in 2D; 3 in 3D} vector positions are taken to form a facet and the following {2 in 2D; 3 in 3D} vertex positions form a separate facet."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall create vertices -0.25 0.0 0.0 0.25 0.0 0.0 0.0 0.0 0.25",
-          "description": "Create single triangular facet with three vertices (3D)"
-        },
-        {
-          "command": "wall create name 'bottom' vertices -3 -3 0 3 -3 0 3 3 0 -3 -3 0 3 3 0 -3 3 0",
-          "description": "Create rectangular base at z=0 (3D) using 2 triangular facets: triangle 1 (-3,-3,0)(3,-3,0)(3,3,0) and triangle 2 (-3,-3,0)(3,3,0)(-3,3,0). Total 6 vertices (2 facets × 3 vertices)"
-        },
-        {
-          "command": "wall create name 'mywall' id 100 vertices (0,0,0) (1,0,0) (0,1,0)",
-          "description": "Create wall with ID 100 and name 'mywall' using vector notation"
-        },
-        {
-          "command": "wall create name 'roof' group name 'boundary' vertices [x1] [y1] [z1] [x2] [y2] [z2] [x3] [y3] [z3]",
-          "description": "Create wall named 'roof' in group 'boundary' using FISH variables for vertex positions"
-        },
-        {
-          "command": "wall create group name 'walls' facet vertices -5 -5 0 5 -5 0 5 5 0 -5 5 0",
-          "description": "Create wall with group assigned to facets (not wall) - 2D example with 2 facets"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "wallcreate1.png",
-            "doc_path": "_images/wallcreate1.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      }
+    {
+      "name": "id",
+      "syntax": "id <id>",
+      "description": "Wall ID. If not specified, then the next available ID is used."
     },
-    "9.0": {
-      "command": "wall create",
-      "syntax": "wall create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group",
-          "description": "Assign name s to the group name at slot slot for the created wall or its constituent facets. If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, then the next available ID is used."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Wall name. If not specified, then the name is set to wallXX , where XX is the ID."
-        },
-        {
-          "name": "vertices",
-          "syntax": "vertices <vert1> ...",
-          "description": "List of vertex positions. The vertex keyword is given once followed by the vertex list. The facet vertices are taken in the order input (e.g., the first {2 in 2D; 3 in 3D} vector positions are taken to form a facet and the following {2 in 2D; 3 in 3D} vertex positions form a separate facet."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall create vertices -0.25 0.0 0.0 0.25 0.0 0.0 0.0 0.0 0.25",
-          "description": "Create single triangular facet with three vertices (3D)"
-        },
-        {
-          "command": "wall create name 'bottom' vertices -3 -3 0 3 -3 0 3 3 0 -3 -3 0 3 3 0 -3 3 0",
-          "description": "Create rectangular base at z=0 (3D) using 2 triangular facets: triangle 1 (-3,-3,0)(3,-3,0)(3,3,0) and triangle 2 (-3,-3,0)(3,3,0)(-3,3,0). Total 6 vertices (2 facets × 3 vertices)"
-        },
-        {
-          "command": "wall create name 'mywall' id 100 vertices (0,0,0) (1,0,0) (0,1,0)",
-          "description": "Create wall with ID 100 and name 'mywall' using vector notation"
-        },
-        {
-          "command": "wall create name 'roof' group name 'boundary' vertices [x1] [y1] [z1] [x2] [y2] [z2] [x3] [y3] [z3]",
-          "description": "Create wall named 'roof' in group 'boundary' using FISH variables for vertex positions"
-        },
-        {
-          "command": "wall create group name 'walls' facet vertices -5 -5 0 5 -5 0 5 5 0 -5 5 0",
-          "description": "Create wall with group assigned to facets (not wall) - 2D example with 2 facets"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "wallcreate1.png",
-            "doc_path": "_images/wallcreate1.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      }
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Wall name. If not specified, then the name is set to wallXX , where XX is the ID."
+    },
+    {
+      "name": "vertices",
+      "syntax": {
+        "6.0": "vertices <vert1>",
+        "7.0": "vertices <vert1> ...",
+        "9.0": "vertices <vert1> ..."
+      },
+      "description": "List of vertex positions. The vertex keyword is given once followed by the vertex list. The facet vertices are taken in the order input (e.g., the first {2 in 2D; 3 in 3D} vector positions are taken to form a facet and the following {2 in 2D; 3 in 3D} vertex positions form a separate facet."
     }
+  ],
+  "examples": [
+    {
+      "command": "wall create vertices -0.25 0.0 0.0 0.25 0.0 0.0 0.0 0.0 0.25",
+      "description": "Create single triangular facet with three vertices (3D)"
+    },
+    {
+      "command": "wall create name 'bottom' vertices -3 -3 0 3 -3 0 3 3 0 -3 -3 0 3 3 0 -3 3 0",
+      "description": "Create rectangular base at z=0 (3D) using 2 triangular facets: triangle 1 (-3,-3,0)(3,-3,0)(3,3,0) and triangle 2 (-3,-3,0)(3,3,0)(-3,3,0). Total 6 vertices (2 facets × 3 vertices)"
+    },
+    {
+      "command": "wall create name 'mywall' id 100 vertices (0,0,0) (1,0,0) (0,1,0)",
+      "description": "Create wall with ID 100 and name 'mywall' using vector notation"
+    },
+    {
+      "command": "wall create name 'roof' group name 'boundary' vertices [x1] [y1] [z1] [x2] [y2] [z2] [x3] [y3] [z3]",
+      "description": "Create wall named 'roof' in group 'boundary' using FISH variables for vertex positions"
+    },
+    {
+      "command": "wall create group name 'walls' facet vertices -5 -5 0 5 -5 0 5 5 0 -5 5 0",
+      "description": "Create wall with group assigned to facets (not wall) - 2D example with 2 facets"
+    }
+  ],
+  "figure_reference": {
+    "figures": [
+      {
+        "name": "wallcreate1.png",
+        "doc_path": "_images/wallcreate1.png"
+      }
+    ],
+    "notes": [
+      "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    ]
   }
 }

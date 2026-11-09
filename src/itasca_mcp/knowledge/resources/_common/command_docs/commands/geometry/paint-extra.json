@@ -11,1007 +11,885 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "geometry paint-extra",
-      "syntax": "geometry paint-extra <i> keyword [range]",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration",
-          "description": "Paint acceleration magnitude at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x",
-          "description": "Paint x -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y",
-          "description": "Paint y -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z",
-          "description": "Paint z -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "condition",
-          "syntax": "condition",
-          "description": "Paint a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up"
-        },
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": "Paint the density of the zone."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement",
-          "description": "Paint displacement magnitude at the gridpoint."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x",
-          "description": "Paint x -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y",
-          "description": "Paint y -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z",
-          "description": "Paint z -displacement at the gridpoint."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra",
-          "description": "Paint an extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the zone extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure",
-          "description": "Paint pore pressure in a zone. By default this will be the average zone pore pressure, but the gridpoint pressure can be specified by using the source keyword modifier."
-        },
-        {
-          "name": "property",
-          "syntax": "property",
-          "description": "Paint a property of the mechanical constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-fluid",
-          "syntax": "property-fluid",
-          "description": "Paint a property of the fluid constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-thermal",
-          "syntax": "property-thermal",
-          "description": "Paint a property of the thermal constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local",
-          "description": "Paint the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "saturation",
-          "syntax": "saturation",
-          "description": "Paint the saturation at the gridpoint (only available if model configure fluid has been specified)."
-        },
-        {
-          "name": "strain-increment",
-          "syntax": "strain-increment",
-          "description": "Paint the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-rate",
-          "syntax": "strain-rate",
-          "description": "Paint the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress",
-          "description": "Paint the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress-strength-ratio",
-          "syntax": "stress-strength-ratio",
-          "description": "Paint the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10."
-        },
-        {
-          "name": "stress-effective",
-          "syntax": "stress-effective",
-          "description": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone stresses minus the zone averaged pore pressure. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature",
-          "description": "Paint the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead."
-        },
-        {
-          "name": "timestep-dynamic",
-          "syntax": "timestep-dynamic",
-          "description": "Paint the local critical dynamic time step of that particular gridpoint. (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "unbalanced-force",
-          "syntax": "unbalanced-force",
-          "description": "Paint the unbalanced force magnitude at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-x",
-          "syntax": "unbalanced-force-x",
-          "description": "Paint the x -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-y",
-          "syntax": "unbalanced-force-y",
-          "description": "Paint the y -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-z",
-          "syntax": "unbalanced-force-z",
-          "description": "Paint the z -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "Paint the velocity magnitude at the gridpoint."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Paint the x -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Paint the y -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Paint the z -velocity at the gridpoint."
-        },
-        {
-          "name": "kwd:component",
-          "syntax": "component {x | y | z | magnitude}",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the x -component of the vector.; y: Get the y -component of the vector; z: Get the z -component of the vector; magnitude: Get the vector magnitude."
-        },
-        {
-          "name": "kwd:index",
-          "syntax": "index <i>",
-          "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
-        },
-        {
-          "name": "kwd:gravity",
-          "syntax": "gravity <b>",
-          "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
-        },
-        {
-          "name": "kwd:label",
-          "syntax": "label <s>",
-          "description": "Assign a label to the history (used in prints and plots)."
-        },
-        {
-          "name": "kwd:log",
-          "syntax": "log <b>",
-          "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
-        },
-        {
-          "name": "kwd:method",
-          "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>]}",
-          "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: This uses an volume weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: This uses a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>]: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
-        },
-        {
-          "name": "kwd:name",
-          "syntax": "name <s>",
-          "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
-        },
-        {
-          "name": "kwd:null",
-          "syntax": "null {fluid <b> | mechanical <b> | thermal <b>}",
-          "description": "Specify the criteria used to ignore zone values. By default mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
-        },
-        {
-          "name": "kwd:quantity",
-          "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz | yy | yz | zz}",
-          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Get the intermediate principal stress.; maximum: Get the maximum (most positive) value of principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; mean: Get the mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: Get the minimum (most negative) principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; norm: Get the norm of the strain rate. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; octahedral: Get octahedral stress. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; shear-maximum: Get the maximum shear stress.; total-measure: Get the distance of tensor value to the origin in principal space.; volumetric: Get the volumetric change, or trace.; von-mises: Get the Von Mises measure. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; xx: Get the xx -component of the tensor.; xy: Get the xy -component of the tensor.; xz: Get the xz -component of the tensor.; yy: Get the yy -component of the tensor.; yz: Get the yz -component of the tensor.; zz: Get the zz -component of the tensor."
-        },
-        {
-          "name": "kwd:source",
-          "syntax": "source {gridpoint | zone}",
-          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
-        },
-        {
-          "name": "kwd:stress",
-          "syntax": "stress <b>",
-          "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
-        },
-        {
-          "name": "kwd:type",
-          "syntax": "type {scalar | vector | tensor}",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: Set type to scalar float. This is the default.; vector: Set type to vector.; tensor: Set type to tensor."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "geometry paint-extra",
+  "syntax": {
+    "6.0": "geometry paint-extra <i> keyword [range]",
+    "7.0": "geometry paint-extra <i> keyword ... [range]",
+    "9.0": "geometry paint-extra <i> keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "acceleration",
+      "syntax": {
+        "6.0": "acceleration",
+        "7.0": "acceleration",
+        "9.0": "acceleration [zonefieldoptions]"
+      },
+      "description": "Paint acceleration magnitude at the gridpoint (only available if model configure dynamic has been specified)."
     },
-    "7.0": {
-      "command": "geometry paint-extra",
-      "syntax": "geometry paint-extra <i> keyword ... [range]",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration",
-          "description": "Paint acceleration magnitude at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x",
-          "description": "Paint \\(x\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y",
-          "description": "Paint \\(y\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z",
-          "description": "Paint \\(z\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "condition",
-          "syntax": "condition",
-          "description": "Paint a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up"
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence",
-          "description": "Paint the zone convergence."
-        },
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": "Paint the density of the zone."
-        },
-        {
-          "name": "density-fluid",
-          "syntax": "density-fluid",
-          "description": "Paint the fluid density."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement",
-          "description": "Paint displacement magnitude at the gridpoint."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x",
-          "description": "Paint \\(x\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y",
-          "description": "Paint \\(y\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z",
-          "description": "Paint \\(z\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra {factor-of-safety}",
-          "description": "Options: factor-of-safety: The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety."
-        },
-        {
-          "name": "fluid-bulk-modulus",
-          "syntax": "fluid-bulk-modulus",
-          "description": "Paint zones by the fluid bulk modulus."
-        },
-        {
-          "name": "fluid-biot-modulus",
-          "syntax": "fluid-biot-modulus",
-          "description": "Paint zones by the fluid Biot modulus."
-        },
-        {
-          "name": "multiplier",
-          "syntax": "multiplier",
-          "description": "Pain the zone multiplier."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure",
-          "description": "Paint pore pressure in a zone. By default this will be the average zone pore pressure, but the gridpoint pressure can be specified by using the source keyword modifier."
-        },
-        {
-          "name": "property",
-          "syntax": "property",
-          "description": "Paint a property of the mechanical constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-fluid",
-          "syntax": "property-fluid",
-          "description": "Paint a property of the fluid constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-thermal",
-          "syntax": "property-thermal",
-          "description": "Paint a property of the thermal constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local",
-          "description": "Paint the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target",
-          "description": "Paint the target unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "saturation",
-          "syntax": "saturation",
-          "description": "Paint the saturation at the gridpoint (only available if model configure fluid has been specified)."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "Specify the geometry set."
-        },
-        {
-          "name": "strain-increment",
-          "syntax": "strain-increment",
-          "description": "Paint the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-increment-xx",
-          "syntax": "strain-increment-xx",
-          "description": "Paint the xx strain increment."
-        },
-        {
-          "name": "strain-increment-xy",
-          "syntax": "strain-increment-xy",
-          "description": "Paint the xy strain increment."
-        },
-        {
-          "name": "strain-increment-xz",
-          "syntax": "strain-increment-xz",
-          "description": "Paint the xz strain increment."
-        },
-        {
-          "name": "strain-increment-yy",
-          "syntax": "strain-increment-yy",
-          "description": "Paint the yy strain increment."
-        },
-        {
-          "name": "strain-increment-yz",
-          "syntax": "strain-increment-yz",
-          "description": "Paint the yz strain increment."
-        },
-        {
-          "name": "strain-increment-zz",
-          "syntax": "strain-increment-zz",
-          "description": "Paint the zz strain increment."
-        },
-        {
-          "name": "strain-rate",
-          "syntax": "strain-rate",
-          "description": "Paint the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-rate-xx",
-          "syntax": "strain-rate-xx",
-          "description": "Paint the xx strain rate."
-        },
-        {
-          "name": "strain-rate-xy",
-          "syntax": "strain-rate-xy",
-          "description": "Paint the xy strain rate."
-        },
-        {
-          "name": "strain-rate-xz",
-          "syntax": "strain-rate-xz",
-          "description": "Paint the xz strain rate."
-        },
-        {
-          "name": "strain-rate-yy",
-          "syntax": "strain-rate-yy",
-          "description": "Paint the yy strain rate."
-        },
-        {
-          "name": "strain-rate-yz",
-          "syntax": "strain-rate-yz",
-          "description": "Paint the yz strain rate."
-        },
-        {
-          "name": "strain-rate-zz",
-          "syntax": "strain-rate-zz",
-          "description": "Paint the zz strain rate."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress",
-          "description": "Paint the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx",
-          "description": "Paint the stress-xx of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy",
-          "description": "Paint the stress-xy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz",
-          "description": "Paint the stress-xz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy",
-          "description": "Paint the stress-yy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz",
-          "description": "Paint the stress-yz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz",
-          "description": "Paint the stress-zz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective",
-          "syntax": "stress-effective",
-          "description": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone effective stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress-effective-xx",
-          "syntax": "stress-effective-xx",
-          "description": "Paint the effective stress-xx of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective-xy",
-          "syntax": "stress-effective-xy",
-          "description": "Paint the effective stress-xy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective-xz",
-          "syntax": "stress-effective-xz",
-          "description": "Paint the effective stress-xz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-yy",
-          "syntax": "stress-effective-yy",
-          "description": "Paint the effective stress-yy of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-yz",
-          "syntax": "stress-effective-yz",
-          "description": "Paint the effective stress-yz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-zz",
-          "syntax": "stress-effective-zz",
-          "description": "Paint the effective stress-zz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "strength-stress-ratio",
-          "syntax": "strength-stress-ratio",
-          "description": "Paint the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10."
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature",
-          "description": "Paint the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead."
-        },
-        {
-          "name": "timestep-dynamic",
-          "syntax": "timestep-dynamic",
-          "description": "Paint the local critical dynamic time step of that particular gridpoint. (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "unbalanced-force",
-          "syntax": "unbalanced-force",
-          "description": "Paint the unbalanced force magnitude at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-x",
-          "syntax": "unbalanced-force-x",
-          "description": "Paint the \\(x\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-y",
-          "syntax": "unbalanced-force-y",
-          "description": "Paint the \\(y\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-z",
-          "syntax": "unbalanced-force-z",
-          "description": "Paint the \\(z\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "Paint the velocity magnitude at the gridpoint."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Paint the \\(x\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Paint the \\(y\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Paint the \\(z\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "kwd:component",
-          "syntax": "component {x | y | z | magnitude}",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the \\(x\\) -component of the vector.; y: Get the \\(y\\) -component of the vector; z: Get the \\(z\\) -component of the vector; magnitude: Get the vector magnitude."
-        },
-        {
-          "name": "kwd:index",
-          "syntax": "index <i>",
-          "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
-        },
-        {
-          "name": "kwd:gravity",
-          "syntax": "gravity <b>",
-          "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
-        },
-        {
-          "name": "kwd:label",
-          "syntax": "label <s>",
-          "description": "Assign a label to the history (used in prints and plots)."
-        },
-        {
-          "name": "kwd:log",
-          "syntax": "log <b>",
-          "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
-        },
-        {
-          "name": "kwd:method",
-          "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>]}",
-          "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: This uses an volume weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: This uses a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>]: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
-        },
-        {
-          "name": "kwd:name",
-          "syntax": "name <s>",
-          "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
-        },
-        {
-          "name": "kwd:null",
-          "syntax": "null {fluid <b> | mechanical <b> | thermal <b>}",
-          "description": "Specify the criteria used to ignore zone values. By default mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
-        },
-        {
-          "name": "kwd:quantity",
-          "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz | yy | yz | zz}",
-          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Get the intermediate principal stress.; maximum: Get the maximum (most positive) value of principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; mean: Get the mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: Get the minimum (most negative) principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; norm: Get the norm of the strain rate. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; octahedral: Get octahedral stress. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; shear-maximum: Get the maximum shear stress.; total-measure: Get the distance of tensor value to the origin in principal space.; volumetric: Get the volumetric change, or trace.; von-mises: Get the Von Mises measure. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; xx: Get the xx -component of the tensor.; xy: Get the xy -component of the tensor.; xz: Get the xz -component of the tensor.; yy: Get the yy -component of the tensor.; yz: Get the yz -component of the tensor.; zz: Get the zz -component of the tensor."
-        },
-        {
-          "name": "kwd:source",
-          "syntax": "source {gridpoint | zone}",
-          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
-        },
-        {
-          "name": "kwd:stress",
-          "syntax": "stress <b>",
-          "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
-        },
-        {
-          "name": "kwd:type",
-          "syntax": "type {scalar | vector | tensor}",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: Set type to scalar float. This is the default.; vector: Set type to vector.; tensor: Set type to tensor."
-        },
-        {
-          "name": "kwd:velocity-limit",
-          "syntax": "velocity-limit <f>",
-          "description": "Specifies the velocity limit used to determine if an object is stable or not for the factor-of-safety value. The default value is 1e-4 ."
-        }
-      ],
-      "examples": []
+    {
+      "name": "acceleration-x",
+      "syntax": {
+        "6.0": "acceleration-x",
+        "7.0": "acceleration-x",
+        "9.0": "acceleration-x [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint x -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "7.0": "Paint \\(x\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "9.0": "Paint \\(x\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
+      }
     },
-    "9.0": {
-      "command": "geometry paint-extra",
-      "syntax": "geometry paint-extra <i> keyword ... [range]",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration [zonefieldoptions]",
-          "description": "Paint acceleration magnitude at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x [zonefieldoptions]",
-          "description": "Paint \\(x\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y [zonefieldoptions]",
-          "description": "Paint \\(y\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z [zonefieldoptions]",
-          "description": "Paint \\(z\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "condition",
-          "syntax": "condition [zonefieldoptions]",
-          "description": "Paint a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up"
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence [zonefieldoptions]",
-          "description": "Paint the zone convergence."
-        },
-        {
-          "name": "density",
-          "syntax": "density [zonefieldoptions]",
-          "description": "Paint the density of the zone."
-        },
-        {
-          "name": "density-fluid",
-          "syntax": "density-fluid [zonefieldoptions]",
-          "description": "Paint the fluid density."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [zonefieldoptions]",
-          "description": "Paint displacement magnitude at the gridpoint."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [zonefieldoptions]",
-          "description": "Paint \\(x\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [zonefieldoptions]",
-          "description": "Paint \\(y\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z [zonefieldoptions]",
-          "description": "Paint \\(z\\) -displacement at the gridpoint."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [zonefieldoptions] {factor-of-safety [zonehistoryblock]}",
-          "description": "Paint an extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the zone extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword. Options: factor-of-safety [zonehistoryblock]: The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety."
-        },
-        {
-          "name": "fluid-bulk-modulus",
-          "syntax": "fluid-bulk-modulus [zonefieldoptions]",
-          "description": "Paint zones by the fluid bulk modulus."
-        },
-        {
-          "name": "fluid-biot-modulus",
-          "syntax": "fluid-biot-modulus [zonefieldoptions]",
-          "description": "Paint zones by the fluid Biot modulus."
-        },
-        {
-          "name": "multiplier",
-          "syntax": "multiplier [zonefieldoptions]",
-          "description": "Pain the zone multiplier."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure [zonefieldoptions]",
-          "description": "Paint pore pressure in a zone. By default this will be the average zone pore pressure, but the gridpoint pressure can be specified by using the source keyword modifier."
-        },
-        {
-          "name": "property",
-          "syntax": "property [zonefieldoptions]",
-          "description": "Paint a property of the mechanical constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-fluid",
-          "syntax": "property-fluid [zonefieldoptions]",
-          "description": "Paint a property of the fluid constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "property-thermal",
-          "syntax": "property-thermal [zonefieldoptions]",
-          "description": "Paint a property of the thermal constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local [zonefieldoptions]",
-          "description": "Paint the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target [zonefieldoptions]",
-          "description": "Paint the target unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
-        },
-        {
-          "name": "saturation",
-          "syntax": "saturation [zonefieldoptions]",
-          "description": "Paint the saturation at the gridpoint (only available if model configure fluid has been specified)."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "Specify the geometry set."
-        },
-        {
-          "name": "strain-increment",
-          "syntax": "strain-increment [zonefieldoptions]",
-          "description": "Paint the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-increment-xx",
-          "syntax": "strain-increment-xx [zonefieldoptions]",
-          "description": "Paint the xx strain increment."
-        },
-        {
-          "name": "strain-increment-xy",
-          "syntax": "strain-increment-xy [zonefieldoptions]",
-          "description": "Paint the xy strain increment."
-        },
-        {
-          "name": "strain-increment-xz",
-          "syntax": "strain-increment-xz [zonefieldoptions]",
-          "description": "Paint the xz strain increment."
-        },
-        {
-          "name": "strain-increment-yy",
-          "syntax": "strain-increment-yy [zonefieldoptions]",
-          "description": "Paint the yy strain increment."
-        },
-        {
-          "name": "strain-increment-yz",
-          "syntax": "strain-increment-yz [zonefieldoptions]",
-          "description": "Paint the yz strain increment."
-        },
-        {
-          "name": "strain-increment-zz",
-          "syntax": "strain-increment-zz [zonefieldoptions]",
-          "description": "Paint the zz strain increment."
-        },
-        {
-          "name": "strain-rate",
-          "syntax": "strain-rate [zonefieldoptions]",
-          "description": "Paint the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "strain-rate-xx",
-          "syntax": "strain-rate-xx [zonefieldoptions]",
-          "description": "Paint the xx strain rate."
-        },
-        {
-          "name": "strain-rate-xy",
-          "syntax": "strain-rate-xy [zonefieldoptions]",
-          "description": "Paint the xy strain rate."
-        },
-        {
-          "name": "strain-rate-xz",
-          "syntax": "strain-rate-xz [zonefieldoptions]",
-          "description": "Paint the xz strain rate."
-        },
-        {
-          "name": "strain-rate-yy",
-          "syntax": "strain-rate-yy [zonefieldoptions]",
-          "description": "Paint the yy strain rate."
-        },
-        {
-          "name": "strain-rate-yz",
-          "syntax": "strain-rate-yz [zonefieldoptions]",
-          "description": "Paint the yz strain rate."
-        },
-        {
-          "name": "strain-rate-zz",
-          "syntax": "strain-rate-zz [zonefieldoptions]",
-          "description": "Paint the zz strain rate."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [zonefieldoptions]",
-          "description": "Paint the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [zonefieldoptions]",
-          "description": "Paint the stress-xx of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [zonefieldoptions]",
-          "description": "Paint the stress-xy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [zonefieldoptions]",
-          "description": "Paint the stress-xz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [zonefieldoptions]",
-          "description": "Paint the stress-yy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [zonefieldoptions]",
-          "description": "Paint the stress-yz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [zonefieldoptions]",
-          "description": "Paint the stress-zz of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective",
-          "syntax": "stress-effective [zonefieldoptions]",
-          "description": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone effective stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
-        },
-        {
-          "name": "stress-effective-xx",
-          "syntax": "stress-effective-xx [zonefieldoptions]",
-          "description": "Paint the effective stress-xx of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective-xy",
-          "syntax": "stress-effective-xy [zonefieldoptions]",
-          "description": "Paint the effective stress-xy of the zone, determined by the weighted average of the subzone stresses."
-        },
-        {
-          "name": "stress-effective-xz",
-          "syntax": "stress-effective-xz [zonefieldoptions]",
-          "description": "Paint the effective stress-xz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-yy",
-          "syntax": "stress-effective-yy [zonefieldoptions]",
-          "description": "Paint the effective stress-yy of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-yz",
-          "syntax": "stress-effective-yz [zonefieldoptions]",
-          "description": "Paint the effective stress-yz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "stress-effective-zz",
-          "syntax": "stress-effective-zz [zonefieldoptions]",
-          "description": "Paint the effective stress-zz of the zone, determined by the weighted average of the subzone effective stresses."
-        },
-        {
-          "name": "strength-stress-ratio",
-          "syntax": "strength-stress-ratio [zonefieldoptions]",
-          "description": "Paint the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10."
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature [zonefieldoptions]",
-          "description": "Paint the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead."
-        },
-        {
-          "name": "timestep-dynamic",
-          "syntax": "timestep-dynamic [zonefieldoptions]",
-          "description": "Paint the local critical dynamic time step of that particular gridpoint. (only available if model configure dynamic has been specified)."
-        },
-        {
-          "name": "unbalanced-force",
-          "syntax": "unbalanced-force [zonefieldoptions]",
-          "description": "Paint the unbalanced force magnitude at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-x",
-          "syntax": "unbalanced-force-x [zonefieldoptions]",
-          "description": "Paint the \\(x\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-y",
-          "syntax": "unbalanced-force-y [zonefieldoptions]",
-          "description": "Paint the \\(y\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "unbalanced-force-z",
-          "syntax": "unbalanced-force-z [zonefieldoptions]",
-          "description": "Paint the \\(z\\) -unbalanced force at the gridpoint."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [zonefieldoptions]",
-          "description": "Paint the velocity magnitude at the gridpoint."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [zonefieldoptions]",
-          "description": "Paint the \\(x\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [zonefieldoptions]",
-          "description": "Paint the \\(y\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z [zonefieldoptions]",
-          "description": "Paint the \\(z\\) -velocity at the gridpoint."
-        },
-        {
-          "name": "kwd:component",
-          "syntax": "component {x | y | z | magnitude}",
-          "description": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the \\(x\\) -component of the vector.; y: Get the \\(y\\) -component of the vector; z: Get the \\(z\\) -component of the vector; magnitude: Get the vector magnitude."
-        },
-        {
-          "name": "kwd:index",
-          "syntax": "index <i>",
-          "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
-        },
-        {
-          "name": "kwd:gravity",
-          "syntax": "gravity <b>",
-          "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
-        },
-        {
-          "name": "kwd:label",
-          "syntax": "label <s>",
-          "description": "Assign a label to the history (used in prints and plots)."
-        },
-        {
-          "name": "kwd:log",
-          "syntax": "log <b>",
-          "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
-        },
-        {
-          "name": "kwd:method",
-          "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>]}",
-          "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: This uses an volume weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: This uses a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>]: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
-        },
-        {
-          "name": "kwd:name",
-          "syntax": "name <s>",
-          "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
-        },
-        {
-          "name": "kwd:null",
-          "syntax": "null {fluid <b> | mechanical <b> | thermal <b>}",
-          "description": "Specify the criteria used to ignore zone values. By default mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
-        },
-        {
-          "name": "kwd:quantity",
-          "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz | yy | yz | zz}",
-          "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Get the intermediate principal stress.; maximum: Get the maximum (most positive) value of principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; mean: Get the mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: Get the minimum (most negative) principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; norm: Get the norm of the strain rate. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; octahedral: Get octahedral stress. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; shear-maximum: Get the maximum shear stress.; total-measure: Get the distance of tensor value to the origin in principal space.; volumetric: Get the volumetric change, or trace.; von-mises: Get the Von Mises measure. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; xx: Get the xx -component of the tensor.; xy: Get the xy -component of the tensor.; xz: Get the xz -component of the tensor.; yy: Get the yy -component of the tensor.; yz: Get the yz -component of the tensor.; zz: Get the zz -component of the tensor."
-        },
-        {
-          "name": "kwd:source",
-          "syntax": "source {gridpoint | zone}",
-          "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
-        },
-        {
-          "name": "kwd:stress",
-          "syntax": "stress <b>",
-          "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
-        },
-        {
-          "name": "kwd:type",
-          "syntax": "type {scalar | vector | tensor}",
-          "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: Set type to scalar float. This is the default.; vector: Set type to vector.; tensor: Set type to tensor."
-        },
-        {
-          "name": "kwd:velocity-limit",
-          "syntax": "velocity-limit <f>",
-          "description": "Specifies the velocity limit used to determine if an object is stable or not for the factor-of-safety value. The default value is 1e-4 ."
-        }
-      ],
-      "examples": []
+    {
+      "name": "acceleration-y",
+      "syntax": {
+        "6.0": "acceleration-y",
+        "7.0": "acceleration-y",
+        "9.0": "acceleration-y [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint y -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "7.0": "Paint \\(y\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "9.0": "Paint \\(y\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
+      }
+    },
+    {
+      "name": "acceleration-z",
+      "syntax": {
+        "6.0": "acceleration-z",
+        "7.0": "acceleration-z",
+        "9.0": "acceleration-z [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint z -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "7.0": "Paint \\(z\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified).",
+        "9.0": "Paint \\(z\\) -acceleration at the gridpoint (only available if model configure dynamic has been specified)."
+      }
+    },
+    {
+      "name": "condition",
+      "syntax": {
+        "6.0": "condition",
+        "7.0": "condition",
+        "9.0": "condition [zonefieldoptions]"
+      },
+      "description": "Paint a measure of how badly deformed a zone is. [URGENT: CS: content required for link here appears to need adding to doc set: Link to wherever the contents of section 1.1.5 in the Command Reference end up"
+    },
+    {
+      "name": "convergence",
+      "syntax": {
+        "7.0": "convergence",
+        "9.0": "convergence [zonefieldoptions]"
+      },
+      "description": "Paint the zone convergence.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "density",
+      "syntax": {
+        "6.0": "density",
+        "7.0": "density",
+        "9.0": "density [zonefieldoptions]"
+      },
+      "description": "Paint the density of the zone."
+    },
+    {
+      "name": "density-fluid",
+      "syntax": {
+        "7.0": "density-fluid",
+        "9.0": "density-fluid [zonefieldoptions]"
+      },
+      "description": "Paint the fluid density.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "displacement",
+      "syntax": {
+        "6.0": "displacement",
+        "7.0": "displacement",
+        "9.0": "displacement [zonefieldoptions]"
+      },
+      "description": "Paint displacement magnitude at the gridpoint."
+    },
+    {
+      "name": "displacement-x",
+      "syntax": {
+        "6.0": "displacement-x",
+        "7.0": "displacement-x",
+        "9.0": "displacement-x [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint x -displacement at the gridpoint.",
+        "7.0": "Paint \\(x\\) -displacement at the gridpoint.",
+        "9.0": "Paint \\(x\\) -displacement at the gridpoint."
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": {
+        "6.0": "displacement-y",
+        "7.0": "displacement-y",
+        "9.0": "displacement-y [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint y -displacement at the gridpoint.",
+        "7.0": "Paint \\(y\\) -displacement at the gridpoint.",
+        "9.0": "Paint \\(y\\) -displacement at the gridpoint."
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": {
+        "6.0": "displacement-z",
+        "7.0": "displacement-z",
+        "9.0": "displacement-z [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint z -displacement at the gridpoint.",
+        "7.0": "Paint \\(z\\) -displacement at the gridpoint.",
+        "9.0": "Paint \\(z\\) -displacement at the gridpoint."
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": {
+        "6.0": "extra",
+        "7.0": "extra {factor-of-safety}",
+        "9.0": "extra [zonefieldoptions] {factor-of-safety [zonehistoryblock]}"
+      },
+      "description": {
+        "6.0": "Paint an extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the zone extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword.",
+        "7.0": "Options: factor-of-safety: The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety.",
+        "9.0": "Paint an extra variable value. The extra variable index used will default to 1 and can be changed with the index modifier keyword. The value will by default come from the zone extra variables, but this can be specified using the source modifier keyword. The value will by default be treated as a scalar floating point type, but this can be specified using the type modifier keyword. Options: factor-of-safety [zonehistoryblock]: The largest factor of safety that remains stable for this grid point. Only available after a model factor-of-safety calculation. The velocity-limit keyword is used to specify a velocity magnitude over which the grid point is considered unstable at a given factor of safety."
+      }
+    },
+    {
+      "name": "fluid-bulk-modulus",
+      "syntax": {
+        "7.0": "fluid-bulk-modulus",
+        "9.0": "fluid-bulk-modulus [zonefieldoptions]"
+      },
+      "description": "Paint zones by the fluid bulk modulus.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "fluid-biot-modulus",
+      "syntax": {
+        "7.0": "fluid-biot-modulus",
+        "9.0": "fluid-biot-modulus [zonefieldoptions]"
+      },
+      "description": "Paint zones by the fluid Biot modulus.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "multiplier",
+      "syntax": {
+        "7.0": "multiplier",
+        "9.0": "multiplier [zonefieldoptions]"
+      },
+      "description": "Pain the zone multiplier.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "pore-pressure",
+      "syntax": {
+        "6.0": "pore-pressure",
+        "7.0": "pore-pressure",
+        "9.0": "pore-pressure [zonefieldoptions]"
+      },
+      "description": "Paint pore pressure in a zone. By default this will be the average zone pore pressure, but the gridpoint pressure can be specified by using the source keyword modifier."
+    },
+    {
+      "name": "property",
+      "syntax": {
+        "6.0": "property",
+        "7.0": "property",
+        "9.0": "property [zonefieldoptions]"
+      },
+      "description": "Paint a property of the mechanical constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
+    },
+    {
+      "name": "property-fluid",
+      "syntax": {
+        "6.0": "property-fluid",
+        "7.0": "property-fluid",
+        "9.0": "property-fluid [zonefieldoptions]"
+      },
+      "description": "Paint a property of the fluid constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
+    },
+    {
+      "name": "property-thermal",
+      "syntax": {
+        "6.0": "property-thermal",
+        "7.0": "property-thermal",
+        "9.0": "property-thermal [zonefieldoptions]"
+      },
+      "description": "Paint a property of the thermal constitutive model of the zone. The property name must be specified using the name keyword modifier. By default it will be assumed the property is a floating point scalar, but this can be specified using the type modifier keyword."
+    },
+    {
+      "name": "ratio-local",
+      "syntax": {
+        "6.0": "ratio-local",
+        "7.0": "ratio-local",
+        "9.0": "ratio-local [zonefieldoptions]"
+      },
+      "description": "Paint the local unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier."
+    },
+    {
+      "name": "ratio-target",
+      "syntax": {
+        "7.0": "ratio-target",
+        "9.0": "ratio-target [zonefieldoptions]"
+      },
+      "description": "Paint the target unbalanced force ratio at each gridpoint. Like all results, this can be changed to the logarithm of the value by using the :lkwd:’log’ keyword modifier.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "saturation",
+      "syntax": {
+        "6.0": "saturation",
+        "7.0": "saturation",
+        "9.0": "saturation [zonefieldoptions]"
+      },
+      "description": "Paint the saturation at the gridpoint (only available if model configure fluid has been specified)."
+    },
+    {
+      "name": "set",
+      "syntax": "set <s>",
+      "description": "Specify the geometry set.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment",
+      "syntax": {
+        "6.0": "strain-increment",
+        "7.0": "strain-increment",
+        "9.0": "strain-increment [zonefieldoptions]"
+      },
+      "description": "Paint the strain increment tensor of the zone, determined by the current displacement field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
+    },
+    {
+      "name": "strain-increment-xx",
+      "syntax": {
+        "7.0": "strain-increment-xx",
+        "9.0": "strain-increment-xx [zonefieldoptions]"
+      },
+      "description": "Paint the xx strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-xy",
+      "syntax": {
+        "7.0": "strain-increment-xy",
+        "9.0": "strain-increment-xy [zonefieldoptions]"
+      },
+      "description": "Paint the xy strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-xz",
+      "syntax": {
+        "7.0": "strain-increment-xz",
+        "9.0": "strain-increment-xz [zonefieldoptions]"
+      },
+      "description": "Paint the xz strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-yy",
+      "syntax": {
+        "7.0": "strain-increment-yy",
+        "9.0": "strain-increment-yy [zonefieldoptions]"
+      },
+      "description": "Paint the yy strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-yz",
+      "syntax": {
+        "7.0": "strain-increment-yz",
+        "9.0": "strain-increment-yz [zonefieldoptions]"
+      },
+      "description": "Paint the yz strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-increment-zz",
+      "syntax": {
+        "7.0": "strain-increment-zz",
+        "9.0": "strain-increment-zz [zonefieldoptions]"
+      },
+      "description": "Paint the zz strain increment.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate",
+      "syntax": {
+        "6.0": "strain-rate",
+        "7.0": "strain-rate",
+        "9.0": "strain-rate [zonefieldoptions]"
+      },
+      "description": "Paint the strain rate tensor of the zone, determined by the current velocity field. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
+    },
+    {
+      "name": "strain-rate-xx",
+      "syntax": {
+        "7.0": "strain-rate-xx",
+        "9.0": "strain-rate-xx [zonefieldoptions]"
+      },
+      "description": "Paint the xx strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate-xy",
+      "syntax": {
+        "7.0": "strain-rate-xy",
+        "9.0": "strain-rate-xy [zonefieldoptions]"
+      },
+      "description": "Paint the xy strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate-xz",
+      "syntax": {
+        "7.0": "strain-rate-xz",
+        "9.0": "strain-rate-xz [zonefieldoptions]"
+      },
+      "description": "Paint the xz strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate-yy",
+      "syntax": {
+        "7.0": "strain-rate-yy",
+        "9.0": "strain-rate-yy [zonefieldoptions]"
+      },
+      "description": "Paint the yy strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate-yz",
+      "syntax": {
+        "7.0": "strain-rate-yz",
+        "9.0": "strain-rate-yz [zonefieldoptions]"
+      },
+      "description": "Paint the yz strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strain-rate-zz",
+      "syntax": {
+        "7.0": "strain-rate-zz",
+        "9.0": "strain-rate-zz [zonefieldoptions]"
+      },
+      "description": "Paint the zz strain rate.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress",
+      "syntax": {
+        "6.0": "stress",
+        "7.0": "stress",
+        "9.0": "stress [zonefieldoptions]"
+      },
+      "description": "Paint the stress tensor of the zone, determined by the weighted average of the subzone stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
+    },
+    {
+      "name": "stress-xx",
+      "syntax": {
+        "7.0": "stress-xx",
+        "9.0": "stress-xx [zonefieldoptions]"
+      },
+      "description": "Paint the stress-xx of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-xy",
+      "syntax": {
+        "7.0": "stress-xy",
+        "9.0": "stress-xy [zonefieldoptions]"
+      },
+      "description": "Paint the stress-xy of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-xz",
+      "syntax": {
+        "7.0": "stress-xz",
+        "9.0": "stress-xz [zonefieldoptions]"
+      },
+      "description": "Paint the stress-xz of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-yy",
+      "syntax": {
+        "7.0": "stress-yy",
+        "9.0": "stress-yy [zonefieldoptions]"
+      },
+      "description": "Paint the stress-yy of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-yz",
+      "syntax": {
+        "7.0": "stress-yz",
+        "9.0": "stress-yz [zonefieldoptions]"
+      },
+      "description": "Paint the stress-yz of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-zz",
+      "syntax": {
+        "7.0": "stress-zz",
+        "9.0": "stress-zz [zonefieldoptions]"
+      },
+      "description": "Paint the stress-zz of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-strength-ratio",
+      "syntax": "stress-strength-ratio",
+      "description": "Paint the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective",
+      "syntax": {
+        "6.0": "stress-effective",
+        "7.0": "stress-effective",
+        "9.0": "stress-effective [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone stresses minus the zone averaged pore pressure. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "7.0": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone effective stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor.",
+        "9.0": "Paint the effective stress tensor of the zone, determined by the weighted average of the subzone effective stresses. Use the quantity keyword to specify which scalar value to retrieve from the tensor."
+      }
+    },
+    {
+      "name": "stress-effective-xx",
+      "syntax": {
+        "7.0": "stress-effective-xx",
+        "9.0": "stress-effective-xx [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-xx of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective-xy",
+      "syntax": {
+        "7.0": "stress-effective-xy",
+        "9.0": "stress-effective-xy [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-xy of the zone, determined by the weighted average of the subzone stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective-xz",
+      "syntax": {
+        "7.0": "stress-effective-xz",
+        "9.0": "stress-effective-xz [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-xz of the zone, determined by the weighted average of the subzone effective stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective-yy",
+      "syntax": {
+        "7.0": "stress-effective-yy",
+        "9.0": "stress-effective-yy [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-yy of the zone, determined by the weighted average of the subzone effective stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective-yz",
+      "syntax": {
+        "7.0": "stress-effective-yz",
+        "9.0": "stress-effective-yz [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-yz of the zone, determined by the weighted average of the subzone effective stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-effective-zz",
+      "syntax": {
+        "7.0": "stress-effective-zz",
+        "9.0": "stress-effective-zz [zonefieldoptions]"
+      },
+      "description": "Paint the effective stress-zz of the zone, determined by the weighted average of the subzone effective stresses.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "strength-stress-ratio",
+      "syntax": {
+        "7.0": "strength-stress-ratio",
+        "9.0": "strength-stress-ratio [zonefieldoptions]"
+      },
+      "description": "Paint the ratio of the current stress to a failure surface of the zone, as determined by the current zone constitutive model. Not all constitutive models support this calculation. If unsupported, the value returned will be 10. The value returned is generally held to a maximum of 10.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "temperature",
+      "syntax": {
+        "6.0": "temperature",
+        "7.0": "temperature",
+        "9.0": "temperature [zonefieldoptions]"
+      },
+      "description": "Paint the temperature at the gridpoints. The source modifier keyword can be used to specify that zone based temperature should be used instead."
+    },
+    {
+      "name": "timestep-dynamic",
+      "syntax": {
+        "6.0": "timestep-dynamic",
+        "7.0": "timestep-dynamic",
+        "9.0": "timestep-dynamic [zonefieldoptions]"
+      },
+      "description": "Paint the local critical dynamic time step of that particular gridpoint. (only available if model configure dynamic has been specified)."
+    },
+    {
+      "name": "unbalanced-force",
+      "syntax": {
+        "6.0": "unbalanced-force",
+        "7.0": "unbalanced-force",
+        "9.0": "unbalanced-force [zonefieldoptions]"
+      },
+      "description": "Paint the unbalanced force magnitude at the gridpoint."
+    },
+    {
+      "name": "unbalanced-force-x",
+      "syntax": {
+        "6.0": "unbalanced-force-x",
+        "7.0": "unbalanced-force-x",
+        "9.0": "unbalanced-force-x [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the x -unbalanced force at the gridpoint.",
+        "7.0": "Paint the \\(x\\) -unbalanced force at the gridpoint.",
+        "9.0": "Paint the \\(x\\) -unbalanced force at the gridpoint."
+      }
+    },
+    {
+      "name": "unbalanced-force-y",
+      "syntax": {
+        "6.0": "unbalanced-force-y",
+        "7.0": "unbalanced-force-y",
+        "9.0": "unbalanced-force-y [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the y -unbalanced force at the gridpoint.",
+        "7.0": "Paint the \\(y\\) -unbalanced force at the gridpoint.",
+        "9.0": "Paint the \\(y\\) -unbalanced force at the gridpoint."
+      }
+    },
+    {
+      "name": "unbalanced-force-z",
+      "syntax": {
+        "6.0": "unbalanced-force-z",
+        "7.0": "unbalanced-force-z",
+        "9.0": "unbalanced-force-z [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the z -unbalanced force at the gridpoint.",
+        "7.0": "Paint the \\(z\\) -unbalanced force at the gridpoint.",
+        "9.0": "Paint the \\(z\\) -unbalanced force at the gridpoint."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": {
+        "6.0": "velocity",
+        "7.0": "velocity",
+        "9.0": "velocity [zonefieldoptions]"
+      },
+      "description": "Paint the velocity magnitude at the gridpoint."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": {
+        "6.0": "velocity-x",
+        "7.0": "velocity-x",
+        "9.0": "velocity-x [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the x -velocity at the gridpoint.",
+        "7.0": "Paint the \\(x\\) -velocity at the gridpoint.",
+        "9.0": "Paint the \\(x\\) -velocity at the gridpoint."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": {
+        "6.0": "velocity-y",
+        "7.0": "velocity-y",
+        "9.0": "velocity-y [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the y -velocity at the gridpoint.",
+        "7.0": "Paint the \\(y\\) -velocity at the gridpoint.",
+        "9.0": "Paint the \\(y\\) -velocity at the gridpoint."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z",
+        "7.0": "velocity-z",
+        "9.0": "velocity-z [zonefieldoptions]"
+      },
+      "description": {
+        "6.0": "Paint the z -velocity at the gridpoint.",
+        "7.0": "Paint the \\(z\\) -velocity at the gridpoint.",
+        "9.0": "Paint the \\(z\\) -velocity at the gridpoint."
+      }
+    },
+    {
+      "name": "kwd:component",
+      "syntax": "component {x | y | z | magnitude}",
+      "description": {
+        "6.0": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the x -component of the vector.; y: Get the y -component of the vector; z: Get the z -component of the vector; magnitude: Get the vector magnitude.",
+        "7.0": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the \\(x\\) -component of the vector.; y: Get the \\(y\\) -component of the vector; z: Get the \\(z\\) -component of the vector; magnitude: Get the vector magnitude.",
+        "9.0": "This keyword selects which scalar to retrieve from a vector type value, such as velocity or displacement. If the value type is not vector, this setting is ignored. The available options are: Options: x: Get the \\(x\\) -component of the vector.; y: Get the \\(y\\) -component of the vector; z: Get the \\(z\\) -component of the vector; magnitude: Get the vector magnitude."
+      }
+    },
+    {
+      "name": "kwd:index",
+      "syntax": "index <i>",
+      "description": "For keywords that require it (most notably extra ), this specifies the index that should be used. The default value will be 1."
+    },
+    {
+      "name": "kwd:gravity",
+      "syntax": "gravity <b>",
+      "description": "If on , then gravitational forces are included in the returned applied force. The default is off ."
+    },
+    {
+      "name": "kwd:label",
+      "syntax": "label <s>",
+      "description": "Assign a label to the history (used in prints and plots)."
+    },
+    {
+      "name": "kwd:log",
+      "syntax": "log <b>",
+      "description": "If on , the returned number is the base 10 log of the absolute value of the original value. The default is off ."
+    },
+    {
+      "name": "kwd:method",
+      "syntax": "method {constant | average | inverse-distance-weight {power <f> | radius-ratio <f>} | polynomial [tolerance <f>]}",
+      "description": "This specifies the method of calculation used to bring zone-based quantities to arbitrary locations in space (including at gridpoint positions). Options: constant: Assumes values are constant inside zones. This is the default option. Values at gridpoints or at zone boundaries will pick one adjacent zone to use.; average: This uses an volume weighted average of all the zones connected to the gridpoint.; inverse-distance-weight {power <f> | radius-ratio <f>}: This uses a weighted average of up to 32 zones in the immediate vicinity of the point. The weighting is determined by a power of the distance of the zone centroid from the specified point. Options: power <f>: Specify the power of the distance used to weight values. The default power is 3.0.; radius-ratio <f>: Specify the ratio of the maximum distance from the point of the zones selected, to the ratio used to calculate weighted values. Zones farther from this value are discounted. The default value is 0.75.; polynomial [tolerance <f>]: Use a fit to a polynomial function based on the zones in the vicinity of the point. Degenerate degrees of freedom are detected and removed. The optional tolerance flag can be used to change the value used to detect a degenerancy. The default value is 1e-7 ."
+    },
+    {
+      "name": "kwd:name",
+      "syntax": "name <s>",
+      "description": "Certain keywords (most notably property ) require a name value to be fully specified. This will determine the specific property name retrieved."
+    },
+    {
+      "name": "kwd:null",
+      "syntax": "null {fluid <b> | mechanical <b> | thermal <b>}",
+      "description": "Specify the criteria used to ignore zone values. By default mechanical null zones are ignored. Options: fluid <b>: Zones with a null fluid constitutive model are also ignored if this is set to on .; mechanical <b>: Zones with a null mechanical constitutive model are ignored if this is set to on (this is the default).; thermal <b>: Zones with a null thermal constitutive model are ignored if this is set to on ."
+    },
+    {
+      "name": "kwd:quantity",
+      "syntax": "quantity {intermediate | maximum | mean | minimum | norm | octahedral | shear-maximum | total-measure | volumetric | von-mises | xx | xy | xz | yy | yz | zz}",
+      "description": "This keyword selects which scalar to retrieve from a symmetric tensor type value, such as stress or strain. If the value type is not a tensor, this setting is ignored. The available options are: Options: intermediate: Get the intermediate principal stress.; maximum: Get the maximum (most positive) value of principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; mean: Get the mean pressure value, defined as the trace of the tensor divided by 3. For stresses this is most often referred to as the pressure.; minimum: Get the minimum (most negative) principal stress. [CS: doc needs to be added for this to work in PFC] Note that in -flac3d- ref-compressive stresses are negative <stresssignconventions>-.; norm: Get the norm of the strain rate. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; octahedral: Get octahedral stress. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; shear-maximum: Get the maximum shear stress.; total-measure: Get the distance of tensor value to the origin in principal space.; volumetric: Get the volumetric change, or trace.; von-mises: Get the Von Mises measure. [CS: again, we need a doc from FLAC3D for this to work in PFC]; see the equation in ref-sec_zonefielddatanames-.; xx: Get the xx -component of the tensor.; xy: Get the xy -component of the tensor.; xz: Get the xz -component of the tensor.; yy: Get the yy -component of the tensor.; yz: Get the yz -component of the tensor.; zz: Get the zz -component of the tensor."
+    },
+    {
+      "name": "kwd:source",
+      "syntax": "source {gridpoint | zone}",
+      "description": "Certain keywords (like extra and pore-pressure ) can be retrieved either from the zone structure or from the gridpoint structure. The default value is gridpoint . Options: gridpoint: Values are retrieved directly from the gridpoint.; zone: Values are retrieved from the zone."
+    },
+    {
+      "name": "kwd:stress",
+      "syntax": "stress <b>",
+      "description": "A few of the tensor type quantity options do different things depending if the value is considered a stress. When coming from a value like extra , this cannot be determined automatically. This allows the user to specify that the incoming tensor value should be considered a stress quantity."
+    },
+    {
+      "name": "kwd:type",
+      "syntax": "type {scalar | vector | tensor}",
+      "description": "In certain cases the type (scalar, vector, or tensor) of the value cannot necessarily be determined ahead of time. Extra variables, for example, can hold values of all three types. This keyword allows one to specify which type it is assumed to be. If the original value type does not match, 0.0 is returned. Options: scalar: Set type to scalar float. This is the default.; vector: Set type to vector.; tensor: Set type to tensor."
+    },
+    {
+      "name": "kwd:velocity-limit",
+      "syntax": "velocity-limit <f>",
+      "description": "Specifies the velocity limit used to determine if an object is stable or not for the factor-of-safety value. The default value is 1e-4 .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

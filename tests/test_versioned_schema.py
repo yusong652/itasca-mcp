@@ -55,17 +55,18 @@ class TestLoadCommandDocVersioned:
         assert "6.0" in doc["versions"]
 
     def test_version_6_0_unavailable_command(self):
-        """Commands not present in 6.0 should have available=false."""
-        # The 6.0 entry exists but marks as unavailable
-        # Load raw JSON to check
+        """A command absent from 6.0 is not in availability.versions and 6.0 raises."""
         import json
+
+        import pytest
 
         from itasca_mcp.knowledge.config import resolve
 
         path = resolve("pfc/command_docs/commands/ball/accumulate-stress.json")
         raw = json.loads(path.read_text(encoding="utf-8"))
-        assert "6.0" in raw["versions"]
-        assert raw["versions"]["6.0"].get("available") is False
+        assert "6.0" not in raw["availability"]["versions"]
+        with pytest.raises(KeyError):
+            CommandLoader.load_command_doc("ball", "accumulate-stress", "6.0", software="pfc")
 
     def test_unknown_command_returns_none(self):
         result = CommandLoader.load_command_doc("ball", "nonexistent_cmd", "7.0", software="pfc")

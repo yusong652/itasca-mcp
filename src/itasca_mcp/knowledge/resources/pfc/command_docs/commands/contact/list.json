@@ -8,237 +8,175 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "contact list",
-      "syntax": "contact [<sprocess>] list [keyword] [all] [type <s>] [range]",
-      "keywords": [
-        {
-          "name": "energy",
-          "syntax": "energy [<s>]",
-          "description": "List the energies of a contact model used by the contact. If s is not specified, then all energy names andvalues are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model."
-        },
-        {
-          "name": "energy-list",
-          "syntax": "energy-list",
-          "description": "List the energies available in each contact model. By default, these energies are not tabulated. See the model energy command for further details."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i>",
-          "description": "List the contact extra variables at index i ."
-        },
-        {
-          "name": "force",
-          "syntax": "force [local]",
-          "description": "List the contact force in the global coordinate system. This is the contact force ( \\(\\mathbf{F_c}\\) ) acting at the body (i.e., ball, clump, or wall) centroid to which the end2 piece (i.e., ball, pebble, or facet) belongs. Give the local keyword to list the contact force in the local coordinate system of the contact. In this case, a vector is returned that is { \\((-F_n,F_{st})\\) in 2D; \\((-F_n,F_{ss},F_{st})\\) in 3D} where \\(\\mathbf{F_c}=-F_n \\hat{\\mathbf{n_c}} + F_{ss} \\hat{\\mathbf{s_c}} + F_{st} \\hat{\\mathbf{t_c}}\\) where \\(F_{ss} \\equiv 0\\) in 2D. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "group",
-          "syntax": "group <i>",
-          "description": "List the contact group names at slot i ."
-        },
-        {
-          "name": "method-list",
-          "syntax": "method-list",
-          "description": "List all available contact models, their available methods, and the names of the method arguments. Contact model methods are distinct from contact model properties in that they operate on one or more contact model properties based on, perhaps, the contact geometry or piece attributes."
-        },
-        {
-          "name": "model",
-          "syntax": "model",
-          "description": "List the contact model name for each contact."
-        },
-        {
-          "name": "model-list",
-          "syntax": "model-list",
-          "description": "List all available contact models, whether or not they have been loaded as plugin contact models, and their property names. This is a synonym for the propertylist keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [local]",
-          "description": "List the contact moments in the global coordinate system. These are the total moments, \\(\\mathbf{M}^{(1)}\\) and \\(\\mathbf{M}^{(2)}\\) , acting on the bodies to which the pieces end1 and end2 belong, respectively. Give the local keyword to list the contact moments in the local coordinate system of the contact. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "normal",
-          "syntax": "normal",
-          "description": "List the contact normal direction, pointing from the end1 piece to the end2 piece. This is the direction in which the normal force is acting and is denoted as \\(\\hat{\\mathbf{n_c}}\\) ."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List the properties of a contact model used by the contact. If s is not specified, then all property names, inheritance state, and values are listed for each contact. If s is specified, then only that property is listed for the specified contacts. Use the propertylist keyword to list contact models and all properties available."
-        },
-        {
-          "name": "property-list",
-          "syntax": "property-list",
-          "description": "List all available contact models, whether or not they have been loaded as plugin contact models, and their property names. This is a synonym for the modellist keyword."
-        },
-        {
-          "name": "shear",
-          "syntax": "shear",
-          "description": "List the contact shear direction. In 2D, this corresponds to the direction orthogonal to the normal direction termed \\(\\hat{\\mathbf{t_c}}\\) . In 3D, on the other hand, this is the direction of the second unit vector forming the local axis system of the contact in global coordinates termed \\(\\hat{\\mathbf{s_c}}\\) . The third unit vector can be obtained from the cross product of the normal and this value."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact list",
+  "syntax": {
+    "6.0": "contact [<sprocess>] list [keyword] [all] [type <s>] [range]",
+    "7.0": "contact list [keyword ...] [range]",
+    "9.0": "contact list [keyword ...] [range]"
+  },
+  "keywords": [
+    {
+      "name": "all",
+      "syntax": "all",
+      "description": "List active and inactive contact information.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "7.0": {
-      "command": "contact list",
-      "syntax": "contact list [keyword ...] [range]",
-      "keywords": [
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "List active and inactive contact information."
-        },
-        {
-          "name": "domain",
-          "syntax": "domain",
-          "description": "List information about domain contacts."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy [<s>]",
-          "description": "List the energies of a contact model used by the contact. If s is not specified, then all energy names and values are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i>",
-          "description": "List the contact extra variables at index i ."
-        },
-        {
-          "name": "force",
-          "syntax": "force [local]",
-          "description": "List the contact force in the global coordinate system. This is the contact force ( \\(\\mathbf{F_c}\\) ) acting at the body (i.e., ball, clump, or wall) centroid to which the end2 piece (i.e., ball, pebble, or facet) belongs. Give the local keyword to list the contact force in the local coordinate system of the contact. In this case, a vector is returned that is { \\((-F_n,F_{st})\\) in 2D; \\((-F_n,F_{ss},F_{st})\\) in 3D} where \\(\\mathbf{F_c}=-F_n \\hat{\\mathbf{n_c}} + F_{ss} \\hat{\\mathbf{s_c}} + F_{st} \\hat{\\mathbf{t_c}}\\) where \\(F_{ss} \\equiv 0\\) in 2D. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "group",
-          "syntax": "group <i>",
-          "description": "List the contact group names at slot i ."
-        },
-        {
-          "name": "model",
-          "syntax": "model",
-          "description": "List the contact model name for each contact."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [local]",
-          "description": "List the contact moments in the global coordinate system. These are the total moments, \\(\\mathbf{M}^{(1)}\\) and \\(\\mathbf{M}^{(2)}\\) , acting on the bodies to which the pieces end1 and end2 belong, respectively. Give the local keyword to list the contact moments in the local coordinate system of the contact. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "normal",
-          "syntax": "normal",
-          "description": "List the contact normal direction, pointing from the end1 piece to the end2 piece. This is the direction in which the normal force is acting and is denoted as \\(\\hat{\\mathbf{n_c}}\\) ."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List the properties of a contact model used by the contact. If s is not specified, then all property names, inheritance state, and values are listed for each contact. If s is specified, then only that property is listed for the specified contacts. Use the propertylist keyword to list contact models and all properties available."
-        },
-        {
-          "name": "shear",
-          "syntax": "shear",
-          "description": "List the contact shear direction. In 2D, this corresponds to the direction orthogonal to the normal direction termed \\(\\hat{\\mathbf{t_c}}\\) . In 3D, on the other hand, this is the direction of the second unit vector forming the local axis system of the contact in global coordinates termed \\(\\hat{\\mathbf{s_c}}\\) . The third unit vector can be obtained from the cross product of the normal and this value."
-        },
-        {
-          "name": "type",
-          "syntax": "type <s>",
-          "description": "Filter by contact type."
-        },
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "List quantities related to mechanical contacts."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "List quantities related to thermal contacts."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); contact list also accepts mechanical and thermal after the subcommand."
-      ]
+    {
+      "name": "domain",
+      "syntax": "domain",
+      "description": "List information about domain contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "contact list",
-      "syntax": "contact list [keyword ...] [range]",
-      "keywords": [
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "List active and inactive contact information."
-        },
-        {
-          "name": "domain",
-          "syntax": "domain",
-          "description": "List information about domain contacts."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy [<s>]",
-          "description": "List the energies of a contact model used by the contact. If s is not specified, then all energy names and values are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i>",
-          "description": "List the contact extra variables at index i ."
-        },
-        {
-          "name": "force",
-          "syntax": "force [local]",
-          "description": "List the contact force in the global coordinate system. This is the contact force ( \\(\\mathbf{F_c}\\) ) acting at the body (i.e., ball, clump, or wall) centroid to which the end2 piece (i.e., ball, pebble, or facet) belongs. Give the local keyword to list the contact force in the local coordinate system of the contact. In this case, a vector is returned that is { \\((-F_n,F_{st})\\) in 2D; \\((-F_n,F_{ss},F_{st})\\) in 3D} where \\(\\mathbf{F_c}=-F_n \\hat{\\mathbf{n_c}} + F_{ss} \\hat{\\mathbf{s_c}} + F_{st} \\hat{\\mathbf{t_c}}\\) where \\(F_{ss} \\equiv 0\\) in 2D. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "group",
-          "syntax": "group <i>",
-          "description": "List the contact group names at slot i ."
-        },
-        {
-          "name": "model",
-          "syntax": "model",
-          "description": "List the contact model name for each contact."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [local]",
-          "description": "List the contact moments in the global coordinate system. These are the total moments, \\(\\mathbf{M}^{(1)}\\) and \\(\\mathbf{M}^{(2)}\\) , acting on the bodies to which the pieces end1 and end2 belong, respectively. Give the local keyword to list the contact moments in the local coordinate system of the contact. The orientation of this system can be listed with the normal and shear keywords."
-        },
-        {
-          "name": "normal",
-          "syntax": "normal",
-          "description": "List the contact normal direction, pointing from the end1 piece to the end2 piece. This is the direction in which the normal force is acting and is denoted as \\(\\hat{\\mathbf{n_c}}\\) ."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List the properties of a contact model used by the contact. If s is not specified, then all property names, inheritance state, and values are listed for each contact. If s is specified, then only that property is listed for the specified contacts. Use the propertylist keyword to list contact models and all properties available."
-        },
-        {
-          "name": "shear",
-          "syntax": "shear",
-          "description": "List the contact shear direction. In 2D, this corresponds to the direction orthogonal to the normal direction termed \\(\\hat{\\mathbf{t_c}}\\) . In 3D, on the other hand, this is the direction of the second unit vector forming the local axis system of the contact in global coordinates termed \\(\\hat{\\mathbf{s_c}}\\) . The third unit vector can be obtained from the cross product of the normal and this value."
-        },
-        {
-          "name": "type",
-          "syntax": "type <s>",
-          "description": "Filter by contact type."
-        },
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "List quantities related to mechanical contacts."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "List quantities related to thermal contacts."
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); contact list also accepts mechanical and thermal after the subcommand."
-      ]
+    {
+      "name": "energy",
+      "syntax": "energy [<s>]",
+      "description": {
+        "6.0": "List the energies of a contact model used by the contact. If s is not specified, then all energy names andvalues are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model.",
+        "7.0": "List the energies of a contact model used by the contact. If s is not specified, then all energy names and values are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model.",
+        "9.0": "List the energies of a contact model used by the contact. If s is not specified, then all energy names and values are listed for each contact. If s is specified, then only that energy is listed for the specified contacts. Use the energylist keyword to list all energies available for each contact model."
+      }
+    },
+    {
+      "name": "energy-list",
+      "syntax": "energy-list",
+      "description": "List the energies available in each contact model. By default, these energies are not tabulated. See the model energy command for further details.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i>",
+      "description": "List the contact extra variables at index i ."
+    },
+    {
+      "name": "force",
+      "syntax": "force [local]",
+      "description": "List the contact force in the global coordinate system. This is the contact force ( \\(\\mathbf{F_c}\\) ) acting at the body (i.e., ball, clump, or wall) centroid to which the end2 piece (i.e., ball, pebble, or facet) belongs. Give the local keyword to list the contact force in the local coordinate system of the contact. In this case, a vector is returned that is { \\((-F_n,F_{st})\\) in 2D; \\((-F_n,F_{ss},F_{st})\\) in 3D} where \\(\\mathbf{F_c}=-F_n \\hat{\\mathbf{n_c}} + F_{ss} \\hat{\\mathbf{s_c}} + F_{st} \\hat{\\mathbf{t_c}}\\) where \\(F_{ss} \\equiv 0\\) in 2D. The orientation of this system can be listed with the normal and shear keywords."
+    },
+    {
+      "name": "group",
+      "syntax": "group <i>",
+      "description": "List the contact group names at slot i ."
+    },
+    {
+      "name": "method-list",
+      "syntax": "method-list",
+      "description": "List all available contact models, their available methods, and the names of the method arguments. Contact model methods are distinct from contact model properties in that they operate on one or more contact model properties based on, perhaps, the contact geometry or piece attributes.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "model",
+      "syntax": "model",
+      "description": "List the contact model name for each contact."
+    },
+    {
+      "name": "model-list",
+      "syntax": "model-list",
+      "description": "List all available contact models, whether or not they have been loaded as plugin contact models, and their property names. This is a synonym for the propertylist keyword.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": "moment [local]",
+      "description": "List the contact moments in the global coordinate system. These are the total moments, \\(\\mathbf{M}^{(1)}\\) and \\(\\mathbf{M}^{(2)}\\) , acting on the bodies to which the pieces end1 and end2 belong, respectively. Give the local keyword to list the contact moments in the local coordinate system of the contact. The orientation of this system can be listed with the normal and shear keywords."
+    },
+    {
+      "name": "normal",
+      "syntax": "normal",
+      "description": "List the contact normal direction, pointing from the end1 piece to the end2 piece. This is the direction in which the normal force is acting and is denoted as \\(\\hat{\\mathbf{n_c}}\\) ."
+    },
+    {
+      "name": "property",
+      "syntax": "property [<s>]",
+      "description": "List the properties of a contact model used by the contact. If s is not specified, then all property names, inheritance state, and values are listed for each contact. If s is specified, then only that property is listed for the specified contacts. Use the propertylist keyword to list contact models and all properties available."
+    },
+    {
+      "name": "property-list",
+      "syntax": "property-list",
+      "description": "List all available contact models, whether or not they have been loaded as plugin contact models, and their property names. This is a synonym for the modellist keyword.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "shear",
+      "syntax": "shear",
+      "description": "List the contact shear direction. In 2D, this corresponds to the direction orthogonal to the normal direction termed \\(\\hat{\\mathbf{t_c}}\\) . In 3D, on the other hand, this is the direction of the second unit vector forming the local axis system of the contact in global coordinates termed \\(\\hat{\\mathbf{s_c}}\\) . The third unit vector can be obtained from the cross product of the normal and this value."
+    },
+    {
+      "name": "type",
+      "syntax": "type <s>",
+      "description": "Filter by contact type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "mechanical",
+      "syntax": "mechanical",
+      "description": "List quantities related to mechanical contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "thermal",
+      "syntax": "thermal",
+      "description": "List quantities related to thermal contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
+  ],
+  "examples": {
+    "6.0": [],
+    "9.0": []
+  },
+  "notes": {
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); contact list also accepts mechanical and thermal after the subcommand."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); contact list also accepts mechanical and thermal after the subcommand."
+    ]
   }
 }

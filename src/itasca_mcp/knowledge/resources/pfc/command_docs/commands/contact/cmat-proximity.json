@@ -10,110 +10,47 @@
     "available": false,
     "workaround": "itasca.command('contact cmat proximity <value>') - Python SDK does not provide direct CMAT proximity API, must use command interface"
   },
-  "notes": [
-    "This command sets the FUTURE contact detection behavior - does not affect existing contacts",
-    "Contact detection happens automatically during cycles, but not immediately after this command",
-    "Use 'model clean' to force immediate contact detection after changing proximity",
-    "fd = 0.0 is the most common value for standard DEM simulations",
-    "Positive fd allows contacts to form before actual geometric contact",
-    "Negative fd would require overlap before contact formation (rarely used)",
-    "Proximity affects performance: larger values → more potential contacts → slower",
-    "This is a global CMAT setting, applies to all new contacts created subsequently",
-    "Does not modify existing contacts - only affects contact creation logic",
-    "Related commands: contact cmat add, contact cmat default, contact cmat apply, model clean",
-    "Negative proximity requires that much overlap before a contact is created; pieces can interpenetrate noticeably before forces appear.",
-    "Changing proximity affects future detection only: existing contacts are not re-detected, and contact cmat apply does not re-run detection - use model clean."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact cmat proximity",
-      "syntax": "contact cmat [<sprocess>] proximity <fd>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat proximity 0.0",
-          "description": "Set contact detection distance to zero - only detect contacts when pieces touch (from official example). Use case: Standard contact detection for rigid particles."
-        },
-        {
-          "command": "contact cmat proximity 1e-6",
-          "description": "Allow small proximity gap for contact detection. Use case: Account for numerical precision or slight initial overlaps."
-        },
-        {
-          "command": "contact cmat proximity 0.1",
-          "description": "Detect contacts when pieces are within 0.1 length units. Use case: Pre-detect contacts before actual contact, useful for certain models."
-        },
-        {
-          "command": "contact cmat mechanical proximity 0.0",
-          "description": "Explicitly set mechanical contact detection distance. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact cmat thermal proximity 1e-5",
-          "description": "Set thermal contact detection distance (if thermal model is active). Use case: Heat transfer simulations with proximity-based thermal contacts."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact cmat proximity",
+  "syntax": "contact cmat [<sprocess>] proximity <fd>",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "contact cmat proximity 0.0",
+      "description": "Set contact detection distance to zero - only detect contacts when pieces touch (from official example). Use case: Standard contact detection for rigid particles."
     },
-    "6.0": {
-      "command": "contact cmat proximity",
-      "syntax": "contact cmat [<sprocess>] proximity <fd>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat proximity 0.0",
-          "description": "Set contact detection distance to zero - only detect contacts when pieces touch (from official example). Use case: Standard contact detection for rigid particles."
-        },
-        {
-          "command": "contact cmat proximity 1e-6",
-          "description": "Allow small proximity gap for contact detection. Use case: Account for numerical precision or slight initial overlaps."
-        },
-        {
-          "command": "contact cmat proximity 0.1",
-          "description": "Detect contacts when pieces are within 0.1 length units. Use case: Pre-detect contacts before actual contact, useful for certain models."
-        },
-        {
-          "command": "contact cmat mechanical proximity 0.0",
-          "description": "Explicitly set mechanical contact detection distance. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact cmat thermal proximity 1e-5",
-          "description": "Set thermal contact detection distance (if thermal model is active). Use case: Heat transfer simulations with proximity-based thermal contacts."
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact cmat proximity 1e-6",
+      "description": "Allow small proximity gap for contact detection. Use case: Account for numerical precision or slight initial overlaps."
     },
-    "9.0": {
-      "command": "contact cmat proximity",
-      "syntax": "contact cmat [<sprocess>] proximity <fd>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat proximity 0.0",
-          "description": "Set contact detection distance to zero - only detect contacts when pieces touch (from official example). Use case: Standard contact detection for rigid particles."
-        },
-        {
-          "command": "contact cmat proximity 1e-6",
-          "description": "Allow small proximity gap for contact detection. Use case: Account for numerical precision or slight initial overlaps."
-        },
-        {
-          "command": "contact cmat proximity 0.1",
-          "description": "Detect contacts when pieces are within 0.1 length units. Use case: Pre-detect contacts before actual contact, useful for certain models."
-        },
-        {
-          "command": "contact cmat mechanical proximity 0.0",
-          "description": "Explicitly set mechanical contact detection distance. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact cmat thermal proximity 1e-5",
-          "description": "Set thermal contact detection distance (if thermal model is active). Use case: Heat transfer simulations with proximity-based thermal contacts."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact cmat proximity 0.1",
+      "description": "Detect contacts when pieces are within 0.1 length units. Use case: Pre-detect contacts before actual contact, useful for certain models."
+    },
+    {
+      "command": "contact cmat mechanical proximity 0.0",
+      "description": "Explicitly set mechanical contact detection distance. Use case: When working with multiple contact processes."
+    },
+    {
+      "command": "contact cmat thermal proximity 1e-5",
+      "description": "Set thermal contact detection distance (if thermal model is active). Use case: Heat transfer simulations with proximity-based thermal contacts."
     }
-  }
+  ]
 }

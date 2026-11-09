@@ -106,7 +106,7 @@ class FishDocumentAdapter:
                     description="; ".join(bits),
                     keywords=keywords,
                     category=entry["namespace"],
-                    syntax=entry.get("signature") or name,
+                    syntax=FishLoader.signature(entry) or name,
                     examples=[],
                     metadata={
                         "returns": entry.get("returns"),

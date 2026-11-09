@@ -32,250 +32,114 @@
     "available": false,
     "workaround": "itasca.command('model range create \"walls\" group \"West\" or \"East\"')\nitasca.command('ball attribute density 2500 range named-range \"walls\"')\n\n# Python SDK does not provide direct range management. For dynamic range-based operations in Python, filter objects manually:\n\nimport itasca\n\n# Example: filter balls by position\nfor ball in itasca.ball.list():\n    pos = ball.pos()\n    if 0 <= pos[0] <= 1 and 0 <= pos[1] <= 1:\n        ball.set_density(2500)"
   },
-  "versions": {
-    "7.0": {
-      "command": "model range",
-      "syntax": "model range keyword",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create <s>",
-          "description": "A named range with the name s is created if one does not exist. This must be followed by one or more range elements , indicated above as [range element] ... (this is, effectively, a range phrase without the word range at the start)."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s>",
-          "description": "Delete the range with name s ."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the named ranges."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model range create 'walls' group 'West' or 'East' or 'North' or 'South'",
-          "description": "Create named range 'walls' for all objects in West, East, North, or South groups"
-        },
-        {
-          "command": "ball attribute density 2500 range named-range 'walls'",
-          "description": "Use named range 'walls' to set ball density"
-        },
-        {
-          "command": "model range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10",
-          "description": "Create named range for southwest corner box (x:0-1, y:0-1, z:0-10)"
-        },
-        {
-          "command": "model range create 'nw corner' position (9,0,0)(10,1,10)",
-          "description": "Create named range for northwest corner using position vectors"
-        },
-        {
-          "command": "model range create 'corners' union named-range 'sw corner' named-range 'nw corner'",
-          "description": "Create named range combining two existing named ranges"
-        },
-        {
-          "command": "clump rotate axis (0,0,1) angle 45 range named-range 'corners'",
-          "description": "Rotate clumps in 'corners' named range"
-        },
-        {
-          "command": "model range create 'large_balls' radius 0.5 1.0",
-          "description": "Create named range for balls with radius between 0.5 and 1.0"
-        },
-        {
-          "command": "model range create 'top_layer' position-z 9.0 10.0",
-          "description": "Create named range for objects in top layer (z: 9.0-10.0)"
-        },
-        {
-          "command": "model range create 'active_region' position-x -5 5 and position-y -5 5 and position-z 0 10",
-          "description": "Create named range using 'and' logic for box region"
-        },
-        {
-          "command": "ball attribute velocity (0,0,-1) range named-range 'top_layer' and named-range 'large_balls'",
-          "description": "Apply attribute to intersection of two named ranges"
-        },
-        {
-          "command": "model range create 'boundary' group 'walls' or id 1 100",
-          "description": "Create named range combining group membership and ID range"
-        },
-        {
-          "command": "clump delete range named-range 'sw corner' not",
-          "description": "Delete all clumps NOT in 'sw corner' range (using 'not' logic)"
-        },
-        {
-          "command": "model range delete 'walls'",
-          "description": "Delete the named range 'walls'"
-        },
-        {
-          "command": "; Complex example from documentation\nmodel range create 'walls' group 'West' or 'East' or 'North' or 'South'\nzone face apply velocity-normal 0 range named-range 'walls'\n\nmodel range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10\nmodel range create 'nw corner' position (9,0,0)(10,1,10)\nzone cmodel assign mohr-coulomb range union named-range 'sw corner' named-range 'nw corner'\nzone cmodel assign elastic range named-range 'sw corner' not named-range 'nw corner' not",
-          "description": "Full example: create multiple named ranges and use with logical operations"
-        },
-        {
-          "command": "model range create 'central_region' position-x -2 2 position-y -2 2\nball generate number 1000 radius 0.5 range named-range 'central_region'",
-          "description": "Generate balls only within pre-defined named range"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model range",
+  "syntax": {
+    "6.0": "model range keyword ...",
+    "7.0": "model range keyword",
+    "9.0": "model range keyword"
+  },
+  "keywords": [
+    {
+      "name": "create",
+      "syntax": {
+        "6.0": "create <s> range",
+        "7.0": "create <s>",
+        "9.0": "create <s> [rangeelement...]"
+      },
+      "description": {
+        "6.0": "A named range with the name s is created if one does not exist. A list of range elements must follow s . The list of range elements appears in the range keyword reference topic. Once a named range has been created, it can be specified in place of a set of range elements in any command (using the named-range keyword) that uses the range logic.",
+        "7.0": "A named range with the name s is created if one does not exist. This must be followed by one or more range elements , indicated above as [range element] ... (this is, effectively, a range phrase without the word range at the start).",
+        "9.0": "A named range with the name s is created if one does not exist. This must be followed by one or more range elements , indicated above as [range element] ... (this is, effectively, a range phrase without the word range at the start)."
+      }
     },
-    "6.0": {
-      "command": "model range",
-      "syntax": "model range keyword ...",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create <s> range",
-          "description": "A named range with the name s is created if one does not exist. A list of range elements must follow s . The list of range elements appears in the range keyword reference topic. Once a named range has been created, it can be specified in place of a set of range elements in any command (using the named-range keyword) that uses the range logic."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s>",
-          "description": "Delete the range with name s . Note As seen here, the link range (non-optional) or < range > (optional), whenever it appears in a command signature, is a link to the range keyword reference ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model range create 'walls' group 'West' or 'East' or 'North' or 'South'",
-          "description": "Create named range 'walls' for all objects in West, East, North, or South groups"
-        },
-        {
-          "command": "ball attribute density 2500 range named-range 'walls'",
-          "description": "Use named range 'walls' to set ball density"
-        },
-        {
-          "command": "model range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10",
-          "description": "Create named range for southwest corner box (x:0-1, y:0-1, z:0-10)"
-        },
-        {
-          "command": "model range create 'nw corner' position (9,0,0)(10,1,10)",
-          "description": "Create named range for northwest corner using position vectors"
-        },
-        {
-          "command": "model range create 'corners' union named-range 'sw corner' named-range 'nw corner'",
-          "description": "Create named range combining two existing named ranges"
-        },
-        {
-          "command": "clump rotate axis (0,0,1) angle 45 range named-range 'corners'",
-          "description": "Rotate clumps in 'corners' named range"
-        },
-        {
-          "command": "model range create 'large_balls' radius 0.5 1.0",
-          "description": "Create named range for balls with radius between 0.5 and 1.0"
-        },
-        {
-          "command": "model range create 'top_layer' position-z 9.0 10.0",
-          "description": "Create named range for objects in top layer (z: 9.0-10.0)"
-        },
-        {
-          "command": "model range create 'active_region' position-x -5 5 and position-y -5 5 and position-z 0 10",
-          "description": "Create named range using 'and' logic for box region"
-        },
-        {
-          "command": "ball attribute velocity (0,0,-1) range named-range 'top_layer' and named-range 'large_balls'",
-          "description": "Apply attribute to intersection of two named ranges"
-        },
-        {
-          "command": "model range create 'boundary' group 'walls' or id 1 100",
-          "description": "Create named range combining group membership and ID range"
-        },
-        {
-          "command": "clump delete range named-range 'sw corner' not",
-          "description": "Delete all clumps NOT in 'sw corner' range (using 'not' logic)"
-        },
-        {
-          "command": "model range delete 'walls'",
-          "description": "Delete the named range 'walls'"
-        },
-        {
-          "command": "; Complex example from documentation\nmodel range create 'walls' group 'West' or 'East' or 'North' or 'South'\nzone face apply velocity-normal 0 range named-range 'walls'\n\nmodel range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10\nmodel range create 'nw corner' position (9,0,0)(10,1,10)\nzone cmodel assign mohr-coulomb range union named-range 'sw corner' named-range 'nw corner'\nzone cmodel assign elastic range named-range 'sw corner' not named-range 'nw corner' not",
-          "description": "Full example: create multiple named ranges and use with logical operations"
-        },
-        {
-          "command": "model range create 'central_region' position-x -2 2 position-y -2 2\nball generate number 1000 radius 0.5 range named-range 'central_region'",
-          "description": "Generate balls only within pre-defined named range"
-        }
-      ]
+    {
+      "name": "delete",
+      "syntax": "delete <s>",
+      "description": {
+        "6.0": "Delete the range with name s . Note As seen here, the link range (non-optional) or < range > (optional), whenever it appears in a command signature, is a link to the range keyword reference .",
+        "7.0": "Delete the range with name s .",
+        "9.0": "Delete the range with name s ."
+      }
     },
-    "9.0": {
-      "command": "model range",
-      "syntax": "model range keyword",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create <s> [rangeelement...]",
-          "description": "A named range with the name s is created if one does not exist. This must be followed by one or more range elements , indicated above as [range element] ... (this is, effectively, a range phrase without the word range at the start)."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s>",
-          "description": "Delete the range with name s ."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the named ranges."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model range create 'walls' group 'West' or 'East' or 'North' or 'South'",
-          "description": "Create named range 'walls' for all objects in West, East, North, or South groups"
-        },
-        {
-          "command": "ball attribute density 2500 range named-range 'walls'",
-          "description": "Use named range 'walls' to set ball density"
-        },
-        {
-          "command": "model range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10",
-          "description": "Create named range for southwest corner box (x:0-1, y:0-1, z:0-10)"
-        },
-        {
-          "command": "model range create 'nw corner' position (9,0,0)(10,1,10)",
-          "description": "Create named range for northwest corner using position vectors"
-        },
-        {
-          "command": "model range create 'corners' union named-range 'sw corner' named-range 'nw corner'",
-          "description": "Create named range combining two existing named ranges"
-        },
-        {
-          "command": "clump rotate axis (0,0,1) angle 45 range named-range 'corners'",
-          "description": "Rotate clumps in 'corners' named range"
-        },
-        {
-          "command": "model range create 'large_balls' radius 0.5 1.0",
-          "description": "Create named range for balls with radius between 0.5 and 1.0"
-        },
-        {
-          "command": "model range create 'top_layer' position-z 9.0 10.0",
-          "description": "Create named range for objects in top layer (z: 9.0-10.0)"
-        },
-        {
-          "command": "model range create 'active_region' position-x -5 5 and position-y -5 5 and position-z 0 10",
-          "description": "Create named range using 'and' logic for box region"
-        },
-        {
-          "command": "ball attribute velocity (0,0,-1) range named-range 'top_layer' and named-range 'large_balls'",
-          "description": "Apply attribute to intersection of two named ranges"
-        },
-        {
-          "command": "model range create 'boundary' group 'walls' or id 1 100",
-          "description": "Create named range combining group membership and ID range"
-        },
-        {
-          "command": "clump delete range named-range 'sw corner' not",
-          "description": "Delete all clumps NOT in 'sw corner' range (using 'not' logic)"
-        },
-        {
-          "command": "model range delete 'walls'",
-          "description": "Delete the named range 'walls'"
-        },
-        {
-          "command": "; Complex example from documentation\nmodel range create 'walls' group 'West' or 'East' or 'North' or 'South'\nzone face apply velocity-normal 0 range named-range 'walls'\n\nmodel range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10\nmodel range create 'nw corner' position (9,0,0)(10,1,10)\nzone cmodel assign mohr-coulomb range union named-range 'sw corner' named-range 'nw corner'\nzone cmodel assign elastic range named-range 'sw corner' not named-range 'nw corner' not",
-          "description": "Full example: create multiple named ranges and use with logical operations"
-        },
-        {
-          "command": "model range create 'central_region' position-x -2 2 position-y -2 2\nball generate number 1000 radius 0.5 range named-range 'central_region'",
-          "description": "Generate balls only within pre-defined named range"
-        }
-      ]
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "List the named ranges.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model range create 'walls' group 'West' or 'East' or 'North' or 'South'",
+      "description": "Create named range 'walls' for all objects in West, East, North, or South groups"
+    },
+    {
+      "command": "ball attribute density 2500 range named-range 'walls'",
+      "description": "Use named range 'walls' to set ball density"
+    },
+    {
+      "command": "model range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10",
+      "description": "Create named range for southwest corner box (x:0-1, y:0-1, z:0-10)"
+    },
+    {
+      "command": "model range create 'nw corner' position (9,0,0)(10,1,10)",
+      "description": "Create named range for northwest corner using position vectors"
+    },
+    {
+      "command": "model range create 'corners' union named-range 'sw corner' named-range 'nw corner'",
+      "description": "Create named range combining two existing named ranges"
+    },
+    {
+      "command": "clump rotate axis (0,0,1) angle 45 range named-range 'corners'",
+      "description": "Rotate clumps in 'corners' named range"
+    },
+    {
+      "command": "model range create 'large_balls' radius 0.5 1.0",
+      "description": "Create named range for balls with radius between 0.5 and 1.0"
+    },
+    {
+      "command": "model range create 'top_layer' position-z 9.0 10.0",
+      "description": "Create named range for objects in top layer (z: 9.0-10.0)"
+    },
+    {
+      "command": "model range create 'active_region' position-x -5 5 and position-y -5 5 and position-z 0 10",
+      "description": "Create named range using 'and' logic for box region"
+    },
+    {
+      "command": "ball attribute velocity (0,0,-1) range named-range 'top_layer' and named-range 'large_balls'",
+      "description": "Apply attribute to intersection of two named ranges"
+    },
+    {
+      "command": "model range create 'boundary' group 'walls' or id 1 100",
+      "description": "Create named range combining group membership and ID range"
+    },
+    {
+      "command": "clump delete range named-range 'sw corner' not",
+      "description": "Delete all clumps NOT in 'sw corner' range (using 'not' logic)"
+    },
+    {
+      "command": "model range delete 'walls'",
+      "description": "Delete the named range 'walls'"
+    },
+    {
+      "command": "; Complex example from documentation\nmodel range create 'walls' group 'West' or 'East' or 'North' or 'South'\nzone face apply velocity-normal 0 range named-range 'walls'\n\nmodel range create 'sw corner' position-x 0 1 position-y 0 1 position-z 0 10\nmodel range create 'nw corner' position (9,0,0)(10,1,10)\nzone cmodel assign mohr-coulomb range union named-range 'sw corner' named-range 'nw corner'\nzone cmodel assign elastic range named-range 'sw corner' not named-range 'nw corner' not",
+      "description": "Full example: create multiple named ranges and use with logical operations"
+    },
+    {
+      "command": "model range create 'central_region' position-x -2 2 position-y -2 2\nball generate number 1000 radius 0.5 range named-range 'central_region'",
+      "description": "Generate balls only within pre-defined named range"
+    }
+  ]
 }

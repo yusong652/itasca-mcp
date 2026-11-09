@@ -9,102 +9,45 @@
     "available": true,
     "workaround": "Ball.set_prop(property_name, value) - requires iteration: for b in itasca.ball.list(): b.set_prop('kn', 1e8)"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball property",
-      "syntax": "ball property <s> <a> [<s1> <a21> ...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": "This is an alias of the `ball attribute density` attribute; the engine routes this keyword to the same ball density attribute. Ball density, where f > 0. By default, ball density is set to zero upon creation of a ball; a non-zero value is required for PFC to properly compute mass properties and integrate the equation of motion for the ball. An exception is thrown if a ball with zero density exists in the model when cycling starts"
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness (linear contact model)"
-        },
-        {
-          "command": "ball property 'fric' 0.5",
-          "description": "Set friction coefficient for all balls"
-        },
-        {
-          "command": "ball property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range group 'bonded'",
-          "description": "Set parallel bond properties (linear parallel bond model) for specific group"
-        },
-        {
-          "command": "ball property 'hz_kn' 5e8 range id 1 100",
-          "description": "Set Hertz normal stiffness for balls 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
-    },
-    "6.0": {
-      "command": "ball property",
-      "syntax": "ball property <s> a[<s1> a21...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": "This is an alias of the `ball attribute density` attribute; the engine routes this keyword to the same ball density attribute. Ball density, where f > 0. By default, ball density is set to zero upon creation of a ball; a non-zero value is required for PFC to properly compute mass properties and integrate the equation of motion for the ball. An exception is thrown if a ball with zero density exists in the model when cycling starts"
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness (linear contact model)"
-        },
-        {
-          "command": "ball property 'fric' 0.5",
-          "description": "Set friction coefficient for all balls"
-        },
-        {
-          "command": "ball property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range group 'bonded'",
-          "description": "Set parallel bond properties (linear parallel bond model) for specific group"
-        },
-        {
-          "command": "ball property 'hz_kn' 5e8 range id 1 100",
-          "description": "Set Hertz normal stiffness for balls 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
-    },
-    "9.0": {
-      "command": "ball property",
-      "syntax": "ball property <s> <a> [<s1> <a21> ...] [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density",
-          "description": "This is an alias of the `ball attribute density` attribute; the engine routes this keyword to the same ball density attribute. Ball density, where f > 0. By default, ball density is set to zero upon creation of a ball; a non-zero value is required for PFC to properly compute mass properties and integrate the equation of motion for the ball. An exception is thrown if a ball with zero density exists in the model when cycling starts"
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness (linear contact model)"
-        },
-        {
-          "command": "ball property 'fric' 0.5",
-          "description": "Set friction coefficient for all balls"
-        },
-        {
-          "command": "ball property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range group 'bonded'",
-          "description": "Set parallel bond properties (linear parallel bond model) for specific group"
-        },
-        {
-          "command": "ball property 'hz_kn' 5e8 range id 1 100",
-          "description": "Set Hertz normal stiffness for balls 1-100"
-        }
-      ],
-      "notes": [
-        "Other property names are free String tokens (surface-property names)."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball property",
+  "syntax": {
+    "6.0": "ball property <s> a[<s1> a21...] [range]",
+    "7.0": "ball property <s> <a> [<s1> <a21> ...] [range]",
+    "9.0": "ball property <s> <a> [<s1> <a21> ...] [range]"
+  },
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density",
+      "description": "This is an alias of the `ball attribute density` attribute; the engine routes this keyword to the same ball density attribute. Ball density, where f > 0. By default, ball density is set to zero upon creation of a ball; a non-zero value is required for PFC to properly compute mass properties and integrate the equation of motion for the ball. An exception is thrown if a ball with zero density exists in the model when cycling starts"
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "ball property 'kn' 1e8 'ks' 5e7",
+      "description": "Set normal and shear stiffness (linear contact model)"
+    },
+    {
+      "command": "ball property 'fric' 0.5",
+      "description": "Set friction coefficient for all balls"
+    },
+    {
+      "command": "ball property 'pb_kn' 1e9 'pb_ks' 5e8 'pb_coh' 1e6 range group 'bonded'",
+      "description": "Set parallel bond properties (linear parallel bond model) for specific group"
+    },
+    {
+      "command": "ball property 'hz_kn' 5e8 range id 1 100",
+      "description": "Set Hertz normal stiffness for balls 1-100"
+    }
+  ],
+  "notes": [
+    "Other property names are free String tokens (surface-property names)."
+  ]
 }

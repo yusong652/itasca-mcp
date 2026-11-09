@@ -13,330 +13,340 @@
     "acceleration",
     "acceleration-rotational"
   ],
-  "description": "Initialize displacement, velocity and position of all structure nodes in the range. Values that can be set include displacement, displacement-rotational, position, ratio-target, velocity, velocity-rotational, acceleration, acceleration-rotational.",
+  "description": {
+    "7.0": "Initialize quantities on all structure nodes in the range. Note that positions can only be specified in the global system.",
+    "9.0": "Modifiers add / multiply / gradient <v> / vary <v> / local are accepted after the value and execute ('velocity-x adjusted in 13 nodes') but are ENUMERATION-INVISIBLE — they never appear in the parser's keyword error listing (same false-positive family as zone gridpoint initialize biot). State-verified against FLAC3D 9.7."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure node initialize",
-      "syntax": "structure node initialize keyword... [range]",
-      "description": "Initialize quantities on all structure nodes in the range. Note that positions can only be specified in the global system.",
-      "keywords": [
-        {
-          "name": "displacement",
-          "syntax": "displacement <v> [nodeinitializeblock]",
-          "description": "translational displacement"
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f> [nodeinitializeblock]",
-          "description": "translational displacement (\\(x\\)-component)"
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f> [nodeinitializeblock]",
-          "description": "translational displacement (\\(y\\)-component)"
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f> [nodeinitializeblock]",
-          "description": "translational displacement (\\(z\\)-component)"
-        },
-        {
-          "name": "displacement-rotational",
-          "syntax": "displacement-rotational <v> [nodeinitializeblock]",
-          "description": "rotational displacement"
-        },
-        {
-          "name": "displacement-rotational-x",
-          "syntax": "displacement-rotational-x <f> [nodeinitializeblock]",
-          "description": "rotational displacement (\\(x\\)-component)"
-        },
-        {
-          "name": "displacement-rotational-y",
-          "syntax": "displacement-rotational-y <f> [nodeinitializeblock]",
-          "description": "translational displacement (\\(y\\)-component)"
-        },
-        {
-          "name": "displacement-rotational-z",
-          "syntax": "displacement-rotational-z <f> [nodeinitializeblock]",
-          "description": "translational displacement (\\(z\\)-component)"
-        },
-        {
-          "name": "position",
-          "syntax": "position <v> [nodeinitializeblock]",
-          "description": "position of node (global system). This is used for positioning of a structural element grid; must be used after creating the node, but before executing any cycles. Any node that is moved into a zone (see the structure link list command) will have its link deleted (if one is present) and will have a new link created with attachment conditions corresponding to the type of structural element using the node (see this table). If more than one element type is using the node, then the attachment condition will correspond with the first element type in the following list: liner, geogrid, pile, cable, shell, and beam. Thus, if a node is being used by both a geogrid and a cable, then the attachment condition after moving this node will correspond with that of a geogrid."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f> [nodeinitializeblock]",
-          "description": "\\(x\\)-coordinate of node (global system). See position above."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f> [nodeinitializeblock]",
-          "description": "\\(y\\)-coordinate of node (global system). See position above."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> [nodeinitializeblock]",
-          "description": "\\(z\\)-coordinate of node (global system). See position above."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target <f> [nodeinitializeblock]",
-          "description": "Sets the target local force ratio that is considered to be converged for mechanical calculations. The default value is 1e-4. A local force ratio of this value will result in a convergence value of 1.0 for the node. See the convergence keyword in the model solve command."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v> [nodeinitializeblock]",
-          "description": "translational velocity"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f> [nodeinitializeblock]",
-          "description": "translational velocity (\\(x\\)-component)"
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f> [nodeinitializeblock]",
-          "description": "translational velocity (\\(y\\)-component)"
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f> [nodeinitializeblock]",
-          "description": "translational velocity (\\(z\\)-component)"
-        },
-        {
-          "name": "velocity-rotational",
-          "syntax": "velocity-rotational <v> [nodeinitializeblock]",
-          "description": "rotational velocity"
-        },
-        {
-          "name": "velocity-rotational-x",
-          "syntax": "velocity-rotational-x <f> [nodeinitializeblock]",
-          "description": "rotational velocity (\\(x\\)-component)"
-        },
-        {
-          "name": "velocity-rotational-y",
-          "syntax": "velocity-rotational-y <f> [nodeinitializeblock]",
-          "description": "rotational velocity (\\(y\\)-component)"
-        },
-        {
-          "name": "velocity-rotational-z",
-          "syntax": "velocity-rotational-z <f> [nodeinitializeblock]",
-          "description": "rotational velocity (\\(z\\)-component)"
-        },
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "the existing value of the parameter (of all nodes in the range) is set to its current value plus the given value. For example, one can add 0.1 to all node \\(x\\)-displacements with the command structure node initialize displacement-x 0.1 add."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply"
-        },
-        {
-          "name": "local",
-          "syntax": "local",
-          "description": "specifying the supplied value will initialize the node in local coordinates. This keyword may not be used with position (position, position-x, etc.)."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v>",
-          "description": "the value installed in each node in the range is \\(val_f\\) = \\(v\\) + \\(xg_x\\) + \\(yg_y\\) + \\(zg_z\\), where the gradient keyword is given immediately after the the supplied value (\\(val\\) here), and (\\(x\\), \\(y\\), \\(z\\)) are the components supplied by v, which specifies the reference position of the node. If the multiply keyword is also present, then the given gradient is applied to the multiplier."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.initialize.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure node initialize",
-      "syntax": "structure node initialize keyword ... [range]",
-      "keywords": [
-        {
-          "name": "displacement",
-          "syntax": "displacement <v> [nodeinitializeblock]",
-          "description": "translational displacement"
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f> [nodeinitializeblock]",
-          "description": "translational displacement ( \\(x\\) -component)"
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f> [nodeinitializeblock]",
-          "description": "translational displacement ( \\(y\\) -component)"
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "translational displacement ( \\(z\\) -component)"
-        },
-        {
-          "name": "displacement-rotational",
-          "syntax": "displacement-rotational <v> [nodeinitializeblock]",
-          "description": "rotational displacement"
-        },
-        {
-          "name": "displacement-rotational-x",
-          "syntax": "displacement-rotational-x <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational displacement ( \\(x\\) -component)"
-        },
-        {
-          "name": "displacement-rotational-y",
-          "syntax": "displacement-rotational-y <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational displacement ( \\(y\\) -component)"
-        },
-        {
-          "name": "displacement-rotational-z",
-          "syntax": "displacement-rotational-z <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational displacement ( \\(z\\) -component)"
-        },
-        {
-          "name": "position",
-          "syntax": "position <v> [nodeinitializeblock]",
-          "description": "position of node (global system). This is used for positioning of structural elements, and must be used after creating the node, but before executing any cycles. A node that is moved into a zone will have its link deleted (if one is present) and will have a new link created with attachment conditions corresponding to the type of structural element using the node (see this table ). If more than one element type is using the node, then the attachment condition will correspond with the first element type in the following list: liner, geogrid, pile, cable, shell, and beam. Thus, if a node is being used by both a geogrid and a cable, then the attachment condition after moving this node will correspond with that of a geogrid."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f> [nodeinitializeblock]",
-          "description": "\\(x\\) -coordinate of node (global system). See position above."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f> [nodeinitializeblock]",
-          "description": "\\(y\\) -coordinate of node (global system). See position above."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "\\(z\\) -coordinate of node (global system). See position above."
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target <f> [nodeinitializeblock]",
-          "description": "Sets the target local force ratio that is considered to be converged for mechanical calculations. The default value is 1e-4. A local force ratio of this value will result in a convergence value of 1.0 for the node. See the convergence keyword in the model solve command."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v> [nodeinitializeblock]",
-          "description": "translational velocity"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f> [nodeinitializeblock]",
-          "description": "translational velocity ( \\(x\\) -component)"
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f> [nodeinitializeblock]",
-          "description": "translational velocity ( \\(y\\) -component)"
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "translational velocity ( \\(z\\) -component)"
-        },
-        {
-          "name": "velocity-rotational",
-          "syntax": "velocity-rotational <v> [nodeinitializeblock]",
-          "description": "rotational velocity"
-        },
-        {
-          "name": "velocity-rotational-x",
-          "syntax": "velocity-rotational-x <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational velocity ( \\(x\\) -component)"
-        },
-        {
-          "name": "velocity-rotational-y",
-          "syntax": "velocity-rotational-y <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational velocity ( \\(y\\) -component)"
-        },
-        {
-          "name": "velocity-rotational-z",
-          "syntax": "velocity-rotational-z <f> [nodeinitializeblock] (3D ONLY)",
-          "description": "rotational velocity ( \\(z\\) -component)"
-        },
-        {
-          "name": "add",
-          "syntax": "add <f>",
-          "description": "Add the specified value to the existing value."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided."
-        },
-        {
-          "name": "local",
-          "syntax": "local",
-          "description": "Specify that the value supplied for the keyword is in the local coordinate system of the gridpoint (if any). By default values are initialize in the global system."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply <f>",
-          "description": "Multiply the existing value by the specified value."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided."
-        },
-        {
-          "name": "acceleration",
-          "syntax": "acceleration <v>",
-          "description": "initialize the translational acceleration vector at nodes in the range"
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x <f>",
-          "description": "initialize the x-component of translational acceleration at nodes in the range"
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y <f>",
-          "description": "initialize the y-component of translational acceleration at nodes in the range"
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z <f>",
-          "description": "initialize the z-component of translational acceleration at nodes in the range"
-        },
-        {
-          "name": "acceleration-rotational",
-          "syntax": "acceleration-rotational <v>",
-          "description": "initialize the rotational acceleration vector at nodes in the range"
-        },
-        {
-          "name": "acceleration-rotational-x",
-          "syntax": "acceleration-rotational-x <f>",
-          "description": "initialize the x-component of rotational acceleration at nodes in the range"
-        },
-        {
-          "name": "acceleration-rotational-y",
-          "syntax": "acceleration-rotational-y <f>",
-          "description": "initialize the y-component of rotational acceleration at nodes in the range"
-        },
-        {
-          "name": "acceleration-rotational-z",
-          "syntax": "acceleration-rotational-z <f>",
-          "description": "initialize the z-component of rotational acceleration at nodes in the range"
-        }
-      ],
-      "description": "Modifiers add / multiply / gradient <v> / vary <v> / local are accepted after the value and execute ('velocity-x adjusted in 13 nodes') but are ENUMERATION-INVISIBLE — they never appear in the parser's keyword error listing (same false-positive family as zone gridpoint initialize biot). State-verified against FLAC3D 9.7."
-    }
-  },
   "notes": [
     "'[nodeinitializeblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (add, multiply, local, gradient)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure node initialize",
+  "syntax": {
+    "7.0": "structure node initialize keyword... [range]",
+    "9.0": "structure node initialize keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "displacement",
+      "syntax": "displacement <v> [nodeinitializeblock]",
+      "description": "translational displacement"
+    },
+    {
+      "name": "displacement-x",
+      "syntax": "displacement-x <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "translational displacement (\\(x\\)-component)",
+        "9.0": "translational displacement ( \\(x\\) -component)"
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": "displacement-y <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "translational displacement (\\(y\\)-component)",
+        "9.0": "translational displacement ( \\(y\\) -component)"
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": {
+        "7.0": "displacement-z <f> [nodeinitializeblock]",
+        "9.0": "displacement-z <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "translational displacement (\\(z\\)-component)",
+        "9.0": "translational displacement ( \\(z\\) -component)"
+      }
+    },
+    {
+      "name": "displacement-rotational",
+      "syntax": "displacement-rotational <v> [nodeinitializeblock]",
+      "description": "rotational displacement"
+    },
+    {
+      "name": "displacement-rotational-x",
+      "syntax": {
+        "7.0": "displacement-rotational-x <f> [nodeinitializeblock]",
+        "9.0": "displacement-rotational-x <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational displacement (\\(x\\)-component)",
+        "9.0": "rotational displacement ( \\(x\\) -component)"
+      }
+    },
+    {
+      "name": "displacement-rotational-y",
+      "syntax": {
+        "7.0": "displacement-rotational-y <f> [nodeinitializeblock]",
+        "9.0": "displacement-rotational-y <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "translational displacement (\\(y\\)-component)",
+        "9.0": "rotational displacement ( \\(y\\) -component)"
+      }
+    },
+    {
+      "name": "displacement-rotational-z",
+      "syntax": {
+        "7.0": "displacement-rotational-z <f> [nodeinitializeblock]",
+        "9.0": "displacement-rotational-z <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "translational displacement (\\(z\\)-component)",
+        "9.0": "rotational displacement ( \\(z\\) -component)"
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v> [nodeinitializeblock]",
+      "description": {
+        "7.0": "position of node (global system). This is used for positioning of a structural element grid; must be used after creating the node, but before executing any cycles. Any node that is moved into a zone (see the structure link list command) will have its link deleted (if one is present) and will have a new link created with attachment conditions corresponding to the type of structural element using the node (see this table). If more than one element type is using the node, then the attachment condition will correspond with the first element type in the following list: liner, geogrid, pile, cable, shell, and beam. Thus, if a node is being used by both a geogrid and a cable, then the attachment condition after moving this node will correspond with that of a geogrid.",
+        "9.0": "position of node (global system). This is used for positioning of structural elements, and must be used after creating the node, but before executing any cycles. A node that is moved into a zone will have its link deleted (if one is present) and will have a new link created with attachment conditions corresponding to the type of structural element using the node (see this table ). If more than one element type is using the node, then the attachment condition will correspond with the first element type in the following list: liner, geogrid, pile, cable, shell, and beam. Thus, if a node is being used by both a geogrid and a cable, then the attachment condition after moving this node will correspond with that of a geogrid."
+      }
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "\\(x\\)-coordinate of node (global system). See position above.",
+        "9.0": "\\(x\\) -coordinate of node (global system). See position above."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "\\(y\\)-coordinate of node (global system). See position above.",
+        "9.0": "\\(y\\) -coordinate of node (global system). See position above."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "7.0": "position-z <f> [nodeinitializeblock]",
+        "9.0": "position-z <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "\\(z\\)-coordinate of node (global system). See position above.",
+        "9.0": "\\(z\\) -coordinate of node (global system). See position above."
+      }
+    },
+    {
+      "name": "ratio-target",
+      "syntax": "ratio-target <f> [nodeinitializeblock]",
+      "description": "Sets the target local force ratio that is considered to be converged for mechanical calculations. The default value is 1e-4. A local force ratio of this value will result in a convergence value of 1.0 for the node. See the convergence keyword in the model solve command."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <v> [nodeinitializeblock]",
+      "description": "translational velocity"
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "translational velocity (\\(x\\)-component)",
+        "9.0": "translational velocity ( \\(x\\) -component)"
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y <f> [nodeinitializeblock]",
+      "description": {
+        "7.0": "translational velocity (\\(y\\)-component)",
+        "9.0": "translational velocity ( \\(y\\) -component)"
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "7.0": "velocity-z <f> [nodeinitializeblock]",
+        "9.0": "velocity-z <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "translational velocity (\\(z\\)-component)",
+        "9.0": "translational velocity ( \\(z\\) -component)"
+      }
+    },
+    {
+      "name": "velocity-rotational",
+      "syntax": "velocity-rotational <v> [nodeinitializeblock]",
+      "description": "rotational velocity"
+    },
+    {
+      "name": "velocity-rotational-x",
+      "syntax": {
+        "7.0": "velocity-rotational-x <f> [nodeinitializeblock]",
+        "9.0": "velocity-rotational-x <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity (\\(x\\)-component)",
+        "9.0": "rotational velocity ( \\(x\\) -component)"
+      }
+    },
+    {
+      "name": "velocity-rotational-y",
+      "syntax": {
+        "7.0": "velocity-rotational-y <f> [nodeinitializeblock]",
+        "9.0": "velocity-rotational-y <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity (\\(y\\)-component)",
+        "9.0": "rotational velocity ( \\(y\\) -component)"
+      }
+    },
+    {
+      "name": "velocity-rotational-z",
+      "syntax": {
+        "7.0": "velocity-rotational-z <f> [nodeinitializeblock]",
+        "9.0": "velocity-rotational-z <f> [nodeinitializeblock] (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity (\\(z\\)-component)",
+        "9.0": "rotational velocity ( \\(z\\) -component)"
+      }
+    },
+    {
+      "name": "add",
+      "syntax": {
+        "7.0": "add",
+        "9.0": "add <f>"
+      },
+      "description": {
+        "7.0": "the existing value of the parameter (of all nodes in the range) is set to its current value plus the given value. For example, one can add 0.1 to all node \\(x\\)-displacements with the command structure node initialize displacement-x 0.1 add.",
+        "9.0": "Add the specified value to the existing value."
+      }
+    },
+    {
+      "name": "multiply",
+      "syntax": {
+        "7.0": "multiply",
+        "9.0": "multiply <f>"
+      },
+      "description": {
+        "9.0": "Multiply the existing value by the specified value."
+      }
+    },
+    {
+      "name": "vary",
+      "syntax": "vary <v>",
+      "description": "Apply a linear variation to the scalar-value provided.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration",
+      "syntax": "acceleration <v>",
+      "description": "initialize the translational acceleration vector at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-x",
+      "syntax": "acceleration-x <f>",
+      "description": "initialize the x-component of translational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-y",
+      "syntax": "acceleration-y <f>",
+      "description": "initialize the y-component of translational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-z",
+      "syntax": "acceleration-z <f>",
+      "description": "initialize the z-component of translational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-rotational",
+      "syntax": "acceleration-rotational <v>",
+      "description": "initialize the rotational acceleration vector at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-rotational-x",
+      "syntax": "acceleration-rotational-x <f>",
+      "description": "initialize the x-component of rotational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-rotational-y",
+      "syntax": "acceleration-rotational-y <f>",
+      "description": "initialize the y-component of rotational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "acceleration-rotational-z",
+      "syntax": "acceleration-rotational-z <f>",
+      "description": "initialize the z-component of rotational acceleration at nodes in the range",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "local",
+      "syntax": "local",
+      "description": {
+        "7.0": "specifying the supplied value will initialize the node in local coordinates. This keyword may not be used with position (position, position-x, etc.).",
+        "9.0": "Specify that the value supplied for the keyword is in the local coordinate system of the gridpoint (if any). By default values are initialize in the global system."
+      }
+    },
+    {
+      "name": "gradient",
+      "syntax": {
+        "7.0": "gradient <v>",
+        "9.0": "gradient <v> [origin <v>]"
+      },
+      "description": {
+        "7.0": "the value installed in each node in the range is \\(val_f\\) = \\(v\\) + \\(xg_x\\) + \\(yg_y\\) + \\(zg_z\\), where the gradient keyword is given immediately after the the supplied value (\\(val\\) here), and (\\(x\\), \\(y\\), \\(z\\)) are the components supplied by v, which specifies the reference position of the node. If the multiply keyword is also present, then the given gradient is applied to the multiplier.",
+        "9.0": "Apply a gradient to the scalar-value provided."
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.initialize.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

@@ -11,161 +11,136 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "program load",
-      "syntax": "program load keyword",
-      "keywords": [
-        {
-          "name": "cmodel",
-          "syntax": "cmodel",
-          "description": "Load constitutive model DLLs. The plugin file prefix is model . The additional model will appear in the list of available models by executing the zone cmodel list command in FLAC3D ."
-        },
-        {
-          "name": "contactmodelmechanical",
-          "syntax": "contactmodelmechanical",
-          "description": "Load mechanical contact model DLLs. The plugin file prefix is contactmodelmechanical3d in 3d and contanctmodelmechanical2d in 2d. As these contact models apply to contacts between balls, pebbles, and wall facets, the PFC module must first be loaded (see the module keyword)."
-        },
-        {
-          "name": "function",
-          "syntax": "function",
-          "description": "Load one or more FISH function DLLs. The plugin file prefix is fish . A FISH function DLL may create one or more FISH intrinsics, that will appear in the list available by executing the fish list intrinsics command."
-        },
-        {
-          "name": "guimodule",
-          "syntax": "guimodule",
-          "description": "Load framework GUI module DLLs. The plugin file prefix is guimodule3d in 3d and guimodule2d in 2d. In general, an engine module exists to drive each GUI module and an engine module must be loaded before a GUI module (see the module keyword)."
-        },
-        {
-          "name": "module",
-          "syntax": "module",
-          "description": "Load framework engine [DR: provide definition of this term to CS; CS: put defintion into terminology scheme] module DLLs. The plugin file prefix is module3d in 3d and module2d in 2d. The module will appear in the list available by executing the program list module command."
-        },
-        {
-          "name": "plotitem",
-          "syntax": "plotitem",
-          "description": "Load framework plot item DLLs. The plugin file prefix is plotitem3d in 3d and plotitem2d in 2d."
-        },
-        {
-          "name": "s",
-          "syntax": "<s>",
-          "description": "Load the plugin DLL file named s . Either the full file name can be given, or the code will attempt to find a name matching the pattern “prefixname005.dll” where s = name and the prefix matches the plugin type. If a full path is not given, the code will look in the executable directory and all subdirectories as well as the current directory and all subdirectories for a match."
-        },
-        {
-          "name": "automatic",
-          "syntax": "automatic",
-          "description": "Attempt to load all plugins found matching “prefixname005.dll” where prefix matches the plugin type and name matches anything available. By default this will scan the “exe64/plugins” directory of the installation location, and all subdirectories. This can be overruled with the directory keyword."
-        },
-        {
-          "name": "directory",
-          "syntax": "directory <sd>",
-          "description": "Specify the directory to scan when using automatic . All subdirectories will also be scanned. The default directory is “exe64/plugins” directory of the installation location."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "program load",
+  "syntax": "program load keyword",
+  "keywords": [
+    {
+      "name": "cmodel",
+      "syntax": {
+        "6.0": "cmodel",
+        "7.0": "cmodel",
+        "9.0": "cmodel [loadoptions]"
+      },
+      "description": "Load constitutive model DLLs. The plugin file prefix is model . The additional model will appear in the list of available models by executing the zone cmodel list command in FLAC3D ."
     },
-    "7.0": {
-      "command": "program load",
-      "syntax": "program load keyword",
-      "keywords": [
-        {
-          "name": "cmodel",
-          "syntax": "cmodel",
-          "description": "Load constitutive model DLLs. The plugin file prefix is model . The additional model will appear in the list of available models by executing the zone cmodel list command in FLAC3D ."
-        },
-        {
-          "name": "contactmodelmechanical",
-          "syntax": "contactmodelmechanical",
-          "description": "Load mechanical contact model DLLs. The plugin file prefix is contactmodelmechanical3d in 3d and contanctmodelmechanical2d in 2d. As these contact models apply to contacts between balls, pebbles, and wall facets, the PFC module must first be loaded (see the module keyword)."
-        },
-        {
-          "name": "function",
-          "syntax": "function",
-          "description": "Load one or more FISH function DLLs. The plugin file prefix is fish . A FISH function DLL may create one or more FISH intrinsics, that will appear in the list available by executing the fish list intrinsics command."
-        },
-        {
-          "name": "guimodule",
-          "syntax": "guimodule",
-          "description": "Load framework GUI module DLLs. The plugin file prefix is guimodule3d in 3d and guimodule2d in 2d. In general, an engine module exists to drive each GUI module and an engine module must be loaded before a GUI module (see the module keyword)."
-        },
-        {
-          "name": "module",
-          "syntax": "module",
-          "description": "Load framework engine [DR: provide definition of this term to CS; CS: put defintion into terminology scheme] module DLLs. The plugin file prefix is module3d in 3d and module2d in 2d. The module will appear in the list available by executing the program list module command."
-        },
-        {
-          "name": "plotitem",
-          "syntax": "plotitem",
-          "description": "Load framework plot item DLLs. The plugin file prefix is plotitem3d in 3d and plotitem2d in 2d."
-        },
-        {
-          "name": "kwd:adummy",
-          "syntax": "<s>",
-          "description": "Load the plugin DLL file named s . Either the full file name can be given, or the code will attempt to find a name matching the pattern “prefixname005.dll” where s = name and the prefix matches the plugin type. If a full path is not given, the code will look in the executable directory and all subdirectories as well as the current directory and all subdirectories for a match."
-        },
-        {
-          "name": "kwd:automatic",
-          "syntax": "automatic",
-          "description": "Attempt to load all plugins found matching “prefixname005.dll” where prefix matches the plugin type and name matches anything available. By default this will scan the “exe64/plugins” directory of the installation location, and all subdirectories. This can be overruled with the directory keyword."
-        },
-        {
-          "name": "kwd:directory",
-          "syntax": "directory <sd>",
-          "description": "Specify the directory to scan when using automatic . All subdirectories will also be scanned. The default directory is “exe64/plugins” directory of the installation location."
-        }
-      ]
+    {
+      "name": "contactmodelmechanical",
+      "syntax": {
+        "6.0": "contactmodelmechanical",
+        "7.0": "contactmodelmechanical",
+        "9.0": "contactmodelmechanical [loadoptions]"
+      },
+      "description": "Load mechanical contact model DLLs. The plugin file prefix is contactmodelmechanical3d in 3d and contanctmodelmechanical2d in 2d. As these contact models apply to contacts between balls, pebbles, and wall facets, the PFC module must first be loaded (see the module keyword)."
     },
-    "9.0": {
-      "command": "program load",
-      "syntax": "program load keyword",
-      "keywords": [
-        {
-          "name": "cmodel",
-          "syntax": "cmodel [loadoptions]",
-          "description": "Load constitutive model DLLs. The plugin file prefix is model . The additional model will appear in the list of available models by executing the zone cmodel list command in FLAC3D ."
-        },
-        {
-          "name": "contactmodelmechanical",
-          "syntax": "contactmodelmechanical [loadoptions]",
-          "description": "Load mechanical contact model DLLs. The plugin file prefix is contactmodelmechanical3d in 3d and contanctmodelmechanical2d in 2d. As these contact models apply to contacts between balls, pebbles, and wall facets, the PFC module must first be loaded (see the module keyword)."
-        },
-        {
-          "name": "function",
-          "syntax": "function [loadoptions]",
-          "description": "Load one or more FISH function DLLs. The plugin file prefix is fish . A FISH function DLL may create one or more FISH intrinsics, that will appear in the list available by executing the fish list intrinsics command."
-        },
-        {
-          "name": "guimodule",
-          "syntax": "guimodule [loadoptions]",
-          "description": "Load framework GUI module DLLs. The plugin file prefix is guimodule3d in 3d and guimodule2d in 2d. In general, an engine module exists to drive each GUI module and an engine module must be loaded before a GUI module (see the module keyword)."
-        },
-        {
-          "name": "module",
-          "syntax": "module [loadoptions]",
-          "description": "Load framework engine [DR: provide definition of this term to CS; CS: put defintion into terminology scheme] module DLLs. The plugin file prefix is module3d in 3d and module2d in 2d. The module will appear in the list available by executing the program list module command."
-        },
-        {
-          "name": "plotitem",
-          "syntax": "plotitem [loadoptions]",
-          "description": "Load framework plot item DLLs. The plugin file prefix is plotitem3d in 3d and plotitem2d in 2d."
-        },
-        {
-          "name": "kwd:adummy",
-          "syntax": "<s>",
-          "description": "Load the plugin DLL file named s . Either the full file name can be given, or the code will attempt to find a name matching the pattern “prefixname005.dll” where s = name and the prefix matches the plugin type. If a full path is not given, the code will look in the executable directory and all subdirectories as well as the current directory and all subdirectories for a match."
-        },
-        {
-          "name": "kwd:automatic",
-          "syntax": "automatic",
-          "description": "Attempt to load all plugins found matching “prefixname005.dll” where prefix matches the plugin type and name matches anything available. By default this will scan the “exe64/plugins” directory of the installation location, and all subdirectories. This can be overruled with the directory keyword."
-        },
-        {
-          "name": "kwd:directory",
-          "syntax": "directory <sd>",
-          "description": "Specify the directory to scan when using automatic . All subdirectories will also be scanned. The default directory is “exe64/plugins” directory of the installation location."
-        }
-      ],
-      "examples": []
+    {
+      "name": "function",
+      "syntax": {
+        "6.0": "function",
+        "7.0": "function",
+        "9.0": "function [loadoptions]"
+      },
+      "description": "Load one or more FISH function DLLs. The plugin file prefix is fish . A FISH function DLL may create one or more FISH intrinsics, that will appear in the list available by executing the fish list intrinsics command."
+    },
+    {
+      "name": "guimodule",
+      "syntax": {
+        "6.0": "guimodule",
+        "7.0": "guimodule",
+        "9.0": "guimodule [loadoptions]"
+      },
+      "description": "Load framework GUI module DLLs. The plugin file prefix is guimodule3d in 3d and guimodule2d in 2d. In general, an engine module exists to drive each GUI module and an engine module must be loaded before a GUI module (see the module keyword)."
+    },
+    {
+      "name": "module",
+      "syntax": {
+        "6.0": "module",
+        "7.0": "module",
+        "9.0": "module [loadoptions]"
+      },
+      "description": "Load framework engine [DR: provide definition of this term to CS; CS: put defintion into terminology scheme] module DLLs. The plugin file prefix is module3d in 3d and module2d in 2d. The module will appear in the list available by executing the program list module command."
+    },
+    {
+      "name": "plotitem",
+      "syntax": {
+        "6.0": "plotitem",
+        "7.0": "plotitem",
+        "9.0": "plotitem [loadoptions]"
+      },
+      "description": "Load framework plot item DLLs. The plugin file prefix is plotitem3d in 3d and plotitem2d in 2d."
+    },
+    {
+      "name": "kwd:adummy",
+      "syntax": "<s>",
+      "description": "Load the plugin DLL file named s . Either the full file name can be given, or the code will attempt to find a name matching the pattern “prefixname005.dll” where s = name and the prefix matches the plugin type. If a full path is not given, the code will look in the executable directory and all subdirectories as well as the current directory and all subdirectories for a match.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:automatic",
+      "syntax": "automatic",
+      "description": "Attempt to load all plugins found matching “prefixname005.dll” where prefix matches the plugin type and name matches anything available. By default this will scan the “exe64/plugins” directory of the installation location, and all subdirectories. This can be overruled with the directory keyword.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "kwd:directory",
+      "syntax": "directory <sd>",
+      "description": "Specify the directory to scan when using automatic . All subdirectories will also be scanned. The default directory is “exe64/plugins” directory of the installation location.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "s",
+      "syntax": "<s>",
+      "description": "Load the plugin DLL file named s . Either the full file name can be given, or the code will attempt to find a name matching the pattern “prefixname005.dll” where s = name and the prefix matches the plugin type. If a full path is not given, the code will look in the executable directory and all subdirectories as well as the current directory and all subdirectories for a match.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "automatic",
+      "syntax": "automatic",
+      "description": "Attempt to load all plugins found matching “prefixname005.dll” where prefix matches the plugin type and name matches anything available. By default this will scan the “exe64/plugins” directory of the installation location, and all subdirectories. This can be overruled with the directory keyword.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "directory",
+      "syntax": "directory <sd>",
+      "description": "Specify the directory to scan when using automatic . All subdirectories will also be scanned. The default directory is “exe64/plugins” directory of the installation location.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
+  ],
+  "examples": {
+    "6.0": [],
+    "9.0": []
   }
 }

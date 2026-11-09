@@ -5,190 +5,96 @@
     "path"
   ],
   "description": "Add a clump or pebble particle trace. The positions and velocities of clumps/pebbles can be sampled and stored during a model run and the path through space can be visualized. The optional id directly following trace creates a particle trace with the specified ID. If not specified, then the next available particle trace ID is used. The optional pebble keyword indicates that a pebble is to be traced. Following this, either 1) a position vector or 2) an additional id keyword must be given to identify a specific clump or pebble. See the trace commands for details regarding the manipulation of particle traces.",
-  "notes": [
-    "Particle traces sample and store positions and velocities during model run",
-    "Traces can be visualized to show particle path through space",
-    "Optional trace ID: if not specified, next available ID is used",
-    "Two identification methods: 1) id keyword + ID number, or 2) position vector (finds nearest)",
-    "pebble keyword switches from clump tracing to pebble tracing",
-    "See 'trace' commands for full particle trace manipulation capabilities",
-    "Traces persist across model runs until explicitly deleted"
-  ],
+  "notes": {
+    "6.0": [
+      "Particle traces sample and store positions and velocities during model run",
+      "Traces can be visualized to show particle path through space",
+      "Optional trace ID: if not specified, next available ID is used",
+      "Two identification methods: 1) id keyword + ID number, or 2) position vector (finds nearest)",
+      "pebble keyword switches from clump tracing to pebble tracing",
+      "See 'trace' commands for full particle trace manipulation capabilities",
+      "Traces persist across model runs until explicitly deleted"
+    ],
+    "7.0": [
+      "Particle traces sample and store positions and velocities during model run",
+      "Traces can be visualized to show particle path through space",
+      "Optional trace ID: if not specified, next available ID is used",
+      "Two identification methods: 1) id keyword + ID number, or 2) position vector (finds nearest)",
+      "pebble keyword switches from clump tracing to pebble tracing",
+      "See 'trace' commands for full particle trace manipulation capabilities",
+      "Traces persist across model runs until explicitly deleted"
+    ],
+    "9.0": [
+      "On the PFC 9.8 builds the trace is created but never sampled: trace export reports an empty list, trace list stays at the origin, and every trace gets ID 0, so address it by name. 9.00 and 7.0 record the path; on 9.8 sample the position with a history or a callback."
+    ]
+  },
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('clump trace ...') - Python SDK does not provide direct particle trace creation"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump trace",
-      "syntax": "clump trace [id <id>] [pebble] id <id2>| <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id <itrace>",
-          "description": "Specify the particle trace ID. If not provided, next available trace ID is automatically assigned"
-        },
-        {
-          "name": "pebble",
-          "syntax": "pebble",
-          "description": "Indicate that a pebble is to be traced. Without this keyword, a clump is traced"
-        },
-        {
-          "name": "id (identifier)",
-          "syntax": "id <id>",
-          "description": "Identify the specific clump or pebble to trace by its ID"
-        },
-        {
-          "name": "position vector",
-          "syntax": "<vpos>",
-          "description": "Identify the clump or pebble to trace by its position vector (closest entity to this position)"
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump trace id 4",
-          "description": "Create particle trace for clump with ID 4, using next available trace ID"
-        },
-        {
-          "command": "clump trace id 2",
-          "description": "Create particle trace for clump with ID 2"
-        },
-        {
-          "command": "clump trace id 3 pebble (-604.633,748.976,672.833)",
-          "description": "Create trace ID 3 for pebble nearest to position (-604.633,748.976,672.833)"
-        },
-        {
-          "command": "clump trace pebble id 100",
-          "description": "Create trace for pebble with ID 100, auto-assign trace ID"
-        },
-        {
-          "command": "clump trace (10.0,5.0,15.0)",
-          "description": "Create trace for clump nearest to position (10.0,5.0,15.0)"
-        },
-        {
-          "command": "clump trace id 10 id 50",
-          "description": "Create trace ID 10 for clump with ID 50"
-        },
-        {
-          "command": "clump trace id 5 pebble id 200",
-          "description": "Create trace ID 5 for pebble with ID 200"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump trace",
+  "syntax": {
+    "6.0": "clump trace [id <id>] [pebble] id <id2> or <v>",
+    "7.0": "clump trace [id <id>] [pebble] id <id2>| <v>",
+    "9.0": "clump trace [id <id>] [pebble] id <id2>| <v>"
+  },
+  "keywords": [
+    {
+      "name": "id",
+      "syntax": "id <itrace>",
+      "description": "Specify the particle trace ID. If not provided, next available trace ID is automatically assigned"
     },
-    "6.0": {
-      "command": "clump trace",
-      "syntax": "clump trace [id <id>] [pebble] id <id2> or <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id <itrace>",
-          "description": "Specify the particle trace ID. If not provided, next available trace ID is automatically assigned"
-        },
-        {
-          "name": "pebble",
-          "syntax": "pebble",
-          "description": "Indicate that a pebble is to be traced. Without this keyword, a clump is traced"
-        },
-        {
-          "name": "id (identifier)",
-          "syntax": "id <id>",
-          "description": "Identify the specific clump or pebble to trace by its ID"
-        },
-        {
-          "name": "position vector",
-          "syntax": "<vpos>",
-          "description": "Identify the clump or pebble to trace by its position vector (closest entity to this position)"
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump trace id 4",
-          "description": "Create particle trace for clump with ID 4, using next available trace ID"
-        },
-        {
-          "command": "clump trace id 2",
-          "description": "Create particle trace for clump with ID 2"
-        },
-        {
-          "command": "clump trace id 3 pebble (-604.633,748.976,672.833)",
-          "description": "Create trace ID 3 for pebble nearest to position (-604.633,748.976,672.833)"
-        },
-        {
-          "command": "clump trace pebble id 100",
-          "description": "Create trace for pebble with ID 100, auto-assign trace ID"
-        },
-        {
-          "command": "clump trace (10.0,5.0,15.0)",
-          "description": "Create trace for clump nearest to position (10.0,5.0,15.0)"
-        },
-        {
-          "command": "clump trace id 10 id 50",
-          "description": "Create trace ID 10 for clump with ID 50"
-        },
-        {
-          "command": "clump trace id 5 pebble id 200",
-          "description": "Create trace ID 5 for pebble with ID 200"
-        }
-      ]
+    {
+      "name": "pebble",
+      "syntax": "pebble",
+      "description": "Indicate that a pebble is to be traced. Without this keyword, a clump is traced"
     },
-    "9.0": {
-      "command": "clump trace",
-      "syntax": "clump trace [id <id>] [pebble] id <id2>| <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id <itrace>",
-          "description": "Specify the particle trace ID. If not provided, next available trace ID is automatically assigned"
-        },
-        {
-          "name": "pebble",
-          "syntax": "pebble",
-          "description": "Indicate that a pebble is to be traced. Without this keyword, a clump is traced"
-        },
-        {
-          "name": "id (identifier)",
-          "syntax": "id <id>",
-          "description": "Identify the specific clump or pebble to trace by its ID"
-        },
-        {
-          "name": "position vector",
-          "syntax": "<vpos>",
-          "description": "Identify the clump or pebble to trace by its position vector (closest entity to this position)"
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump trace id 4",
-          "description": "Create particle trace for clump with ID 4, using next available trace ID"
-        },
-        {
-          "command": "clump trace id 2",
-          "description": "Create particle trace for clump with ID 2"
-        },
-        {
-          "command": "clump trace id 3 pebble (-604.633,748.976,672.833)",
-          "description": "Create trace ID 3 for pebble nearest to position (-604.633,748.976,672.833)"
-        },
-        {
-          "command": "clump trace pebble id 100",
-          "description": "Create trace for pebble with ID 100, auto-assign trace ID"
-        },
-        {
-          "command": "clump trace (10.0,5.0,15.0)",
-          "description": "Create trace for clump nearest to position (10.0,5.0,15.0)"
-        },
-        {
-          "command": "clump trace id 10 id 50",
-          "description": "Create trace ID 10 for clump with ID 50"
-        },
-        {
-          "command": "clump trace id 5 pebble id 200",
-          "description": "Create trace ID 5 for pebble with ID 200"
-        }
-      ],
-      "notes": [
-        "On the PFC 9.8 builds the trace is created but never sampled: trace export reports an empty list, trace list stays at the origin, and every trace gets ID 0, so address it by name. 9.00 and 7.0 record the path; on 9.8 sample the position with a history or a callback."
-      ]
+    {
+      "name": "id (identifier)",
+      "syntax": "id <id>",
+      "description": "Identify the specific clump or pebble to trace by its ID"
+    },
+    {
+      "name": "position vector",
+      "syntax": "<vpos>",
+      "description": "Identify the clump or pebble to trace by its position vector (closest entity to this position)"
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump trace id 4",
+      "description": "Create particle trace for clump with ID 4, using next available trace ID"
+    },
+    {
+      "command": "clump trace id 2",
+      "description": "Create particle trace for clump with ID 2"
+    },
+    {
+      "command": "clump trace id 3 pebble (-604.633,748.976,672.833)",
+      "description": "Create trace ID 3 for pebble nearest to position (-604.633,748.976,672.833)"
+    },
+    {
+      "command": "clump trace pebble id 100",
+      "description": "Create trace for pebble with ID 100, auto-assign trace ID"
+    },
+    {
+      "command": "clump trace (10.0,5.0,15.0)",
+      "description": "Create trace for clump nearest to position (10.0,5.0,15.0)"
+    },
+    {
+      "command": "clump trace id 10 id 50",
+      "description": "Create trace ID 10 for clump with ID 50"
+    },
+    {
+      "command": "clump trace id 5 pebble id 200",
+      "description": "Create trace ID 5 for pebble with ID 200"
+    }
+  ]
 }

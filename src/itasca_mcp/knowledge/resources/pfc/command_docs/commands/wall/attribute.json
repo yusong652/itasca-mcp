@@ -13,620 +13,438 @@
     "available": true,
     "workaround": "Wall.set_*() methods (e.g., Wall.set_vel(), Wall.set_spin(), Wall.set_pos(), Wall.set_disp(), Wall.set_rotation_center()) - requires iteration over wall range"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall attribute",
-      "syntax": "wall attribute [facet] [vertex] keyword ... [range]",
-      "keywords": [
-        {
-          "name": "cutoff-angle",
-          "syntax": "cutoff-angle <f>",
-          "description": "Set the cutoff angle (an angle in degrees) for walls. By default, the cutoff angle is 0. This angle controls contact state information propagation."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v>",
-          "description": "Accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f>",
-          "description": "The \\(x\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f>",
-          "description": "The \\(y\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f>",
-          "description": "The \\(z\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v>",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y ’-axis followed by rotation about the z ’‘-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f>",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f>",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f>",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY",
-          "description": "Current wall orientation in degrees. Setting it assigns an absolute angle and does not move the wall vertices. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Wall location vector. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The \\(z\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "rotation-center",
-          "syntax": "rotation-center <v>",
-          "description": "Set the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-x",
-          "syntax": "rotation-center-x <f>",
-          "description": "Set the \\(x\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-y",
-          "syntax": "rotation-center-y <f>",
-          "description": "Set the \\(y\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-z",
-          "syntax": "rotation-center-z <f>",
-          "description": "Set the \\(z\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fx> <fy> <fz>",
-          "description": "The wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f>",
-          "description": "The \\(x\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f>",
-          "description": "The \\(y\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f>",
-          "description": "The \\(z\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Wall translational velocity vector. If given with the vertex keyword, then this corresponds to the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f>",
-          "description": "The \\(x\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(x\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f>",
-          "description": "The \\(y\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(y\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f>",
-          "description": "The \\(z\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(z\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-conveyor",
-          "syntax": "velocity-conveyor <v>",
-          "description": "Set the facet conveyor velocity vector. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-x",
-          "syntax": "velocity-conveyor-x <f>",
-          "description": "Set the \\(x\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-y",
-          "syntax": "velocity-conveyor-y <f>",
-          "description": "Set the \\(y\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-z",
-          "syntax": "velocity-conveyor-z <f>",
-          "description": "Set the \\(z\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient fx fy fz (post-value modifier)",
-          "description": "Apply a linear gradient in each of the axes directions starting at the origin."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "facet",
-          "syntax": "facet",
-          "description": ""
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall attribute velocity-z [platenVel] range name 'platenBottom'",
-          "description": "Set the z-component of velocity for the wall named platenBottom"
-        },
-        {
-          "command": "wall attribute velocity-z 0.0 range id 100 by wall",
-          "description": "Set the z-component of velocity for the wall with ID 100"
-        },
-        {
-          "command": "wall attribute rotation-center [rp_] range group 'wallassembly'",
-          "description": "Set the center of rotation for walls in group wallassembly"
-        },
-        {
-          "command": "wall attribute velocity (1.0,0,0) range id 1",
-          "description": "Set wall translational velocity vector for wall ID 1"
-        },
-        {
-          "command": "wall attribute spin 0 0 0.5 range name 'rotating_drum'",
-          "description": "Set angular velocity (spinning around z-axis) for wall named rotating_drum"
-        }
-      ],
-      "notes": [
-        "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
-      ]
-    },
-    "6.0": {
-      "command": "wall attribute",
-      "syntax": "wall attribute [facet] [vertex] keyword ... [range]",
-      "keywords": [
-        {
-          "name": "cutoff-angle",
-          "syntax": "cutoff-angle <f>",
-          "description": "Set the cutoff angle (an angle in degrees) for walls. By default, the cutoff angle is 0. This angle controls contact state information propagation."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v>",
-          "description": "Accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f>",
-          "description": "The x -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f>",
-          "description": "The y -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f>",
-          "description": "The z -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v>",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the x -axis followed by rotation about the y ’-axis followed by rotation about the z ’‘-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f>",
-          "description": "The x -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f>",
-          "description": "The y -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f>",
-          "description": "The z -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY",
-          "description": "Current wall orientation in degrees. Setting it assigns an absolute angle and does not move the wall vertices. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Wall location vector. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The x -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The y -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The z -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "rotation-center",
-          "syntax": "rotation-center <v>",
-          "description": "Set the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-x",
-          "syntax": "rotation-center-x <f>",
-          "description": "Set the x -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-y",
-          "syntax": "rotation-center-y <f>",
-          "description": "Set the y -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-z",
-          "syntax": "rotation-center-z <f>",
-          "description": "Set the z -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fx> <fy> <fz>",
-          "description": "The wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f>",
-          "description": "The x -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f>",
-          "description": "The y -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f>",
-          "description": "The z -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Wall translational velocity vector. If given with the vertex keyword, then this corresponds to the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f>",
-          "description": "The x -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the x -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f>",
-          "description": "The y -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the y -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f>",
-          "description": "The z -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the z -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-conveyor",
-          "syntax": "velocity-conveyor <v>",
-          "description": "Set the facet conveyor velocity vector. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-x",
-          "syntax": "velocity-conveyor-x <f>",
-          "description": "Set the x -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-y",
-          "syntax": "velocity-conveyor-y <f>",
-          "description": "Set the y -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-z",
-          "syntax": "velocity-conveyor-z <f>",
-          "description": "Set the z -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "facet",
-          "syntax": "facet",
-          "description": ""
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall attribute velocity-z [platenVel] range name 'platenBottom'",
-          "description": "Set the z-component of velocity for the wall named platenBottom"
-        },
-        {
-          "command": "wall attribute velocity-z 0.0 range id 100 by wall",
-          "description": "Set the z-component of velocity for the wall with ID 100"
-        },
-        {
-          "command": "wall attribute rotation-center [rp_] range group 'wallassembly'",
-          "description": "Set the center of rotation for walls in group wallassembly"
-        },
-        {
-          "command": "wall attribute velocity (1.0,0,0) range id 1",
-          "description": "Set wall translational velocity vector for wall ID 1"
-        },
-        {
-          "command": "wall attribute spin 0 0 0.5 range name 'rotating_drum'",
-          "description": "Set angular velocity (spinning around z-axis) for wall named rotating_drum"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "wall attribute",
-      "syntax": "wall attribute [facet] [vertex] keyword ... [range]",
-      "keywords": [
-        {
-          "name": "cutoff-angle",
-          "syntax": "cutoff-angle <f> [wlmodblock]",
-          "description": "Set the cutoff angle (an angle in degrees) for walls. By default, the cutoff angle is 0. This angle controls contact state information propagation."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v> [wlmodblock]",
-          "description": "Accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f> [wlmodblock]",
-          "description": "The \\(x\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f> [wlmodblock]",
-          "description": "The \\(y\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(z\\) -component of the accumulated wall displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v> 3D ONLY [wlmodblock]",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y ’-axis followed by rotation about the z ’’-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY [wlmodblock]",
-          "description": "Current wall orientation in degrees. Setting it assigns an absolute angle and does not move the wall vertices. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v> [wlmodblock]",
-          "description": "Wall location vector. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f> [wlmodblock]",
-          "description": "The \\(x\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f> [wlmodblock]",
-          "description": "The \\(y\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> [wlmodblock]",
-          "description": "The \\(z\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
-        },
-        {
-          "name": "rotation-center",
-          "syntax": "rotation-center <v> [wlmodblock]",
-          "description": "Set the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-x",
-          "syntax": "rotation-center-x <f> [wlmodblock]",
-          "description": "Set the \\(x\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-y",
-          "syntax": "rotation-center-y <f> [wlmodblock]",
-          "description": "Set the \\(y\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "rotation-center-z",
-          "syntax": "rotation-center-z <f> 3D ONLY [wlmodblock]",
-          "description": "Set the \\(z\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fx> <fy> <fz> (y and z components 3D ONLY) [wlmodblock]",
-          "description": "The wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(x\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(y\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(z\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v> [wlmodblock]",
-          "description": "Wall translational velocity vector. If given with the vertex keyword, then this corresponds to the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f> [wlmodblock]",
-          "description": "The \\(x\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(x\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f> [wlmodblock]",
-          "description": "The \\(y\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(y\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f> 3D ONLY [wlmodblock]",
-          "description": "The \\(z\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(z\\) -component of the vertex velocity and the range applies to vertices."
-        },
-        {
-          "name": "velocity-conveyor",
-          "syntax": "velocity-conveyor <v> [wlmodblock]",
-          "description": "Set the facet conveyor velocity vector. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-x",
-          "syntax": "velocity-conveyor-x <f> [wlmodblock]",
-          "description": "Set the \\(x\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-y",
-          "syntax": "velocity-conveyor-y <f> [wlmodblock]",
-          "description": "Set the \\(y\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "velocity-conveyor-z",
-          "syntax": "velocity-conveyor-z <f> 3D ONLY [wlmodblock]",
-          "description": "Set the \\(z\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient fx fy fz (post-value modifier)",
-          "description": "Apply a linear gradient in each of the axes directions starting at the origin."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "facet",
-          "syntax": "facet",
-          "description": ""
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall attribute velocity-z [platenVel] range name 'platenBottom'",
-          "description": "Set the z-component of velocity for the wall named platenBottom"
-        },
-        {
-          "command": "wall attribute velocity-z 0.0 range id 100 by wall",
-          "description": "Set the z-component of velocity for the wall with ID 100"
-        },
-        {
-          "command": "wall attribute rotation-center [rp_] range group 'wallassembly'",
-          "description": "Set the center of rotation for walls in group wallassembly"
-        },
-        {
-          "command": "wall attribute velocity (1.0,0,0) range id 1",
-          "description": "Set wall translational velocity vector for wall ID 1"
-        },
-        {
-          "command": "wall attribute spin 0 0 0.5 range name 'rotating_drum'",
-          "description": "Set angular velocity (spinning around z-axis) for wall named rotating_drum"
-        }
-      ],
-      "notes": [
-        "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7."
-      ]
-    }
+  "notes": {
+    "6.0": [
+      "'[wlmodblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (fragment, gradient, axis-angle, facet, vertex).",
+      "Modifiers: add <f>: Add f to the existing value; gradient <v>: Apply a linear gradient in each of the axes directions starting at the origin; gradient-x <f>: Apply a linear gradient in the x-direction starting at the origin; gradient-y <f>: Apply a linear gradient in the y-direction starting at the origin; gradient-z <f>: Apply a linear gradient in the z-direction starting at the origin (3D ONLY); multiply <f>: Multiply the existing value by f; replace <f>: Replace the existing value with f"
+    ],
+    "7.0": [
+      "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
+    ],
+    "9.0": [
+      "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7."
+    ]
   },
-  "notes": [
-    "'[wlmodblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (fragment, gradient, axis-angle, facet, vertex).",
-    "Modifiers: add <f>: Add f to the existing value; gradient <v>: Apply a linear gradient in each of the axes directions starting at the origin; gradient-x <f>: Apply a linear gradient in the x-direction starting at the origin; gradient-y <f>: Apply a linear gradient in the y-direction starting at the origin; gradient-z <f>: Apply a linear gradient in the z-direction starting at the origin (3D ONLY); multiply <f>: Multiply the existing value by f; replace <f>: Replace the existing value with f"
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall attribute",
+  "syntax": "wall attribute [facet] [vertex] keyword ... [range]",
+  "keywords": [
+    {
+      "name": "cutoff-angle",
+      "syntax": {
+        "6.0": "cutoff-angle <f>",
+        "7.0": "cutoff-angle <f>",
+        "9.0": "cutoff-angle <f> [wlmodblock]"
+      },
+      "description": "Set the cutoff angle (an angle in degrees) for walls. By default, the cutoff angle is 0. This angle controls contact state information propagation."
+    },
+    {
+      "name": "displacement",
+      "syntax": {
+        "6.0": "displacement <v>",
+        "7.0": "displacement <v>",
+        "9.0": "displacement <v> [wlmodblock]"
+      },
+      "description": "Accumulated wall displacement vector as a result of cycling."
+    },
+    {
+      "name": "displacement-x",
+      "syntax": {
+        "6.0": "displacement-x <f>",
+        "7.0": "displacement-x <f>",
+        "9.0": "displacement-x <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the accumulated wall displacement as a result of cycling.",
+        "7.0": "The \\(x\\) -component of the accumulated wall displacement as a result of cycling.",
+        "9.0": "The \\(x\\) -component of the accumulated wall displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": {
+        "6.0": "displacement-y <f>",
+        "7.0": "displacement-y <f>",
+        "9.0": "displacement-y <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the accumulated wall displacement as a result of cycling.",
+        "7.0": "The \\(y\\) -component of the accumulated wall displacement as a result of cycling.",
+        "9.0": "The \\(y\\) -component of the accumulated wall displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": {
+        "6.0": "displacement-z <f>",
+        "7.0": "displacement-z <f>",
+        "9.0": "displacement-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the accumulated wall displacement as a result of cycling.",
+        "7.0": "The \\(z\\) -component of the accumulated wall displacement as a result of cycling.",
+        "9.0": "The \\(z\\) -component of the accumulated wall displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "euler",
+      "syntax": {
+        "6.0": "euler <v>",
+        "7.0": "euler <v>",
+        "9.0": "euler <v> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the x -axis followed by rotation about the y ’-axis followed by rotation about the z ’‘-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized.",
+        "7.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y ’-axis followed by rotation about the z ’‘-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized.",
+        "9.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y ’-axis followed by rotation about the z ’’-axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current clump orientation can be visualized."
+      }
+    },
+    {
+      "name": "euler-x",
+      "syntax": {
+        "6.0": "euler-x <f>",
+        "7.0": "euler-x <f>",
+        "9.0": "euler-x <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The x -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "7.0": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "9.0": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "euler-y",
+      "syntax": {
+        "6.0": "euler-y <f>",
+        "7.0": "euler-y <f>",
+        "9.0": "euler-y <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The y -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "7.0": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "9.0": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "euler-z",
+      "syntax": {
+        "6.0": "euler-z <f>",
+        "7.0": "euler-z <f>",
+        "9.0": "euler-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The z -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "7.0": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details.",
+        "9.0": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "rotation",
+      "syntax": {
+        "6.0": "rotation <f> 2D ONLY",
+        "7.0": "rotation <f> 2D ONLY",
+        "9.0": "rotation <f> 2D ONLY [wlmodblock]"
+      },
+      "description": "Current wall orientation in degrees. Setting it assigns an absolute angle and does not move the wall vertices. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
+    },
+    {
+      "name": "fragment",
+      "syntax": "fragment <i>",
+      "description": "Fragment ID (see “ Fragment ”)."
+    },
+    {
+      "name": "position",
+      "syntax": {
+        "6.0": "position <v>",
+        "7.0": "position <v>",
+        "9.0": "position <v> [wlmodblock]"
+      },
+      "description": "Wall location vector. This corresponds to the average position of all vertices. The center of rotation is not modified."
+    },
+    {
+      "name": "position-x",
+      "syntax": {
+        "6.0": "position-x <f>",
+        "7.0": "position-x <f>",
+        "9.0": "position-x <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "7.0": "The \\(x\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "9.0": "The \\(x\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": {
+        "6.0": "position-y <f>",
+        "7.0": "position-y <f>",
+        "9.0": "position-y <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "7.0": "The \\(y\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "9.0": "The \\(y\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z <f>",
+        "7.0": "position-z <f>",
+        "9.0": "position-z <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "7.0": "The \\(z\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified.",
+        "9.0": "The \\(z\\) -component of the wall location. This corresponds to the average position of all vertices. The center of rotation is not modified."
+      }
+    },
+    {
+      "name": "rotation-center",
+      "syntax": {
+        "6.0": "rotation-center <v>",
+        "7.0": "rotation-center <v>",
+        "9.0": "rotation-center <v> [wlmodblock]"
+      },
+      "description": "Set the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
+    },
+    {
+      "name": "rotation-center-x",
+      "syntax": {
+        "6.0": "rotation-center-x <f>",
+        "7.0": "rotation-center-x <f>",
+        "9.0": "rotation-center-x <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the x -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "7.0": "Set the \\(x\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "9.0": "Set the \\(x\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
+      }
+    },
+    {
+      "name": "rotation-center-y",
+      "syntax": {
+        "6.0": "rotation-center-y <f>",
+        "7.0": "rotation-center-y <f>",
+        "9.0": "rotation-center-y <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the y -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "7.0": "Set the \\(y\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "9.0": "Set the \\(y\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
+      }
+    },
+    {
+      "name": "rotation-center-z",
+      "syntax": {
+        "6.0": "rotation-center-z <f>",
+        "7.0": "rotation-center-z <f>",
+        "9.0": "rotation-center-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the z -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "7.0": "Set the \\(z\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin.",
+        "9.0": "Set the \\(z\\) -component of the center of rotation for walls in the range. This is the position about which rotations occur when an angular velocity is supplied to a wall. The center of rotation translates with the wall if a translational velocity is supplied. The default center of rotation is the origin."
+      }
+    },
+    {
+      "name": "spin",
+      "syntax": {
+        "6.0": "spin <fx> <fy> <fz>",
+        "7.0": "spin <fx> <fy> <fz>",
+        "9.0": "spin <fx> <fy> <fz> (y and z components 3D ONLY) [wlmodblock]"
+      },
+      "description": "The wall angular velocity in radians per second. Walls rotate around their center of rotation."
+    },
+    {
+      "name": "spin-x",
+      "syntax": {
+        "6.0": "spin-x <f>",
+        "7.0": "spin-x <f>",
+        "9.0": "spin-x <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "7.0": "The \\(x\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "9.0": "The \\(x\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
+      }
+    },
+    {
+      "name": "spin-y",
+      "syntax": {
+        "6.0": "spin-y <f>",
+        "7.0": "spin-y <f>",
+        "9.0": "spin-y <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "7.0": "The \\(y\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "9.0": "The \\(y\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": {
+        "6.0": "spin-z <f>",
+        "7.0": "spin-z <f>",
+        "9.0": "spin-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "7.0": "The \\(z\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation.",
+        "9.0": "The \\(z\\) -component of the wall angular velocity in radians per second. Walls rotate around their center of rotation."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": {
+        "6.0": "velocity <v>",
+        "7.0": "velocity <v>",
+        "9.0": "velocity <v> [wlmodblock]"
+      },
+      "description": "Wall translational velocity vector. If given with the vertex keyword, then this corresponds to the vertex velocity and the range applies to vertices."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": {
+        "6.0": "velocity-x <f>",
+        "7.0": "velocity-x <f>",
+        "9.0": "velocity-x <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the x -component of the vertex velocity and the range applies to vertices.",
+        "7.0": "The \\(x\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(x\\) -component of the vertex velocity and the range applies to vertices.",
+        "9.0": "The \\(x\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(x\\) -component of the vertex velocity and the range applies to vertices."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": {
+        "6.0": "velocity-y <f>",
+        "7.0": "velocity-y <f>",
+        "9.0": "velocity-y <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the y -component of the vertex velocity and the range applies to vertices.",
+        "7.0": "The \\(y\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(y\\) -component of the vertex velocity and the range applies to vertices.",
+        "9.0": "The \\(y\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(y\\) -component of the vertex velocity and the range applies to vertices."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z <f>",
+        "7.0": "velocity-z <f>",
+        "9.0": "velocity-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the z -component of the vertex velocity and the range applies to vertices.",
+        "7.0": "The \\(z\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(z\\) -component of the vertex velocity and the range applies to vertices.",
+        "9.0": "The \\(z\\) -component of the wall translational velocity. If given with the vertex keyword, then this corresponds to the \\(z\\) -component of the vertex velocity and the range applies to vertices."
+      }
+    },
+    {
+      "name": "velocity-conveyor",
+      "syntax": {
+        "6.0": "velocity-conveyor <v>",
+        "7.0": "velocity-conveyor <v>",
+        "9.0": "velocity-conveyor <v> [wlmodblock]"
+      },
+      "description": "Set the facet conveyor velocity vector. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
+    },
+    {
+      "name": "velocity-conveyor-x",
+      "syntax": {
+        "6.0": "velocity-conveyor-x <f>",
+        "7.0": "velocity-conveyor-x <f>",
+        "9.0": "velocity-conveyor-x <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the x -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "7.0": "Set the \\(x\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "9.0": "Set the \\(x\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
+      }
+    },
+    {
+      "name": "velocity-conveyor-y",
+      "syntax": {
+        "6.0": "velocity-conveyor-y <f>",
+        "7.0": "velocity-conveyor-y <f>",
+        "9.0": "velocity-conveyor-y <f> [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the y -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "7.0": "Set the \\(y\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "9.0": "Set the \\(y\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
+      }
+    },
+    {
+      "name": "velocity-conveyor-z",
+      "syntax": {
+        "6.0": "velocity-conveyor-z <f>",
+        "7.0": "velocity-conveyor-z <f>",
+        "9.0": "velocity-conveyor-z <f> 3D ONLY [wlmodblock]"
+      },
+      "description": {
+        "6.0": "Set the z -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "7.0": "Set the \\(z\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets.",
+        "9.0": "Set the \\(z\\) -component of the facet conveyor velocity. If given with the facet keyword, then the range applies to facets. Otherwise the conveyor velocity is set for all facets in each wall in the specified range. The conveyor velocity is a fictitious velocity that is added to the wall velocity when calculating the relative velocity between a facet and another piece. A conveyor velocity cannot be active when vertex velocities are active. Setting a nonzero conveyor velocity allows one to simulate conveyance of balls or clumps along facets without moving the facets."
+      }
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient fx fy fz (post-value modifier)",
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "axis-angle",
+      "syntax": "axis-angle",
+      "description": ""
+    },
+    {
+      "name": "facet",
+      "syntax": "facet",
+      "description": ""
+    },
+    {
+      "name": "vertex",
+      "syntax": "vertex",
+      "description": ""
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall attribute velocity-z [platenVel] range name 'platenBottom'",
+      "description": "Set the z-component of velocity for the wall named platenBottom"
+    },
+    {
+      "command": "wall attribute velocity-z 0.0 range id 100 by wall",
+      "description": "Set the z-component of velocity for the wall with ID 100"
+    },
+    {
+      "command": "wall attribute rotation-center [rp_] range group 'wallassembly'",
+      "description": "Set the center of rotation for walls in group wallassembly"
+    },
+    {
+      "command": "wall attribute velocity (1.0,0,0) range id 1",
+      "description": "Set wall translational velocity vector for wall ID 1"
+    },
+    {
+      "command": "wall attribute spin 0 0 0.5 range name 'rotating_drum'",
+      "description": "Set angular velocity (spinning around z-axis) for wall named rotating_drum"
+    }
   ]
 }

@@ -5,305 +5,313 @@
     "create",
     "structure"
   ],
-  "description": "Create a liner consisting of a collection of shell finite elements. The five main keywords articulate five creation techniques: (1) create a collection of elements from a set of block faces ( by-block-face ); (2) create a single element from three existing nodes ( by-nodeids ); (3) create a collection of elements from a quadrilateral shape ( by-quadrilateral ); (4) create a collection of elements from a triangular shape ( by-triangle ); and (5) create a collection of elements from a set of zone faces ( by-zone-face ). For technique 2, newly created nodes will remain unattached. If you wish to attach them to a target object, position them with the structure node initialize position command. If the liner is on the outer surface of an object (i.e., not an embedded liner), then the z-axes of the elements must point away from the body to which the liner is attached. This condition is only enforced automatically for techniques 1 and 5; thus, it may be necessary to reverse the direction of the element normals if using one of the other techniques. The direction of the element normals can be viewed with the liner plot item by setting the System attribute to Element. A liner can also be created by the structure liner import command.",
+  "description": {
+    "7.0": "Create a liner. There are four different techniques of creation: by creating a collection of elements from a group of zone faces (by-zone-face or by-block-face); by creating a single element from four existing nodes (by-nodeids), from a specified quadrilateral (by-quadrilateral), or from a triangle (by-triangle).",
+    "9.0": "Create a liner consisting of a collection of shell finite elements. The five main keywords articulate five creation techniques: (1) create a collection of elements from a set of block faces ( by-block-face ); (2) create a single element from three existing nodes ( by-nodeids ); (3) create a collection of elements from a quadrilateral shape ( by-quadrilateral ); (4) create a collection of elements from a triangular shape ( by-triangle ); and (5) create a collection of elements from a set of zone faces ( by-zone-face ). For technique 2, newly created nodes will remain unattached. If you wish to attach them to a target object, position them with the structure node initialize position command. If the liner is on the outer surface of an object (i.e., not an embedded liner), then the z-axes of the elements must point away from the body to which the liner is attached. This condition is only enforced automatically for techniques 1 and 5; thus, it may be necessary to reverse the direction of the element normals if using one of the other techniques. The direction of the element normals can be viewed with the liner plot item by setting the System attribute to Element. A liner can also be created by the structure liner import command."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure liner create",
-      "syntax": "structure liner create keyword",
-      "description": "Create a liner. There are four different techniques of creation: by creating a collection of elements from a group of zone faces (by-zone-face or by-block-face); by creating a single element from four existing nodes (by-nodeids), from a specified quadrilateral (by-quadrilateral), or from a triangle (by-triangle).",
-      "keywords": [
-        {
-          "name": "by-zone-face",
-          "syntax": "by-zone-face (FLAC3D) [linercreateblock] [range]",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "by-block-face",
-          "syntax": "by-block-face [tolerance <f>] (3DEC) [linercreateblock] [range]",
-          "description": "The tolerance keyword can be used to enable linking of liner elements on faces where the faces may have separated due to large strain deformations. By default, nodes on adjacent liner elements will be linked if the distance between them is less than f = 1e-5."
-        },
-        {
-          "name": "by-nodeids",
-          "syntax": "by-nodeids <i1> <i2> <i3> [linercreateblock]"
-        },
-        {
-          "name": "by-quadrilateral",
-          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [linercreateblock]",
-          "description": "create elements based on four points forming a quadrilateral, in order. The element local system will point in the direction determined by using the right-hand rule."
-        },
-        {
-          "name": "by-triangle",
-          "syntax": "by-triangle <v1> <v2> <v3> [linercreateblock]",
-          "description": "Create elements based on three points forming a triangle. The element local system will point in the direction determined by using the right-hand rule."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s1> [slot <s2>]",
-          "description": "Assign the created elements to group s1. The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not supplied. Use of the group logic is described in Groups."
-        },
-        {
-          "name": "cross-diagonal",
-          "syntax": "cross-diagonal <b>",
-          "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral."
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
-        },
-        {
-          "name": "element-type",
-          "syntax": "element-type keyword"
-        },
-        {
-          "name": "element-type-adummy",
-          "syntax": "<s>",
-          "description": "Attempt to match the string s to one of the available keywords below, and treats as that option"
-        },
-        {
-          "name": "element-type-cst",
-          "syntax": "cst",
-          "description": "CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading."
-        },
-        {
-          "name": "element-type-csth",
-          "syntax": "csth",
-          "description": "CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading."
-        },
-        {
-          "name": "element-type-dkt",
-          "syntax": "dkt",
-          "description": "DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading."
-        },
-        {
-          "name": "element-type-dkt-cst",
-          "syntax": "dkt-cst",
-          "description": "DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "element-type-dkt-csth",
-          "syntax": "dkt-csth",
-          "description": "DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "embedded",
-          "syntax": "embedded",
-          "description": "Specify that this liner is two-sided. If the embedded keyword is used, then the internal keyword is implied, even if not explicitly given."
-        },
-        {
-          "name": "internal",
-          "syntax": "internal",
-          "description": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f>",
-          "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created."
-        },
-        {
-          "name": "separate",
-          "syntax": "separate keyword",
-          "description": "Select a group of internal faces, and separate them into surfaces as with the zone separate command. A liner will be created between the two surfaces. This keyword implies both embedded and internal. The following keywords are available:",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "separate-origin",
-          "syntax": "origin <v>",
-          "description": "The point v is used to determine which side of the faces selected will be considered side 1, and which will be side 2. The vector from v to the face centroid is compared with the normal to the face. The side pointing toward v will be side 1, and the side pointing away from v will be side 2. If the origin keyword is not specified, it is assumed to be (0,0,0).",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "separate-clear-attach",
-          "syntax": "clear-attach",
-          "description": "If specified, causes any attach conditions on the boundary to be cleared. By default, an existing attach condition causes an error.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "size",
-          "syntax": "size <i1> <i2>",
-          "description": "This keyword only applies if the from-quadrilateral option was used. Increases the number of elements created by subdividing the quadrilateral into i1 segments along the first edge and i2 segments along the second. By default, only one quad is created."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.create.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "notes": {
+    "7.0": [
+      "'[linercreateblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+    ],
+    "9.0": [
+      "by-circle is a 9.8 keyword: 7.0 rejects it. center, radius and normal on 3DEC and FLAC made 17 nodes and 24 elements."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure liner create",
+  "syntax": "structure liner create keyword",
+  "keywords": [
+    {
+      "name": "by-zone-face",
+      "syntax": {
+        "7.0": "by-zone-face (FLAC3D) [linercreateblock] [range]",
+        "9.0": "by-zone-face [linercreateblock] [range]"
+      },
+      "description": {
+        "9.0": "Create new elements that are attached to the set of three- or four-sided zone-faces in the range (3D) or 2-noded edges (2D). By default, only surface faces will be considered, and the internal keyword can be used to select internal faces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword. Note that after creating the elements with this command, the zones may be deleted and the elements may be positioned by moving their nodes with the structure node initialize position command."
+      },
+      "availability": {
+        "engines": [
+          "flac"
+        ]
       }
     },
-    "9.0": {
-      "command": "structure liner create",
-      "syntax": "structure liner create keyword",
-      "keywords": [
-        {
-          "name": "by-block-face",
-          "syntax": "by-block-face [tolerance <f>] 3DEC [linercreateblock] [range]",
-          "description": "Create new elements that are attached to the set of 3-sided 3DEC zone faces in the range. Elements can only be created on block surfaces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword."
-        },
-        {
-          "name": "by-nodeids",
-          "syntax": "by-nodeids <i1> <i2> <i3> [linercreateblock]",
-          "description": "Create a single element from three existing nodes."
-        },
-        {
-          "name": "by-quadrilateral",
-          "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [linercreateblock]",
-          "description": "Create elements based on four points forming a quadrilateral, in order. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the quadrilateral."
-        },
-        {
-          "name": "by-circle",
-          "syntax": "by-circle {center <v> | diameter <f> | normal <v> | radius <f> | size <i1> <i2>} ... [linercreateblock]",
-          "description": "Create new elements within a circle. Options: center <v>: Specify the center of the circle.; normal <v>: Specify the normal of the circle.; radius <f>: Specify the radius of the circle.; diameter <f>: Specify the diameter of the circle."
-        },
-        {
-          "name": "by-triangle",
-          "syntax": "by-triangle <v1> <v2> <v3> [linercreateblock]",
-          "description": "Create elements based on three points forming a triangle. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the triangle."
-        },
-        {
-          "name": "by-zone-face",
-          "syntax": "by-zone-face [linercreateblock] [range]",
-          "description": "Create new elements that are attached to the set of three- or four-sided zone-faces in the range (3D) or 2-noded edges (2D). By default, only surface faces will be considered, and the internal keyword can be used to select internal faces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword. Note that after creating the elements with this command, the zones may be deleted and the elements may be positioned by moving their nodes with the structure node initialize position command.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "cross-diagonal",
-          "syntax": "cross-diagonal [<b>]",
-          "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral. If this keyword is not specified, then a cross-hatch mesh will be created. [ 1 ]"
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
-        },
-        {
-          "name": "element-type",
-          "syntax": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}",
-          "description": "Specify the type of finite element to be used by each structural element. A description of the available shell finite elements is provided here . If no element type is specified, then the element type will be DKT-CST. [ 2 ] Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The keyword must be one of the following entries: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option.; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "embedded",
-          "syntax": "embedded",
-          "description": "Specify that this liner is two-sided. If the embedded keyword is used, then the internal keyword is implied, even if not explicitly given."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s1> [slot <s2>]",
-          "description": "Assign the created elements to group s1 . The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
-        },
-        {
-          "name": "internal",
-          "syntax": "internal",
-          "description": "This keyword only applies if the by-zone-face option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f>",
-          "description": "Break the element into segments no greater than length f . The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "reverse",
-          "syntax": "reverse",
-          "description": "This keyword only applies if the by-zone-faces option was used. Specifies that the orientation of the element will be reversed from the default with respect to the face, so that the element \\(z\\) axis points in the other direction. Also, if the cross-diagonal keyword was not used, then the diagonal will appear in the other direction with respect to quadrilateral faces."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1 , indicating that only one element will be created."
-        },
-        {
-          "name": "separate",
-          "syntax": "separate {origin <v> | clear-attach}",
-          "description": "Select a group of internal faces, and separate them into surfaces as with the zone separate command. A liner will be created between the two surfaces. This keyword implies both embedded and internal . The following keywords are available: Options: origin <v>: The point v is used to determine which side of the faces selected will be considered side 1, and which will be side 2. The vector from v to the face centroid is compared with the normal to the face. The side pointing toward v will be side 1, and the side pointing away from v will be side 2. If the origin keyword is not specified, it is assumed to be (0,0,0) .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default, an existing attach condition causes an error.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "size",
-          "syntax": "size <i1> <i2>",
-          "description": "This keyword only applies if the by-quadrilateral option was used. Increases the number of elements created by subdividing the quadrilateral into i1 segments along the first edge and i2 segments along the second. By default, only one quad is created."
-        },
-        {
-          "name": "by-line",
-          "syntax": "by-line <v1> <v2> 2D ONLY [linercreateblock]",
-          "description": "Create a collection of elements that lie along a straight line between the locations v1 and v2 . New nodes associated with the elements will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 to v2 corresponds with the direction from the begin point to the end point. If there are objects (zones in FLAC3D ) in these locations, the element will be attached to the objects at its nodes according to the Single Sided Liner-Grid Interaction section. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "by-ray",
-          "syntax": "by-ray <v1> <v2> <f> 2D ONLY [linercreateblock]",
-          "description": "Create a collection of elements that lie along a straight line starting at v1 , proceeding in the direction specified by v2 , for a distance given by f . New nodes associated with the element will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 corresponds with the direction from the begin point to the end point. If there are target objects (zones in FLAC2D ) in these locations, the element will be attached to the objects at its nodes according to the Single Sided Liner-Grid Interaction section. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        }
-      ],
-      "notes": [
-        "by-circle is a 9.8 keyword: 7.0 rejects it. center, radius and normal on 3DEC and FLAC made 17 nodes and 24 elements."
-      ]
+    {
+      "name": "by-block-face",
+      "syntax": {
+        "7.0": "by-block-face [tolerance <f>] (3DEC) [linercreateblock] [range]",
+        "9.0": "by-block-face [tolerance <f>] 3DEC [linercreateblock] [range]"
+      },
+      "description": {
+        "7.0": "The tolerance keyword can be used to enable linking of liner elements on faces where the faces may have separated due to large strain deformations. By default, nodes on adjacent liner elements will be linked if the distance between them is less than f = 1e-5.",
+        "9.0": "Create new elements that are attached to the set of 3-sided 3DEC zone faces in the range. Elements can only be created on block surfaces. New nodes associated with each element will also be created. The nodes of each element will be ordered counter-clockwise with respect to the outside of the zone faces, thereby making each element \\(z\\) axis point outward. The orientation of the \\(z\\) axis can be reversed with the reverse keyword."
+      }
+    },
+    {
+      "name": "by-nodeids",
+      "syntax": "by-nodeids <i1> <i2> <i3> [linercreateblock]",
+      "description": {
+        "9.0": "Create a single element from three existing nodes."
+      }
+    },
+    {
+      "name": "by-quadrilateral",
+      "syntax": "by-quadrilateral <v1> <v2> <v3> <v4> [linercreateblock]",
+      "description": {
+        "7.0": "create elements based on four points forming a quadrilateral, in order. The element local system will point in the direction determined by using the right-hand rule.",
+        "9.0": "Create elements based on four points forming a quadrilateral, in order. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the quadrilateral."
+      }
+    },
+    {
+      "name": "by-circle",
+      "syntax": "by-circle {center <v> | diameter <f> | normal <v> | radius <f> | size <i1> <i2>} ... [linercreateblock]",
+      "description": "Create new elements within a circle. Options: center <v>: Specify the center of the circle.; normal <v>: Specify the normal of the circle.; radius <f>: Specify the radius of the circle.; diameter <f>: Specify the diameter of the circle.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "by-triangle",
+      "syntax": "by-triangle <v1> <v2> <v3> [linercreateblock]",
+      "description": {
+        "7.0": "Create elements based on three points forming a triangle. The element local system will point in the direction determined by using the right-hand rule.",
+        "9.0": "Create elements based on three points forming a triangle. The element \\(z\\) -axis will point in the direction determined by applying the right-hand rule to the triangle."
+      }
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": {
+        "7.0": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i.",
+        "9.0": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
+      }
+    },
+    {
+      "name": "group",
+      "syntax": "group <s1> [slot <s2>]",
+      "description": {
+        "7.0": "Assign the created elements to group s1. The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not supplied. Use of the group logic is described in Groups.",
+        "9.0": "Assign the created elements to group s1 . The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups ."
+      }
+    },
+    {
+      "name": "cross-diagonal",
+      "syntax": {
+        "7.0": "cross-diagonal <b>",
+        "9.0": "cross-diagonal [<b>]"
+      },
+      "description": {
+        "7.0": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral.",
+        "9.0": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral. If this keyword is not specified, then a cross-hatch mesh will be created. [ 1 ]"
+      }
+    },
+    {
+      "name": "distinct",
+      "syntax": "distinct",
+      "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
+    },
+    {
+      "name": "element-type",
+      "syntax": {
+        "7.0": "element-type keyword",
+        "9.0": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}"
+      },
+      "description": {
+        "9.0": "Specify the type of finite element to be used by each structural element. A description of the available shell finite elements is provided here . If no element type is specified, then the element type will be DKT-CST. [ 2 ] Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The keyword must be one of the following entries: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option.; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
+      }
+    },
+    {
+      "name": "element-type-adummy",
+      "syntax": "<s>",
+      "description": "Attempt to match the string s to one of the available keywords below, and treats as that option",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-cst",
+      "syntax": "cst",
+      "description": "CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-csth",
+      "syntax": "csth",
+      "description": "CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt",
+      "syntax": "dkt",
+      "description": "DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt-cst",
+      "syntax": "dkt-cst",
+      "description": "DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt-csth",
+      "syntax": "dkt-csth",
+      "description": "DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "embedded",
+      "syntax": "embedded",
+      "description": "Specify that this liner is two-sided. If the embedded keyword is used, then the internal keyword is implied, even if not explicitly given."
+    },
+    {
+      "name": "internal",
+      "syntax": "internal",
+      "description": {
+        "7.0": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
+        "9.0": "This keyword only applies if the by-zone-face option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered."
+      },
+      "availability": {
+        "engines": [
+          "flac"
+        ]
+      }
+    },
+    {
+      "name": "maximum-length",
+      "syntax": "maximum-length <f>",
+      "description": {
+        "7.0": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting.",
+        "9.0": "Break the element into segments no greater than length f . The segments setting, if provided, is overridden as needed by this setting."
+      }
+    },
+    {
+      "name": "reverse",
+      "syntax": "reverse",
+      "description": "This keyword only applies if the by-zone-faces option was used. Specifies that the orientation of the element will be reversed from the default with respect to the face, so that the element \\(z\\) axis points in the other direction. Also, if the cross-diagonal keyword was not used, then the diagonal will appear in the other direction with respect to quadrilateral faces.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "segments",
+      "syntax": "segments <i>",
+      "description": {
+        "7.0": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created.",
+        "9.0": "Break the element into i equal segments, creating new nodes as needed. The default value is 1 , indicating that only one element will be created."
+      }
+    },
+    {
+      "name": "separate",
+      "syntax": {
+        "7.0": "separate keyword",
+        "9.0": "separate {origin <v> | clear-attach}"
+      },
+      "description": {
+        "7.0": "Select a group of internal faces, and separate them into surfaces as with the zone separate command. A liner will be created between the two surfaces. This keyword implies both embedded and internal. The following keywords are available:",
+        "9.0": "Select a group of internal faces, and separate them into surfaces as with the zone separate command. A liner will be created between the two surfaces. This keyword implies both embedded and internal . The following keywords are available: Options: origin <v>: The point v is used to determine which side of the faces selected will be considered side 1, and which will be side 2. The vector from v to the face centroid is compared with the normal to the face. The side pointing toward v will be side 1, and the side pointing away from v will be side 2. If the origin keyword is not specified, it is assumed to be (0,0,0) .; clear-attach: If specified, causes any attach conditions on the boundary to be cleared. By default, an existing attach condition causes an error."
+      },
+      "availability": {
+        "engines": [
+          "flac"
+        ]
+      }
+    },
+    {
+      "name": "separate-origin",
+      "syntax": "origin <v>",
+      "description": "The point v is used to determine which side of the faces selected will be considered side 1, and which will be side 2. The vector from v to the face centroid is compared with the normal to the face. The side pointing toward v will be side 1, and the side pointing away from v will be side 2. If the origin keyword is not specified, it is assumed to be (0,0,0).",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "separate-clear-attach",
+      "syntax": "clear-attach",
+      "description": "If specified, causes any attach conditions on the boundary to be cleared. By default, an existing attach condition causes an error.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "size",
+      "syntax": "size <i1> <i2>",
+      "description": {
+        "7.0": "This keyword only applies if the from-quadrilateral option was used. Increases the number of elements created by subdividing the quadrilateral into i1 segments along the first edge and i2 segments along the second. By default, only one quad is created.",
+        "9.0": "This keyword only applies if the by-quadrilateral option was used. Increases the number of elements created by subdividing the quadrilateral into i1 segments along the first edge and i2 segments along the second. By default, only one quad is created."
+      }
+    },
+    {
+      "name": "by-line",
+      "syntax": "by-line <v1> <v2> 2D ONLY [linercreateblock]",
+      "description": "Create a collection of elements that lie along a straight line between the locations v1 and v2 . New nodes associated with the elements will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 to v2 corresponds with the direction from the begin point to the end point. If there are objects (zones in FLAC3D ) in these locations, the element will be attached to the objects at its nodes according to the Single Sided Liner-Grid Interaction section. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "by-ray",
+      "syntax": "by-ray <v1> <v2> <f> 2D ONLY [linercreateblock]",
+      "description": "Create a collection of elements that lie along a straight line starting at v1 , proceeding in the direction specified by v2 , for a distance given by f . New nodes associated with the element will also be created (see the id keyword). The nodal connectivity of each new element will be ordered such that the direction from v1 corresponds with the direction from the begin point to the end point. If there are target objects (zones in FLAC2D ) in these locations, the element will be attached to the objects at its nodes according to the Single Sided Liner-Grid Interaction section. If no attachment to objects is desired, then the links may be deleted with the command structure link delete after creating and positioning the element.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  },
-  "notes": [
-    "'[linercreateblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (the keywords on this page whose syntax carries no marker)."
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.create.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

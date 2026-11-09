@@ -10,601 +10,418 @@
     "available": false,
     "workaround": "itasca.command('wall history ...') - Python SDK does not provide history recording. Use history commands for manipulation"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall history",
-      "syntax": "wall history [name <sid>] keyword ...",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [wallhistoryblock]",
-          "description": "Magnitude of the accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY [wallhistoryblock]",
-          "description": "Current wall orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [wallhistoryblock]",
-          "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact [wallhistoryblock]",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact [wallhistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Record the history of wall with name s ."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin [wallhistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [wallhistoryblock]",
-          "description": "Magnitude of the wall translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the wall velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the wall velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the wall velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall history name 'wall1_force' force-contact id 1",
-          "description": "Track contact force magnitude for wall ID 1, name history 'wall1_force'"
-        },
-        {
-          "command": "wall history displacement-z name 'platen'",
-          "description": "Track z-displacement for wall named 'platen' (3D)"
-        },
-        {
-          "command": "wall history velocity-x position (0,0,5)",
-          "description": "Track x-velocity for wall nearest to position (0,0,5)"
-        },
-        {
-          "command": "wall history name 'bottom_vel' velocity-z id 100",
-          "description": "Track z-velocity for wall ID 100, name history 'bottom_vel'"
-        },
-        {
-          "command": "wall history force-contact-x name 'boundary'",
-          "description": "Track x-component of contact force for wall named 'boundary'"
-        },
-        {
-          "command": "wall history spin-z id 5",
-          "description": "Track z-component of angular velocity for wall ID 5 (3D)"
-        },
-        {
-          "command": "wall history extra index 1 type float id 10",
-          "description": "Track extra variable at index 1 (float type) for wall ID 10"
-        }
-      ],
-      "notes": [
-        "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
-      ]
-    },
-    "6.0": {
-      "command": "wall history",
-      "syntax": "wall history [name <sid>] keyword id <id> or name <s> or position <v>",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement",
-          "description": "Magnitude of the accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x",
-          "description": "The x -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y",
-          "description": "The y -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z",
-          "description": "The z -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x",
-          "description": "The x -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y",
-          "description": "The y -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z",
-          "description": "The z -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY",
-          "description": "Current wall orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x",
-          "description": "The x -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y",
-          "description": "The y -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z",
-          "description": "The z -component of the contact force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x",
-          "description": "The x -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y",
-          "description": "The y -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z",
-          "description": "The z -component of the contact moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Record the history of wall with name s ."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x",
-          "description": "The x -component of the location of wall centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y",
-          "description": "The y -component of the location of wall centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z",
-          "description": "The z -component of the location of wall centroid."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "{Value in 2D; Magnitude in 3D} of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "The x -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "The y -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "The z -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "Magnitude of the wall translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "The x -component of the wall velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "The y -component of the wall velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "The z -component of the wall velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall history name 'wall1_force' force-contact id 1",
-          "description": "Track contact force magnitude for wall ID 1, name history 'wall1_force'"
-        },
-        {
-          "command": "wall history displacement-z name 'platen'",
-          "description": "Track z-displacement for wall named 'platen' (3D)"
-        },
-        {
-          "command": "wall history velocity-x position (0,0,5)",
-          "description": "Track x-velocity for wall nearest to position (0,0,5)"
-        },
-        {
-          "command": "wall history name 'bottom_vel' velocity-z id 100",
-          "description": "Track z-velocity for wall ID 100, name history 'bottom_vel'"
-        },
-        {
-          "command": "wall history force-contact-x name 'boundary'",
-          "description": "Track x-component of contact force for wall named 'boundary'"
-        },
-        {
-          "command": "wall history spin-z id 5",
-          "description": "Track z-component of angular velocity for wall ID 5 (3D)"
-        },
-        {
-          "command": "wall history extra index 1 type float id 10",
-          "description": "Track extra variable at index 1 (float type) for wall ID 10"
-        }
-      ],
-      "notes": [
-        "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
-      ]
-    },
-    "9.0": {
-      "command": "wall history",
-      "syntax": "wall history [name <sid>] keyword ...",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [wallhistoryblock]",
-          "description": "Magnitude of the accumulated wall displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY [wallhistoryblock]",
-          "description": "Current wall orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [wallhistoryblock]",
-          "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact [wallhistoryblock]",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact [wallhistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Record the history of wall with name s ."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the location of wall centroid."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin [wallhistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the wall angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [wallhistoryblock]",
-          "description": "Magnitude of the wall translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [wallhistoryblock]",
-          "description": "The \\(x\\) -component of the wall velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [wallhistoryblock]",
-          "description": "The \\(y\\) -component of the wall velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY [wallhistoryblock]",
-          "description": "The \\(z\\) -component of the wall velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall history name 'wall1_force' force-contact id 1",
-          "description": "Track contact force magnitude for wall ID 1, name history 'wall1_force'"
-        },
-        {
-          "command": "wall history displacement-z name 'platen'",
-          "description": "Track z-displacement for wall named 'platen' (3D)"
-        },
-        {
-          "command": "wall history velocity-x position (0,0,5)",
-          "description": "Track x-velocity for wall nearest to position (0,0,5)"
-        },
-        {
-          "command": "wall history name 'bottom_vel' velocity-z id 100",
-          "description": "Track z-velocity for wall ID 100, name history 'bottom_vel'"
-        },
-        {
-          "command": "wall history force-contact-x name 'boundary'",
-          "description": "Track x-component of contact force for wall named 'boundary'"
-        },
-        {
-          "command": "wall history spin-z id 5",
-          "description": "Track z-component of angular velocity for wall ID 5 (3D)"
-        },
-        {
-          "command": "wall history extra index 1 type float id 10",
-          "description": "Track extra variable at index 1 (float type) for wall ID 10"
-        }
-      ],
-      "notes": [
-        "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz) are rejected per-keyword on live 9.7."
-      ]
-    }
+  "notes": {
+    "6.0": [
+      "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
+    ],
+    "7.0": [
+      "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
+    ],
+    "9.0": [
+      "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz) are rejected per-keyword on live 9.7."
+    ]
   },
-  "notes": [
-    "'[wallhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (axis-angle-x, axis-angle-y, axis-angle-z, name)."
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall history",
+  "syntax": {
+    "6.0": "wall history [name <sid>] keyword id <id> or name <s> or position <v>",
+    "7.0": "wall history [name <sid>] keyword ...",
+    "9.0": "wall history [name <sid>] keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "axis-angle-x",
+      "syntax": "axis-angle-x",
+      "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
+    },
+    {
+      "name": "axis-angle-y",
+      "syntax": "axis-angle-y",
+      "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
+    },
+    {
+      "name": "axis-angle-z",
+      "syntax": "axis-angle-z",
+      "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
+    },
+    {
+      "name": "displacement",
+      "syntax": {
+        "6.0": "displacement",
+        "7.0": "displacement [wallhistoryblock]",
+        "9.0": "displacement [wallhistoryblock]"
+      },
+      "description": "Magnitude of the accumulated wall displacement vector as a result of cycling."
+    },
+    {
+      "name": "displacement-x",
+      "syntax": {
+        "6.0": "displacement-x",
+        "7.0": "displacement-x [wallhistoryblock]",
+        "9.0": "displacement-x [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of accumulated displacement as a result of cycling.",
+        "7.0": "The \\(x\\) -component of accumulated displacement as a result of cycling.",
+        "9.0": "The \\(x\\) -component of accumulated displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": {
+        "6.0": "displacement-y",
+        "7.0": "displacement-y [wallhistoryblock]",
+        "9.0": "displacement-y [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of accumulated displacement as a result of cycling.",
+        "7.0": "The \\(y\\) -component of accumulated displacement as a result of cycling.",
+        "9.0": "The \\(y\\) -component of accumulated displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": {
+        "6.0": "displacement-z",
+        "7.0": "displacement-z 3D ONLY [wallhistoryblock]",
+        "9.0": "displacement-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of accumulated displacement as a result of cycling.",
+        "7.0": "The \\(z\\) -component of accumulated displacement as a result of cycling.",
+        "9.0": "The \\(z\\) -component of accumulated displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "euler-x",
+      "syntax": {
+        "6.0": "euler-x",
+        "7.0": "euler-x 3D ONLY [wallhistoryblock]",
+        "9.0": "euler-x 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "7.0": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "9.0": "The \\(x\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
+      }
+    },
+    {
+      "name": "euler-y",
+      "syntax": {
+        "6.0": "euler-y",
+        "7.0": "euler-y 3D ONLY [wallhistoryblock]",
+        "9.0": "euler-y 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "7.0": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "9.0": "The \\(y\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
+      }
+    },
+    {
+      "name": "euler-z",
+      "syntax": {
+        "6.0": "euler-z",
+        "7.0": "euler-z 3D ONLY [wallhistoryblock]",
+        "9.0": "euler-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "7.0": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command.",
+        "9.0": "The \\(z\\) -euler angle (in degrees) of the current wall orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the wall attribute command."
+      }
+    },
+    {
+      "name": "rotation",
+      "syntax": {
+        "6.0": "rotation 2D ONLY",
+        "7.0": "rotation 2D ONLY [wallhistoryblock]",
+        "9.0": "rotation 2D ONLY [wallhistoryblock]"
+      },
+      "description": "Current wall orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra [wallhistoryblock]",
+      "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "force-contact",
+      "syntax": {
+        "6.0": "force-contact",
+        "7.0": "force-contact [wallhistoryblock]",
+        "9.0": "force-contact [wallhistoryblock]"
+      },
+      "description": "The magnitude of the force resulting from contacts."
+    },
+    {
+      "name": "force-contact-x",
+      "syntax": {
+        "6.0": "force-contact-x",
+        "7.0": "force-contact-x [wallhistoryblock]",
+        "9.0": "force-contact-x [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the contact force.",
+        "7.0": "The \\(x\\) -component of the contact force.",
+        "9.0": "The \\(x\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "force-contact-y",
+      "syntax": {
+        "6.0": "force-contact-y",
+        "7.0": "force-contact-y [wallhistoryblock]",
+        "9.0": "force-contact-y [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the contact force.",
+        "7.0": "The \\(y\\) -component of the contact force.",
+        "9.0": "The \\(y\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "force-contact-z",
+      "syntax": {
+        "6.0": "force-contact-z",
+        "7.0": "force-contact-z 3D ONLY [wallhistoryblock]",
+        "9.0": "force-contact-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the contact force.",
+        "7.0": "The \\(z\\) -component of the contact force.",
+        "9.0": "The \\(z\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "moment-contact",
+      "syntax": {
+        "6.0": "moment-contact",
+        "7.0": "moment-contact [wallhistoryblock]",
+        "9.0": "moment-contact [wallhistoryblock]"
+      },
+      "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
+    },
+    {
+      "name": "moment-contact-x",
+      "syntax": {
+        "6.0": "moment-contact-x",
+        "7.0": "moment-contact-x 3D ONLY [wallhistoryblock]",
+        "9.0": "moment-contact-x 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the contact moment.",
+        "7.0": "The \\(x\\) -component of the contact moment.",
+        "9.0": "The \\(x\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "moment-contact-y",
+      "syntax": {
+        "6.0": "moment-contact-y",
+        "7.0": "moment-contact-y 3D ONLY [wallhistoryblock]",
+        "9.0": "moment-contact-y 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the contact moment.",
+        "7.0": "The \\(y\\) -component of the contact moment.",
+        "9.0": "The \\(y\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "moment-contact-z",
+      "syntax": {
+        "6.0": "moment-contact-z",
+        "7.0": "moment-contact-z 3D ONLY [wallhistoryblock]",
+        "9.0": "moment-contact-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the contact moment.",
+        "7.0": "The \\(z\\) -component of the contact moment.",
+        "9.0": "The \\(z\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Record the history of wall with name s ."
+    },
+    {
+      "name": "position-x",
+      "syntax": {
+        "6.0": "position-x",
+        "7.0": "position-x [wallhistoryblock]",
+        "9.0": "position-x [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the location of wall centroid.",
+        "7.0": "The \\(x\\) -component of the location of wall centroid.",
+        "9.0": "The \\(x\\) -component of the location of wall centroid."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": {
+        "6.0": "position-y",
+        "7.0": "position-y [wallhistoryblock]",
+        "9.0": "position-y [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the location of wall centroid.",
+        "7.0": "The \\(y\\) -component of the location of wall centroid.",
+        "9.0": "The \\(y\\) -component of the location of wall centroid."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z",
+        "7.0": "position-z 3D ONLY [wallhistoryblock]",
+        "9.0": "position-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the location of wall centroid.",
+        "7.0": "The \\(z\\) -component of the location of wall centroid.",
+        "9.0": "The \\(z\\) -component of the location of wall centroid."
+      }
+    },
+    {
+      "name": "spin",
+      "syntax": {
+        "6.0": "spin",
+        "7.0": "spin [wallhistoryblock]",
+        "9.0": "spin [wallhistoryblock]"
+      },
+      "description": "{Value in 2D; Magnitude in 3D} of the wall angular velocity in radians per second."
+    },
+    {
+      "name": "spin-x",
+      "syntax": {
+        "6.0": "spin-x",
+        "7.0": "spin-x 3D ONLY [wallhistoryblock]",
+        "9.0": "spin-x 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the wall angular velocity in radians per second.",
+        "7.0": "The \\(x\\) -component of the wall angular velocity in radians per second.",
+        "9.0": "The \\(x\\) -component of the wall angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "spin-y",
+      "syntax": {
+        "6.0": "spin-y",
+        "7.0": "spin-y 3D ONLY [wallhistoryblock]",
+        "9.0": "spin-y 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the wall angular velocity in radians per second.",
+        "7.0": "The \\(y\\) -component of the wall angular velocity in radians per second.",
+        "9.0": "The \\(y\\) -component of the wall angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": {
+        "6.0": "spin-z",
+        "7.0": "spin-z 3D ONLY [wallhistoryblock]",
+        "9.0": "spin-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the wall angular velocity in radians per second.",
+        "7.0": "The \\(z\\) -component of the wall angular velocity in radians per second.",
+        "9.0": "The \\(z\\) -component of the wall angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": {
+        "6.0": "velocity",
+        "7.0": "velocity [wallhistoryblock]",
+        "9.0": "velocity [wallhistoryblock]"
+      },
+      "description": "Magnitude of the wall translational velocity vector."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": {
+        "6.0": "velocity-x",
+        "7.0": "velocity-x [wallhistoryblock]",
+        "9.0": "velocity-x [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The x -component of the wall velocity.",
+        "7.0": "The \\(x\\) -component of the wall velocity.",
+        "9.0": "The \\(x\\) -component of the wall velocity."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": {
+        "6.0": "velocity-y",
+        "7.0": "velocity-y [wallhistoryblock]",
+        "9.0": "velocity-y [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The y -component of the wall velocity.",
+        "7.0": "The \\(y\\) -component of the wall velocity.",
+        "9.0": "The \\(y\\) -component of the wall velocity."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z",
+        "7.0": "velocity-z 3D ONLY [wallhistoryblock]",
+        "9.0": "velocity-z 3D ONLY [wallhistoryblock]"
+      },
+      "description": {
+        "6.0": "The z -component of the wall velocity.",
+        "7.0": "The \\(z\\) -component of the wall velocity.",
+        "9.0": "The \\(z\\) -component of the wall velocity."
+      }
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall history name 'wall1_force' force-contact id 1",
+      "description": "Track contact force magnitude for wall ID 1, name history 'wall1_force'"
+    },
+    {
+      "command": "wall history displacement-z name 'platen'",
+      "description": "Track z-displacement for wall named 'platen' (3D)"
+    },
+    {
+      "command": "wall history velocity-x position (0,0,5)",
+      "description": "Track x-velocity for wall nearest to position (0,0,5)"
+    },
+    {
+      "command": "wall history name 'bottom_vel' velocity-z id 100",
+      "description": "Track z-velocity for wall ID 100, name history 'bottom_vel'"
+    },
+    {
+      "command": "wall history force-contact-x name 'boundary'",
+      "description": "Track x-component of contact force for wall named 'boundary'"
+    },
+    {
+      "command": "wall history spin-z id 5",
+      "description": "Track z-component of angular velocity for wall ID 5 (3D)"
+    },
+    {
+      "command": "wall history extra index 1 type float id 10",
+      "description": "Track extra variable at index 1 (float type) for wall ID 10"
+    }
   ]
 }

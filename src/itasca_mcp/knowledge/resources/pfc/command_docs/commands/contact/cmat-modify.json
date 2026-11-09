@@ -22,187 +22,117 @@
     "Related commands: contact cmat add, contact cmat list, contact cmat default, contact cmat apply, contact cmat remove",
     "Only the specified keywords change; the entry's other settings are retained - except a model change, which discards the previous model's properties."
   ],
-  "versions": {
-    "7.0": {
-      "command": "contact cmat modify",
-      "syntax": "contact cmat modify <i> keyword ... [range]",
-      "keywords": [
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Apply to mechanical contacts."
-        },
-        {
-          "name": "method",
-          "syntax": "method <s> [<sa> <a>] ...",
-          "description": "The contact model method s , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with this cmat entry and will be invoked at contact creation."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole | linearpbond | null | rrlinear | smoothjoint | softbond}",
-          "description": "Specify the contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "property",
-          "syntax": "property <sp> <a> ...",
-          "description": "The contact model property named sp is set to a ."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Apply to thermal contacts."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat modify 1 model linearpbond method deformability emod 1e6 kratio 0.5 method pb_deformability emod 1e6 kratio 0.5 property fric 0.25 dp_nratio 0.2 pb_ten 1e8 pb_coh 1e8 pb_fa 30.0",
-          "description": "Modify entry 1 to use linearpbond model with deformability methods and specified properties (from official example)"
-        },
-        {
-          "command": "contact cmat modify 2 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Change entry 2 to use linear model with updated stiffness and friction"
-        },
-        {
-          "command": "contact cmat modify 3 property pb_ten 2e8 pb_coh 1e8",
-          "description": "Update only the strength properties of entry 3 without changing model or other properties"
-        },
-        {
-          "command": "contact cmat modify 0 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Modify the default entry (index 0) to change the fallback contact model"
-        },
-        {
-          "command": "contact cmat modify 1 property fric 0.6",
-          "description": "Update only the friction coefficient for entry 1"
-        },
-        {
-          "command": "contact cmat modify 2 range group 'soil'",
-          "description": "Update the range specification for entry 2 to apply to 'soil' group"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact cmat modify",
+  "syntax": {
+    "6.0": "contact cmat [<sprocess>] modify <i> keyword",
+    "7.0": "contact cmat modify <i> keyword ... [range]",
+    "9.0": "contact cmat modify <i> keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "mechanical",
+      "syntax": "mechanical",
+      "description": "Apply to mechanical contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "contact cmat modify",
-      "syntax": "contact cmat [<sprocess>] modify <i> keyword",
-      "keywords": [
-        {
-          "name": "inheritance",
-          "syntax": "inheritance",
-          "description": ""
-        },
-        {
-          "name": "method",
-          "syntax": "method <s> [<sa> a] ...",
-          "description": "The contact model method s , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with this cmat entry and will be invoked at contact creation."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | burger | flatjoint | hertz | hysteretic | linear | linearcbond | linearpbond | null | rrlinear | smoothjoint | softbond}",
-          "description": "Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; burger: Specify the Burger’s Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "property",
-          "syntax": "property <sp> a...",
-          "description": "The contact model property named sp is set to a . The list of available properties is contact model specific. Visit the documentation of the desired contact model for details."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat modify 1 model linearpbond method deformability emod 1e6 kratio 0.5 method pb_deformability emod 1e6 kratio 0.5 property fric 0.25 dp_nratio 0.2 pb_ten 1e8 pb_coh 1e8 pb_fa 30.0",
-          "description": "Modify entry 1 to use linearpbond model with deformability methods and specified properties (from official example)"
-        },
-        {
-          "command": "contact cmat modify 2 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Change entry 2 to use linear model with updated stiffness and friction"
-        },
-        {
-          "command": "contact cmat modify 3 property pb_ten 2e8 pb_coh 1e8",
-          "description": "Update only the strength properties of entry 3 without changing model or other properties"
-        },
-        {
-          "command": "contact cmat modify 0 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Modify the default entry (index 0) to change the fallback contact model"
-        },
-        {
-          "command": "contact cmat modify 1 property fric 0.6",
-          "description": "Update only the friction coefficient for entry 1"
-        },
-        {
-          "command": "contact cmat modify 2 range group 'soil'",
-          "description": "Update the range specification for entry 2 to apply to 'soil' group"
-        }
-      ]
+    {
+      "name": "inheritance",
+      "syntax": "inheritance",
+      "description": "",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "contact cmat modify",
-      "syntax": "contact cmat modify <i> keyword ... [range]",
-      "keywords": [
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Apply to mechanical contacts."
-        },
-        {
-          "name": "method",
-          "syntax": "method <s> [<sa> <a>] ...",
-          "description": "The contact model method s , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with this cmat entry and will be invoked at contact creation."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole 3D ONLY | linearpbond | null | rrlinear | smoothjoint | softbond | springnetwork | subspringnetwork}",
-          "description": "Specify the contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole 3D ONLY: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.; springnetwork: Specify the Spring Network Model contact model.; subspringnetwork: Specify the Subspring Network Model contact model."
-        },
-        {
-          "name": "property",
-          "syntax": "property <sp> <a> ...",
-          "description": "The contact model property named sp is set to a ."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Apply to thermal contacts."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat modify 1 model linearpbond method deformability emod 1e6 kratio 0.5 method pb_deformability emod 1e6 kratio 0.5 property fric 0.25 dp_nratio 0.2 pb_ten 1e8 pb_coh 1e8 pb_fa 30.0",
-          "description": "Modify entry 1 to use linearpbond model with deformability methods and specified properties (from official example)"
-        },
-        {
-          "command": "contact cmat modify 2 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Change entry 2 to use linear model with updated stiffness and friction"
-        },
-        {
-          "command": "contact cmat modify 3 property pb_ten 2e8 pb_coh 1e8",
-          "description": "Update only the strength properties of entry 3 without changing model or other properties"
-        },
-        {
-          "command": "contact cmat modify 0 model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Modify the default entry (index 0) to change the fallback contact model"
-        },
-        {
-          "command": "contact cmat modify 1 property fric 0.6",
-          "description": "Update only the friction coefficient for entry 1"
-        },
-        {
-          "command": "contact cmat modify 2 range group 'soil'",
-          "description": "Update the range specification for entry 2 to apply to 'soil' group"
-        }
-      ]
+    {
+      "name": "method",
+      "syntax": {
+        "6.0": "method <s> [<sa> a] ...",
+        "7.0": "method <s> [<sa> <a>] ...",
+        "9.0": "method <s> [<sa> <a>] ..."
+      },
+      "description": "The contact model method s , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with this cmat entry and will be invoked at contact creation."
+    },
+    {
+      "name": "model",
+      "syntax": {
+        "6.0": "model {arrlinear | burger | flatjoint | hertz | hysteretic | linear | linearcbond | linearpbond | null | rrlinear | smoothjoint | softbond}",
+        "7.0": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole | linearpbond | null | rrlinear | smoothjoint | softbond}",
+        "9.0": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole 3D ONLY | linearpbond | null | rrlinear | smoothjoint | softbond | springnetwork | subspringnetwork}"
+      },
+      "description": {
+        "6.0": "Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; burger: Specify the Burger’s Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.",
+        "7.0": "Specify the contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.",
+        "9.0": "Specify the contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole 3D ONLY: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.; springnetwork: Specify the Spring Network Model contact model.; subspringnetwork: Specify the Subspring Network Model contact model."
+      }
+    },
+    {
+      "name": "property",
+      "syntax": {
+        "6.0": "property <sp> a...",
+        "7.0": "property <sp> <a> ...",
+        "9.0": "property <sp> <a> ..."
+      },
+      "description": {
+        "6.0": "The contact model property named sp is set to a . The list of available properties is contact model specific. Visit the documentation of the desired contact model for details.",
+        "7.0": "The contact model property named sp is set to a .",
+        "9.0": "The contact model property named sp is set to a ."
+      }
+    },
+    {
+      "name": "proximity",
+      "syntax": "proximity <fd>",
+      "description": "The detection distance is set to fd ."
+    },
+    {
+      "name": "thermal",
+      "syntax": "thermal",
+      "description": "Apply to thermal contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "contact cmat modify 1 model linearpbond method deformability emod 1e6 kratio 0.5 method pb_deformability emod 1e6 kratio 0.5 property fric 0.25 dp_nratio 0.2 pb_ten 1e8 pb_coh 1e8 pb_fa 30.0",
+      "description": "Modify entry 1 to use linearpbond model with deformability methods and specified properties (from official example)"
+    },
+    {
+      "command": "contact cmat modify 2 model linear property kn 1e8 ks 5e7 fric 0.5",
+      "description": "Change entry 2 to use linear model with updated stiffness and friction"
+    },
+    {
+      "command": "contact cmat modify 3 property pb_ten 2e8 pb_coh 1e8",
+      "description": "Update only the strength properties of entry 3 without changing model or other properties"
+    },
+    {
+      "command": "contact cmat modify 0 model linear property kn 1e8 ks 5e7 fric 0.5",
+      "description": "Modify the default entry (index 0) to change the fallback contact model"
+    },
+    {
+      "command": "contact cmat modify 1 property fric 0.6",
+      "description": "Update only the friction coefficient for entry 1"
+    },
+    {
+      "command": "contact cmat modify 2 range group 'soil'",
+      "description": "Update the range specification for entry 2 to apply to 'soil' group"
+    }
+  ]
 }

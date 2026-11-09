@@ -18,171 +18,80 @@
     "available": false,
     "workaround": "itasca.command('clump distribute ...') - Python SDK cannot directly distribute clumps with templating system"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump distribute",
-      "syntax": "clump distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <s> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>} ...",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <s><a><1><...a><n>: The clump sizes are drawn from the distribution represented by the FISH function s . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "Clumps will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the clumps is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the clumps while generating can be specified by the FISH function sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each clump generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump distribute porosity 0.4 diameter template 'triangle' size 2 4 box -9 9",
-          "description": "Create clumps with overlap within the specified box until porosity reaches 0.4. Size set by equivalent circle/sphere diameter"
-        },
-        {
-          "command": "clump distribute resolution 0.5 number-bins 1 diameter box -2.5 2.5 -2.5 2.5 -5 5 bin 1 template 'pill' az 0 90 el 0 90 tilt 0 90 size 1.0 1.5 porosity 0.5",
-          "description": "Create clumps with overlap and specified orientation ranges (azimuth, elevation, tilt) until porosity reaches 0.5"
-        },
-        {
-          "command": "clump distribute porosity 0.3 diameter number-bins 6 box -40 40 -40 40 -40 40 bin 1 size 9.99 19.98 volume-fraction 0.41 group 'comp1' template 'comp1' bin 2 size 9.9 19.8 volume-fraction 0.21 group 'comp2' template 'comp2' bin 3 size 9.5 19 volume-fraction 0.14 group 'comp3' template 'comp3' bin 4 size 9.76 19.52 volume-fraction 0.11 group 'comp4' template 'comp4' bin 5 size 9.6 19.2 volume-fraction 0.07 group 'comp5' template 'comp5' bin 6 size 9.8 19.6 volume-fraction 0.06 group 'comp6' template 'comp6'",
-          "description": "Create multi-component assembly with 6 bins, each with different size ranges, volume fractions, groups, and templates. Volume fractions sum to 1.0. Stops at porosity 0.3"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump distribute",
+  "syntax": "clump distribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "bin",
+      "syntax": {
+        "6.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>}",
+        "7.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <s> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>} ...",
+        "9.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> 3D ONLY | fish-distribution <s> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> 3D ONLY | volume-fraction <fvfrac>} ..."
+      },
+      "description": {
+        "6.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the y -axis in degrees.; fish-distribution <sfish>a...a: The clump sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1.",
+        "7.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <s><a><1><...a><n>: The clump sizes are drawn from the distribution represented by the FISH function s . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1.",
+        "9.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>3D ONLY: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <s><a><1><...a><n>: The clump sizes are drawn from the distribution represented by the FISH function s . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>3D ONLY: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1."
+      }
     },
-    "6.0": {
-      "command": "clump distribute",
-      "syntax": "clump distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>}",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the y -axis in degrees.; fish-distribution <sfish>a...a: The clump sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "Clumps will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the clumps is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the clumps while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each clump generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump distribute porosity 0.4 diameter template 'triangle' size 2 4 box -9 9",
-          "description": "Create clumps with overlap within the specified box until porosity reaches 0.4. Size set by equivalent circle/sphere diameter"
-        },
-        {
-          "command": "clump distribute resolution 0.5 number-bins 1 diameter box -2.5 2.5 -2.5 2.5 -5 5 bin 1 template 'pill' az 0 90 el 0 90 tilt 0 90 size 1.0 1.5 porosity 0.5",
-          "description": "Create clumps with overlap and specified orientation ranges (azimuth, elevation, tilt) until porosity reaches 0.5"
-        },
-        {
-          "command": "clump distribute porosity 0.3 diameter number-bins 6 box -40 40 -40 40 -40 40 bin 1 size 9.99 19.98 volume-fraction 0.41 group 'comp1' template 'comp1' bin 2 size 9.9 19.8 volume-fraction 0.21 group 'comp2' template 'comp2' bin 3 size 9.5 19 volume-fraction 0.14 group 'comp3' template 'comp3' bin 4 size 9.76 19.52 volume-fraction 0.11 group 'comp4' template 'comp4' bin 5 size 9.6 19.2 volume-fraction 0.07 group 'comp5' template 'comp5' bin 6 size 9.8 19.6 volume-fraction 0.06 group 'comp6' template 'comp6'",
-          "description": "Create multi-component assembly with 6 bins, each with different size ranges, volume fractions, groups, and templates. Volume fractions sum to 1.0. Stops at porosity 0.3"
-        }
-      ]
+    {
+      "name": "box",
+      "syntax": {
+        "6.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
+        "7.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
+        "9.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>`z`-components are 3D ONLY"
+      },
+      "description": "Clumps will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
     },
-    "9.0": {
-      "command": "clump distribute",
-      "syntax": "clump distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> 3D ONLY | fish-distribution <s> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] [pebble] ... | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> 3D ONLY | volume-fraction <fvfrac>} ...",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the clump template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The clump density that is 1 by default.; elevation <fellow><felhi>3D ONLY: Range of elevations to rotate the clump template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <s><a><1><...a><n>: The clump sizes are drawn from the distribution represented by the FISH function s . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the clump size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the clump sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>] [pebble] ...: Specify that generated clumps or pebbles are given group name s at slot slot If the slot keyword is not specified, then the group name is assigned to the slot Default . The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump.; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the clump template to be used.; tilt <ftiltlow><ftilthi>3D ONLY: Range of tilts to rotate the clump template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of clumps in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>`z`-components are 3D ONLY",
-          "description": "Clumps will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the clumps is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the clumps while generating can be specified by the FISH function sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each clump generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump distribute porosity 0.4 diameter template 'triangle' size 2 4 box -9 9",
-          "description": "Create clumps with overlap within the specified box until porosity reaches 0.4. Size set by equivalent circle/sphere diameter"
-        },
-        {
-          "command": "clump distribute resolution 0.5 number-bins 1 diameter box -2.5 2.5 -2.5 2.5 -5 5 bin 1 template 'pill' az 0 90 el 0 90 tilt 0 90 size 1.0 1.5 porosity 0.5",
-          "description": "Create clumps with overlap and specified orientation ranges (azimuth, elevation, tilt) until porosity reaches 0.5"
-        },
-        {
-          "command": "clump distribute porosity 0.3 diameter number-bins 6 box -40 40 -40 40 -40 40 bin 1 size 9.99 19.98 volume-fraction 0.41 group 'comp1' template 'comp1' bin 2 size 9.9 19.8 volume-fraction 0.21 group 'comp2' template 'comp2' bin 3 size 9.5 19 volume-fraction 0.14 group 'comp3' template 'comp3' bin 4 size 9.76 19.52 volume-fraction 0.11 group 'comp4' template 'comp4' bin 5 size 9.6 19.2 volume-fraction 0.07 group 'comp5' template 'comp5' bin 6 size 9.8 19.6 volume-fraction 0.06 group 'comp6' template 'comp6'",
-          "description": "Create multi-component assembly with 6 bins, each with different size ranges, volume fractions, groups, and templates. Volume fractions sum to 1.0. Stops at porosity 0.3"
-        }
-      ]
+    {
+      "name": "diameter",
+      "syntax": "diameter",
+      "description": "Specify that the linear size used to scale the clumps is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
+    },
+    {
+      "name": "fish-size",
+      "syntax": "fish-size <sfname>",
+      "description": {
+        "6.0": "The size used to scale the clumps while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer.",
+        "7.0": "The size used to scale the clumps while generating can be specified by the FISH function sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer.",
+        "9.0": "The size used to scale the clumps while generating can be specified by the FISH function sfname . The return value of the FISH function should be a linear measure of the clump size and the function should take one argument that is a clump pointer."
+      }
+    },
+    {
+      "name": "number-bins",
+      "syntax": "number-bins <inum>",
+      "description": "Number of distributions used to generate the assembly."
+    },
+    {
+      "name": "porosity",
+      "syntax": "porosity <fporos>",
+      "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
+    },
+    {
+      "name": "resolution",
+      "syntax": "resolution <fres>",
+      "description": "Optional resolution that can be used as a multiplicative factor of the size of each clump generated. By default, fres = 1.0."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump distribute porosity 0.4 diameter template 'triangle' size 2 4 box -9 9",
+      "description": "Create clumps with overlap within the specified box until porosity reaches 0.4. Size set by equivalent circle/sphere diameter"
+    },
+    {
+      "command": "clump distribute resolution 0.5 number-bins 1 diameter box -2.5 2.5 -2.5 2.5 -5 5 bin 1 template 'pill' az 0 90 el 0 90 tilt 0 90 size 1.0 1.5 porosity 0.5",
+      "description": "Create clumps with overlap and specified orientation ranges (azimuth, elevation, tilt) until porosity reaches 0.5"
+    },
+    {
+      "command": "clump distribute porosity 0.3 diameter number-bins 6 box -40 40 -40 40 -40 40 bin 1 size 9.99 19.98 volume-fraction 0.41 group 'comp1' template 'comp1' bin 2 size 9.9 19.8 volume-fraction 0.21 group 'comp2' template 'comp2' bin 3 size 9.5 19 volume-fraction 0.14 group 'comp3' template 'comp3' bin 4 size 9.76 19.52 volume-fraction 0.11 group 'comp4' template 'comp4' bin 5 size 9.6 19.2 volume-fraction 0.07 group 'comp5' template 'comp5' bin 6 size 9.8 19.6 volume-fraction 0.06 group 'comp6' template 'comp6'",
+      "description": "Create multi-component assembly with 6 bins, each with different size ranges, volume fractions, groups, and templates. Volume fractions sum to 1.0. Stops at porosity 0.3"
+    }
+  ]
 }

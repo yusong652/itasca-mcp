@@ -5,21 +5,17 @@
     "update"
   ],
   "description": "Modify measurement region attributes. The ID must be specified to identify which measurement to modify. An error is thrown if no measurement region exists with the specified ID. Only specified attributes are changed; unspecified attributes retain their previous values. After modification, measurements must be recalculated with model clean.",
-  "notes": [
-    "id keyword is REQUIRED - must specify which measurement to modify",
-    "Error thrown if specified ID does not exist",
-    "Only specified attributes are changed - others retain previous values",
-    "After modification, call model clean to recalculate with new parameters",
-    "Can modify multiple attributes in single command",
-    "Cannot change ID itself - use delete/create to reassign ID",
-    "More efficient than delete/create when keeping same ID",
-    "Position can be specified as vector (position) or components (x/y/z)",
-    "Modifying position or radius changes which bodies are in measurement region",
-    "Modifying tolerance affects porosity calculation accuracy",
-    "Modifying bins affects size distribution resolution",
-    "Related commands: measure create, measure delete, measure list, model clean",
-    "Only the attributes given change; results update only after model clean. The position vector form and the x/y/z component form cannot be mixed in one command."
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00: 'id <i>' is the required first slot (verified via 'measure modify id 1 radius 3')."
+    ],
+    "7.0": [
+      "Live 7.00: 'id <i>' is the required first slot; the keywords follow it (verified via 'measure modify id 1 radius 3')."
+    ],
+    "9.0": [
+      "Live 9.7: 'id <i>' is the required first slot; the keywords follow it (verified via 'measure modify id 1 radius 3')."
+    ]
+  },
   "python_sdk_alternative": {
     "available": true,
     "notes": [
@@ -32,238 +28,107 @@
       "python": "# Python SDK approach - consult PFC documentation\n# itasca.measure module provides modification functionality"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "measure modify",
-      "syntax": "measure modify id <i> keyword ...",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Modify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the volume (area) equivalent sphere (circle) diameters in 3D (2D). The cumulative volume percentage (between 0 and 1) of bodies as a function of bin size is calculated and can be exported to a table with the measure dump command. The table holds the bin boundaries, and the percentage for a bin is given with the entry holding the lower bin boundary."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement circle (sphere)."
-        },
-        {
-          "name": "x",
-          "syntax": "x <f>",
-          "description": "\\(x\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "y",
-          "syntax": "y <f>",
-          "description": "\\(y\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "z",
-          "syntax": "z <f>",
-          "description": "\\(z\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "percentage (range: p â‰¥ 0) for accumulating the volume of bodies that intersect the measurement region in the porosity calculation."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement circle (sphere)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure modify id 1 radius 4.0",
-          "description": "Change radius of measurement 1 to 4.0, keep other attributes. Use case: Adjust measurement region size."
-        },
-        {
-          "command": "measure modify id 1 radius 4.0 x 2.0 y 2.0 z 2.0 tolerance 0.0",
-          "description": "Modify multiple attributes: radius, position, and tolerance. Use case: Comprehensive reconfiguration (example from documentation)."
-        },
-        {
-          "command": "measure modify id 2 position (5.0, 3.0, 2.0)",
-          "description": "Move measurement 2 to new position using vector notation. Use case: Relocate measurement region."
-        },
-        {
-          "command": "measure modify id 1 x 10.0",
-          "description": "Change only x-coordinate, keep y and z unchanged. Use case: Adjust single coordinate component."
-        },
-        {
-          "command": "measure modify id 3 bins 200 0.0 1.0",
-          "description": "Change size distribution to 200 bins from 0.0 to 1.0. Use case: Increase resolution of particle size distribution."
-        },
-        {
-          "command": "measure modify id 1 tolerance 0.001\nmodel clean\nmeasure list",
-          "description": "Increase precision, recalculate, view updated results. Use case: Refine porosity calculation accuracy."
-        },
-        {
-          "command": "measure list\nmeasure modify id 1 radius 6.0\nmodel clean\nmeasure list",
-          "description": "View before, modify, recalculate, view after. Use case: Before/after comparison workflow."
-        }
-      ],
-      "notes": [
-        "Live 7.00: 'id <i>' is the required first slot; the keywords follow it (verified via 'measure modify id 1 radius 3')."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "measure modify",
+  "syntax": "measure modify id <i> keyword ...",
+  "keywords": [
+    {
+      "name": "bins",
+      "syntax": "bins <i> <fl> <fh>",
+      "description": "Modify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the volume (area) equivalent sphere (circle) diameters in 3D (2D). The cumulative volume percentage (between 0 and 1) of bodies as a function of bin size is calculated and can be exported to a table with the measure dump command. The table holds the bin boundaries, and the percentage for a bin is given with the entry holding the lower bin boundary."
     },
-    "6.0": {
-      "command": "measure modify",
-      "syntax": "measure modify id <i> keyword ...",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Modify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the volume (area) equivalent sphere (circle) diameters in 3D (2D). The cumulative volume percentage (between 0 and 1) of bodies as a function of bin size is calculated and can be exported to a table with the measure dump command. The table holds the bin boundaries, and the percentage for a bin is given with the entry holding the lower bin boundary."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement circle (sphere)."
-        },
-        {
-          "name": "x",
-          "syntax": "x <f>",
-          "description": "x -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "y",
-          "syntax": "y <f>",
-          "description": "y -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "z",
-          "syntax": "z <f>",
-          "description": "z -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "percentage (range: p â‰¥ 0) for accumulating the volume of bodies that intersect the measurement region in the porosity calculation."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement circle (sphere)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure modify id 1 radius 4.0",
-          "description": "Change radius of measurement 1 to 4.0, keep other attributes. Use case: Adjust measurement region size."
-        },
-        {
-          "command": "measure modify id 1 radius 4.0 x 2.0 y 2.0 z 2.0 tolerance 0.0",
-          "description": "Modify multiple attributes: radius, position, and tolerance. Use case: Comprehensive reconfiguration (example from documentation)."
-        },
-        {
-          "command": "measure modify id 2 position (5.0, 3.0, 2.0)",
-          "description": "Move measurement 2 to new position using vector notation. Use case: Relocate measurement region."
-        },
-        {
-          "command": "measure modify id 1 x 10.0",
-          "description": "Change only x-coordinate, keep y and z unchanged. Use case: Adjust single coordinate component."
-        },
-        {
-          "command": "measure modify id 3 bins 200 0.0 1.0",
-          "description": "Change size distribution to 200 bins from 0.0 to 1.0. Use case: Increase resolution of particle size distribution."
-        },
-        {
-          "command": "measure modify id 1 tolerance 0.001\nmodel clean\nmeasure list",
-          "description": "Increase precision, recalculate, view updated results. Use case: Refine porosity calculation accuracy."
-        },
-        {
-          "command": "measure list\nmeasure modify id 1 radius 6.0\nmodel clean\nmeasure list",
-          "description": "View before, modify, recalculate, view after. Use case: Before/after comparison workflow."
-        }
-      ],
-      "notes": [
-        "Live 6.00: 'id <i>' is the required first slot (verified via 'measure modify id 1 radius 3')."
-      ]
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Specify the ID.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "measure modify",
-      "syntax": "measure modify id <i> keyword ...",
-      "keywords": [
-        {
-          "name": "bins",
-          "syntax": "bins <i> <fl> <fh>",
-          "description": "Modify the number of bins ( i ) and the lowest and highest ( fl and fh ) bin edges for the size distribution calculation. All bodies (e.g., clumps and balls) that fall within the measurement region are binned based on the volume (area) equivalent sphere (circle) diameters in 3D (2D). The cumulative volume percentage (between 0 and 1) of bodies as a function of bin size is calculated and can be exported to a table with the measure dump command. The table holds the bin boundaries, and the percentage for a bin is given with the entry holding the lower bin boundary."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Radius of the measurement circle (sphere)."
-        },
-        {
-          "name": "x",
-          "syntax": "x <f>",
-          "description": "\\(x\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "y",
-          "syntax": "y <f>",
-          "description": "\\(y\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "z",
-          "syntax": "z <f> 3D only",
-          "description": "\\(z\\) -coordinate of the center of the measurement circle (sphere)."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "percentage (range: p â‰¥ 0) for accumulating the volume of bodies that intersect the measurement region in the porosity calculation."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the center of the measurement circle (sphere)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure modify id 1 radius 4.0",
-          "description": "Change radius of measurement 1 to 4.0, keep other attributes. Use case: Adjust measurement region size."
-        },
-        {
-          "command": "measure modify id 1 radius 4.0 x 2.0 y 2.0 z 2.0 tolerance 0.0",
-          "description": "Modify multiple attributes: radius, position, and tolerance. Use case: Comprehensive reconfiguration (example from documentation)."
-        },
-        {
-          "command": "measure modify id 2 position (5.0, 3.0, 2.0)",
-          "description": "Move measurement 2 to new position using vector notation. Use case: Relocate measurement region."
-        },
-        {
-          "command": "measure modify id 1 x 10.0",
-          "description": "Change only x-coordinate, keep y and z unchanged. Use case: Adjust single coordinate component."
-        },
-        {
-          "command": "measure modify id 3 bins 200 0.0 1.0",
-          "description": "Change size distribution to 200 bins from 0.0 to 1.0. Use case: Increase resolution of particle size distribution."
-        },
-        {
-          "command": "measure modify id 1 tolerance 0.001\nmodel clean\nmeasure list",
-          "description": "Increase precision, recalculate, view updated results. Use case: Refine porosity calculation accuracy."
-        },
-        {
-          "command": "measure list\nmeasure modify id 1 radius 6.0\nmodel clean\nmeasure list",
-          "description": "View before, modify, recalculate, view after. Use case: Before/after comparison workflow."
-        }
-      ],
-      "notes": [
-        "Live 9.7: 'id <i>' is the required first slot; the keywords follow it (verified via 'measure modify id 1 radius 3')."
-      ]
+    {
+      "name": "radius",
+      "syntax": "radius <f>",
+      "description": "Radius of the measurement circle (sphere)."
+    },
+    {
+      "name": "x",
+      "syntax": "x <f>",
+      "description": {
+        "6.0": "x -coordinate of the center of the measurement circle (sphere).",
+        "7.0": "\\(x\\) -coordinate of the center of the measurement circle (sphere).",
+        "9.0": "\\(x\\) -coordinate of the center of the measurement circle (sphere)."
+      }
+    },
+    {
+      "name": "y",
+      "syntax": "y <f>",
+      "description": {
+        "6.0": "y -coordinate of the center of the measurement circle (sphere).",
+        "7.0": "\\(y\\) -coordinate of the center of the measurement circle (sphere).",
+        "9.0": "\\(y\\) -coordinate of the center of the measurement circle (sphere)."
+      }
+    },
+    {
+      "name": "z",
+      "syntax": {
+        "6.0": "z <f>",
+        "7.0": "z <f>",
+        "9.0": "z <f> 3D only"
+      },
+      "description": {
+        "6.0": "z -coordinate of the center of the measurement circle (sphere).",
+        "7.0": "\\(z\\) -coordinate of the center of the measurement circle (sphere).",
+        "9.0": "\\(z\\) -coordinate of the center of the measurement circle (sphere)."
+      }
+    },
+    {
+      "name": "tolerance",
+      "syntax": "tolerance <f>",
+      "description": "percentage (range: p â‰¥ 0) for accumulating the volume of bodies that intersect the measurement region in the porosity calculation."
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Position of the center of the measurement circle (sphere)."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "measure modify id 1 radius 4.0",
+      "description": "Change radius of measurement 1 to 4.0, keep other attributes. Use case: Adjust measurement region size."
+    },
+    {
+      "command": "measure modify id 1 radius 4.0 x 2.0 y 2.0 z 2.0 tolerance 0.0",
+      "description": "Modify multiple attributes: radius, position, and tolerance. Use case: Comprehensive reconfiguration (example from documentation)."
+    },
+    {
+      "command": "measure modify id 2 position (5.0, 3.0, 2.0)",
+      "description": "Move measurement 2 to new position using vector notation. Use case: Relocate measurement region."
+    },
+    {
+      "command": "measure modify id 1 x 10.0",
+      "description": "Change only x-coordinate, keep y and z unchanged. Use case: Adjust single coordinate component."
+    },
+    {
+      "command": "measure modify id 3 bins 200 0.0 1.0",
+      "description": "Change size distribution to 200 bins from 0.0 to 1.0. Use case: Increase resolution of particle size distribution."
+    },
+    {
+      "command": "measure modify id 1 tolerance 0.001\nmodel clean\nmeasure list",
+      "description": "Increase precision, recalculate, view updated results. Use case: Refine porosity calculation accuracy."
+    },
+    {
+      "command": "measure list\nmeasure modify id 1 radius 6.0\nmodel clean\nmeasure list",
+      "description": "View before, modify, recalculate, view after. Use case: Before/after comparison workflow."
+    }
+  ]
 }

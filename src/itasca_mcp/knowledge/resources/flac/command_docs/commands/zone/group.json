@@ -4,52 +4,40 @@
     "group",
     "zone"
   ],
-  "description": "Add group name s to the zones in the range. Use of the group logic is described in Groups . This command may take the form zone group \"slotname=groupname\" — quotation marks required, — where slotname is the slot assignment and groupname is the group name.",
+  "description": {
+    "7.0": "Add group name s to the zones in the range. Use of the group logic is described in Groups. This command may take the form zone group \"slotname=groupname\" — quotation marks required, — where slotname is the slot assignment and groupname is the group name.",
+    "9.0": "Add group name s to the zones in the range. Use of the group logic is described in Groups . This command may take the form zone group \"slotname=groupname\" — quotation marks required, — where slotname is the slot assignment and groupname is the group name."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone group",
-      "syntax": "zone group <s> [keyword] [range]",
-      "description": "Add group name s to the zones in the range. Use of the group logic is described in Groups. This command may take the form zone group \"slotname=groupname\" — quotation marks required, — where slotname is the slot assignment and groupname is the group name.",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the zones. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s. The default slot name is Default."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.group.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone group",
+  "syntax": "zone group <s> [keyword] [range]",
+  "keywords": [
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": {
+        "7.0": "Remove s from the zones. If a slot is not specified, the group name is removed from all slots it is found in.",
+        "9.0": "Remove s from the zones. If a slot is not specified, the group name is removed from all slots where it is found."
       }
     },
-    "9.0": {
-      "command": "zone group",
-      "syntax": "zone group <s> [keyword] [range]",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the zones. If a slot is not specified, the group name is removed from all slots where it is found."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s . If not supplied, a group name created by the command is assigned to the named Default ."
-        }
-      ]
+    {
+      "name": "slot",
+      "syntax": "slot <s>",
+      "description": {
+        "7.0": "Assign the group to the slot named s. The default slot name is Default.",
+        "9.0": "Assign the group to the slot named s . If not supplied, a group name created by the command is assigned to the named Default ."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.group.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

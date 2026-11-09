@@ -9,163 +9,89 @@
     "available": true,
     "workaround": "Ball.set_group(group_name, slot=None) - requires iteration: for b in itasca.ball.list(): b.set_group('name')"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball group",
-      "syntax": "ball group <s> [keyword ...] [range]",
-      "keywords": [
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Assign s to the next available slot."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from all slots."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s2>",
-          "description": "Assign the group s to slot s2 . By default, slot Default is used."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball group 'top_grip' range position-y 0.049 0.05",
-          "description": "Assign balls in y-position range to group 'top_grip' (default slot, from official docs)"
-        },
-        {
-          "command": "ball group 'inclusions' range circle center -1.0 -3.0 radius 0.5",
-          "description": "Assign balls within circular region to group 'inclusions' (from official docs)"
-        },
-        {
-          "command": "ball group 'layer1' slot 'layer' range position-z -5 0",
-          "description": "Assign balls in z-range to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "ball group 'active' range id 1 100",
-          "description": "Assign balls with IDs 1-100 to group 'active' in default slot"
-        },
-        {
-          "command": "ball group 'active' add",
-          "description": "Assign ALL balls to group 'active' in next available slot"
-        },
-        {
-          "command": "ball group 'old_group' remove",
-          "description": "Remove group 'old_group' from all balls in all slots"
-        },
-        {
-          "command": "ball group 'BackLeft' range position-x -5.0 0.0",
-          "description": "Assign balls in x-range to group 'BackLeft' (based on official docs pattern)"
-        }
-      ],
-      "notes": [
-        "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball group",
+  "syntax": "ball group <s> [keyword ...] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "ball group",
-      "syntax": "ball group <s> [keyword ...] [range]",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the balls. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s . The default slot name is Default ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball group 'top_grip' range position-y 0.049 0.05",
-          "description": "Assign balls in y-position range to group 'top_grip' (default slot, from official docs)"
-        },
-        {
-          "command": "ball group 'inclusions' range circle center -1.0 -3.0 radius 0.5",
-          "description": "Assign balls within circular region to group 'inclusions' (from official docs)"
-        },
-        {
-          "command": "ball group 'layer1' slot 'layer' range position-z -5 0",
-          "description": "Assign balls in z-range to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "ball group 'active' range id 1 100",
-          "description": "Assign balls with IDs 1-100 to group 'active' in default slot"
-        },
-        {
-          "command": "ball group 'active' add",
-          "description": "Assign ALL balls to group 'active' in next available slot"
-        },
-        {
-          "command": "ball group 'old_group' remove",
-          "description": "Remove group 'old_group' from all balls in all slots"
-        },
-        {
-          "command": "ball group 'BackLeft' range position-x -5.0 0.0",
-          "description": "Assign balls in x-range to group 'BackLeft' (based on official docs pattern)"
-        }
-      ],
-      "notes": [
-        "Live 6.00: the first slot is the group name (String); modifiers follow the name."
-      ]
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": {
+        "6.0": "Remove s from the balls. If a slot is not specified, the group name is removed from all slots it is found in.",
+        "7.0": "Remove s from all slots.",
+        "9.0": "Remove s from all slots."
+      }
     },
-    "9.0": {
-      "command": "ball group",
-      "syntax": "ball group <s> [keyword ...] [range]",
-      "keywords": [
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Assign s to the next available slot."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from all slots."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s2>",
-          "description": "Assign the group s to slot s2 . By default, slot Default is used."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball group 'top_grip' range position-y 0.049 0.05",
-          "description": "Assign balls in y-position range to group 'top_grip' (default slot, from official docs)"
-        },
-        {
-          "command": "ball group 'inclusions' range circle center -1.0 -3.0 radius 0.5",
-          "description": "Assign balls within circular region to group 'inclusions' (from official docs)"
-        },
-        {
-          "command": "ball group 'layer1' slot 'layer' range position-z -5 0",
-          "description": "Assign balls in z-range to group 'layer1' in slot 'layer'"
-        },
-        {
-          "command": "ball group 'active' range id 1 100",
-          "description": "Assign balls with IDs 1-100 to group 'active' in default slot"
-        },
-        {
-          "command": "ball group 'active' add",
-          "description": "Assign ALL balls to group 'active' in next available slot"
-        },
-        {
-          "command": "ball group 'old_group' remove",
-          "description": "Remove group 'old_group' from all balls in all slots"
-        },
-        {
-          "command": "ball group 'BackLeft' range position-x -5.0 0.0",
-          "description": "Assign balls in x-range to group 'BackLeft' (based on official docs pattern)"
-        }
-      ],
-      "notes": [
-        "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
-      ]
+    {
+      "name": "slot",
+      "syntax": {
+        "6.0": "slot <s>",
+        "7.0": "slot <s2>",
+        "9.0": "slot <s2>"
+      },
+      "description": {
+        "6.0": "Assign the group to the slot named s . The default slot name is Default .",
+        "7.0": "Assign the group s to slot s2 . By default, slot Default is used.",
+        "9.0": "Assign the group s to slot s2 . By default, slot Default is used."
+      }
     }
+  ],
+  "examples": [
+    {
+      "command": "ball group 'top_grip' range position-y 0.049 0.05",
+      "description": "Assign balls in y-position range to group 'top_grip' (default slot, from official docs)"
+    },
+    {
+      "command": "ball group 'inclusions' range circle center -1.0 -3.0 radius 0.5",
+      "description": "Assign balls within circular region to group 'inclusions' (from official docs)"
+    },
+    {
+      "command": "ball group 'layer1' slot 'layer' range position-z -5 0",
+      "description": "Assign balls in z-range to group 'layer1' in slot 'layer'"
+    },
+    {
+      "command": "ball group 'active' range id 1 100",
+      "description": "Assign balls with IDs 1-100 to group 'active' in default slot"
+    },
+    {
+      "command": "ball group 'active' add",
+      "description": "Assign ALL balls to group 'active' in next available slot"
+    },
+    {
+      "command": "ball group 'old_group' remove",
+      "description": "Remove group 'old_group' from all balls in all slots"
+    },
+    {
+      "command": "ball group 'BackLeft' range position-x -5.0 0.0",
+      "description": "Assign balls in x-range to group 'BackLeft' (based on official docs pattern)"
+    }
+  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00: the first slot is the group name (String); modifiers follow the name."
+    ],
+    "7.0": [
+      "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+    ],
+    "9.0": [
+      "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+    ]
   }
 }

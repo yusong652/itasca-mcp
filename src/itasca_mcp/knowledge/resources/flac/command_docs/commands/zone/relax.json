@@ -8,347 +8,285 @@
     "modify",
     "fill"
   ],
-  "description": "Create and modify a special apply condition on the zones in the range. Keywords include delete, excavate, modify, fill. This condition gradually “excavates” the material by reducing the stiffness, stresses, and densities of the zones. This keeps spurious inertial effects in the static solution process from causing unrealistic damage to the region around the excavation.",
+  "description": {
+    "7.0": "Creates and modifies a special apply condition on the zones in the range. This condition gradually ‘excavates’ the material by reducing the stiffness, stresses, and densities of the zones. This keeps spurious inertial effects in the static solution process from causing unrealistic damage to the region around the excavation.",
+    "9.0": "Create and modify a special apply condition on the zones in the range. Keywords include delete, excavate, modify, fill. This condition gradually “excavates” the material by reducing the stiffness, stresses, and densities of the zones. This keeps spurious inertial effects in the static solution process from causing unrealistic damage to the region around the excavation."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone relax",
-      "syntax": "zone relax keyword",
-      "description": "Creates and modifies a special apply condition on the zones in the range. This condition gradually ‘excavates’ the material by reducing the stiffness, stresses, and densities of the zones. This keeps spurious inertial effects in the static solution process from causing unrealistic damage to the region around the excavation.",
-      "keywords": [
-        {
-          "name": "delete",
-          "syntax": "delete <s>",
-          "description": "Finds a previously created zone relax apply condition with name s, and deletes it. If the reduction factor has reached 0, the material has been nulled and thus its relax condition has been deleted. For this case, no need to delete it once more."
-        },
-        {
-          "name": "excavate",
-          "syntax": "excavate {fish <s> | fish-local <s> | minimum <f> | name <s> | servo-bound <f> | servo-increment <f> | step <i> | table <s> [time {step | mechanical | fluid | thermal | creep | dynamic}]} [range]",
-          "description": "Creates and initializes an excavation condition on all zones in the range. The following keywords are available to customize how the excavation progresses. Options: fish <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.; fish-local <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used. The function is assumed to take two arguments. The first argument is a pointer to the zone in question. The second argument is unused.; minimum <f>: Sets the minimum reduction factor that will be allowed. The default value is 0.0 . This should be a number between 0.0 and 1.0 . This value can be used to solve to a specific reduction factor before installing reinforcement or other operation. Then the zone relax modify command can be used to lower the minimum. Note changing the minimum when using the table , fish , or fish-local options to control the reduction factor may result in unexpected behavior, as the time index used for those options will not stop advancing after reaching the minimum value.; name <s>: Assigns the apply condition an identifying name s . If a name is not specified one will be created automatically based on the internally assigned ID number.; servo-bound <f>: If the current mechanical force ratio (see the zone ratio ) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3; servo-increment <f>: If the current mechanical force ratio is less than servo-bound , then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0 , and greater than 0.0 . The default value is 0.005 .; step <i>: If set to a positive value, then any FISH , table , or servo parameters are ignored and the reduction factor is reduced linearly from 1.0 to 0.0 over the course of i steps.; table <s>[time {step | mechanical | fluid | thermal | creep | dynamic}]: If specified, then the reduction factor is given by table s . A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options. Options: step: Use the total cycle count.; mechanical: Use the accumulated mechanical time (the default); fluid: Use the accumulated fluid flow time.; thermal: Use the accumulated thermal time.; creep: Use the accumulated creep time.; dynamic: Use the accumulated dynamic time."
-        },
-        {
-          "name": "excavate-fish",
-          "syntax": "fish <s>",
-          "description": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used."
-        },
-        {
-          "name": "excavate-fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used."
-        },
-        {
-          "name": "excavate-minimum",
-          "syntax": "minimum <f>",
-          "description": "Note changing the minimum when using the table, fish, or fish-local options to control the reduction factor may result in unexpected behavior, as the time index used for those options will not stop advancing after reaching the minimum value."
-        },
-        {
-          "name": "excavate-name",
-          "syntax": "name <s>",
-          "description": "Assigns the apply condition an identifying name s. If a name is not specified one will be created automatically based on the internally assigned ID number."
-        },
-        {
-          "name": "excavate-servo-bound",
-          "syntax": "servo-bound <f>",
-          "description": "If the current mechanical force ratio (see the zone ratio) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3"
-        },
-        {
-          "name": "excavate-servo-increment",
-          "syntax": "servo-increment <f>",
-          "description": "If the current mechanical force ratio is less than servo-bound, then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0, and greater than 0.0. The default value is 0.005."
-        },
-        {
-          "name": "excavate-step",
-          "syntax": "step <i>",
-          "description": "If set to a positive value, then any FISH, table, or servo parameters are ignored and the reduction factor is reduced linearly from 1.0 to 0.0 over the course of i steps."
-        },
-        {
-          "name": "excavate-table",
-          "syntax": "table <s> [time keyword]",
-          "description": "If specified, then the reduction factor is given by table s. A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options."
-        },
-        {
-          "name": "excavate-table-step",
-          "syntax": "step",
-          "description": "Use the total cycle count."
-        },
-        {
-          "name": "excavate-table-mechanical",
-          "syntax": "mechanical",
-          "description": "Use the accumulated mechanical time (the default)"
-        },
-        {
-          "name": "excavate-table-fluid",
-          "syntax": "fluid",
-          "description": "Use the accumulated fluid flow time."
-        },
-        {
-          "name": "excavate-table-thermal",
-          "syntax": "thermal",
-          "description": "Use the accumulated thermal time."
-        },
-        {
-          "name": "excavate-table-creep",
-          "syntax": "creep",
-          "description": "Use the accumulated creep time."
-        },
-        {
-          "name": "excavate-table-dynamic",
-          "syntax": "dynamic",
-          "description": "Use the accumulated dynamic time."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List all relax conditions, including their name and settings."
-        },
-        {
-          "name": "modify",
-          "syntax": "modify <s> keyword",
-          "description": "Finds the previously created zone relax apply condition with name s, and modify its settings. The following keywords are available: Options: fish <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.; fish-local <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used. The function is assumed to take two arguments. The first argument is a pointer to the zone in question. The second argument is unused.; name <s>: Assigns the apply condition an identifying name s . If a name is not specified one will be created automatically based on the internally assigned ID number.; servo-bound <f>: If the current mechanical force ratio (see the zone ratio ) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3; servo-increment <f>: If the current mechanical force ratio is less than servo-bound , then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0 , and greater than 0.0 . The default value is 0.005 .; step <i>: If set to a positive value, then any FISH , table , or servo parameters are ignored and the reduction factor is reduced linearly from the current value (which is at start 0.99 ) to minimum (by default 0.0 ) over the course of i steps.; table <s>[time {step | mechanical | fluid | thermal | creep | dynamic}]: If specified, then the reduction factor is given by table s . A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options. Options: step: Use the total cycle count.; mechanical: Use the accumulated mechanical time (the default); fluid: Use the accumulated fluid flow time.; thermal: Use the accumulated thermal time.; creep: Use the accumulated creep time.; dynamic: Use the accumulated dynamic time."
-        },
-        {
-          "name": "modify-fish",
-          "syntax": "fish <s>",
-          "description": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used."
-        },
-        {
-          "name": "modify-fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used."
-        },
-        {
-          "name": "modify-name",
-          "syntax": "name <s>",
-          "description": "Assigns the apply condition an identifying name s. If a name is not specified one will be created automatically based on the internally assigned ID number."
-        },
-        {
-          "name": "modify-servo-bound",
-          "syntax": "servo-bound <f>",
-          "description": "If the current mechanical force ratio (see the zone ratio) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3"
-        },
-        {
-          "name": "modify-servo-increment",
-          "syntax": "servo-increment <f>",
-          "description": "If the current mechanical force ratio is less than servo-bound, then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0, and greater than 0.0. The default value is 0.005."
-        },
-        {
-          "name": "modify-step",
-          "syntax": "step <i>",
-          "description": "If set to a positive value, then any FISH, table, or servo parameters are ignored and the reduction factor is reduced linearly from the current value (which is at start 0.99) to minimum (by default 0.0) over the course of i steps."
-        },
-        {
-          "name": "modify-table",
-          "syntax": "table <s> [time keyword]",
-          "description": "If specified, then the reduction factor is given by table s. A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options."
-        },
-        {
-          "name": "modify-table-step",
-          "syntax": "step",
-          "description": "Use the total cycle count."
-        },
-        {
-          "name": "modify-table-mechanical",
-          "syntax": "mechanical",
-          "description": "Use the accumulated mechanical time (the default)"
-        },
-        {
-          "name": "modify-table-fluid",
-          "syntax": "fluid",
-          "description": "Use the accumulated fluid flow time."
-        },
-        {
-          "name": "modify-table-thermal",
-          "syntax": "thermal",
-          "description": "Use the accumulated thermal time."
-        },
-        {
-          "name": "modify-table-creep",
-          "syntax": "creep",
-          "description": "Use the accumulated creep time."
-        },
-        {
-          "name": "modify-table-dynamic",
-          "syntax": "dynamic",
-          "description": "Use the accumulated dynamic time."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.relax.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone relax",
+  "syntax": "zone relax keyword",
+  "keywords": [
+    {
+      "name": "delete",
+      "syntax": "delete <s>",
+      "description": {
+        "7.0": "Finds a previously created zone relax apply condition with name s, and deletes it. If the reduction factor has reached 0, the material has been nulled and thus its relax condition has been deleted. For this case, no need to delete it once more.",
+        "9.0": "Delete the named relax condition (use the name assigned via the name sub-keyword of excavate/modify), or all conditions if no name is supplied."
       }
     },
-    "9.0": {
-      "command": "zone relax",
-      "syntax": "zone relax keyword",
-      "keywords": [
-        {
-          "name": "delete",
-          "syntax": "delete <s>",
-          "description": "Delete the named relax condition (use the name assigned via the name sub-keyword of excavate/modify), or all conditions if no name is supplied."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List all currently-active relax conditions, with their names, scope (zones in range), table (if any), and current relaxation factor."
-        },
-        {
-          "name": "excavate",
-          "syntax": "excavate keyword [range]",
-          "description": "Create a relax condition that progressively reduces (excavates) the boundary tractions on zones in the range. Sub-keywords: fish, fish-local, minimum, name, servo-bound, servo-increment, step, table."
-        },
-        {
-          "name": "excavate-fish",
-          "syntax": "fish <s>",
-          "description": "Use the FISH function named s to compute the per-step relaxation factor."
-        },
-        {
-          "name": "excavate-fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Same as fish but the function name is interpreted in the local FISH namespace."
-        },
-        {
-          "name": "excavate-minimum",
-          "syntax": "minimum <f>",
-          "description": "Lower bound (floor) for the relaxation factor, clamped during cycling."
-        },
-        {
-          "name": "excavate-name",
-          "syntax": "name <s>",
-          "description": "Assign the relax condition a name s so it can be referenced by zone relax delete / zone relax modify."
-        },
-        {
-          "name": "excavate-servo-bound",
-          "syntax": "servo-bound <f>",
-          "description": "Servo-control threshold; the relaxation factor is held when the controlled quantity exceeds this bound."
-        },
-        {
-          "name": "excavate-servo-increment",
-          "syntax": "servo-increment <f>",
-          "description": "Per-step increment applied to the relaxation factor when the servo is active."
-        },
-        {
-          "name": "excavate-step",
-          "syntax": "step <i>",
-          "description": "Number of cycles over which to ramp the relaxation factor from 1.0 to its target."
-        },
-        {
-          "name": "excavate-table",
-          "syntax": "table <s> [time keyword]",
-          "description": "Use the named table to drive the relaxation factor versus time. Optional time keyword selects which process clock advances the table: step, mechanical, fluid, thermal, creep, dynamic."
-        },
-        {
-          "name": "excavate-table-step",
-          "syntax": "step",
-          "description": "Advance the relaxation table against the mechanical step counter."
-        },
-        {
-          "name": "excavate-table-mechanical",
-          "syntax": "mechanical",
-          "description": "Advance the relaxation table against mechanical time."
-        },
-        {
-          "name": "excavate-table-fluid",
-          "syntax": "fluid",
-          "description": "Advance the relaxation table against fluid-flow time."
-        },
-        {
-          "name": "excavate-table-thermal",
-          "syntax": "thermal",
-          "description": "Advance the relaxation table against thermal time."
-        },
-        {
-          "name": "excavate-table-creep",
-          "syntax": "creep",
-          "description": "Advance the relaxation table against creep time."
-        },
-        {
-          "name": "excavate-table-dynamic",
-          "syntax": "dynamic",
-          "description": "Advance the relaxation table against dynamic time."
-        },
-        {
-          "name": "modify",
-          "syntax": "modify <s> keyword",
-          "description": "Modify an existing relax condition (looked up by name s). Sub-keywords are the same as for excavate: fish, fish-local, name, servo-bound, servo-increment, step, table."
-        },
-        {
-          "name": "modify-fish",
-          "syntax": "fish <s>",
-          "description": "Replace the FISH function used to compute the per-step relaxation factor."
-        },
-        {
-          "name": "modify-fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Replace the FISH function using the local FISH namespace."
-        },
-        {
-          "name": "modify-name",
-          "syntax": "name <s>",
-          "description": "Rename the relax condition."
-        },
-        {
-          "name": "modify-servo-bound",
-          "syntax": "servo-bound <f>",
-          "description": "Change the servo bound."
-        },
-        {
-          "name": "modify-servo-increment",
-          "syntax": "servo-increment <f>",
-          "description": "Change the servo increment."
-        },
-        {
-          "name": "modify-step",
-          "syntax": "step <i>",
-          "description": "Change the ramp length (cycles)."
-        },
-        {
-          "name": "modify-table",
-          "syntax": "table <s> [time keyword]",
-          "description": "Switch to a different driving table (and optionally a different time keyword)."
-        },
-        {
-          "name": "modify-table-step",
-          "syntax": "step",
-          "description": "Advance the modified table against the mechanical step counter."
-        },
-        {
-          "name": "modify-table-mechanical",
-          "syntax": "mechanical",
-          "description": "Advance the modified table against mechanical time."
-        },
-        {
-          "name": "modify-table-fluid",
-          "syntax": "fluid",
-          "description": "Advance the modified table against fluid-flow time."
-        },
-        {
-          "name": "modify-table-thermal",
-          "syntax": "thermal",
-          "description": "Advance the modified table against thermal time."
-        },
-        {
-          "name": "modify-table-creep",
-          "syntax": "creep",
-          "description": "Advance the modified table against creep time."
-        },
-        {
-          "name": "modify-table-dynamic",
-          "syntax": "dynamic",
-          "description": "Advance the modified table against dynamic time."
-        },
-        {
-          "name": "fill",
-          "syntax": "fill",
-          "description": "Relax with fill placement. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        }
-      ]
+    {
+      "name": "excavate",
+      "syntax": {
+        "7.0": "excavate {fish <s> | fish-local <s> | minimum <f> | name <s> | servo-bound <f> | servo-increment <f> | step <i> | table <s> [time {step | mechanical | fluid | thermal | creep | dynamic}]} [range]",
+        "9.0": "excavate keyword [range]"
+      },
+      "description": {
+        "7.0": "Creates and initializes an excavation condition on all zones in the range. The following keywords are available to customize how the excavation progresses. Options: fish <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.; fish-local <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used. The function is assumed to take two arguments. The first argument is a pointer to the zone in question. The second argument is unused.; minimum <f>: Sets the minimum reduction factor that will be allowed. The default value is 0.0 . This should be a number between 0.0 and 1.0 . This value can be used to solve to a specific reduction factor before installing reinforcement or other operation. Then the zone relax modify command can be used to lower the minimum. Note changing the minimum when using the table , fish , or fish-local options to control the reduction factor may result in unexpected behavior, as the time index used for those options will not stop advancing after reaching the minimum value.; name <s>: Assigns the apply condition an identifying name s . If a name is not specified one will be created automatically based on the internally assigned ID number.; servo-bound <f>: If the current mechanical force ratio (see the zone ratio ) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3; servo-increment <f>: If the current mechanical force ratio is less than servo-bound , then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0 , and greater than 0.0 . The default value is 0.005 .; step <i>: If set to a positive value, then any FISH , table , or servo parameters are ignored and the reduction factor is reduced linearly from 1.0 to 0.0 over the course of i steps.; table <s>[time {step | mechanical | fluid | thermal | creep | dynamic}]: If specified, then the reduction factor is given by table s . A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options. Options: step: Use the total cycle count.; mechanical: Use the accumulated mechanical time (the default); fluid: Use the accumulated fluid flow time.; thermal: Use the accumulated thermal time.; creep: Use the accumulated creep time.; dynamic: Use the accumulated dynamic time.",
+        "9.0": "Create a relax condition that progressively reduces (excavates) the boundary tractions on zones in the range. Sub-keywords: fish, fish-local, minimum, name, servo-bound, servo-increment, step, table."
+      }
+    },
+    {
+      "name": "excavate-fish",
+      "syntax": "fish <s>",
+      "description": {
+        "7.0": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.",
+        "9.0": "Use the FISH function named s to compute the per-step relaxation factor."
+      }
+    },
+    {
+      "name": "excavate-fish-local",
+      "syntax": "fish-local <s>",
+      "description": {
+        "7.0": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used.",
+        "9.0": "Same as fish but the function name is interpreted in the local FISH namespace."
+      }
+    },
+    {
+      "name": "excavate-minimum",
+      "syntax": "minimum <f>",
+      "description": {
+        "7.0": "Note changing the minimum when using the table, fish, or fish-local options to control the reduction factor may result in unexpected behavior, as the time index used for those options will not stop advancing after reaching the minimum value.",
+        "9.0": "Lower bound (floor) for the relaxation factor, clamped during cycling."
+      }
+    },
+    {
+      "name": "excavate-name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Assigns the apply condition an identifying name s. If a name is not specified one will be created automatically based on the internally assigned ID number.",
+        "9.0": "Assign the relax condition a name s so it can be referenced by zone relax delete / zone relax modify."
+      }
+    },
+    {
+      "name": "excavate-servo-bound",
+      "syntax": "servo-bound <f>",
+      "description": {
+        "7.0": "If the current mechanical force ratio (see the zone ratio) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3",
+        "9.0": "Servo-control threshold; the relaxation factor is held when the controlled quantity exceeds this bound."
+      }
+    },
+    {
+      "name": "excavate-servo-increment",
+      "syntax": "servo-increment <f>",
+      "description": {
+        "7.0": "If the current mechanical force ratio is less than servo-bound, then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0, and greater than 0.0. The default value is 0.005.",
+        "9.0": "Per-step increment applied to the relaxation factor when the servo is active."
+      }
+    },
+    {
+      "name": "excavate-step",
+      "syntax": "step <i>",
+      "description": {
+        "7.0": "If set to a positive value, then any FISH, table, or servo parameters are ignored and the reduction factor is reduced linearly from 1.0 to 0.0 over the course of i steps.",
+        "9.0": "Number of cycles over which to ramp the relaxation factor from 1.0 to its target."
+      }
+    },
+    {
+      "name": "excavate-table",
+      "syntax": "table <s> [time keyword]",
+      "description": {
+        "7.0": "If specified, then the reduction factor is given by table s. A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options.",
+        "9.0": "Use the named table to drive the relaxation factor versus time. Optional time keyword selects which process clock advances the table: step, mechanical, fluid, thermal, creep, dynamic."
+      }
+    },
+    {
+      "name": "excavate-table-step",
+      "syntax": "step",
+      "description": {
+        "7.0": "Use the total cycle count.",
+        "9.0": "Advance the relaxation table against the mechanical step counter."
+      }
+    },
+    {
+      "name": "excavate-table-mechanical",
+      "syntax": "mechanical",
+      "description": {
+        "7.0": "Use the accumulated mechanical time (the default)",
+        "9.0": "Advance the relaxation table against mechanical time."
+      }
+    },
+    {
+      "name": "excavate-table-fluid",
+      "syntax": "fluid",
+      "description": {
+        "7.0": "Use the accumulated fluid flow time.",
+        "9.0": "Advance the relaxation table against fluid-flow time."
+      }
+    },
+    {
+      "name": "excavate-table-thermal",
+      "syntax": "thermal",
+      "description": {
+        "7.0": "Use the accumulated thermal time.",
+        "9.0": "Advance the relaxation table against thermal time."
+      }
+    },
+    {
+      "name": "excavate-table-creep",
+      "syntax": "creep",
+      "description": {
+        "7.0": "Use the accumulated creep time.",
+        "9.0": "Advance the relaxation table against creep time."
+      }
+    },
+    {
+      "name": "excavate-table-dynamic",
+      "syntax": "dynamic",
+      "description": {
+        "7.0": "Use the accumulated dynamic time.",
+        "9.0": "Advance the relaxation table against dynamic time."
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": {
+        "7.0": "List all relax conditions, including their name and settings.",
+        "9.0": "List all currently-active relax conditions, with their names, scope (zones in range), table (if any), and current relaxation factor."
+      }
+    },
+    {
+      "name": "modify",
+      "syntax": "modify <s> keyword",
+      "description": {
+        "7.0": "Finds the previously created zone relax apply condition with name s, and modify its settings. The following keywords are available: Options: fish <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.; fish-local <s>: Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used. The function is assumed to take two arguments. The first argument is a pointer to the zone in question. The second argument is unused.; name <s>: Assigns the apply condition an identifying name s . If a name is not specified one will be created automatically based on the internally assigned ID number.; servo-bound <f>: If the current mechanical force ratio (see the zone ratio ) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3; servo-increment <f>: If the current mechanical force ratio is less than servo-bound , then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0 , and greater than 0.0 . The default value is 0.005 .; step <i>: If set to a positive value, then any FISH , table , or servo parameters are ignored and the reduction factor is reduced linearly from the current value (which is at start 0.99 ) to minimum (by default 0.0 ) over the course of i steps.; table <s>[time {step | mechanical | fluid | thermal | creep | dynamic}]: If specified, then the reduction factor is given by table s . A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options. Options: step: Use the total cycle count.; mechanical: Use the accumulated mechanical time (the default); fluid: Use the accumulated fluid flow time.; thermal: Use the accumulated thermal time.; creep: Use the accumulated creep time.; dynamic: Use the accumulated dynamic time.",
+        "9.0": "Modify an existing relax condition (looked up by name s). Sub-keywords are the same as for excavate: fish, fish-local, name, servo-bound, servo-increment, step, table."
+      }
+    },
+    {
+      "name": "modify-fish",
+      "syntax": "fish <s>",
+      "description": {
+        "7.0": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This should return a value of 1.0 at the start, and 0.0 and the end. If this keyword is used, the default servo is not used.",
+        "9.0": "Replace the FISH function used to compute the per-step relaxation factor."
+      }
+    },
+    {
+      "name": "modify-fish-local",
+      "syntax": "fish-local <s>",
+      "description": {
+        "7.0": "Specify a FISH function that determines the multiplier to use as the excavation progresses. This function is called separately for each individual zone taking part in the apply condition. If this keyword is used, the default servo is not used.",
+        "9.0": "Replace the FISH function using the local FISH namespace."
+      }
+    },
+    {
+      "name": "modify-name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Assigns the apply condition an identifying name s. If a name is not specified one will be created automatically based on the internally assigned ID number.",
+        "9.0": "Rename the relax condition."
+      }
+    },
+    {
+      "name": "modify-servo-bound",
+      "syntax": "servo-bound <f>",
+      "description": {
+        "7.0": "If the current mechanical force ratio (see the zone ratio) is lower than this value, the reduction factor is reduced by the increment. The default value is 1e-3",
+        "9.0": "Change the servo bound."
+      }
+    },
+    {
+      "name": "modify-servo-increment",
+      "syntax": "servo-increment <f>",
+      "description": {
+        "7.0": "If the current mechanical force ratio is less than servo-bound, then the reduction factor is reduced by subtracting f from it. This number should be less than 1.0, and greater than 0.0. The default value is 0.005.",
+        "9.0": "Change the servo increment."
+      }
+    },
+    {
+      "name": "modify-step",
+      "syntax": "step <i>",
+      "description": {
+        "7.0": "If set to a positive value, then any FISH, table, or servo parameters are ignored and the reduction factor is reduced linearly from the current value (which is at start 0.99) to minimum (by default 0.0) over the course of i steps.",
+        "9.0": "Change the ramp length (cycles)."
+      }
+    },
+    {
+      "name": "modify-table",
+      "syntax": "table <s> [time keyword]",
+      "description": {
+        "7.0": "If specified, then the reduction factor is given by table s. A lookup is performed every step. By default the x value used to lookup a table y value will be the accumulated mechanical time, which for a purely static analysis is the same as the number of steps. The time index used can be changed by using the optional time keyword, with the following options.",
+        "9.0": "Switch to a different driving table (and optionally a different time keyword)."
+      }
+    },
+    {
+      "name": "modify-table-step",
+      "syntax": "step",
+      "description": {
+        "7.0": "Use the total cycle count.",
+        "9.0": "Advance the modified table against the mechanical step counter."
+      }
+    },
+    {
+      "name": "modify-table-mechanical",
+      "syntax": "mechanical",
+      "description": {
+        "7.0": "Use the accumulated mechanical time (the default)",
+        "9.0": "Advance the modified table against mechanical time."
+      }
+    },
+    {
+      "name": "modify-table-fluid",
+      "syntax": "fluid",
+      "description": {
+        "7.0": "Use the accumulated fluid flow time.",
+        "9.0": "Advance the modified table against fluid-flow time."
+      }
+    },
+    {
+      "name": "modify-table-thermal",
+      "syntax": "thermal",
+      "description": {
+        "7.0": "Use the accumulated thermal time.",
+        "9.0": "Advance the modified table against thermal time."
+      }
+    },
+    {
+      "name": "modify-table-creep",
+      "syntax": "creep",
+      "description": {
+        "7.0": "Use the accumulated creep time.",
+        "9.0": "Advance the modified table against creep time."
+      }
+    },
+    {
+      "name": "modify-table-dynamic",
+      "syntax": "dynamic",
+      "description": {
+        "7.0": "Use the accumulated dynamic time.",
+        "9.0": "Advance the modified table against dynamic time."
+      }
+    },
+    {
+      "name": "fill",
+      "syntax": "fill",
+      "description": "Relax with fill placement. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.relax.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

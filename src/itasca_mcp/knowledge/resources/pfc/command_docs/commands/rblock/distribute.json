@@ -10,132 +10,59 @@
     "available": false,
     "workaround": "Use itasca.command('rblock distribute ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock distribute",
-      "syntax": "rblock distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>}",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the y -axis in degrees.; fish-distribution <sfish>a...a: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each rigid block generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock distribute",
+  "syntax": "rblock distribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "bin",
+      "syntax": {
+        "6.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>}",
+        "7.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>} ...",
+        "9.0": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> 3D ONLY | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> 3D ONLY | volume-fraction <fvfrac>} ..."
+      },
+      "description": {
+        "6.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the y -axis in degrees.; fish-distribution <sfish>a...a: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1.",
+        "7.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <sfish><a><1><...a><n>: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1.",
+        "9.0": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>3D ONLY: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <sfish><a><1><...a><n>: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>3D ONLY: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1."
+      }
     },
-    "7.0": {
-      "command": "rblock distribute",
-      "syntax": "rblock distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> | volume-fraction <fvfrac>} ...",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <sfish><a><1><...a><n>: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each rigid block generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": []
+    {
+      "name": "box",
+      "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
+      "description": "rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
     },
-    "9.0": {
-      "command": "rblock distribute",
-      "syntax": "rblock distribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "bin",
-          "syntax": "bin <ibin> {azimuth <fazlow> <fazhi> | density <fdens> | elevation <fellow> <felhi> 3D ONLY | fish-distribution <sfish> <a1> ... <an> | gauss [<fcutoff>] | group <s> [slot <slot>] | size <fsizelow> [<fsizehi>] | template <stname> | tilt <ftiltlow> <ftilthi> 3D ONLY | volume-fraction <fvfrac>} ...",
-          "description": "Specify the distributional properties of bin ibin . Any number of distributions with radii ranges, volume fractions, and distributional types can be specified. The volume fractions of all distributions must sum to 1. Options: azimuth <fazlow><fazhi>: Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.; density <fdens>: The rigid block density that is 1 by default.; elevation <fellow><felhi>3D ONLY: Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right hand rotation about the \\(y\\) -axis in degrees.; fish-distribution <sfish><a><1><...a><n>: The rigid block sizes are drawn from the distribution represented by the FISH function sfish . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords.; gauss [<fcutoff>]: Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fradlow + fradhi )/2 and standard deviation ( fradhi - fradlow )/2. The optional fcutoff (default 0.1), multiplied by fradlow , constitutes the minimum size allowed.; group <s>[slot <slot>]: Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default .; size <fsizelow>[<fsizehi>]: Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword.; template <stname>: Name of the rigid block template to be used.; tilt <ftiltlow><ftilthi>3D ONLY: Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.; volume-fraction <fvfrac>: The volume fraction of rigid blocks in this distribution. The sum of volume fractions of all distributions must be 1."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfname>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "number-bins",
-          "syntax": "number-bins <inum>",
-          "description": "Number of distributions used to generate the assembly."
-        },
-        {
-          "name": "porosity",
-          "syntax": "porosity <fporos>",
-          "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <fres>",
-          "description": "Optional resolution that can be used as a multiplicative factor of the size of each rigid block generated. By default, fres = 1.0."
-        }
-      ],
-      "examples": []
+    {
+      "name": "diameter",
+      "syntax": "diameter",
+      "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
+    },
+    {
+      "name": "fish-size",
+      "syntax": "fish-size <sfname>",
+      "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name sfname . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
+    },
+    {
+      "name": "number-bins",
+      "syntax": "number-bins <inum>",
+      "description": "Number of distributions used to generate the assembly."
+    },
+    {
+      "name": "porosity",
+      "syntax": "porosity <fporos>",
+      "description": "The final porosity is set to fporos . By default, fporos = {0.16 in 2D; 0.359 in 3D}, corresponding to the porosity for a tight, monodisperse packing of {disks in 2D; spheres in 3D}."
+    },
+    {
+      "name": "resolution",
+      "syntax": "resolution <fres>",
+      "description": "Optional resolution that can be used as a multiplicative factor of the size of each rigid block generated. By default, fres = 1.0."
     }
-  }
+  ],
+  "examples": []
 }

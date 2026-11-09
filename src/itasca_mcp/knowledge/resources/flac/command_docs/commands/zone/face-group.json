@@ -5,87 +5,95 @@
     "group",
     "zone"
   ],
-  "description": "Adds a group name s to zone faces included in the optional range . Use of the group logic is described in Groups . This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
+  "description": {
+    "7.0": "Adds a group name s to zone faces included in the optional range. Use of the group logic is described in Groups. This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
+    "9.0": "Adds a group name s to zone faces included in the optional range . Use of the group logic is described in Groups . This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone face group",
-      "syntax": "zone face group <s> keyword... [range]",
-      "description": "Adds a group name s to zone faces included in the optional range. Use of the group logic is described in Groups. This command may take the form zone face group \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
-      "keywords": [
-        {
-          "name": "fluid",
-          "syntax": "fluid",
-          "description": "Zones with a non-null fluid model are scanned to determine the surface faces. Applies only if internal is not specified."
-        },
-        {
-          "name": "internal",
-          "syntax": "internal",
-          "description": "If specified, then the range looks at internal faces as well as surface faces."
-        },
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Zones with a non-null mechanical model are scanned to determine the surface faces. Applies only if internal is not specified."
-        },
-        {
-          "name": "or",
-          "syntax": "or",
-          "description": "Cannot be used with internal. By default, if more than one mechanical, thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "The group is removed from the zone face if present. If the slot keyword is used, then the group is only removed from that slot if present. Otherwise the group is removed from any slot it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "The group is assigned to the slot named s. If not supplied, the group is assigned to the default slot, which is the one named default."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.group.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone face group",
+  "syntax": {
+    "7.0": "zone face group <s> keyword... [range]",
+    "9.0": "zone face group <s> keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "fluid",
+      "syntax": "fluid",
+      "description": "Zones with a non-null fluid model are scanned to determine the surface faces. Applies only if internal is not specified.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
       }
     },
-    "9.0": {
-      "command": "zone face group",
-      "syntax": "zone face group <s> keyword ... [range]",
-      "keywords": [
-        {
-          "name": "internal",
-          "syntax": "internal",
-          "description": "If specified, then the range looks at internal faces as well as surface faces."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "The group is removed from the zone face if present. If the slot keyword is used, then the group is only removed from that slot if present. Otherwise the group is removed from any slot it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "The group is assigned to the slot named s . If not supplied, the group is assigned to the default slot, which is the one named default ."
-        },
-        {
-          "name": "surface",
-          "syntax": "surface {fluid | mechanical | or | thermal}",
-          "description": "If specified, then the range looks only at surface faces. Options: fluid: Zones with a non-null fluid model are scanned to determine the surface faces.; mechanical: Zones with a non-null mechanical model are scanned to determine the surface faces.; or: By default, if more than one mechanical , thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model.; thermal: Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified."
-        }
-      ]
+    {
+      "name": "internal",
+      "syntax": "internal",
+      "description": "If specified, then the range looks at internal faces as well as surface faces."
+    },
+    {
+      "name": "mechanical",
+      "syntax": "mechanical",
+      "description": "Zones with a non-null mechanical model are scanned to determine the surface faces. Applies only if internal is not specified.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "or",
+      "syntax": "or",
+      "description": "Cannot be used with internal. By default, if more than one mechanical, thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "The group is removed from the zone face if present. If the slot keyword is used, then the group is only removed from that slot if present. Otherwise the group is removed from any slot it is found in."
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <s>",
+      "description": {
+        "7.0": "The group is assigned to the slot named s. If not supplied, the group is assigned to the default slot, which is the one named default.",
+        "9.0": "The group is assigned to the slot named s . If not supplied, the group is assigned to the default slot, which is the one named default ."
+      }
+    },
+    {
+      "name": "surface",
+      "syntax": "surface {fluid | mechanical | or | thermal}",
+      "description": "If specified, then the range looks only at surface faces. Options: fluid: Zones with a non-null fluid model are scanned to determine the surface faces.; mechanical: Zones with a non-null mechanical model are scanned to determine the surface faces.; or: By default, if more than one mechanical , thermal or fluid keyword is given, then the zone needs to have all of those conditions to determine a surface face. In other words, if both mechanical and thermal were given, then if the zone had a non-null mechanical model and a null thermal model it would be considered outside the surface. If the or keyword is given, then it is considered inside the surface if any of those conditions has a non-null model.; thermal: Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "thermal",
+      "syntax": "thermal",
+      "description": "Zones with a non-null thermal model are scanned to determine the surface faces. Applies only if internal is not specified.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.group.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

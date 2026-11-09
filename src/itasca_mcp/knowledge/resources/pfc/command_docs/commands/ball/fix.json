@@ -10,198 +10,113 @@
     "available": true,
     "workaround": "Ball.set_fix(component, True) where component (1-based): 3D 1=X, 2=Y, 3=Z, 4=RX, 5=RY, 6=RZ; 2D 1=X, 2=Y, 3=spin - requires iteration"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball fix",
-      "syntax": "ball fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Fix the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Fix the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Fix the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Fix the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball fix velocity-x velocity-y velocity-z spin-x spin-y spin-z range position-x -3 -1",
-          "description": "Fix all velocity and spin components for balls in x-position range"
-        },
-        {
-          "command": "ball fix velocity-z range group 'bottom_grip'",
-          "description": "Fix z-velocity for balls in 'bottom_grip' group (common in compression tests)"
-        },
-        {
-          "command": "ball fix velocity range position-y -6 -5.5",
-          "description": "Fix translational velocity (all components) for balls in y-position range"
-        },
-        {
-          "command": "ball fix velocity-x velocity-y range id 1 100",
-          "description": "Fix x and y velocities (allow z motion) for balls 1-100"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball fix",
+  "syntax": "ball fix keyword ... [range]",
+  "keywords": [
+    {
+      "name": "spin",
+      "syntax": "spin",
+      "description": "The angular velocity is fixed."
     },
-    "6.0": {
-      "command": "ball fix",
-      "syntax": "ball fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Fix the x -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Fix the y -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Fix the z -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the x -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the y -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Fix the z -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball fix velocity-x velocity-y velocity-z spin-x spin-y spin-z range position-x -3 -1",
-          "description": "Fix all velocity and spin components for balls in x-position range"
-        },
-        {
-          "command": "ball fix velocity-z range group 'bottom_grip'",
-          "description": "Fix z-velocity for balls in 'bottom_grip' group (common in compression tests)"
-        },
-        {
-          "command": "ball fix velocity range position-y -6 -5.5",
-          "description": "Fix translational velocity (all components) for balls in y-position range"
-        },
-        {
-          "command": "ball fix velocity-x velocity-y range id 1 100",
-          "description": "Fix x and y velocities (allow z motion) for balls 1-100"
-        }
-      ]
+    {
+      "name": "spin-x",
+      "syntax": {
+        "6.0": "spin-x",
+        "7.0": "spin-x",
+        "9.0": "spin-x 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the x -component of the angular velocity.",
+        "7.0": "Fix the \\(x\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(x\\) -component of the angular velocity."
+      }
     },
-    "9.0": {
-      "command": "ball fix",
-      "syntax": "ball fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY",
-          "description": "Fix the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY",
-          "description": "Fix the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY",
-          "description": "Fix the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY",
-          "description": "Fix the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball fix velocity-x velocity-y velocity-z spin-x spin-y spin-z range position-x -3 -1",
-          "description": "Fix all velocity and spin components for balls in x-position range"
-        },
-        {
-          "command": "ball fix velocity-z range group 'bottom_grip'",
-          "description": "Fix z-velocity for balls in 'bottom_grip' group (common in compression tests)"
-        },
-        {
-          "command": "ball fix velocity range position-y -6 -5.5",
-          "description": "Fix translational velocity (all components) for balls in y-position range"
-        },
-        {
-          "command": "ball fix velocity-x velocity-y range id 1 100",
-          "description": "Fix x and y velocities (allow z motion) for balls 1-100"
-        }
-      ]
+    {
+      "name": "spin-y",
+      "syntax": {
+        "6.0": "spin-y",
+        "7.0": "spin-y",
+        "9.0": "spin-y 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the y -component of the angular velocity.",
+        "7.0": "Fix the \\(y\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(y\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": {
+        "6.0": "spin-z",
+        "7.0": "spin-z",
+        "9.0": "spin-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the z -component of the angular velocity.",
+        "7.0": "Fix the \\(z\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(z\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity",
+      "description": "The translational velocity is fixed."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x",
+      "description": {
+        "6.0": "Fix the x -component of the translational velocity.",
+        "7.0": "Fix the \\(x\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(x\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y",
+      "description": {
+        "6.0": "Fix the y -component of the translational velocity.",
+        "7.0": "Fix the \\(y\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(y\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z",
+        "7.0": "velocity-z",
+        "9.0": "velocity-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the z -component of the translational velocity.",
+        "7.0": "Fix the \\(z\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(z\\) -component of the translational velocity."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "ball fix velocity-x velocity-y velocity-z spin-x spin-y spin-z range position-x -3 -1",
+      "description": "Fix all velocity and spin components for balls in x-position range"
+    },
+    {
+      "command": "ball fix velocity-z range group 'bottom_grip'",
+      "description": "Fix z-velocity for balls in 'bottom_grip' group (common in compression tests)"
+    },
+    {
+      "command": "ball fix velocity range position-y -6 -5.5",
+      "description": "Fix translational velocity (all components) for balls in y-position range"
+    },
+    {
+      "command": "ball fix velocity-x velocity-y range id 1 100",
+      "description": "Fix x and y velocities (allow z motion) for balls 1-100"
+    }
+  ]
 }

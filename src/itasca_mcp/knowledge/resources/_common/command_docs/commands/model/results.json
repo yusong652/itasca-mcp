@@ -31,381 +31,162 @@
     "available": false,
     "workaround": "itasca.command('model results ...') - Python SDK does not provide direct results file control. For exporting states in Python, use:\n\n# Setup automatic export\nitasca.command('model results prefix \"simulation\"')\nitasca.command('model results interval step 1000')\n\n# Manual export\nitasca.command('model results export \"snapshot.p3result\"')\n\n# Import\nitasca.command('model results import \"snapshot.p3result\"')"
   },
-  "versions": {
-    "7.0": {
-      "command": "model results",
-      "syntax": "model results keyword",
-      "keywords": [
-        {
-          "name": "clear-map",
-          "syntax": "clear-map",
-          "description": "Clear the current list of tabulated results."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s> [text]",
-          "description": "Export the results file to the file s . The default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default the result is exported in binary format. The option text keyword specifies that it the export is in text format."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s>| <i> [skip-fish]",
-          "description": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported."
-        },
-        {
-          "name": "index",
-          "syntax": "index <i>",
-          "description": "Specify the numeric index to use for the name of the next results file to be exported."
-        },
-        {
-          "name": "interval",
-          "syntax": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal <f>}",
-          "description": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal <f>: Export a result file every f units of accumulated thermal time."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the current results file settings. This list starts with a detailed breakdown of all optional values which can be included, and their current setting. It ends with the current interval values."
-        },
-        {
-          "name": "map",
-          "syntax": "map <s>| <sy>",
-          "description": "Place the list of tabulated results into a FISH map. If the FISH variable does not exist a string name must be given. Otherwise the symbol name can be given without quotes. The keys are either the super-cycle numbers or the accumulated time at the instant of tabulation while the values are the results file names."
-        },
-        {
-          "name": "prefix",
-          "syntax": "prefix <s>",
-          "description": "Specify the prefix used for automatically exported result files. The default prefix is flac3d in FLAC3D and { pfc2d in PFC2D ; pfc3d in PFC3D }."
-        },
-        {
-          "name": "warn",
-          "syntax": "warn <b>",
-          "description": "Specify whether the user will be notified if a results file overwrites an existing results file when cycling is initiated from the console."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model results export 'final_state.p3result'",
-          "description": "Export current state to results file (explicit extension)"
-        },
-        {
-          "command": "model results export 'snapshot'",
-          "description": "Export to 'snapshot.p3result' (extension added automatically)"
-        },
-        {
-          "command": "model results export 'debug' text",
-          "description": "Export as human-readable text format (larger file)"
-        },
-        {
-          "command": "model results import 'snapshot.p3result'",
-          "description": "Import results file (overwrites current state)"
-        },
-        {
-          "command": "model results import 5",
-          "description": "Import results file with index 5 (e.g., 'pfc3d0005.p3result')"
-        },
-        {
-          "command": "model results import 'snapshot.p3result' skip-fish",
-          "description": "Import results but keep current FISH state intact"
-        },
-        {
-          "command": "model results prefix 'simulation'\nmodel results index 1\nmodel results interval step 1000",
-          "description": "Setup automatic export every 1000 cycles as 'simulation0001.p3result', 'simulation0002.p3result', etc."
-        },
-        {
-          "command": "model results interval mechanical 0.5",
-          "description": "Export results every 0.5 units of mechanical time"
-        },
-        {
-          "command": "model results interval step 500",
-          "description": "Export results every 500 cycles"
-        },
-        {
-          "command": "model results interval clock 30 minutes",
-          "description": "Export results every 30 minutes of real (wall-clock) time"
-        },
-        {
-          "command": "model results interval active on",
-          "description": "Enable automatic results export (usually set automatically when interval specified)"
-        },
-        {
-          "command": "model results interval active off",
-          "description": "Disable automatic results export"
-        },
-        {
-          "command": "model results list",
-          "description": "Display current results file settings and included values"
-        },
-        {
-          "command": "model results prefix 'movie_frames'\nmodel results index 1\nmodel results interval step 100\nball results active true\nmodel solve ratio 1e-5",
-          "description": "Setup for movie creation: export ball states every 100 cycles during solve"
-        },
-        {
-          "command": "clump results active true\nclump results add-attribute velocity\nmodel results prefix 'clump_motion'\nmodel results interval step 50\nmodel cycle 5000",
-          "description": "Export clump positions and velocities every 50 cycles"
-        },
-        {
-          "command": "model results warn off",
-          "description": "Suppress warnings when overwriting existing results files"
-        },
-        {
-          "command": "model results map results_map",
-          "description": "Store results file list in FISH map variable"
-        },
-        {
-          "command": "model results clear-map",
-          "description": "Clear the current list of tabulated results"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model results",
+  "syntax": "model results keyword",
+  "keywords": [
+    {
+      "name": "clear-map",
+      "syntax": "clear-map",
+      "description": "Clear the current list of tabulated results."
     },
-    "6.0": {
-      "command": "model results",
-      "syntax": "model results keyword",
-      "keywords": [
-        {
-          "name": "clear-map",
-          "syntax": "clear-map",
-          "description": "Clear the current list of tabulated results."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s>",
-          "description": "Export the results file to the file s . The default extension is f3result in FLAC3D and result in PFC ."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s> or <i> [skip-fish]",
-          "description": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and result in PFC . By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported."
-        },
-        {
-          "name": "index",
-          "syntax": "index <i>",
-          "description": "Specify the numeric index to use for the name of the next results file to be exported."
-        },
-        {
-          "name": "interval",
-          "syntax": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal}",
-          "description": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal: Export a result file every f units of accumulated thermal time."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the current results file settings. This list starts with a detailed breakdown of all optional values which can be included, and their current setting. It ends with the current interval values."
-        },
-        {
-          "name": "map",
-          "syntax": "map <s> or <sy>",
-          "description": "Place the list of tabulated results into a FISH map. If the FISH variable does not exist a string name must be given. Otherwise the symbol name can be given without quotes. The keys are either the super-cycle numbers or the accumulated time at the instant of tabulation while the values are the results file names."
-        },
-        {
-          "name": "prefix",
-          "syntax": "prefix <s>",
-          "description": "Specify the prefix used for automatically exported result files. The default prefix is flac3d in FLAC3D and { pfc2d in PFC2D ; pfc3d in PFC3D }."
-        },
-        {
-          "name": "warn",
-          "syntax": "warn <b>",
-          "description": "Specify whether the user will be notified if a results file overwrites an existing results file when cycling is initiated from the console."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model results export 'final_state.p3result'",
-          "description": "Export current state to results file (explicit extension)"
-        },
-        {
-          "command": "model results export 'snapshot'",
-          "description": "Export to 'snapshot.p3result' (extension added automatically)"
-        },
-        {
-          "command": "model results export 'debug' text",
-          "description": "Export as human-readable text format (larger file)"
-        },
-        {
-          "command": "model results import 'snapshot.p3result'",
-          "description": "Import results file (overwrites current state)"
-        },
-        {
-          "command": "model results import 5",
-          "description": "Import results file with index 5 (e.g., 'pfc3d0005.p3result')"
-        },
-        {
-          "command": "model results import 'snapshot.p3result' skip-fish",
-          "description": "Import results but keep current FISH state intact"
-        },
-        {
-          "command": "model results prefix 'simulation'\nmodel results index 1\nmodel results interval step 1000",
-          "description": "Setup automatic export every 1000 cycles as 'simulation0001.p3result', 'simulation0002.p3result', etc."
-        },
-        {
-          "command": "model results interval mechanical 0.5",
-          "description": "Export results every 0.5 units of mechanical time"
-        },
-        {
-          "command": "model results interval step 500",
-          "description": "Export results every 500 cycles"
-        },
-        {
-          "command": "model results interval clock 30 minutes",
-          "description": "Export results every 30 minutes of real (wall-clock) time"
-        },
-        {
-          "command": "model results interval active on",
-          "description": "Enable automatic results export (usually set automatically when interval specified)"
-        },
-        {
-          "command": "model results interval active off",
-          "description": "Disable automatic results export"
-        },
-        {
-          "command": "model results list",
-          "description": "Display current results file settings and included values"
-        },
-        {
-          "command": "model results prefix 'movie_frames'\nmodel results index 1\nmodel results interval step 100\nball results active true\nmodel solve ratio 1e-5",
-          "description": "Setup for movie creation: export ball states every 100 cycles during solve"
-        },
-        {
-          "command": "clump results active true\nclump results add-attribute velocity\nmodel results prefix 'clump_motion'\nmodel results interval step 50\nmodel cycle 5000",
-          "description": "Export clump positions and velocities every 50 cycles"
-        },
-        {
-          "command": "model results warn off",
-          "description": "Suppress warnings when overwriting existing results files"
-        },
-        {
-          "command": "model results map results_map",
-          "description": "Store results file list in FISH map variable"
-        },
-        {
-          "command": "model results clear-map",
-          "description": "Clear the current list of tabulated results"
-        }
-      ]
+    {
+      "name": "export",
+      "syntax": {
+        "6.0": "export <s>",
+        "7.0": "export <s> [text]",
+        "9.0": "export <s> [text]"
+      },
+      "description": {
+        "6.0": "Export the results file to the file s . The default extension is f3result in FLAC3D and result in PFC .",
+        "7.0": "Export the results file to the file s . The default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default the result is exported in binary format. The option text keyword specifies that it the export is in text format.",
+        "9.0": "Export the results file to the file s . The default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default the result is exported in binary format. The option text keyword specifies that it the export is in text format."
+      }
     },
-    "9.0": {
-      "command": "model results",
-      "syntax": "model results keyword",
-      "keywords": [
-        {
-          "name": "clear-map",
-          "syntax": "clear-map",
-          "description": "Clear the current list of tabulated results."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s> [text]",
-          "description": "Export the results file to the file s . The default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default the result is exported in binary format. The option text keyword specifies that it the export is in text format."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s>| <i> [skip-fish]",
-          "description": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported."
-        },
-        {
-          "name": "index",
-          "syntax": "index <i>",
-          "description": "Specify the numeric index to use for the name of the next results file to be exported."
-        },
-        {
-          "name": "interval",
-          "syntax": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal <f>}",
-          "description": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal <f>: Export a result file every f units of accumulated thermal time."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List the current results file settings. This list starts with a detailed breakdown of all optional values which can be included, and their current setting. It ends with the current interval values."
-        },
-        {
-          "name": "map",
-          "syntax": "map <s>| <sy>",
-          "description": "Place the list of tabulated results into a FISH map. If the FISH variable does not exist a string name must be given. Otherwise the symbol name can be given without quotes. The keys are either the super-cycle numbers or the accumulated time at the instant of tabulation while the values are the results file names."
-        },
-        {
-          "name": "prefix",
-          "syntax": "prefix <s>",
-          "description": "Specify the prefix used for automatically exported result files. The default prefix is flac3d in FLAC3D and { pfc2d in PFC2D ; pfc3d in PFC3D }."
-        },
-        {
-          "name": "warn",
-          "syntax": "warn <b>",
-          "description": "Specify whether the user will be notified if a results file overwrites an existing results file when cycling is initiated from the console."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model results export 'final_state.p3result'",
-          "description": "Export current state to results file (explicit extension)"
-        },
-        {
-          "command": "model results export 'snapshot'",
-          "description": "Export to 'snapshot.p3result' (extension added automatically)"
-        },
-        {
-          "command": "model results export 'debug' text",
-          "description": "Export as human-readable text format (larger file)"
-        },
-        {
-          "command": "model results import 'snapshot.p3result'",
-          "description": "Import results file (overwrites current state)"
-        },
-        {
-          "command": "model results import 5",
-          "description": "Import results file with index 5 (e.g., 'pfc3d0005.p3result')"
-        },
-        {
-          "command": "model results import 'snapshot.p3result' skip-fish",
-          "description": "Import results but keep current FISH state intact"
-        },
-        {
-          "command": "model results prefix 'simulation'\nmodel results index 1\nmodel results interval step 1000",
-          "description": "Setup automatic export every 1000 cycles as 'simulation0001.p3result', 'simulation0002.p3result', etc."
-        },
-        {
-          "command": "model results interval mechanical 0.5",
-          "description": "Export results every 0.5 units of mechanical time"
-        },
-        {
-          "command": "model results interval step 500",
-          "description": "Export results every 500 cycles"
-        },
-        {
-          "command": "model results interval clock 30 minutes",
-          "description": "Export results every 30 minutes of real (wall-clock) time"
-        },
-        {
-          "command": "model results interval active on",
-          "description": "Enable automatic results export (usually set automatically when interval specified)"
-        },
-        {
-          "command": "model results interval active off",
-          "description": "Disable automatic results export"
-        },
-        {
-          "command": "model results list",
-          "description": "Display current results file settings and included values"
-        },
-        {
-          "command": "model results prefix 'movie_frames'\nmodel results index 1\nmodel results interval step 100\nball results active true\nmodel solve ratio 1e-5",
-          "description": "Setup for movie creation: export ball states every 100 cycles during solve"
-        },
-        {
-          "command": "clump results active true\nclump results add-attribute velocity\nmodel results prefix 'clump_motion'\nmodel results interval step 50\nmodel cycle 5000",
-          "description": "Export clump positions and velocities every 50 cycles"
-        },
-        {
-          "command": "model results warn off",
-          "description": "Suppress warnings when overwriting existing results files"
-        },
-        {
-          "command": "model results map results_map",
-          "description": "Store results file list in FISH map variable"
-        },
-        {
-          "command": "model results clear-map",
-          "description": "Clear the current list of tabulated results"
-        }
-      ]
+    {
+      "name": "import",
+      "syntax": {
+        "6.0": "import <s> or <i> [skip-fish]",
+        "7.0": "import <s>| <i> [skip-fish]",
+        "9.0": "import <s>| <i> [skip-fish]"
+      },
+      "description": {
+        "6.0": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and result in PFC . By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported.",
+        "7.0": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported.",
+        "9.0": "Import the contents of the results file s or the results file with index i . If an integer is given a prospective filename is created given the prefix specified. The assumed default extension is f3result in FLAC3D and { p2result in PFC2D ; p3result in PFC3D }. By default, the FISH state is reset and any FISH variables saved with the results file are imported. The skip-fish keyword specifies that the current FISH state is kept intact and any FISH variables stored in the results file are not imported."
+      }
+    },
+    {
+      "name": "index",
+      "syntax": "index <i>",
+      "description": "Specify the numeric index to use for the name of the next results file to be exported."
+    },
+    {
+      "name": "interval",
+      "syntax": {
+        "6.0": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal}",
+        "7.0": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal <f>}",
+        "9.0": "interval {active <b> | clock <f> {hours | minutes | seconds} | creep <f> | dynamic <f> | fluid <f> | mechanical <f> | step <i> | thermal <f>}"
+      },
+      "description": {
+        "6.0": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal: Export a result file every f units of accumulated thermal time.",
+        "7.0": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal <f>: Export a result file every f units of accumulated thermal time.",
+        "9.0": "Control the interval at which results files are exported during cycling, if at all. The default setting is model results interval active off . Options: active <b>: Turn automatic exporting of results files on and off . The default setting is off . In general, setting an export interval will automatically turn exporting on .; clock <f>{hours | minutes | seconds}: Activate exporting of results files at real-time intervals. f specifies the amount of time between exports. The following keywords are available to define the units of time f uses. Options: hours: f is in hours between result file exports.; minutes: f is in minutes between result file exports.; seconds: f is in seconds between result file exports.; creep <f>: Export a result file every f units of accumulated creep time.; dynamic <f>: Export a result file every f units of accumulated dynamic time.; fluid <f>: Export a result file every f units of accumulated fluid time.; mechanical <f>: Export a result file every f units of accumulated mechanical time. Note that this will include cycles taken under static, creep, or dynamic conditions. Static cyling always uses a timestep of 1.0 .; step <i>: Export a result file every i cycles. Note that for loosely coupled analyses (see the model solve command) the steps are “super-cycles”, and do not includes steps taken to solve slave processes to equilibrium.; thermal <f>: Export a result file every f units of accumulated thermal time."
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "List the current results file settings. This list starts with a detailed breakdown of all optional values which can be included, and their current setting. It ends with the current interval values."
+    },
+    {
+      "name": "map",
+      "syntax": {
+        "6.0": "map <s> or <sy>",
+        "7.0": "map <s>| <sy>",
+        "9.0": "map <s>| <sy>"
+      },
+      "description": "Place the list of tabulated results into a FISH map. If the FISH variable does not exist a string name must be given. Otherwise the symbol name can be given without quotes. The keys are either the super-cycle numbers or the accumulated time at the instant of tabulation while the values are the results file names."
+    },
+    {
+      "name": "prefix",
+      "syntax": "prefix <s>",
+      "description": "Specify the prefix used for automatically exported result files. The default prefix is flac3d in FLAC3D and { pfc2d in PFC2D ; pfc3d in PFC3D }."
+    },
+    {
+      "name": "warn",
+      "syntax": "warn <b>",
+      "description": "Specify whether the user will be notified if a results file overwrites an existing results file when cycling is initiated from the console."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model results export 'final_state.p3result'",
+      "description": "Export current state to results file (explicit extension)"
+    },
+    {
+      "command": "model results export 'snapshot'",
+      "description": "Export to 'snapshot.p3result' (extension added automatically)"
+    },
+    {
+      "command": "model results export 'debug' text",
+      "description": "Export as human-readable text format (larger file)"
+    },
+    {
+      "command": "model results import 'snapshot.p3result'",
+      "description": "Import results file (overwrites current state)"
+    },
+    {
+      "command": "model results import 5",
+      "description": "Import results file with index 5 (e.g., 'pfc3d0005.p3result')"
+    },
+    {
+      "command": "model results import 'snapshot.p3result' skip-fish",
+      "description": "Import results but keep current FISH state intact"
+    },
+    {
+      "command": "model results prefix 'simulation'\nmodel results index 1\nmodel results interval step 1000",
+      "description": "Setup automatic export every 1000 cycles as 'simulation0001.p3result', 'simulation0002.p3result', etc."
+    },
+    {
+      "command": "model results interval mechanical 0.5",
+      "description": "Export results every 0.5 units of mechanical time"
+    },
+    {
+      "command": "model results interval step 500",
+      "description": "Export results every 500 cycles"
+    },
+    {
+      "command": "model results interval clock 30 minutes",
+      "description": "Export results every 30 minutes of real (wall-clock) time"
+    },
+    {
+      "command": "model results interval active on",
+      "description": "Enable automatic results export (usually set automatically when interval specified)"
+    },
+    {
+      "command": "model results interval active off",
+      "description": "Disable automatic results export"
+    },
+    {
+      "command": "model results list",
+      "description": "Display current results file settings and included values"
+    },
+    {
+      "command": "model results prefix 'movie_frames'\nmodel results index 1\nmodel results interval step 100\nball results active true\nmodel solve ratio 1e-5",
+      "description": "Setup for movie creation: export ball states every 100 cycles during solve"
+    },
+    {
+      "command": "clump results active true\nclump results add-attribute velocity\nmodel results prefix 'clump_motion'\nmodel results interval step 50\nmodel cycle 5000",
+      "description": "Export clump positions and velocities every 50 cycles"
+    },
+    {
+      "command": "model results warn off",
+      "description": "Suppress warnings when overwriting existing results files"
+    },
+    {
+      "command": "model results map results_map",
+      "description": "Store results file list in FISH map variable"
+    },
+    {
+      "command": "model results clear-map",
+      "description": "Clear the current list of tabulated results"
+    }
+  ]
 }

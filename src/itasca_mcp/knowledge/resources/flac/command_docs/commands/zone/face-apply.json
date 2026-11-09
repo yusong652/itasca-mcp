@@ -5,736 +5,792 @@
     "apply",
     "zone"
   ],
-  "description": "This command is used to apply boundary conditions at surface faces of the model. To apply conditions to zones rather than at faces, see the zone apply command. To apply conditions at individual gridpoints, see the zone gridpoint fix command.",
+  "description": {
+    "7.0": "This command is used to apply boundary conditions at surface faces of the model. To apply conditions to zones rather than at faces, see the zone apply command. To apply conditions at individual gridpoints, see the zone gridpoint fix command.",
+    "9.0": "This command is used to apply boundary conditions at surface faces of the model. Process gating (verified against FLAC3D 9.7): the keyword ENUMERATION below is context-free -- the parser lists the identical 47-keyword set whether or not thermal/dynamic/creep/fluid are configured -- but EXECUTION is gated per process: thermal keywords (temperature, flux, convection) require 'model configure thermal', dynamic keywords (quiet*, acceleration*) require 'model configure dynamic', fluid keywords (pore-pressure*, head*, discharge, leakage) require a fluid configure; without the configure the engine rejects with a message naming the missing process. Applying a condition to gridpoints that already carry a conflicting apply removes the old condition (reported in the command output)."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone face apply",
-      "syntax": "zone face apply keyword [range]",
-      "description": "This command is used to apply boundary conditions at surface faces of the model. To apply conditions to zones rather than at faces, see the zone apply command. To apply conditions at individual gridpoints, see the zone gridpoint fix command.",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration <v> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-dip",
-          "syntax": "acceleration-dip <f> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-local",
-          "syntax": "acceleration-local <v> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-normal",
-          "syntax": "acceleration-normal <f> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-strike",
-          "syntax": "acceleration-strike <f> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x <f> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y <f> [faceapplyblock]"
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z <f> [faceapplyblock]"
-        },
-        {
-          "name": "convection",
-          "syntax": "convection <f1> <f2> [faceapplyblock]"
-        },
-        {
-          "name": "discharge",
-          "syntax": "discharge <f> [faceapplyblock]",
-          "description": "Fluid flux f is the component of the specific discharge vector (e.g., in m/s) applied normal to the boundary."
-        },
-        {
-          "name": "flux",
-          "syntax": "flux <f> [faceapplyblock]"
-        },
-        {
-          "name": "leakage",
-          "syntax": "leakage <f1> <f2> [faceapplyblock]",
-          "description": "f1 is the pore pressure in the leaky layer."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure <f> [faceapplyblock]"
-        },
-        {
-          "name": "quiet",
-          "syntax": "quiet [faceapplyblock]"
-        },
-        {
-          "name": "quiet-dip",
-          "syntax": "quiet-dip [faceapplyblock]"
-        },
-        {
-          "name": "quiet-normal",
-          "syntax": "quiet-normal [faceapplyblock]"
-        },
-        {
-          "name": "quiet-strike",
-          "syntax": "quiet-strike [faceapplyblock]"
-        },
-        {
-          "name": "reaction",
-          "syntax": "reaction [faceapplyblock]",
-          "description": "Vector of all components of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-dip",
-          "syntax": "reaction-dip [faceapplyblock]",
-          "description": "Reaction force in the dip direction of the local gridpoint axes Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-local",
-          "syntax": "reaction-local [faceapplyblock]",
-          "description": "Apply a reaction force in all components of the local coordinate system (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-normal",
-          "syntax": "reaction-normal [faceapplyblock]",
-          "description": "Reaction force in the normal direction of the local gridpoint axes (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-strike",
-          "syntax": "reaction-strike [faceapplyblock]",
-          "description": "Reaction force in the strike direction of the local gridpoint axes (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-x",
-          "syntax": "reaction-x [faceapplyblock]",
-          "description": "\\(x\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-y",
-          "syntax": "reaction-y [faceapplyblock]",
-          "description": "\\(y\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "reaction-z",
-          "syntax": "reaction-z [faceapplyblock]",
-          "description": "\\(z\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition."
-        },
-        {
-          "name": "stress-dip",
-          "syntax": "stress-dip <f> [faceapplyblock]",
-          "description": "Stress component applied in the dip direction of the local face axes (see Local Axes System below)."
-        },
-        {
-          "name": "stress-normal",
-          "syntax": "stress-normal <f> [faceapplyblock]",
-          "description": "Stress component applied in the normal direction of the local face axes (see Local Axes System below)."
-        },
-        {
-          "name": "stress-strike",
-          "syntax": "stress-strike <f> [faceapplyblock]",
-          "description": "Stress component applied in the strike direction of the local face axes (see Local Axes System below)."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx <f> [faceapplyblock]",
-          "description": "xx-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy <f> [faceapplyblock]",
-          "description": "xy-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz <f> [faceapplyblock]",
-          "description": "xz-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy <f> [faceapplyblock]",
-          "description": "yy-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz <f> [faceapplyblock]",
-          "description": "xz-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz <f> [faceapplyblock]",
-          "description": "zz-component of the stress tensor applied at a face"
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature <f> [faceapplyblock]"
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v> [faceapplyblock]",
-          "description": "Vector of all velocity components in the global coordinate axes. This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-dip",
-          "syntax": "velocity-dip <f> [faceapplyblock]",
-          "description": "Velocity component applied in the dip direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-local",
-          "syntax": "velocity-local <v> [faceapplyblock]",
-          "description": "Vector of all velocity components in the local coordinate axes (see Local Axes System below). This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-normal",
-          "syntax": "velocity-normal <f> [faceapplyblock]",
-          "description": "Velocity component applied in the normal direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-strike",
-          "syntax": "velocity-strike <f> [faceapplyblock]",
-          "description": "Velocity component applied in the strike direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f> [faceapplyblock]",
-          "description": "\\(x\\)-component of velocity applied at a gridpoint This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f> [faceapplyblock]",
-          "description": "\\(y\\)-component of velocity applied at a gridpoint This is a gridpoint based condition."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f> [faceapplyblock]",
-          "description": "\\(z\\)-component of velocity applied at a gridpoint This is a gridpoint based condition."
-        },
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Specify a multiplier that is a FISH function named s. The returned value of this FISH function is multiplied by the base value (including gradient) over all zone faces or gridpoints included in this apply condition. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step. If the apply condition requires a vector value, this function should also return a vector. If the apply condition requires two values, the function should return a vector and the \\(z\\)-component will be ignored."
-        },
-        {
-          "name": "fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Specify a multiplier that is a FISH function named s, which is applied separately to each individual zone face or gridpoint affected by this apply condition. This function must take two arguments. For apply conditions that work directly on faces, the first argument is a pointer to the zone and the second argument is an integer from 1 to 6 indicating the face. For apply conditions that work on gridpoints, the first argument is a pointer to the gridpoint and the second argument is not used. This allows an apply condition to vary over time as well as space. The returned value of this FISH function is multiplied by the base value (including gradient) on the specific zone supplied. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step for every zone included in the apply condition. If the apply condition requires a vector value, this function should also return a vector. If the apply condition requires two values, the function should return a vector and the \\(z\\)-component will be ignored."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v>",
-          "description": "Apply a gradient to the scalar-value provided. This is not available if the apply conditions requires two values or a vector value."
-        },
-        {
-          "name": "servo",
-          "syntax": "servo keyword...",
-          "description": "Use a servo tied to the mechanical convergence ratio to control the magnitude of the applied condition. This can be used to maintain, gradually ramp up, or gradually reduce apply conditions while maintaining a quasi-static response. This controls a factor that is multiplied with the base value supplied. By default the factor will start at 0.001, and will gradually increase to 1.0 as the convergence ratio falls below 2e-3, and decrease if it rises above 1e-2. The following keywords are available to control the servo response:"
-        },
-        {
-          "name": "servo-latency",
-          "syntax": "latency <i>",
-          "description": "The minimum number of steps that must pass since the last servo adjustment before the next one occurs. This can keep the servo from over controlling in the initial response to a change in the factor. The default value is 1."
-        },
-        {
-          "name": "servo-lower-bound",
-          "syntax": "lower-bound <f>",
-          "description": "Set the lower mechanical convergence ratio limit. If the current ratio falls below this limit, the factor will be multiplied by the lower-multiplier. The default limit is 2e-3."
-        },
-        {
-          "name": "servo-lower-multiplier",
-          "syntax": "lower-multiplier <f>",
-          "description": "If the current ratio falls below the lower-bound limit, the factor is multiplied by this number. The default is 1.01."
-        },
-        {
-          "name": "servo-maximum",
-          "syntax": "maximum <f>",
-          "description": "The maximum value the factor is allowed to become. The default is 1.0."
-        },
-        {
-          "name": "servo-minimum",
-          "syntax": "minimum <f>",
-          "description": "The minimum value the factor is allowed to become. The default is 0.001."
-        },
-        {
-          "name": "servo-ramp",
-          "syntax": "ramp",
-          "description": "Sets the servo into ramp mode. This means that the factor is not allowed to go down, the value will only increase. This is useful to gradually increase an applied condition to it’s full value. See also the reduce keyword."
-        },
-        {
-          "name": "servo-ratio",
-          "syntax": "ratio keyword",
-          "description": "Which mechanical convergence ratio is compared against lower-bound and upper-bound. By default this is the current value assigned by the zone ratio command (which is average by default. See the zone ratio command for definitions. The available keywords are:"
-        },
-        {
-          "name": "servo-ratio-average",
-          "syntax": "average",
-          "description": "Use the average mechanical force ratio."
-        },
-        {
-          "name": "servo-ratio-maximum",
-          "syntax": "maximum",
-          "description": "Use the maximum mechanical force ratio."
-        },
-        {
-          "name": "servo-ratio-local",
-          "syntax": "local",
-          "description": "Use the local mechanical force ratio."
-        },
-        {
-          "name": "servo-reduce",
-          "syntax": "reduce",
-          "description": "Sets the servo into reduce mode. In this mode the starting value of the factor is 1.0, and the minimum value is set to 0.0. When the current ratio falls below lower-bound the factor is reduced by the upper-multiplier. The factor is never increased. This is useful to gradually decrease an applied condition to zero."
-        },
-        {
-          "name": "servo-upper-bound",
-          "syntax": "upper-bound <f>",
-          "description": "Set the upper mechanical convergence ratio value. If the current ratio rises above this value, the factor will be multiplier by the upper-multiplier. The default is 1e-2."
-        },
-        {
-          "name": "servo-upper-multiplier",
-          "syntax": "upper-multiplier <f>",
-          "description": "If the current ratio rises above the upper-bound, the factor is multiplied by this. The default is 0.975."
-        },
-        {
-          "name": "system",
-          "syntax": "system keyword...",
-          "description": "The local coordinate system used by the apply condition may be specified explicitly by the user. By default, this coordinate system is determined automatically. For faces it is determined by the normal direction of the face. For gridpoints it is determined by the average normal vectors of all faces connected to the gridpoint that are a part of this apply condition."
-        },
-        {
-          "name": "system-normal",
-          "syntax": "normal <v>",
-          "description": "v is the unit normal vector to the plane."
-        },
-        {
-          "name": "system-dip",
-          "syntax": "dip <f>",
-          "description": "dip [degrees], f, of the plane measured in the negative z-direction from the global xy-plane."
-        },
-        {
-          "name": "system-dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "dip-direction [degrees], f, of the plane measured in the global xy-plane clockwise from the positive y-axis."
-        },
-        {
-          "name": "table",
-          "syntax": "table <s> [time keyword]",
-          "description": "Specify a multiplier that is a table named s. By default the x-axis value is the current step number. The optional time keyword may be used to specify which processes accumulated time-total should be used to provide the x-axis value. The available keywords are:"
-        },
-        {
-          "name": "table-creep",
-          "syntax": "creep"
-        },
-        {
-          "name": "table-dynamic",
-          "syntax": "dynamic"
-        },
-        {
-          "name": "table-fluid",
-          "syntax": "fluid"
-        },
-        {
-          "name": "table-mechanical",
-          "syntax": "mechanical"
-        },
-        {
-          "name": "table-step",
-          "syntax": "step"
-        },
-        {
-          "name": "table-thermal",
-          "syntax": "thermal"
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided. This is not available if the apply conditions requires two values or a vector value."
-        },
-        {
-          "name": "free-field",
-          "syntax": "free-field",
-          "description": "Free-field boundary condition (dynamic analysis). Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-tensor",
-          "syntax": "stress-tensor <t>",
-          "description": "Apply a full stress tensor on faces. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "westergaard",
-          "syntax": "westergaard",
-          "description": "Westergaard hydrodynamic pressure condition (moved to the dedicated zone face westergaard command in 9.x). Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "reaction-tangential",
-          "syntax": "reaction-tangential [faceapplyblock] 2D ONLY",
-          "description": "Reaction force, tangential component. (2D only.)"
-        },
-        {
-          "name": "stress-shear",
-          "syntax": "stress-shear <f> [faceapplyblock] 2D ONLY",
-          "description": "Apply shear traction. (2D only.)"
-        },
-        {
-          "name": "velocity-tangential",
-          "syntax": "velocity-tangential <f> [faceapplyblock] 2D ONLY",
-          "description": "Velocity in the tangential direction. (2D only.)"
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      },
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "bound_stresses.png",
-            "doc_path": "_images/bound_stresses.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+  "notes": [
+    "'[faceapplyblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (fish, fish-local, gradient, servo, table, vary, update-direction)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone face apply",
+  "syntax": "zone face apply keyword [range]",
+  "keywords": [
+    {
+      "name": "acceleration",
+      "syntax": "acceleration <v> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration boundary condition (vector form)."
+      }
+    },
+    {
+      "name": "acceleration-dip",
+      "syntax": "acceleration-dip <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration in the dip direction. (3D only.)"
+      }
+    },
+    {
+      "name": "acceleration-local",
+      "syntax": "acceleration-local <v> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration in the gridpoint-local coordinate system."
+      }
+    },
+    {
+      "name": "acceleration-normal",
+      "syntax": "acceleration-normal <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration normal to the face."
+      }
+    },
+    {
+      "name": "acceleration-strike",
+      "syntax": "acceleration-strike <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration in the strike direction. (3D only.)"
+      }
+    },
+    {
+      "name": "acceleration-x",
+      "syntax": "acceleration-x <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration x-component (global frame)."
+      }
+    },
+    {
+      "name": "acceleration-y",
+      "syntax": "acceleration-y <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration y-component (global frame)."
+      }
+    },
+    {
+      "name": "acceleration-z",
+      "syntax": "acceleration-z <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply acceleration z-component (global frame). (3D only.)"
+      }
+    },
+    {
+      "name": "convection",
+      "syntax": "convection <f1> <f2> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply convective heat-transfer condition. f1 = ambient temperature, f2 = heat-transfer coefficient. (Thermal config.)"
+      }
+    },
+    {
+      "name": "discharge",
+      "syntax": "discharge <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Fluid flux f is the component of the specific discharge vector (e.g., in m/s) applied normal to the boundary.",
+        "9.0": "Apply prescribed fluid discharge. (Fluid config.)"
+      }
+    },
+    {
+      "name": "flux",
+      "syntax": "flux <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply prescribed heat flux. (Thermal config.)"
+      }
+    },
+    {
+      "name": "head",
+      "syntax": "head <f> [faceapplyblock]",
+      "description": "Apply prescribed pore-pressure head. (Fluid config.)",
+      "availability": {
+        "versions": [
+          "9.0"
         ]
       }
     },
-    "9.0": {
-      "command": "zone face apply",
-      "syntax": "zone face apply keyword [range]",
-      "description": "This command is used to apply boundary conditions at surface faces of the model. Process gating (verified against FLAC3D 9.7): the keyword ENUMERATION below is context-free -- the parser lists the identical 47-keyword set whether or not thermal/dynamic/creep/fluid are configured -- but EXECUTION is gated per process: thermal keywords (temperature, flux, convection) require 'model configure thermal', dynamic keywords (quiet*, acceleration*) require 'model configure dynamic', fluid keywords (pore-pressure*, head*, discharge, leakage) require a fluid configure; without the configure the engine rejects with a message naming the missing process. Applying a condition to gridpoints that already carry a conflicting apply removes the old condition (reported in the command output).",
-      "keywords": [
-        {
-          "name": "acceleration",
-          "syntax": "acceleration <v> [faceapplyblock]",
-          "description": "Apply acceleration boundary condition (vector form)."
-        },
-        {
-          "name": "acceleration-dip",
-          "syntax": "acceleration-dip <f> [faceapplyblock]",
-          "description": "Apply acceleration in the dip direction. (3D only.)"
-        },
-        {
-          "name": "acceleration-local",
-          "syntax": "acceleration-local <v> [faceapplyblock]",
-          "description": "Apply acceleration in the gridpoint-local coordinate system."
-        },
-        {
-          "name": "acceleration-normal",
-          "syntax": "acceleration-normal <f> [faceapplyblock]",
-          "description": "Apply acceleration normal to the face."
-        },
-        {
-          "name": "acceleration-strike",
-          "syntax": "acceleration-strike <f> [faceapplyblock]",
-          "description": "Apply acceleration in the strike direction. (3D only.)"
-        },
-        {
-          "name": "acceleration-x",
-          "syntax": "acceleration-x <f> [faceapplyblock]",
-          "description": "Apply acceleration x-component (global frame)."
-        },
-        {
-          "name": "acceleration-y",
-          "syntax": "acceleration-y <f> [faceapplyblock]",
-          "description": "Apply acceleration y-component (global frame)."
-        },
-        {
-          "name": "acceleration-z",
-          "syntax": "acceleration-z <f> [faceapplyblock]",
-          "description": "Apply acceleration z-component (global frame). (3D only.)"
-        },
-        {
-          "name": "convection",
-          "syntax": "convection <f1> <f2> [faceapplyblock]",
-          "description": "Apply convective heat-transfer condition. f1 = ambient temperature, f2 = heat-transfer coefficient. (Thermal config.)"
-        },
-        {
-          "name": "discharge",
-          "syntax": "discharge <f> [faceapplyblock]",
-          "description": "Apply prescribed fluid discharge. (Fluid config.)"
-        },
-        {
-          "name": "flux",
-          "syntax": "flux <f> [faceapplyblock]",
-          "description": "Apply prescribed heat flux. (Thermal config.)"
-        },
-        {
-          "name": "head",
-          "syntax": "head <f> [faceapplyblock]",
-          "description": "Apply prescribed pore-pressure head. (Fluid config.)"
-        },
-        {
-          "name": "head-saturation",
-          "syntax": "head-saturation <f> [faceapplyblock]",
-          "description": "Uses head to calculate and fix pore pressures together with saturation (companion keyword to head). Requires the model configured for fluid, with fluid density and gravity defined beforehand. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
-        },
-        {
-          "name": "leakage",
-          "syntax": "leakage <f1> <f2> [faceapplyblock]",
-          "description": "Apply leakage boundary condition. (Fluid config.)"
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure <f> [faceapplyblock]",
-          "description": "Apply prescribed pore pressure. (Fluid config.)"
-        },
-        {
-          "name": "pore-pressure-maximum",
-          "syntax": "pore-pressure-maximum [<f>] [faceapplyblock]",
-          "description": "Seepage-type limited-pore-pressure boundary. Gridpoint pore pressure on the face is left FREE while below f (it follows the flow field, unlike a plain pore-pressure apply which pins the value from both directions) and is clamped at f whenever flow would push it higher -- the face acts as a drain at pp = f. At apply time, any pore pressure above f in the range is immediately reduced to f. Omitting f is equivalent to f = 0 (zero-pressure seepage face). Requires the model configured for fluid. State-verified against FLAC3D 9.7 (fluid-explicit diffusion tests with gp.pp() readback, contrasted against a plain pore-pressure face); absent from the official 9.x HTML documentation."
-        },
-        {
-          "name": "pore-pressure-saturation",
-          "syntax": "pore-pressure-saturation <v2> [faceapplyblock]",
-          "description": "Apply pore pressure and saturation together; takes a 2-component vector (pore pressure, saturation). Requires the model configured for fluid. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation."
-        },
-        {
-          "name": "quiet",
-          "syntax": "quiet [faceapplyblock]",
-          "description": "Apply a quiet (non-reflecting) boundary across all components. (Dynamic config.)"
-        },
-        {
-          "name": "quiet-dip",
-          "syntax": "quiet-dip [faceapplyblock]",
-          "description": "Apply a quiet boundary in the dip component only. (3D, dynamic config.)"
-        },
-        {
-          "name": "quiet-normal",
-          "syntax": "quiet-normal [faceapplyblock]",
-          "description": "Apply a quiet boundary in the normal component only. (Dynamic config.)"
-        },
-        {
-          "name": "quiet-strike",
-          "syntax": "quiet-strike [faceapplyblock]",
-          "description": "Apply a quiet boundary in the strike component only. (3D, dynamic config.)"
-        },
-        {
-          "name": "reaction",
-          "syntax": "reaction [faceapplyblock]",
-          "description": "Reaction-force boundary across all components."
-        },
-        {
-          "name": "reaction-dip",
-          "syntax": "reaction-dip [faceapplyblock]",
-          "description": "Reaction force in the dip component. (3D only.)"
-        },
-        {
-          "name": "reaction-local",
-          "syntax": "reaction-local [faceapplyblock]",
-          "description": "Reaction force in the gridpoint-local frame."
-        },
-        {
-          "name": "reaction-normal",
-          "syntax": "reaction-normal [faceapplyblock]",
-          "description": "Reaction force normal to the face."
-        },
-        {
-          "name": "reaction-strike",
-          "syntax": "reaction-strike [faceapplyblock]",
-          "description": "Reaction force in the strike direction. (3D only.)"
-        },
-        {
-          "name": "reaction-x",
-          "syntax": "reaction-x [faceapplyblock]",
-          "description": "Reaction force x-component (global frame)."
-        },
-        {
-          "name": "reaction-y",
-          "syntax": "reaction-y [faceapplyblock]",
-          "description": "Reaction force y-component (global frame)."
-        },
-        {
-          "name": "reaction-z",
-          "syntax": "reaction-z [faceapplyblock]",
-          "description": "Reaction force z-component (global frame). (3D only.)"
-        },
-        {
-          "name": "stress-dip",
-          "syntax": "stress-dip <f> [faceapplyblock]",
-          "description": "Apply traction in the dip direction. (3D only.)"
-        },
-        {
-          "name": "stress-normal",
-          "syntax": "stress-normal <f> [faceapplyblock]",
-          "description": "Apply traction normal to the face."
-        },
-        {
-          "name": "stress-strike",
-          "syntax": "stress-strike <f> [faceapplyblock]",
-          "description": "Apply traction in the strike direction. (3D only.)"
-        },
-        {
-          "name": "stress-tensor",
-          "syntax": "stress-tensor <xx> <yy> <zz> <xy> <xz> <yz> [faceapplyblock]",
-          "description": "Apply the full stress tensor (six components) as a face traction condition."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx <f> [faceapplyblock]",
-          "description": "Traction tensor xx-component."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy <f> [faceapplyblock]",
-          "description": "Traction tensor xy-component."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz <f> [faceapplyblock]",
-          "description": "Traction tensor xz-component. (3D only.)"
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy <f> [faceapplyblock]",
-          "description": "Traction tensor yy-component."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz <f> [faceapplyblock]",
-          "description": "Traction tensor yz-component. (3D only.)"
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz <f> [faceapplyblock]",
-          "description": "Traction tensor zz-component. (3D only.)"
-        },
-        {
-          "name": "temperature",
-          "syntax": "temperature <f> [faceapplyblock]",
-          "description": "Apply prescribed temperature. (Thermal config.)"
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v> [faceapplyblock]",
-          "description": "Apply velocity boundary condition (vector form)."
-        },
-        {
-          "name": "velocity-dip",
-          "syntax": "velocity-dip <f> [faceapplyblock]",
-          "description": "Velocity in the dip direction. (3D only.)"
-        },
-        {
-          "name": "velocity-local",
-          "syntax": "velocity-local <v> [faceapplyblock]",
-          "description": "Velocity in the gridpoint-local frame."
-        },
-        {
-          "name": "velocity-normal",
-          "syntax": "velocity-normal <f> [faceapplyblock]",
-          "description": "Velocity normal to the face."
-        },
-        {
-          "name": "velocity-strike",
-          "syntax": "velocity-strike <f> [faceapplyblock]",
-          "description": "Velocity in the strike direction. (3D only.)"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f> [faceapplyblock]",
-          "description": "Velocity x-component (global frame)."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f> [faceapplyblock]",
-          "description": "Velocity y-component (global frame)."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f> [faceapplyblock]",
-          "description": "Velocity z-component (global frame). (3D only.)"
-        },
-        {
-          "name": "acceleration-tangential",
-          "syntax": "acceleration-tangential <f> [faceapplyblock]",
-          "description": "Apply acceleration tangential to the face. (2D only.)"
-        },
-        {
-          "name": "quiet-tangential",
-          "syntax": "quiet-tangential [faceapplyblock]",
-          "description": "Quiet boundary, tangential component. (2D, dynamic config.)"
-        },
-        {
-          "name": "reaction-tangential",
-          "syntax": "reaction-tangential [faceapplyblock]",
-          "description": "Reaction force, tangential component. (2D only.)"
-        },
-        {
-          "name": "stress-shear",
-          "syntax": "stress-shear <f> [faceapplyblock]",
-          "description": "Apply shear traction. (2D only.)"
-        },
-        {
-          "name": "velocity-tangential",
-          "syntax": "velocity-tangential <f> [faceapplyblock]",
-          "description": "Velocity in the tangential direction. (2D only.)"
-        },
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Use the FISH function named s to compute the applied value per face/gridpoint. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
-        },
-        {
-          "name": "fish-local",
-          "syntax": "fish-local <s>",
-          "description": "Use the local-namespace FISH function s to compute the applied value. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a linear spatial gradient v to the base value (optionally with a reference origin)."
-        },
-        {
-          "name": "servo",
-          "syntax": "servo [latency <i>] [lower-bound <f>] [lower-multiplier <f>] [maximum <f>] [minimum <f>] [ramp] [ratio keyword] [reduce] [upper-bound <f>] [upper-multiplier <f>]",
-          "description": "Servo-control the applied magnitude based on the mechanical convergence ratio. Sub-keywords verified against FLAC3D 9.7: latency, lower-bound, lower-multiplier (must be > 1), maximum, minimum, ramp, ratio (one of average / convergence / global / local / maximum), reduce, upper-bound, upper-multiplier (must be < 1). Replaces the 7.0 hyphenated servo-* keywords (servo-ratio, servo-latency, ...), which FLAC3D 9.x rejects."
-        },
-        {
-          "name": "table",
-          "syntax": "table <s>",
-          "description": "Specify a value multiplier from the table named s (the x-value of the table is time by default). The table name must be given as a quoted string (e.g. table 'name'); an unquoted name is rejected. Replaces the 7.0 table-creep / table-dynamic / table-fluid / table-mechanical / table-step / table-thermal variants, which FLAC3D 9.x no longer accepts. Verified against FLAC3D 9.7."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation v to the base value across the face."
-        },
-        {
-          "name": "update-direction",
-          "syntax": "update-direction <b>",
-          "description": "If on, the direction of the applied vector quantity is updated each step to follow the current face normal (for large-strain analyses). Verified FLAC3D 9.7: accepted after gridpoint-based vector conditions (velocity, velocity-normal, acceleration, ...); rejected after face-based stress conditions (stress-normal, stress-xx, ...)."
-        },
-        {
-          "name": "cutoff",
-          "syntax": "cutoff <f>",
-          "description": "Follows head or pore-pressure. Pore-pressure values are not allowed to fall below this value. If no value is given 0.0 is assumed. The default is no limit."
-        },
-        {
-          "name": "datum",
-          "syntax": "datum <v>",
-          "description": "Follows head. The datum used as the origin of the head height; the applied pore pressure is density * gravity * (head - height above the datum). The default value is the origin."
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "bound_stresses.png",
-            "doc_path": "_images/bound_stresses.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    {
+      "name": "head-saturation",
+      "syntax": "head-saturation <f> [faceapplyblock]",
+      "description": "Uses head to calculate and fix pore pressures together with saturation (companion keyword to head). Requires the model configured for fluid, with fluid density and gravity defined beforehand. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation.",
+      "availability": {
+        "versions": [
+          "9.0"
         ]
       }
+    },
+    {
+      "name": "leakage",
+      "syntax": "leakage <f1> <f2> [faceapplyblock]",
+      "description": {
+        "7.0": "f1 is the pore pressure in the leaky layer.",
+        "9.0": "Apply leakage boundary condition. (Fluid config.)"
+      }
+    },
+    {
+      "name": "pore-pressure",
+      "syntax": "pore-pressure <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply prescribed pore pressure. (Fluid config.)"
+      }
+    },
+    {
+      "name": "pore-pressure-maximum",
+      "syntax": "pore-pressure-maximum [<f>] [faceapplyblock]",
+      "description": "Seepage-type limited-pore-pressure boundary. Gridpoint pore pressure on the face is left FREE while below f (it follows the flow field, unlike a plain pore-pressure apply which pins the value from both directions) and is clamped at f whenever flow would push it higher -- the face acts as a drain at pp = f. At apply time, any pore pressure above f in the range is immediately reduced to f. Omitting f is equivalent to f = 0 (zero-pressure seepage face). Requires the model configured for fluid. State-verified against FLAC3D 9.7 (fluid-explicit diffusion tests with gp.pp() readback, contrasted against a plain pore-pressure face); absent from the official 9.x HTML documentation.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "pore-pressure-saturation",
+      "syntax": "pore-pressure-saturation <v2> [faceapplyblock]",
+      "description": "Apply pore pressure and saturation together; takes a 2-component vector (pore pressure, saturation). Requires the model configured for fluid. Verified against FLAC3D 9.7; absent from the official 9.x HTML documentation.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "quiet",
+      "syntax": "quiet [faceapplyblock]",
+      "description": {
+        "9.0": "Apply a quiet (non-reflecting) boundary across all components. (Dynamic config.)"
+      }
+    },
+    {
+      "name": "quiet-dip",
+      "syntax": "quiet-dip [faceapplyblock]",
+      "description": {
+        "9.0": "Apply a quiet boundary in the dip component only. (3D, dynamic config.)"
+      }
+    },
+    {
+      "name": "quiet-normal",
+      "syntax": "quiet-normal [faceapplyblock]",
+      "description": {
+        "9.0": "Apply a quiet boundary in the normal component only. (Dynamic config.)"
+      }
+    },
+    {
+      "name": "quiet-strike",
+      "syntax": "quiet-strike [faceapplyblock]",
+      "description": {
+        "9.0": "Apply a quiet boundary in the strike component only. (3D, dynamic config.)"
+      }
+    },
+    {
+      "name": "reaction",
+      "syntax": "reaction [faceapplyblock]",
+      "description": {
+        "7.0": "Vector of all components of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction-force boundary across all components."
+      }
+    },
+    {
+      "name": "reaction-dip",
+      "syntax": "reaction-dip [faceapplyblock]",
+      "description": {
+        "7.0": "Reaction force in the dip direction of the local gridpoint axes Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force in the dip component. (3D only.)"
+      }
+    },
+    {
+      "name": "reaction-local",
+      "syntax": "reaction-local [faceapplyblock]",
+      "description": {
+        "7.0": "Apply a reaction force in all components of the local coordinate system (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force in the gridpoint-local frame."
+      }
+    },
+    {
+      "name": "reaction-normal",
+      "syntax": "reaction-normal [faceapplyblock]",
+      "description": {
+        "7.0": "Reaction force in the normal direction of the local gridpoint axes (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force normal to the face."
+      }
+    },
+    {
+      "name": "reaction-strike",
+      "syntax": "reaction-strike [faceapplyblock]",
+      "description": {
+        "7.0": "Reaction force in the strike direction of the local gridpoint axes (see Local Axes System below). Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force in the strike direction. (3D only.)"
+      }
+    },
+    {
+      "name": "reaction-x",
+      "syntax": "reaction-x [faceapplyblock]",
+      "description": {
+        "7.0": "\\(x\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force x-component (global frame)."
+      }
+    },
+    {
+      "name": "reaction-y",
+      "syntax": "reaction-y [faceapplyblock]",
+      "description": {
+        "7.0": "\\(y\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force y-component (global frame)."
+      }
+    },
+    {
+      "name": "reaction-z",
+      "syntax": "reaction-z [faceapplyblock]",
+      "description": {
+        "7.0": "\\(z\\)-component of reaction force at a gridpoint Reaction forces will only be applied in directions that are currently fixed, and those fixity conditions will be removed. This is a gridpoint based condition.",
+        "9.0": "Reaction force z-component (global frame). (3D only.)"
+      }
+    },
+    {
+      "name": "stress-dip",
+      "syntax": "stress-dip <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Stress component applied in the dip direction of the local face axes (see Local Axes System below).",
+        "9.0": "Apply traction in the dip direction. (3D only.)"
+      }
+    },
+    {
+      "name": "stress-normal",
+      "syntax": "stress-normal <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Stress component applied in the normal direction of the local face axes (see Local Axes System below).",
+        "9.0": "Apply traction normal to the face."
+      }
+    },
+    {
+      "name": "stress-strike",
+      "syntax": "stress-strike <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Stress component applied in the strike direction of the local face axes (see Local Axes System below).",
+        "9.0": "Apply traction in the strike direction. (3D only.)"
+      }
+    },
+    {
+      "name": "stress-xx",
+      "syntax": "stress-xx <f> [faceapplyblock]",
+      "description": {
+        "7.0": "xx-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor xx-component."
+      }
+    },
+    {
+      "name": "stress-xy",
+      "syntax": "stress-xy <f> [faceapplyblock]",
+      "description": {
+        "7.0": "xy-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor xy-component."
+      }
+    },
+    {
+      "name": "stress-xz",
+      "syntax": "stress-xz <f> [faceapplyblock]",
+      "description": {
+        "7.0": "xz-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor xz-component. (3D only.)"
+      }
+    },
+    {
+      "name": "stress-yy",
+      "syntax": "stress-yy <f> [faceapplyblock]",
+      "description": {
+        "7.0": "yy-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor yy-component."
+      }
+    },
+    {
+      "name": "stress-yz",
+      "syntax": "stress-yz <f> [faceapplyblock]",
+      "description": {
+        "7.0": "xz-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor yz-component. (3D only.)"
+      }
+    },
+    {
+      "name": "stress-zz",
+      "syntax": "stress-zz <f> [faceapplyblock]",
+      "description": {
+        "7.0": "zz-component of the stress tensor applied at a face",
+        "9.0": "Traction tensor zz-component. (3D only.)"
+      }
+    },
+    {
+      "name": "temperature",
+      "syntax": "temperature <f> [faceapplyblock]",
+      "description": {
+        "9.0": "Apply prescribed temperature. (Thermal config.)"
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <v> [faceapplyblock]",
+      "description": {
+        "7.0": "Vector of all velocity components in the global coordinate axes. This is a gridpoint based condition.",
+        "9.0": "Apply velocity boundary condition (vector form)."
+      }
+    },
+    {
+      "name": "velocity-dip",
+      "syntax": "velocity-dip <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Velocity component applied in the dip direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition.",
+        "9.0": "Velocity in the dip direction. (3D only.)"
+      }
+    },
+    {
+      "name": "velocity-local",
+      "syntax": "velocity-local <v> [faceapplyblock]",
+      "description": {
+        "7.0": "Vector of all velocity components in the local coordinate axes (see Local Axes System below). This is a gridpoint based condition.",
+        "9.0": "Velocity in the gridpoint-local frame."
+      }
+    },
+    {
+      "name": "velocity-normal",
+      "syntax": "velocity-normal <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Velocity component applied in the normal direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition.",
+        "9.0": "Velocity normal to the face."
+      }
+    },
+    {
+      "name": "velocity-strike",
+      "syntax": "velocity-strike <f> [faceapplyblock]",
+      "description": {
+        "7.0": "Velocity component applied in the strike direction of the local gridpoint axes (see Local Axes System below). This is a gridpoint based condition.",
+        "9.0": "Velocity in the strike direction. (3D only.)"
+      }
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x <f> [faceapplyblock]",
+      "description": {
+        "7.0": "\\(x\\)-component of velocity applied at a gridpoint This is a gridpoint based condition.",
+        "9.0": "Velocity x-component (global frame)."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y <f> [faceapplyblock]",
+      "description": {
+        "7.0": "\\(y\\)-component of velocity applied at a gridpoint This is a gridpoint based condition.",
+        "9.0": "Velocity y-component (global frame)."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z <f> [faceapplyblock]",
+      "description": {
+        "7.0": "\\(z\\)-component of velocity applied at a gridpoint This is a gridpoint based condition.",
+        "9.0": "Velocity z-component (global frame). (3D only.)"
+      }
+    },
+    {
+      "name": "acceleration-tangential",
+      "syntax": "acceleration-tangential <f> [faceapplyblock]",
+      "description": "Apply acceleration tangential to the face. (2D only.)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "quiet-tangential",
+      "syntax": "quiet-tangential [faceapplyblock]",
+      "description": "Quiet boundary, tangential component. (2D, dynamic config.)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "fish",
+      "syntax": "fish <s>",
+      "description": {
+        "7.0": "Specify a multiplier that is a FISH function named s. The returned value of this FISH function is multiplied by the base value (including gradient) over all zone faces or gridpoints included in this apply condition. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step. If the apply condition requires a vector value, this function should also return a vector. If the apply condition requires two values, the function should return a vector and the \\(z\\)-component will be ignored.",
+        "9.0": "Use the FISH function named s to compute the applied value per face/gridpoint. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
+      }
+    },
+    {
+      "name": "fish-local",
+      "syntax": "fish-local <s>",
+      "description": {
+        "7.0": "Specify a multiplier that is a FISH function named s, which is applied separately to each individual zone face or gridpoint affected by this apply condition. This function must take two arguments. For apply conditions that work directly on faces, the first argument is a pointer to the zone and the second argument is an integer from 1 to 6 indicating the face. For apply conditions that work on gridpoints, the first argument is a pointer to the gridpoint and the second argument is not used. This allows an apply condition to vary over time as well as space. The returned value of this FISH function is multiplied by the base value (including gradient) on the specific zone supplied. So a return value of 1.0 will apply the base value provided, and a return value of 0.0 will effectively remove it. This function will be called every step for every zone included in the apply condition. If the apply condition requires a vector value, this function should also return a vector. If the apply condition requires two values, the function should return a vector and the \\(z\\)-component will be ignored.",
+        "9.0": "Use the local-namespace FISH function s to compute the applied value. The function name is given as an unquoted FISH symbol; a quoted string is rejected (verified FLAC3D 9.7)."
+      }
+    },
+    {
+      "name": "gradient",
+      "syntax": {
+        "7.0": "gradient <v>",
+        "9.0": "gradient <v> [origin <v>]"
+      },
+      "description": {
+        "7.0": "Apply a gradient to the scalar-value provided. This is not available if the apply conditions requires two values or a vector value.",
+        "9.0": "Apply a linear spatial gradient v to the base value (optionally with a reference origin)."
+      }
+    },
+    {
+      "name": "servo",
+      "syntax": {
+        "7.0": "servo keyword...",
+        "9.0": "servo [latency <i>] [lower-bound <f>] [lower-multiplier <f>] [maximum <f>] [minimum <f>] [ramp] [ratio keyword] [reduce] [upper-bound <f>] [upper-multiplier <f>]"
+      },
+      "description": {
+        "7.0": "Use a servo tied to the mechanical convergence ratio to control the magnitude of the applied condition. This can be used to maintain, gradually ramp up, or gradually reduce apply conditions while maintaining a quasi-static response. This controls a factor that is multiplied with the base value supplied. By default the factor will start at 0.001, and will gradually increase to 1.0 as the convergence ratio falls below 2e-3, and decrease if it rises above 1e-2. The following keywords are available to control the servo response:",
+        "9.0": "Servo-control the applied magnitude based on the mechanical convergence ratio. Sub-keywords verified against FLAC3D 9.7: latency, lower-bound, lower-multiplier (must be > 1), maximum, minimum, ramp, ratio (one of average / convergence / global / local / maximum), reduce, upper-bound, upper-multiplier (must be < 1). Replaces the 7.0 hyphenated servo-* keywords (servo-ratio, servo-latency, ...), which FLAC3D 9.x rejects."
+      }
+    },
+    {
+      "name": "servo-latency",
+      "syntax": "latency <i>",
+      "description": "The minimum number of steps that must pass since the last servo adjustment before the next one occurs. This can keep the servo from over controlling in the initial response to a change in the factor. The default value is 1.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-lower-bound",
+      "syntax": "lower-bound <f>",
+      "description": "Set the lower mechanical convergence ratio limit. If the current ratio falls below this limit, the factor will be multiplied by the lower-multiplier. The default limit is 2e-3.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-lower-multiplier",
+      "syntax": "lower-multiplier <f>",
+      "description": "If the current ratio falls below the lower-bound limit, the factor is multiplied by this number. The default is 1.01.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-maximum",
+      "syntax": "maximum <f>",
+      "description": "The maximum value the factor is allowed to become. The default is 1.0.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-minimum",
+      "syntax": "minimum <f>",
+      "description": "The minimum value the factor is allowed to become. The default is 0.001.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-ramp",
+      "syntax": "ramp",
+      "description": "Sets the servo into ramp mode. This means that the factor is not allowed to go down, the value will only increase. This is useful to gradually increase an applied condition to it’s full value. See also the reduce keyword.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-ratio",
+      "syntax": "ratio keyword",
+      "description": "Which mechanical convergence ratio is compared against lower-bound and upper-bound. By default this is the current value assigned by the zone ratio command (which is average by default. See the zone ratio command for definitions. The available keywords are:",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-ratio-average",
+      "syntax": "average",
+      "description": "Use the average mechanical force ratio.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-ratio-maximum",
+      "syntax": "maximum",
+      "description": "Use the maximum mechanical force ratio.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-ratio-local",
+      "syntax": "local",
+      "description": "Use the local mechanical force ratio.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-reduce",
+      "syntax": "reduce",
+      "description": "Sets the servo into reduce mode. In this mode the starting value of the factor is 1.0, and the minimum value is set to 0.0. When the current ratio falls below lower-bound the factor is reduced by the upper-multiplier. The factor is never increased. This is useful to gradually decrease an applied condition to zero.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-upper-bound",
+      "syntax": "upper-bound <f>",
+      "description": "Set the upper mechanical convergence ratio value. If the current ratio rises above this value, the factor will be multiplier by the upper-multiplier. The default is 1e-2.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "servo-upper-multiplier",
+      "syntax": "upper-multiplier <f>",
+      "description": "If the current ratio rises above the upper-bound, the factor is multiplied by this. The default is 0.975.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "system",
+      "syntax": "system keyword...",
+      "description": "The local coordinate system used by the apply condition may be specified explicitly by the user. By default, this coordinate system is determined automatically. For faces it is determined by the normal direction of the face. For gridpoints it is determined by the average normal vectors of all faces connected to the gridpoint that are a part of this apply condition.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "system-normal",
+      "syntax": "normal <v>",
+      "description": "v is the unit normal vector to the plane.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "system-dip",
+      "syntax": "dip <f>",
+      "description": "dip [degrees], f, of the plane measured in the negative z-direction from the global xy-plane.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "system-dip-direction",
+      "syntax": "dip-direction <f>",
+      "description": "dip-direction [degrees], f, of the plane measured in the global xy-plane clockwise from the positive y-axis.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table",
+      "syntax": {
+        "7.0": "table <s> [time keyword]",
+        "9.0": "table <s>"
+      },
+      "description": {
+        "7.0": "Specify a multiplier that is a table named s. By default the x-axis value is the current step number. The optional time keyword may be used to specify which processes accumulated time-total should be used to provide the x-axis value. The available keywords are:",
+        "9.0": "Specify a value multiplier from the table named s (the x-value of the table is time by default). The table name must be given as a quoted string (e.g. table 'name'); an unquoted name is rejected. Replaces the 7.0 table-creep / table-dynamic / table-fluid / table-mechanical / table-step / table-thermal variants, which FLAC3D 9.x no longer accepts. Verified against FLAC3D 9.7."
+      }
+    },
+    {
+      "name": "table-creep",
+      "syntax": "creep",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table-dynamic",
+      "syntax": "dynamic",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table-fluid",
+      "syntax": "fluid",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table-mechanical",
+      "syntax": "mechanical",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table-step",
+      "syntax": "step",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "table-thermal",
+      "syntax": "thermal",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "vary",
+      "syntax": "vary <v>",
+      "description": {
+        "7.0": "Apply a linear variation to the scalar-value provided. This is not available if the apply conditions requires two values or a vector value.",
+        "9.0": "Apply a linear variation v to the base value across the face."
+      }
+    },
+    {
+      "name": "update-direction",
+      "syntax": "update-direction <b>",
+      "description": "If on, the direction of the applied vector quantity is updated each step to follow the current face normal (for large-strain analyses). Verified FLAC3D 9.7: accepted after gridpoint-based vector conditions (velocity, velocity-normal, acceleration, ...); rejected after face-based stress conditions (stress-normal, stress-xx, ...).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "cutoff",
+      "syntax": "cutoff <f>",
+      "description": "Follows head or pore-pressure. Pore-pressure values are not allowed to fall below this value. If no value is given 0.0 is assumed. The default is no limit.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "datum",
+      "syntax": "datum <v>",
+      "description": "Follows head. The datum used as the origin of the head height; the applied pore pressure is density * gravity * (head - height above the datum). The default value is the origin.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "free-field",
+      "syntax": "free-field",
+      "description": "Free-field boundary condition (dynamic analysis). Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-tensor",
+      "syntax": {
+        "7.0": "stress-tensor <t>",
+        "9.0": "stress-tensor <xx> <yy> <zz> <xy> <xz> <yz> [faceapplyblock]"
+      },
+      "description": {
+        "7.0": "Apply a full stress tensor on faces. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Apply the full stress tensor (six components) as a face traction condition."
+      }
+    },
+    {
+      "name": "westergaard",
+      "syntax": "westergaard",
+      "description": "Westergaard hydrodynamic pressure condition (moved to the dedicated zone face westergaard command in 9.x). Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "reaction-tangential",
+      "syntax": {
+        "7.0": "reaction-tangential [faceapplyblock] 2D ONLY",
+        "9.0": "reaction-tangential [faceapplyblock]"
+      },
+      "description": "Reaction force, tangential component. (2D only.)"
+    },
+    {
+      "name": "stress-shear",
+      "syntax": {
+        "7.0": "stress-shear <f> [faceapplyblock] 2D ONLY",
+        "9.0": "stress-shear <f> [faceapplyblock]"
+      },
+      "description": "Apply shear traction. (2D only.)"
+    },
+    {
+      "name": "velocity-tangential",
+      "syntax": {
+        "7.0": "velocity-tangential <f> [faceapplyblock] 2D ONLY",
+        "9.0": "velocity-tangential <f> [faceapplyblock]"
+      },
+      "description": "Velocity in the tangential direction. (2D only.)"
     }
-  },
-  "notes": [
-    "'[faceapplyblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (fish, fish-local, gradient, servo, table, vary, update-direction)."
-  ]
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneface/cmd_zone.face.apply.html); syntax from official FLAC3D 7.0 detailed command page."
+  ],
+  "figure_reference": {
+    "figures": [
+      {
+        "name": "bound_stresses.png",
+        "doc_path": "_images/bound_stresses.png"
+      }
+    ],
+    "notes": [
+      "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    ]
+  }
 }

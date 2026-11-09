@@ -8,150 +8,78 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "geometry tessellate",
-      "syntax": "geometry tessellate keyword [range]",
-      "keywords": [
-        {
-          "name": "box-check",
-          "syntax": "box-check",
-          "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes."
-        },
-        {
-          "name": "convex-hull",
-          "syntax": "convex-hull",
-          "description": "Calculate the convex hull of the nodes in the current geometry set. This keyword is not compatible with the start-set ."
-        },
-        {
-          "name": "delaunay",
-          "syntax": "delaunay",
-          "description": "Calculate the Delaunay simplices of the nodes of the current geometry set."
-        },
-        {
-          "name": "start-set",
-          "syntax": "start-set <s>",
-          "description": "Each Delaunay simplex or Voronoi region is placed in a unique set. Each set name is a combination of s with the ID of the set post-pended to s . For example, the set with ID = 13 with s = con would have name con13 . This keyword cannot be used with the convexhull keyword."
-        },
-        {
-          "name": "to-set",
-          "syntax": "to-set <s>",
-          "description": "Place the resulting polygons in the set with name s . This set is created if it does not exist."
-        },
-        {
-          "name": "voronoi",
-          "syntax": "voronoi",
-          "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "geometry tessellate",
+  "syntax": {
+    "6.0": "geometry tessellate keyword [range]",
+    "7.0": "geometry tessellate keyword ... [range]",
+    "9.0": "geometry tessellate keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "box-check",
+      "syntax": "box-check",
+      "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes.",
+      "availability": {
+        "engines": [
+          "pfc",
+          "flac",
+          "3dec",
+          "mpoint"
+        ]
+      }
     },
-    "7.0": {
-      "command": "geometry tessellate",
-      "syntax": "geometry tessellate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "convex-hull",
-          "syntax": "convex-hull",
-          "description": "Calculate the convex hull of the nodes in the current geometry set. This keyword is not compatible with the start-set ."
-        },
-        {
-          "name": "delaunay",
-          "syntax": "delaunay",
-          "description": "Calculate the Delaunay simplices of the nodes of the current geometry set."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "Specify the geometry set."
-        },
-        {
-          "name": "start-set",
-          "syntax": "start-set <s>",
-          "description": "Each Delaunay simplex or Voronoi region is placed in a unique set. Each set name is a combination of s with the ID of the set post-pended to s . For example, the set with ID = 13 with s = con would have name con13 . This keyword cannot be used with the convexhull keyword."
-        },
-        {
-          "name": "to-set",
-          "syntax": "to-set <s>",
-          "description": "Place the resulting polygons in the set with name s . This set is created if it does not exist."
-        },
-        {
-          "name": "voronoi",
-          "syntax": "voronoi",
-          "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
-        },
-        {
-          "name": "box-check",
-          "syntax": "box-check",
-          "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "3dec",
-              "mpoint"
-            ]
-          }
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it."
-      ]
+    {
+      "name": "convex-hull",
+      "syntax": "convex-hull",
+      "description": "Calculate the convex hull of the nodes in the current geometry set. This keyword is not compatible with the start-set ."
     },
-    "9.0": {
-      "command": "geometry tessellate",
-      "syntax": "geometry tessellate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "convex-hull",
-          "syntax": "convex-hull",
-          "description": "Calculate the convex hull of the nodes in the current geometry set. This keyword is not compatible with the start-set ."
-        },
-        {
-          "name": "delaunay",
-          "syntax": "delaunay",
-          "description": "Calculate the Delaunay simplices of the nodes of the current geometry set."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "Specify the geometry set."
-        },
-        {
-          "name": "start-set",
-          "syntax": "start-set <s>",
-          "description": "Each Delaunay simplex or Voronoi region is placed in a unique set. Each set name is a combination of s with the ID of the set post-pended to s . For example, the set with ID = 13 with s = con would have name con13 . This keyword cannot be used with the convexhull keyword."
-        },
-        {
-          "name": "to-set",
-          "syntax": "to-set <s>",
-          "description": "Place the resulting polygons in the set with name s . This set is created if it does not exist."
-        },
-        {
-          "name": "voronoi",
-          "syntax": "voronoi",
-          "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
-        },
-        {
-          "name": "box-check",
-          "syntax": "box-check",
-          "description": "Only create Voronoi cells where the cell node positions fall within the axis-aligned bounding box enclosing all seed geometry nodes.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "3dec",
-              "mpoint"
-            ]
-          }
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it.",
-        "box-check alone makes no polygons and prints a qhull error."
-      ]
+    {
+      "name": "delaunay",
+      "syntax": "delaunay",
+      "description": "Calculate the Delaunay simplices of the nodes of the current geometry set."
+    },
+    {
+      "name": "set",
+      "syntax": "set <s>",
+      "description": "Specify the geometry set.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "start-set",
+      "syntax": "start-set <s>",
+      "description": "Each Delaunay simplex or Voronoi region is placed in a unique set. Each set name is a combination of s with the ID of the set post-pended to s . For example, the set with ID = 13 with s = con would have name con13 . This keyword cannot be used with the convexhull keyword."
+    },
+    {
+      "name": "to-set",
+      "syntax": "to-set <s>",
+      "description": "Place the resulting polygons in the set with name s . This set is created if it does not exist."
+    },
+    {
+      "name": "voronoi",
+      "syntax": "voronoi",
+      "description": "Calculate the Voronoi regions of the nodes in the current geometry set. Note Voronoi regions with points at infinity are skipped when producing the output."
     }
+  ],
+  "examples": [],
+  "notes": {
+    "7.0": [
+      "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it."
+    ],
+    "9.0": [
+      "box-check goes with voronoi: it removes the cells that leave the box, and delaunay is unchanged by it.",
+      "box-check alone makes no polygons and prints a qhull error."
+    ]
   }
 }

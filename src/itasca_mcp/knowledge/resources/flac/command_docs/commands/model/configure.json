@@ -26,216 +26,212 @@
     "Can be given at any stage of an analysis",
     "Configures calculation modes that require extra resources or license restrictions",
     "Once configured, the mode remains active for the model",
-    "May affect available memory and computational resources"
+    "May affect available memory and computational resources",
+    "ITASCA 9.1 and later use model configure fluid-flow for FLAC groundwater flow; 9.0 used model configure fluid.",
+    "The bundled FLAC command block omits common-page keywords for other Itasca products."
   ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('model configure fluid') - Python SDK does not provide a direct configure method"
   },
-  "versions": {
-    "7.0": {
-      "command": "model configure",
-      "syntax": "model configure keyword ...",
-      "keywords": [
-        {
-          "name": "creep",
-          "syntax": "creep",
-          "description": "Creep material analysis*"
-        },
-        {
-          "name": "dynamic",
-          "syntax": "dynamic",
-          "description": "Fully dynamic analysis*"
-        },
-        {
-          "name": "fluid",
-          "syntax": "fluid",
-          "description": "Fluid-flow analysis"
-        },
-        {
-          "name": "imass",
-          "syntax": "imass",
-          "description": "The Itasca Model for Advanced Strain Softening*"
-        },
-        {
-          "name": "plugins",
-          "syntax": "plugins",
-          "description": "C++ user-defined models and/or FISH intrinsic plugins.* FISH plugins can be loaded (but cycling is disabled) without this configuration."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Thermal analysis"
-        },
-        {
-          "name": "array",
-          "syntax": "array",
-          "description": "Configure the array process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "cfd",
-          "syntax": "cfd",
-          "description": "Configure the cfd process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "cluster",
-          "syntax": "cluster",
-          "description": "Configure the cluster process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy",
-          "description": "Configure the energy process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "feblock",
-          "syntax": "feblock",
-          "description": "Configure the feblock process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "highorder",
-          "syntax": "highorder",
-          "description": "Configure the highorder process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "hotetra",
-          "syntax": "hotetra",
-          "description": "Configure the hotetra process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "matrixflow",
-          "syntax": "matrixflow",
-          "description": "Configure the matrixflow process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Configure the mechanical process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model configure fluid",
-          "description": "Enable fluid-flow analysis mode before solving"
-        },
-        {
-          "command": "model configure dynamic",
-          "description": "Enable dynamic analysis mode before cycling"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model configure",
+  "syntax": "model configure keyword ...",
+  "keywords": [
+    {
+      "name": "axisymmetry",
+      "syntax": "axisymmetry",
+      "description": "Enable FLAC2D axisymmetric analysis. 2D ONLY in the 9.x series: not in the FLAC3D 9.7 enumeration. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "model configure",
-      "syntax": "model configure keyword ...",
-      "keywords": [
-        {
-          "name": "axisymmetry",
-          "syntax": "axisymmetry",
-          "description": "Enable FLAC2D axisymmetric analysis. 2D ONLY in the 9.x series: not in the FLAC3D 9.7 enumeration. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "creep",
-          "syntax": "creep",
-          "description": "Enable creep material analysis when licensed."
-        },
-        {
-          "name": "dynamic",
-          "syntax": "dynamic",
-          "description": "Enable fully dynamic analysis when licensed."
-        },
-        {
-          "name": "fluid-flow",
-          "syntax": "fluid-flow",
-          "description": "Enable groundwater fluid-flow analysis. This replaces the 9.0 fluid keyword in 9.1 and later."
-        },
-        {
-          "name": "imass",
-          "syntax": "imass",
-          "description": "Enable the Itasca Model for Advanced Strain Softening when licensed."
-        },
-        {
-          "name": "plugins",
-          "syntax": "plugins",
-          "description": "Load C++ user-defined models and FISH intrinsic plugins."
-        },
-        {
-          "name": "thermal",
-          "syntax": "thermal",
-          "description": "Enable thermal analysis."
-        },
-        {
-          "name": "array",
-          "syntax": "array",
-          "description": "Configure the array process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "cfd",
-          "syntax": "cfd",
-          "description": "Configure the cfd process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "cluster",
-          "syntax": "cluster",
-          "description": "Configure the cluster process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy",
-          "description": "Configure the energy process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "feblock",
-          "syntax": "feblock",
-          "description": "Configure the feblock process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "fluid-explicit",
-          "syntax": "fluid-explicit",
-          "description": "Configure the fluid-explicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "fluid-implicit",
-          "syntax": "fluid-implicit",
-          "description": "Configure the fluid-implicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "highorder",
-          "syntax": "highorder",
-          "description": "Configure the highorder process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "hotetra",
-          "syntax": "hotetra",
-          "description": "Configure the hotetra process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "matrixflow",
-          "syntax": "matrixflow",
-          "description": "Configure the matrixflow process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "mechanical",
-          "syntax": "mechanical",
-          "description": "Configure the mechanical process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "model configure fluid-flow",
-          "description": "Enable groundwater fluid-flow analysis before solving"
-        },
-        {
-          "command": "model configure dynamic",
-          "description": "Enable dynamic analysis before cycling"
-        }
-      ],
-      "version_notes": [
-        "ITASCA 9.1 and later use model configure fluid-flow for FLAC groundwater flow; 9.0 used model configure fluid.",
-        "The bundled FLAC command block omits common-page keywords for other Itasca products."
-      ],
-      "source": [
-        "https://docs.itascacg.com/itasca910/common/kernel/doc/manual/model/commands/cmd_model.configure.html"
-      ]
+    {
+      "name": "creep",
+      "syntax": "creep",
+      "description": {
+        "7.0": "Creep material analysis*",
+        "9.0": "Enable creep material analysis when licensed."
+      }
+    },
+    {
+      "name": "dynamic",
+      "syntax": "dynamic",
+      "description": {
+        "7.0": "Fully dynamic analysis*",
+        "9.0": "Enable fully dynamic analysis when licensed."
+      }
+    },
+    {
+      "name": "fluid-flow",
+      "syntax": "fluid-flow",
+      "description": "Enable groundwater fluid-flow analysis. This replaces the 9.0 fluid keyword in 9.1 and later.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "fluid",
+      "syntax": "fluid",
+      "description": "Fluid-flow analysis",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "imass",
+      "syntax": "imass",
+      "description": {
+        "7.0": "The Itasca Model for Advanced Strain Softening*",
+        "9.0": "Enable the Itasca Model for Advanced Strain Softening when licensed."
+      }
+    },
+    {
+      "name": "plugins",
+      "syntax": "plugins",
+      "description": {
+        "7.0": "C++ user-defined models and/or FISH intrinsic plugins.* FISH plugins can be loaded (but cycling is disabled) without this configuration.",
+        "9.0": "Load C++ user-defined models and FISH intrinsic plugins."
+      }
+    },
+    {
+      "name": "thermal",
+      "syntax": "thermal",
+      "description": {
+        "7.0": "Thermal analysis",
+        "9.0": "Enable thermal analysis."
+      }
+    },
+    {
+      "name": "array",
+      "syntax": "array",
+      "description": {
+        "7.0": "Configure the array process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the array process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "cfd",
+      "syntax": "cfd",
+      "description": {
+        "7.0": "Configure the cfd process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the cfd process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "cluster",
+      "syntax": "cluster",
+      "description": {
+        "7.0": "Configure the cluster process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the cluster process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "energy",
+      "syntax": "energy",
+      "description": {
+        "7.0": "Configure the energy process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the energy process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "feblock",
+      "syntax": "feblock",
+      "description": {
+        "7.0": "Configure the feblock process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the feblock process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "fluid-explicit",
+      "syntax": "fluid-explicit",
+      "description": "Configure the fluid-explicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "fluid-implicit",
+      "syntax": "fluid-implicit",
+      "description": "Configure the fluid-implicit process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "highorder",
+      "syntax": "highorder",
+      "description": {
+        "7.0": "Configure the highorder process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the highorder process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "hotetra",
+      "syntax": "hotetra",
+      "description": {
+        "7.0": "Configure the hotetra process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the hotetra process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "matrixflow",
+      "syntax": "matrixflow",
+      "description": {
+        "7.0": "Configure the matrixflow process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the matrixflow process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
+    },
+    {
+      "name": "mechanical",
+      "syntax": "mechanical",
+      "description": {
+        "7.0": "Configure the mechanical process/module. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "Configure the mechanical process/module. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13)."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "model configure fluid-flow",
+      "description": "Enable groundwater fluid-flow analysis before solving",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "model configure fluid",
+      "description": "Enable fluid-flow analysis mode before solving",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "command": "model configure dynamic",
+      "description": {
+        "7.0": "Enable dynamic analysis mode before cycling",
+        "9.0": "Enable dynamic analysis before cycling"
+      }
+    }
+  ],
+  "source": "https://docs.itascacg.com/itasca910/common/kernel/doc/manual/model/commands/cmd_model.configure.html"
 }

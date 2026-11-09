@@ -85,50 +85,47 @@ class TestApply:
     MANIFEST = {"zone create2d": _FIGS}
 
     def test_figures_attached_from_manifest(self):
-        doc = {"versions": {"9.0": {"command": "zone create2d", "keywords": []}}}
+        doc = {"command": "zone create2d", "keywords": []}
         assert ffd._apply_to_doc(doc, self.MANIFEST) is True
-        assert doc["versions"]["9.0"]["figure_reference"]["figures"] == _FIGS
+        assert doc["figure_reference"]["figures"] == _FIGS
 
     def test_deferral_text_sets_incomplete(self):
         doc = {
-            "versions": {
-                "9.0": {
-                    "command": "zone create2d",
-                    "keywords": [{"name": "size", "description": "shown in the reference images above."}],
-                }
-            }
+            "command": "zone create2d",
+            "keywords": [{"name": "size", "description": "shown in the reference images above."}],
         }
         ffd._apply_to_doc(doc, self.MANIFEST)
-        fr = doc["versions"]["9.0"]["figure_reference"]
+        fr = doc["figure_reference"]
         assert fr["text_incomplete"] is True and fr["figures"] == _FIGS
 
+    def test_version_mapped_command_still_matches(self):
+        doc = {"command": {"7.0": "zone create-2d", "9.0": "zone create2d"}, "keywords": []}
+        assert ffd._apply_to_doc(doc, self.MANIFEST) is True
+        assert doc["figure_reference"]["figures"] == _FIGS
+
     def test_no_match_no_flag(self):
-        doc = {"versions": {"9.0": {"command": "model solve", "keywords": []}}}
+        doc = {"command": "model solve", "keywords": []}
         assert ffd._apply_to_doc(doc, self.MANIFEST) is False
-        assert "figure_reference" not in doc["versions"]["9.0"]
+        assert "figure_reference" not in doc
 
     def test_idempotent(self):
-        doc = {"versions": {"9.0": {"command": "zone create2d", "keywords": []}}}
+        doc = {"command": "zone create2d", "keywords": []}
         assert ffd._apply_to_doc(doc, self.MANIFEST) is True
         assert ffd._apply_to_doc(doc, self.MANIFEST) is False
 
     def test_stale_flag_removed(self):
         doc = {
-            "versions": {
-                "9.0": {
-                    "command": "model solve",
-                    "keywords": [],
-                    "figure_reference": {"figures": _FIGS, "notes": ["old"]},
-                }
-            }
+            "command": "model solve",
+            "keywords": [],
+            "figure_reference": {"figures": _FIGS, "notes": ["old"]},
         }
         assert ffd._apply_to_doc(doc, self.MANIFEST) is True
-        assert "figure_reference" not in doc["versions"]["9.0"]
+        assert "figure_reference" not in doc
 
-    def test_unavailable_version_never_flagged(self):
-        doc = {"versions": {"6.0": {"available": False}}}
+    def test_unavailable_doc_never_flagged(self):
+        doc = {"command": "zone create2d", "available": False}
         ffd._apply_to_doc(doc, self.MANIFEST)
-        assert "figure_reference" not in doc["versions"]["6.0"]
+        assert "figure_reference" not in doc
 
 
 class TestManifest:

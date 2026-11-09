@@ -15,269 +15,125 @@
     "available": true,
     "workaround": "Clump getter methods: Clump.pos(), Clump.vel(), Clump.density(), Clump.volume(), etc. - requires iteration: for c in itasca.clump.list(): print(c.pos())"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump list",
-      "syntax": "clump list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "contact",
-          "syntax": "contact [all]",
-          "description": "List the contacts with a clump. The pebble ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [pebble]",
-          "description": "List the extra variables at index i . If the pebble keyword is given, then the pebble extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [pebble]",
-          "description": "List the group names at slot s . If the pebble keyword is given, then the pebble group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s> ...]",
-          "description": "List pebble properties. If no s is given, then the available properties are listed for each clump (i.e., the list of properties over all pebbles in the clump). If s is specified, then the value of that property is listed for each pebble. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls such as mass and velocity."
-        },
-        {
-          "name": "template",
-          "syntax": "template [attribute <s>]",
-          "description": "List information regarding clump templates, including the clump template name, referenced status, pebble count, volume, and density. The attribute kewyord without s lists the available attributes. If s is specified, then the value of that attribute is listed for each clump template."
-        },
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List clump attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each clump. Pebble attributes, such as pebble position, also may be present. Attributes are characteristics of clumps such as mass and velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump list",
-          "description": "Show the default listing for clumps (ID, template, pebble count, contacts, fixity, position)"
-        },
-        {
-          "command": "clump list attribute velocity",
-          "description": "List the clump velocities"
-        },
-        {
-          "command": "clump list attribute",
-          "description": "List all available clump attributes"
-        },
-        {
-          "command": "clump list extra 2",
-          "description": "List value of extra variable at index 2 for all clumps"
-        },
-        {
-          "command": "clump list extra 1 pebble",
-          "description": "List value of extra variable at index 1 for all pebbles"
-        },
-        {
-          "command": "clump list group 'Default'",
-          "description": "List group names at slot 'Default' for all clumps"
-        },
-        {
-          "command": "clump list group 'slot1' pebble",
-          "description": "List group names at slot 'slot1' for all pebbles"
-        },
-        {
-          "command": "clump list property",
-          "description": "List available properties for each clump (properties across all pebbles)"
-        },
-        {
-          "command": "clump list property 'kn'",
-          "description": "List normal stiffness property for each pebble"
-        },
-        {
-          "command": "clump list contact all range id 1 100",
-          "description": "List all contacts (active and inactive) for clumps 1-100"
-        },
-        {
-          "command": "clump list template",
-          "description": "List all clump templates with name, referenced status, pebble count, volume, and density"
-        },
-        {
-          "command": "clump list template attribute volume",
-          "description": "List volume attribute for each clump template"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump list",
+  "syntax": "clump list [keyword] [range]",
+  "keywords": [
+    {
+      "name": "contact",
+      "syntax": "contact [all]",
+      "description": "List the contacts with a clump. The pebble ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "clump list",
-      "syntax": "clump list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List clump attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each clump. Pebble attributes, such as pebble position, also may be present. Attributes are characteristics of clumps such as mass and velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        },
-        {
-          "name": "contacts",
-          "syntax": "contacts [all]",
-          "description": "List the contacts with a clump. The pebble ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [pebble]",
-          "description": "List the extra variables at index i . If the pebble keyword is given, then the pebble extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [pebble]",
-          "description": "List the group names at slot s . If the pebble keyword is given, then the pebble group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List pebble properties. If no s is given, then the available properties are listed for each clump (i.e., the list of properties over all pebbles in the clump). If s is specified, then the value of that property is listed for each pebble. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls such as mass and velocity."
-        },
-        {
-          "name": "result",
-          "syntax": "result",
-          "description": "List the clump model results that have been tabulated. See the clump results command for more details."
-        },
-        {
-          "name": "template",
-          "syntax": "template [attribute <s>]",
-          "description": "List information regarding clump templates, including the clump template name, referenced status, pebble count, volume, and density. The attribute kewyord without s lists the available attributes. If s is specified, then the value of that attribute is listed for each clump template."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump list",
-          "description": "Show the default listing for clumps (ID, template, pebble count, contacts, fixity, position)"
-        },
-        {
-          "command": "clump list attribute velocity",
-          "description": "List the clump velocities"
-        },
-        {
-          "command": "clump list attribute",
-          "description": "List all available clump attributes"
-        },
-        {
-          "command": "clump list extra 2",
-          "description": "List value of extra variable at index 2 for all clumps"
-        },
-        {
-          "command": "clump list extra 1 pebble",
-          "description": "List value of extra variable at index 1 for all pebbles"
-        },
-        {
-          "command": "clump list group 'Default'",
-          "description": "List group names at slot 'Default' for all clumps"
-        },
-        {
-          "command": "clump list group 'slot1' pebble",
-          "description": "List group names at slot 'slot1' for all pebbles"
-        },
-        {
-          "command": "clump list property",
-          "description": "List available properties for each clump (properties across all pebbles)"
-        },
-        {
-          "command": "clump list property 'kn'",
-          "description": "List normal stiffness property for each pebble"
-        },
-        {
-          "command": "clump list contact all range id 1 100",
-          "description": "List all contacts (active and inactive) for clumps 1-100"
-        },
-        {
-          "command": "clump list template",
-          "description": "List all clump templates with name, referenced status, pebble count, volume, and density"
-        },
-        {
-          "command": "clump list template attribute volume",
-          "description": "List volume attribute for each clump template"
-        }
-      ]
+    {
+      "name": "attribute",
+      "syntax": "attribute [keyword]",
+      "description": "List clump attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each clump. Pebble attributes, such as pebble position, also may be present. Attributes are characteristics of clumps such as mass and velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
     },
-    "9.0": {
-      "command": "clump list",
-      "syntax": "clump list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "contact",
-          "syntax": "contact [all]",
-          "description": "List the contacts with a clump. The pebble ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [pebble]",
-          "description": "List the extra variables at index i . If the pebble keyword is given, then the pebble extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [pebble]",
-          "description": "List the group names at slot s . If the pebble keyword is given, then the pebble group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s> ...]",
-          "description": "List pebble properties. If no s is given, then the available properties are listed for each clump (i.e., the list of properties over all pebbles in the clump). If s is specified, then the value of that property is listed for each pebble. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls such as mass and velocity."
-        },
-        {
-          "name": "template",
-          "syntax": "template [attribute <s>]",
-          "description": "List information regarding clump templates, including the clump template name, referenced status, pebble count, volume, and density. The attribute kewyord without s lists the available attributes. If s is specified, then the value of that attribute is listed for each clump template."
-        },
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List clump attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each clump. Pebble attributes, such as pebble position, also may be present. Attributes are characteristics of clumps such as mass and velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump list",
-          "description": "Show the default listing for clumps (ID, template, pebble count, contacts, fixity, position)"
-        },
-        {
-          "command": "clump list attribute velocity",
-          "description": "List the clump velocities"
-        },
-        {
-          "command": "clump list attribute",
-          "description": "List all available clump attributes"
-        },
-        {
-          "command": "clump list extra 2",
-          "description": "List value of extra variable at index 2 for all clumps"
-        },
-        {
-          "command": "clump list extra 1 pebble",
-          "description": "List value of extra variable at index 1 for all pebbles"
-        },
-        {
-          "command": "clump list group 'Default'",
-          "description": "List group names at slot 'Default' for all clumps"
-        },
-        {
-          "command": "clump list group 'slot1' pebble",
-          "description": "List group names at slot 'slot1' for all pebbles"
-        },
-        {
-          "command": "clump list property",
-          "description": "List available properties for each clump (properties across all pebbles)"
-        },
-        {
-          "command": "clump list property 'kn'",
-          "description": "List normal stiffness property for each pebble"
-        },
-        {
-          "command": "clump list contact all range id 1 100",
-          "description": "List all contacts (active and inactive) for clumps 1-100"
-        },
-        {
-          "command": "clump list template",
-          "description": "List all clump templates with name, referenced status, pebble count, volume, and density"
-        },
-        {
-          "command": "clump list template attribute volume",
-          "description": "List volume attribute for each clump template"
-        }
-      ]
+    {
+      "name": "contacts",
+      "syntax": "contacts [all]",
+      "description": "List the contacts with a clump. The pebble ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i> [pebble]",
+      "description": "List the extra variables at index i . If the pebble keyword is given, then the pebble extra variables at index i are listed."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [pebble]",
+      "description": "List the group names at slot s . If the pebble keyword is given, then the pebble group variables at slot s are listed."
+    },
+    {
+      "name": "property",
+      "syntax": {
+        "6.0": "property [<s>]",
+        "7.0": "property [<s> ...]",
+        "9.0": "property [<s> ...]"
+      },
+      "description": "List pebble properties. If no s is given, then the available properties are listed for each clump (i.e., the list of properties over all pebbles in the clump). If s is specified, then the value of that property is listed for each pebble. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls such as mass and velocity."
+    },
+    {
+      "name": "result",
+      "syntax": "result",
+      "description": "List the clump model results that have been tabulated. See the clump results command for more details.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "template",
+      "syntax": "template [attribute <s>]",
+      "description": "List information regarding clump templates, including the clump template name, referenced status, pebble count, volume, and density. The attribute kewyord without s lists the available attributes. If s is specified, then the value of that attribute is listed for each clump template."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump list",
+      "description": "Show the default listing for clumps (ID, template, pebble count, contacts, fixity, position)"
+    },
+    {
+      "command": "clump list attribute velocity",
+      "description": "List the clump velocities"
+    },
+    {
+      "command": "clump list attribute",
+      "description": "List all available clump attributes"
+    },
+    {
+      "command": "clump list extra 2",
+      "description": "List value of extra variable at index 2 for all clumps"
+    },
+    {
+      "command": "clump list extra 1 pebble",
+      "description": "List value of extra variable at index 1 for all pebbles"
+    },
+    {
+      "command": "clump list group 'Default'",
+      "description": "List group names at slot 'Default' for all clumps"
+    },
+    {
+      "command": "clump list group 'slot1' pebble",
+      "description": "List group names at slot 'slot1' for all pebbles"
+    },
+    {
+      "command": "clump list property",
+      "description": "List available properties for each clump (properties across all pebbles)"
+    },
+    {
+      "command": "clump list property 'kn'",
+      "description": "List normal stiffness property for each pebble"
+    },
+    {
+      "command": "clump list contact all range id 1 100",
+      "description": "List all contacts (active and inactive) for clumps 1-100"
+    },
+    {
+      "command": "clump list template",
+      "description": "List all clump templates with name, referenced status, pebble count, volume, and density"
+    },
+    {
+      "command": "clump list template attribute volume",
+      "description": "List volume attribute for each clump template"
+    }
+  ]
 }

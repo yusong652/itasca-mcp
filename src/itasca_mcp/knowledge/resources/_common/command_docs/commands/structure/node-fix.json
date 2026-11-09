@@ -5,122 +5,111 @@
     "fix",
     "structure"
   ],
-  "description": "Fix the velocity-fixity conditions for all nodes in the range, thereby preventing these values from changing. The conditions are given in terms of the node-local coordinate system. If a velocity component is fixed, then the value of this component should also be specified in the node-local coordinate system via the structure node initialize command. If a fixed displacement is required, then the appropriate velocity components should be initialized to zero. A degree-of-freedom with a rigid attachment condition cannot be fixed; the rigid condition overrides the fix condition. The velocity-fixity conditions are freed with the structure node free command.",
+  "description": {
+    "7.0": "Fix conditions for all nodes in the range, thereby preventing these values from changing. If any translational/rotational velocity component is fixed, then all three components of the translational/rotational velocity should also be specified in the local coordinate system via the structure node initialize command. If a fixed displacement is required, the appropriate velocities should be initialized to zero. Degrees-of-freedom with a rigid attachment condition cannot be fixed; the rigid condition overrides the fix condition.",
+    "9.0": "Fix the velocity-fixity conditions for all nodes in the range, thereby preventing these values from changing. The conditions are given in terms of the node-local coordinate system. If a velocity component is fixed, then the value of this component should also be specified in the node-local coordinate system via the structure node initialize command. If a fixed displacement is required, then the appropriate velocity components should be initialized to zero. A degree-of-freedom with a rigid attachment condition cannot be fixed; the rigid condition overrides the fix condition. The velocity-fixity conditions are freed with the structure node free command."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure node fix",
-      "syntax": "structure node fix keyword... [range]",
-      "description": "Fix conditions for all nodes in the range, thereby preventing these values from changing. If any translational/rotational velocity component is fixed, then all three components of the translational/rotational velocity should also be specified in the local coordinate system via the structure node initialize command. If a fixed displacement is required, the appropriate velocities should be initialized to zero. Degrees-of-freedom with a rigid attachment condition cannot be fixed; the rigid condition overrides the fix condition.",
-      "keywords": [
-        {
-          "name": "rotation",
-          "syntax": "rotation",
-          "description": "rotational velocity in all three degrees-of-freedom (node local system)"
-        },
-        {
-          "name": "rotation-x",
-          "syntax": "rotation-x",
-          "description": "rotational velocity about \\(x\\)-axis (node-local system)"
-        },
-        {
-          "name": "rotation-y",
-          "syntax": "rotation-y",
-          "description": "rotational velocity about \\(y\\)-axis (node-local system)"
-        },
-        {
-          "name": "rotation-z",
-          "syntax": "rotation-z",
-          "description": "rotational velocity about \\(z\\)-axis (node-local system)"
-        },
-        {
-          "name": "system-local",
-          "syntax": "system-local",
-          "description": "inhibits automatic updating of the node-local system based on the elements that use the node. The default behavior is free."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "translational velocity in all three degrees-of-freedom (node local system)"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "translational velocity in \\(x\\)-direction (node-local system)"
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "translational velocity in \\(y\\)-direction (node-local system)"
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "translational velocity in \\(z\\)-direction (node-local system)"
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.fix.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure node fix",
+  "syntax": {
+    "7.0": "structure node fix keyword... [range]",
+    "9.0": "structure node fix keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "rotation",
+      "syntax": "rotation",
+      "description": {
+        "7.0": "rotational velocity in all three degrees-of-freedom (node local system)",
+        "9.0": "rotational velocity in all three rotational degrees-of-freedom (node-local system)"
       }
     },
-    "9.0": {
-      "command": "structure node fix",
-      "syntax": "structure node fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "rotation",
-          "syntax": "rotation",
-          "description": "rotational velocity in all three rotational degrees-of-freedom (node-local system)"
-        },
-        {
-          "name": "rotation-x",
-          "syntax": "rotation-x (3D ONLY)",
-          "description": "rotational velocity about \\(x\\) -axis (node-local system)"
-        },
-        {
-          "name": "rotation-y",
-          "syntax": "rotation-y (3D ONLY)",
-          "description": "rotational velocity about \\(y\\) -axis (node-local system)"
-        },
-        {
-          "name": "rotation-z",
-          "syntax": "rotation-z (3D ONLY)",
-          "description": "rotational velocity about \\(z\\) -axis (node-local system)"
-        },
-        {
-          "name": "system-local",
-          "syntax": "system-local",
-          "description": "inhibits automatic updating of the node-local system based on the elements that use the node (the node-local system is automatically reoriented from the orientation of the structural elements attached to the node; see the Structural Elements formulation section of the official documentation — the original hyperlink target). The default behavior is free (see structure node free system-local )."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "translational velocity in all translational three degrees-of-freedom (node local system)"
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "translational velocity in \\(x\\) -direction (node-local system)"
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "translational velocity in \\(y\\) -direction (node-local system)"
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z (3D ONLY)",
-          "description": "translational velocity in \\(z\\) -direction (node-local system)"
-        }
-      ]
+    {
+      "name": "rotation-x",
+      "syntax": {
+        "7.0": "rotation-x",
+        "9.0": "rotation-x (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity about \\(x\\)-axis (node-local system)",
+        "9.0": "rotational velocity about \\(x\\) -axis (node-local system)"
+      }
+    },
+    {
+      "name": "rotation-y",
+      "syntax": {
+        "7.0": "rotation-y",
+        "9.0": "rotation-y (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity about \\(y\\)-axis (node-local system)",
+        "9.0": "rotational velocity about \\(y\\) -axis (node-local system)"
+      }
+    },
+    {
+      "name": "rotation-z",
+      "syntax": {
+        "7.0": "rotation-z",
+        "9.0": "rotation-z (3D ONLY)"
+      },
+      "description": {
+        "7.0": "rotational velocity about \\(z\\)-axis (node-local system)",
+        "9.0": "rotational velocity about \\(z\\) -axis (node-local system)"
+      }
+    },
+    {
+      "name": "system-local",
+      "syntax": "system-local",
+      "description": {
+        "7.0": "inhibits automatic updating of the node-local system based on the elements that use the node. The default behavior is free.",
+        "9.0": "inhibits automatic updating of the node-local system based on the elements that use the node (the node-local system is automatically reoriented from the orientation of the structural elements attached to the node; see the Structural Elements formulation section of the official documentation — the original hyperlink target). The default behavior is free (see structure node free system-local )."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity",
+      "description": {
+        "7.0": "translational velocity in all three degrees-of-freedom (node local system)",
+        "9.0": "translational velocity in all translational three degrees-of-freedom (node local system)"
+      }
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x",
+      "description": {
+        "7.0": "translational velocity in \\(x\\)-direction (node-local system)",
+        "9.0": "translational velocity in \\(x\\) -direction (node-local system)"
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y",
+      "description": {
+        "7.0": "translational velocity in \\(y\\)-direction (node-local system)",
+        "9.0": "translational velocity in \\(y\\) -direction (node-local system)"
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "7.0": "velocity-z",
+        "9.0": "velocity-z (3D ONLY)"
+      },
+      "description": {
+        "7.0": "translational velocity in \\(z\\)-direction (node-local system)",
+        "9.0": "translational velocity in \\(z\\) -direction (node-local system)"
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.fix.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

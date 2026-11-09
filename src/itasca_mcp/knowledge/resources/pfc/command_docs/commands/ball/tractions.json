@@ -10,334 +10,162 @@
     "available": false,
     "workaround": "itasca.command('ball tractions ...') - Python SDK does not provide Voronoi-based traction computation"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball tractions",
-      "syntax": "ball tractions keyword ... [range]",
-      "keywords": [
-        {
-          "name": "angular-tolerance",
-          "syntax": "angular-tolerance <f>",
-          "description": "Specify the angular tolerance for ball-facet identification. If the ball-facet contact normal is within f degrees of the Voronoi cell normal with the boundary, the contact area is set. By default the angular tolerance is 10 degrees."
-        },
-        {
-          "name": "boundary-group",
-          "syntax": "boundary-group <s> [slot <slot>] ...",
-          "description": "Specify that balls with contacts with the boundaries of the Voronoi region are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default . This can be useful for identifying model boundaries."
-        },
-        {
-          "name": "contact-active",
-          "syntax": "contact-active <b>",
-          "description": "Specify whether or not forces are set for inactive contacts. If true (the default), then forces are set for only active contacts. If false, forces are set for all contacts and inactive contacts may be activated."
-        },
-        {
-          "name": "contact-create",
-          "syntax": "contact-create <b>",
-          "description": "Specify ball-ball and ball-facet contact creation in cases where there is no piece overlap but pieces are in adjacent Voronoi cells. By default contacts are not created."
-        },
-        {
-          "name": "constant",
-          "syntax": "constant <f1> <f2> <f3> <f4> <f5> <f6>",
-          "description": "Set the components of a constant stress tensor. All components must be specified. In 3D, six parameters must be specified in the order stress-xx, stress-yy, stress-zz, stress-xy, stress-sxz, stress-syz. In 2D, three parameters must be specified in the order stress-xx, stress-yy, stress-xy. All components can be 0, in which case the contact forces are nulled and the contact connectivity and areas are set accordingly."
-        },
-        {
-          "name": "direction-x",
-          "syntax": "direction-x <v>",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). This keyword cannot be given with the constant keyword."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i>",
-          "description": "Assign the stress based on the tensor stored at extra index i ."
-        },
-        {
-          "name": "layered",
-          "syntax": "layered <b>",
-          "description": "Compute the overburden based on integrating the density of balls above this current contact location. This keyword cannot be used with the constant keyword. By default the model is not assumed to be layered."
-        },
-        {
-          "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. This keyword cannot be be given with the constant keyword."
-        },
-        {
-          "name": "periodicity",
-          "syntax": "periodicity <bx> <by> <bz>",
-          "description": "Specify whether or not periodic boundary conditions should be assumed in each direction during the tessellation."
-        },
-        {
-          "name": "polydisperse",
-          "syntax": "polydisperse <b>",
-          "description": "Specify if a radical Voronoi tessellation (or Laguerre tessellation) is computed versus a standard Voronoi tessellation. By default the radical tessellation is computed. The radical tessellation produces Voronoi cells that are weighted by the ball radii, making them more closely represent the ball size distribution."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f> [<fy>]",
-          "description": "Determine the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local \\(x\\) and \\(y\\) -directions. Note that the direction-x keyword is used in this case to distinguish these local directions. This keyword cannot be given with the constant keyword."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "Specify if the contact areas are updated in the contact models, if areas are supported. Currently the user_area contact model property will be set. By default the contact areas are updated."
-        },
-        {
-          "name": "update-position",
-          "syntax": "update-position <b>",
-          "description": "Specify if the ball positions are updated to coincide with the Voronoi cell centroids. By default the ball positions are updated."
-        },
-        {
-          "name": "update-volume",
-          "syntax": "update-volume <b>",
-          "description": "Specify if the ball volumes are updated to coincide with the Voronoi cell volumes. By default the ball volumes are updated."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball tractions constant -1e6 -1e6 -1e6 0 0 0",
-          "description": "Set isotropic stress state (-1 MPa) using Voronoi tessellation"
-        },
-        {
-          "command": "ball tractions constant 0 0 0 0 0 0",
-          "description": "Null all forces and set Voronoi contact connectivity/areas"
-        },
-        {
-          "command": "ball tractions ratio 0.5",
-          "description": "Set gravitational stress with K0 = 0.5 (horizontal = 0.5 × vertical)"
-        },
-        {
-          "command": "ball tractions ratio 0.5 overburden -5e5",
-          "description": "Apply K0 = 0.5 with 500 kPa overburden stress"
-        },
-        {
-          "command": "ball tractions layered true ratio 0.7",
-          "description": "Compute layered overburden for non-uniform density distribution"
-        },
-        {
-          "command": "ball tractions constant -2e6 -2e6 -2e6 0 0 0 contact-create true",
-          "description": "Set stress and create contacts between adjacent Voronoi cells"
-        },
-        {
-          "command": "ball tractions ratio 0.6 boundary-group 'boundary' slot 'location'",
-          "description": "Apply stress and tag boundary balls for subsequent operations"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball tractions",
+  "syntax": "ball tractions keyword ... [range]",
+  "keywords": [
+    {
+      "name": "angular-tolerance",
+      "syntax": "angular-tolerance <f>",
+      "description": "Specify the angular tolerance for ball-facet identification. If the ball-facet contact normal is within f degrees of the Voronoi cell normal with the boundary, the contact area is set. By default the angular tolerance is 10 degrees."
     },
-    "6.0": {
-      "command": "ball tractions",
-      "syntax": "ball tractions keyword ... [range]",
-      "keywords": [
-        {
-          "name": "angular-tolerance",
-          "syntax": "angular-tolerance <f>",
-          "description": "Specify the angular tolerance for ball-facet identification. If the ball-facet contact normal is within f degrees of the Voronoi cell normal with the boundary, the contact area is set. By default the angular tolerance is 10 degrees."
-        },
-        {
-          "name": "boundary-group",
-          "syntax": "boundary-group <s> [slot <slot>] ...",
-          "description": "Specify that balls with contacts with the boundaries of the Voronoi region are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default . This can be useful for identifying model boundaries."
-        },
-        {
-          "name": "contact-active",
-          "syntax": "contact-active <b>",
-          "description": "Specify whether or not forces are set for inactive contacts. If true (the default), then forces are set for only active contacts. If false, forces are set for all contacts and inactive contacts may be activated."
-        },
-        {
-          "name": "contact-create",
-          "syntax": "contact-create <b>",
-          "description": "Specify ball-ball and ball-facet contact creation in cases where there is no piece overlap but pieces are in adjacent Voronoi cells. By default contacts are not created."
-        },
-        {
-          "name": "constant",
-          "syntax": "constant <f1> <f2> <f3> <f4> <f5> <f6>",
-          "description": "Set the components of a constant stress tensor. All components must be specified. In 3D, 6 parameters must be specified in the order stress-xx,stress-yy,stress-zz,stress-xy,stress-sxz,stress-syz. In 2D, 3 parameters must be specified in the order stress-xx,stress-yy,stress-xy. All components can be 0 in which case the contact forces are nulled and the contact connectivity and areas are set accordingly."
-        },
-        {
-          "name": "direction-x",
-          "syntax": "direction-x <v>",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). Cannot be given with the constant keyword."
-        },
-        {
-          "name": "layered",
-          "syntax": "layered <b>",
-          "description": "Compute the overburden based on integrating the density of balls above this current contact location. Cannot be used with the constant keyword. By default the model is not assumed to be layered."
-        },
-        {
-          "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. Cannot be given with the constant keyword."
-        },
-        {
-          "name": "polydisperse",
-          "syntax": "polydisperse <b>",
-          "description": "Specify if a radical Voronoi tessellation (or Laguerre tessellation) is computed versus a standard Voronoi tessellation. By default the radical tessellation is computed. The radical tessellation produces Voronoi cells that are weighted by the ball radii, making them more closely represent the ball size distribution."
-        },
-        {
-          "name": "periodicity",
-          "syntax": "periodicity <bx> <by> <bz>",
-          "description": "Specify whether or not periodic boundary conditions should be assumed in each direction during the tessellation."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f>",
-          "description": "Determines the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local x and y directions. Note that the direction-x keyword is used in this case to distinguish these local directions. Cannot be given with the constant keyword."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "Specify if the contact areas are updated in the contact models, if areas are supported. Currently the user_area contact model property will be set. By default the contact areas are updated."
-        },
-        {
-          "name": "update-position",
-          "syntax": "update-position <b>",
-          "description": "Specify if the ball positions are updated to coincide with the Voronoi cell centroids. By default the ball positions are updated."
-        },
-        {
-          "name": "update-volume",
-          "syntax": "update-volume <b>",
-          "description": "Specify if the ball volumes are updated to coincide with the Voronoi cell volumes. By default the ball volumes are updated."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball tractions constant -1e6 -1e6 -1e6 0 0 0",
-          "description": "Set isotropic stress state (-1 MPa) using Voronoi tessellation"
-        },
-        {
-          "command": "ball tractions constant 0 0 0 0 0 0",
-          "description": "Null all forces and set Voronoi contact connectivity/areas"
-        },
-        {
-          "command": "ball tractions ratio 0.5",
-          "description": "Set gravitational stress with K0 = 0.5 (horizontal = 0.5 × vertical)"
-        },
-        {
-          "command": "ball tractions ratio 0.5 overburden -5e5",
-          "description": "Apply K0 = 0.5 with 500 kPa overburden stress"
-        },
-        {
-          "command": "ball tractions layered true ratio 0.7",
-          "description": "Compute layered overburden for non-uniform density distribution"
-        },
-        {
-          "command": "ball tractions constant -2e6 -2e6 -2e6 0 0 0 contact-create true",
-          "description": "Set stress and create contacts between adjacent Voronoi cells"
-        },
-        {
-          "command": "ball tractions ratio 0.6 boundary-group 'boundary' slot 'location'",
-          "description": "Apply stress and tag boundary balls for subsequent operations"
-        }
-      ]
+    {
+      "name": "boundary-group",
+      "syntax": "boundary-group <s> [slot <slot>] ...",
+      "description": "Specify that balls with contacts with the boundaries of the Voronoi region are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default . This can be useful for identifying model boundaries."
     },
-    "9.0": {
-      "command": "ball tractions",
-      "syntax": "ball tractions keyword ... [range]",
-      "keywords": [
-        {
-          "name": "angular-tolerance",
-          "syntax": "angular-tolerance <f>",
-          "description": "Specify the angular tolerance for ball-facet identification. If the ball-facet contact normal is within f degrees of the Voronoi cell normal with the boundary, the contact area is set. By default the angular tolerance is 10 degrees."
-        },
-        {
-          "name": "boundary-group",
-          "syntax": "boundary-group <s> [slot <slot>] ...",
-          "description": "Specify that balls with contacts with the boundaries of the Voronoi region are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default . This can be useful for identifying model boundaries."
-        },
-        {
-          "name": "contact-active",
-          "syntax": "contact-active <b>",
-          "description": "Specify whether or not forces are set for inactive contacts. If true (the default), then forces are set for only active contacts. If false, forces are set for all contacts and inactive contacts may be activated."
-        },
-        {
-          "name": "contact-create",
-          "syntax": "contact-create <b>",
-          "description": "Specify ball-ball and ball-facet contact creation in cases where there is no piece overlap but pieces are in adjacent Voronoi cells. By default contacts are not created."
-        },
-        {
-          "name": "constant",
-          "syntax": "constant <f1> <f2> <f3> <f4> <f5> <f6> only 3 components in 2D",
-          "description": "Set the components of a constant stress tensor. All components must be specified. In 3D, six parameters must be specified in the order stress-xx, stress-yy, stress-zz, stress-xy, stress-sxz, stress-syz. In 2D, three parameters must be specified in the order stress-xx, stress-yy, stress-xy. All components can be 0, in which case the contact forces are nulled and the contact connectivity and areas are set accordingly."
-        },
-        {
-          "name": "direction-x",
-          "syntax": "direction-x <v> 3D ONLY",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). This keyword cannot be given with the constant keyword."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i>",
-          "description": "Assign the stress based on the tensor stored at extra index i ."
-        },
-        {
-          "name": "layered",
-          "syntax": "layered <b>",
-          "description": "Compute the overburden based on integrating the density of balls above this current contact location. This keyword cannot be used with the constant keyword. By default the model is not assumed to be layered."
-        },
-        {
-          "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. This keyword cannot be be given with the constant keyword."
-        },
-        {
-          "name": "periodicity",
-          "syntax": "periodicity <bx> <by> <bz>`z`-component is 3D ONLY",
-          "description": "Specify whether or not periodic boundary conditions should be assumed in each direction during the tessellation."
-        },
-        {
-          "name": "polydisperse",
-          "syntax": "polydisperse <b>",
-          "description": "Specify if a radical Voronoi tessellation (or Laguerre tessellation) is computed versus a standard Voronoi tessellation. By default the radical tessellation is computed. The radical tessellation produces Voronoi cells that are weighted by the ball radii, making them more closely represent the ball size distribution."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f> [<fy>] 3D ONLY",
-          "description": "Determine the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local \\(x\\) and \\(y\\) -directions. Note that the direction-x keyword is used in this case to distinguish these local directions. This keyword cannot be given with the constant keyword."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "Specify if the contact areas are updated in the contact models, if areas are supported. Currently the user_area contact model property will be set. By default the contact areas are updated."
-        },
-        {
-          "name": "update-position",
-          "syntax": "update-position <b>",
-          "description": "Specify if the ball positions are updated to coincide with the Voronoi cell centroids. By default the ball positions are updated."
-        },
-        {
-          "name": "update-volume",
-          "syntax": "update-volume <b>",
-          "description": "Specify if the ball volumes are updated to coincide with the Voronoi cell volumes. By default the ball volumes are updated."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball tractions constant -1e6 -1e6 -1e6 0 0 0",
-          "description": "Set isotropic stress state (-1 MPa) using Voronoi tessellation"
-        },
-        {
-          "command": "ball tractions constant 0 0 0 0 0 0",
-          "description": "Null all forces and set Voronoi contact connectivity/areas"
-        },
-        {
-          "command": "ball tractions ratio 0.5",
-          "description": "Set gravitational stress with K0 = 0.5 (horizontal = 0.5 × vertical)"
-        },
-        {
-          "command": "ball tractions ratio 0.5 overburden -5e5",
-          "description": "Apply K0 = 0.5 with 500 kPa overburden stress"
-        },
-        {
-          "command": "ball tractions layered true ratio 0.7",
-          "description": "Compute layered overburden for non-uniform density distribution"
-        },
-        {
-          "command": "ball tractions constant -2e6 -2e6 -2e6 0 0 0 contact-create true",
-          "description": "Set stress and create contacts between adjacent Voronoi cells"
-        },
-        {
-          "command": "ball tractions ratio 0.6 boundary-group 'boundary' slot 'location'",
-          "description": "Apply stress and tag boundary balls for subsequent operations"
-        }
-      ]
+    {
+      "name": "contact-active",
+      "syntax": "contact-active <b>",
+      "description": "Specify whether or not forces are set for inactive contacts. If true (the default), then forces are set for only active contacts. If false, forces are set for all contacts and inactive contacts may be activated."
+    },
+    {
+      "name": "contact-create",
+      "syntax": "contact-create <b>",
+      "description": "Specify ball-ball and ball-facet contact creation in cases where there is no piece overlap but pieces are in adjacent Voronoi cells. By default contacts are not created."
+    },
+    {
+      "name": "constant",
+      "syntax": {
+        "6.0": "constant <f1> <f2> <f3> <f4> <f5> <f6>",
+        "7.0": "constant <f1> <f2> <f3> <f4> <f5> <f6>",
+        "9.0": "constant <f1> <f2> <f3> <f4> <f5> <f6> only 3 components in 2D"
+      },
+      "description": {
+        "6.0": "Set the components of a constant stress tensor. All components must be specified. In 3D, 6 parameters must be specified in the order stress-xx,stress-yy,stress-zz,stress-xy,stress-sxz,stress-syz. In 2D, 3 parameters must be specified in the order stress-xx,stress-yy,stress-xy. All components can be 0 in which case the contact forces are nulled and the contact connectivity and areas are set accordingly.",
+        "7.0": "Set the components of a constant stress tensor. All components must be specified. In 3D, six parameters must be specified in the order stress-xx, stress-yy, stress-zz, stress-xy, stress-sxz, stress-syz. In 2D, three parameters must be specified in the order stress-xx, stress-yy, stress-xy. All components can be 0, in which case the contact forces are nulled and the contact connectivity and areas are set accordingly.",
+        "9.0": "Set the components of a constant stress tensor. All components must be specified. In 3D, six parameters must be specified in the order stress-xx, stress-yy, stress-zz, stress-xy, stress-sxz, stress-syz. In 2D, three parameters must be specified in the order stress-xx, stress-yy, stress-xy. All components can be 0, in which case the contact forces are nulled and the contact connectivity and areas are set accordingly."
+      }
+    },
+    {
+      "name": "direction-x",
+      "syntax": {
+        "6.0": "direction-x <v>",
+        "7.0": "direction-x <v>",
+        "9.0": "direction-x <v> 3D ONLY"
+      },
+      "description": {
+        "6.0": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). Cannot be given with the constant keyword.",
+        "7.0": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). This keyword cannot be given with the constant keyword.",
+        "9.0": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0). This keyword cannot be given with the constant keyword."
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i>",
+      "description": "Assign the stress based on the tensor stored at extra index i .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "layered",
+      "syntax": "layered <b>",
+      "description": {
+        "6.0": "Compute the overburden based on integrating the density of balls above this current contact location. Cannot be used with the constant keyword. By default the model is not assumed to be layered.",
+        "7.0": "Compute the overburden based on integrating the density of balls above this current contact location. This keyword cannot be used with the constant keyword. By default the model is not assumed to be layered.",
+        "9.0": "Compute the overburden based on integrating the density of balls above this current contact location. This keyword cannot be used with the constant keyword. By default the model is not assumed to be layered."
+      }
+    },
+    {
+      "name": "overburden",
+      "syntax": "overburden <f>",
+      "description": {
+        "6.0": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. Cannot be given with the constant keyword.",
+        "7.0": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. This keyword cannot be be given with the constant keyword.",
+        "9.0": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative. This keyword cannot be be given with the constant keyword."
+      }
+    },
+    {
+      "name": "polydisperse",
+      "syntax": "polydisperse <b>",
+      "description": "Specify if a radical Voronoi tessellation (or Laguerre tessellation) is computed versus a standard Voronoi tessellation. By default the radical tessellation is computed. The radical tessellation produces Voronoi cells that are weighted by the ball radii, making them more closely represent the ball size distribution."
+    },
+    {
+      "name": "periodicity",
+      "syntax": {
+        "6.0": "periodicity <bx> <by> <bz>",
+        "7.0": "periodicity <bx> <by> <bz>",
+        "9.0": "periodicity <bx> <by> <bz>`z`-component is 3D ONLY"
+      },
+      "description": "Specify whether or not periodic boundary conditions should be assumed in each direction during the tessellation."
+    },
+    {
+      "name": "ratio",
+      "syntax": {
+        "6.0": "ratio <f>",
+        "7.0": "ratio <f> [<fy>]",
+        "9.0": "ratio <f> [<fy>] 3D ONLY"
+      },
+      "description": {
+        "6.0": "Determines the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local x and y directions. Note that the direction-x keyword is used in this case to distinguish these local directions. Cannot be given with the constant keyword.",
+        "7.0": "Determine the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local \\(x\\) and \\(y\\) -directions. Note that the direction-x keyword is used in this case to distinguish these local directions. This keyword cannot be given with the constant keyword.",
+        "9.0": "Determine the vertical to horizontal stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local \\(x\\) and \\(y\\) -directions. Note that the direction-x keyword is used in this case to distinguish these local directions. This keyword cannot be given with the constant keyword."
+      }
+    },
+    {
+      "name": "update-area",
+      "syntax": "update-area <b>",
+      "description": "Specify if the contact areas are updated in the contact models, if areas are supported. Currently the user_area contact model property will be set. By default the contact areas are updated."
+    },
+    {
+      "name": "update-position",
+      "syntax": "update-position <b>",
+      "description": "Specify if the ball positions are updated to coincide with the Voronoi cell centroids. By default the ball positions are updated."
+    },
+    {
+      "name": "update-volume",
+      "syntax": "update-volume <b>",
+      "description": "Specify if the ball volumes are updated to coincide with the Voronoi cell volumes. By default the ball volumes are updated."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "ball tractions constant -1e6 -1e6 -1e6 0 0 0",
+      "description": "Set isotropic stress state (-1 MPa) using Voronoi tessellation"
+    },
+    {
+      "command": "ball tractions constant 0 0 0 0 0 0",
+      "description": "Null all forces and set Voronoi contact connectivity/areas"
+    },
+    {
+      "command": "ball tractions ratio 0.5",
+      "description": "Set gravitational stress with K0 = 0.5 (horizontal = 0.5 × vertical)"
+    },
+    {
+      "command": "ball tractions ratio 0.5 overburden -5e5",
+      "description": "Apply K0 = 0.5 with 500 kPa overburden stress"
+    },
+    {
+      "command": "ball tractions layered true ratio 0.7",
+      "description": "Compute layered overburden for non-uniform density distribution"
+    },
+    {
+      "command": "ball tractions constant -2e6 -2e6 -2e6 0 0 0 contact-create true",
+      "description": "Set stress and create contacts between adjacent Voronoi cells"
+    },
+    {
+      "command": "ball tractions ratio 0.6 boundary-group 'boundary' slot 'location'",
+      "description": "Apply stress and tag boundary balls for subsequent operations"
+    }
+  ]
 }
