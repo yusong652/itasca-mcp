@@ -1,0 +1,55 @@
+{
+  "category": "cfd",
+  "search_keywords": [
+    "cfd",
+    "connect",
+    "socket",
+    "proxy",
+    "coupling"
+  ],
+  "description": "Establish the socket connection to the CFD proxy server. A port number may be specified with the port keyword if the proxy server has been configured to operate on a port other than port 2500.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('cfd connect ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "cfd connect",
+  "syntax": "cfd connect [port <i>] keyword ...",
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density <f>",
+      "description": "The fluid density of all CFD elements is set to f. A nonzero density must be specified."
+    },
+    {
+      "name": "viscosity",
+      "syntax": "viscosity <f>",
+      "description": "The fluid viscosity of all CFD elements is set to f. A nonzero viscosity must be specified."
+    },
+    {
+      "name": "port",
+      "syntax": "port <i>",
+      "description": "Port of the CFD proxy server; by default port 2500."
+    }
+  ],
+  "examples": [
+    {
+      "command": "cfd connect density 1000 viscosity 0.001",
+      "description": "Connect to the CFD proxy server with the required fluid density and viscosity"
+    }
+  ],
+  "notes": [
+    "The density and viscosity keywords are required: without them the command is rejected with 'The element fluid density and viscosity must be specified' on 6.00, 7.00 and 9.8.",
+    "A CCFD proxy server (the GiD-based CFD program) must be listening on the port for the connection to succeed."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): rejected without density/viscosity on all three consoles; with 'port 2525 density 1000 viscosity 0.001' the engine attempts the socket connection and fails cleanly without a server ('CCFD Socket not connected' on 9.8, 'CCFD Socket write error' on 7.00) - no proxy server was available for a full coupling test."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "category": "cfd",
+  "search_keywords": [
+    "cfd",
+    "update",
+    "porosity",
+    "drag"
+  ],
+  "description": "Update the porosity, particle-applied force, and drag force. This happens automatically during cycling (see cfd interval ). This command is useful for testing.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('cfd update ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "cfd update",
+  "syntax": "cfd update",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "cfd update",
+      "description": "Recompute porosity, applied force and drag force"
+    }
+  ],
+  "notes": [
+    "Requires a nonzero fluid density on every element first; otherwise the command is rejected with 'The fluid density of all elements must be greater than zero' on 6.00, 7.00 and 9.8."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): after setting a nonzero element density, cfd update runs and computes the element porosity (0.9916 for the probe mesh) identically on all three consoles."
+  ]
+}

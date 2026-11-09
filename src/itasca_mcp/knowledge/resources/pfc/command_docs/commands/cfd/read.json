@@ -1,0 +1,82 @@
+{
+  "category": "cfd",
+  "search_keywords": [
+    "cfd",
+    "read",
+    "mesh",
+    "nodes",
+    "elements",
+    "fluid"
+  ],
+  "description": "Read a fluid mesh or fluid property from files.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('cfd read ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "cfd read",
+  "syntax": "cfd read keyword",
+  "keywords": [
+    {
+      "name": "nodes",
+      "syntax": "nodes <s>",
+      "description": "Read the node file s. Nodes and elements cannot previously exist."
+    },
+    {
+      "name": "elements",
+      "syntax": "elements <s>",
+      "description": "Read the element file s. Nodes must exist, but elements cannot previously exist."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <s>",
+      "description": "Read the fluid velocity from the file s."
+    },
+    {
+      "name": "pressure",
+      "syntax": "pressure <s>",
+      "description": "Read the fluid pressure from the file s."
+    },
+    {
+      "name": "gradp",
+      "syntax": "gradp <s>",
+      "description": "Read the fluid pressure gradient from the file s."
+    },
+    {
+      "name": "viscosity",
+      "syntax": "viscosity <s>",
+      "description": "Read the fluid viscosity from the file s."
+    },
+    {
+      "name": "density",
+      "syntax": "density <s>",
+      "description": "Read the fluid density from the file s."
+    }
+  ],
+  "examples": [
+    {
+      "command": "cfd read nodes 'Node.dat'",
+      "description": "Read the fluid mesh nodes"
+    },
+    {
+      "command": "cfd read elements 'Elem.dat'",
+      "description": "Read the fluid mesh elements (nodes must exist)"
+    }
+  ],
+  "notes": [
+    "Node file format: first line gives the node count (twice); each following line is 'index x y z' with indices starting at 1.",
+    "Element file format: first line gives the element count (twice); each element takes three lines - the type code (8 hexahedral, 6 tetrahedral), then 'index' plus 8 (or 4) node indices plus four unused floats, then one unused integer line.",
+    "Property file format (velocity/pressure/gradp/viscosity/density): first line is the element count, then one line per element with one number (scalars) or three (vectors).",
+    "Python alternative for mesh import: itasca.cfdarray.create_mesh(nodes, elements)."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): a 12-node/2-hexahedra mesh read on all three consoles (element.cfd.num = 2) and every property file read back exactly via element.cfd.* FISH intrinsics (pressure 101/102, gradp z -9810, viscosity 0.001, density 998)."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "category": "ball",
+  "search_keywords": [
+    "cfd",
+    "group",
+    "slot"
+  ],
+  "description": "Specify CFD ball group names. Use of the group logic is described in Groups. By default, s is assigned to the group slot Default. Use the add keyword to assign the group name to the next available slot and the remove keyword to remove s from all slots.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('ball cfd group ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "ball cfd group",
+  "syntax": "ball cfd group <s> [keyword ...] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot."
+    },
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "Remove s from all slots."
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <slot>",
+      "description": "Set group slot slot to s. By default, slot Default is used."
+    }
+  ],
+  "examples": [
+    {
+      "command": "ball cfd group 'g1'",
+      "description": "Assign the group in the Default slot"
+    }
+  ],
+  "notes": [
+    "On 7.00 and 9.8 the command is accepted and echoes the assignment, but it is not retrievable afterwards: ball.cfd.group reads 'None' and isgroup False. On 6.00 the assignment persists."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (state grade): on 6.00 ball.cfd.group reads back 'Default=<name>'; on 7.00 and 9.8 the command is accepted but the assignment is lost - treat it as unreliable there."
+  ]
+}

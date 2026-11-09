@@ -1,0 +1,46 @@
+{
+  "category": "cfd",
+  "search_keywords": [
+    "cfd",
+    "term",
+    "drag",
+    "epschi",
+    "gradp"
+  ],
+  "description": "Modify terms used in drag force calculations.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('cfd term ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "cfd term",
+  "syntax": "cfd term keyword",
+  "keywords": [
+    {
+      "name": "epschi",
+      "syntax": "epschi <b>",
+      "description": "If on (the default), the \\(\\epsilon^{-\\chi}\\) term in Equation (10) in the “Theory and Background” section is included. This term adjusts the particle drag force to account for the increase in drag at low porosities."
+    },
+    {
+      "name": "gradp",
+      "syntax": "gradp <b>",
+      "description": "If on, the \\(\\nabla P\\) term from Equation (16) in the “Theory and Background” section is included. This term adjusts the particle drag force as a result of the pressure gradient. By default, this term is not included."
+    }
+  ],
+  "examples": [
+    {
+      "command": "cfd term gradp on",
+      "description": "Include the pressure-gradient term in the drag force"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): epschi and gradp accepted on all three consoles."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "category": "element",
+  "search_keywords": [
+    "cfd",
+    "element",
+    "list"
+  ],
+  "description": "List CFD element information. By default, the CFD element ID, number of nodes per face, number of faces, and centroid position are listed. Use the attribute keyword to list all CFD element attributes.",
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('element cfd list ...')"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "dimension": "3D",
+  "command": "element cfd list",
+  "syntax": "element cfd list [keyword] [range]",
+  "keywords": [
+    {
+      "name": "attribute",
+      "syntax": "attribute [ <s> ]",
+      "description": "List CFD element attributes. If no s is given, then the available attributes are listed. If s is specified, then the value of that attribute is listed for each CFD element. Attributes are characteristics of CFD elements. Acceptable values are density, dragforce, porosity, position, presgradient, pressure, radius, velocity, viscosity, and volume."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i>",
+      "description": "List the extra variables at index i."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s>",
+      "description": "List the group names at slot s."
+    }
+  ],
+  "examples": [
+    {
+      "command": "element cfd list attribute pressure",
+      "description": "List the fluid pressure per element"
+    }
+  ],
+  "notes": [
+    "Give the optional attribute name to 'list attribute' as a bare token; a quoted string errors as an unused parameter on all versions. 'list group <s>' takes a slot name, not a group name."
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC3D 6.00, 7.00 and 9.8 consoles (syntax grade): list and the attribute, extra and group sub-keywords executed on all three consoles."
+  ]
+}
