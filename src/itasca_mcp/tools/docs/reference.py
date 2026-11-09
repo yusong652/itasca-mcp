@@ -175,7 +175,7 @@ def _browse_item(category: str, item: str, version: str, software: str) -> dict[
             "category": category,
             "item": item,
             "description": item_doc.get("description", ""),
-            "base_syntax": item_doc.get("base_syntax", ""),
+            "syntax": item_doc.get("syntax", ""),
         }
         if "basic_keywords" in item_doc:
             overview["basic_keywords"] = item_doc["basic_keywords"]
@@ -236,7 +236,7 @@ _ITEM_IDENTITY_FIELDS = (
     "property_groups",
     "parameters",
 )
-_ITEM_CORE_FIELDS = (*_ITEM_IDENTITY_FIELDS, "alt_syntax", "dimension", "usage", "examples", "notes")
+_ITEM_CORE_FIELDS = (*_ITEM_IDENTITY_FIELDS, "dimension", "usage", "examples", "notes")
 
 
 def _property_keywords(groups: list[Any]) -> list[Any]:

@@ -145,15 +145,26 @@ response is too large (`_COMMAND_CORE_FIELDS`).
   entries that are not genuinely useful cross-references are dropped outright
   rather than kept.
 
-## D. Naming and provenance
+## D. Naming and provenance (done 2026-11-09)
+
+Outcome (`scripts/corpus/migrate_naming.py`, 451 files): 364 renames
+(source_url/official_documentation → source, base_syntax → syntax), 56
+deletions (parent/parent_item, documented_syntax), 14 notes folds
+(alt_syntax, validation_notes, the PFC-specific tag on `contact`), 78 nodes
+flattened into `verification: list[str]`, 465 example normalisations
+(bare strings → `{command}`, use_case/model/output_example merged into
+description). The fish index `verification` became a list via the generator.
+`legacy_documentation` internals (incl. its source/source_urls) stay for
+step A; the raw-shape sweep (`test_no_legacy_naming_or_provenance_fields_remain`)
+bans every retired spelling outside the deferred subtrees.
 
 | meaning | today | canonical |
 | --- | --- | --- |
 | manual origin | `source`, `source_url`, `source_urls`, `official_documentation` | `source` (str or list[str]) |
 | live-test provenance | `verification`, `verified`, `evidence`, `live_verification[_flac3d_97/...]`, `live_enumeration_9_7`, `binary_validated_*`, `live_notes`, `validation_notes` | `verification: list[str]`, each entry naming the build and the fact ("FLAC3D 9.8.54 console: ...") |
-| hierarchy | `parent` (16), `parent_item` (16) | `parent` |
+| hierarchy | `parent` (16), `parent_item` (16) | delete both — the browse path already carries the hierarchy and no code reads the field |
 | display title | `full_name` vs `name` | keep both: `name` = engine spelling / path token, `full_name` = human title |
-| syntax line | `syntax`, `base_syntax`, `documented_syntax`, `alt_syntax` | `syntax`; a manual-vs-engine discrepancy becomes a `verification` + the engine-true string in `syntax` |
+| syntax line | `syntax`, `base_syntax`, `documented_syntax`, `alt_syntax` | `syntax` (single string). `base_syntax` is a rename (those files have no `syntax`). `documented_syntax` is the manual's spelling echo — delete; a trailing "(2D ONLY)" / "(engine-specific)" tag moves to dimension/availability. `alt_syntax` (6 range elements) is a real second calling form — fold into notes as "Alternate form: ...". |
 | example entry | `{command, description}` + stragglers `use_case` (386), `model` (66), `output_example` (9), and a few legacy bare-string examples | `{command, description}`; `use_case` merges into `description`, `model` becomes an `availability`-style tag only if load-bearing, else description text; bare strings become `{command}` |
 
 ## E. Keywords

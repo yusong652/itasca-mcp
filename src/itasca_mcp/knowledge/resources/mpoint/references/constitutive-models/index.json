@@ -10,7 +10,9 @@
       "keyword": "density",
       "description": "Mass density of the material points. Present in every model's live keyword table but absent from every _common model doc, because the official per-model pages document it separately from the property table. There is no 'mpoint density' command -- unlike some other Itasca families, density on material points is set only as a model property.",
       "usage": "mpoint property density <value> [range ...]",
-      "verified": "state -- accepted on all 42 assignable models, MPoint3D 9.7"
+      "verification": [
+        "state -- accepted on all 42 assignable models, MPoint3D 9.7"
+      ]
     }
   ],
   "models": [
@@ -371,17 +373,6 @@
     "cavehoek and imass are listed by 'mpoint cmodel assign' but refuse to assign until the model is configured: run 'model configure imass' right after 'model new'. Their properties are snake_case (in_stren_gsi, hb_cohesion, ...), not the kebab-case every other model uses.",
     "Property availability is per-model, not global: 'mpoint property <name>' is rejected unless <name> belongs to the assigned model's table."
   ],
-  "live_verification": {
-    "grade": "state",
-    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
-    "date": "2026-09-14",
-    "method": "For each model: 'mpoint cmodel assign <model>' onto 8 generated material points, then 'mpoint property zzbogus 1.0' to make the engine enumerate that model's legal property keywords. The returned sets were diffed against the _common docs.",
-    "result": "All 43 models assign successfully (2 of them only after 'model configure imass'). Every property name in the _common docs is accepted by the engine. The diff reduced to three facts, all now reflected in the docs: 'density' is universal and was missing everywhere; double-yield spells it 'strain-tension-plastic' (not 'tensile'); and columnar-basalt's '-i' keywords expand to 1..4.",
-    "traps": [
-      "The enumerated keyword table under-reports: 'strain-volume-plastic' is accepted by both cap-yield and double-yield but is listed by neither. Absence from the table is not proof a keyword is rejected -- only a rejection is.",
-      "'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks."
-    ]
-  },
   "dimension_differences": {
     "3d_only": [
       "columnar-basalt",
@@ -408,5 +399,11 @@
         "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
       ]
     }
-  }
+  },
+  "verification": [
+    "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): For each model: 'mpoint cmodel assign <model>' onto 8 generated material points, then 'mpoint property zzbogus 1.0' to make the engine enumerate that model's legal property keywords. The returned sets were diffed against the _common docs.",
+    "Result: All 43 models assign successfully (2 of them only after 'model configure imass'). Every property name in the _common docs is accepted by the engine. The diff reduced to three facts, all now reflected in the docs: 'density' is universal and was missing everywhere; double-yield spells it 'strain-tension-plastic' (not 'tensile'); and columnar-basalt's '-i' keywords expand to 1..4.",
+    "Trap: The enumerated keyword table under-reports: 'strain-volume-plastic' is accepted by both cap-yield and double-yield but is listed by neither. Absence from the table is not proof a keyword is rejected -- only a rejection is.",
+    "Trap: 'tensile' vs 'tension' is not a doc typo to normalise away: cap-yield and cap-yield-simplified accept only 'strain-tensile-plastic', double-yield accepts only 'strain-tension-plastic'. The engine itself is inconsistent, and each official page happens to print both spellings in different blocks."
+  ]
 }

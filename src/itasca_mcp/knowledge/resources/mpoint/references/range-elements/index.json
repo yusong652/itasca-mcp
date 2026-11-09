@@ -308,20 +308,6 @@
     "model range delete",
     "model range list"
   ],
-  "official_documentation": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
-  "live_verification": {
-    "grade": "state",
-    "engine": "MPoint3D 9.7 (Itasca Software Subscription)",
-    "date": "2026-09-14",
-    "method": "Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
-    "result": "All 22 documented elements parse, and every geometric and attribute element selects exactly the predicted set. One documented example is rejected by the engine ('range fish' quoting), one is a no-op on material points ('by'), and four useful elements were undocumented.",
-    "notes": [
-      "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is rejected. Multiple elements go inside the single range phrase.",
-      "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so 'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' matched 32.",
-      "Group slots hold ONE group per point. Assigning a second group in the same slot silently replaces the first, and the replaced group then matches nothing -- the original 'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. Groups in different slots coexist.",
-      "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works."
-    ]
-  },
   "mpoint_selection_counts": {
     "lattice": {
       "setup": [
@@ -464,90 +450,28 @@
     "circle": {
       "syntax": "circle center <v> radius <f>",
       "description": "The 2D counterpart of 'sphere'. MPoint2D has no 'sphere' or 'cylinder'.",
-      "verified": "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
+      "verification": [
+        "state -- 'range circle center (0,0) radius 0.5' selected 4 of 36 points on a 0.4-spaced lattice, exactly the four at distance 0.283 from the origin"
+      ]
     }
   },
   "dimension_note": "MPoint2D drops sphere, cylinder, position-z and adds 'circle'. MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
-  "live_enumeration_mpoint3d_98": {
-    "description": "Range-element keyword set listed by 'mpoint group ... range ?' on MPoint3D 9.8.54 (2026-10-31, after 'mpoint node spacing' and a 216-point lattice): 66 tokens, identical to PFC3D 9.8.54. Every element referenced by this index is in it.",
-    "tokens": [
-      "annulus",
-      "aspect-ratio",
-      "bmaterial",
-      "by",
-      "cmodel",
-      "component-id",
-      "component-id-list",
-      "concave",
-      "contact",
-      "cylinder",
-      "deformable",
-      "deselected",
-      "dfn",
-      "dfn-3dec",
-      "displacement",
-      "edge-length",
-      "ellipse",
-      "excavated",
-      "extent",
-      "extra",
-      "extra-list",
-      "face-area",
-      "fid",
-      "fidlist",
-      "fish",
-      "fracture-id",
-      "geometry-distance",
-      "geometry-space",
-      "group",
-      "group-intersection",
-      "id",
-      "id-list",
-      "index-list",
-      "interface",
-      "jmaterial",
-      "jmodel",
-      "joint-set",
-      "leader-id",
-      "mintersection",
-      "name",
-      "named-range",
-      "not",
-      "orientation",
-      "plane",
-      "polygon",
-      "position",
-      "position-x",
-      "position-y",
-      "position-z",
-      "project-range",
-      "radius",
-      "rectangle",
-      "region",
-      "remove",
-      "rintersection",
-      "seed",
-      "selected",
-      "set",
-      "sphere",
-      "sregion",
-      "state",
-      "structure-type",
-      "surface",
-      "union",
-      "use-hidden",
-      "velocity",
-      "volume",
-      "wall"
-    ],
-    "verified_state": {
-      "component-id": "'component-id 1 3' -> 3 of 216 points",
-      "component-id-list": "'component-id-list 1 5 10' -> 3 points",
-      "use-hidden": "'use-hidden position-x 0 10' -> 108 (nothing hidden)",
-      "volume": "'volume 0.06 0.07' -> all 216 (point volume 0.064), as on 9.7",
-      "selected / deselected": "0 / 216 with nothing selected in the GUI",
-      "radius": "'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
-      "circle": "rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)"
-    }
-  }
+  "source": "https://docs.itascacg.com/flac3d900/common/module/doc/manual/range_manual/range_commands/rangephrasereference.html",
+  "verification": [
+    "Live-verified 2026-09-14 on MPoint3D 9.7 (Itasca Software Subscription) (state grade): Every documented example was executed against a 216-point lattice with hand-checkable coordinates, and the number of material points each range matched was compared with the count computed by hand. This category had been inherited from FLAC by assumption -- the elements are kernel-level, but nothing had confirmed what they select on material points, which are not zones.",
+    "Result: All 22 documented elements parse, and every geometric and attribute element selects exactly the predicted set. One documented example is rejected by the engine ('range fish' quoting), one is a no-op on material points ('by'), and four useful elements were undocumented.",
+    "'range' may appear only once in a command: 'range position-x 0 20 range position-y 0 20' is rejected. Multiple elements go inside the single range phrase.",
+    "'extent' is meaningful on material points rather than a no-op -- they carry a volume, so 'sphere center (0,0,0) radius 0.7 extent' matched 0 where the same sphere without 'extent' matched 32.",
+    "Group slots hold ONE group per point. Assigning a second group in the same slot silently replaces the first, and the replaced group then matches nothing -- the original 'Group X assigned to 108 MPoints' message gives no hint that it will be superseded. Groups in different slots coexist.",
+    "Group names must be quoted: 'range group sample' is rejected, 'range group \\'sample\\'' works.",
+    "Description: Range-element keyword set listed by 'mpoint group ... range ?' on MPoint3D 9.8.54 (2026-10-31, after 'mpoint node spacing' and a 216-point lattice): 66 tokens, identical to PFC3D 9.8.54. Every element referenced by this index is in it.",
+    "State-verified 'component-id': 'component-id 1 3' -> 3 of 216 points",
+    "State-verified 'component-id-list': 'component-id-list 1 5 10' -> 3 points",
+    "State-verified 'use-hidden': 'use-hidden position-x 0 10' -> 108 (nothing hidden)",
+    "State-verified 'volume': 'volume 0.06 0.07' -> all 216 (point volume 0.064), as on 9.7",
+    "State-verified 'selected / deselected': 0 / 216 with nothing selected in the GUI",
+    "State-verified 'radius': 'radius 0.5' -> 0 points (ball attribute leaking into the vocabulary)",
+    "State-verified 'circle': rejected on MPoint3D ('Bad conversion of parameter (circle)'); MPoint2D selects with it (see mpoint2d_only_elements)",
+    "Tokens (68): annulus, aspect-ratio, bmaterial, by, cmodel, component-id, component-id-list, concave, contact, cylinder, deformable, deselected, dfn, dfn-3dec, displacement, edge-length, ellipse, excavated, extent, extra, extra-list, face-area, fid, fidlist, fish, fracture-id, geometry-distance, geometry-space, group, group-intersection, id, id-list, index-list, interface, jmaterial, jmodel, joint-set, leader-id, mintersection, name, named-range, not, orientation, plane, polygon, position, position-x, position-y, position-z, project-range, radius, rectangle, region, remove, rintersection, seed, selected, set, sphere, sregion, state, structure-type, surface, union, use-hidden, velocity, volume, wall"
+  ]
 }
