@@ -1,0 +1,52 @@
+{
+  "category": "rblock",
+  "search_keywords": [
+    "thermal",
+    "group",
+    "slot"
+  ],
+  "description": "Specify thermal rigid block group names. Use of the group logic is described in Groups. By default, s is assigned to the group slot Default. Use the add keyword to assign the group name to the next available slot and the remove keyword to remove s from all slots.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.rblock.thermal.find(id).set_group(name, slot)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock thermal group",
+  "syntax": "rblock thermal group <s> [keyword ...] [range]",
+  "keywords": [
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Assign s to the next available slot."
+    },
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "Remove s from all slots."
+    },
+    {
+      "name": "slot",
+      "syntax": "slot <slot>",
+      "description": "Set group slot slot to s. By default, slot Default is used."
+    }
+  ],
+  "examples": [
+    {
+      "command": "rblock thermal group 'tg1'",
+      "description": "Assign the group in the Default slot"
+    },
+    {
+      "command": "rblock thermal group 'tg2' slot 'other'",
+      "description": "Assign the group in a named slot"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): rblock.thermal.isgroup reads True after assignment to the Default and a named slot, and False again after remove, on all six consoles."
+  ]
+}

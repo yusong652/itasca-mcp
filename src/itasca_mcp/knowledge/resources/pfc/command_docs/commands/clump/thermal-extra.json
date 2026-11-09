@@ -1,0 +1,41 @@
+{
+  "category": "clump",
+  "search_keywords": [
+    "thermal",
+    "extra"
+  ],
+  "description": "Set thermal clump or pebble extra variables. The extra variable can be of any type and is associated with the index i as if stored in an array. The optional pebble keyword can be given before the optional range to specify that the extra variable will be applied to thermal pebbles. In this case, the range is applied to the thermal pebbles and not to thermal clumps.",
+  "python_sdk_alternative": {
+    "available": true,
+    "workaround": "itasca.clump.thermal.find(id).set_extra(index, value)"
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump thermal extra",
+  "syntax": "clump thermal extra <i> <a> [pebble] [range]",
+  "keywords": [
+    {
+      "name": "pebble",
+      "syntax": "pebble",
+      "description": "Apply the extra variable to thermal pebbles; the range then applies to thermal pebbles and not to thermal clumps."
+    }
+  ],
+  "examples": [
+    {
+      "command": "clump thermal extra 1 3.25",
+      "description": "Store 3.25 in extra slot 1"
+    },
+    {
+      "command": "clump thermal extra 2 1.5 pebble",
+      "description": "Store the value on the thermal pebbles"
+    }
+  ],
+  "verification": [
+    "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): 'thermal extra 1 3.25' read back via clump.thermal.extra on all six consoles; the pebble flavour accepted on all six consoles."
+  ]
+}
