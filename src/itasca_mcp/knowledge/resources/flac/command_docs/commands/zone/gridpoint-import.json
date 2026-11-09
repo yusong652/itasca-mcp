@@ -9,78 +9,75 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone gridpoint import",
-      "syntax": "zone gridpoint import pore-pressure sfile [keyword ...] [range]",
-      "description": "Imports grid point data.",
-      "keywords": [
-        {
-          "name": "cutoff",
-          "syntax": "cutoff <f>",
-          "description": "Pore pressure values are not allowed to fall below this cutoff value. The default cutoff value is 0.0."
-        },
-        {
-          "name": "geometry",
-          "syntax": "geometry",
-          "description": "If this keyword is given, then geometric data representing the MineDW nodes and zones will be created in a geometric set named MineDW. Nodes and edges are created only. The first extra variable of the node will be assigned the pore pressure value"
-        },
-        {
-          "name": "translate",
-          "syntax": "translate <v>",
-          "description": "If this keyword is used, the node locations in the file will be translate by the specified vector on import. The default value is (0,0,0)."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure",
-          "description": "Import pore pressures. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.import.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone gridpoint import",
+  "syntax": {
+    "7.0": "zone gridpoint import pore-pressure sfile [keyword ...] [range]",
+    "9.0": "zone gridpoint import pore-pressure <sfile> [keyword ...] [range] (3D ONLY)"
+  },
+  "keywords": [
+    {
+      "name": "cutoff",
+      "syntax": "cutoff <f>",
+      "description": {
+        "7.0": "Pore pressure values are not allowed to fall below this cutoff value. The default cutoff value is 0.0.",
+        "9.0": "Pore pressure values are not allowed to fall below this cutoff value. The default cutoff value is 0.0 . The cutoff is applied before the scaling of pressure, if scale-pressure is given."
       }
     },
-    "9.0": {
-      "command": "zone gridpoint import",
-      "syntax": "zone gridpoint import pore-pressure <sfile> [keyword ...] [range] (3D ONLY)",
-      "keywords": [
-        {
-          "name": "cutoff",
-          "syntax": "cutoff <f>",
-          "description": "Pore pressure values are not allowed to fall below this cutoff value. The default cutoff value is 0.0 . The cutoff is applied before the scaling of pressure, if scale-pressure is given."
-        },
-        {
-          "name": "geometry",
-          "syntax": "geometry",
-          "description": "If this keyword is given, then geometric data representing the pore pressure is created. MineDW nodes and zones will be created in a geometric set named MineDW . Nodes and edges are created only. Unstructured imported points are added as nodes only to a geometry set called PorePressure . The first extra variable of the node will be assigned the pore pressure value."
-        },
-        {
-          "name": "translate",
-          "syntax": "translate <v>",
-          "description": "If this keyword is used, the node locations in the file will be translate by the specified vector on import. The default value is (0,0,0). The translate is applied before the scale operation if scale-pressure is given."
-        },
-        {
-          "name": "scale-position",
-          "syntax": "scale-position <f>",
-          "description": "Scale the components of the position vector of the individual points by multiplying by the scalar f. This scale operation is performed after the translate operation. The default value is 1.0"
-        },
-        {
-          "name": "scale-pressure",
-          "syntax": "scale-pressure <f>",
-          "description": "Scale the pore pressure by multiplying by the scalar f. This scaler operation is performed after the cuttoff operation. The default value is 1.0 ."
-        },
-        {
-          "name": "pore-pressure",
-          "syntax": "pore-pressure <s>",
-          "description": "import gridpoint pore-pressure values from the named file s (extension *.mdp or *.csv)"
-        }
-      ]
+    {
+      "name": "geometry",
+      "syntax": "geometry",
+      "description": {
+        "7.0": "If this keyword is given, then geometric data representing the MineDW nodes and zones will be created in a geometric set named MineDW. Nodes and edges are created only. The first extra variable of the node will be assigned the pore pressure value",
+        "9.0": "If this keyword is given, then geometric data representing the pore pressure is created. MineDW nodes and zones will be created in a geometric set named MineDW . Nodes and edges are created only. Unstructured imported points are added as nodes only to a geometry set called PorePressure . The first extra variable of the node will be assigned the pore pressure value."
+      }
+    },
+    {
+      "name": "translate",
+      "syntax": "translate <v>",
+      "description": {
+        "7.0": "If this keyword is used, the node locations in the file will be translate by the specified vector on import. The default value is (0,0,0).",
+        "9.0": "If this keyword is used, the node locations in the file will be translate by the specified vector on import. The default value is (0,0,0). The translate is applied before the scale operation if scale-pressure is given."
+      }
+    },
+    {
+      "name": "scale-position",
+      "syntax": "scale-position <f>",
+      "description": "Scale the components of the position vector of the individual points by multiplying by the scalar f. This scale operation is performed after the translate operation. The default value is 1.0",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "scale-pressure",
+      "syntax": "scale-pressure <f>",
+      "description": "Scale the pore pressure by multiplying by the scalar f. This scaler operation is performed after the cuttoff operation. The default value is 1.0 .",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "pore-pressure",
+      "syntax": {
+        "7.0": "pore-pressure",
+        "9.0": "pore-pressure <s>"
+      },
+      "description": {
+        "7.0": "Import pore pressures. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "import gridpoint pore-pressure values from the named file s (extension *.mdp or *.csv)"
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.import.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

@@ -15,198 +15,113 @@
     "available": true,
     "workaround": "Clump.set_fix(component, True) where component (1-based): 3D 1=X, 2=Y, 3=Z, 4=RX, 5=RY, 6=RZ; 2D 1=X, 2=Y, 3=spin - requires iteration: for c in itasca.clump.list(): c.set_fix(component, True)"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump fix",
-      "syntax": "clump fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Fix the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Fix the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Fix the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Fix the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump fix velocity-x velocity-y spin range id 1 4 not",
-          "description": "Fix the x- and y- components of velocity and the rotational velocity of all clumps except those with ID 1, 2, 3, and 4"
-        },
-        {
-          "command": "clump fix velocity-x range id 1",
-          "description": "Fix the x-component of velocity of clump with ID 1"
-        },
-        {
-          "command": "clump fix velocity-z range group 'platen'",
-          "description": "Fix z-velocity for clumps in 'platen' group (common in compression tests)"
-        },
-        {
-          "command": "clump fix velocity spin range all",
-          "description": "Fix all translational and rotational velocity components for all clumps (fully constrained)"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump fix",
+  "syntax": "clump fix keyword ... [range]",
+  "keywords": [
+    {
+      "name": "spin",
+      "syntax": "spin",
+      "description": "The angular velocity is fixed."
     },
-    "6.0": {
-      "command": "clump fix",
-      "syntax": "clump fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x",
-          "description": "Fix the x -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y",
-          "description": "Fix the y -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z",
-          "description": "Fix the z -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the x -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the y -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z",
-          "description": "Fix the z -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump fix velocity-x velocity-y spin range id 1 4 not",
-          "description": "Fix the x- and y- components of velocity and the rotational velocity of all clumps except those with ID 1, 2, 3, and 4"
-        },
-        {
-          "command": "clump fix velocity-x range id 1",
-          "description": "Fix the x-component of velocity of clump with ID 1"
-        },
-        {
-          "command": "clump fix velocity-z range group 'platen'",
-          "description": "Fix z-velocity for clumps in 'platen' group (common in compression tests)"
-        },
-        {
-          "command": "clump fix velocity spin range all",
-          "description": "Fix all translational and rotational velocity components for all clumps (fully constrained)"
-        }
-      ]
+    {
+      "name": "spin-x",
+      "syntax": {
+        "6.0": "spin-x",
+        "7.0": "spin-x",
+        "9.0": "spin-x 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the x -component of the angular velocity.",
+        "7.0": "Fix the \\(x\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(x\\) -component of the angular velocity."
+      }
     },
-    "9.0": {
-      "command": "clump fix",
-      "syntax": "clump fix keyword ... [range]",
-      "keywords": [
-        {
-          "name": "spin",
-          "syntax": "spin",
-          "description": "The angular velocity is fixed."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY",
-          "description": "Fix the \\(x\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY",
-          "description": "Fix the \\(y\\) -component of the angular velocity."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY",
-          "description": "Fix the \\(z\\) -component of the angular velocity."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity",
-          "description": "The translational velocity is fixed."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x",
-          "description": "Fix the \\(x\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y",
-          "description": "Fix the \\(y\\) -component of the translational velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY",
-          "description": "Fix the \\(z\\) -component of the translational velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump fix velocity-x velocity-y spin range id 1 4 not",
-          "description": "Fix the x- and y- components of velocity and the rotational velocity of all clumps except those with ID 1, 2, 3, and 4"
-        },
-        {
-          "command": "clump fix velocity-x range id 1",
-          "description": "Fix the x-component of velocity of clump with ID 1"
-        },
-        {
-          "command": "clump fix velocity-z range group 'platen'",
-          "description": "Fix z-velocity for clumps in 'platen' group (common in compression tests)"
-        },
-        {
-          "command": "clump fix velocity spin range all",
-          "description": "Fix all translational and rotational velocity components for all clumps (fully constrained)"
-        }
-      ]
+    {
+      "name": "spin-y",
+      "syntax": {
+        "6.0": "spin-y",
+        "7.0": "spin-y",
+        "9.0": "spin-y 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the y -component of the angular velocity.",
+        "7.0": "Fix the \\(y\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(y\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": {
+        "6.0": "spin-z",
+        "7.0": "spin-z",
+        "9.0": "spin-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the z -component of the angular velocity.",
+        "7.0": "Fix the \\(z\\) -component of the angular velocity.",
+        "9.0": "Fix the \\(z\\) -component of the angular velocity."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity",
+      "description": "The translational velocity is fixed."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x",
+      "description": {
+        "6.0": "Fix the x -component of the translational velocity.",
+        "7.0": "Fix the \\(x\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(x\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y",
+      "description": {
+        "6.0": "Fix the y -component of the translational velocity.",
+        "7.0": "Fix the \\(y\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(y\\) -component of the translational velocity."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": {
+        "6.0": "velocity-z",
+        "7.0": "velocity-z",
+        "9.0": "velocity-z 3D ONLY"
+      },
+      "description": {
+        "6.0": "Fix the z -component of the translational velocity.",
+        "7.0": "Fix the \\(z\\) -component of the translational velocity.",
+        "9.0": "Fix the \\(z\\) -component of the translational velocity."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump fix velocity-x velocity-y spin range id 1 4 not",
+      "description": "Fix the x- and y- components of velocity and the rotational velocity of all clumps except those with ID 1, 2, 3, and 4"
+    },
+    {
+      "command": "clump fix velocity-x range id 1",
+      "description": "Fix the x-component of velocity of clump with ID 1"
+    },
+    {
+      "command": "clump fix velocity-z range group 'platen'",
+      "description": "Fix z-velocity for clumps in 'platen' group (common in compression tests)"
+    },
+    {
+      "command": "clump fix velocity spin range all",
+      "description": "Fix all translational and rotational velocity components for all clumps (fully constrained)"
+    }
+  ]
 }

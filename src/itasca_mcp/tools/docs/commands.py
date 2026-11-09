@@ -301,17 +301,30 @@ def _browse_group(group: str, version: str, software: str) -> dict[str, Any] | N
 
 def _browse_command(category: str, command_name: str, version: str, software: str) -> dict[str, Any]:
     """Level 2: Return full documentation for a specific command."""
+
     # JSON filenames use dash as sub-command separator (e.g. edge-create,
     # cmat-add, scalar-create) while Itasca command syntax separates them with spaces.
     # Accept either form on input.
-    try:
-        cmd_doc = CommandLoader.load_command_doc(category, command_name, version, software=software)
-        if not cmd_doc and " " in command_name:
-            cmd_doc = CommandLoader.load_command_doc(
-                category, command_name.replace(" ", "-"), version, software=software
+    def _load(requested_version: str) -> dict[str, Any] | None:
+        doc = CommandLoader.load_command_doc(category, command_name, requested_version, software=software)
+        if not doc and " " in command_name:
+            doc = CommandLoader.load_command_doc(
+                category, command_name.replace(" ", "-"), requested_version, software=software
             )
+        return doc
+
+    try:
+        cmd_doc = _load(version)
     except KeyError:
         # Command exists but its doc has no entry for this version.
+        available_versions = []
+        for other in sorted(supported_doc_versions(software)):
+            try:
+                probe = _load(other)
+            except KeyError:
+                continue
+            if probe and probe.get("available") is not False:
+                available_versions.append(other)
         return {
             "source": "commands",
             "action": "browse",
@@ -320,6 +333,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
                 "message": f"Command '{command_name}' is not available in {software} {version}.",
             },
             "input": {"category": category, "command": command_name, "version": version, "software": software},
+            "available_versions": available_versions,
         }
 
     if not cmd_doc:

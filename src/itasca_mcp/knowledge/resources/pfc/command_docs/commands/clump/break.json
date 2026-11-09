@@ -18,97 +18,52 @@
     "available": false,
     "workaround": "itasca.command('clump break ...') - Python SDK cannot directly break clumps into pebbles"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump break",
-      "syntax": "clump break [keyword] [range]",
-      "keywords": [
-        {
-          "name": "combine",
-          "syntax": "combine <b>",
-          "description": "Combine the broken pebbles into a new clump. All contacts with the broken pebbles are retained. By default combine = false ."
-        },
-        {
-          "name": "inertia-tolerance",
-          "syntax": "inertia-tolerance <f>",
-          "description": "Specify the tolerance for computing the inertial attributes of the remaining or new clumps. Values between 0.00005 and 1 are accepted ( f = 0.01 by default). Lower f values will produce more accurate inertial attribute estimates."
-        },
-        {
-          "name": "pebbles",
-          "syntax": "pebbles <i> ...",
-          "description": "Specify one or more pebbles to be broken by ID. The pebbles must be balls or rblocks. Cannot be given with the plane keyword."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {normal <v> | point <v>} ...",
-          "description": "Specify that a plane is used to identify pebbles to be broken. Cannot be given with the pebbles keyword. Options: normal <v>: Specify the plane normal.; point <v>: Specify a point on the plane."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump break pebbles 1 2 3 range id 100",
-          "description": "Break clump 100 by removing pebbles with IDs 1, 2, and 3"
-        },
-        {
-          "command": "clump break plane normal (0,0,1) point (0,0,5) range group 'mygroup'",
-          "description": "Break clumps in 'mygroup' using a horizontal plane at z=5"
-        },
-        {
-          "command": "clump break pebbles 5 6 combine true inertia-tolerance 0.001 range id 50",
-          "description": "Break clump 50 by removing pebbles 5 and 6, then combine remaining pebbles into a new clump with high precision (0.1% tolerance)"
-        },
-        {
-          "command": "clump break plane normal (1,0,0) point (10,0,0) combine false range all",
-          "description": "Break all clumps using a vertical plane at x=10, do not combine broken pieces"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump break",
+  "syntax": "clump break [keyword] [range]",
+  "keywords": [
+    {
+      "name": "combine",
+      "syntax": "combine <b>",
+      "description": "Combine the broken pebbles into a new clump. All contacts with the broken pebbles are retained. By default combine = false ."
     },
-    "6.0": {
-      "available": false
+    {
+      "name": "inertia-tolerance",
+      "syntax": "inertia-tolerance <f>",
+      "description": "Specify the tolerance for computing the inertial attributes of the remaining or new clumps. Values between 0.00005 and 1 are accepted ( f = 0.01 by default). Lower f values will produce more accurate inertial attribute estimates."
     },
-    "9.0": {
-      "command": "clump break",
-      "syntax": "clump break [keyword] [range]",
-      "keywords": [
-        {
-          "name": "combine",
-          "syntax": "combine <b>",
-          "description": "Combine the broken pebbles into a new clump. All contacts with the broken pebbles are retained. By default combine = false ."
-        },
-        {
-          "name": "inertia-tolerance",
-          "syntax": "inertia-tolerance <f>",
-          "description": "Specify the tolerance for computing the inertial attributes of the remaining or new clumps. Values between 0.00005 and 1 are accepted ( f = 0.01 by default). Lower f values will produce more accurate inertial attribute estimates."
-        },
-        {
-          "name": "pebbles",
-          "syntax": "pebbles <i> ...",
-          "description": "Specify one or more pebbles to be broken by ID. The pebbles must be balls or rblocks. Cannot be given with the plane keyword."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {normal <v> | point <v>} ...",
-          "description": "Specify that a plane is used to identify pebbles to be broken. Cannot be given with the pebbles keyword. Options: normal <v>: Specify the plane normal.; point <v>: Specify a point on the plane."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump break pebbles 1 2 3 range id 100",
-          "description": "Break clump 100 by removing pebbles with IDs 1, 2, and 3"
-        },
-        {
-          "command": "clump break plane normal (0,0,1) point (0,0,5) range group 'mygroup'",
-          "description": "Break clumps in 'mygroup' using a horizontal plane at z=5"
-        },
-        {
-          "command": "clump break pebbles 5 6 combine true inertia-tolerance 0.001 range id 50",
-          "description": "Break clump 50 by removing pebbles 5 and 6, then combine remaining pebbles into a new clump with high precision (0.1% tolerance)"
-        },
-        {
-          "command": "clump break plane normal (1,0,0) point (10,0,0) combine false range all",
-          "description": "Break all clumps using a vertical plane at x=10, do not combine broken pieces"
-        }
-      ]
+    {
+      "name": "pebbles",
+      "syntax": "pebbles <i> ...",
+      "description": "Specify one or more pebbles to be broken by ID. The pebbles must be balls or rblocks. Cannot be given with the plane keyword."
+    },
+    {
+      "name": "plane",
+      "syntax": "plane {normal <v> | point <v>} ...",
+      "description": "Specify that a plane is used to identify pebbles to be broken. Cannot be given with the pebbles keyword. Options: normal <v>: Specify the plane normal.; point <v>: Specify a point on the plane."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump break pebbles 1 2 3 range id 100",
+      "description": "Break clump 100 by removing pebbles with IDs 1, 2, and 3"
+    },
+    {
+      "command": "clump break plane normal (0,0,1) point (0,0,5) range group 'mygroup'",
+      "description": "Break clumps in 'mygroup' using a horizontal plane at z=5"
+    },
+    {
+      "command": "clump break pebbles 5 6 combine true inertia-tolerance 0.001 range id 50",
+      "description": "Break clump 50 by removing pebbles 5 and 6, then combine remaining pebbles into a new clump with high precision (0.1% tolerance)"
+    },
+    {
+      "command": "clump break plane normal (1,0,0) point (10,0,0) combine false range all",
+      "description": "Break all clumps using a vertical plane at x=10, do not combine broken pieces"
+    }
+  ]
 }

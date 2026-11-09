@@ -13,59 +13,60 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "block relax",
-      "syntax": "block relax keyword",
-      "keywords": [
-        {
-          "name": "fish",
-          "syntax": "fish <s>",
-          "description": "Specify the name of a FISH function used to reduce the applied forces. The result of the function is multiplied by the initial forces every calculation step. The function must return a value between 0 and 1."
-        },
-        {
-          "name": "linear",
-          "syntax": "linear <i>",
-          "description": "Reduce the tractions linearly to the specified minimum over the next i calculation steps."
-        },
-        {
-          "name": "nonlinear",
-          "syntax": "nonlinear <i>",
-          "description": "Reduce the tractions non-linearly to the specified minimum over the next i calculation steps, so that the forces are initially reduced quite quickly, and then more slowly as time progresses and confinement reduces. The equation for non-linear force application is: where \\(f\\) is the factor multiplied by the initial forces (between 0 and 1), \\(cyc\\) is the number of cycles since the block relax command was issued, and \\(i\\) is the number of steps specified above. This equation is for a minimum of 0. For a minimum greater than 0, the force is scaled by multiplying the above equation by (1- \\(min\\) ) and adding \\(min\\) , where \\(min\\) is the minimum value between 0 and 1 specified with the keyword minimum (default is 0). This function approaches the specified minimum asymptotically, so the value of \\(f\\) does not decrease exactly to 0 over \\(i\\) steps. A typical curve for relaxation to (almost) 0 over 1000 steps is shown below:"
-        },
-        {
-          "name": "minimium",
-          "syntax": "minimium <f>",
-          "description": "The applied forces are reduced by a factor of f . f must be between 0 and 1. If a minimum is not specified, then this defaults to 0. Must FOLLOW the step spec (linear/nonlinear/table/fish); giving minimium first is rejected with 'Step, table or fish must be specified' (live 9.7.47)."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete",
-          "description": "Delete an existing relax condition (applied forces will be set to 0)."
-        },
-        {
-          "name": "face-group",
-          "syntax": "face-group <s> [slot <s>]",
-          "description": "When a block relax command is given, all faces in the range are automatically assigned a group name. By default, the group name is relax in the slot relax . It is possible to overwrite this default by assigning a specific group name (and, optionally, slot) to the faces in the range. Note that if a group name is chosen that already exists, the string _1 will be appended to the specified group name."
-        },
-        {
-          "name": "table",
-          "syntax": "table '<name>'",
-          "description": "Reduce the applied forces according to a table of (step, factor) pairs. Live 9.7.47: NOT valid alone despite the engine's 'Step, table or fish must be specified' message - must be combined with a step spec, e.g. 'block relax linear <n> table <name>'."
-        }
-      ],
-      "examples": [],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "cmd-relax.png",
-            "doc_path": "_images/cmd-relax.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      }
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "block relax",
+  "syntax": "block relax keyword",
+  "keywords": [
+    {
+      "name": "fish",
+      "syntax": "fish <s>",
+      "description": "Specify the name of a FISH function used to reduce the applied forces. The result of the function is multiplied by the initial forces every calculation step. The function must return a value between 0 and 1."
+    },
+    {
+      "name": "linear",
+      "syntax": "linear <i>",
+      "description": "Reduce the tractions linearly to the specified minimum over the next i calculation steps."
+    },
+    {
+      "name": "nonlinear",
+      "syntax": "nonlinear <i>",
+      "description": "Reduce the tractions non-linearly to the specified minimum over the next i calculation steps, so that the forces are initially reduced quite quickly, and then more slowly as time progresses and confinement reduces. The equation for non-linear force application is: where \\(f\\) is the factor multiplied by the initial forces (between 0 and 1), \\(cyc\\) is the number of cycles since the block relax command was issued, and \\(i\\) is the number of steps specified above. This equation is for a minimum of 0. For a minimum greater than 0, the force is scaled by multiplying the above equation by (1- \\(min\\) ) and adding \\(min\\) , where \\(min\\) is the minimum value between 0 and 1 specified with the keyword minimum (default is 0). This function approaches the specified minimum asymptotically, so the value of \\(f\\) does not decrease exactly to 0 over \\(i\\) steps. A typical curve for relaxation to (almost) 0 over 1000 steps is shown below:"
+    },
+    {
+      "name": "minimium",
+      "syntax": "minimium <f>",
+      "description": "The applied forces are reduced by a factor of f . f must be between 0 and 1. If a minimum is not specified, then this defaults to 0. Must FOLLOW the step spec (linear/nonlinear/table/fish); giving minimium first is rejected with 'Step, table or fish must be specified' (live 9.7.47)."
+    },
+    {
+      "name": "delete",
+      "syntax": "delete",
+      "description": "Delete an existing relax condition (applied forces will be set to 0)."
+    },
+    {
+      "name": "face-group",
+      "syntax": "face-group <s> [slot <s>]",
+      "description": "When a block relax command is given, all faces in the range are automatically assigned a group name. By default, the group name is relax in the slot relax . It is possible to overwrite this default by assigning a specific group name (and, optionally, slot) to the faces in the range. Note that if a group name is chosen that already exists, the string _1 will be appended to the specified group name."
+    },
+    {
+      "name": "table",
+      "syntax": "table '<name>'",
+      "description": "Reduce the applied forces according to a table of (step, factor) pairs. Live 9.7.47: NOT valid alone despite the engine's 'Step, table or fish must be specified' message - must be combined with a step spec, e.g. 'block relax linear <n> table <name>'."
     }
+  ],
+  "examples": [],
+  "figure_reference": {
+    "figures": [
+      {
+        "name": "cmd-relax.png",
+        "doc_path": "_images/cmd-relax.png"
+      }
+    ],
+    "notes": [
+      "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    ]
   }
 }

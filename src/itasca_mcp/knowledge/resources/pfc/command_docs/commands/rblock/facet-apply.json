@@ -10,58 +10,43 @@
     "available": false,
     "workaround": "Use itasca.command('rblock facet apply ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "available": false
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock facet apply",
+  "syntax": "rblock facet apply keyword ... [range]",
+  "keywords": [
+    {
+      "name": "stress",
+      "syntax": {
+        "7.0": "stress <f1> <f2> <f3> <f4> <f5> <f6>",
+        "9.0": "stress <f1> <f2> <f3> <f4> <f5> <f6> only 3 components in 2D"
+      },
+      "description": "Apply the stress tensor to facets. The traction and moment are computed given the facet orientation. All components must be specified. In 3D, 6 parameters must be specified in the order stress-xx,stress-yy,stress-zz,stress-xy,stress-sxz,stress-syz. In 2D, 3 parameters must be specified in the order stress-xx,stress-yy,stress-xy."
     },
-    "7.0": {
-      "command": "rblock facet apply",
-      "syntax": "rblock facet apply keyword ... [range]",
-      "keywords": [
-        {
-          "name": "stress",
-          "syntax": "stress <f1> <f2> <f3> <f4> <f5> <f6>",
-          "description": "Apply the stress tensor to facets. The traction and moment are computed given the facet orientation. All components must be specified. In 3D, 6 parameters must be specified in the order stress-xx,stress-yy,stress-zz,stress-xy,stress-sxz,stress-syz. In 2D, 3 parameters must be specified in the order stress-xx,stress-yy,stress-xy."
-        },
-        {
-          "name": "stress-normal",
-          "syntax": "stress-normal <v>",
-          "description": "Apply the normal stress to the facets. The traction and moment are computed given the facet orientation."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> {origin <v>}",
-          "description": "Apply a linear gradient. The value is modified by the dot product of the vector gradient with the difference of facet position and the origin . Options: origin <v>: Specify the origin for the gradient computation."
-        }
-      ],
-      "examples": []
+    {
+      "name": "stress-normal",
+      "syntax": "stress-normal <v>",
+      "description": "Apply the normal stress to the facets. The traction and moment are computed given the facet orientation."
     },
-    "9.0": {
-      "command": "rblock facet apply",
-      "syntax": "rblock facet apply keyword ... [range]",
-      "keywords": [
-        {
-          "name": "stress",
-          "syntax": "stress <f1> <f2> <f3> <f4> <f5> <f6> only 3 components in 2D",
-          "description": "Apply the stress tensor to facets. The traction and moment are computed given the facet orientation. All components must be specified. In 3D, 6 parameters must be specified in the order stress-xx,stress-yy,stress-zz,stress-xy,stress-sxz,stress-syz. In 2D, 3 parameters must be specified in the order stress-xx,stress-yy,stress-xy."
-        },
-        {
-          "name": "stress-normal",
-          "syntax": "stress-normal <v>",
-          "description": "Apply the normal stress to the facets. The traction and moment are computed given the facet orientation."
-        },
-        {
-          "name": "unbalanced",
-          "syntax": "unbalanced [<s>]",
-          "description": "Apply unbalanced forces and moments. The optional FISH function must take two arguments and return a float. The scaling factor computed by this function is multiplied by the unbalanced force and moment. The first argument is the rigid block, and the second argument is number of times the apply condition as been applied."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> {origin <v>}",
-          "description": "Apply a linear gradient. The value is modified by the dot product of the vector gradient with the difference of facet position and the origin . Options: origin <v>: Specify the origin for the gradient computation."
-        }
-      ],
-      "examples": []
+    {
+      "name": "unbalanced",
+      "syntax": "unbalanced [<s>]",
+      "description": "Apply unbalanced forces and moments. The optional FISH function must take two arguments and return a float. The scaling factor computed by this function is multiplied by the unbalanced force and moment. The first argument is the rigid block, and the second argument is number of times the apply condition as been applied.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient <v> {origin <v>}",
+      "description": "Apply a linear gradient. The value is modified by the dot product of the vector gradient with the difference of facet position and the origin . Options: origin <v>: Specify the origin for the gradient computation."
     }
-  }
+  ],
+  "examples": []
 }

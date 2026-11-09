@@ -5,122 +5,96 @@
     "list",
     "structure"
   ],
-  "description": "List properties and responses of structural element links in the range.",
+  "description": {
+    "7.0": "List values and information about link objects in the range.",
+    "9.0": "List properties and responses of structural element links in the range."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure link list",
-      "syntax": "structure link list keyword [range]",
-      "description": "List values and information about link objects in the range.",
-      "keywords": [
-        {
-          "name": "attach",
-          "syntax": "attach",
-          "description": "attachment conditions"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement",
-          "description": "relative displacement in each degree-of-freedom"
-        },
-        {
-          "name": "force",
-          "syntax": "force",
-          "description": "force being exerted in each degree-of-freedom"
-        },
-        {
-          "name": "property",
-          "syntax": "property <s>",
-          "description": "list link property associated with the current model. The value of s corresponds to the desired property. [DR: help to sort out what to do with next statement] See:flag2:-Link to discussion of the link force-displacement models available here- for a list of properties associated with each of the deformable models available."
-        },
-        {
-          "name": "slide",
-          "syntax": "slide",
-          "description": "sliding flag"
-        },
-        {
-          "name": "slide-tolerance",
-          "syntax": "slide-tolerance",
-          "description": "sliding tolerance"
-        },
-        {
-          "name": "source-node",
-          "syntax": "source-node",
-          "description": "source node — node from which the link emanates"
-        },
-        {
-          "name": "state",
-          "syntax": "state",
-          "description": "the failure state associated with each degree-of-freedom that has a deformable force-displacement model"
-        },
-        {
-          "name": "target",
-          "syntax": "target",
-          "description": "link type: node-to-zone or node-to-node and the component-id of the specific target of this link"
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/links/commands/cmd_structure.link.list.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure link list",
+  "syntax": "structure link list keyword [range]",
+  "keywords": [
+    {
+      "name": "attach",
+      "syntax": "attach",
+      "description": "attachment conditions"
+    },
+    {
+      "name": "displacement",
+      "syntax": "displacement",
+      "description": {
+        "7.0": "relative displacement in each degree-of-freedom",
+        "9.0": "displacement in deformable models of this link. Displacement of target object minum displacement of source node (node-local coordinate system)."
       }
     },
-    "9.0": {
-      "command": "structure link list",
-      "syntax": "structure link list keyword [range]",
-      "keywords": [
-        {
-          "name": "attach",
-          "syntax": "attach",
-          "description": "attachment conditions"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement",
-          "description": "displacement in deformable models of this link. Displacement of target object minum displacement of source node (node-local coordinate system)."
-        },
-        {
-          "name": "force",
-          "syntax": "force",
-          "description": "Force in deformable models of this link (sign corresponds with sign of displacement)"
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "value of property s in deformable models of this link (see Link Model Properties )"
-        },
-        {
-          "name": "slide",
-          "syntax": "slide",
-          "description": "flag for large-strain sliding"
-        },
-        {
-          "name": "slide-tolerance",
-          "syntax": "slide-tolerance",
-          "description": "sliding tolerance (used during large-strain sliding)"
-        },
-        {
-          "name": "source-node",
-          "syntax": "source-node",
-          "description": "node from which the link emanates"
-        },
-        {
-          "name": "state",
-          "syntax": "state",
-          "description": "yield state for each degree-of-freedom that has a deformable model"
-        },
-        {
-          "name": "target",
-          "syntax": "target",
-          "description": "type (node-to-node or node-to-object) and ID (or component-id of a node) of the link target"
-        }
-      ]
+    {
+      "name": "force",
+      "syntax": "force",
+      "description": {
+        "7.0": "force being exerted in each degree-of-freedom",
+        "9.0": "Force in deformable models of this link (sign corresponds with sign of displacement)"
+      }
+    },
+    {
+      "name": "property",
+      "syntax": {
+        "7.0": "property <s>",
+        "9.0": "property [<s>]"
+      },
+      "description": {
+        "7.0": "list link property associated with the current model. The value of s corresponds to the desired property. [DR: help to sort out what to do with next statement] See:flag2:-Link to discussion of the link force-displacement models available here- for a list of properties associated with each of the deformable models available.",
+        "9.0": "value of property s in deformable models of this link (see Link Model Properties )"
+      }
+    },
+    {
+      "name": "slide",
+      "syntax": "slide",
+      "description": {
+        "7.0": "sliding flag",
+        "9.0": "flag for large-strain sliding"
+      }
+    },
+    {
+      "name": "slide-tolerance",
+      "syntax": "slide-tolerance",
+      "description": {
+        "7.0": "sliding tolerance",
+        "9.0": "sliding tolerance (used during large-strain sliding)"
+      }
+    },
+    {
+      "name": "source-node",
+      "syntax": "source-node",
+      "description": {
+        "7.0": "source node — node from which the link emanates",
+        "9.0": "node from which the link emanates"
+      }
+    },
+    {
+      "name": "state",
+      "syntax": "state",
+      "description": {
+        "7.0": "the failure state associated with each degree-of-freedom that has a deformable force-displacement model",
+        "9.0": "yield state for each degree-of-freedom that has a deformable model"
+      }
+    },
+    {
+      "name": "target",
+      "syntax": "target",
+      "description": {
+        "7.0": "link type: node-to-zone or node-to-node and the component-id of the specific target of this link",
+        "9.0": "type (node-to-node or node-to-object) and ID (or component-id of a node) of the link target"
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/links/commands/cmd_structure.link.list.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

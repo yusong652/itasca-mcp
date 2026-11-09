@@ -9,58 +9,53 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone gridpoint merge",
-      "syntax": "zone gridpoint merge [keyword] [range]",
-      "description": "Attempts to merge all gridpoints in the range. A gridpoint will be merged if another gridpoint falls within a distance given by the tolerances specified. The following optional keywords are available to manually specify the tolerances used.",
-      "keywords": [
-        {
-          "name": "tolerance-relative",
-          "syntax": "tolerance-relative <f>",
-          "description": "Specifies a relative tolerance value. This is converted to an absolute tolerance by multiplying it to the minimum edge length of all zones connected to the gridpoint. The default value is 0.01. If both an absolute and a relative tolerance is specified, the value used an any given gridpoint is the maximum of the two."
-        },
-        {
-          "name": "tolerance-absolute",
-          "syntax": "tolerance-absolute <f>",
-          "description": "Specifies an absolute tolerance value. The default value is 0. If both an absolute and a relative tolerance is specified, the value used an any given gridpoint is the maximum of the two."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.merge.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone gridpoint merge",
+  "syntax": "zone gridpoint merge [keyword] [range]",
+  "keywords": [
+    {
+      "name": "tolerance-relative",
+      "syntax": "tolerance-relative <f>",
+      "description": {
+        "7.0": "Specifies a relative tolerance value. This is converted to an absolute tolerance by multiplying it to the minimum edge length of all zones connected to the gridpoint. The default value is 0.01. If both an absolute and a relative tolerance is specified, the value used an any given gridpoint is the maximum of the two.",
+        "9.0": "Specifies a relative tolerance value. This is converted to an absolute tolerance by multiplying it to the minimum edge length of all zones connected to the gridpoint. The default value is 0.01 . If both an absolute and a relative tolerance are specified, the value used on any given gridpoint is the maximum of the two."
       }
     },
-    "9.0": {
-      "command": "zone gridpoint merge",
-      "syntax": "zone gridpoint merge [keyword] [range]",
-      "keywords": [
-        {
-          "name": "tolerance-relative",
-          "syntax": "tolerance-relative <f>",
-          "description": "Specifies a relative tolerance value. This is converted to an absolute tolerance by multiplying it to the minimum edge length of all zones connected to the gridpoint. The default value is 0.01 . If both an absolute and a relative tolerance are specified, the value used on any given gridpoint is the maximum of the two."
-        },
-        {
-          "name": "tolerance-absolute",
-          "syntax": "tolerance-absolute <f>",
-          "description": "Specifies an absolute tolerance value. The default value is 0 . If both an absolute and a relative tolerance are specified, the value used on any given gridpoint is the maximum of the two."
-        },
-        {
-          "name": "all",
-          "syntax": "all",
-          "description": "By default the merge will attempt to skip gridpoints across attach, interface, or zone joint boundaries. If this keyword is used then those boundaries will be included. Attach, interface, and zone joints may be removed if their zone faces are no longer surfaces."
-        },
-        {
-          "name": "by-face",
-          "syntax": "by-face",
-          "description": "By default gridpoints will be merged as long as they are detected and are within a given distance of each other. Using the by-face keyword will require that they belong to adjacent faces with some significant overlapping area. This allows better conformance to the intent of skipping attach/interface/zone joint surfaces at a location where there is intersecting surfaces."
-        }
-      ]
+    {
+      "name": "tolerance-absolute",
+      "syntax": "tolerance-absolute <f>",
+      "description": {
+        "7.0": "Specifies an absolute tolerance value. The default value is 0. If both an absolute and a relative tolerance is specified, the value used an any given gridpoint is the maximum of the two.",
+        "9.0": "Specifies an absolute tolerance value. The default value is 0 . If both an absolute and a relative tolerance are specified, the value used on any given gridpoint is the maximum of the two."
+      }
+    },
+    {
+      "name": "all",
+      "syntax": "all",
+      "description": "By default the merge will attempt to skip gridpoints across attach, interface, or zone joint boundaries. If this keyword is used then those boundaries will be included. Attach, interface, and zone joints may be removed if their zone faces are no longer surfaces.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "by-face",
+      "syntax": "by-face",
+      "description": "By default gridpoints will be merged as long as they are detected and are within a given distance of each other. Using the by-face keyword will require that they belong to adjacent faces with some significant overlapping area. This allows better conformance to the intent of skipping attach/interface/zone joint surfaces at a location where there is intersecting surfaces.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zonegridpoint/cmd_zone.gridpoint.merge.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

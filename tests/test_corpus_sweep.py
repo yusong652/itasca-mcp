@@ -44,11 +44,16 @@ def test_every_command_doc_resolves(software: str) -> None:
         category, name = cmd_meta["category"], cmd_meta["name"]
         where = f"{software}:{category}/{name}"
         resolved_any = tombstone = False
+        key_errors = 0
         for version in _versions(software):
             try:
                 doc = CommandLoader.load_command_doc(category, name, version, software=software)
             except KeyError:
-                continue  # no entry for this version: fine, as long as some version has one
+                # No entry for this version. All versions raising is also fine for a
+                # shared doc whose availability sits outside this engine's corpus
+                # (e.g. a 6.0-only PFC command listed in the _common index).
+                key_errors += 1
+                continue
             if doc is None:
                 problems.append(f"{where}@{version}: index entry points at no loadable doc")
                 continue
@@ -59,7 +64,7 @@ def test_every_command_doc_resolves(software: str) -> None:
                 continue
             resolved_any = True
             problems.extend(f"{where}@{version}: {p}" for p in _command_doc_problems(doc))
-        if not resolved_any and not tombstone:
+        if not resolved_any and not tombstone and key_errors != len(_versions(software)):
             problems.append(f"{where}: no version resolves to an available doc")
     assert problems == []
 
@@ -214,9 +219,8 @@ def _entry_problems(where: str, entries: Any) -> list[str]:
 
 _RESOURCES = Path(__file__).resolve().parents[1] / "src" / "itasca_mcp" / "knowledge" / "resources"
 
-# Subtrees owned by later migration steps; their internals are not judged yet.
-# (legacy_documentation: the command version-block restructure, step A.)
-_DEFERRED_SUBTREES = {"legacy_documentation"}
+# Nothing is deferred any more: section A retired the version blocks.
+_DEFERRED_SUBTREES: set[str] = set()
 # The mpoint dimension-differences category is the curated 2D-vs-3D correction
 # page; its structured diff lists are its content, not drift.
 _DEFERRED_PATHS = ("references/dimension-differences/",)
@@ -291,8 +295,7 @@ def test_every_reference_page_fits_its_archetype() -> None:
     assert problems == []
 
 
-# Legacy spellings that section D retires. `source_urls` survives only inside
-# command_docs version blocks (the removed-command apparatus, step A).
+# Legacy spellings that section D retires.
 _BANNED_KEYS = {
     "parent",
     "parent_item",
@@ -307,6 +310,11 @@ _BANNED_KEYS = {
     "validation_notes",
 }
 _BANNED_PREFIXES = ("live_verification", "live_enumeration", "binary_validated")
+
+# Section A: the per-version whole-block duplication and the removed-command
+# apparatus are gone; availability + version maps carry the same facts.
+_BANNED_KEYS |= {"legacy_documentation", "target_version", "source_urls", "signature_7.0"}
+_VERSION_LABELS = {"6.0", "7.0", "9.0"}
 
 # Section B: dimension is the structured {"2D","3D"} tag; every other spelling
 # of "this differs between the 2D and 3D builds" is retired.
@@ -346,7 +354,7 @@ def _keyword_entry_problems(entries: Any, rel: str, jp: str) -> list[str]:
     return problems
 
 
-def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool, parent_key: str = "") -> list[str]:
+def _shape_problems(node: Any, rel: str, jp: str, parent_key: str = "") -> list[str]:
     problems: list[str] = []
     if isinstance(node, dict):
         for key, value in node.items():
@@ -358,8 +366,8 @@ def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool, parent_
                 problems.append(f"{rel} @{jp}: parallel keyword list {key!r}")
             if key == "engines" and parent_key != "availability":
                 problems.append(f"{rel} @{jp}: bare 'engines' outside availability")
-            if key == "source_urls" and not in_command_docs:
-                problems.append(f"{rel} @{jp}: legacy field 'source_urls'")
+            if key == "versions" and isinstance(value, dict):
+                problems.append(f"{rel} @{jp}: version-block dict 'versions'")
             if key in ("keywords", "sub_keywords") and isinstance(value, list):
                 problems.extend(_keyword_entry_problems(value, rel, f"{jp}.{key}"))
             if key == "verification" and not (
@@ -381,10 +389,10 @@ def _shape_problems(node: Any, rel: str, jp: str, in_command_docs: bool, parent_
             ):
                 problems.append(f"{rel} @{jp}: prose dimension note; use the dimension field")
             if key not in _DEFERRED_SUBTREES:
-                problems.extend(_shape_problems(value, rel, f"{jp}.{key}", in_command_docs, key))
+                problems.extend(_shape_problems(value, rel, f"{jp}.{key}", key))
     elif isinstance(node, list):
         for i, value in enumerate(node):
-            problems.extend(_shape_problems(value, rel, f"{jp}[{i}]", in_command_docs, parent_key))
+            problems.extend(_shape_problems(value, rel, f"{jp}[{i}]", parent_key))
     return problems
 
 
@@ -395,5 +403,5 @@ def test_no_legacy_naming_or_provenance_fields_remain() -> None:
         if any(deferred in rel for deferred in _DEFERRED_PATHS):
             continue
         doc = json.loads(path.read_text(encoding="utf-8"))
-        problems.extend(_shape_problems(doc, rel, "$", "/command_docs/" in f"/{rel}"))
+        problems.extend(_shape_problems(doc, rel, "$"))
     assert problems == []

@@ -9,32 +9,33 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "massflow drawpoint dump-drawperiod",
-      "syntax": "massflow drawpoint dump-drawperiod name <s> [keyword]",
-      "keywords": [
-        {
-          "name": "cumulative",
-          "syntax": "cumulative <b>",
-          "description": "If set to true , then the cumulative mass is recorded. The default is false , such that the mass for each period is recorded."
-        },
-        {
-          "name": "drawpoint",
-          "syntax": "drawpoint <s>",
-          "description": "If this keyword is not given, the default is the sum of the mass for all drawpoints."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Specify a name for the table."
-        }
-      ],
-      "examples": []
-    }
-  },
   "notes": [
     "`name` is required: without it the command fails with `MASSFLOW DRAWPOINT DUMP-SCHEDULE: Table not be created`.",
     "On MassFlow 9.7.47 this creates the named table but leaves it EMPTY. Tried on a model computed to day 50, with and without `drawpoint`, with and without `cumulative on`: `table list` reports 0 entries every time. Use `massflow record` for a mass-per-period table that does fill."
-  ]
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow drawpoint dump-drawperiod",
+  "syntax": "massflow drawpoint dump-drawperiod name <s> [keyword]",
+  "keywords": [
+    {
+      "name": "cumulative",
+      "syntax": "cumulative <b>",
+      "description": "If set to true , then the cumulative mass is recorded. The default is false , such that the mass for each period is recorded."
+    },
+    {
+      "name": "drawpoint",
+      "syntax": "drawpoint <s>",
+      "description": "If this keyword is not given, the default is the sum of the mass for all drawpoints."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Specify a name for the table."
+    }
+  ],
+  "examples": []
 }

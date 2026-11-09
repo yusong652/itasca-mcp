@@ -9,106 +9,51 @@
     "available": false,
     "workaround": "itasca.command('contact cmat apply ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "notes": [
-    "WARNING: This command completely replaces the contact model - all previous model data is LOST",
-    "For non-destructive property updates, use 'contact property' or 'contact method' instead",
-    "The CMAT entries are evaluated in order to determine which model/properties to apply",
-    "If no CMAT entry matches a contact, the default CMAT entry is used",
-    "Mechanical contacts are targeted by default; use 'thermal' keyword for thermal contacts",
-    "Commonly used after modifying CMAT entries to update existing contacts",
-    "Range specification is optional - omit to apply to all contacts",
-    "Related commands: contact cmat add, contact cmat default, contact property, contact method"
-  ],
-  "versions": {
-    "7.0": {
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact cmat apply",
+  "syntax": {
+    "6.0": "contact cmat [<sprocess>] apply [range]",
+    "7.0": "contact cmat apply [keyword] [range]",
+    "9.0": "contact cmat apply [keyword] [range]"
+  },
+  "keywords": [],
+  "examples": [
+    {
       "command": "contact cmat apply",
-      "syntax": "contact cmat apply [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat apply",
-          "description": "Apply CMAT to all mechanical contacts in the model"
-        },
-        {
-          "command": "contact cmat apply range group 'glass' matches 2",
-          "description": "Apply CMAT to contacts in group 'glass' with matches count of 2"
-        },
-        {
-          "command": "contact cmat apply range contact type 'ball-ball'",
-          "description": "Apply CMAT to all ball-ball contacts"
-        },
-        {
-          "command": "contact cmat apply thermal range group 'heated'",
-          "description": "Apply CMAT to thermal contacts in 'heated' group"
-        },
-        {
-          "command": "contact cmat apply range model linear",
-          "description": "Reapply CMAT to all contacts currently using linear model"
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+      "description": "Apply CMAT to all mechanical contacts in the model"
     },
-    "6.0": {
-      "command": "contact cmat apply",
-      "syntax": "contact cmat [<sprocess>] apply [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat apply",
-          "description": "Apply CMAT to all mechanical contacts in the model"
-        },
-        {
-          "command": "contact cmat apply range group 'glass' matches 2",
-          "description": "Apply CMAT to contacts in group 'glass' with matches count of 2"
-        },
-        {
-          "command": "contact cmat apply range contact type 'ball-ball'",
-          "description": "Apply CMAT to all ball-ball contacts"
-        },
-        {
-          "command": "contact cmat apply thermal range group 'heated'",
-          "description": "Apply CMAT to thermal contacts in 'heated' group"
-        },
-        {
-          "command": "contact cmat apply range model linear",
-          "description": "Reapply CMAT to all contacts currently using linear model"
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact cmat apply range group 'glass' matches 2",
+      "description": "Apply CMAT to contacts in group 'glass' with matches count of 2"
     },
-    "9.0": {
-      "command": "contact cmat apply",
-      "syntax": "contact cmat apply [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat apply",
-          "description": "Apply CMAT to all mechanical contacts in the model"
-        },
-        {
-          "command": "contact cmat apply range group 'glass' matches 2",
-          "description": "Apply CMAT to contacts in group 'glass' with matches count of 2"
-        },
-        {
-          "command": "contact cmat apply range contact type 'ball-ball'",
-          "description": "Apply CMAT to all ball-ball contacts"
-        },
-        {
-          "command": "contact cmat apply thermal range group 'heated'",
-          "description": "Apply CMAT to thermal contacts in 'heated' group"
-        },
-        {
-          "command": "contact cmat apply range model linear",
-          "description": "Reapply CMAT to all contacts currently using linear model"
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact cmat apply range contact type 'ball-ball'",
+      "description": "Apply CMAT to all ball-ball contacts"
+    },
+    {
+      "command": "contact cmat apply thermal range group 'heated'",
+      "description": "Apply CMAT to thermal contacts in 'heated' group"
+    },
+    {
+      "command": "contact cmat apply range model linear",
+      "description": "Reapply CMAT to all contacts currently using linear model"
     }
-  }
+  ]
 }

@@ -8,116 +8,81 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "model fluid",
-      "syntax": "model fluid keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The fluid process is on , by default, when the model configure fluid command is given. Specify active off to suppress fluid calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display fluid calculation-mode information."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated fluid time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "slave",
-          "syntax": "slave <b>",
-          "description": "Specify that fluid mode is to be considered a slave, and cycled to equilibrium after each master step has been taken."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specify the maximum number of steps the fluid process will take when solving with slave on ."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model fluid",
+  "syntax": {
+    "6.0": "model fluid keyword",
+    "7.0": "model fluid [<b>] keyword",
+    "9.0": "model fluid [<b>] keyword"
+  },
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "The fluid process is on , by default, when the model configure fluid command is given. Specify active off to suppress fluid calculations."
     },
-    "7.0": {
-      "command": "model fluid",
-      "syntax": "model fluid [<b>] keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The fluid process is on , by default, when the model configure fluid command is given. Specify active off to suppress fluid calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display fluid calculation-mode information."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated fluid time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "slave",
-          "syntax": "slave <b>",
-          "description": "Specify that fluid mode is to be considered a slave, and cycled to equilibrium after each master step has been taken."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specify the maximum number of steps the fluid process will take when solving with slave on ."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0.; update <i>: Set the number of cycles between timestep calculation in 3DEC . By default, i = 1 (i.e., the timestep is updated every cycle). This value is not used in FLAC3D fluid timestep calculations."
-        }
-      ]
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "Display fluid calculation-mode information."
     },
-    "9.0": {
-      "command": "model fluid",
-      "syntax": "model fluid [<b>] keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "The fluid process is on , by default, when the model configure fluid command is given. Specify active off to suppress fluid calculations."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display fluid calculation-mode information."
-        },
-        {
-          "name": "time-total",
-          "syntax": "time-total <f>",
-          "description": "f is the accumulated fluid time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
-        },
-        {
-          "name": "follower",
-          "syntax": "follower <b>",
-          "description": "Specify that fluid mode is to be considered a follower, and cycled to equilibrium after each leader step has been taken."
-        },
-        {
-          "name": "substep",
-          "syntax": "substep <i>",
-          "description": "Specify the maximum number of steps the fluid process will take when solving with follower on ."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
-          "description": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0.; update <i>: Set the number of cycles between timestep calculation in 3DEC . By default, i = 1 (i.e., the timestep is updated every cycle). This value is not used in FLAC3D fluid timestep calculations."
-        }
-      ],
-      "examples": []
+    {
+      "name": "time-total",
+      "syntax": "time-total <f>",
+      "description": "f is the accumulated fluid time for the model. This can be reset to any value, and will continue to be accumulated during cycling after that."
+    },
+    {
+      "name": "follower",
+      "syntax": "follower <b>",
+      "description": "Specify that fluid mode is to be considered a follower, and cycled to equilibrium after each leader step has been taken.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "slave",
+      "syntax": "slave <b>",
+      "description": "Specify that fluid mode is to be considered a slave, and cycled to equilibrium after each master step has been taken.",
+      "availability": {
+        "versions": [
+          "6.0",
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "substep",
+      "syntax": "substep <i>",
+      "description": {
+        "6.0": "Specify the maximum number of steps the fluid process will take when solving with slave on .",
+        "7.0": "Specify the maximum number of steps the fluid process will take when solving with slave on .",
+        "9.0": "Specify the maximum number of steps the fluid process will take when solving with follower on ."
+      }
+    },
+    {
+      "name": "timestep",
+      "syntax": {
+        "6.0": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f>}",
+        "7.0": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}",
+        "9.0": "timestep {automatic | fix <f> | increment <f> | maximum <f> | safety-factor <f> | update <i>}"
+      },
+      "description": {
+        "6.0": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0.",
+        "7.0": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0.; update <i>: Set the number of cycles between timestep calculation in 3DEC . By default, i = 1 (i.e., the timestep is updated every cycle). This value is not used in FLAC3D fluid timestep calculations.",
+        "9.0": "Options: automatic: The stable timestep is calculated automatically. This is the default setting.; fix <f>: Set the timestep to be the fixed value f . All timestep calculations are skipped. Setting a value greater than the calculated critical timestep will result in an error.; increment <f>: Set the incremental amount that the timestep is allowed to increase from one cycle to the next in auto mode. By default, f = 1.05. The timestep can decrease by any amount to ensure stability.; maximum <f>: Set the maximum allowed timestep. By default, there is no bound to the maximum timestep.; safety-factor <f>: Set the timestep safety factor, or the factor that is multiplied by the stable timestep calculated when auto mode. By default, f = 1.0.; update <i>: Set the number of cycles between timestep calculation in 3DEC . By default, i = 1 (i.e., the timestep is updated every cycle). This value is not used in FLAC3D fluid timestep calculations."
+      }
     }
+  ],
+  "examples": {
+    "6.0": [],
+    "9.0": []
   }
 }

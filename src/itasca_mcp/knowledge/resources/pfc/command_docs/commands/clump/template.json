@@ -6,277 +6,128 @@
     "bubblepack"
   ],
   "description": "Operate on a single clump template. A clump template is a reduced version of a clump composed of pebbles. Additionally, a clump template may hold a surface description that can be used for the calculation of inertial parameters and clump visualization. Clump templates can be created, deleted, imported, and exported. Clump templates are not model components; instead, they may be used to create clumps using the clump replicate, clump generate, or clump distribute commands. Clumps that refer to clump templates may be visualized via their surface descriptions.",
-  "notes": [
-    "Clump templates are NOT model components - they are used to create clumps via replicate/generate/distribute commands",
-    "Clump templates are assumed to have unit density - inertia must reflect this",
-    "Templates can hold surface descriptions for inertial calculation and visualization",
-    "Clump and pebbles are translated so centroid coincides with origin; original position retained for replication",
-    "Bubble Pack algorithm: Taghavi (2011) - automatic pebble generation from surface mesh",
-    "Three ways to specify inertial attributes: 1) direct (volume+inertia+position), 2) calculate from pebbles, 3) calculate from surface"
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00 subcommand enum: create delete export import; the volume/name keywords belong to the create sub-grammar."
+    ],
+    "7.0": [
+      "Live 7.00 subcommand probes: 'clump template create' and 'clump template delete' parse; 'make' and 'list' are rejected. The volume/name/skip-errors keywords belong to the create sub-grammar.",
+      "Hang: 'clump template import' of an exported template hung the PFC2D 7.0 console in 2 of 2 runs; PFC3D 7.0 and both 9.8 builds imported it."
+    ],
+    "9.0": [
+      "Live 9.7 subcommand probes: 'clump template create' and 'clump template delete' parse; 'make' and 'list' are rejected. The volume/name/skip-errors keywords belong to the create sub-grammar."
+    ]
+  },
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('clump template ...') - Python SDK does not provide direct clump template management"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump template",
-      "syntax": "clump template keyword ...",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create {bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | calculate-pebbles <ftol> | calculate-surface | from-clump <i> [{delete <b>}] | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> | name <s> | pebbles <inumber> <frad> <vpos> ... | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> | volume <fvol>} ...",
-          "description": "Create a clump template. The inertial attributes must be specified upon creation. One can either specify them directly (i.e., specify the volume, inertia, and position) or specify their calculation from the pebble distribution (with the pebcalculate keyword) or from the surface description (with the surfcalculate keyword). The pebbles may be specified directly or automatically via the Bubble Pack algorithm of Taghavi (2011). The clump, and all pebbles, are translated so that the clump centroid coincides with the origin. The original clump position is also retained and can be used for replication. Note Clump templates are assumed to have unit density, and the inertia must reflect this condition. Options: bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; calculate-pebbles <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; calculate-surface: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; from-clump <i>[{delete <b>}]: Create the clump template from the clump with ID i . By default the clump is retained. Options: delete <b>: If b is true , the clump is deleted after the template is deleted. By default the clump is retained.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>...: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The \\(x\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The \\(y\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>: The \\(z\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s> {name <s>}",
-          "description": "Delete clump template s with the specified names. If a name is not specified, then all clump templates are deleted. Any clumps referring to the deleted clump template(s) no longer refer to any clump template. Options: name <s>: Name of clump template to delete."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s> [{filename <s> | skip-errors} ...]",
-          "description": "Export the clump template s to file. The default file name is {“clump.p2clp” in 2D; “clump.p3clp” in 3D}. If nothrow is specified, then a file will be overwritten if it exists, otherwise an error is thrown. This is a binary file that can be reloaded with the import keyword. Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s> {name <s>} ...",
-          "description": "Import clump template from file with name s . If name is not specified, then the clump name is set to the file name without the file extension. If a clump template with of the specified name exists, then an error is thrown. Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump template create name 'three_peb' calculate-pebbles pebbles 3 0.25 (-0.55,0.0,0.6) 0.25 (-0.75,0.0,0.15) 0.25 (-0.75,0.0,0.4)",
-          "description": "Create template with 3 pebbles, calculate inertial attributes from pebble distribution (1% tolerance)"
-        },
-        {
-          "command": "clump template create name 'rock' geometry 'rock_surface' calculate-surface",
-          "description": "Create template from geometry set 'rock_surface', calculate inertial attributes from surface"
-        },
-        {
-          "command": "clump template create name 'bubble_rock' geometry 'rock_geom' bubblepack distance 45 ratio 0.3 radfactor 1.1",
-          "description": "Create template using Bubble Pack algorithm with custom parameters (smoothness=45°, size ratio=0.3)"
-        },
-        {
-          "command": "clump template create from-clump 100 name 'from_clump100' delete true",
-          "description": "Create template from clump ID 100, delete clump after template creation"
-        },
-        {
-          "command": "clump template delete name 'old_template'",
-          "description": "Delete template named 'old_template'"
-        },
-        {
-          "command": "clump template export 'rock' filename 'rock_template.p3clp' skip-errors",
-          "description": "Export template 'rock' to file, overwrite if exists"
-        },
-        {
-          "command": "clump template import 'rock_template.p3clp' name 'imported_rock'",
-          "description": "Import template from file, name it 'imported_rock'"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "clumptemplate.png",
-            "doc_path": "_images/clumptemplate.png"
-          },
-          {
-            "name": "clumptemplate2.png",
-            "doc_path": "_images/clumptemplate2.png"
-          },
-          {
-            "name": "clumptemplate3.png",
-            "doc_path": "_images/clumptemplate3.png"
-          },
-          {
-            "name": "clumptemplate4.png",
-            "doc_path": "_images/clumptemplate4.png"
-          },
-          {
-            "name": "clumptemplate5.png",
-            "doc_path": "_images/clumptemplate5.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump template",
+  "syntax": "clump template keyword ...",
+  "keywords": [
+    {
+      "name": "create",
+      "syntax": {
+        "6.0": "create {bubblepack {distance <fdistance> | pebbles <i> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> | name <s> | pebbles <inumber> <frad> <vpos> | pebcalculate <ftol> | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> | surfcalculate | volume <fvol>} ...",
+        "7.0": "create {bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | calculate-pebbles <ftol> | calculate-surface | from-clump <i> [{delete <b>}] | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> | name <s> | pebbles <inumber> <frad> <vpos> ... | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> | volume <fvol>} ...",
+        "9.0": "create {bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | calculate-pebbles <ftol> | calculate-surface | from-clump <i> [{delete <b>}] | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> only 1 component in 2D | name <s> | pebbles <inumber> <frad> <vpos> ... | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> 3D ONLY | volume <fvol>} ..."
       },
-      "notes": [
-        "Live 7.00 subcommand probes: 'clump template create' and 'clump template delete' parse; 'make' and 'list' are rejected. The volume/name/skip-errors keywords belong to the create sub-grammar.",
-        "Hang: 'clump template import' of an exported template hung the PFC2D 7.0 console in 2 of 2 runs; PFC3D 7.0 and both 9.8 builds imported it."
-      ]
+      "description": {
+        "6.0": "Options: bubblepack {distance <fdistance> | pebbles <i> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; pebbles <i>: Set the maximum number of pebbles created to i . By default no maximum is enforced.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; pebcalculate <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The x -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The y -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>: The z -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; surfcalculate: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords.",
+        "7.0": "Create a clump template. The inertial attributes must be specified upon creation. One can either specify them directly (i.e., specify the volume, inertia, and position) or specify their calculation from the pebble distribution (with the pebcalculate keyword) or from the surface description (with the surfcalculate keyword). The pebbles may be specified directly or automatically via the Bubble Pack algorithm of Taghavi (2011). The clump, and all pebbles, are translated so that the clump centroid coincides with the origin. The original clump position is also retained and can be used for replication. Note Clump templates are assumed to have unit density, and the inertia must reflect this condition. Options: bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; calculate-pebbles <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; calculate-surface: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; from-clump <i>[{delete <b>}]: Create the clump template from the clump with ID i . By default the clump is retained. Options: delete <b>: If b is true , the clump is deleted after the template is deleted. By default the clump is retained.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>...: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The \\(x\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The \\(y\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>: The \\(z\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords.",
+        "9.0": "Create a clump template. The inertial attributes must be specified upon creation. One can either specify them directly (i.e., specify the volume, inertia, and position) or specify their calculation from the pebble distribution (with the pebcalculate keyword) or from the surface description (with the surfcalculate keyword). The pebbles may be specified directly or automatically via the Bubble Pack algorithm of Taghavi (2011). The clump, and all pebbles, are translated so that the clump centroid coincides with the origin. The original clump position is also retained and can be used for replication. Note Clump templates are assumed to have unit density, and the inertia must reflect this condition. Options: bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; calculate-pebbles <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; calculate-surface: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; from-clump <i>[{delete <b>}]: Create the clump template from the clump with ID i . By default the clump is retained. Options: delete <b>: If b is true , the clump is deleted after the template is deleted. By default the clump is retained.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>only 1 component in 2D: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>...: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The \\(x\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The \\(y\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>3D ONLY: The \\(z\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords."
+      }
     },
-    "6.0": {
-      "command": "clump template",
-      "syntax": "clump template keyword ...",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create {bubblepack {distance <fdistance> | pebbles <i> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> | name <s> | pebbles <inumber> <frad> <vpos> | pebcalculate <ftol> | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> | surfcalculate | volume <fvol>} ...",
-          "description": "Options: bubblepack {distance <fdistance> | pebbles <i> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; pebbles <i>: Set the maximum number of pebbles created to i . By default no maximum is enforced.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; pebcalculate <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The x -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The y -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>: The z -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; surfcalculate: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s> {name <s>}",
-          "description": "Options: name <s>: Name of clump template to delete."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s> [{filename <s> | skip-errors} ...]",
-          "description": "Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s> {name <s>} ...",
-          "description": "Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump template create name 'three_peb' calculate-pebbles pebbles 3 0.25 (-0.55,0.0,0.6) 0.25 (-0.75,0.0,0.15) 0.25 (-0.75,0.0,0.4)",
-          "description": "Create template with 3 pebbles, calculate inertial attributes from pebble distribution (1% tolerance)"
-        },
-        {
-          "command": "clump template create name 'rock' geometry 'rock_surface' calculate-surface",
-          "description": "Create template from geometry set 'rock_surface', calculate inertial attributes from surface"
-        },
-        {
-          "command": "clump template create name 'bubble_rock' geometry 'rock_geom' bubblepack distance 45 ratio 0.3 radfactor 1.1",
-          "description": "Create template using Bubble Pack algorithm with custom parameters (smoothness=45°, size ratio=0.3)"
-        },
-        {
-          "command": "clump template create from-clump 100 name 'from_clump100' delete true",
-          "description": "Create template from clump ID 100, delete clump after template creation"
-        },
-        {
-          "command": "clump template delete name 'old_template'",
-          "description": "Delete template named 'old_template'"
-        },
-        {
-          "command": "clump template export 'rock' filename 'rock_template.p3clp' skip-errors",
-          "description": "Export template 'rock' to file, overwrite if exists"
-        },
-        {
-          "command": "clump template import 'rock_template.p3clp' name 'imported_rock'",
-          "description": "Import template from file, name it 'imported_rock'"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "clumptemplate.png",
-            "doc_path": "_images/clumptemplate.png"
-          },
-          {
-            "name": "clumptemplate2.png",
-            "doc_path": "_images/clumptemplate2.png"
-          },
-          {
-            "name": "clumptemplate3.png",
-            "doc_path": "_images/clumptemplate3.png"
-          },
-          {
-            "name": "clumptemplate4.png",
-            "doc_path": "_images/clumptemplate4.png"
-          },
-          {
-            "name": "clumptemplate5.png",
-            "doc_path": "_images/clumptemplate5.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      },
-      "notes": [
-        "Live 6.00 subcommand enum: create delete export import; the volume/name keywords belong to the create sub-grammar."
-      ]
+    {
+      "name": "delete",
+      "syntax": "delete <s> {name <s>}",
+      "description": {
+        "6.0": "Options: name <s>: Name of clump template to delete.",
+        "7.0": "Delete clump template s with the specified names. If a name is not specified, then all clump templates are deleted. Any clumps referring to the deleted clump template(s) no longer refer to any clump template. Options: name <s>: Name of clump template to delete.",
+        "9.0": "Delete clump template s with the specified names. If a name is not specified, then all clump templates are deleted. Any clumps referring to the deleted clump template(s) no longer refer to any clump template. Options: name <s>: Name of clump template to delete."
+      }
     },
-    "9.0": {
-      "command": "clump template",
-      "syntax": "clump template keyword ...",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create {bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ... | calculate-pebbles <ftol> | calculate-surface | from-clump <i> [{delete <b>}] | geometry <s> | inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> only 1 component in 2D | name <s> | pebbles <inumber> <frad> <vpos> ... | position <vcpos> | position-x <fposx> | position-y <fposy> | position-z <fposz> 3D ONLY | volume <fvol>} ...",
-          "description": "Create a clump template. The inertial attributes must be specified upon creation. One can either specify them directly (i.e., specify the volume, inertia, and position) or specify their calculation from the pebble distribution (with the pebcalculate keyword) or from the surface description (with the surfcalculate keyword). The pebbles may be specified directly or automatically via the Bubble Pack algorithm of Taghavi (2011). The clump, and all pebbles, are translated so that the clump centroid coincides with the origin. The original clump position is also retained and can be used for replication. Note Clump templates are assumed to have unit density, and the inertia must reflect this condition. Options: bubblepack {distance <fdistance> | ratio <fratio> | radfactor <frad> | refinenum <i>} ...: Specify the creation of the clump template pebbles via the Bubble Pack algorithm of Taghavi (2011). A {linear faceted in 2D; triangulated surface in 3D} must be specified with the geometry keyword and no pebbles can be directly specified. The surface mesh is refined to provide an optimal facet size (see the refinenum keyword for further details) and an approximation of the medial axis is calculated. The medial axis is represented as a set of {circles in 2D; spheres in 3D} that are nearly tangent with the surface. Prospective pebbles are those {circles in 2D; spheres in 3D} whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0). The remaining pebbles are filtered based on their fratio that is the ratio of the smallest to largest pebble in the clump (0 < fratio < 1) and the distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The algorithm begins by including the largest sphere. Spheres may be included as pebbles if the ratio of their radii to the largest sphere radii is above fratio . The parameter fdistance describes the “distance” between overlapping pebbles where fdistance = 0 for spheres that just touch at one point (i.e., do not overlap) and fdistance = 180 for spheres that just touch at one point where one sphere is contained within the other (i.e, completely overlap). Thus larger values of fdistance result in more pebbles and a smoother surface representation. If the density of pebbles is not sufficient, one may use the refinenum keyword. The bubblepack keyword cannot be given with the pebbles keyword. Options: distance <fdistance>: The distance fdistance that corresponds to an angular measure of smoothness in degrees 0 < fdistance < 180 as defined in Taghavi (2011). The greater fdistance , the smoother the pebble distribution.; ratio <fratio>: Ratio of the smallest to largest pebble kept in the clump template with 0 < fratio < 1.; radfactor <frad>: Radius factor used for consideration as a pebble. Prospective pebbles are those whose closest distance from the pebble center to the surface is greater than the pebble radius divided by frad ( frad > 1.0 and frad = 1.05 by default). This parameter controls the degree to which the pebbles adhere to the surface with smaller factors resulting in less pebble overlap with the surface.; refinenum <i>: Specify the maximum number of {linear in 2D; triangular in 3D} facets used when automatically refining the surface mesh. By default, i = {5,000 in 2D; 10,000 in 3D}. Thus, if the bubblepack results in pebbles that are not sufficiently dense for the given set of parameters, then one can force the level of refinement to be increased with this keyword. Note Large levels of refinement may require significant computational time. Use with caution.; calculate-pebbles <ftol>: This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration, the “final” size of the clump is extrapolated and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated sizes are within the desired tolerance. By default, the percentage difference ftol = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump. This command cannot be given with the inertia , position , surfcalculate , volume , x , y , or z keywords.; calculate-surface: Calculate the inertial attributes from the surface description assuming uniform density. The algorithm involves looping through all facets, computing the covariance of the {triangle in 2D; tetrahedron in 3D} formed by the facet vertices and the origin, adding this covariance to an accumulator, and converting the covariance matrix to an inertia tensor. In 2D, the polar moment of inertia is used, which is the trace of the inertia tensor. See http://number-none.com/blow/inertia/index.html for a thorough description of the algorithm. This keyword cannot be given with the inertia , pebcalculate , position , volume , x , y , or z keywords.; from-clump <i>[{delete <b>}]: Create the clump template from the clump with ID i . By default the clump is retained. Options: delete <b>: If b is true , the clump is deleted after the template is deleted. By default the clump is retained.; geometry <s>: Name of geometry set to be used as the surface descriptor of the clump. The surface description must be a closed, orientable, and manifold surface composed of {line segements in 2D; triangular facets in 3D}.; inertia <fe11><fe22><fe33><fe12><fe13><fe23>only 1 component in 2D: Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume and this keyword cannot be specified with the pebcalculate or surfcalculate keywords.; name <s>: Given name of the clump template. If no name is specified and no geometry set is specified, then the name clumpTemplateXX is assigned, where XX is the clump template ID. If no name is specified and a geometry set is specified, then s is the geometry set name.; pebbles <inumber><frad><vpos>...: Number of pebbles in the clump, inumber , followed by inumber sets of pebble geometric parameters. Each set is the pebble radius ( frad ) and position ( fposx , fposy and fpoz ). Cannot be given with the bubblepack keyword.; position <vcpos>: Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-x <fposx>: The \\(x\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-y <fposy>: The \\(y\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; position-z <fposz>3D ONLY: The \\(z\\) -component of the position that is 0 by default. This keyword cannot be given with the pebcalculate or surfcalculate keywords.; volume <fvol>: Set the {volume per unit thickness in 2D; volume in 3D} to fvol . One must also specify the inertia tensor as well. This keyword cannot be given with the pebcalculate or surfcalculate keywords."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <s> {name <s>}",
-          "description": "Delete clump template s with the specified names. If a name is not specified, then all clump templates are deleted. Any clumps referring to the deleted clump template(s) no longer refer to any clump template. Options: name <s>: Name of clump template to delete."
-        },
-        {
-          "name": "export",
-          "syntax": "export <s> [{filename <s> | skip-errors} ...]",
-          "description": "Export the clump template s to file. The default file name is {“clump.p2clp” in 2D; “clump.p3clp” in 3D}. If nothrow is specified, then a file will be overwritten if it exists, otherwise an error is thrown. This is a binary file that can be reloaded with the import keyword. Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten."
-        },
-        {
-          "name": "import",
-          "syntax": "import <s> {name <s>} ...",
-          "description": "Import clump template from file with name s . If name is not specified, then the clump name is set to the file name without the file extension. If a clump template with of the specified name exists, then an error is thrown. Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump template create name 'three_peb' calculate-pebbles pebbles 3 0.25 (-0.55,0.0,0.6) 0.25 (-0.75,0.0,0.15) 0.25 (-0.75,0.0,0.4)",
-          "description": "Create template with 3 pebbles, calculate inertial attributes from pebble distribution (1% tolerance)"
-        },
-        {
-          "command": "clump template create name 'rock' geometry 'rock_surface' calculate-surface",
-          "description": "Create template from geometry set 'rock_surface', calculate inertial attributes from surface"
-        },
-        {
-          "command": "clump template create name 'bubble_rock' geometry 'rock_geom' bubblepack distance 45 ratio 0.3 radfactor 1.1",
-          "description": "Create template using Bubble Pack algorithm with custom parameters (smoothness=45°, size ratio=0.3)"
-        },
-        {
-          "command": "clump template create from-clump 100 name 'from_clump100' delete true",
-          "description": "Create template from clump ID 100, delete clump after template creation"
-        },
-        {
-          "command": "clump template delete name 'old_template'",
-          "description": "Delete template named 'old_template'"
-        },
-        {
-          "command": "clump template export 'rock' filename 'rock_template.p3clp' skip-errors",
-          "description": "Export template 'rock' to file, overwrite if exists"
-        },
-        {
-          "command": "clump template import 'rock_template.p3clp' name 'imported_rock'",
-          "description": "Import template from file, name it 'imported_rock'"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "clumptemplate.png",
-            "doc_path": "_images/clumptemplate.png"
-          },
-          {
-            "name": "clumptemplate2.png",
-            "doc_path": "_images/clumptemplate2.png"
-          },
-          {
-            "name": "clumptemplate3.png",
-            "doc_path": "_images/clumptemplate3.png"
-          },
-          {
-            "name": "clumptemplate4.png",
-            "doc_path": "_images/clumptemplate4.png"
-          },
-          {
-            "name": "clumptemplate5.png",
-            "doc_path": "_images/clumptemplate5.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
-      },
-      "notes": [
-        "Live 9.7 subcommand probes: 'clump template create' and 'clump template delete' parse; 'make' and 'list' are rejected. The volume/name/skip-errors keywords belong to the create sub-grammar."
-      ]
+    {
+      "name": "export",
+      "syntax": "export <s> [{filename <s> | skip-errors} ...]",
+      "description": {
+        "6.0": "Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten.",
+        "7.0": "Export the clump template s to file. The default file name is {“clump.p2clp” in 2D; “clump.p3clp” in 3D}. If nothrow is specified, then a file will be overwritten if it exists, otherwise an error is thrown. This is a binary file that can be reloaded with the import keyword. Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten.",
+        "9.0": "Export the clump template s to file. The default file name is {“clump.p2clp” in 2D; “clump.p3clp” in 3D}. If nothrow is specified, then a file will be overwritten if it exists, otherwise an error is thrown. This is a binary file that can be reloaded with the import keyword. Options: filename <s>: Clump template file name that is, by default, the name of the clump template appended with the extentsion {.p2clp in 2D; .p3clp in 3D}.; skip-errors: Indicate that if a previous file of the specified s exists, then it will be overwritten."
+      }
+    },
+    {
+      "name": "import",
+      "syntax": "import <s> {name <s>} ...",
+      "description": {
+        "6.0": "Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension.",
+        "7.0": "Import clump template from file with name s . If name is not specified, then the clump name is set to the file name without the file extension. If a clump template with of the specified name exists, then an error is thrown. Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension.",
+        "9.0": "Import clump template from file with name s . If name is not specified, then the clump name is set to the file name without the file extension. If a clump template with of the specified name exists, then an error is thrown. Options: name <s>: Clump template name. If not specified, then the clump name is set to the file name s without the file extension."
+      }
     }
+  ],
+  "examples": [
+    {
+      "command": "clump template create name 'three_peb' calculate-pebbles pebbles 3 0.25 (-0.55,0.0,0.6) 0.25 (-0.75,0.0,0.15) 0.25 (-0.75,0.0,0.4)",
+      "description": "Create template with 3 pebbles, calculate inertial attributes from pebble distribution (1% tolerance)"
+    },
+    {
+      "command": "clump template create name 'rock' geometry 'rock_surface' calculate-surface",
+      "description": "Create template from geometry set 'rock_surface', calculate inertial attributes from surface"
+    },
+    {
+      "command": "clump template create name 'bubble_rock' geometry 'rock_geom' bubblepack distance 45 ratio 0.3 radfactor 1.1",
+      "description": "Create template using Bubble Pack algorithm with custom parameters (smoothness=45°, size ratio=0.3)"
+    },
+    {
+      "command": "clump template create from-clump 100 name 'from_clump100' delete true",
+      "description": "Create template from clump ID 100, delete clump after template creation"
+    },
+    {
+      "command": "clump template delete name 'old_template'",
+      "description": "Delete template named 'old_template'"
+    },
+    {
+      "command": "clump template export 'rock' filename 'rock_template.p3clp' skip-errors",
+      "description": "Export template 'rock' to file, overwrite if exists"
+    },
+    {
+      "command": "clump template import 'rock_template.p3clp' name 'imported_rock'",
+      "description": "Import template from file, name it 'imported_rock'"
+    }
+  ],
+  "figure_reference": {
+    "figures": [
+      {
+        "name": "clumptemplate.png",
+        "doc_path": "_images/clumptemplate.png"
+      },
+      {
+        "name": "clumptemplate2.png",
+        "doc_path": "_images/clumptemplate2.png"
+      },
+      {
+        "name": "clumptemplate3.png",
+        "doc_path": "_images/clumptemplate3.png"
+      },
+      {
+        "name": "clumptemplate4.png",
+        "doc_path": "_images/clumptemplate4.png"
+      },
+      {
+        "name": "clumptemplate5.png",
+        "doc_path": "_images/clumptemplate5.png"
+      }
+    ],
+    "notes": [
+      "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    ]
   }
 }

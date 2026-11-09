@@ -5,52 +5,37 @@
     "group",
     "structure"
   ],
-  "description": "Assign all pile elements in the range to the group with the name s . Use of the group logic is described in Groups . Any element may only belong to one group in a given slot. Assigning an element to a new group in that slot will cause it to be removed from its current group assignment. The structure pile list group command lists the existing element group names. The groups can be visualized with the pile plot item.",
+  "description": {
+    "7.0": "Both the group and the slot can be encoded into the single string s. To do this, use the composition ‘slotname=groupname’, where the name to the left of the equals sign will be the slot, and the name to the right will be the group.",
+    "9.0": "Assign all pile elements in the range to the group with the name s . Use of the group logic is described in Groups . Any element may only belong to one group in a given slot. Assigning an element to a new group in that slot will cause it to be removed from its current group assignment. The structure pile list group command lists the existing element group names. The groups can be visualized with the pile plot item."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure pile group",
-      "syntax": "structure pile group <s> [keyword] [range]",
-      "description": "Both the group and the slot can be encoded into the single string s. To do this, use the composition ‘slotname=groupname’, where the name to the left of the equals sign will be the slot, and the name to the right will be the group.",
-      "keywords": [
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to slot s. If omitted, the group is assigned to the slot named Default."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "The specified group is removed from the specified slot. If no slot is specified, then the group will be removed from any and all slots it is in."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.group.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure pile group",
+  "syntax": "structure pile group <s> [keyword] [range]",
+  "keywords": [
+    {
+      "name": "slot",
+      "syntax": "slot <s>",
+      "description": {
+        "7.0": "Assign the group to slot s. If omitted, the group is assigned to the slot named Default.",
+        "9.0": "Assign the group to slot s . If omitted, the group is assigned to the slot named Default ."
       }
     },
-    "9.0": {
-      "command": "structure pile group",
-      "syntax": "structure pile group <s> [keyword] [range]",
-      "keywords": [
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to slot s . If omitted, the group is assigned to the slot named Default ."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "The specified group is removed from the specified slot. If no slot is specified, then the group will be removed from any and all slots it is in."
-        }
-      ]
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "The specified group is removed from the specified slot. If no slot is specified, then the group will be removed from any and all slots it is in."
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.group.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

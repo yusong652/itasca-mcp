@@ -9,234 +9,143 @@
     "available": false,
     "workaround": "itasca.command('contact cmat default ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "notes": [
-    "If 'type' keyword is NOT specified, ALL default slots are modified",
-    "If 'type' keyword IS specified, only that contact type's default slot is modified",
-    "Default slots are used when no specific CMAT entry matches a newly created contact",
-    "The default slot(s) will not be modified if the contact type(s) cannot use the specified model",
-    "Multiple properties can be set in a single command",
-    "The 'method' keyword registers methods that execute automatically at contact creation",
-    "Common method 'deformability' calculates stiffnesses from elastic modulus and stiffness ratio",
-    "Use 'mechanical' (default) or 'thermal' to specify contact type",
-    "Related commands: contact cmat add, contact cmat apply, contact cmat remove, contact model assign",
-    "Without the type keyword every default slot changes; with type only that contact type. The default entry is the fallback; add creates rules that are checked before it."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact cmat default",
-      "syntax": "contact cmat default [type <stype>] keyword ...",
-      "keywords": [
-        {
-          "name": "inheritance",
-          "syntax": "inheritance keyword <b> ...",
-          "description": "The inheritance flag for the contact model property is set to b . The property must support inheritance."
-        },
-        {
-          "name": "method",
-          "syntax": "method keyword ...",
-          "description": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation."
-        },
-        {
-          "name": "property",
-          "syntax": "property keyword [inheritance <b>] ...",
-          "description": "Specify the contact model property. If the optional inheritance is issued, then the property must support inheritance and a boolean must follow indicating its inheritance flag."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole | linearpbond | null | rrlinear | smoothjoint | softbond}",
-          "description": "Specify the default model. The default slot(s) will not be modified if the corresponding contact type(s) cannot use the specified contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "type",
-          "syntax": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock}",
-          "description": "Specify that this CMAT entry applies to contacts of the specified type. This can also be accomplished with the contact range element. Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Set default entry to linear model with specified stiffness and friction"
-        },
-        {
-          "command": "contact cmat default model linear prop dp_nratio 0.8 dp_mode 1",
-          "description": "Set default entry to linear model with damping properties (from BlenderBalls.dat)"
-        },
-        {
-          "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 dp_nratio 0.7 dp_sratio 0.7 dp_mode 1 rr_fric 0.3",
-          "description": "Set default to rrlinear model with deformability method and rolling resistance (from Rolling Resistance example)"
-        },
-        {
-          "command": "contact cmat default model linearpbond method deformability emod 1e10 kratio 1.0",
-          "description": "Set default to linearpbond model with deformability method (from PunchIndentation.dat)"
-        },
-        {
-          "command": "contact cmat default type ball-ball model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.3",
-          "description": "Set ball-ball default to Hertz model with specific properties"
-        },
-        {
-          "command": "contact cmat default type ball-facet model linear property kn 1e8 ks 5e7",
-          "description": "Set ball-facet default separately with linear model"
-        },
-        {
-          "command": "contact cmat default mechanical model linear property kn 1e8",
-          "description": "Set mechanical contact default (all types) to linear model"
-        },
-        {
-          "command": "contact cmat default thermal property th_kn 100",
-          "description": "Set thermal contact default properties"
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names follow the 'model' keyword and pair types follow the 'type' keyword (live 7.00 type enum: ball-ball ball-facet ball-pebble ball-rblock facet-facet pebble-facet pebble-pebble pebble-rblock rblock-facet rblock-rblock vertex-facet)."
-      ]
+  "notes": {
+    "6.0": [
+      "If 'type' keyword is NOT specified, ALL default slots are modified",
+      "If 'type' keyword IS specified, only that contact type's default slot is modified",
+      "Default slots are used when no specific CMAT entry matches a newly created contact",
+      "The default slot(s) will not be modified if the contact type(s) cannot use the specified model",
+      "Multiple properties can be set in a single command",
+      "The 'method' keyword registers methods that execute automatically at contact creation",
+      "Common method 'deformability' calculates stiffnesses from elastic modulus and stiffness ratio",
+      "Use 'mechanical' (default) or 'thermal' to specify contact type",
+      "Related commands: contact cmat add, contact cmat apply, contact cmat remove, contact model assign",
+      "Without the type keyword every default slot changes; with type only that contact type. The default entry is the fallback; add creates rules that are checked before it."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. Model names follow the 'model' keyword and pair types follow the 'type' keyword (live 7.00 type enum: ball-ball ball-facet ball-pebble ball-rblock facet-facet pebble-facet pebble-pebble pebble-rblock rblock-facet rblock-rblock vertex-facet)."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. Model names follow the 'model' keyword and pair types follow the 'type' keyword (live 9.7 type enum: MPMPoint-facet ball-MPMPoint ball-ball ball-facet ball-pebble ball-rblock facet-facet pebble-facet pebble-pebble pebble-rblock rblock-facet rblock-rblock vertex-facet)."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact cmat default",
+  "syntax": {
+    "6.0": "contact cmat [<sprocess>] default [type <stype>] keyword ...",
+    "7.0": "contact cmat default [type <stype>] keyword ...",
+    "9.0": "contact cmat default [type <stype>] keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "inheritance",
+      "syntax": {
+        "6.0": "inheritance <sprop> <b> ...",
+        "7.0": "inheritance keyword <b> ...",
+        "9.0": "inheritance keyword <b> ..."
+      },
+      "description": {
+        "6.0": "The inheritance flag for the contact model property sprop is set to b . The property sprop must support inheritance.",
+        "7.0": "The inheritance flag for the contact model property is set to b . The property must support inheritance.",
+        "9.0": "The inheritance flag for the contact model property is set to b . The property must support inheritance."
+      }
     },
-    "6.0": {
-      "command": "contact cmat default",
-      "syntax": "contact cmat [<sprocess>] default [type <stype>] keyword ...",
-      "keywords": [
-        {
-          "name": "inheritance",
-          "syntax": "inheritance <sprop> <b> ...",
-          "description": "The inheritance flag for the contact model property sprop is set to b . The property sprop must support inheritance."
-        },
-        {
-          "name": "method",
-          "syntax": "method <sm> [<sa> a]",
-          "description": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation. The list of available methods is contact model specific. Visit the documentation of the desired contact model for details."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | burger | flatjoint | hertz | hysteretic | linear | linearcbond | linearpbond | null | rrlinear | smoothjoint | softbond}",
-          "description": "Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; burger: Specify the Burger’s Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model."
-        },
-        {
-          "name": "property",
-          "syntax": "property <sprop> a[inheritance <b>] ...",
-          "description": "The contact model property sprop is set to a . The list of available properties is contact model specific. Visit the documentation of the desired contact model for details. If the optional inheritance is issued, then the property sprop must support inheritance and a boolean must follow indicating its inheritance flag."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        },
-        {
-          "name": "type",
-          "syntax": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock}",
-          "description": "Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Set default entry to linear model with specified stiffness and friction"
-        },
-        {
-          "command": "contact cmat default model linear prop dp_nratio 0.8 dp_mode 1",
-          "description": "Set default entry to linear model with damping properties (from BlenderBalls.dat)"
-        },
-        {
-          "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 dp_nratio 0.7 dp_sratio 0.7 dp_mode 1 rr_fric 0.3",
-          "description": "Set default to rrlinear model with deformability method and rolling resistance (from Rolling Resistance example)"
-        },
-        {
-          "command": "contact cmat default model linearpbond method deformability emod 1e10 kratio 1.0",
-          "description": "Set default to linearpbond model with deformability method (from PunchIndentation.dat)"
-        },
-        {
-          "command": "contact cmat default type ball-ball model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.3",
-          "description": "Set ball-ball default to Hertz model with specific properties"
-        },
-        {
-          "command": "contact cmat default type ball-facet model linear property kn 1e8 ks 5e7",
-          "description": "Set ball-facet default separately with linear model"
-        },
-        {
-          "command": "contact cmat default mechanical model linear property kn 1e8",
-          "description": "Set mechanical contact default (all types) to linear model"
-        },
-        {
-          "command": "contact cmat default thermal property th_kn 100",
-          "description": "Set thermal contact default properties"
-        }
-      ]
+    {
+      "name": "method",
+      "syntax": {
+        "6.0": "method <sm> [<sa> a]",
+        "7.0": "method keyword ...",
+        "9.0": "method keyword ..."
+      },
+      "description": {
+        "6.0": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation. The list of available methods is contact model specific. Visit the documentation of the desired contact model for details.",
+        "7.0": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation.",
+        "9.0": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation."
+      }
     },
-    "9.0": {
-      "command": "contact cmat default",
-      "syntax": "contact cmat default [type <stype>] keyword ...",
-      "keywords": [
-        {
-          "name": "inheritance",
-          "syntax": "inheritance keyword <b> ...",
-          "description": "The inheritance flag for the contact model property is set to b . The property must support inheritance."
-        },
-        {
-          "name": "method",
-          "syntax": "method keyword ...",
-          "description": "The contact model method sm , along with its specific list of pairs of argument names and values ( sa , a ) (if applicable), is registered with the selected default slot(s) and will be invoked at contact creation."
-        },
-        {
-          "name": "property",
-          "syntax": "property keyword [inheritance <b>] ...",
-          "description": "Specify the contact model property. If the optional inheritance is issued, then the property must support inheritance and a boolean must follow indicating its inheritance flag."
-        },
-        {
-          "name": "proximity",
-          "syntax": "proximity <fd>",
-          "description": "The detection distance is set to fd ."
-        },
-        {
-          "name": "model",
-          "syntax": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole 3D ONLY | linearpbond | null | rrlinear | smoothjoint | softbond | springnetwork | subspringnetwork}",
-          "description": "Specify the default model. The default slot(s) will not be modified if the corresponding contact type(s) cannot use the specified contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole 3D ONLY: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.; springnetwork: Specify the Spring Network Model contact model.; subspringnetwork: Specify the Subspring Network Model contact model."
-        },
-        {
-          "name": "type",
-          "syntax": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock | mpmpoint-facet MPoint ONLY}",
-          "description": "Specify that this CMAT entry applies to contacts of the specified type (see this Figure ). This can also be accomplished with the contact range element. Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry.; mpmpoint-facet MPoint ONLY: Specify that this is the MPMPoint-facet default CMAT entry."
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5",
-          "description": "Set default entry to linear model with specified stiffness and friction"
-        },
-        {
-          "command": "contact cmat default model linear prop dp_nratio 0.8 dp_mode 1",
-          "description": "Set default entry to linear model with damping properties (from BlenderBalls.dat)"
-        },
-        {
-          "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 dp_nratio 0.7 dp_sratio 0.7 dp_mode 1 rr_fric 0.3",
-          "description": "Set default to rrlinear model with deformability method and rolling resistance (from Rolling Resistance example)"
-        },
-        {
-          "command": "contact cmat default model linearpbond method deformability emod 1e10 kratio 1.0",
-          "description": "Set default to linearpbond model with deformability method (from PunchIndentation.dat)"
-        },
-        {
-          "command": "contact cmat default type ball-ball model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.3",
-          "description": "Set ball-ball default to Hertz model with specific properties"
-        },
-        {
-          "command": "contact cmat default type ball-facet model linear property kn 1e8 ks 5e7",
-          "description": "Set ball-facet default separately with linear model"
-        },
-        {
-          "command": "contact cmat default mechanical model linear property kn 1e8",
-          "description": "Set mechanical contact default (all types) to linear model"
-        },
-        {
-          "command": "contact cmat default thermal property th_kn 100",
-          "description": "Set thermal contact default properties"
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. Model names follow the 'model' keyword and pair types follow the 'type' keyword (live 9.7 type enum: MPMPoint-facet ball-MPMPoint ball-ball ball-facet ball-pebble ball-rblock facet-facet pebble-facet pebble-pebble pebble-rblock rblock-facet rblock-rblock vertex-facet)."
-      ]
+    {
+      "name": "model",
+      "syntax": {
+        "6.0": "model {arrlinear | burger | flatjoint | hertz | hysteretic | linear | linearcbond | linearpbond | null | rrlinear | smoothjoint | softbond}",
+        "7.0": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole | linearpbond | null | rrlinear | smoothjoint | softbond}",
+        "9.0": "model {arrlinear | bilinear | burger | fish | flatjoint | hertz | hysteretic | linear | linearcbond | lineardipole 3D ONLY | linearpbond | null | rrlinear | smoothjoint | softbond | springnetwork | subspringnetwork}"
+      },
+      "description": {
+        "6.0": "Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; burger: Specify the Burger’s Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.",
+        "7.0": "Specify the default model. The default slot(s) will not be modified if the corresponding contact type(s) cannot use the specified contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.",
+        "9.0": "Specify the default model. The default slot(s) will not be modified if the corresponding contact type(s) cannot use the specified contact model. The list of built-in mechanical contact models is given in the “ Built-in Contact Models ” section. Users may also implement custom contact models (see “ User-Defined Contact Models ” for further information) and register them in the CMAT. Options: arrlinear: Specify the Adhesive Rolling Resistance Linear Model contact model.; bilinear: Specify the Bilinear Contact Model contact model.; burger: Specify the Burger’s Model contact model.; fish: Specify the FISH Model contact model.; flatjoint: Specify the Flat-Joint Model contact model.; hertz: Specify the Hertz Model contact model.; hysteretic: Specify the Hysteretic Model contact model.; linear: Specify the Linear Model contact model.; linearcbond: Specify the Linear Contact Bond Model contact model.; lineardipole 3D ONLY: Specify the Linear Dipole Model contact model.; linearpbond: Specify the Linear Parallel Bond Model contact model.; null: Specify the Null Model contact model.; rrlinear: Specify the Rolling Resistance Linear Model contact model.; smoothjoint: Specify the Smooth-Joint Model contact model.; softbond: Specify the Soft-Bond Model contact model.; springnetwork: Specify the Spring Network Model contact model.; subspringnetwork: Specify the Subspring Network Model contact model."
+      }
+    },
+    {
+      "name": "property",
+      "syntax": {
+        "6.0": "property <sprop> a[inheritance <b>] ...",
+        "7.0": "property keyword [inheritance <b>] ...",
+        "9.0": "property keyword [inheritance <b>] ..."
+      },
+      "description": {
+        "6.0": "The contact model property sprop is set to a . The list of available properties is contact model specific. Visit the documentation of the desired contact model for details. If the optional inheritance is issued, then the property sprop must support inheritance and a boolean must follow indicating its inheritance flag.",
+        "7.0": "Specify the contact model property. If the optional inheritance is issued, then the property must support inheritance and a boolean must follow indicating its inheritance flag.",
+        "9.0": "Specify the contact model property. If the optional inheritance is issued, then the property must support inheritance and a boolean must follow indicating its inheritance flag."
+      }
+    },
+    {
+      "name": "proximity",
+      "syntax": "proximity <fd>",
+      "description": "The detection distance is set to fd ."
+    },
+    {
+      "name": "type",
+      "syntax": {
+        "6.0": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock}",
+        "7.0": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock}",
+        "9.0": "type {ball-ball | ball-facet | ball-pebble | ball-rblock | pebble-facet | pebble-pebble | pebble-rblock | rblock-facet | rblock-rblock | mpmpoint-facet MPoint ONLY}"
+      },
+      "description": {
+        "6.0": "Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry.",
+        "7.0": "Specify that this CMAT entry applies to contacts of the specified type. This can also be accomplished with the contact range element. Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry.",
+        "9.0": "Specify that this CMAT entry applies to contacts of the specified type (see this Figure ). This can also be accomplished with the contact range element. Options: ball-ball: Specify that this is the ball-ball default CMAT entry.; ball-facet: Specify that this is the ball-facet default CMAT entry.; ball-pebble: Specify that this is the ball-pebble default CMAT entry.; ball-rblock: Specify that this is the ball-rblock default CMAT entry.; pebble-facet: Specify that this is the pebble-facet default CMAT entry.; pebble-pebble: Specify that this is the pebble-pebble default CMAT entry.; pebble-rblock: Specify that this is the pebble-rblock default CMAT entry.; rblock-facet: Specify that this is the rblock-facet default CMAT entry.; rblock-rblock: Specify that this is the rblock-rblock default CMAT entry.; mpmpoint-facet MPoint ONLY: Specify that this is the MPMPoint-facet default CMAT entry."
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5",
+      "description": "Set default entry to linear model with specified stiffness and friction"
+    },
+    {
+      "command": "contact cmat default model linear prop dp_nratio 0.8 dp_mode 1",
+      "description": "Set default entry to linear model with damping properties (from BlenderBalls.dat)"
+    },
+    {
+      "command": "contact cmat default model rrlinear method deformability emod 5e9 kratio 1.5 property fric 0.5 dp_nratio 0.7 dp_sratio 0.7 dp_mode 1 rr_fric 0.3",
+      "description": "Set default to rrlinear model with deformability method and rolling resistance (from Rolling Resistance example)"
+    },
+    {
+      "command": "contact cmat default model linearpbond method deformability emod 1e10 kratio 1.0",
+      "description": "Set default to linearpbond model with deformability method (from PunchIndentation.dat)"
+    },
+    {
+      "command": "contact cmat default type ball-ball model hertz property hz_shear 2e9 hz_poiss 0.25 fric 0.3",
+      "description": "Set ball-ball default to Hertz model with specific properties"
+    },
+    {
+      "command": "contact cmat default type ball-facet model linear property kn 1e8 ks 5e7",
+      "description": "Set ball-facet default separately with linear model"
+    },
+    {
+      "command": "contact cmat default mechanical model linear property kn 1e8",
+      "description": "Set mechanical contact default (all types) to linear model"
+    },
+    {
+      "command": "contact cmat default thermal property th_kn 100",
+      "description": "Set thermal contact default properties"
+    }
+  ]
 }

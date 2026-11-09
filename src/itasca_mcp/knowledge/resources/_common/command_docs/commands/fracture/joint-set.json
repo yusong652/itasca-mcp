@@ -8,159 +8,86 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "available": false
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fracture joint-set",
+  "syntax": "fracture joint-set keyword ...",
+  "keywords": [
+    {
+      "name": "dfn",
+      "syntax": "dfn <s>",
+      "description": "Add the fracture to the DFN with name s ."
     },
-    "7.0": {
-      "command": "fracture joint-set",
-      "syntax": "fracture joint-set keyword ...",
-      "keywords": [
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Add the fracture to the DFN with name s ."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f1> [<f2>]",
-          "description": "Dip angle of the fracture in degrees, where f1 is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f1 = 0. f2 optionally can be given to provide a random, uniform deviation of dips."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f1> [<f2>]",
-          "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f1 is in the range [0,360]. By default, f1 is 0.0. f2 optionally can be given to provide a random, uniform deviation of dip directions."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance <i>",
-          "description": "Specify the starting fracture dominance where i is greater than 1. If not specified or already taken, the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Assign the group name s to the fractures and optionally set the slot to slot ."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Fracture intersections with the newly created fractures are calculated and added to the intersection set with name s ."
-        },
-        {
-          "name": "number",
-          "syntax": "number <i>",
-          "description": "Create i fractures. If no number is specified then a single fracture is created. Fractures are created until a newly created fracture falls completely outside the model domain."
-        },
-        {
-          "name": "origin",
-          "syntax": "origin <v>",
-          "description": "Set the origin, or starting point, of the joint set. The first fracture generated will pass through this point."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f1> [<f2>]",
-          "description": "Size of the fracture. By default, the size is set to span the entire domain. The size is the {fracture length in 2D; disk diameter in 3D}. A random, uniform deviation is specified optionally with f2 ."
-        },
-        {
-          "name": "spacing",
-          "syntax": "spacing <f1> [<f2>]",
-          "description": "Set the spacing between joints of the set. A random, uniform deviation is specified optionally with f2 ."
-        },
-        {
-          "name": "points",
-          "syntax": "points <v1> <v2> [<v3>]",
-          "description": "Define the plane of the joint set by points instead of dip and dip direction: three points in 3D, two in 2D. In 3D (0,0,0) (1,0,0) (0,1,0) gives dip 0 and (0,0,0) (1,0,0) (0,0,1) gives dip 90.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "3dec",
-              "mpoint"
-            ]
-          }
-        }
-      ],
-      "examples": []
+    {
+      "name": "dfn-dominance",
+      "syntax": "dfn-dominance <i>",
+      "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
     },
-    "9.0": {
-      "command": "fracture joint-set",
-      "syntax": "fracture joint-set keyword ...",
-      "keywords": [
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Add the fracture to the DFN with name s ."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f1> [<f2>]",
-          "description": "Dip angle of the fracture in degrees, where f1 is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f1 = 0. f2 optionally can be given to provide a random, uniform deviation of dips."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f1> [<f2>] 3D only",
-          "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f1 is in the range [0,360]. By default, f1 is 0.0. f2 optionally can be given to provide a random, uniform deviation of dip directions."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance <i>",
-          "description": "Specify the starting fracture dominance where i is greater than 1. If not specified or already taken, the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Assign the group name s to the fractures and optionally set the slot to slot ."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Fracture intersections with the newly created fractures are calculated and added to the intersection set with name s ."
-        },
-        {
-          "name": "number",
-          "syntax": "number <i>",
-          "description": "Create i fractures. If no number is specified then a single fracture is created. Fractures are created until a newly created fracture falls completely outside the model domain."
-        },
-        {
-          "name": "origin",
-          "syntax": "origin <v>",
-          "description": "Set the origin, or starting point, of the joint set. The first fracture generated will pass through this point."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f1> [<f2>]",
-          "description": "Size of the fracture. By default, the size is set to span the entire domain. The size is the {fracture length in 2D; disk diameter in 3D}. A random, uniform deviation is specified optionally with f2 ."
-        },
-        {
-          "name": "spacing",
-          "syntax": "spacing <f1> [<f2>]",
-          "description": "Set the spacing between joints of the set. A random, uniform deviation is specified optionally with f2 ."
-        },
-        {
-          "name": "points",
-          "syntax": "points <v1> <v2> [<v3>]",
-          "description": "Define the plane of the joint set by points instead of dip and dip direction: three points in 3D, two in 2D. In 3D (0,0,0) (1,0,0) (0,1,0) gives dip 0 and (0,0,0) (1,0,0) (0,0,1) gives dip 90.",
-          "availability": {
-            "engines": [
-              "pfc",
-              "flac",
-              "3dec",
-              "mpoint"
-            ]
-          }
-        }
-      ],
-      "examples": []
+    {
+      "name": "dip",
+      "syntax": "dip <f1> [<f2>]",
+      "description": "Dip angle of the fracture in degrees, where f1 is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f1 = 0. f2 optionally can be given to provide a random, uniform deviation of dips."
+    },
+    {
+      "name": "dip-direction",
+      "syntax": {
+        "7.0": "dip-direction <f1> [<f2>]",
+        "9.0": "dip-direction <f1> [<f2>] 3D only"
+      },
+      "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f1 is in the range [0,360]. By default, f1 is 0.0. f2 optionally can be given to provide a random, uniform deviation of dip directions."
+    },
+    {
+      "name": "dominance",
+      "syntax": "dominance <i>",
+      "description": "Specify the starting fracture dominance where i is greater than 1. If not specified or already taken, the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>]",
+      "description": "Assign the group name s to the fractures and optionally set the slot to slot ."
+    },
+    {
+      "name": "intersection-set",
+      "syntax": "intersection-set <s>",
+      "description": "Fracture intersections with the newly created fractures are calculated and added to the intersection set with name s ."
+    },
+    {
+      "name": "number",
+      "syntax": "number <i>",
+      "description": "Create i fractures. If no number is specified then a single fracture is created. Fractures are created until a newly created fracture falls completely outside the model domain."
+    },
+    {
+      "name": "origin",
+      "syntax": "origin <v>",
+      "description": "Set the origin, or starting point, of the joint set. The first fracture generated will pass through this point."
+    },
+    {
+      "name": "size",
+      "syntax": "size <f1> [<f2>]",
+      "description": "Size of the fracture. By default, the size is set to span the entire domain. The size is the {fracture length in 2D; disk diameter in 3D}. A random, uniform deviation is specified optionally with f2 ."
+    },
+    {
+      "name": "spacing",
+      "syntax": "spacing <f1> [<f2>]",
+      "description": "Set the spacing between joints of the set. A random, uniform deviation is specified optionally with f2 ."
+    },
+    {
+      "name": "points",
+      "syntax": "points <v1> <v2> [<v3>]",
+      "description": "Define the plane of the joint set by points instead of dip and dip direction: three points in 3D, two in 2D. In 3D (0,0,0) (1,0,0) (0,1,0) gives dip 0 and (0,0,0) (1,0,0) (0,0,1) gives dip 90.",
+      "availability": {
+        "engines": [
+          "pfc",
+          "flac",
+          "3dec",
+          "mpoint"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

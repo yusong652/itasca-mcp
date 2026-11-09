@@ -10,141 +10,62 @@
     "available": false,
     "workaround": "itasca.command('wall addfacet ...') - Python SDK does not provide facet creation methods"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall addfacet",
-      "syntax": "wall addfacet keyword ...",
-      "keywords": [
-        {
-          "name": "facetid",
-          "syntax": "facetid <ifacet>",
-          "description": "ID of the facet that is being added."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "ID of the wall to which the facet is being added. Cannot be given with the name keyword."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall to which the facet is being added. Cannot be given with the id keyword."
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex <vpos>| <ivert>",
-          "description": "The vertex position or ID."
-        },
-        {
-          "name": "group",
-          "syntax": "group {name <s> | slot <slot>} ...",
-          "description": "Options: name <s>: Group name.; slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall addfacet name boundary vertex (0.6,0) vertex (0.7,0) facetid 7",
-          "description": "Add facet with ID 7 to wall named 'boundary' using two position vectors (2D)"
-        },
-        {
-          "command": "wall addfacet id 1 vertex -5 -5 -5 vertex -5 -5 5 vertex 5 -5 5",
-          "description": "Add facet to wall ID 1 using three position vectors (3D)"
-        },
-        {
-          "command": "wall addfacet name 'fred' vertex [v1] vertex [v2] vertex [c]",
-          "description": "Add facet to wall named 'fred' using vertex IDs from FISH variables"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall addfacet",
+  "syntax": "wall addfacet keyword ...",
+  "keywords": [
+    {
+      "name": "facetid",
+      "syntax": "facetid <ifacet>",
+      "description": "ID of the facet that is being added."
     },
-    "6.0": {
-      "command": "wall addfacet",
-      "syntax": "wall addfacet keyword ...",
-      "keywords": [
-        {
-          "name": "facetid",
-          "syntax": "facetid <ifacet>",
-          "description": "ID of the facet that is being added."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "ID of the wall to which the facet is being added. Cannot be given with the name keyword."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall to which the facet is being added. Cannot be given with the id keyword."
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex <ivert> or <vpos>",
-          "description": "The vertex ID or position."
-        },
-        {
-          "name": "group",
-          "syntax": "group {name <s> | slot <slot>} ...",
-          "description": "Options: name <s>: Group name.; slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall addfacet name boundary vertex (0.6,0) vertex (0.7,0) facetid 7",
-          "description": "Add facet with ID 7 to wall named 'boundary' using two position vectors (2D)"
-        },
-        {
-          "command": "wall addfacet id 1 vertex -5 -5 -5 vertex -5 -5 5 vertex 5 -5 5",
-          "description": "Add facet to wall ID 1 using three position vectors (3D)"
-        },
-        {
-          "command": "wall addfacet name 'fred' vertex [v1] vertex [v2] vertex [c]",
-          "description": "Add facet to wall named 'fred' using vertex IDs from FISH variables"
-        }
-      ]
+    {
+      "name": "id",
+      "syntax": "id <id>",
+      "description": "ID of the wall to which the facet is being added. Cannot be given with the name keyword."
     },
-    "9.0": {
-      "command": "wall addfacet",
-      "syntax": "wall addfacet keyword ...",
-      "keywords": [
-        {
-          "name": "facetid",
-          "syntax": "facetid <ifacet>",
-          "description": "ID of the facet that is being added."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "ID of the wall to which the facet is being added. Cannot be given with the name keyword."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall to which the facet is being added. Cannot be given with the id keyword."
-        },
-        {
-          "name": "vertex",
-          "syntax": "vertex <vpos>| <ivert>",
-          "description": "The vertex position or ID."
-        },
-        {
-          "name": "group",
-          "syntax": "group {name <s> | slot <slot>} ...",
-          "description": "Options: name <s>: Group name.; slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall addfacet name boundary vertex (0.6,0) vertex (0.7,0) facetid 7",
-          "description": "Add facet with ID 7 to wall named 'boundary' using two position vectors (2D)"
-        },
-        {
-          "command": "wall addfacet id 1 vertex -5 -5 -5 vertex -5 -5 5 vertex 5 -5 5",
-          "description": "Add facet to wall ID 1 using three position vectors (3D)"
-        },
-        {
-          "command": "wall addfacet name 'fred' vertex [v1] vertex [v2] vertex [c]",
-          "description": "Add facet to wall named 'fred' using vertex IDs from FISH variables"
-        }
-      ]
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Name of the wall to which the facet is being added. Cannot be given with the id keyword."
+    },
+    {
+      "name": "vertex",
+      "syntax": {
+        "6.0": "vertex <ivert> or <vpos>",
+        "7.0": "vertex <vpos>| <ivert>",
+        "9.0": "vertex <vpos>| <ivert>"
+      },
+      "description": {
+        "6.0": "The vertex ID or position.",
+        "7.0": "The vertex position or ID.",
+        "9.0": "The vertex position or ID."
+      }
+    },
+    {
+      "name": "group",
+      "syntax": "group {name <s> | slot <slot>} ...",
+      "description": "Options: name <s>: Group name.; slot <slot>: Set the group slot slot to s . By default, the slot Default is assigned."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "wall addfacet name boundary vertex (0.6,0) vertex (0.7,0) facetid 7",
+      "description": "Add facet with ID 7 to wall named 'boundary' using two position vectors (2D)"
+    },
+    {
+      "command": "wall addfacet id 1 vertex -5 -5 -5 vertex -5 -5 5 vertex 5 -5 5",
+      "description": "Add facet to wall ID 1 using three position vectors (3D)"
+    },
+    {
+      "command": "wall addfacet name 'fred' vertex [v1] vertex [v2] vertex [c]",
+      "description": "Add facet to wall named 'fred' using vertex IDs from FISH variables"
+    }
+  ]
 }

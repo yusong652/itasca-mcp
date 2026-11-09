@@ -8,39 +8,40 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "massflow record",
-      "syntax": "massflow record name <s> [keyword ...]",
-      "keywords": [
-        {
-          "name": "cumulative",
-          "syntax": "cumulative <b>",
-          "description": "If set to true , then the cumulative mass is recorded. The default is false , such that the mass for each period is recorded."
-        },
-        {
-          "name": "drawpoint",
-          "syntax": "drawpoint <s>",
-          "description": "If this keyword is not given, the default is the sum of the mass for all drawpoints."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Specify a name for the table."
-        },
-        {
-          "name": "ore",
-          "syntax": "ore <s>",
-          "description": "Specify what mass quantity should be recorded. If not given, the default is all units. The value for s must correspond exactly to the name given to the ore in the mine block input file (see Block Model )."
-        }
-      ],
-      "examples": []
-    }
-  },
   "notes": [
     "`name` is required and comes first: bare `massflow record` fails with `MASSFLOW RECORD: Table not be created`.",
     "The table is created empty and fills during `massflow compute`: one point per period, x = period number, y = mass.",
     "Recording starts at the period the command was issued in, not at period 1. Issued at period 3 and computed to period 5, the table held 3 points.",
     "`cumulative true` accumulates: (3, 1950) ... (5, 29250) for all drawpoints together, against (3, 650) ... (5, 1300) for a single drawpoint per period."
-  ]
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow record",
+  "syntax": "massflow record name <s> [keyword ...]",
+  "keywords": [
+    {
+      "name": "cumulative",
+      "syntax": "cumulative <b>",
+      "description": "If set to true , then the cumulative mass is recorded. The default is false , such that the mass for each period is recorded."
+    },
+    {
+      "name": "drawpoint",
+      "syntax": "drawpoint <s>",
+      "description": "If this keyword is not given, the default is the sum of the mass for all drawpoints."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Specify a name for the table."
+    },
+    {
+      "name": "ore",
+      "syntax": "ore <s>",
+      "description": "Specify what mass quantity should be recorded. If not given, the default is all units. The value for s must correspond exactly to the name given to the ore in the mine block input file (see Block Model )."
+    }
+  ],
+  "examples": []
 }

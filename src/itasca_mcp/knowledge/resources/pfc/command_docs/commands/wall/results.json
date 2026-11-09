@@ -10,140 +10,6 @@
     "available": false,
     "workaround": "itasca.command('wall results ...') - Python SDK does not provide wall results logic control. This is a global post-processing utility"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall results",
-      "syntax": "wall results keyword ...",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the status of wall result creation."
-        },
-        {
-          "name": "add-attribute",
-          "syntax": "add-attribute <s>",
-          "description": "Add the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. When the result is re-created, this attribute will be filled. All wall attributes can be listed with the wall list attribute command. Wall group and extra variables can also be added using the group and extra keywords."
-        },
-        {
-          "name": "remove-attribute",
-          "syntax": "remove-attribute <s>",
-          "description": "Remove the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. Wall group and extra variables can be removed using the group and extra keywords."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall results active on",
-          "description": "Enable wall result creation"
-        },
-        {
-          "command": "wall results active off",
-          "description": "Disable wall result creation"
-        },
-        {
-          "command": "wall results add-attribute position",
-          "description": "Add wall position attribute to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute velocity",
-          "description": "Add wall velocity attribute to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute displacement-z",
-          "description": "Add z-displacement attribute to be recorded in results (3D)"
-        },
-        {
-          "command": "wall results add-attribute group",
-          "description": "Add wall group variables to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute extra",
-          "description": "Add wall extra variables to be recorded in results"
-        },
-        {
-          "command": "wall results remove-attribute velocity",
-          "description": "Remove velocity attribute from being recorded in results"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "wall results",
-      "syntax": "wall results keyword ...",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the status of wall result creation."
-        },
-        {
-          "name": "add-attribute",
-          "syntax": "add-attribute <s>",
-          "description": "Add the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. When the result is re-created, this attribute will be filled. All wall attributes can be listed with the wall list attribute command. Wall group and extra variables can also be added using the group and extra keywords."
-        },
-        {
-          "name": "remove-attribute",
-          "syntax": "remove-attribute <s>",
-          "description": "Remove the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. Wall group and extra variables can be removed using the group and extra keywords."
-        }
-      ],
-      "examples": []
-    },
-    "9.0": {
-      "command": "wall results",
-      "syntax": "wall results keyword ...",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the status of wall result creation."
-        },
-        {
-          "name": "add-attribute",
-          "syntax": "add-attribute <s>",
-          "description": "Add the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. When the result is re-created, this attribute will be filled. All wall attributes can be listed with the wall list attribute command. Wall group and extra variables can also be added using the group and extra keywords."
-        },
-        {
-          "name": "remove-attribute",
-          "syntax": "remove-attribute <s>",
-          "description": "Remove the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. Wall group and extra variables can be removed using the group and extra keywords."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall results active on",
-          "description": "Enable wall result creation"
-        },
-        {
-          "command": "wall results active off",
-          "description": "Disable wall result creation"
-        },
-        {
-          "command": "wall results add-attribute position",
-          "description": "Add wall position attribute to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute velocity",
-          "description": "Add wall velocity attribute to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute displacement-z",
-          "description": "Add z-displacement attribute to be recorded in results (3D)"
-        },
-        {
-          "command": "wall results add-attribute group",
-          "description": "Add wall group variables to be recorded in results"
-        },
-        {
-          "command": "wall results add-attribute extra",
-          "description": "Add wall extra variables to be recorded in results"
-        },
-        {
-          "command": "wall results remove-attribute velocity",
-          "description": "Remove velocity attribute from being recorded in results"
-        }
-      ]
-    }
-  },
   "notes": [
     "Recordable attributes: position, position-x/y/z, displacement, displacement-x/y/z, velocity, velocity-x/y/z, spin, spin-x/y/z, rotation-center, euler (3D), group (group variables), extra (extra variables)",
     "Wall result files are NOT full model state files",
@@ -151,5 +17,113 @@
     "Use model results command to control when/how result files are created and imported",
     "Only selected attributes are recorded (geometry + added attributes)",
     "More efficient than full state saves for post-processing workflows"
+  ],
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall results",
+  "syntax": "wall results keyword ...",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Set the status of wall result creation."
+    },
+    {
+      "name": "add-attribute",
+      "syntax": "add-attribute <s>",
+      "description": "Add the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. When the result is re-created, this attribute will be filled. All wall attributes can be listed with the wall list attribute command. Wall group and extra variables can also be added using the group and extra keywords."
+    },
+    {
+      "name": "remove-attribute",
+      "syntax": "remove-attribute <s>",
+      "description": "Remove the wall attribute s (as defined in the wall attribute command) to be recorded in the wall result. Wall group and extra variables can be removed using the group and extra keywords."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall results active on",
+      "description": "Enable wall result creation",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results active off",
+      "description": "Disable wall result creation",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results add-attribute position",
+      "description": "Add wall position attribute to be recorded in results",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results add-attribute velocity",
+      "description": "Add wall velocity attribute to be recorded in results",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results add-attribute displacement-z",
+      "description": "Add z-displacement attribute to be recorded in results (3D)",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results add-attribute group",
+      "description": "Add wall group variables to be recorded in results",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results add-attribute extra",
+      "description": "Add wall extra variables to be recorded in results",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "command": "wall results remove-attribute velocity",
+      "description": "Remove velocity attribute from being recorded in results",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    }
   ]
 }

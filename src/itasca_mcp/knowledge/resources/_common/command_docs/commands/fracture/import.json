@@ -8,237 +8,106 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "fracture import",
-      "syntax": "fracture import keyword",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center",
-          "description": "The DFN will be “centered,” wherein the average location of the fracture centers is aligned with the origin. This location is taken for all fractures prior to modification (e.g., truncation or omission)."
-        },
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set, from which fractures have been imported, is to be deleted after successful importation. This keyword only applies when the from-geometry keyword has been specified."
-        },
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Specify the DFN name to be created. If a name is not specified then the DFN name is derived from the import file name or geometry set name specified."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "The DFN dominance is set to i where i ≥ 1. The dominance is used during contact model assignment when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance {ordered | random}",
-          "description": "Specify the mode to set the fracture dominance. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model properties. The default behavior is ordered . See the fracture contact-model command for further details. Options: ordered: The fracture dominance in assigned based on the order of importation, where the dominance values increase as importation continues.; random: Specify that the fracture dominance is set in a random fashion, independent of the order of fracture importation."
-        },
-        {
-          "name": "from-file",
-          "syntax": "from-file <s1> [format {itasca | fishlab | fracman}]",
-          "description": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab: The fishlab format is the flowplane format used in FISHLab.; fracman: The fracman format follows the FracMan ASCII output format."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s>",
-          "description": "Import fractures from the geometry set s . In 2D, the geometry edges are queried and turned into fractures. In 3D, this command attempts to import fractures as both planar polygons and disks. Planar polygon importation scans the geometry polygons. Disk importation occurs by scanning all geometry points and investigating the extra variables. If there are 3 extra variables that are doubles in extra slots 1, 2 and 3, then the point is deemed to represent a disk where the extra variables are the radius, dip (in degrees) and dip direction (in degrees), respectively."
-        },
-        {
-          "name": "make-disk",
-          "syntax": "make-disk <i>",
-          "description": "Fractures with i vertices or more are made into disks with radii equal to the average distance from the centroid to the vertices and dip/dip direction, as specified."
-        },
-        {
-          "name": "make-planar",
-          "syntax": "make-planar",
-          "description": "Planarity is forced for all fractures that are not disks. The fracture normal is as defined in the data file, and the fracture position is set to the average position of the vertices. The vertices are adjusted so that they fall on the plane."
-        },
-        {
-          "name": "offset",
-          "syntax": "offset <v>",
-          "description": "Offset all fracture locations by v ."
-        },
-        {
-          "name": "property-file",
-          "syntax": "property-file <s>",
-          "description": "Indicate that the properties of fractures are set via a property file. See DFN-Related File Formats for a definition of the property file format. This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the importation will continue in spite of fractures lying outside the model domain. The offending fractures will not be imported."
-        },
-        {
-          "name": "template-file",
-          "syntax": "template-file <s>",
-          "description": "Indicate that the provided DFN has been generated according to the fracture generation template defined in the file s . The template file format is specified in DFN-Related File Formats . This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "truncate",
-          "syntax": "truncate",
-          "description": "Indicate that fractures intersecting the model domain boundary are truncated (i.e., disk fractures in 3D can be converted to polygonal fractures)."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fracture import",
+  "syntax": {
+    "6.0": "fracture import keyword",
+    "7.0": "fracture import keyword ...",
+    "9.0": "fracture import keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "center",
+      "syntax": "center",
+      "description": "The DFN will be “centered,” wherein the average location of the fracture centers is aligned with the origin. This location is taken for all fractures prior to modification (e.g., truncation or omission)."
     },
-    "7.0": {
-      "command": "fracture import",
-      "syntax": "fracture import keyword ...",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center",
-          "description": "The DFN will be “centered,” wherein the average location of the fracture centers is aligned with the origin. This location is taken for all fractures prior to modification (e.g., truncation or omission)."
-        },
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set, from which fractures have been imported, is to be deleted after successful importation. This keyword only applies when the from-geometry keyword has been specified."
-        },
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Specify the DFN name to be created. If a name is not specified then the DFN name is derived from the import file name or geometry set name specified."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "The DFN dominance is set to i where i ≥ 1. The dominance is used during contact model assignment when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance {ordered | random}",
-          "description": "Specify the mode to set the fracture dominance. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model properties. The default behavior is ordered . See the fracture contact-model command for further details. Options: ordered: The fracture dominance in assigned based on the order of importation, where the dominance values increase as importation continues.; random: Specify that the fracture dominance is set in a random fashion, independent of the order of fracture importation."
-        },
-        {
-          "name": "from-file",
-          "syntax": "from-file <s1> [format {itasca | fishlab | fracman | rockmass [size <f>] [average <b>]}]",
-          "description": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab: The fishlab format is the flowplane format used in FISHLab.; fracman: The fracman format follows the FracMan ASCII output format.; rockmass [size <f>] [average <b>]: The rockmass format refers to a file format resulting from field measurements. The format is produced by Rockmass Technologies or Leapfrog, as specified in DFN-Related File Formats . Because this is from field data, no fracture size is given in the file. An optional diameter for all fractures may be given with the size keyword. If no size is specified, all imported fractures will have a diamter of 1. Additionally, you can specify whether or not all meaurements for the same feature and window are averaged to produce a single fracture by using the average keyword. The default is true ."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s>",
-          "description": "Import fractures from the geometry set s . In 2D, the geometry edges are queried and turned into fractures. In 3D, this command attempts to import fractures as both planar polygons and disks. Planar polygon importation scans the geometry polygons. Disk importation occurs by scanning all geometry points and investigating the extra variables. If there are 3 extra variables that are doubles in extra slots 1, 2 and 3, then the point is deemed to represent a disk where the extra variables are the radius, dip (in degrees) and dip direction (in degrees), respectively."
-        },
-        {
-          "name": "make-disk",
-          "syntax": "make-disk <i>",
-          "description": "Fractures with i vertices or more are made into disks with radii equal to the average distance from the centroid to the vertices and dip/dip direction, as specified."
-        },
-        {
-          "name": "make-planar",
-          "syntax": "make-planar",
-          "description": "Planarity is forced for all fractures that are not disks. The fracture normal is as defined in the data file, and the fracture position is set to the average position of the vertices. The vertices are adjusted so that they fall on the plane."
-        },
-        {
-          "name": "offset",
-          "syntax": "offset <v>",
-          "description": "Offset all fracture locations by v ."
-        },
-        {
-          "name": "property-file",
-          "syntax": "property-file <s>",
-          "description": "Indicate that the properties of fractures are set via a property file. See DFN-Related File Formats for a definition of the property file format. This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the importation will continue in spite of fractures lying outside the model domain. The offending fractures will not be imported."
-        },
-        {
-          "name": "template-file",
-          "syntax": "template-file <s>",
-          "description": "Indicate that the provided DFN has been generated according to the fracture generation template defined in the file s . The template file format is specified in DFN-Related File Formats . This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "truncate",
-          "syntax": "truncate",
-          "description": "Indicate that fractures intersecting the model domain boundary are truncated (i.e., disk fractures in 3D can be converted to polygonal fractures)."
-        }
-      ],
-      "examples": []
+    {
+      "name": "clean",
+      "syntax": "clean",
+      "description": "Specify that the geometry set, from which fractures have been imported, is to be deleted after successful importation. This keyword only applies when the from-geometry keyword has been specified."
     },
-    "9.0": {
-      "command": "fracture import",
-      "syntax": "fracture import keyword ...",
-      "keywords": [
-        {
-          "name": "center",
-          "syntax": "center",
-          "description": "The DFN will be “centered,” wherein the average location of the fracture centers is aligned with the origin. This location is taken for all fractures prior to modification (e.g., truncation or omission)."
-        },
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set, from which fractures have been imported, is to be deleted after successful importation. This keyword only applies when the from-geometry keyword has been specified."
-        },
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Specify the DFN name to be created. If a name is not specified then the DFN name is derived from the import file name or geometry set name specified."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "The DFN dominance is set to i where i ≥ 1. The dominance is used during contact model assignment when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance {ordered | random}",
-          "description": "Specify the mode to set the fracture dominance. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model properties. The default behavior is ordered . See the fracture contact-model command for further details. Options: ordered: The fracture dominance in assigned based on the order of importation, where the dominance values increase as importation continues.; random: Specify that the fracture dominance is set in a random fashion, independent of the order of fracture importation."
-        },
-        {
-          "name": "from-file",
-          "syntax": "from-file <s1> [format {itasca | fishlab 3D ONLY | fracman 3D ONLY | rockmass [size <f>] [average <b>] 3D ONLY}]",
-          "description": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab 3D ONLY: The fishlab format is the flowplane format used in FISHLab.; fracman 3D ONLY: The fracman format follows the FracMan ASCII output format.; rockmass [size <f>] [average <b>] 3D ONLY: The rockmass format refers to a file format resulting from field measurements. The format is produced by Rockmass Technologies or Leapfrog, as specified in DFN-Related File Formats . Because this is from field data, no fracture size is given in the file. An optional diameter for all fractures may be given with the size keyword. If no size is specified, all imported fractures will have a diamter of 1. Additionally, you can specify whether or not all meaurements for the same feature and window are averaged to produce a single fracture by using the average keyword. The default is true ."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s>",
-          "description": "Import fractures from the geometry set s . In 2D, the geometry edges are queried and turned into fractures. In 3D, this command attempts to import fractures as both planar polygons and disks. Planar polygon importation scans the geometry polygons. Disk importation occurs by scanning all geometry points and investigating the extra variables. If there are 3 extra variables that are doubles in extra slots 1, 2 and 3, then the point is deemed to represent a disk where the extra variables are the radius, dip (in degrees) and dip direction (in degrees), respectively."
-        },
-        {
-          "name": "make-disk",
-          "syntax": "make-disk <i> 3D only",
-          "description": "Fractures with i vertices or more are made into disks with radii equal to the average distance from the centroid to the vertices and dip/dip direction, as specified."
-        },
-        {
-          "name": "make-planar",
-          "syntax": "make-planar 3D only",
-          "description": "Planarity is forced for all fractures that are not disks. The fracture normal is as defined in the data file, and the fracture position is set to the average position of the vertices. The vertices are adjusted so that they fall on the plane."
-        },
-        {
-          "name": "offset",
-          "syntax": "offset <v>",
-          "description": "Offset all fracture locations by v ."
-        },
-        {
-          "name": "property-file",
-          "syntax": "property-file <s>",
-          "description": "Indicate that the properties of fractures are set via a property file. See DFN-Related File Formats for a definition of the property file format. This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the importation will continue in spite of fractures lying outside the model domain. The offending fractures will not be imported."
-        },
-        {
-          "name": "template-file",
-          "syntax": "template-file <s>",
-          "description": "Indicate that the provided DFN has been generated according to the fracture generation template defined in the file s . The template file format is specified in DFN-Related File Formats . This cannot be used with the geometry keyword."
-        },
-        {
-          "name": "truncate",
-          "syntax": "truncate",
-          "description": "Indicate that fractures intersecting the model domain boundary are truncated (i.e., disk fractures in 3D can be converted to polygonal fractures)."
-        }
-      ],
-      "examples": []
+    {
+      "name": "dfn",
+      "syntax": "dfn <s>",
+      "description": "Specify the DFN name to be created. If a name is not specified then the DFN name is derived from the import file name or geometry set name specified."
+    },
+    {
+      "name": "dfn-dominance",
+      "syntax": "dfn-dominance <i>",
+      "description": "The DFN dominance is set to i where i ≥ 1. The dominance is used during contact model assignment when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
+    },
+    {
+      "name": "dominance",
+      "syntax": "dominance {ordered | random}",
+      "description": "Specify the mode to set the fracture dominance. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model properties. The default behavior is ordered . See the fracture contact-model command for further details. Options: ordered: The fracture dominance in assigned based on the order of importation, where the dominance values increase as importation continues.; random: Specify that the fracture dominance is set in a random fashion, independent of the order of fracture importation."
+    },
+    {
+      "name": "from-file",
+      "syntax": {
+        "6.0": "from-file <s1> [format {itasca | fishlab | fracman}]",
+        "7.0": "from-file <s1> [format {itasca | fishlab | fracman | rockmass [size <f>] [average <b>]}]",
+        "9.0": "from-file <s1> [format {itasca | fishlab 3D ONLY | fracman 3D ONLY | rockmass [size <f>] [average <b>] 3D ONLY}]"
+      },
+      "description": {
+        "6.0": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab: The fishlab format is the flowplane format used in FISHLab.; fracman: The fracman format follows the FracMan ASCII output format.",
+        "7.0": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab: The fishlab format is the flowplane format used in FISHLab.; fracman: The fracman format follows the FracMan ASCII output format.; rockmass [size <f>] [average <b>]: The rockmass format refers to a file format resulting from field measurements. The format is produced by Rockmass Technologies or Leapfrog, as specified in DFN-Related File Formats . Because this is from field data, no fracture size is given in the file. An optional diameter for all fractures may be given with the size keyword. If no size is specified, all imported fractures will have a diamter of 1. Additionally, you can specify whether or not all meaurements for the same feature and window are averaged to produce a single fracture by using the average keyword. The default is true .",
+        "9.0": "Import fractures from file s1 . The format can optionally be specified with the format keyword. If no format is specified, then the file extension of the name specified with the file keyword is used to determine the file format. A ‘.dat’ file extension is assumed to be in the itasca format, a ‘.flab’ file extension is assumed to be in the fishlab format, and a ‘.fab’ file extension is assumed to be in the fracman format. Options: itasca: The itasca format is as specified in DFN-Related File Formats , and is the default format.; fishlab 3D ONLY: The fishlab format is the flowplane format used in FISHLab.; fracman 3D ONLY: The fracman format follows the FracMan ASCII output format.; rockmass [size <f>] [average <b>] 3D ONLY: The rockmass format refers to a file format resulting from field measurements. The format is produced by Rockmass Technologies or Leapfrog, as specified in DFN-Related File Formats . Because this is from field data, no fracture size is given in the file. An optional diameter for all fractures may be given with the size keyword. If no size is specified, all imported fractures will have a diamter of 1. Additionally, you can specify whether or not all meaurements for the same feature and window are averaged to produce a single fracture by using the average keyword. The default is true ."
+      }
+    },
+    {
+      "name": "from-geometry",
+      "syntax": "from-geometry <s>",
+      "description": "Import fractures from the geometry set s . In 2D, the geometry edges are queried and turned into fractures. In 3D, this command attempts to import fractures as both planar polygons and disks. Planar polygon importation scans the geometry polygons. Disk importation occurs by scanning all geometry points and investigating the extra variables. If there are 3 extra variables that are doubles in extra slots 1, 2 and 3, then the point is deemed to represent a disk where the extra variables are the radius, dip (in degrees) and dip direction (in degrees), respectively."
+    },
+    {
+      "name": "make-disk",
+      "syntax": {
+        "6.0": "make-disk <i>",
+        "7.0": "make-disk <i>",
+        "9.0": "make-disk <i> 3D only"
+      },
+      "description": "Fractures with i vertices or more are made into disks with radii equal to the average distance from the centroid to the vertices and dip/dip direction, as specified."
+    },
+    {
+      "name": "make-planar",
+      "syntax": {
+        "6.0": "make-planar",
+        "7.0": "make-planar",
+        "9.0": "make-planar 3D only"
+      },
+      "description": "Planarity is forced for all fractures that are not disks. The fracture normal is as defined in the data file, and the fracture position is set to the average position of the vertices. The vertices are adjusted so that they fall on the plane."
+    },
+    {
+      "name": "offset",
+      "syntax": "offset <v>",
+      "description": "Offset all fracture locations by v ."
+    },
+    {
+      "name": "property-file",
+      "syntax": "property-file <s>",
+      "description": "Indicate that the properties of fractures are set via a property file. See DFN-Related File Formats for a definition of the property file format. This cannot be used with the geometry keyword."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "Indicate that the importation will continue in spite of fractures lying outside the model domain. The offending fractures will not be imported."
+    },
+    {
+      "name": "template-file",
+      "syntax": "template-file <s>",
+      "description": "Indicate that the provided DFN has been generated according to the fracture generation template defined in the file s . The template file format is specified in DFN-Related File Formats . This cannot be used with the geometry keyword."
+    },
+    {
+      "name": "truncate",
+      "syntax": "truncate",
+      "description": "Indicate that fractures intersecting the model domain boundary are truncated (i.e., disk fractures in 3D can be converted to polygonal fractures)."
     }
-  }
+  ],
+  "examples": []
 }

@@ -17,226 +17,167 @@
     "ipstress",
     "integration-point"
   ],
-  "description": "Sample pile responses. Quantities that can be recorded include coupling-displacement, coupling-stress, coupling-yield, coupling-displacement-shear, coupling-stress-shear, coupling-yield-shear, force, moment, component-id, end, ipstress, integration-point. Quantities for sampling include force and moment at one end of the pile, axial stress for elements with a plastic material model and displacement, stress, and yield state in both the normal and shear coupling springs. The force and moment are expressed using the force-moment sign convention .",
+  "description": {
+    "7.0": "Sample pile responses. Quantities for sampling include force and moment acting on the pile itself, and displacement, stress, and yield state in both the normal and shear coupling springs.",
+    "9.0": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure pile history",
-      "syntax": "structure pile history keyword",
-      "description": "Sample pile responses. Quantities for sampling include force and moment acting on the pile itself, and displacement, stress, and yield state in both the normal and shear coupling springs.",
-      "keywords": [
-        {
-          "name": "coupling-displacement-normal",
-          "syntax": "coupling-displacement-normal [pilehistoryblock]",
-          "description": "displacement in the normal direction coupling spring at end of the element. Sign convention for normal spring is+/-, indicating separation/overlap."
-        },
-        {
-          "name": "coupling-stress-normal",
-          "syntax": "coupling-stress-normal [pilehistoryblock]",
-          "description": "stress in the normal direction coupling spring at end of the element. Sign convention for normal spring is +/-, indicating separation/ overlap."
-        },
-        {
-          "name": "coupling-yield-normal",
-          "syntax": "coupling-yield-normal [pilehistoryblock]",
-          "description": "yield state in the normal direction coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
-        },
-        {
-          "name": "coupling-displacement-shear",
-          "syntax": "coupling-displacement-shear [pilehistoryblock]",
-          "description": "displacement in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
-        },
-        {
-          "name": "coupling-stress-shear",
-          "syntax": "coupling-stress-shear [pilehistoryblock]",
-          "description": "stress in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
-        },
-        {
-          "name": "coupling-yield-shear",
-          "syntax": "coupling-yield-shear [pilehistoryblock]",
-          "description": "yield state in the shear coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
-        },
-        {
-          "name": "force",
-          "syntax": "force [pilehistoryblock]",
-          "description": "force magnitude"
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [pilehistoryblock]",
-          "description": "force (\\(x\\)-component, element system)"
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [pilehistoryblock]",
-          "description": "force (\\(y\\)-component, element system)"
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [pilehistoryblock]",
-          "description": "force (\\(z\\)-component, element system)"
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [pilehistoryblock]",
-          "description": "moment magnitude"
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [pilehistoryblock]",
-          "description": "moment (\\(x\\)-component, element system)"
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [pilehistoryblock]",
-          "description": "moment (\\(y\\)-component, element system)"
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [pilehistoryblock]",
-          "description": "moment (\\(z\\)-component, element system)"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the particular element is identified by the CID number. If this keyword is used, position should not be used."
-        },
-        {
-          "name": "end",
-          "syntax": "end <i>",
-          "description": "the quantity will be sampled at end i (where i is 1 or 2), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the particular element is identified by (v) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.history.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure pile history",
-      "syntax": "structure pile history [name <s>] keyword",
-      "keywords": [
-        {
-          "name": "coupling-displacement-normal",
-          "syntax": "coupling-displacement-normal [pilehistoryblock]",
-          "description": "displacement in the normal direction coupling spring at end of the element. Sign convention for normal spring is+/-, indicating separation/overlap."
-        },
-        {
-          "name": "coupling-stress-normal",
-          "syntax": "coupling-stress-normal [pilehistoryblock]",
-          "description": "stress in the normal direction coupling spring at end of the element. Sign convention for normal spring is +/-, indicating separation/ overlap."
-        },
-        {
-          "name": "coupling-yield-normal",
-          "syntax": "coupling-yield-normal [pilehistoryblock]",
-          "description": "yield state in the normal direction coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
-        },
-        {
-          "name": "coupling-displacement-shear",
-          "syntax": "coupling-displacement-shear [pilehistoryblock]",
-          "description": "displacement in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
-        },
-        {
-          "name": "coupling-stress-shear",
-          "syntax": "coupling-stress-shear [pilehistoryblock]",
-          "description": "stress in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
-        },
-        {
-          "name": "coupling-yield-shear",
-          "syntax": "coupling-yield-shear [pilehistoryblock]",
-          "description": "yield state in the shear coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
-        },
-        {
-          "name": "force",
-          "syntax": "force [pilehistoryblock]",
-          "description": "force magnitude"
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [pilehistoryblock]",
-          "description": "force ( \\(x\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [pilehistoryblock]",
-          "description": "force ( \\(y\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [pilehistoryblock]",
-          "description": "force ( \\(z\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "ipstress",
-          "syntax": "ipstress [pilehistoryblock]",
-          "description": "axial stress ( \\(\\sigma_{xx}\\) ) for an element with a plastic material model. Uses the integration-point keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [pilehistoryblock]",
-          "description": "moment magnitude"
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [pilehistoryblock]",
-          "description": "moment ( \\(x\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [pilehistoryblock]",
-          "description": "moment ( \\(y\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [pilehistoryblock]",
-          "description": "moment ( \\(z\\) -component, force-moment sign convention)"
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "assign a name s to the history record (used to reference the history elsewhere)"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the particular element is identified by the CID number. If this keyword is used, position should not be used."
-        },
-        {
-          "name": "end",
-          "syntax": "end <i>",
-          "description": "the quantity will be sampled at end i (where i is 1 or 2 ), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
-        },
-        {
-          "name": "integration-point",
-          "syntax": "integration-point <ind>",
-          "description": "the integration point at which the axial stress is sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration' (cross-section layout and along-length count); the layout figures are on the official Structural Elements formulation pages (the original hyperlink targets, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the particular element is identified by ( v ) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
-        }
-      ],
-      "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
-    }
-  },
   "notes": [
     "'[pilehistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, end, position, name)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure pile history",
+  "syntax": {
+    "7.0": "structure pile history keyword",
+    "9.0": "structure pile history [name <s>] keyword"
+  },
+  "keywords": [
+    {
+      "name": "coupling-displacement-normal",
+      "syntax": "coupling-displacement-normal [pilehistoryblock]",
+      "description": "displacement in the normal direction coupling spring at end of the element. Sign convention for normal spring is+/-, indicating separation/overlap."
+    },
+    {
+      "name": "coupling-stress-normal",
+      "syntax": "coupling-stress-normal [pilehistoryblock]",
+      "description": "stress in the normal direction coupling spring at end of the element. Sign convention for normal spring is +/-, indicating separation/ overlap."
+    },
+    {
+      "name": "coupling-yield-normal",
+      "syntax": "coupling-yield-normal [pilehistoryblock]",
+      "description": "yield state in the normal direction coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
+    },
+    {
+      "name": "coupling-displacement-shear",
+      "syntax": "coupling-displacement-shear [pilehistoryblock]",
+      "description": "displacement in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
+    },
+    {
+      "name": "coupling-stress-shear",
+      "syntax": "coupling-stress-shear [pilehistoryblock]",
+      "description": "stress in the shear direction coupling spring at end of the element. Sign convention for shear spring is +/- with respect to average axial direction of pile."
+    },
+    {
+      "name": "coupling-yield-shear",
+      "syntax": "coupling-yield-shear [pilehistoryblock]",
+      "description": "yield state in the shear coupling spring at end of the element. Value {0, 1, 2} denotes never yielded, yielding now, or yielded in past, respectively."
+    },
+    {
+      "name": "force",
+      "syntax": "force [pilehistoryblock]",
+      "description": "force magnitude"
+    },
+    {
+      "name": "force-x",
+      "syntax": "force-x [pilehistoryblock]",
+      "description": {
+        "7.0": "force (\\(x\\)-component, element system)",
+        "9.0": "force ( \\(x\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "force-y",
+      "syntax": "force-y [pilehistoryblock]",
+      "description": {
+        "7.0": "force (\\(y\\)-component, element system)",
+        "9.0": "force ( \\(y\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "force-z",
+      "syntax": "force-z [pilehistoryblock]",
+      "description": {
+        "7.0": "force (\\(z\\)-component, element system)",
+        "9.0": "force ( \\(z\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "ipstress",
+      "syntax": "ipstress [pilehistoryblock]",
+      "description": "axial stress ( \\(\\sigma_{xx}\\) ) for an element with a plastic material model. Uses the integration-point keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": "moment [pilehistoryblock]",
+      "description": "moment magnitude"
+    },
+    {
+      "name": "moment-x",
+      "syntax": "moment-x [pilehistoryblock]",
+      "description": {
+        "7.0": "moment (\\(x\\)-component, element system)",
+        "9.0": "moment ( \\(x\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "moment-y",
+      "syntax": "moment-y [pilehistoryblock]",
+      "description": {
+        "7.0": "moment (\\(y\\)-component, element system)",
+        "9.0": "moment ( \\(y\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "moment-z",
+      "syntax": "moment-z [pilehistoryblock]",
+      "description": {
+        "7.0": "moment (\\(z\\)-component, element system)",
+        "9.0": "moment ( \\(z\\) -component, force-moment sign convention)"
+      }
+    },
+    {
+      "name": "component-id",
+      "syntax": "component-id <i>",
+      "description": "the particular element is identified by the CID number. If this keyword is used, position should not be used."
+    },
+    {
+      "name": "end",
+      "syntax": "end <i>",
+      "description": {
+        "7.0": "the quantity will be sampled at end i (where i is 1 or 2), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied.",
+        "9.0": "the quantity will be sampled at end i (where i is 1 or 2 ), which corresponds with the order in the nodal-connectivity list. The history is sampled at end 1 (the default) if this keyword is not supplied."
+      }
+    },
+    {
+      "name": "integration-point",
+      "syntax": "integration-point <ind>",
+      "description": "the integration point at which the axial stress is sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration' (cross-section layout and along-length count); the layout figures are on the official Structural Elements formulation pages (the original hyperlink targets, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": {
+        "7.0": "the particular element is identified by (v) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used.",
+        "9.0": "the particular element is identified by ( v ) coordinates (the nearest element is taken). If this keyword is used, component-id should not be used."
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "assign a name s to the history record (used to reference the history elsewhere)"
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/piles/commands/cmd_structure.pile.history.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

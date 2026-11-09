@@ -8,102 +8,53 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "fracture intersections compute",
-      "syntax": "fracture intersections compute keyword [range]",
-      "keywords": [
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set is to be deleted after the intersection operation has succeeded."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "The optional keyword indicates that the intersection set name is placed in group slot s of all fractures found to be in the intersection."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Specify the intersection set. If delineating intersections and no intersection set is specified then the intersection name is set to intersectionsXX , where XX is the next available intersection set ID."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the determination of intersections will continue in spite of geometry objects being nonplanar, concave or not simple polygons. The offending fractures are skipped."
-        },
-        {
-          "name": "with-geometry",
-          "syntax": "with-geometry <s> [range]",
-          "description": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The fracture.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fracture intersections compute",
+  "syntax": {
+    "6.0": "fracture intersections compute keyword [range]",
+    "7.0": "fracture intersections compute keyword ... [range]",
+    "9.0": "fracture intersections compute keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "clean",
+      "syntax": "clean",
+      "description": "Specify that the geometry set is to be deleted after the intersection operation has succeeded."
     },
-    "7.0": {
-      "command": "fracture intersections compute",
-      "syntax": "fracture intersections compute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set is to be deleted after the intersection operation has succeeded."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "The optional keyword indicates that the intersection set name is placed in group slot s of all fractures found to be in the intersection."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Specify the intersection set. If delineating intersections and no intersection set is specified then the intersection name is set to intersectionsXX , where XX is the next available intersection set ID."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the determination of intersections will continue in spite of geometry objects being nonplanar, concave or not simple polygons. The offending fractures are skipped."
-        },
-        {
-          "name": "with-geometry",
-          "syntax": "with-geometry <s> [range]",
-          "description": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The dfn.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case."
-        }
-      ],
-      "examples": []
+    {
+      "name": "group-slot",
+      "syntax": "group-slot <s>",
+      "description": "The optional keyword indicates that the intersection set name is placed in group slot s of all fractures found to be in the intersection."
     },
-    "9.0": {
-      "command": "fracture intersections compute",
-      "syntax": "fracture intersections compute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "clean",
-          "syntax": "clean",
-          "description": "Specify that the geometry set is to be deleted after the intersection operation has succeeded."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "The optional keyword indicates that the intersection set name is placed in group slot s of all fractures found to be in the intersection."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Specify the intersection set. If delineating intersections and no intersection set is specified then the intersection name is set to intersectionsXX , where XX is the next available intersection set ID."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors 3D only",
-          "description": "Indicate that the determination of intersections will continue in spite of geometry objects being nonplanar, concave or not simple polygons. The offending fractures are skipped."
-        },
-        {
-          "name": "with-geometry",
-          "syntax": "with-geometry <s> [range]",
-          "description": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The dfn.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case."
-        }
-      ],
-      "examples": []
+    {
+      "name": "intersection-set",
+      "syntax": "intersection-set <s>",
+      "description": "Specify the intersection set. If delineating intersections and no intersection set is specified then the intersection name is set to intersectionsXX , where XX is the next available intersection set ID."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": {
+        "6.0": "skip-errors",
+        "7.0": "skip-errors",
+        "9.0": "skip-errors 3D only"
+      },
+      "description": "Indicate that the determination of intersections will continue in spite of geometry objects being nonplanar, concave or not simple polygons. The offending fractures are skipped."
+    },
+    {
+      "name": "with-geometry",
+      "syntax": "with-geometry <s> [range]",
+      "description": {
+        "6.0": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The fracture.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case.",
+        "7.0": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The dfn.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case.",
+        "9.0": "Delineate the intersections between fractures and the geometry set with name s . An optional range of {edges in 2D; polygons in 3D} can be specified following the with-geometry keyword to filter the geometry object. The dfn.intersect.end2 FISH intrinsic returns a pointer to the geometry set in this case."
+      }
     }
-  }
+  ],
+  "examples": []
 }

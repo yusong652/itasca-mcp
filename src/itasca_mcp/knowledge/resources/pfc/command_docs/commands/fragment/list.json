@@ -32,132 +32,51 @@
       "python": "# No direct equivalent - must iterate:\nfragments = {}\nfor b in it.ball.list():\n    fid = b.fragment()\n    if fid not in fragments:\n        fragments[fid] = []\n    fragments[fid].append(b)"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "fragment list",
-      "syntax": "fragment list [keyword]",
-      "keywords": [
-        {
-          "name": "catalog",
-          "syntax": "catalog [<i>]",
-          "description": "List the fragment information of all active fragments in catalog i . This includes the fragment ID, volume, body count, and position."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "List the catalog numbers, cycles numbers, times, volumes, body counts, and positions of the fragment with ID i ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment list",
-          "description": "List all catalog entries (overview of all fragment computations). Use case: See when fragments were computed and how many existed at each time. Output example: Catalog 1: Cycle 0, Time 0.0, 10 fragments\nCatalog 2: Cycle 1000, Time 0.1, 15 fragments."
-        },
-        {
-          "command": "fragment list catalog 1",
-          "description": "List all fragments in catalog 1 (detailed snapshot at that computation). Use case: Examine specific fragment configuration at a particular moment. Output example: Fragment 1: Volume 0.05, Bodies 5, Position (1.0, 2.0, 0.0)\nFragment 2: Volume 0.08, Bodies 8, Position (5.0, 3.0, 0.0)."
-        },
-        {
-          "command": "fragment list id 1",
-          "description": "List complete history of fragment 1 across all catalogs. Use case: Track how a specific fragment evolved over time. Output example: Catalog 1: Cycle 0, Time 0.0, Volume 0.05, Bodies 5\nCatalog 2: Cycle 1000, Time 0.1, Volume 0.06, Bodies 6."
-        },
-        {
-          "command": "fragment compute\nfragment list\nmodel cycle 1000\nfragment compute\nfragment list",
-          "description": "Compute, list, run cycles, recompute, list again to compare. Use case: Track fragment evolution between two simulation states."
-        },
-        {
-          "command": "fragment activate cycles 100\nmodel cycle 5000\nfragment list",
-          "description": "Auto-compute during cycling, then list all catalog entries. Use case: See complete history of fragment evolution during auto-computation."
-        },
-        {
-          "command": "fragment list\nfragment list catalog 5\nfragment list id 3",
-          "description": "Overview, then specific catalog detail, then specific fragment history. Use case: Progressive drill-down into fragment data."
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fragment list",
+  "syntax": "fragment list [keyword]",
+  "keywords": [
+    {
+      "name": "catalog",
+      "syntax": "catalog [<i>]",
+      "description": "List the fragment information of all active fragments in catalog i . This includes the fragment ID, volume, body count, and position."
     },
-    "6.0": {
-      "command": "fragment list",
-      "syntax": "fragment list [keyword]",
-      "keywords": [
-        {
-          "name": "catalog",
-          "syntax": "catalog [<i>]",
-          "description": "List the fragment information of all active fragments in catalog i . This includes the fragment ID, volume, body count, and position."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "List the catalog numbers, cycles numbers, times, volumes, body counts, and positions of the fragment with ID i ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment list",
-          "description": "List all catalog entries (overview of all fragment computations). Use case: See when fragments were computed and how many existed at each time. Output example: Catalog 1: Cycle 0, Time 0.0, 10 fragments\nCatalog 2: Cycle 1000, Time 0.1, 15 fragments."
-        },
-        {
-          "command": "fragment list catalog 1",
-          "description": "List all fragments in catalog 1 (detailed snapshot at that computation). Use case: Examine specific fragment configuration at a particular moment. Output example: Fragment 1: Volume 0.05, Bodies 5, Position (1.0, 2.0, 0.0)\nFragment 2: Volume 0.08, Bodies 8, Position (5.0, 3.0, 0.0)."
-        },
-        {
-          "command": "fragment list id 1",
-          "description": "List complete history of fragment 1 across all catalogs. Use case: Track how a specific fragment evolved over time. Output example: Catalog 1: Cycle 0, Time 0.0, Volume 0.05, Bodies 5\nCatalog 2: Cycle 1000, Time 0.1, Volume 0.06, Bodies 6."
-        },
-        {
-          "command": "fragment compute\nfragment list\nmodel cycle 1000\nfragment compute\nfragment list",
-          "description": "Compute, list, run cycles, recompute, list again to compare. Use case: Track fragment evolution between two simulation states."
-        },
-        {
-          "command": "fragment activate cycles 100\nmodel cycle 5000\nfragment list",
-          "description": "Auto-compute during cycling, then list all catalog entries. Use case: See complete history of fragment evolution during auto-computation."
-        },
-        {
-          "command": "fragment list\nfragment list catalog 5\nfragment list id 3",
-          "description": "Overview, then specific catalog detail, then specific fragment history. Use case: Progressive drill-down into fragment data."
-        }
-      ]
-    },
-    "9.0": {
-      "command": "fragment list",
-      "syntax": "fragment list [keyword]",
-      "keywords": [
-        {
-          "name": "catalog",
-          "syntax": "catalog [<i>]",
-          "description": "List the fragment information of all active fragments in catalog i . This includes the fragment ID, volume, body count, and position."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "List the catalog numbers, cycles numbers, times, volumes, body counts, and positions of the fragment with ID i ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment list",
-          "description": "List all catalog entries (overview of all fragment computations). Use case: See when fragments were computed and how many existed at each time. Output example: Catalog 1: Cycle 0, Time 0.0, 10 fragments\nCatalog 2: Cycle 1000, Time 0.1, 15 fragments."
-        },
-        {
-          "command": "fragment list catalog 1",
-          "description": "List all fragments in catalog 1 (detailed snapshot at that computation). Use case: Examine specific fragment configuration at a particular moment. Output example: Fragment 1: Volume 0.05, Bodies 5, Position (1.0, 2.0, 0.0)\nFragment 2: Volume 0.08, Bodies 8, Position (5.0, 3.0, 0.0)."
-        },
-        {
-          "command": "fragment list id 1",
-          "description": "List complete history of fragment 1 across all catalogs. Use case: Track how a specific fragment evolved over time. Output example: Catalog 1: Cycle 0, Time 0.0, Volume 0.05, Bodies 5\nCatalog 2: Cycle 1000, Time 0.1, Volume 0.06, Bodies 6."
-        },
-        {
-          "command": "fragment compute\nfragment list\nmodel cycle 1000\nfragment compute\nfragment list",
-          "description": "Compute, list, run cycles, recompute, list again to compare. Use case: Track fragment evolution between two simulation states."
-        },
-        {
-          "command": "fragment activate cycles 100\nmodel cycle 5000\nfragment list",
-          "description": "Auto-compute during cycling, then list all catalog entries. Use case: See complete history of fragment evolution during auto-computation."
-        },
-        {
-          "command": "fragment list\nfragment list catalog 5\nfragment list id 3",
-          "description": "Overview, then specific catalog detail, then specific fragment history. Use case: Progressive drill-down into fragment data."
-        }
-      ]
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "List the catalog numbers, cycles numbers, times, volumes, body counts, and positions of the fragment with ID i ."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "fragment list",
+      "description": "List all catalog entries (overview of all fragment computations). Use case: See when fragments were computed and how many existed at each time. Output example: Catalog 1: Cycle 0, Time 0.0, 10 fragments\nCatalog 2: Cycle 1000, Time 0.1, 15 fragments."
+    },
+    {
+      "command": "fragment list catalog 1",
+      "description": "List all fragments in catalog 1 (detailed snapshot at that computation). Use case: Examine specific fragment configuration at a particular moment. Output example: Fragment 1: Volume 0.05, Bodies 5, Position (1.0, 2.0, 0.0)\nFragment 2: Volume 0.08, Bodies 8, Position (5.0, 3.0, 0.0)."
+    },
+    {
+      "command": "fragment list id 1",
+      "description": "List complete history of fragment 1 across all catalogs. Use case: Track how a specific fragment evolved over time. Output example: Catalog 1: Cycle 0, Time 0.0, Volume 0.05, Bodies 5\nCatalog 2: Cycle 1000, Time 0.1, Volume 0.06, Bodies 6."
+    },
+    {
+      "command": "fragment compute\nfragment list\nmodel cycle 1000\nfragment compute\nfragment list",
+      "description": "Compute, list, run cycles, recompute, list again to compare. Use case: Track fragment evolution between two simulation states."
+    },
+    {
+      "command": "fragment activate cycles 100\nmodel cycle 5000\nfragment list",
+      "description": "Auto-compute during cycling, then list all catalog entries. Use case: See complete history of fragment evolution during auto-computation."
+    },
+    {
+      "command": "fragment list\nfragment list catalog 5\nfragment list id 3",
+      "description": "Overview, then specific catalog detail, then specific fragment history. Use case: Progressive drill-down into fragment data."
+    }
+  ]
 }

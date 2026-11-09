@@ -30,123 +30,48 @@
     "available": false,
     "workaround": "itasca.command('model restore \"filename.f3sav\"') - Python SDK does not provide direct restore function. Note: Use double quotes around filename in command string if path contains spaces"
   },
-  "versions": {
-    "7.0": {
-      "command": "model restore",
-      "syntax": "model restore <s>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model restore 'checkpoint.f3sav'",
-          "description": "Restore model from checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model restore 'checkpoint'",
-          "description": "Restore model from checkpoint (extension '.f3sav' added automatically)"
-        },
-        {
-          "command": "model restore 'C:/simulations/results/final_state.f3sav'",
-          "description": "Restore from file with absolute path"
-        },
-        {
-          "command": "model restore './saves/equilibrium'",
-          "description": "Restore from file with relative path (extension added)"
-        },
-        {
-          "command": "model restore 'initial_state'\nmodel cycle 5000\nmodel save 'after_5000_cycles'",
-          "description": "Restore checkpoint, run more cycles, save new state"
-        },
-        {
-          "command": "model restore 'base_configuration'\nmodel gravity 9.81\nmodel solve\nmodel save 'with_gravity'",
-          "description": "Restore base state, add gravity, solve, save new configuration"
-        },
-        {
-          "command": "model restore 'saved_state.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "model restore 'problem1_equilibrium'\n; Continue simulation from equilibrium\nwall attribute velocity-y -0.1 range id 1\nmodel cycle 10000",
-          "description": "Restore equilibrium state and continue with new loading"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model restore",
+  "syntax": "model restore <s>",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "model restore 'checkpoint.f3sav'",
+      "description": "Restore model from checkpoint file (explicit extension)"
     },
-    "6.0": {
-      "command": "model restore",
-      "syntax": "model restore <s>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model restore 'checkpoint.f3sav'",
-          "description": "Restore model from checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model restore 'checkpoint'",
-          "description": "Restore model from checkpoint (extension '.f3sav' added automatically)"
-        },
-        {
-          "command": "model restore 'C:/simulations/results/final_state.f3sav'",
-          "description": "Restore from file with absolute path"
-        },
-        {
-          "command": "model restore './saves/equilibrium'",
-          "description": "Restore from file with relative path (extension added)"
-        },
-        {
-          "command": "model restore 'initial_state'\nmodel cycle 5000\nmodel save 'after_5000_cycles'",
-          "description": "Restore checkpoint, run more cycles, save new state"
-        },
-        {
-          "command": "model restore 'base_configuration'\nmodel gravity 9.81\nmodel solve\nmodel save 'with_gravity'",
-          "description": "Restore base state, add gravity, solve, save new configuration"
-        },
-        {
-          "command": "model restore 'saved_state.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "model restore 'problem1_equilibrium'\n; Continue simulation from equilibrium\nwall attribute velocity-y -0.1 range id 1\nmodel cycle 10000",
-          "description": "Restore equilibrium state and continue with new loading"
-        }
-      ]
+    {
+      "command": "model restore 'checkpoint'",
+      "description": "Restore model from checkpoint (extension '.f3sav' added automatically)"
     },
-    "9.0": {
-      "command": "model restore",
-      "syntax": "model restore <s>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model restore 'checkpoint.f3sav'",
-          "description": "Restore model from checkpoint file (explicit extension)"
-        },
-        {
-          "command": "model restore 'checkpoint'",
-          "description": "Restore model from checkpoint (extension '.f3sav' added automatically)"
-        },
-        {
-          "command": "model restore 'C:/simulations/results/final_state.f3sav'",
-          "description": "Restore from file with absolute path"
-        },
-        {
-          "command": "model restore './saves/equilibrium'",
-          "description": "Restore from file with relative path (extension added)"
-        },
-        {
-          "command": "model restore 'initial_state'\nmodel cycle 5000\nmodel save 'after_5000_cycles'",
-          "description": "Restore checkpoint, run more cycles, save new state"
-        },
-        {
-          "command": "model restore 'base_configuration'\nmodel gravity 9.81\nmodel solve\nmodel save 'with_gravity'",
-          "description": "Restore base state, add gravity, solve, save new configuration"
-        },
-        {
-          "command": "model restore 'saved_state.sav'\nmodel clean\nclump tolerance extent 0.02",
-          "description": "After restore, must clean before modifying extent tolerances"
-        },
-        {
-          "command": "model restore 'problem1_equilibrium'\n; Continue simulation from equilibrium\nwall attribute velocity-y -0.1 range id 1\nmodel cycle 10000",
-          "description": "Restore equilibrium state and continue with new loading"
-        }
-      ]
+    {
+      "command": "model restore 'C:/simulations/results/final_state.f3sav'",
+      "description": "Restore from file with absolute path"
+    },
+    {
+      "command": "model restore './saves/equilibrium'",
+      "description": "Restore from file with relative path (extension added)"
+    },
+    {
+      "command": "model restore 'initial_state'\nmodel cycle 5000\nmodel save 'after_5000_cycles'",
+      "description": "Restore checkpoint, run more cycles, save new state"
+    },
+    {
+      "command": "model restore 'base_configuration'\nmodel gravity 9.81\nmodel solve\nmodel save 'with_gravity'",
+      "description": "Restore base state, add gravity, solve, save new configuration"
+    },
+    {
+      "command": "model restore 'saved_state.sav'\nmodel clean\nclump tolerance extent 0.02",
+      "description": "After restore, must clean before modifying extent tolerances"
+    },
+    {
+      "command": "model restore 'problem1_equilibrium'\n; Continue simulation from equilibrium\nwall attribute velocity-y -0.1 range id 1\nmodel cycle 10000",
+      "description": "Restore equilibrium state and continue with new loading"
     }
-  }
+  ]
 }

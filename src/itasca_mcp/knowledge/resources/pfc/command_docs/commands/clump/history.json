@@ -6,747 +6,315 @@
     "monitor"
   ],
   "description": "Add a history of a clump value. A history is a table of floating point values assigned by sampling a model attribute periodically during a simulation. The clump must be specified by either 'id' or 'position' keyword following the quantity keyword. The history can be assigned a name for later reference with the optional name keyword; if not, the history will be given a default name based on its internally assigned id number. Quantities that can be recorded include position, velocity, displacement, spin, euler, force-contact, force-unbalanced, moment-contact, moment-unbalanced, stress, ratio-local, and convergence. Live 9.7: the quantity slot was fully enumerated (Batch P1); an object selector (id <i> or position <v>) is REQUIRED after the quantity - omitting it fails with 'No object for history specified'.",
-  "notes": [
-    "Following one of the quantity keywords, either 1) an 'id' keyword followed by an integer id, or 2) a 'position' keyword followed by a position vector must be given to define the specific clump",
-    "Review the common history commands for details regarding the manipulation of histories",
-    "Orientation tracking must be enabled (model orientation-tracking) to record euler angles or rotation",
-    "'[clumphistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (axis-angle-x, axis-angle-y, axis-angle-z, convergence, force-unbalanced-, name, ratio-local).",
-    "History quantities: position: position-x, position-y, position-z, displacement, displacement-x/y/z; velocity: velocity, velocity-x, velocity-y, velocity-z, spin, spin-x/y/z (3D); orientation: euler-x (3D), euler-y (3D), euler-z (3D), rotation (2D); forces: force-contact, force-contact-x/y/z, force-unbalanced, force-unbalanced-x/y/z; moments: moment-contact, moment-contact-x/y/z (3D), moment-unbalanced, moment-unbalanced-x/y/z (3D); stress: stress; other: extra"
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
+    ],
+    "7.0": [
+      "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
+    ],
+    "9.0": [
+      "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz) are rejected per-keyword on live 9.7."
+    ]
+  },
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('clump history ...') or manually record values using itasca.set_callback() with Clump getter methods"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump history",
-      "syntax": "clump history [name <sid>] keyword ...",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence",
-          "description": "Per-object convergence measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [clumphistoryblock]",
-          "description": "Magnitude of the accumulated clump displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY [clumphistoryblock]",
-          "description": "Current clump orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [clumphistoryblock]",
-          "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact [clumphistoryblock]",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "force-unbalanced",
-          "syntax": "force-unbalanced [clumphistoryblock]",
-          "description": "The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces)."
-        },
-        {
-          "name": "force-unbalanced-",
-          "syntax": "force-unbalanced-",
-          "description": ""
-        },
-        {
-          "name": "force-unbalanced-y",
-          "syntax": "force-unbalanced-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced force."
-        },
-        {
-          "name": "force-unbalanced-z",
-          "syntax": "force-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-unbalanced",
-          "syntax": "moment-unbalanced [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments."
-        },
-        {
-          "name": "moment-unbalanced-x",
-          "syntax": "moment-unbalanced-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-y",
-          "syntax": "moment-unbalanced-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-z",
-          "syntax": "moment-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local",
-          "description": "Local force-ratio measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "spin",
-          "syntax": "spin [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [clumphistoryblock]",
-          "description": "The clump stress. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [clumphistoryblock]",
-          "description": "Magnitude of the clump translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the clump velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump history name 'clump_pos' position-x id 1",
-          "description": "Record x-position of clump 1 with history name 'clump_pos'"
-        },
-        {
-          "command": "clump history velocity-z id 100",
-          "description": "Record z-velocity of clump 100 (auto-generated history name)"
-        },
-        {
-          "command": "clump history force-unbalanced id 5",
-          "description": "Record magnitude of unbalanced force on clump 5"
-        },
-        {
-          "command": "clump history name 'center_clump' displacement position (0,0,0)",
-          "description": "Record displacement magnitude of clump nearest to origin"
-        },
-        {
-          "command": "clump history extra index 1 type float id 10",
-          "description": "Record extra variable at index 1 (float type) for clump 10"
-        },
-        {
-          "command": "clump history stress quantity intermediate id 50",
-          "description": "Record intermediate principal stress of clump 50"
-        }
-      ],
-      "notes": [
-        "Live 7.0 first-slot enumeration; an object selector is required after the quantity (same grammar as 9.x)."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump history",
+  "syntax": {
+    "6.0": "clump history [name <sid>] keyword id <id> or position <v>",
+    "7.0": "clump history [name <sid>] keyword ...",
+    "9.0": "clump history [name <sid>] keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "axis-angle-x",
+      "syntax": "axis-angle-x",
+      "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
     },
-    "6.0": {
-      "command": "clump history",
-      "syntax": "clump history [name <sid>] keyword id <id> or position <v>",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [clumphistoryblock]",
-          "description": "Magnitude of the accumulated clump displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY [clumphistoryblock]",
-          "description": "Current clump orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact [clumphistoryblock]",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "force-unbalanced",
-          "syntax": "force-unbalanced [clumphistoryblock]",
-          "description": "The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces)."
-        },
-        {
-          "name": "force-unbalanced-",
-          "syntax": "force-unbalanced-",
-          "description": ""
-        },
-        {
-          "name": "force-unbalanced-y",
-          "syntax": "force-unbalanced-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced force."
-        },
-        {
-          "name": "force-unbalanced-z",
-          "syntax": "force-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-unbalanced",
-          "syntax": "moment-unbalanced [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments."
-        },
-        {
-          "name": "moment-unbalanced-x",
-          "syntax": "moment-unbalanced-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-y",
-          "syntax": "moment-unbalanced-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-z",
-          "syntax": "moment-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [clumphistoryblock]",
-          "description": "Magnitude of the clump translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump velocity."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement {displacement-x | displacement-y | displacement-z | euler-x | euler-y | euler-z | force-contact | force-contact-x | force-contact-y | force-contact-z | force-unbalanced | force-unbalanced-x | force-unbalanced-y | force-unbalanced-z | moment-contact | moment-contact-x | moment-contact-y | moment-contact-z | moment-unbalanced | moment-unbalanced-x | moment-unbalanced-y | moment-unbalanced-z | position-x | position-y | position-z | rotation | spin | spin-x | spin-y | spin-z | velocity | velocity-x | velocity-y | velocity-z}",
-          "description": "Options: displacement-x: The x -component of accumulated displacement as a result of cycling.; displacement-y: The y -component of accumulated displacement as a result of cycling.; displacement-z: The z -component of accumulated displacement as a result of cycling.; euler-x: The x -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; euler-y: The y -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; euler-z: The z -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; force-contact: The magnitude of the force resulting from contacts.; force-contact-x: The x -component of the contact force.; force-contact-y: The y -component of the contact force.; force-contact-z: The z -component of the contact force.; force-unbalanced: The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces).; force-unbalanced-x: The x -component of the unbalanced force.; force-unbalanced-y: The y -component of the unbalanced force.; force-unbalanced-z: The z -component of the unbalanced force.; moment-contact: {Value in 2D; Magnitude in 3D} of the sum of the contact moments.; moment-contact-x: The x -component of the contact moment.; moment-contact-y: The y -component of the contact moment.; moment-contact-z: The z -component of the contact moment.; moment-unbalanced: {Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments.; moment-unbalanced-x: The x -component of the unbalanced moment.; moment-unbalanced-y: The y -component of the unbalanced moment.; moment-unbalanced-z: The z -component of the unbalanced moment.; position-x: The x -component of the location of clump centroid.; position-y: The y -component of the location of clump centroid.; position-z: The z -component of the location of clump centroid.; rotation: Current clump orientation. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command).; spin: {Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second.; spin-x: The x -component of the clump angular velocity in radians per second.; spin-y: The y -component of the clump angular velocity in radians per second.; spin-z: The z -component of the clump angular velocity in radians per second.; velocity: Magnitude of the clump translational velocity vector.; velocity-x: The x -component of the clump velocity.; velocity-y: The y -component of the clump velocity.; velocity-z: The z -component of the clump velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump history name 'clump_pos' position-x id 1",
-          "description": "Record x-position of clump 1 with history name 'clump_pos'"
-        },
-        {
-          "command": "clump history velocity-z id 100",
-          "description": "Record z-velocity of clump 100 (auto-generated history name)"
-        },
-        {
-          "command": "clump history force-unbalanced id 5",
-          "description": "Record magnitude of unbalanced force on clump 5"
-        },
-        {
-          "command": "clump history name 'center_clump' displacement position (0,0,0)",
-          "description": "Record displacement magnitude of clump nearest to origin"
-        },
-        {
-          "command": "clump history extra index 1 type float id 10",
-          "description": "Record extra variable at index 1 (float type) for clump 10"
-        },
-        {
-          "command": "clump history stress quantity intermediate id 50",
-          "description": "Record intermediate principal stress of clump 50"
-        }
-      ],
-      "notes": [
-        "Live 6.00 first-slot enumeration; an object selector is required after the quantity."
-      ]
+    {
+      "name": "axis-angle-y",
+      "syntax": "axis-angle-y",
+      "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
     },
-    "9.0": {
-      "command": "clump history",
-      "syntax": "clump history [name <sid>] keyword ...",
-      "keywords": [
-        {
-          "name": "axis-angle-x",
-          "syntax": "axis-angle-x",
-          "description": "x-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-y",
-          "syntax": "axis-angle-y",
-          "description": "y-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "axis-angle-z",
-          "syntax": "axis-angle-z",
-          "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence",
-          "description": "Per-object convergence measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement [clumphistoryblock]",
-          "description": "Magnitude of the accumulated clump displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation 2D ONLY [clumphistoryblock]",
-          "description": "Current clump orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra [clumphistoryblock]",
-          "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact [clumphistoryblock]",
-          "description": "The magnitude of the force resulting from contacts."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "force-unbalanced",
-          "syntax": "force-unbalanced [clumphistoryblock]",
-          "description": "The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces)."
-        },
-        {
-          "name": "force-unbalanced-",
-          "syntax": "force-unbalanced-",
-          "description": ""
-        },
-        {
-          "name": "force-unbalanced-y",
-          "syntax": "force-unbalanced-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced force."
-        },
-        {
-          "name": "force-unbalanced-z",
-          "syntax": "force-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced force."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-unbalanced",
-          "syntax": "moment-unbalanced [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments."
-        },
-        {
-          "name": "moment-unbalanced-x",
-          "syntax": "moment-unbalanced-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-y",
-          "syntax": "moment-unbalanced-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "moment-unbalanced-z",
-          "syntax": "moment-unbalanced-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the unbalanced moment."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the location of clump centroid."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local",
-          "description": "Local force-ratio measure. (Listed by PFC3D 9.7; not on the manual page.)"
-        },
-        {
-          "name": "spin",
-          "syntax": "spin [clumphistoryblock]",
-          "description": "{Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x 3D ONLY [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y 3D ONLY [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [clumphistoryblock]",
-          "description": "The clump stress. Use the quantity keyword to specify the quantity to be recorded."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity [clumphistoryblock]",
-          "description": "Magnitude of the clump translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x [clumphistoryblock]",
-          "description": "The \\(x\\) -component of the clump velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y [clumphistoryblock]",
-          "description": "The \\(y\\) -component of the clump velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z 3D ONLY [clumphistoryblock]",
-          "description": "The \\(z\\) -component of the clump velocity."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump history name 'clump_pos' position-x id 1",
-          "description": "Record x-position of clump 1 with history name 'clump_pos'"
-        },
-        {
-          "command": "clump history velocity-z id 100",
-          "description": "Record z-velocity of clump 100 (auto-generated history name)"
-        },
-        {
-          "command": "clump history force-unbalanced id 5",
-          "description": "Record magnitude of unbalanced force on clump 5"
-        },
-        {
-          "command": "clump history name 'center_clump' displacement position (0,0,0)",
-          "description": "Record displacement magnitude of clump nearest to origin"
-        },
-        {
-          "command": "clump history extra index 1 type float id 10",
-          "description": "Record extra variable at index 1 (float type) for clump 10"
-        },
-        {
-          "command": "clump history stress quantity intermediate id 50",
-          "description": "Record intermediate principal stress of clump 50"
-        }
-      ],
-      "notes": [
-        "Live 9.7 first-slot enumeration; an object selector is required after the quantity. The former official-page spellings (magnitude/index/log/position/vector/zz) are rejected per-keyword on live 9.7."
-      ]
+    {
+      "name": "axis-angle-z",
+      "syntax": "axis-angle-z",
+      "description": "z-component of the axis-angle orientation measure. (Listed by PFC3D 9.7; not on the manual page.)"
+    },
+    {
+      "name": "convergence",
+      "syntax": "convergence",
+      "description": "Per-object convergence measure. (Listed by PFC3D 9.7; not on the manual page.)",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "displacement",
+      "syntax": "displacement [clumphistoryblock]",
+      "description": "Magnitude of the accumulated clump displacement vector as a result of cycling."
+    },
+    {
+      "name": "displacement-x",
+      "syntax": "displacement-x [clumphistoryblock]",
+      "description": "The \\(x\\) -component of accumulated displacement as a result of cycling."
+    },
+    {
+      "name": "displacement-y",
+      "syntax": "displacement-y [clumphistoryblock]",
+      "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
+    },
+    {
+      "name": "displacement-z",
+      "syntax": "displacement-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
+    },
+    {
+      "name": "euler-x",
+      "syntax": "euler-x 3D ONLY [clumphistoryblock]",
+      "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
+    },
+    {
+      "name": "euler-y",
+      "syntax": "euler-y 3D ONLY [clumphistoryblock]",
+      "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
+    },
+    {
+      "name": "euler-z",
+      "syntax": "euler-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command."
+    },
+    {
+      "name": "rotation",
+      "syntax": "rotation 2D ONLY [clumphistoryblock]",
+      "description": "Current clump orientation in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
+    },
+    {
+      "name": "extra",
+      "syntax": "extra [clumphistoryblock]",
+      "description": "Take a history of an extra variable. Use index to specify the extra index and type to specify the type.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "force-contact",
+      "syntax": "force-contact [clumphistoryblock]",
+      "description": "The magnitude of the force resulting from contacts."
+    },
+    {
+      "name": "force-contact-x",
+      "syntax": "force-contact-x [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the contact force."
+    },
+    {
+      "name": "force-contact-y",
+      "syntax": "force-contact-y [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the contact force."
+    },
+    {
+      "name": "force-contact-z",
+      "syntax": "force-contact-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the contact force."
+    },
+    {
+      "name": "force-unbalanced",
+      "syntax": "force-unbalanced [clumphistoryblock]",
+      "description": "The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces)."
+    },
+    {
+      "name": "force-unbalanced-",
+      "syntax": "force-unbalanced-",
+      "description": ""
+    },
+    {
+      "name": "force-unbalanced-y",
+      "syntax": "force-unbalanced-y [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the unbalanced force."
+    },
+    {
+      "name": "force-unbalanced-z",
+      "syntax": "force-unbalanced-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the unbalanced force."
+    },
+    {
+      "name": "moment-contact",
+      "syntax": "moment-contact [clumphistoryblock]",
+      "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact moments."
+    },
+    {
+      "name": "moment-contact-x",
+      "syntax": "moment-contact-x 3D ONLY [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the contact moment."
+    },
+    {
+      "name": "moment-contact-y",
+      "syntax": "moment-contact-y 3D ONLY [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the contact moment."
+    },
+    {
+      "name": "moment-contact-z",
+      "syntax": "moment-contact-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the contact moment."
+    },
+    {
+      "name": "moment-unbalanced",
+      "syntax": "moment-unbalanced [clumphistoryblock]",
+      "description": "{Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments."
+    },
+    {
+      "name": "moment-unbalanced-x",
+      "syntax": "moment-unbalanced-x 3D ONLY [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the unbalanced moment."
+    },
+    {
+      "name": "moment-unbalanced-y",
+      "syntax": "moment-unbalanced-y 3D ONLY [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the unbalanced moment."
+    },
+    {
+      "name": "moment-unbalanced-z",
+      "syntax": "moment-unbalanced-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the unbalanced moment."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Assign a custom name to the history. (Listed by PFC3D 9.7; not on the manual page.)"
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the location of clump centroid."
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the location of clump centroid."
+    },
+    {
+      "name": "position-z",
+      "syntax": "position-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the location of clump centroid."
+    },
+    {
+      "name": "ratio-local",
+      "syntax": "ratio-local",
+      "description": "Local force-ratio measure. (Listed by PFC3D 9.7; not on the manual page.)",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "spin",
+      "syntax": "spin [clumphistoryblock]",
+      "description": "{Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second."
+    },
+    {
+      "name": "spin-x",
+      "syntax": "spin-x 3D ONLY [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
+    },
+    {
+      "name": "spin-y",
+      "syntax": "spin-y 3D ONLY [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
+    },
+    {
+      "name": "spin-z",
+      "syntax": "spin-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
+    },
+    {
+      "name": "stress",
+      "syntax": "stress [clumphistoryblock]",
+      "description": "The clump stress. Use the quantity keyword to specify the quantity to be recorded.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity [clumphistoryblock]",
+      "description": "Magnitude of the clump translational velocity vector."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x [clumphistoryblock]",
+      "description": "The \\(x\\) -component of the clump velocity."
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y [clumphistoryblock]",
+      "description": "The \\(y\\) -component of the clump velocity."
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z 3D ONLY [clumphistoryblock]",
+      "description": "The \\(z\\) -component of the clump velocity.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "displacement",
+      "syntax": "displacement {displacement-x | displacement-y | displacement-z | euler-x | euler-y | euler-z | force-contact | force-contact-x | force-contact-y | force-contact-z | force-unbalanced | force-unbalanced-x | force-unbalanced-y | force-unbalanced-z | moment-contact | moment-contact-x | moment-contact-y | moment-contact-z | moment-unbalanced | moment-unbalanced-x | moment-unbalanced-y | moment-unbalanced-z | position-x | position-y | position-z | rotation | spin | spin-x | spin-y | spin-z | velocity | velocity-x | velocity-y | velocity-z}",
+      "description": "Options: displacement-x: The x -component of accumulated displacement as a result of cycling.; displacement-y: The y -component of accumulated displacement as a result of cycling.; displacement-z: The z -component of accumulated displacement as a result of cycling.; euler-x: The x -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; euler-y: The y -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; euler-z: The z -euler angle (in degrees) of the current clump orientation. The orientation is updated only when orientation tracking has been enabled (see the model orientation-tracking command). See the euler keyword of the clump attribute command.; force-contact: The magnitude of the force resulting from contacts.; force-contact-x: The x -component of the contact force.; force-contact-y: The y -component of the contact force.; force-contact-z: The z -component of the contact force.; force-unbalanced: The magnitude of the unbalanced force (sum of the applied, contact and gravitational forces).; force-unbalanced-x: The x -component of the unbalanced force.; force-unbalanced-y: The y -component of the unbalanced force.; force-unbalanced-z: The z -component of the unbalanced force.; moment-contact: {Value in 2D; Magnitude in 3D} of the sum of the contact moments.; moment-contact-x: The x -component of the contact moment.; moment-contact-y: The y -component of the contact moment.; moment-contact-z: The z -component of the contact moment.; moment-unbalanced: {Value in 2D; Magnitude in 3D} of the sum of the contact and applied moments.; moment-unbalanced-x: The x -component of the unbalanced moment.; moment-unbalanced-y: The y -component of the unbalanced moment.; moment-unbalanced-z: The z -component of the unbalanced moment.; position-x: The x -component of the location of clump centroid.; position-y: The y -component of the location of clump centroid.; position-z: The z -component of the location of clump centroid.; rotation: Current clump orientation. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command).; spin: {Value in 2D; Magnitude in 3D} of the clump angular velocity in radians per second.; spin-x: The x -component of the clump angular velocity in radians per second.; spin-y: The y -component of the clump angular velocity in radians per second.; spin-z: The z -component of the clump angular velocity in radians per second.; velocity: Magnitude of the clump translational velocity vector.; velocity-x: The x -component of the clump velocity.; velocity-y: The y -component of the clump velocity.; velocity-z: The z -component of the clump velocity.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump history name 'clump_pos' position-x id 1",
+      "description": "Record x-position of clump 1 with history name 'clump_pos'"
+    },
+    {
+      "command": "clump history velocity-z id 100",
+      "description": "Record z-velocity of clump 100 (auto-generated history name)"
+    },
+    {
+      "command": "clump history force-unbalanced id 5",
+      "description": "Record magnitude of unbalanced force on clump 5"
+    },
+    {
+      "command": "clump history name 'center_clump' displacement position (0,0,0)",
+      "description": "Record displacement magnitude of clump nearest to origin"
+    },
+    {
+      "command": "clump history extra index 1 type float id 10",
+      "description": "Record extra variable at index 1 (float type) for clump 10"
+    },
+    {
+      "command": "clump history stress quantity intermediate id 50",
+      "description": "Record intermediate principal stress of clump 50"
+    }
+  ]
 }

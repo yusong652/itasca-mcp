@@ -9,111 +9,52 @@
     "available": false,
     "workaround": "itasca.command('ball trace ...') - Python SDK does not provide trace creation. Use trace commands for manipulation."
   },
-  "versions": {
-    "7.0": {
-      "command": "ball trace",
-      "syntax": "ball trace [id <id>] id <id2>| <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id",
-          "description": ""
-        },
-        {
-          "name": "name",
-          "syntax": "name",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball trace id 1",
-          "description": "Create trace for ball 1 (auto-assign trace ID)"
-        },
-        {
-          "command": "ball trace id 100 id 1",
-          "description": "Create trace with ID 100 for ball 1"
-        },
-        {
-          "command": "ball trace position (0,0,5)",
-          "description": "Create trace for ball nearest to position (0,0,5)"
-        },
-        {
-          "command": "ball trace id 10 position (-2,3,0)",
-          "description": "Create trace ID 10 for ball nearest to (-2,3,0)"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball trace",
+  "syntax": {
+    "6.0": "ball trace [id <id>] id <id2> or <v>",
+    "7.0": "ball trace [id <id>] id <id2>| <v>",
+    "9.0": "ball trace [id <id>] id <id2>| <v>"
+  },
+  "keywords": [
+    {
+      "name": "id",
+      "syntax": "id",
+      "description": ""
     },
-    "6.0": {
-      "command": "ball trace",
-      "syntax": "ball trace [id <id>] id <id2> or <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id",
-          "description": ""
-        },
-        {
-          "name": "name",
-          "syntax": "name",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball trace id 1",
-          "description": "Create trace for ball 1 (auto-assign trace ID)"
-        },
-        {
-          "command": "ball trace id 100 id 1",
-          "description": "Create trace with ID 100 for ball 1"
-        },
-        {
-          "command": "ball trace position (0,0,5)",
-          "description": "Create trace for ball nearest to position (0,0,5)"
-        },
-        {
-          "command": "ball trace id 10 position (-2,3,0)",
-          "description": "Create trace ID 10 for ball nearest to (-2,3,0)"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "ball trace",
-      "syntax": "ball trace [id <id>] id <id2>| <v>",
-      "keywords": [
-        {
-          "name": "id",
-          "syntax": "id",
-          "description": ""
-        },
-        {
-          "name": "name",
-          "syntax": "name",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball trace id 1",
-          "description": "Create trace for ball 1 (auto-assign trace ID)"
-        },
-        {
-          "command": "ball trace id 100 id 1",
-          "description": "Create trace with ID 100 for ball 1"
-        },
-        {
-          "command": "ball trace position (0,0,5)",
-          "description": "Create trace for ball nearest to position (0,0,5)"
-        },
-        {
-          "command": "ball trace id 10 position (-2,3,0)",
-          "description": "Create trace ID 10 for ball nearest to (-2,3,0)"
-        }
-      ],
-      "notes": [
-        "On the PFC 9.8 builds the trace is created but never sampled: trace export reports an empty list, trace list stays at the origin, and every trace gets ID 0, so address it by name. 9.00 and 7.0 record the path; on 9.8 sample the position with a history or a callback."
-      ]
+    {
+      "name": "name",
+      "syntax": "name",
+      "description": ""
     }
+  ],
+  "examples": [
+    {
+      "command": "ball trace id 1",
+      "description": "Create trace for ball 1 (auto-assign trace ID)"
+    },
+    {
+      "command": "ball trace id 100 id 1",
+      "description": "Create trace with ID 100 for ball 1"
+    },
+    {
+      "command": "ball trace position (0,0,5)",
+      "description": "Create trace for ball nearest to position (0,0,5)"
+    },
+    {
+      "command": "ball trace id 10 position (-2,3,0)",
+      "description": "Create trace ID 10 for ball nearest to (-2,3,0)"
+    }
+  ],
+  "notes": {
+    "9.0": [
+      "On the PFC 9.8 builds the trace is created but never sampled: trace export reports an empty list, trace list stays at the origin, and every trace gets ID 0, so address it by name. 9.00 and 7.0 record the path; on 9.8 sample the position with a history or a callback."
+    ]
   }
 }

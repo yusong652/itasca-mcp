@@ -12,139 +12,78 @@
     "available": false,
     "workaround": "Use itasca.command('brick inlet create ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "available": false
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "inlet create",
+  "syntax": "inlet create id <i> keyword ...",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Set the inlet activity status. The default is false ."
     },
-    "7.0": {
-      "command": "inlet create",
-      "syntax": "inlet create id <i> keyword ...",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the inlet activity status. The default is false ."
-        },
-        {
-          "name": "brick-id",
-          "syntax": "brick-id <i>",
-          "description": "Set the brick."
-        },
-        {
-          "name": "flow-velocity",
-          "syntax": "flow-velocity <v>",
-          "description": "Set the flow velocity."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the newly created bodies. If slot is not specified, then the group slot Default is set to s ."
-        },
-        {
-          "name": "orientation",
-          "syntax": "orientation <v>",
-          "description": "Set the inlet orientation from Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the \\(y’\\) -axis followed by rotation about the \\(z’\\) -axis) in degrees."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Set the inlet position. The position corresponds to the position of the centroid of the brick extent."
-        },
-        {
-          "name": "relaxation-steps",
-          "syntax": "relaxation-steps <i1> [<i2>]",
-          "description": "Activate inlet relaxation scheme based on the number of steps. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to i1 steps. If i2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between steps i1 and i2 ."
-        },
-        {
-          "name": "relaxation-time",
-          "syntax": "relaxation-time <f1> [<f2>]",
-          "description": "Activate inlet relaxation scheme based on the mechanical time. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to an elapsed mechanical time of f1 steps. If f2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between times f1 and f2 ."
-        },
-        {
-          "name": "rotation-center",
-          "syntax": "rotation-center <v>",
-          "description": "Set the inlet rotation center."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <v>",
-          "description": "Set the inlet angular velocity. Rotation occurs with respect to the rotation center."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Set the inlet translational velocity. If not null, the center of rotation is also translated during motion."
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "Live 7.0 grammar: 'id <i>' is the required first slot; the keywords follow it (verified via 'inlet create id 1 <keyword>'). 'inlet' is a top-level command with subcommands create|modify."
-      ]
+    {
+      "name": "brick-id",
+      "syntax": "brick-id <i>",
+      "description": "Set the brick."
     },
-    "9.0": {
-      "command": "inlet create",
-      "syntax": "inlet create id <i> keyword ...",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Set the inlet activity status. The default is false ."
-        },
-        {
-          "name": "brick-id",
-          "syntax": "brick-id <i>",
-          "description": "Set the brick."
-        },
-        {
-          "name": "flow-velocity",
-          "syntax": "flow-velocity <v>",
-          "description": "Set the flow velocity."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the newly created bodies. If slot is not specified, then the group slot Default is set to s ."
-        },
-        {
-          "name": "orientation",
-          "syntax": "orientation <v>",
-          "description": "Set the inlet orientation from Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the \\(y’\\) -axis followed by rotation about the \\(z’\\) -axis) in degrees."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Set the inlet position. The position corresponds to the position of the centroid of the brick extent."
-        },
-        {
-          "name": "relaxation-steps",
-          "syntax": "relaxation-steps <i1> [<i2>]",
-          "description": "Activate inlet relaxation scheme based on the number of steps. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to i1 steps. If i2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between steps i1 and i2 ."
-        },
-        {
-          "name": "relaxation-time",
-          "syntax": "relaxation-time <f1> [<f2>]",
-          "description": "Activate inlet relaxation scheme based on the mechanical time. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to an elapsed mechanical time of f1 steps. If f2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between times f1 and f2 ."
-        },
-        {
-          "name": "rotation-center",
-          "syntax": "rotation-center <v>",
-          "description": "Set the inlet rotation center."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <v>",
-          "description": "Set the inlet angular velocity. Rotation occurs with respect to the rotation center."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Set the inlet translational velocity. If not null, the center of rotation is also translated during motion."
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "Live 9.7 grammar identical to 7.0: 'id <i>' is the required first slot; the keywords follow it."
-      ]
+    {
+      "name": "flow-velocity",
+      "syntax": "flow-velocity <v>",
+      "description": "Set the flow velocity."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>]",
+      "description": "The group slot slot is set to s for the newly created bodies. If slot is not specified, then the group slot Default is set to s ."
+    },
+    {
+      "name": "orientation",
+      "syntax": "orientation <v>",
+      "description": "Set the inlet orientation from Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the \\(y’\\) -axis followed by rotation about the \\(z’\\) -axis) in degrees."
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Set the inlet position. The position corresponds to the position of the centroid of the brick extent."
+    },
+    {
+      "name": "relaxation-steps",
+      "syntax": "relaxation-steps <i1> [<i2>]",
+      "description": "Activate inlet relaxation scheme based on the number of steps. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to i1 steps. If i2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between steps i1 and i2 ."
+    },
+    {
+      "name": "relaxation-time",
+      "syntax": "relaxation-time <f1> [<f2>]",
+      "description": "Activate inlet relaxation scheme based on the mechanical time. A force equal and opposite to the out-of-balance force is applied to the bodies inserted up to an elapsed mechanical time of f1 steps. If f2 is specified, then the applied force is multiplied by a factor linearly decaying from 1 to 0 between times f1 and f2 ."
+    },
+    {
+      "name": "rotation-center",
+      "syntax": "rotation-center <v>",
+      "description": "Set the inlet rotation center."
+    },
+    {
+      "name": "spin",
+      "syntax": "spin <v>",
+      "description": "Set the inlet angular velocity. Rotation occurs with respect to the rotation center."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <v>",
+      "description": "Set the inlet translational velocity. If not null, the center of rotation is also translated during motion."
     }
+  ],
+  "examples": [],
+  "notes": {
+    "7.0": [
+      "Live 7.0 grammar: 'id <i>' is the required first slot; the keywords follow it (verified via 'inlet create id 1 <keyword>'). 'inlet' is a top-level command with subcommands create|modify."
+    ],
+    "9.0": [
+      "Live 9.7 grammar identical to 7.0: 'id <i>' is the required first slot; the keywords follow it."
+    ]
   }
 }

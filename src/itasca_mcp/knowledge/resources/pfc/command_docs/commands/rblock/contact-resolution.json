@@ -10,162 +10,115 @@
     "available": false,
     "workaround": "Use itasca.command('rblock contact resolution ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock contact-resolution",
-      "syntax": "rblock contact-resolution keyword ...",
-      "keywords": [
-        {
-          "name": "full",
-          "syntax": "full",
-          "description": "Set the contact resolution strategy to full. When activated, the contact position is the centroid of the overlap region. For rigid blocks with many facets this may be significantly more computationally intensive than the reduced mode."
-        },
-        {
-          "name": "inhibit-contacts",
-          "syntax": "inhibit-contacts [{face-maximum <f> | face-minimum <f> | probability <f>}]",
-          "description": "Options: face-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum face area of the two rblocks at the ends of the contact.; face-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum face area of the two rblocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1."
-        },
-        {
-          "name": "inhibit-interval",
-          "syntax": "inhibit-interval <i>",
-          "description": "Specify the interval, in number of cycles, for inhibited contacts with rigid blocks to be tested for activity. This is useful for bonded block modeling where rounding is introduced to cull edge-edge and vertex-vertex contacts. In this case, when bonding, the inactive contacts may be inhibited and periodically checked for activity, improving computational performance. By default, inhibited contacts are never tested for activity (i.e., i = 0)."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "Set the contact resolution strategy to reduced. When in reduced mode, the contact plane, as determined by the GJK method, is used to cut the rigid blocks, producing two overlapping {line segments in 2D; convex, planar polygons in 3D}. The contact position is the centroid of these overlapping {line segments in 2D; polygons in 3D}."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Set the contact resolution tolerance. This is used in both full and reduced mode. If the overlap returned by the GJK method is less than f multiplied by twice the minimal enclosing ball radius, the blocks are displaced so that they at least overlap by this computed distance during the contact resolution computation. f must be greater than 0 and should be a small fraction of 1. By default the contact resolution tolerance is 0.0. Setting a non-zero tolerance may help stability for very stiff systems with normal force computed by absolute overlap. In general, though, normal force computations by incremental normal displacements yield much higher levels of stability."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "By default, the curvatures passed to the contact models to compute contact areas with rblocks are based on the rblock enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for face-face contact configurations. The curvatures are not updated when a bond is present at the contact."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock contact-resolution",
+  "syntax": "rblock contact-resolution keyword ...",
+  "keywords": [
+    {
+      "name": "accumulate-stress",
+      "syntax": "accumulate-stress [<b>]",
+      "description": "Specify that stresses are accumulated and stored during cycling. This slows performance by ~15% but allows the current stress state to be queried and used in contact models during force-displacement computations. By default the rigid block stresses are not accumulated but are computed when queried.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "7.0": {
-      "command": "rblock contact-resolution",
-      "syntax": "rblock contact-resolution keyword ...",
-      "keywords": [
-        {
-          "name": "accumulate-stress",
-          "syntax": "accumulate-stress [<b>]",
-          "description": "Specify that stresses are accumulated and stored during cycling. This slows performance by ~15% but allows the current stress state to be queried and used in contact models during force-displacement computations. By default the rigid block stresses are not accumulated but are computed when queried."
-        },
-        {
-          "name": "full",
-          "syntax": "full",
-          "description": "Set the contact resolution strategy to full. When activated, the contact position is the centroid of the overlap region. For rigid blocks with many facets this may be significantly more computationally intensive than the reduced mode."
-        },
-        {
-          "name": "inhibit-interval",
-          "syntax": "inhibit-interval <i>",
-          "description": "Specify the interval, in number of cycles, for inhibited contacts with rigid blocks to be tested for activity. This is useful for bonded block modeling where rounding is introduced to cull edge-edge and vertex-vertex contacts. In this case, when bonding, the inactive contacts may be inhibited and periodically checked for activity, improving computational performance. By default, inhibited contacts are never tested for activity (i.e., i = 0)."
-        },
-        {
-          "name": "install-gaps",
-          "syntax": "install-gaps",
-          "description": "Install gaps between rigid blocks consistent with the stress. When stresses are initialized between rigid blocks, the amount they overlap plays an important role in how they behave after the stress has been relieved. For instance, if rigid blocks are just touching and a large compressive stress is specified, it may be possible for the blocks to no longer physically be in contact even though compressive stress remains. This can result in undesirable behavior if a shear failure occurs as some portion of the stress has been relieved. In that case, the contact resolution may determine that the contact gap is greater than zero, meaning that all contact forces are set to zero. This command adds a small rounding contribution to each contact consistent with the reference gap specified in the contact model. This operation happens automatically, by default, when the rblock tractions command is given."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "Set the contact resolution strategy to reduced. When in reduced mode, the contact plane, as determined by the GJK method, is used to cut the rigid blocks, producing two overlapping {line segments in 2D; convex, planar polygons in 3D}. The contact position is the centroid of these overlapping {line segments in 2D; polygons in 3D}."
-        },
-        {
-          "name": "rblock-facet-tolerance",
-          "syntax": "rblock-facet-tolerance",
-          "description": "Set the angular tolerance (in degrees) between the rblock-facet contact normal and the wall facet normal for rblock-facet contact activity. By default, rblock-facet contacts are active regardless of contact normal orientation, provided a negative contact gap. This setting may be useful for simulations of rigid blocks sliding along relatively planar walls composed of many facets."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Set the contact resolution tolerance. This is used in both full and reduced mode. If the overlap returned by the GJK method is less than f multiplied by twice the minimal enclosing ball radius, the blocks are displaced so that they at least overlap by this computed distance during the contact resolution computation. f must be greater than 0 and should be a small fraction of 1. By default the contact resolution tolerance is 0.0. Setting a non-zero tolerance may help stability for very stiff systems with normal force computed by absolute overlap. In general, though, normal force computations by incremental normal displacements yield much higher levels of stability."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "By default, the curvatures passed to the contact models to compute contact areas with rigid blocks are based on the rigid block enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for facet-facet contact configurations. The curvatures are not updated when a bond is present at the contact."
-        },
-        {
-          "name": "facet-total",
-          "syntax": "facet-total <f> {check-on-remap <b>} ... [range]",
-          "description": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. This should be used in place of the inhibit-contacts keyword if contacts between rigid block vertices and edges do not need to be checked for reactivation periodically. This is applied per rigid block, so must be given after rigid blocks are created. Many fewer contacts may exist compared with using the inhibit-contacts keyword, saving significant memory. By default this check is only applied to the next remapping of the cellspace and contact detection event. If b is true , in all subsequent cellspace remapping and contact detection events between rigid blocks, the facet-total criteria continues to be enforced. b is false by default. Options: check-on-remap <b>"
-        },
-        {
-          "name": "inhibit-contacts",
-          "syntax": "inhibit-contacts [{facet-maximum <f> | facet-minimum <f> | facet-total <f> | probability <f>}]",
-          "description": "Inhibit rblock-rblock contacts based on contact area. By default, contacts are inhibited if the contact area is less than 0.5 (see the face-minimum keyword) multiplied by the minimum facet area of the two rblocks at the ends of the contact. This can effectively be used to inhibit the vast majority of vertex-vertex and edge-edge contacts in zero porosity packings of rigid blocks. Contacts not inhibited by the criterion above can also be inhibited if their areas are less than a specified factor of the maximum facet area of the two rigid blocks at the ends of the contact (see the face-maximum keyword). By default the maximum facet area is not checked. Options: facet-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum facet area of the two rigid blocks at the ends of the contact.; facet-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum facet area of the two rigid blocks at the ends of the contact.; facet-total <f>: Inhibit contacts it their area is less that f (default 0.01) multiplied by the minimum of the total facet area of the two rigid blocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1."
-        }
-      ],
-      "examples": []
+    {
+      "name": "full",
+      "syntax": "full",
+      "description": "Set the contact resolution strategy to full. When activated, the contact position is the centroid of the overlap region. For rigid blocks with many facets this may be significantly more computationally intensive than the reduced mode."
     },
-    "9.0": {
-      "command": "rblock contact-resolution",
-      "syntax": "rblock contact-resolution keyword ...",
-      "keywords": [
-        {
-          "name": "accumulate-stress",
-          "syntax": "accumulate-stress [<b>]",
-          "description": "Specify that stresses are accumulated and stored during cycling. This slows performance by ~15% but allows the current stress state to be queried and used in contact models during force-displacement computations. By default the rigid block stresses are not accumulated but are computed when queried."
-        },
-        {
-          "name": "full",
-          "syntax": "full",
-          "description": "Set the contact resolution strategy to full. When activated, the contact position is the centroid of the overlap region. For rigid blocks with many facets this may be significantly more computationally intensive than the reduced mode."
-        },
-        {
-          "name": "inhibit-interval",
-          "syntax": "inhibit-interval <i>",
-          "description": "Specify the interval, in number of cycles, for inhibited contacts with rigid blocks to be tested for activity. This is useful for bonded block modeling where rounding is introduced to cull edge-edge and vertex-vertex contacts. In this case, when bonding, the inactive contacts may be inhibited and periodically checked for activity, improving computational performance. By default, inhibited contacts are never tested for activity (i.e., i = 0)."
-        },
-        {
-          "name": "install-gaps",
-          "syntax": "install-gaps",
-          "description": "Install gaps between rigid blocks consistent with the stress. When stresses are initialized between rigid blocks, the amount they overlap plays an important role in how they behave after the stress has been relieved. For instance, if rigid blocks are just touching and a large compressive stress is specified, it may be possible for the blocks to no longer physically be in contact even though compressive stress remains. This can result in undesirable behavior if a shear failure occurs as some portion of the stress has been relieved. In that case, the contact resolution may determine that the contact gap is greater than zero, meaning that all contact forces are set to zero. This command adds a small rounding contribution to each contact consistent with the reference gap specified in the contact model. This operation happens automatically, by default, when the rblock tractions command is given."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "Set the contact resolution strategy to reduced. When in reduced mode, the contact plane, as determined by the GJK method, is used to cut the rigid blocks, producing two overlapping {line segments in 2D; convex, planar polygons in 3D}. The contact position is the centroid of these overlapping {line segments in 2D; polygons in 3D}."
-        },
-        {
-          "name": "relaxed-detection",
-          "syntax": "relaxed-detection <b>",
-          "description": "By default, contacts are detected between all rblocks at the start and end of the cycle sequence. This ensures that if rblocks have been modified outside of the cycle sequence (i.e., cut, positions changed, rblocks added, etc.) that the contact state is valid when cycling commences for the very next cycle. For large models, though, these operations can take a fair amount of computational time for large models. If b is true (the default is false ), these operations are skipped. It is the responsibility of the user to ensure the state is valid."
-        },
-        {
-          "name": "rblock-facet-tolerance",
-          "syntax": "rblock-facet-tolerance",
-          "description": "Set the angular tolerance (in degrees) between the rblock-facet contact normal and the wall facet normal for rblock-facet contact activity. By default, rblock-facet contacts are active regardless of contact normal orientation, provided a negative contact gap. This setting may be useful for simulations of rigid blocks sliding along relatively planar walls composed of many facets."
-        },
-        {
-          "name": "tolerance",
-          "syntax": "tolerance <f>",
-          "description": "Set the contact resolution tolerance. This is used in both full and reduced mode. If the overlap returned by the GJK method is less than f multiplied by twice the minimal enclosing ball radius, the blocks are displaced so that they at least overlap by this computed distance during the contact resolution computation. f must be greater than 0 and should be a small fraction of 1. By default the contact resolution tolerance is 0.0. Setting a non-zero tolerance may help stability for very stiff systems with normal force computed by absolute overlap. In general, though, normal force computations by incremental normal displacements yield much higher levels of stability."
-        },
-        {
-          "name": "update-area",
-          "syntax": "update-area <b>",
-          "description": "By default, the curvatures passed to the contact models to compute contact areas with rigid blocks are based on the rigid block enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for facet-facet contact configurations. The curvatures are not updated when a bond is present at the contact."
-        },
-        {
-          "name": "facet-total",
-          "syntax": "facet-total <f> {check-on-remap <b>} ... [range]",
-          "description": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. This should be used in place of the inhibit-contacts keyword if contacts between rigid block vertices and edges do not need to be checked for reactivation periodically. This is applied per rigid block, so must be given after rigid blocks are created. Many fewer contacts may exist compared with using the inhibit-contacts keyword, saving significant memory. By default this check is only applied to the next remapping of the cellspace and contact detection event. Options: check-on-remap <b>: If b is true , in all subsequent cellspace remapping and contact detection events between rigid blocks, the facet-total criteria continues to be enforced. b is false by default."
-        },
-        {
-          "name": "inhibit-contacts",
-          "syntax": "inhibit-contacts [{facet-maximum <f> | facet-minimum <f> | facet-total <f> | probability <f>}]",
-          "description": "Inhibit rblock-rblock contacts based on contact area. By default, contacts are inhibited if the contact area is less than 0.5 (see the face-minimum keyword) multiplied by the minimum facet area of the two rblocks at the ends of the contact. This can effectively be used to inhibit the vast majority of vertex-vertex and edge-edge contacts in zero porosity packings of rigid blocks. Contacts not inhibited by the criterion above can also be inhibited if their areas are less than a specified factor of the maximum facet area of the two rigid blocks at the ends of the contact (see the face-maximum keyword). By default the maximum facet area is not checked. Options: facet-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum facet area of the two rigid blocks at the ends of the contact.; facet-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum facet area of the two rigid blocks at the ends of the contact.; facet-total <f>: Inhibit contacts it their area is less that f (default 0.01) multiplied by the minimum of the total facet area of the two rigid blocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1."
-        }
-      ],
-      "examples": []
+    {
+      "name": "inhibit-contacts",
+      "syntax": {
+        "6.0": "inhibit-contacts [{face-maximum <f> | face-minimum <f> | probability <f>}]",
+        "7.0": "inhibit-contacts [{facet-maximum <f> | facet-minimum <f> | facet-total <f> | probability <f>}]",
+        "9.0": "inhibit-contacts [{facet-maximum <f> | facet-minimum <f> | facet-total <f> | probability <f>}]"
+      },
+      "description": {
+        "6.0": "Options: face-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum face area of the two rblocks at the ends of the contact.; face-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum face area of the two rblocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1.",
+        "7.0": "Inhibit rblock-rblock contacts based on contact area. By default, contacts are inhibited if the contact area is less than 0.5 (see the face-minimum keyword) multiplied by the minimum facet area of the two rblocks at the ends of the contact. This can effectively be used to inhibit the vast majority of vertex-vertex and edge-edge contacts in zero porosity packings of rigid blocks. Contacts not inhibited by the criterion above can also be inhibited if their areas are less than a specified factor of the maximum facet area of the two rigid blocks at the ends of the contact (see the face-maximum keyword). By default the maximum facet area is not checked. Options: facet-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum facet area of the two rigid blocks at the ends of the contact.; facet-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum facet area of the two rigid blocks at the ends of the contact.; facet-total <f>: Inhibit contacts it their area is less that f (default 0.01) multiplied by the minimum of the total facet area of the two rigid blocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1.",
+        "9.0": "Inhibit rblock-rblock contacts based on contact area. By default, contacts are inhibited if the contact area is less than 0.5 (see the face-minimum keyword) multiplied by the minimum facet area of the two rblocks at the ends of the contact. This can effectively be used to inhibit the vast majority of vertex-vertex and edge-edge contacts in zero porosity packings of rigid blocks. Contacts not inhibited by the criterion above can also be inhibited if their areas are less than a specified factor of the maximum facet area of the two rigid blocks at the ends of the contact (see the face-maximum keyword). By default the maximum facet area is not checked. Options: facet-maximum <f>: Inhibit contacts if their areas are less than f (default 0) multiplied by the maximum facet area of the two rigid blocks at the ends of the contact.; facet-minimum <f>: Inhibit contacts if their areas are less than f (default 0.5) multiplied by the minimum facet area of the two rigid blocks at the ends of the contact.; facet-total <f>: Inhibit contacts it their area is less that f (default 0.01) multiplied by the minimum of the total facet area of the two rigid blocks at the ends of the contact.; probability <f>: Set the probability of inhibiting a contact that fits the inhibition criteria to f (default 1.0). The value can range from 0 to 1."
+      }
+    },
+    {
+      "name": "inhibit-interval",
+      "syntax": "inhibit-interval <i>",
+      "description": "Specify the interval, in number of cycles, for inhibited contacts with rigid blocks to be tested for activity. This is useful for bonded block modeling where rounding is introduced to cull edge-edge and vertex-vertex contacts. In this case, when bonding, the inactive contacts may be inhibited and periodically checked for activity, improving computational performance. By default, inhibited contacts are never tested for activity (i.e., i = 0)."
+    },
+    {
+      "name": "install-gaps",
+      "syntax": "install-gaps",
+      "description": "Install gaps between rigid blocks consistent with the stress. When stresses are initialized between rigid blocks, the amount they overlap plays an important role in how they behave after the stress has been relieved. For instance, if rigid blocks are just touching and a large compressive stress is specified, it may be possible for the blocks to no longer physically be in contact even though compressive stress remains. This can result in undesirable behavior if a shear failure occurs as some portion of the stress has been relieved. In that case, the contact resolution may determine that the contact gap is greater than zero, meaning that all contact forces are set to zero. This command adds a small rounding contribution to each contact consistent with the reference gap specified in the contact model. This operation happens automatically, by default, when the rblock tractions command is given.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "reduced",
+      "syntax": "reduced",
+      "description": "Set the contact resolution strategy to reduced. When in reduced mode, the contact plane, as determined by the GJK method, is used to cut the rigid blocks, producing two overlapping {line segments in 2D; convex, planar polygons in 3D}. The contact position is the centroid of these overlapping {line segments in 2D; polygons in 3D}."
+    },
+    {
+      "name": "relaxed-detection",
+      "syntax": "relaxed-detection <b>",
+      "description": "By default, contacts are detected between all rblocks at the start and end of the cycle sequence. This ensures that if rblocks have been modified outside of the cycle sequence (i.e., cut, positions changed, rblocks added, etc.) that the contact state is valid when cycling commences for the very next cycle. For large models, though, these operations can take a fair amount of computational time for large models. If b is true (the default is false ), these operations are skipped. It is the responsibility of the user to ensure the state is valid.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "rblock-facet-tolerance",
+      "syntax": "rblock-facet-tolerance",
+      "description": "Set the angular tolerance (in degrees) between the rblock-facet contact normal and the wall facet normal for rblock-facet contact activity. By default, rblock-facet contacts are active regardless of contact normal orientation, provided a negative contact gap. This setting may be useful for simulations of rigid blocks sliding along relatively planar walls composed of many facets.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "tolerance",
+      "syntax": "tolerance <f>",
+      "description": "Set the contact resolution tolerance. This is used in both full and reduced mode. If the overlap returned by the GJK method is less than f multiplied by twice the minimal enclosing ball radius, the blocks are displaced so that they at least overlap by this computed distance during the contact resolution computation. f must be greater than 0 and should be a small fraction of 1. By default the contact resolution tolerance is 0.0. Setting a non-zero tolerance may help stability for very stiff systems with normal force computed by absolute overlap. In general, though, normal force computations by incremental normal displacements yield much higher levels of stability."
+    },
+    {
+      "name": "update-area",
+      "syntax": "update-area <b>",
+      "description": {
+        "6.0": "By default, the curvatures passed to the contact models to compute contact areas with rblocks are based on the rblock enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for face-face contact configurations. The curvatures are not updated when a bond is present at the contact.",
+        "7.0": "By default, the curvatures passed to the contact models to compute contact areas with rigid blocks are based on the rigid block enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for facet-facet contact configurations. The curvatures are not updated when a bond is present at the contact.",
+        "9.0": "By default, the curvatures passed to the contact models to compute contact areas with rigid blocks are based on the rigid block enclosing ball radii. By setting the update-area to true , rblock-rblock and rblock-facet contact areas are used to compute the curvatures. The contact area is computed as the {area in 2D; volume in 3D} of the overlap region divided by the maximum penetration depth. The implication is that, for rblock-rblock or rblock-facet contacts using contacts models with stiffness in terms of stress divided by displacement (e.g., the Soft-Bond Model contact model), the effective stiffnesses respond to the overlap area. For instance, for rblock-rblock contacts between edges the effective contact stiffness may be much lower than for facet-facet contact configurations. The curvatures are not updated when a bond is present at the contact."
+      }
+    },
+    {
+      "name": "facet-total",
+      "syntax": "facet-total <f> {check-on-remap <b>} ... [range]",
+      "description": {
+        "7.0": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. This should be used in place of the inhibit-contacts keyword if contacts between rigid block vertices and edges do not need to be checked for reactivation periodically. This is applied per rigid block, so must be given after rigid blocks are created. Many fewer contacts may exist compared with using the inhibit-contacts keyword, saving significant memory. By default this check is only applied to the next remapping of the cellspace and contact detection event. If b is true , in all subsequent cellspace remapping and contact detection events between rigid blocks, the facet-total criteria continues to be enforced. b is false by default. Options: check-on-remap <b>",
+        "9.0": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. This should be used in place of the inhibit-contacts keyword if contacts between rigid block vertices and edges do not need to be checked for reactivation periodically. This is applied per rigid block, so must be given after rigid blocks are created. Many fewer contacts may exist compared with using the inhibit-contacts keyword, saving significant memory. By default this check is only applied to the next remapping of the cellspace and contact detection event. Options: check-on-remap <b>: If b is true , in all subsequent cellspace remapping and contact detection events between rigid blocks, the facet-total criteria continues to be enforced. b is false by default."
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

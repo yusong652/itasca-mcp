@@ -5,194 +5,225 @@
     "import",
     "structure"
   ],
-  "description": "Create a geogrid as a collection of shell finite elements, where the elements are obtained from an outside source. A geogrid can also be created by the structure geogrid create command.",
+  "description": {
+    "7.0": "Create geogrid elements from an outside source.",
+    "9.0": "Create a geogrid as a collection of shell finite elements, where the elements are obtained from an outside source. A geogrid can also be created by the structure geogrid create command."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure geogrid import",
-      "syntax": "structure geogrid import keyword",
-      "description": "Create geogrid elements from an outside source.",
-      "keywords": [
-        {
-          "name": "from-file",
-          "syntax": "from-file <s> [geogridimportblock]",
-          "description": "Create elements from the geometry file s."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s> [geogridimportblock] [range]",
-          "description": "Create elements from the geometry set named s. The range applies to the list of edges in the geometry set."
-        },
-        {
-          "name": "cross-diagonal",
-          "syntax": "cross-diagonal <b>",
-          "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral."
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
-        },
-        {
-          "name": "element-type",
-          "syntax": "element-type keyword"
-        },
-        {
-          "name": "element-type-adummy",
-          "syntax": "<s>",
-          "description": "Attempt to match the string s to one of the available keywords below, and treats as that option"
-        },
-        {
-          "name": "element-type-cst",
-          "syntax": "cst",
-          "description": "CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading."
-        },
-        {
-          "name": "element-type-csth",
-          "syntax": "csth",
-          "description": "CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading."
-        },
-        {
-          "name": "element-type-dkt",
-          "syntax": "dkt",
-          "description": "DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading."
-        },
-        {
-          "name": "element-type-dkt-cst",
-          "syntax": "dkt-cst",
-          "description": "DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "element-type-dkt-csth",
-          "syntax": "dkt-csth",
-          "description": "DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "format",
-          "syntax": "format keyword",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure geogrid import command: from-file."
-        },
-        {
-          "name": "format-dxf",
-          "syntax": "dxf",
-          "description": "Specify the DXF file format."
-        },
-        {
-          "name": "format-geom",
-          "syntax": "geom",
-          "description": "Specify the geometry file format."
-        },
-        {
-          "name": "format-stl",
-          "syntax": "stl",
-          "description": "Specify the STL file format."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s1> [slot <s2>]",
-          "description": "Assign the created elements to group s1. The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i."
-        },
-        {
-          "name": "internal",
-          "syntax": "internal",
-          "description": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f>",
-          "description": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.import.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure geogrid import",
-      "syntax": "structure geogrid import keyword",
-      "keywords": [
-        {
-          "name": "from-file",
-          "syntax": "from-file <s> [geogridimportblock]",
-          "description": "Create elements from the geometry file s ."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s> [geogridimportblock] [range]",
-          "description": "Create elements from the geometry set named s . The range applies to the list of edges in the geometry set."
-        },
-        {
-          "name": "cross-diagonal",
-          "syntax": "cross-diagonal [<b>]",
-          "description": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral. When connecting elements to the grid, it is best to locate nodes at gridpoints. If the finite-element type can resist bending (DKT, DKT-CST, or DKT-(CST Hybrid) elements), then incompatibilities can develop along element faces and zone faces, because the transverse (out-of-plane) displacement field varies cubically across element faces, but varies only linearly across zone faces. Thus, when connecting bending-resistant elements rigidly to zone faces, it is best to utilize a cross-hatch mesh, because the middle node of the cross-diagonal mesh will be constrained to translate according to the linear displacement field of the zone face. This over-constrains the elements and can produce near-zero moments at these mid-nodes when present in a nonzero moment field."
-        },
-        {
-          "name": "distinct",
-          "syntax": "distinct",
-          "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
-        },
-        {
-          "name": "element-type",
-          "syntax": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}",
-          "description": "Specify the type of finite element to be used by each structural element. If no element type is specified, then the element type will be DKT-CST. Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. The finite element type of existing structural elements is listed by the structure geogrid list element-type command. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The value of the keyword supplied must be one of the following three-noded shell finite elements: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
-        },
-        {
-          "name": "format",
-          "syntax": "format {dxf | geom | stl}",
-          "description": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure geogrid import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s1> [slot <s2>]",
-          "description": "Assign the created elements to group s1 . The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
-        },
-        {
-          "name": "maximum-length",
-          "syntax": "maximum-length <f>",
-          "description": "Break the element into segments no greater than length f . The segments setting, if provided, is overridden as needed by this setting."
-        },
-        {
-          "name": "offset",
-          "syntax": "offset <v>",
-          "description": "Specify the translational offset of the geogrid."
-        },
-        {
-          "name": "segments",
-          "syntax": "segments <i>",
-          "description": "Break the element into i equal segments, creating new nodes as needed. The default value is 1 , indicating that only one element will be created."
-        }
-      ]
-    }
-  },
   "notes": [
     "'[geogridimportblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (cross-diagonal, distinct, element-type, format, group, id, maximum-length, offset, segments)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure geogrid import",
+  "syntax": "structure geogrid import keyword",
+  "keywords": [
+    {
+      "name": "from-file",
+      "syntax": "from-file <s> [geogridimportblock]",
+      "description": {
+        "7.0": "Create elements from the geometry file s.",
+        "9.0": "Create elements from the geometry file s ."
+      }
+    },
+    {
+      "name": "from-geometry",
+      "syntax": "from-geometry <s> [geogridimportblock] [range]",
+      "description": {
+        "7.0": "Create elements from the geometry set named s. The range applies to the list of edges in the geometry set.",
+        "9.0": "Create elements from the geometry set named s . The range applies to the list of edges in the geometry set."
+      }
+    },
+    {
+      "name": "cross-diagonal",
+      "syntax": {
+        "7.0": "cross-diagonal <b>",
+        "9.0": "cross-diagonal [<b>]"
+      },
+      "description": {
+        "7.0": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral.",
+        "9.0": "If specified, a cross-diagonal mesh of four triangles will be created with a node lying at the centroid of all quadrilaterals; otherwise, a cross-hatch mesh of two triangles will be created dividing the quadrilateral. When connecting elements to the grid, it is best to locate nodes at gridpoints. If the finite-element type can resist bending (DKT, DKT-CST, or DKT-(CST Hybrid) elements), then incompatibilities can develop along element faces and zone faces, because the transverse (out-of-plane) displacement field varies cubically across element faces, but varies only linearly across zone faces. Thus, when connecting bending-resistant elements rigidly to zone faces, it is best to utilize a cross-hatch mesh, because the middle node of the cross-diagonal mesh will be constrained to translate according to the linear displacement field of the zone face. This over-constrains the elements and can produce near-zero moments at these mid-nodes when present in a nonzero moment field."
+      }
+    },
+    {
+      "name": "distinct",
+      "syntax": "distinct",
+      "description": "Eliminate sharing of nodes among created elements. Every element will create a new set of nodes, even if they are at the same location in space and elements share the same ID number. This option is most commonly used with a later structure node join command to create links connecting nodes at the same location in order to apply custom inter-element behavior."
+    },
+    {
+      "name": "element-type",
+      "syntax": {
+        "7.0": "element-type keyword",
+        "9.0": "element-type {<s> | cst | csth | dkt | dkt-cst | dkt-csth}"
+      },
+      "description": {
+        "9.0": "Specify the type of finite element to be used by each structural element. If no element type is specified, then the element type will be DKT-CST. Note that the type of finite element is associated with each structural element when it is created and cannot subsequently be altered. The finite element type of existing structural elements is listed by the structure geogrid list element-type command. Plastic material behavior is supported by the DKT, CST and DKT-CST finite elements. The value of the keyword supplied must be one of the following three-noded shell finite elements: Options: <s>: Attempt to match the string s to one of the available keywords below, and treats as that option; cst: CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; csth: CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.; dkt: DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.; dkt-cst: DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.; dkt-csth: DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading."
+      }
+    },
+    {
+      "name": "element-type-adummy",
+      "syntax": "<s>",
+      "description": "Attempt to match the string s to one of the available keywords below, and treats as that option",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-cst",
+      "syntax": "cst",
+      "description": "CST (6 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-csth",
+      "syntax": "csth",
+      "description": "CST Hybrid (9 degrees-of-freedom) finite element. This is a membrane element; it resists membrane, but not bending, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt",
+      "syntax": "dkt",
+      "description": "DKT (9 degrees-of-freedom) finite element. This is a plate-bending element; it resists bending, but not membrane, loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt-cst",
+      "syntax": "dkt-cst",
+      "description": "DKT-CST (15 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST elements to resist both bending and membrane loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "element-type-dkt-csth",
+      "syntax": "dkt-csth",
+      "description": "DKT-(CST Hybrid) (18 degrees-of-freedom) finite element. This is a shell element that combines the DKT and CST Hybrid elements to resist both bending and membrane loading.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "format",
+      "syntax": {
+        "7.0": "format keyword",
+        "9.0": "format {dxf | geom | stl}"
+      },
+      "description": {
+        "7.0": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure geogrid import command: from-file.",
+        "9.0": "Specify the format of the file. Can only be given with the from-file keyword. This keyword can only be used with the following keywords of the structure geogrid import command: from-file . Options: dxf: Specify the DXF file format.; geom: Specify the geometry file format.; stl: Specify the STL file format."
+      }
+    },
+    {
+      "name": "format-dxf",
+      "syntax": "dxf",
+      "description": "Specify the DXF file format.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "format-geom",
+      "syntax": "geom",
+      "description": "Specify the geometry file format.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "format-stl",
+      "syntax": "stl",
+      "description": "Specify the STL file format.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "group",
+      "syntax": "group <s1> [slot <s2>]",
+      "description": {
+        "7.0": "Assign the created elements to group s1. The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups.",
+        "9.0": "Assign the created elements to group s1 . The group is assigned to the slot named s2 if supplied; it is assigned to the slot named Default if not. Use of the group logic is described in Groups ."
+      }
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": {
+        "7.0": "Specify the ID that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element, as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i.",
+        "9.0": "Specify the ID (this is the collection ID) that will be assigned to all new elements created by this command. If this value is not given, then the next available ID will be used. The ID controls potential joining of the element nodes to an existing element as follows. At each potential new node location, a new node is created unless all of the following conditions are fulfilled: 1) the ID is given; 2) an existing node is found “near” the potential new node location; and 3) the found node is part of an element of the same type with ID equal to i ."
+      }
+    },
+    {
+      "name": "internal",
+      "syntax": "internal",
+      "description": "This keyword only applies if the from-faces option was used. Specifies that all internal and surface faces in the range will have elements created on them. Normally only surface faces are considered.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "maximum-length",
+      "syntax": "maximum-length <f>",
+      "description": {
+        "7.0": "Break the element into segments no greater than length f. The segments setting, if provided, is overridden as needed by this setting.",
+        "9.0": "Break the element into segments no greater than length f . The segments setting, if provided, is overridden as needed by this setting."
+      }
+    },
+    {
+      "name": "offset",
+      "syntax": "offset <v>",
+      "description": "Specify the translational offset of the geogrid.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "segments",
+      "syntax": "segments <i>",
+      "description": {
+        "7.0": "Break the element into i equal segments, creating new nodes as needed. The default value is 1, indicating that only one element will be created.",
+        "9.0": "Break the element into i equal segments, creating new nodes as needed. The default value is 1 , indicating that only one element will be created."
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.import.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

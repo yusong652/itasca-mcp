@@ -10,68 +10,55 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone initialize-stresses",
-      "syntax": "zone initialize-stresses keyword [range]",
-      "description": "Initialize zone stresses based on the density of the zones above them and gravity.",
-      "keywords": [
-        {
-          "name": "direction-x",
-          "syntax": "direction-x <v>",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\)-direction the system should use. The \\(y\\)-direction is determined automatically using the \\(x\\)-direction and the direction of gravity to create an orthonormal system. The \\(x'\\)-direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\)-direction is (1,0,0)."
-        },
-        {
-          "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0. Remember that compressive stresses are negative, so this value will typically be negative."
-        },
-        {
-          "name": "total",
-          "syntax": "total",
-          "description": "By default the vertical to horizontal stress ratio is applied to effective stress. Use this keyword to make it apply to total stress. This has no effect unless a non-zero pore-pressure field has been created."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f> <fy>",
-          "description": "Determines the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local x and y directions. Note that the direction-x keyword is used in this case to distinguish these local directions."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.initialize-stresses.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone initialize-stresses",
+  "syntax": "zone initialize-stresses keyword [range]",
+  "keywords": [
+    {
+      "name": "direction-x",
+      "syntax": {
+        "7.0": "direction-x <v>",
+        "9.0": "direction-x <v> 3D Only"
+      },
+      "description": {
+        "7.0": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\)-direction the system should use. The \\(y\\)-direction is determined automatically using the \\(x\\)-direction and the direction of gravity to create an orthonormal system. The \\(x'\\)-direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\)-direction is (1,0,0).",
+        "9.0": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x'\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0)."
       }
     },
-    "9.0": {
-      "command": "zone initialize-stresses",
-      "syntax": "zone initialize-stresses keyword [range]",
-      "keywords": [
-        {
-          "name": "direction-x",
-          "syntax": "direction-x <v> 3D Only",
-          "description": "If two parameters are given for the ratio keyword, then this keyword can be used to specify the local \\(x\\) -direction the system should use. The \\(y\\) -direction is determined automatically using the \\(x'\\) -direction and the direction of gravity to create an orthonormal system. The \\(x'\\) -direction may be adjusted to make it normal to the direction of gravity. By default the \\(x\\) -direction is (1,0,0)."
-        },
-        {
-          "name": "overburden",
-          "syntax": "overburden <f>",
-          "description": "Specify an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative."
-        },
-        {
-          "name": "total",
-          "syntax": "total",
-          "description": "By default the vertical to horizontal stress ratio is applied to effective stress. This keyword makes it apply to total stress. This has no effect unless a non-zero pore-pressure field has been created."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f> [<fs>]",
-          "description": "Determine the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fs is given, then a different ratio is used in the local horizontal directions. Typically, the \\(z\\) -direction is assumed vertical in FLAC3D and the \\(y\\) -direction is assumed vertical in FLAC2D . Hence, the horizontal directions are the \\(x-\\) and \\(y-\\) directions in FLAC3D and the \\(x-\\) and \\(z-\\) directions in FLAC2D ."
-        }
-      ]
+    {
+      "name": "overburden",
+      "syntax": "overburden <f>",
+      "description": {
+        "7.0": "Specifies an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0. Remember that compressive stresses are negative, so this value will typically be negative.",
+        "9.0": "Specify an overburden stress added to the calculation, assuming the vertical boundary of the model does not represent the surface. This value defaults to 0.0 . Remember that compressive stresses are negative, so this value will typically be negative."
+      }
+    },
+    {
+      "name": "total",
+      "syntax": "total",
+      "description": {
+        "7.0": "By default the vertical to horizontal stress ratio is applied to effective stress. Use this keyword to make it apply to total stress. This has no effect unless a non-zero pore-pressure field has been created.",
+        "9.0": "By default the vertical to horizontal stress ratio is applied to effective stress. This keyword makes it apply to total stress. This has no effect unless a non-zero pore-pressure field has been created."
+      }
+    },
+    {
+      "name": "ratio",
+      "syntax": {
+        "7.0": "ratio <f> <fy>",
+        "9.0": "ratio <f> [<fs>]"
+      },
+      "description": {
+        "7.0": "Determines the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fy is given, then a different ratio is used in the local x and y directions. Note that the direction-x keyword is used in this case to distinguish these local directions.",
+        "9.0": "Determine the horizontal to vertical stress ratio. Both horizontal stresses are set to the vertical stresses times this value. If the optional second parameter fs is given, then a different ratio is used in the local horizontal directions. Typically, the \\(z\\) -direction is assumed vertical in FLAC3D and the \\(y\\) -direction is assumed vertical in FLAC2D . Hence, the horizontal directions are the \\(x-\\) and \\(y-\\) directions in FLAC3D and the \\(x-\\) and \\(z-\\) directions in FLAC2D ."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.initialize-stresses.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

@@ -10,250 +10,181 @@
     "available": false,
     "workaround": "Use itasca.command('rblock cut ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock cut",
-      "syntax": "rblock cut keyword ... [range]",
-      "keywords": [
-        {
-          "name": "aspect-ratio",
-          "syntax": "aspect-ratio <f>",
-          "description": "Specify the maximum aspect ratio of the rigid blocks resulting from a cut to produce a sliver. The default value is 100."
-        },
-        {
-          "name": "fractures",
-          "syntax": "fractures [<s>] [{infinite-plane | throughgoing} ...]",
-          "description": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the Infinite-plane keyword."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the cut rigid blocks. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "intersects-box",
-          "syntax": "intersects-box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
-          "description": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the x -direction, if subsequent extents are omitted, then the latest specified extent is used."
-        },
-        {
-          "name": "keep-contacts",
-          "syntax": "keep-contacts <b>",
-          "description": "When rblocks are cut all existing contacts are deleted and new contacts may be created where previously existing contacts once existed. By default, new contact models are inserted at these new contacts based on the setting of the CMAT . When b = true , the previous contact models are retained when possible. The normal contact force is also set at the contact that is between the cut blocks."
-        },
-        {
-          "name": "persistance",
-          "syntax": "persistance",
-          "description": ""
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {normal <vnorm> | point <vpt> | radius <f>} ...",
-          "description": "Options: normal <vnorm>: Specify the normal of the plane. By default the normal points in the positive {y-direction in 2D; z-direction in 3D}.; point <vpt>: Specify a point on the plane. Be default the point on the plane is the origin.; radius <f>: Specify the radius of the cut. If the distance from the point on the plane (specified with the point keyword) to any of the points corresponding to the intersection of the plane with the rigid block is greater than f then the cut is unsuccessful."
-        },
-        {
-          "name": "size",
-          "syntax": "size {absolute <f> | relative <f>}",
-          "description": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05."
-        },
-        {
-          "name": "sliver-group",
-          "syntax": "sliver-group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the cut rigid blocks that are deemed slivers. If slot is not specified, then s is assigned to the group slot Default . If rblocks are kept intact (using the sliver-intact keyword) then this group will be assigned to any intact rblocks where cuts would have created slivers."
-        },
-        {
-          "name": "sliver-intact",
-          "syntax": "sliver-intact <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword."
-        },
-        {
-          "name": "sliver-remove",
-          "syntax": "sliver-remove <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword."
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "Live 6.00 spelling is 'persistance' (sic); the official 'persistence' spelling does not parse."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock cut",
+  "syntax": "rblock cut keyword ... [range]",
+  "keywords": [
+    {
+      "name": "aspect-ratio",
+      "syntax": "aspect-ratio <f>",
+      "description": "Specify the maximum aspect ratio of the rigid blocks resulting from a cut to produce a sliver. The default value is 100."
     },
-    "7.0": {
-      "command": "rblock cut",
-      "syntax": "rblock cut keyword ... [range]",
-      "keywords": [
-        {
-          "name": "aspect-ratio",
-          "syntax": "aspect-ratio <f>",
-          "description": "Specify the maximum aspect ratio of the rigid blocks resulting from a cut to produce a sliver. The default value is 100."
-        },
-        {
-          "name": "deviation",
-          "syntax": "deviation <f1> [<f2>]",
-          "description": "Specify a deviation (in degrees) of the {dip and dip direction in 3D; dip only in 2D}. If the cut would be successful with the specified plane, the plane orientation is perturbed randomly (using a uniform distribution) with dip within f1 degrees {and dip direction within f2 degrees in 3D}. Thus, different orientation is used for each cut with the same plane. By default there is no deviation."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to the group s for the cut rigid blocks. If slot is not specified, then the group s is assigned to the group slot Default ."
-        },
-        {
-          "name": "group-facets",
-          "syntax": "group-facets <s> [slot <slot>]",
-          "description": "The group slot slot is set to the group s for the facets that are cut. If slot is not specified, then the group s is assigned to the group slot Default ."
-        },
-        {
-          "name": "group-sides",
-          "syntax": "group-sides <s> [slot <slot>]",
-          "description": "The group slot slot is set to s appended with either “_above” or “_below”, depending on whether the centroid of the block is above or below the cutting plane or fracture. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "intersects-box",
-          "syntax": "intersects-box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
-          "description": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used."
-        },
-        {
-          "name": "keep-contacts",
-          "syntax": "keep-contacts <b>",
-          "description": "When rblocks are cut all existing contacts are deleted and new contacts may be created where previously existing contacts once existed. By default, new contact models are inserted at these new contacts based on the setting of the CMAT . When b = true , the previous contact models are retained when possible. The normal contact force is also set at the contact that is between the cut blocks."
-        },
-        {
-          "name": "length-minimum",
-          "syntax": "length-minimum <f>",
-          "description": "Specify the minimum length of the rigid blocks resulting from a cut to produce a sliver. The aspect ratio computation provides a set of axes aligned with the rigid block maximum and minimum dimensions. The minimum length is the minimum dimension. The default value is 0."
-        },
-        {
-          "name": "persistence",
-          "syntax": "persistence <f>",
-          "description": "Specify the persistence of the cut. If a cut is successful, a uniform random number is selected to model persistence; if this value is greater than or equal to f the cut is abandoned and the original rigid block is retained. The default value is 1.0."
-        },
-        {
-          "name": "sliver-group",
-          "syntax": "sliver-group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the cut rigid blocks that are deemed slivers. If slot is not specified, then s is assigned to the group slot Default . If rblocks are kept intact (using the sliver-intact keyword) then this group will be assigned to any intact rblocks where cuts would have created slivers."
-        },
-        {
-          "name": "sliver-intact",
-          "syntax": "sliver-intact <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword."
-        },
-        {
-          "name": "sliver-remove",
-          "syntax": "sliver-remove <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword."
-        },
-        {
-          "name": "fractures",
-          "syntax": "fractures [<s>] [{infinite-plane | throughgoing} ...]",
-          "description": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the infinite-plane keyword."
-        },
-        {
-          "name": "group-fractures",
-          "syntax": "group-fractures [{sides <b> | slot <slot>} ...]",
-          "description": "Options: sides <b>: The group name from the fracture is appended with either “_above” or “_below” depending on whether the centroid of the block is above or below the cutting fracture if b is true. By default b = false.; slot <slot>: Use the fracture group name in slot slot to set the rblock groups."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {normal <vnorm> | point <vpt> | radius <f>} ...",
-          "description": "Options: normal <vnorm>: Specify the normal of the plane. By default the normal points in the positive {y-direction in 2D; z-direction in 3D}.; point <vpt>: Specify a point on the plane. Be default the point on the plane is the origin.; radius <f>: Specify the radius of the cut. If the distance from the point on the plane (specified with the point keyword) to any of the points corresponding to the intersection of the plane with the rigid block is greater than f then the cut is unsuccessful."
-        },
-        {
-          "name": "size",
-          "syntax": "size {absolute <f> | relative <f>}",
-          "description": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05."
-        }
-      ],
-      "examples": []
+    {
+      "name": "deviation",
+      "syntax": "deviation <f1> [<f2>]",
+      "description": "Specify a deviation (in degrees) of the {dip and dip direction in 3D; dip only in 2D}. If the cut would be successful with the specified plane, the plane orientation is perturbed randomly (using a uniform distribution) with dip within f1 degrees {and dip direction within f2 degrees in 3D}. Thus, different orientation is used for each cut with the same plane. By default there is no deviation.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "rblock cut",
-      "syntax": "rblock cut keyword ... [range]",
-      "keywords": [
-        {
-          "name": "aspect-ratio",
-          "syntax": "aspect-ratio <f>",
-          "description": "Specify the maximum aspect ratio of the rigid blocks resulting from a cut to produce a sliver. The default value is 100."
-        },
-        {
-          "name": "deviation",
-          "syntax": "deviation <f1> [<f2>]",
-          "description": "Specify a deviation (in degrees) of the {dip and dip direction in 3D; dip only in 2D}. If the cut would be successful with the specified plane, the plane orientation is perturbed randomly (using a uniform distribution) with dip within f1 degrees {and dip direction within f2 degrees in 3D}. Thus, different orientation is used for each cut with the same plane. By default there is no deviation."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "The group slot slot is set to the group s for the cut rigid blocks. If slot is not specified, then the group s is assigned to the group slot Default ."
-        },
-        {
-          "name": "group-facets",
-          "syntax": "group-facets <s> [slot <slot>]",
-          "description": "The group slot slot is set to the group s for the facets that are cut. If slot is not specified, then the group s is assigned to the group slot Default ."
-        },
-        {
-          "name": "group-sides",
-          "syntax": "group-sides <s> [slot <slot>]",
-          "description": "The group slot slot is set to s appended with either “_above” or “_below”, depending on whether the centroid of the block is above or below the cutting plane or fracture. If slot is not specified, then s is assigned to the group slot Default ."
-        },
-        {
-          "name": "intersects-box",
-          "syntax": "intersects-box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
-          "description": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used."
-        },
-        {
-          "name": "keep-contacts",
-          "syntax": "keep-contacts <b>",
-          "description": "When rblocks are cut all existing contacts are deleted and new contacts may be created where previously existing contacts once existed. By default, new contact models are inserted at these new contacts based on the setting of the CMAT . When b = true , the previous contact models are retained when possible. The normal contact force is also set at the contact that is between the cut blocks."
-        },
-        {
-          "name": "length-minimum",
-          "syntax": "length-minimum <f>",
-          "description": "Specify the minimum length of the rigid blocks resulting from a cut to produce a sliver. The aspect ratio computation provides a set of axes aligned with the rigid block maximum and minimum dimensions. The minimum length is the minimum dimension. The default value is 0."
-        },
-        {
-          "name": "minimum-edge",
-          "syntax": "minimum-edge <f>",
-          "description": "Specify the minimum edge length of rigid block facet edges to produce a sliver. The default value is 0.0."
-        },
-        {
-          "name": "persistence",
-          "syntax": "persistence <f>",
-          "description": "Specify the persistence of the cut. If a cut is successful, a uniform random number is selected to model persistence; if this value is greater than or equal to f the cut is abandoned and the original rigid block is retained. The default value is 1.0."
-        },
-        {
-          "name": "sliver-group",
-          "syntax": "sliver-group <s> [slot <slot>]",
-          "description": "The group slot slot is set to s for the cut rigid blocks that are deemed slivers. If slot is not specified, then s is assigned to the group slot Default . If rblocks are kept intact (using the sliver-intact keyword) then this group will be assigned to any intact rblocks where cuts would have created slivers."
-        },
-        {
-          "name": "sliver-intact",
-          "syntax": "sliver-intact <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword."
-        },
-        {
-          "name": "sliver-remove",
-          "syntax": "sliver-remove <b>",
-          "description": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword."
-        },
-        {
-          "name": "fractures",
-          "syntax": "fractures [<s>] [{infinite-plane | throughgoing} ...]",
-          "description": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the infinite-plane keyword."
-        },
-        {
-          "name": "group-fractures",
-          "syntax": "group-fractures [{sides <b> | slot <slot>} ...]",
-          "description": "Options: sides <b>: The group name from the fracture is appended with either “_above” or “_below” depending on whether the centroid of the block is above or below the cutting fracture if b is true. By default b = false.; slot <slot>: Use the fracture group name in slot slot to set the rblock groups."
-        },
-        {
-          "name": "plane",
-          "syntax": "plane {normal <vnorm> | point <vpt> | radius <f>} ...",
-          "description": "Options: normal <vnorm>: Specify the normal of the plane. By default the normal points in the positive {y-direction in 2D; z-direction in 3D}.; point <vpt>: Specify a point on the plane. Be default the point on the plane is the origin.; radius <f>: Specify the radius of the cut. If the distance from the point on the plane (specified with the point keyword) to any of the points corresponding to the intersection of the plane with the rigid block is greater than f then the cut is unsuccessful."
-        },
-        {
-          "name": "size",
-          "syntax": "size {absolute <f> | relative <f>}",
-          "description": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05."
-        }
-      ],
-      "examples": []
+    {
+      "name": "fractures",
+      "syntax": "fractures [<s>] [{infinite-plane | throughgoing} ...]",
+      "description": {
+        "6.0": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the Infinite-plane keyword.",
+        "7.0": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the infinite-plane keyword.",
+        "9.0": "Options: infinite-plane: Treat each fracture as an infinite plane, cutting the entire model. Cannot be given with the throughgoing keyword.; throughgoing: Fractures cut rigid blocks that they intersect. Cannot be given with the infinite-plane keyword."
+      }
+    },
+    {
+      "name": "group-fractures",
+      "syntax": "group-fractures [{sides <b> | slot <slot>} ...]",
+      "description": "Options: sides <b>: The group name from the fracture is appended with either “_above” or “_below” depending on whether the centroid of the block is above or below the cutting fracture if b is true. By default b = false.; slot <slot>: Use the fracture group name in slot slot to set the rblock groups.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>]",
+      "description": {
+        "6.0": "The group slot slot is set to s for the cut rigid blocks. If slot is not specified, then s is assigned to the group slot Default .",
+        "7.0": "The group slot slot is set to the group s for the cut rigid blocks. If slot is not specified, then the group s is assigned to the group slot Default .",
+        "9.0": "The group slot slot is set to the group s for the cut rigid blocks. If slot is not specified, then the group s is assigned to the group slot Default ."
+      }
+    },
+    {
+      "name": "group-facets",
+      "syntax": "group-facets <s> [slot <slot>]",
+      "description": "The group slot slot is set to the group s for the facets that are cut. If slot is not specified, then the group s is assigned to the group slot Default .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "group-sides",
+      "syntax": "group-sides <s> [slot <slot>]",
+      "description": "The group slot slot is set to s appended with either “_above” or “_below”, depending on whether the centroid of the block is above or below the cutting plane or fracture. If slot is not specified, then s is assigned to the group slot Default .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "intersects-box",
+      "syntax": "intersects-box <fxmin> <fxmax> [<fymin> <fymax> [<fzmin> <fzmax>]]",
+      "description": {
+        "6.0": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the x -direction, if subsequent extents are omitted, then the latest specified extent is used.",
+        "7.0": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used.",
+        "9.0": "Restrict cutting to the rigid blocks that intersect the specified box. Following specification of the extent of the box in the \\(x\\) -direction, if subsequent extents are omitted, then the latest specified extent is used."
+      }
+    },
+    {
+      "name": "keep-contacts",
+      "syntax": "keep-contacts <b>",
+      "description": "When rblocks are cut all existing contacts are deleted and new contacts may be created where previously existing contacts once existed. By default, new contact models are inserted at these new contacts based on the setting of the CMAT . When b = true , the previous contact models are retained when possible. The normal contact force is also set at the contact that is between the cut blocks."
+    },
+    {
+      "name": "length-minimum",
+      "syntax": "length-minimum <f>",
+      "description": "Specify the minimum length of the rigid blocks resulting from a cut to produce a sliver. The aspect ratio computation provides a set of axes aligned with the rigid block maximum and minimum dimensions. The minimum length is the minimum dimension. The default value is 0.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "minimum-edge",
+      "syntax": "minimum-edge <f>",
+      "description": "Specify the minimum edge length of rigid block facet edges to produce a sliver. The default value is 0.0.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "persistence",
+      "syntax": "persistence <f>",
+      "description": "Specify the persistence of the cut. If a cut is successful, a uniform random number is selected to model persistence; if this value is greater than or equal to f the cut is abandoned and the original rigid block is retained. The default value is 1.0.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "persistance",
+      "syntax": "persistance",
+      "description": "",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "plane",
+      "syntax": "plane {normal <vnorm> | point <vpt> | radius <f>} ...",
+      "description": "Options: normal <vnorm>: Specify the normal of the plane. By default the normal points in the positive {y-direction in 2D; z-direction in 3D}.; point <vpt>: Specify a point on the plane. Be default the point on the plane is the origin.; radius <f>: Specify the radius of the cut. If the distance from the point on the plane (specified with the point keyword) to any of the points corresponding to the intersection of the plane with the rigid block is greater than f then the cut is unsuccessful."
+    },
+    {
+      "name": "size",
+      "syntax": "size {absolute <f> | relative <f>}",
+      "description": {
+        "6.0": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05.",
+        "7.0": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05.",
+        "9.0": "Options: absolute <f>: Specify the absolute minimal {area in 2D; volume in 3D} of a rigid block resulting from a cut to produce a sliver. The default value is 0.0.; relative <f>: Specify the relative ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block to produce a sliver. If the ratio of {areas in 2D; volumes in 3D} is less than f a sliver is produced. By default this value is 0.05."
+      }
+    },
+    {
+      "name": "sliver-group",
+      "syntax": "sliver-group <s> [slot <slot>]",
+      "description": "The group slot slot is set to s for the cut rigid blocks that are deemed slivers. If slot is not specified, then s is assigned to the group slot Default . If rblocks are kept intact (using the sliver-intact keyword) then this group will be assigned to any intact rblocks where cuts would have created slivers."
+    },
+    {
+      "name": "sliver-intact",
+      "syntax": "sliver-intact <b>",
+      "description": {
+        "6.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword.",
+        "7.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword.",
+        "9.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then, if b is true , the cut will be deemed unsuccessful and the original rblock will be kept. This keyword should not be used with the sliver-remove keyword."
+      }
+    },
+    {
+      "name": "sliver-remove",
+      "syntax": "sliver-remove <b>",
+      "description": {
+        "6.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword.",
+        "7.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword.",
+        "9.0": "Specify the behavior when a sliver is encountered. The cut is deemed to produce a sliver if either: 1) the aspect ratio of one of the resulting rigid blocks is larger than the value specified with the aspect-ratio keyword; 2) the ratio of the {area in 2D; volume in 3D} of one of the resulting rigid blocks to the original rigid block is smaller than the value specified with the size relative keywords; or 3) the {area in 2D; volume in 3D} of one of the resulting rigid blocks is smaller than the value specified with the size absolute keywords. If a sliver condition is detected then either the block that is a sliver may be deleted (if b is true ) or the sliver may be retained (if b is false ). By default slivers are removed. This keyword should not be used with the sliver-intact keyword."
+      }
     }
+  ],
+  "examples": [],
+  "notes": {
+    "6.0": [
+      "Live 6.00 spelling is 'persistance' (sic); the official 'persistence' spelling does not parse."
+    ]
   }
 }

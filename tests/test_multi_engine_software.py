@@ -492,7 +492,7 @@ def test_mpoint_import_documents_from_zones() -> None:
     from itasca_mcp.knowledge.config import RESOURCES_DIR
 
     doc = json.loads((RESOURCES_DIR / "mpoint/command_docs/commands/mpoint/import.json").read_text(encoding="utf-8"))
-    keywords = {k["name"]: k for k in doc["versions"]["9.0"]["keywords"]}
+    keywords = {k["name"]: k for k in doc["keywords"]}
     assert "from-zones" in keywords
     assert "zones" in keywords["from-zones"]["description"].lower()
     assert "from-balls" in keywords
@@ -509,7 +509,7 @@ def test_mpoint_command_keywords_match_the_installed_index() -> None:
 
     root = RESOURCES_DIR / "mpoint/command_docs/commands/mpoint"
     property_doc = json.loads((root / "property.json").read_text(encoding="utf-8"))
-    assert property_doc["versions"]["9.0"]["keywords"] == []
+    assert property_doc["keywords"] == []
     assert any("constitutive-models" in n for n in property_doc["notes"])
 
     # every undocumented, live-discovered command says so rather than inventing behaviour
@@ -518,7 +518,7 @@ def test_mpoint_command_keywords_match_the_installed_index() -> None:
         assert any("Semantics are NOT established" in n for n in doc["notes"])
     for stem in ("sort", "node-list"):
         doc = json.loads((root / f"{stem}.json").read_text(encoding="utf-8"))
-        assert doc["versions"]["9.0"]["keywords"] == []
+        assert doc["keywords"] == []
 
 
 def test_mpoint_fish_intrinsics_are_complete_and_signed() -> None:

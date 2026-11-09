@@ -8,60 +8,41 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "block to-pfc",
-      "syntax": "block to-pfc keyword",
-      "keywords": [
-        {
-          "name": "filename",
-          "syntax": "filename <s> keyword",
-          "description": "Specify the name of the output file. This file is an assembly of PFC commands."
-        },
-        {
-          "name": "by-zone",
-          "syntax": "by-zone keyword",
-          "description": "Export tetrahedral zones. By default, 3DEC blocks are exported."
-        },
-        {
-          "name": "grid",
-          "syntax": "grid [{binary <b> | block-ids <b> | merge-join <b> | offset <v> | filename <s>} ...] [range]",
-          "description": "Export the zoned blocks as a FLAC3D grid file instead of PFC commands; the default file name is 3dec.f3grid. Options: binary <b>: Write a binary file, the default. With off the file is the text *FLAC3D grid format.; offset <v>: Shift the exported coordinates by v.; block-ids <b>, merge-join <b>: Listed by the engine; the manual does not describe them.; filename <s>: Name of the output file. It must come before the range."
-        },
-        {
-          "name": "precision",
-          "syntax": "precision <i>",
-          "description": "Numeric precision of the export. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "block to-pfc",
+  "syntax": "block to-pfc keyword",
+  "keywords": [
+    {
+      "name": "filename",
+      "syntax": "filename <s> keyword",
+      "description": "Specify the name of the output file. This file is an assembly of PFC commands."
     },
-    "7.0": {
-      "command": "block to-pfc",
-      "syntax": "block to-pfc keyword",
-      "keywords": [
-        {
-          "name": "filename",
-          "syntax": "filename <s> keyword",
-          "description": "Specify the name of the output file. This file is an assembly of PFC commands."
-        },
-        {
-          "name": "by-zone",
-          "syntax": "by-zone keyword",
-          "description": "Export tetrahedral zones. By default, 3DEC blocks are exported."
-        },
-        {
-          "name": "grid",
-          "syntax": "grid [{binary <b> | block-ids <b> | face-groups <b> | merge-join <b> | offset <v> | zone-groups <b> | filename <s>} ...] [range]",
-          "description": "Export the zoned blocks as a FLAC3D grid file instead of PFC commands; the default file name is 3dec.f3grid. Options: binary <b>: Write a binary file, the default. With off the file is the text *FLAC3D grid format.; offset <v>: Shift the exported coordinates by v.; block-ids <b>, merge-join <b>, face-groups <b>, zone-groups <b>: Listed by the engine; the manual does not describe them.; filename <s>: Name of the output file. It must come before the range."
-        },
-        {
-          "name": "precision",
-          "syntax": "precision <i>",
-          "description": "Numeric precision of the export. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        }
-      ],
-      "examples": []
+    {
+      "name": "by-zone",
+      "syntax": "by-zone keyword",
+      "description": "Export tetrahedral zones. By default, 3DEC blocks are exported."
+    },
+    {
+      "name": "grid",
+      "syntax": {
+        "7.0": "grid [{binary <b> | block-ids <b> | face-groups <b> | merge-join <b> | offset <v> | zone-groups <b> | filename <s>} ...] [range]",
+        "9.0": "grid [{binary <b> | block-ids <b> | merge-join <b> | offset <v> | filename <s>} ...] [range]"
+      },
+      "description": {
+        "7.0": "Export the zoned blocks as a FLAC3D grid file instead of PFC commands; the default file name is 3dec.f3grid. Options: binary <b>: Write a binary file, the default. With off the file is the text *FLAC3D grid format.; offset <v>: Shift the exported coordinates by v.; block-ids <b>, merge-join <b>, face-groups <b>, zone-groups <b>: Listed by the engine; the manual does not describe them.; filename <s>: Name of the output file. It must come before the range.",
+        "9.0": "Export the zoned blocks as a FLAC3D grid file instead of PFC commands; the default file name is 3dec.f3grid. Options: binary <b>: Write a binary file, the default. With off the file is the text *FLAC3D grid format.; offset <v>: Shift the exported coordinates by v.; block-ids <b>, merge-join <b>: Listed by the engine; the manual does not describe them.; filename <s>: Name of the output file. It must come before the range."
+      }
+    },
+    {
+      "name": "precision",
+      "syntax": "precision <i>",
+      "description": "Numeric precision of the export. (Listed by 3DEC 9.7.47; not on the manual page.)"
     }
-  }
+  ],
+  "examples": []
 }

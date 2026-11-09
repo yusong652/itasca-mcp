@@ -21,7 +21,27 @@ fish_docs 75, references 314, including indexes) across `_common` + 5 engines.
    wholesale; generators (fish) must be updated to emit the same shape and
    verified by regenerate-and-diff.
 
-## A. Availability and versions
+## A. Availability and versions (done 2026-11-09)
+
+Outcome (`scripts/corpus/migrate_versions.py`, 984 files): the per-version
+whole-block duplication is gone — one body, `availability: {versions: [...]}`
+always explicit at file level, 3,186 version maps, 1,398 keyword/example
+entries carrying their own `availability.versions`. Version maps are allowed
+on ANY field whose value genuinely differs (not just syntax/description — the
+52 command renames like extrude→sketch and the version-varying notes use the
+same form); the loader omits a field when the requested version is not in its
+map. `legacy_documentation` provenance became `verification` entries (D-style,
+not notes as first drafted); the removed-version apparatus became notes; a
+tombstoned version now raises KeyError at the loader (the tool answers
+`command_unavailable_for_version` with the available list) instead of serving
+an empty available-false page — only full tombstones (3DEC `fblock delete`)
+keep `available: false`. Keyword-level engines tags that differ by version
+split into parallel entries (`fish callback` contact events: pfc all versions,
+3dec from 9.0). fish `signature_7.0` ×19 became signature version maps via
+the generator; `figure_reference` flags were regenerated on the merged shape.
+Semantic doc-level comparison of the resolved views: 2,842 identical, 657
+with only the intended notes/verification/source additions, 150 tombstone
+pseudo-pages removed, 142 keyword-order drifts, 0 unexplained.
 
 Today the same fact — "this exists in these versions, for these engines" —
 has four shapes:

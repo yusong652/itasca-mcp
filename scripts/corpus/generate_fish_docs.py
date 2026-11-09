@@ -501,7 +501,11 @@ def main() -> None:
                 rec.update({"signature": None, "returns": None, "args": [], "settable": None})
             sigs = entry["sigs"]
             if "7.0" in sigs and "9.0" in sigs and sigs["7.0"] != sigs["9.0"]:
-                rec["signature_7.0"] = sigs["7.0"]
+                # The spelling changed between versions: a version map, total
+                # over the entry's available versions (6.0 keeps 9.0's grammar,
+                # matching the long-standing normalisation).
+                available_now = [v for v, ok in versions_for(entry, ns, ref_engine).items() if ok]
+                rec["signature"] = {v: sigs.get(v) or sigs["9.0"] for v in available_now}
             # corpus-spec availability: omitted = available in every corpus version.
             available = [v for v, ok in versions_for(entry, ns, ref_engine).items() if ok]
             if available != ALL_VERSIONS:

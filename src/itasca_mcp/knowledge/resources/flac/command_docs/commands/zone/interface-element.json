@@ -9,141 +9,126 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone interface element",
-      "syntax": "zone interface <s> element keyword [range]",
-      "description": "Manage zone interface elements. If the interface name is not given then the command operates on all interfaces.",
-      "keywords": [
-        {
-          "name": "delete",
-          "syntax": "delete",
-          "description": "All interface elements associated with this interface within the selected range are deleted."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> a[interfaceelementblock]",
-          "description": "sets the extra interface element variable value for array index i. The standard [interfaceelementblock] list is available to modify this value in space."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [keyword]",
-          "description": "Add group name s to the interface elements in the range. Use of the group logic is described in Groups. This command may take the form zone interface element \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. Options: remove: Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
-        },
-        {
-          "name": "group-remove",
-          "syntax": "remove",
-          "description": "Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s. The default slot name is Default."
-        },
-        {
-          "name": "list",
-          "syntax": "list {extra <i> | information}",
-          "description": "Options: extra <i>: Lists the values of the interface element extra variable for array index i .; information: Nodes, area and normal vector of all elements in the range are displayed."
-        },
-        {
-          "name": "list-extra",
-          "syntax": "extra <i>",
-          "description": "Lists the values of the interface element extra variable for array index i."
-        },
-        {
-          "name": "list-information",
-          "syntax": "information",
-          "description": "Nodes, area and normal vector of all elements in the range are displayed."
-        },
-        {
-          "name": "maximum-edge",
-          "syntax": "maximum-edge <f>",
-          "description": "f is the maximum edge length for interface elements in the range. The interface is subdivided until all of these elements have an edge length smaller than the assigned value. By default, two triangular elements are created for each quadrilateral zone face."
-        },
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Add the specified value to the existing value."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing value by the specified value."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneinterface/cmd_zone.interface.element.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "zone interface element",
-      "syntax": "zone interface [<s>] element keyword [range]",
-      "keywords": [
-        {
-          "name": "delete",
-          "syntax": "delete",
-          "description": "All interface elements associated with this interface within the selected range are deleted."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> <a> [interfaceelementblock]",
-          "description": "sets the extra interface element variable value for array index i. The standard [interfaceelementblock] list is available to modify this value in space."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [{remove | slot <s>}]",
-          "description": "Add group name s to the interface elements in the range. Use of the group logic is described in Groups . This command may take the form zone interface element \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. An interface element may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The following optional keywords are available: Options: remove: Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
-        },
-        {
-          "name": "list",
-          "syntax": "list {extra <i> | information}",
-          "description": "Options: extra <i>: Lists the values of the interface element extra variable for array index i .; information: Nodes, area (in 3D) or length (in 2D), and normal vector of all elements in the range are displayed."
-        },
-        {
-          "name": "maximum-edge",
-          "syntax": "maximum-edge <f>",
-          "description": "f is the maximum edge length for interface elements in the range. The interface is subdivided until all of these elements have an edge length smaller than the assigned value. By default, two triangular elements are created for each quadrilateral zone face in FLAC3D. In FLAC2D, a single line element is created for each zone face."
-        },
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Add the specified value to the existing value."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command — which may not produce the intended result."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing value by the specified value."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided."
-        }
-      ]
-    }
-  },
   "notes": [
     "'[interfaceelementblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (delete, group, list, maximum-edge, add, gradient, multiply, vary)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone interface element",
+  "syntax": {
+    "7.0": "zone interface <s> element keyword [range]",
+    "9.0": "zone interface [<s>] element keyword [range]"
+  },
+  "keywords": [
+    {
+      "name": "delete",
+      "syntax": "delete",
+      "description": "All interface elements associated with this interface within the selected range are deleted."
+    },
+    {
+      "name": "extra",
+      "syntax": {
+        "7.0": "extra <i> a[interfaceelementblock]",
+        "9.0": "extra <i> <a> [interfaceelementblock]"
+      },
+      "description": "sets the extra interface element variable value for array index i. The standard [interfaceelementblock] list is available to modify this value in space."
+    },
+    {
+      "name": "group",
+      "syntax": {
+        "7.0": "group <s> [keyword]",
+        "9.0": "group <s> [{remove | slot <s>}]"
+      },
+      "description": {
+        "7.0": "Add group name s to the interface elements in the range. Use of the group logic is described in Groups. This command may take the form zone interface element \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. Options: remove: Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default .",
+        "9.0": "Add group name s to the interface elements in the range. Use of the group logic is described in Groups . This command may take the form zone interface element \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name. An interface element may belong to many groups in different slots, up to a maximum of 128. The group range element can be used to select objects by group name. The following optional keywords are available: Options: remove: Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in.; slot <s>: Assign the group to the slot named s . The default slot name is Default ."
+      }
+    },
+    {
+      "name": "group-remove",
+      "syntax": "remove",
+      "description": "Remove s from interface elements. If a slot is not specified, the group name is removed from all slots it is found in.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "group-slot",
+      "syntax": "slot <s>",
+      "description": "Assign the group to the slot named s. The default slot name is Default.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list {extra <i> | information}",
+      "description": {
+        "7.0": "Options: extra <i>: Lists the values of the interface element extra variable for array index i .; information: Nodes, area and normal vector of all elements in the range are displayed.",
+        "9.0": "Options: extra <i>: Lists the values of the interface element extra variable for array index i .; information: Nodes, area (in 3D) or length (in 2D), and normal vector of all elements in the range are displayed."
+      }
+    },
+    {
+      "name": "list-extra",
+      "syntax": "extra <i>",
+      "description": "Lists the values of the interface element extra variable for array index i.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "list-information",
+      "syntax": "information",
+      "description": "Nodes, area and normal vector of all elements in the range are displayed.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "maximum-edge",
+      "syntax": "maximum-edge <f>",
+      "description": {
+        "7.0": "f is the maximum edge length for interface elements in the range. The interface is subdivided until all of these elements have an edge length smaller than the assigned value. By default, two triangular elements are created for each quadrilateral zone face.",
+        "9.0": "f is the maximum edge length for interface elements in the range. The interface is subdivided until all of these elements have an edge length smaller than the assigned value. By default, two triangular elements are created for each quadrilateral zone face in FLAC3D. In FLAC2D, a single line element is created for each zone face."
+      }
+    },
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Add the specified value to the existing value."
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient <v> [origin <v>]",
+      "description": {
+        "7.0": "Apply a gradient to the scalar-value provided.",
+        "9.0": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command — which may not produce the intended result."
+      }
+    },
+    {
+      "name": "multiply",
+      "syntax": "multiply",
+      "description": "Multiply the existing value by the specified value."
+    },
+    {
+      "name": "vary",
+      "syntax": "vary <v>",
+      "description": "Apply a linear variation to the scalar-value provided."
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneinterface/cmd_zone.interface.element.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

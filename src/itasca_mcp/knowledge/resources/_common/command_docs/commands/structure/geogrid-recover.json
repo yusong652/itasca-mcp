@@ -5,62 +5,48 @@
     "recover",
     "structure"
   ],
-  "description": "Recover stress and stress resultants for shell-type elements. The stresses can only be recovered for elements with an elastic material model, whereas the stress resultants can be recovered for elements with either an elastic or a plastic material model. The range keyword identifies the patch of elements to which the command will apply. The recovered quantities will depend upon the range of elements over which these quantities are being recovered, because nodal averaging only occurs for elements within this range.",
+  "description": {
+    "7.0": "Stress-recovery for geogrid elements. The stress-recovery procedure can be applied to all elements to compute both the stress resultants and the stresses acting at a specified depth. The range keyword identifies the patch of elements to which the command will apply. Note that the recovered quantities will depend upon the range of elements over which these quantities are being recovered, because nodal averaging only occurs for elements within this range.",
+    "9.0": "Recover stress and stress resultants for shell-type elements. The stresses can only be recovered for elements with an elastic material model, whereas the stress resultants can be recovered for elements with either an elastic or a plastic material model. The range keyword identifies the patch of elements to which the command will apply. The recovered quantities will depend upon the range of elements over which these quantities are being recovered, because nodal averaging only occurs for elements within this range."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure geogrid recover",
-      "syntax": "structure geogrid recover keyword [range]",
-      "description": "Stress-recovery for geogrid elements. The stress-recovery procedure can be applied to all elements to compute both the stress resultants and the stresses acting at a specified depth. The range keyword identifies the patch of elements to which the command will apply. Note that the recovered quantities will depend upon the range of elements over which these quantities are being recovered, because nodal averaging only occurs for elements within this range.",
-      "keywords": [
-        {
-          "name": "resultants",
-          "syntax": "resultants [range]",
-          "description": "recover the eight stress resultants for all elements in the optional range. The stress resultants are expressed in terms of the surface coordinate system. This command assumes that a consistent surface coordinate system has been established for the group of elements in the range (see the surface keyword). The bending and membrane stress resultants (\\(M_x\\), \\(M_y\\), \\(M_{xy}\\), \\(N_x\\), \\(N_y\\), and \\(N_{xy}\\)) vary linearly over each element, whereas the transverse-shear stress resultants (\\(Q_x\\) and \\(Q_y\\)) are constant over each element. The recovery procedure first computes the average values of bending and membrane stress resultants (by averaging, at the nodes, the contributions from each element in the range), and then spatially differentiates this average bending field over each element to obtain the transverse-shear stress resultants."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [depth-factor <f>]",
-          "description": "recover a stress tensor (expressed in global coordinate system) at a specified depth in all elements in the optional range. The depth equals \\(v\\) times \\(t\\)/2, where \\(t\\) is shell thickness. The depth factor, \\(v\\), must be in the range [-1, +1]. \\(v\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\)-direction), and \\(v\\) equal to zero corresponds with the shell mid-surface. If \\(v\\) is not specified, it defaults to +1."
-        },
-        {
-          "name": "surface",
-          "syntax": "surface <v>",
-          "description": "The vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x'\\) \\(y'\\) \\(z'\\), has the following properties: (1) \\(z'\\) is normal to the surface; (2) \\(x'\\) is the projection of the given vector onto the surface; and (3) \\(y'\\) is orthogonal to \\(x'\\) and \\(z'\\). The \\(z'\\)-direction is found at each node by taking the average normal direction of all elements in the range. If surface v is aligned with \\(z'\\) at any node, then processing stops and an error message is displayed. To proceed, designate a different v, or restrict the range of elements considered."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.recover.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure geogrid recover",
+  "syntax": "structure geogrid recover keyword [range]",
+  "keywords": [
+    {
+      "name": "resultants",
+      "syntax": "resultants [range]",
+      "description": {
+        "7.0": "recover the eight stress resultants for all elements in the optional range. The stress resultants are expressed in terms of the surface coordinate system. This command assumes that a consistent surface coordinate system has been established for the group of elements in the range (see the surface keyword). The bending and membrane stress resultants (\\(M_x\\), \\(M_y\\), \\(M_{xy}\\), \\(N_x\\), \\(N_y\\), and \\(N_{xy}\\)) vary linearly over each element, whereas the transverse-shear stress resultants (\\(Q_x\\) and \\(Q_y\\)) are constant over each element. The recovery procedure first computes the average values of bending and membrane stress resultants (by averaging, at the nodes, the contributions from each element in the range), and then spatially differentiates this average bending field over each element to obtain the transverse-shear stress resultants.",
+        "9.0": "Recover the eight stress resultants for all elements in the optional range. The stress resultants are expressed in terms of the surface coordinate system. This command assumes that a consistent surface coordinate system has been established for the group of elements in the range (see the surface keyword). The bending and membrane stress resultants ( \\(M_x\\) , \\(M_y\\) , \\(M_{xy}\\) , \\(N_x\\) , \\(N_y\\) , and \\(N_{xy}\\) ) vary linearly over each element, whereas the transverse shear stress resultants ( \\(Q_x\\) and \\(Q_y\\) ) are constant over each element. The recovery procedure first computes the average values of bending and membrane stress resultants (by averaging at the nodes the contributions from each element in the range), and then enforces the equilibrium condition that expresses the transverse shear stress resultants in terms of the spatial derivatives of the bending stress resultants by spatially differentiating the bending stress resultant field over the element. Stress resultants can be queried after recovery with the command structure geogrid list resultants and the FISH function struct.shell.resultant . The validity of the stress resultants for a particular element can be queried with the FISH function struct.shell.resultant.valid ."
       }
     },
-    "9.0": {
-      "command": "structure geogrid recover",
-      "syntax": "structure geogrid recover keyword [range]",
-      "keywords": [
-        {
-          "name": "resultants",
-          "syntax": "resultants [range]",
-          "description": "Recover the eight stress resultants for all elements in the optional range. The stress resultants are expressed in terms of the surface coordinate system. This command assumes that a consistent surface coordinate system has been established for the group of elements in the range (see the surface keyword). The bending and membrane stress resultants ( \\(M_x\\) , \\(M_y\\) , \\(M_{xy}\\) , \\(N_x\\) , \\(N_y\\) , and \\(N_{xy}\\) ) vary linearly over each element, whereas the transverse shear stress resultants ( \\(Q_x\\) and \\(Q_y\\) ) are constant over each element. The recovery procedure first computes the average values of bending and membrane stress resultants (by averaging at the nodes the contributions from each element in the range), and then enforces the equilibrium condition that expresses the transverse shear stress resultants in terms of the spatial derivatives of the bending stress resultants by spatially differentiating the bending stress resultant field over the element. Stress resultants can be queried after recovery with the command structure geogrid list resultants and the FISH function struct.shell.resultant . The validity of the stress resultants for a particular element can be queried with the FISH function struct.shell.resultant.valid ."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [depth-factor <f>]",
-          "description": "recover a stress tensor (expressed in the global coordinate system) at a specified depth for all elements with an elastic material model in the optional range. The depth equals \\(z^\\star\\) times \\(t\\) /2, where \\(z^\\star\\) is depth factor and \\(t\\) is shell thickness. The depth factor must be in the range [-1, +1]. \\(z^\\star\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\) -direction), and \\(z^\\star\\) equal to zero corresponds with the shell midsurface. If the depth factor is not specified, then it defaults to +1. Stresses are recovered at the three nodal points and centroid of each element with an elastic material model. If the \\(xy\\) -axes lie on the shell midsurface, then 1) stress components \\(σ_{xx}\\) , \\(σ_{yy}\\) , and \\(σ_{xy}\\) vary linearly over each element, 2) stress components \\(σ_{xz}\\) and \\(σ_{yz}\\) are constant over each element, and 3) \\(σ_{zz}\\) = 0 over each element. The stresses are obtained from the stress resultants by the following relations which hold for a homogeneous, linear elastic and thin-walled shell These stresses are computed in the surface coordinate system in which are expressed the stress resultants, and then transformed into the global coordinate system. If the stress resultants are not valid when this command is executed, then an attempt is made to recover them. If this attempt fails, then an error message is displayed indicating the problem. The usual problem is an inconsistency of the surface system, which must be rectified with the structure geogrid recover surface command. Stresses and principal stresses for elements with an elastic material model can be queried after recovery with the commands structure geogrid list stress and structure geogrid list stress-principal , and with the FISH functions struct.shell.stress and struct.shell.stress.prin . The depth at which these stresses have been recovered can be queried with the command structure geogrid list depth-factor and the FISH function struct.shell.stress.depth.factor . The validity of the stresses and principal stresses for a particular element can be queried with the FISH function struct.shell.stress.valid ."
-        },
-        {
-          "name": "surface",
-          "syntax": "surface <v>",
-          "description": "The vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x'y'z'\\) , has the following properties: 1) \\(z'\\) is normal to the surface; 2) \\(x'\\) is the projection of the given vector onto the surface; and 3) \\(y' = z' \\times x'\\) . The \\(z'\\) -direction is found at each node by taking the average normal direction of all elements in the range that use the node. If surface v is aligned with \\(z'\\) at any node, then processing stops and an error message is displayed. To proceed, designate a different v , or restrict the range of elements considered. The surface system at a node automatically becomes invalid under the following conditions: 1) large-strain update; or 2) creation or deletion of a element that uses the node. Validity must be re-established with the command structure geogrid recover surface . The surface coordinate system can be listed with the command structure node list system-surface and queried and set with the FISH function struct.node.system.surface . It can be visualized with the Shell plot item by choosing the System attribute called Surface."
-        }
-      ]
+    {
+      "name": "stress",
+      "syntax": "stress [depth-factor <f>]",
+      "description": {
+        "7.0": "recover a stress tensor (expressed in global coordinate system) at a specified depth in all elements in the optional range. The depth equals \\(v\\) times \\(t\\)/2, where \\(t\\) is shell thickness. The depth factor, \\(v\\), must be in the range [-1, +1]. \\(v\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\)-direction), and \\(v\\) equal to zero corresponds with the shell mid-surface. If \\(v\\) is not specified, it defaults to +1.",
+        "9.0": "recover a stress tensor (expressed in the global coordinate system) at a specified depth for all elements with an elastic material model in the optional range. The depth equals \\(z^\\star\\) times \\(t\\) /2, where \\(z^\\star\\) is depth factor and \\(t\\) is shell thickness. The depth factor must be in the range [-1, +1]. \\(z^\\star\\) equal to +1 / -1 corresponds with the outer/inner shell surface (outer surface defined by positive surface system \\(z\\) -direction), and \\(z^\\star\\) equal to zero corresponds with the shell midsurface. If the depth factor is not specified, then it defaults to +1. Stresses are recovered at the three nodal points and centroid of each element with an elastic material model. If the \\(xy\\) -axes lie on the shell midsurface, then 1) stress components \\(σ_{xx}\\) , \\(σ_{yy}\\) , and \\(σ_{xy}\\) vary linearly over each element, 2) stress components \\(σ_{xz}\\) and \\(σ_{yz}\\) are constant over each element, and 3) \\(σ_{zz}\\) = 0 over each element. The stresses are obtained from the stress resultants by the following relations which hold for a homogeneous, linear elastic and thin-walled shell These stresses are computed in the surface coordinate system in which are expressed the stress resultants, and then transformed into the global coordinate system. If the stress resultants are not valid when this command is executed, then an attempt is made to recover them. If this attempt fails, then an error message is displayed indicating the problem. The usual problem is an inconsistency of the surface system, which must be rectified with the structure geogrid recover surface command. Stresses and principal stresses for elements with an elastic material model can be queried after recovery with the commands structure geogrid list stress and structure geogrid list stress-principal , and with the FISH functions struct.shell.stress and struct.shell.stress.prin . The depth at which these stresses have been recovered can be queried with the command structure geogrid list depth-factor and the FISH function struct.shell.stress.depth.factor . The validity of the stresses and principal stresses for a particular element can be queried with the FISH function struct.shell.stress.valid ."
+      }
+    },
+    {
+      "name": "surface",
+      "syntax": "surface <v>",
+      "description": {
+        "7.0": "The vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x'\\) \\(y'\\) \\(z'\\), has the following properties: (1) \\(z'\\) is normal to the surface; (2) \\(x'\\) is the projection of the given vector onto the surface; and (3) \\(y'\\) is orthogonal to \\(x'\\) and \\(z'\\). The \\(z'\\)-direction is found at each node by taking the average normal direction of all elements in the range. If surface v is aligned with \\(z'\\) at any node, then processing stops and an error message is displayed. To proceed, designate a different v, or restrict the range of elements considered.",
+        "9.0": "The vector v enables a surface coordinate system to be generated for all nodes used by the elements in the optional range. The surface coordinate system, \\(x'y'z'\\) , has the following properties: 1) \\(z'\\) is normal to the surface; 2) \\(x'\\) is the projection of the given vector onto the surface; and 3) \\(y' = z' \\times x'\\) . The \\(z'\\) -direction is found at each node by taking the average normal direction of all elements in the range that use the node. If surface v is aligned with \\(z'\\) at any node, then processing stops and an error message is displayed. To proceed, designate a different v , or restrict the range of elements considered. The surface system at a node automatically becomes invalid under the following conditions: 1) large-strain update; or 2) creation or deletion of a element that uses the node. Validity must be re-established with the command structure geogrid recover surface . The surface coordinate system can be listed with the command structure node list system-surface and queried and set with the FISH function struct.node.system.surface . It can be visualized with the Shell plot item by choosing the System attribute called Surface."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/geogrids/commands/cmd_structure.geogrid.recover.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

@@ -9,90 +9,71 @@
     "available": false,
     "workaround": "itasca.command('contact cmat list') - Python SDK does not provide direct CMAT API, must use command interface."
   },
-  "notes": [
-    "Lists all CMAT entries including the default entry (index 0)",
-    "CMAT entries are evaluated in the order they appear (lower indices first)",
-    "Useful for debugging and reviewing CMAT configuration",
-    "Mechanical contacts are listed by default; use 'thermal' keyword for thermal CMAT",
-    "Shows which models and properties will be assigned to new contacts",
-    "Entry ranges show the conditions under which each entry is applied",
-    "Related commands: contact cmat add, contact cmat apply, contact cmat default, contact cmat remove",
-    "Entries are checked lowest index first; entry 0 is the default fallback."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact cmat list",
-      "syntax": "contact cmat list [keyword]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat list",
-          "description": "List all mechanical CMAT entries with their indices, models, and properties"
-        },
-        {
-          "command": "contact cmat list mechanical",
-          "description": "Explicitly list mechanical CMAT entries (same as default)"
-        },
-        {
-          "command": "contact cmat list thermal",
-          "description": "List thermal CMAT entries"
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "6.0": [
+      "Lists all CMAT entries including the default entry (index 0)",
+      "CMAT entries are evaluated in the order they appear (lower indices first)",
+      "Useful for debugging and reviewing CMAT configuration",
+      "Mechanical contacts are listed by default; use 'thermal' keyword for thermal CMAT",
+      "Shows which models and properties will be assigned to new contacts",
+      "Entry ranges show the conditions under which each entry is applied",
+      "Related commands: contact cmat add, contact cmat apply, contact cmat default, contact cmat remove",
+      "Entries are checked lowest index first; entry 0 is the default fallback."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact cmat list",
+  "syntax": {
+    "6.0": "contact cmat [<sprocess>] list",
+    "7.0": "contact cmat list [keyword]",
+    "9.0": "contact cmat list [keyword]"
+  },
+  "keywords": [
+    {
+      "name": "default",
+      "syntax": "default",
+      "description": "",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "contact cmat list",
-      "syntax": "contact cmat [<sprocess>] list",
-      "keywords": [
-        {
-          "name": "default",
-          "syntax": "default",
-          "description": ""
-        },
-        {
-          "name": "entries",
-          "syntax": "entries",
-          "description": ""
-        }
-      ],
-      "examples": [
-        {
-          "command": "contact cmat list",
-          "description": "List all mechanical CMAT entries with their indices, models, and properties"
-        },
-        {
-          "command": "contact cmat list mechanical",
-          "description": "Explicitly list mechanical CMAT entries (same as default)"
-        },
-        {
-          "command": "contact cmat list thermal",
-          "description": "List thermal CMAT entries"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "contact cmat list",
-      "syntax": "contact cmat list [keyword]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact cmat list",
-          "description": "List all mechanical CMAT entries with their indices, models, and properties"
-        },
-        {
-          "command": "contact cmat list mechanical",
-          "description": "Explicitly list mechanical CMAT entries (same as default)"
-        },
-        {
-          "command": "contact cmat list thermal",
-          "description": "List thermal CMAT entries"
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "name": "entries",
+      "syntax": "entries",
+      "description": "",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "contact cmat list",
+      "description": "List all mechanical CMAT entries with their indices, models, and properties"
+    },
+    {
+      "command": "contact cmat list mechanical",
+      "description": "Explicitly list mechanical CMAT entries (same as default)"
+    },
+    {
+      "command": "contact cmat list thermal",
+      "description": "List thermal CMAT entries"
+    }
+  ]
 }

@@ -33,134 +33,59 @@
       "python": "for c in it.contact.list(): c.set_persist(True)"
     }
   },
-  "notes": [
-    "Persist flag is OFF by default - contacts can be deleted by contact detection",
-    "When persist = ON: contact survives even when pieces separate beyond detection distance",
-    "When persist = OFF: contact deleted when separation exceeds detection criteria (default)",
-    "Persistence does NOT prevent deletion if a piece is deleted",
-    "Setting persistence on thermal contacts also sets it on corresponding mechanical contacts",
-    "Useful for tracking contact history even after separation",
-    "More efficient than Python iteration for bulk persistence setting",
-    "Persistence persists until explicitly changed or contact deleted",
-    "Does not affect force calculation - only contact lifetime",
-    "Related commands: contact detection, contact delete, contact activate, contact inhibit, model clean",
-    "Setting persistence on a non-mechanical (e.g. thermal) contact also turns it on for the corresponding mechanical contact.",
-    "Persistence does not survive piece deletion: deleting either piece deletes the contact."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact persist",
-      "syntax": "contact persist <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact persist on",
-          "description": "Set persistence flag on for all contacts (from official example). Use case: Prevent automatic contact deletion throughout simulation."
-        },
-        {
-          "command": "contact persist true range group 'permanent'",
-          "description": "Make contacts in 'permanent' group persist. Use case: Ensure specific contacts remain even when pieces separate."
-        },
-        {
-          "command": "contact persist on range contact type 'ball-ball'",
-          "description": "Make all ball-ball contacts persist. Use case: Track ball-ball interactions even after separation."
-        },
-        {
-          "command": "contact persist off range contact",
-          "description": "Restore normal deletion behavior for all contacts. Use case: Allow contact detection system to delete separated contacts."
-        },
-        {
-          "command": "contact persist true range model linearpbond",
-          "description": "Make linearpbond contacts persist. Use case: Keep bond contact records even after bond breakage and separation."
-        },
-        {
-          "command": "contact persist on mechanical range contact active",
-          "description": "Make all active mechanical contacts persist. Use case: Preserve contact network for analysis."
-        },
-        {
-          "command": "contact persist false range position-z 5.0 6.0",
-          "description": "Disable persistence for contacts in specific spatial region. Use case: Allow normal deletion in specific zone."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact persist",
+  "syntax": {
+    "6.0": "contact [<sprocess>] persist <bval> [range]",
+    "7.0": "contact persist <bval> [keyword] [range]",
+    "9.0": "contact persist <bval> [keyword] [range]"
+  },
+  "keywords": [],
+  "examples": [
+    {
+      "command": "contact persist on",
+      "description": "Set persistence flag on for all contacts (from official example). Use case: Prevent automatic contact deletion throughout simulation."
     },
-    "6.0": {
-      "command": "contact persist",
-      "syntax": "contact [<sprocess>] persist <bval> [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact persist on",
-          "description": "Set persistence flag on for all contacts (from official example). Use case: Prevent automatic contact deletion throughout simulation."
-        },
-        {
-          "command": "contact persist true range group 'permanent'",
-          "description": "Make contacts in 'permanent' group persist. Use case: Ensure specific contacts remain even when pieces separate."
-        },
-        {
-          "command": "contact persist on range contact type 'ball-ball'",
-          "description": "Make all ball-ball contacts persist. Use case: Track ball-ball interactions even after separation."
-        },
-        {
-          "command": "contact persist off range contact",
-          "description": "Restore normal deletion behavior for all contacts. Use case: Allow contact detection system to delete separated contacts."
-        },
-        {
-          "command": "contact persist true range model linearpbond",
-          "description": "Make linearpbond contacts persist. Use case: Keep bond contact records even after bond breakage and separation."
-        },
-        {
-          "command": "contact persist on mechanical range contact active",
-          "description": "Make all active mechanical contacts persist. Use case: Preserve contact network for analysis."
-        },
-        {
-          "command": "contact persist false range position-z 5.0 6.0",
-          "description": "Disable persistence for contacts in specific spatial region. Use case: Allow normal deletion in specific zone."
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact persist true range group 'permanent'",
+      "description": "Make contacts in 'permanent' group persist. Use case: Ensure specific contacts remain even when pieces separate."
     },
-    "9.0": {
-      "command": "contact persist",
-      "syntax": "contact persist <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact persist on",
-          "description": "Set persistence flag on for all contacts (from official example). Use case: Prevent automatic contact deletion throughout simulation."
-        },
-        {
-          "command": "contact persist true range group 'permanent'",
-          "description": "Make contacts in 'permanent' group persist. Use case: Ensure specific contacts remain even when pieces separate."
-        },
-        {
-          "command": "contact persist on range contact type 'ball-ball'",
-          "description": "Make all ball-ball contacts persist. Use case: Track ball-ball interactions even after separation."
-        },
-        {
-          "command": "contact persist off range contact",
-          "description": "Restore normal deletion behavior for all contacts. Use case: Allow contact detection system to delete separated contacts."
-        },
-        {
-          "command": "contact persist true range model linearpbond",
-          "description": "Make linearpbond contacts persist. Use case: Keep bond contact records even after bond breakage and separation."
-        },
-        {
-          "command": "contact persist on mechanical range contact active",
-          "description": "Make all active mechanical contacts persist. Use case: Preserve contact network for analysis."
-        },
-        {
-          "command": "contact persist false range position-z 5.0 6.0",
-          "description": "Disable persistence for contacts in specific spatial region. Use case: Allow normal deletion in specific zone."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact persist on range contact type 'ball-ball'",
+      "description": "Make all ball-ball contacts persist. Use case: Track ball-ball interactions even after separation."
+    },
+    {
+      "command": "contact persist off range contact",
+      "description": "Restore normal deletion behavior for all contacts. Use case: Allow contact detection system to delete separated contacts."
+    },
+    {
+      "command": "contact persist true range model linearpbond",
+      "description": "Make linearpbond contacts persist. Use case: Keep bond contact records even after bond breakage and separation."
+    },
+    {
+      "command": "contact persist on mechanical range contact active",
+      "description": "Make all active mechanical contacts persist. Use case: Preserve contact network for analysis."
+    },
+    {
+      "command": "contact persist false range position-z 5.0 6.0",
+      "description": "Disable persistence for contacts in specific spatial region. Use case: Allow normal deletion in specific zone."
     }
-  }
+  ]
 }

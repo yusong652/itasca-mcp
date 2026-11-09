@@ -10,34 +10,29 @@
     "available": false,
     "workaround": "Use itasca.command('rblock configure ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "available": false
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "rblock configure bbm",
+  "syntax": "rblock configure bbm keyword ... [range]",
+  "keywords": [
+    {
+      "name": "facet-total",
+      "syntax": "facet-total <f>",
+      "description": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. The default value is 0.01 . This check happens whenever there is a new contact detection event."
     },
-    "7.0": {
-      "available": false
+    {
+      "name": "relative",
+      "syntax": "relative <f>",
+      "description": "The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. Thus the expansion varies per rigid block. The default value is 1e-5 . The inertial properties are also unchanged as a result of dilation."
     },
-    "9.0": {
-      "command": "rblock configure bbm",
-      "syntax": "rblock configure bbm keyword ... [range]",
-      "keywords": [
-        {
-          "name": "facet-total",
-          "syntax": "facet-total <f>",
-          "description": "Specify that rblock-rblock contacts with area less than f multiplied by the minimum of the total facet area of the two rigid blocks in contact should not be created. The default value is 0.01 . This check happens whenever there is a new contact detection event."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "The amount of expansion is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block. Thus the expansion varies per rigid block. The default value is 1e-5 . The inertial properties are also unchanged as a result of dilation."
-        },
-        {
-          "name": "remap-interval",
-          "syntax": "remap-interval <i>",
-          "description": "Contacts are detected between rigid blocks every i cycles regardless of the amount of displacement. This is necessary to ensure that"
-        }
-      ],
-      "examples": []
+    {
+      "name": "remap-interval",
+      "syntax": "remap-interval <i>",
+      "description": "Contacts are detected between rigid blocks every i cycles regardless of the amount of displacement. This is necessary to ensure that"
     }
-  }
+  ],
+  "examples": []
 }

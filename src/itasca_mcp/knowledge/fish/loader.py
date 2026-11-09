@@ -135,6 +135,20 @@ class FishLoader:
         return total
 
     @staticmethod
+    def signature(entry: dict[str, Any], version: str | None = None) -> Any:
+        """The entry's signature for ``version``; a version map resolves here.
+
+        Without a version (or for one the map does not name) the 9.0 spelling
+        wins — the unified-kernel grammar the corpus is normalised to.
+        """
+        signature = entry.get("signature")
+        if isinstance(signature, dict):
+            if version and version in signature:
+                return signature[version]
+            return signature.get("9.0") or next(iter(signature.values()))
+        return signature
+
+    @staticmethod
     def namespaces(*, software: str, version: str | None = None) -> list[dict[str, Any]]:
         """Top-level namespaces from the engine index, dropping ones empty in ``version``."""
         index = FishLoader.load_index(software=software)

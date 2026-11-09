@@ -9,224 +9,232 @@
     "state",
     "stress"
   ],
-  "description": "Initialize a variable on all zones in the range. Values that can be set include density, extra, fluid-density, state, stress.",
+  "description": {
+    "7.0": "Initialize a variable on all zones in the range.",
+    "9.0": "Initialize a variable on all zones in the range. Values that can be set include density, extra, fluid-density, state, stress."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone initialize",
-      "syntax": "zone initialize keyword [range]",
-      "description": "Initialize a variable on all zones in the range.",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density <f> [zoneinitializeblock]",
-          "description": "mass density of zone"
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> a[zoneinitializeblock]",
-          "description": "extra variable for array index i"
-        },
-        {
-          "name": "fluid-density",
-          "syntax": "fluid-density <f> [zoneinitializeblock]"
-        },
-        {
-          "name": "state",
-          "syntax": "state <i> [zoneinitializeblock]",
-          "description": "The plasticity indicators for tetrahedrons are set to i. Normally the value of i used is 0 in order to reset the failure indicators."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [keyword ...]",
-          "description": "Full stress state, specified by component. A component that is not specified is assumed to be zero. This command should be used after assigning a constitutive model. Options: xx <f>: xx -component of stress; xy <f>: xy -component of stress; xz <f>: xz -component of stress; yy <f>: yy -component of stress; yz <f>: yz -component of stress; zz <f>: zz -component of stress"
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "xx <f>",
-          "description": "xx-component of stress"
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "xy <f>",
-          "description": "xy-component of stress"
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "xz <f>",
-          "description": "xz-component of stress"
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "yy <f>",
-          "description": "yy-component of stress"
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "yz <f>",
-          "description": "yz-component of stress"
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "zz <f>",
-          "description": "zz-component of stress"
-        },
-        {
-          "name": "stress-principal",
-          "syntax": "stress-principal [keyword ...]",
-          "description": "Principal stress states, specified by value and by direction using the available keywords. Note that at least two directions must be specified, and magnitudes not specified are assumed to be zero. Note that the [zoneinitializeblock] is available after each of the following keywords, allowing them to be varied in space independently. This command should be used after assigning a constitutive model. Options: direction-intermediate <v>: Direction of intermediate principal stress.; direction-maximum <v>: Direction of maximum principal stress.; direction-minimum <v>: Direction of minimum principal stress.; intermediate <f>: Intermediate principal stress magnitude.; maximum <f>: Maximum (most postitive) principal stress.; minimum <f>: Minimum (most negative) principal stress."
-        },
-        {
-          "name": "stress-principal-direction-intermediate",
-          "syntax": "direction-intermediate <v> [zoneinitializeblock]",
-          "description": "Direction of intermediate principal stress."
-        },
-        {
-          "name": "stress-principal-direction-maximum",
-          "syntax": "direction-maximum <v> [zoneinitializeblock]",
-          "description": "Direction of maximum principal stress."
-        },
-        {
-          "name": "stress-principal-direction-minimum",
-          "syntax": "direction-minimum <v> [zoneinitializeblock]",
-          "description": "Direction of minimum principal stress."
-        },
-        {
-          "name": "stress-principal-intermediate",
-          "syntax": "intermediate <f> [zoneinitializeblock]",
-          "description": "Intermediate principal stress magnitude."
-        },
-        {
-          "name": "stress-principal-maximum",
-          "syntax": "maximum <f> [zoneinitializeblock]",
-          "description": "Maximum (most postitive) principal stress."
-        },
-        {
-          "name": "stress-principal-minimum",
-          "syntax": "minimum <f> [zoneinitializeblock]",
-          "description": "Minimum (most negative) principal stress."
-        },
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Add the specified value to the existing value."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing value by the specified value."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.initialize.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "zone initialize",
-      "syntax": "zone initialize keyword [range]",
-      "keywords": [
-        {
-          "name": "density",
-          "syntax": "density <f> [zoneinitializeblock]",
-          "description": "Mass density of zone."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> <a> [zoneinitializeblock]",
-          "description": "Extra variable for array index i ."
-        },
-        {
-          "name": "fluid-density",
-          "syntax": "fluid-density <f> [zoneinitializeblock]",
-          "description": "Fluid mass density in zone (only available if model configure fluid has been specified)"
-        },
-        {
-          "name": "state",
-          "syntax": "state <i> [zoneinitializeblock]",
-          "description": "The plasticity indicators for tetrahedrons are set to i . Normally the value of i used is 0 in order to reset the failure indicators."
-        },
-        {
-          "name": "stress",
-          "syntax": "stress [{xx <f> | xy <f> | xz <f> 3D Only | yy <f> | yz <f> 3D Only | zz <f>} ...]",
-          "description": "Full stress state, specified by component. A component that is not specified is assumed to be zero. This command should be used after assigning a constitutive model. Options: xx <f>: xx -component of stress.; xy <f>: xy -component of stress.; xz <f>3D Only: xz -component of stress.; yy <f>: yy -component of stress.; yz <f>3D Only: yz -component of stress.; zz <f>: zz -component of stress. initialize the full stress tensor (six components) for zones in the range. Requires a non-null constitutive model assigned beforehand."
-        },
-        {
-          "name": "stress-principal",
-          "syntax": "stress-principal [{direction-intermediate <v> [zoneinitializeblock] | direction-maximum <v> [zoneinitializeblock] | direction-minimum <v> [zoneinitializeblock] | intermediate <f> [zoneinitializeblock] | maximum <f> [zoneinitializeblock] | minimum <f> [zoneinitializeblock] | dip-maximum <f> 3D Only | dip-direction-maximum <f> 3D Only | dip-intermediate <f> 3D Only | dip-direction-intermediate <f> 3D Only | dip-minimum <f> 3D Only | dip-direction-minimum <f> 3D Only} ...]",
-          "description": "Principal stress states, specified by value and by direction using the available keywords. Note that at least two directions must be specified, and magnitudes not specified are assumed to be zero. Note that the [zoneinitializeblock] is available after each of the following keywords, allowing them to be varied in space independently. This command should be used after assigning a constitutive model. Options: direction-intermediate <v>[zoneinitializeblock]: Direction of intermediate principal stress.; direction-maximum <v>[zoneinitializeblock]: Direction of maximum principal stress.; direction-minimum <v>[zoneinitializeblock]: Direction of minimum principal stress.; intermediate <f>[zoneinitializeblock]: Intermediate principal stress magnitude.; maximum <f>[zoneinitializeblock]: Maximum (most postitive) principal stress.; minimum <f>[zoneinitializeblock]: Minimum (most negative) principal stress.; dip-maximum <f>3D Only: Set dip of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-maximum <f>3D Only: Set dip direction of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-intermediate <f>3D Only: Set dip of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-intermediate <f>3D Only: Set dip direction of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-minimum <f>3D Only: Set dip of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-minimum <f>3D Only: Set dip direction of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal directions. initialize zone principal stresses, specified by magnitudes (maximum/intermediate/minimum) and by direction (direction-maximum/direction-intermediate/direction-minimum). At least two principal directions must be specified. Requires a non-null constitutive model assigned beforehand."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx <f> [zoneinitializeblock]",
-          "description": "xx -component of stress (See the description above for the difference between zone initialize stress-xx and zone initialize stress xx and for the next five keywords)."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy <f> [zoneinitializeblock]",
-          "description": "xy -component of stress."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz <f> 3D Only [zoneinitializeblock]",
-          "description": "xz -component of stress."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy <f> [zoneinitializeblock]",
-          "description": "yy -component of stress."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz <f> 3D Only [zoneinitializeblock]",
-          "description": "yz -component of stress."
-        },
-        {
-          "name": "add",
-          "syntax": "add",
-          "description": "Add the specified value to the existing value."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient <v> [origin <v>]",
-          "description": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command — which may not produce the intended result."
-        },
-        {
-          "name": "multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing value by the specified value."
-        },
-        {
-          "name": "vary",
-          "syntax": "vary <v>",
-          "description": "Apply a linear variation to the scalar-value provided."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz <f> [zoneinitializeblock]",
-          "description": "zz -component of stress."
-        }
-      ]
-    }
-  },
   "notes": [
     "'[zoneinitializeblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (stress, add, gradient, multiply, vary)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone initialize",
+  "syntax": "zone initialize keyword [range]",
+  "keywords": [
+    {
+      "name": "density",
+      "syntax": "density <f> [zoneinitializeblock]",
+      "description": {
+        "7.0": "mass density of zone",
+        "9.0": "Mass density of zone."
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": {
+        "7.0": "extra <i> a[zoneinitializeblock]",
+        "9.0": "extra <i> <a> [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "extra variable for array index i",
+        "9.0": "Extra variable for array index i ."
+      }
+    },
+    {
+      "name": "fluid-density",
+      "syntax": "fluid-density <f> [zoneinitializeblock]",
+      "description": {
+        "9.0": "Fluid mass density in zone (only available if model configure fluid has been specified)"
+      }
+    },
+    {
+      "name": "state",
+      "syntax": "state <i> [zoneinitializeblock]",
+      "description": {
+        "7.0": "The plasticity indicators for tetrahedrons are set to i. Normally the value of i used is 0 in order to reset the failure indicators.",
+        "9.0": "The plasticity indicators for tetrahedrons are set to i . Normally the value of i used is 0 in order to reset the failure indicators."
+      }
+    },
+    {
+      "name": "stress",
+      "syntax": {
+        "7.0": "stress [keyword ...]",
+        "9.0": "stress [{xx <f> | xy <f> | xz <f> 3D Only | yy <f> | yz <f> 3D Only | zz <f>} ...]"
+      },
+      "description": {
+        "7.0": "Full stress state, specified by component. A component that is not specified is assumed to be zero. This command should be used after assigning a constitutive model. Options: xx <f>: xx -component of stress; xy <f>: xy -component of stress; xz <f>: xz -component of stress; yy <f>: yy -component of stress; yz <f>: yz -component of stress; zz <f>: zz -component of stress",
+        "9.0": "Full stress state, specified by component. A component that is not specified is assumed to be zero. This command should be used after assigning a constitutive model. Options: xx <f>: xx -component of stress.; xy <f>: xy -component of stress.; xz <f>3D Only: xz -component of stress.; yy <f>: yy -component of stress.; yz <f>3D Only: yz -component of stress.; zz <f>: zz -component of stress. initialize the full stress tensor (six components) for zones in the range. Requires a non-null constitutive model assigned beforehand."
+      }
+    },
+    {
+      "name": "stress-xx",
+      "syntax": {
+        "7.0": "xx <f>",
+        "9.0": "stress-xx <f> [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "xx-component of stress",
+        "9.0": "xx -component of stress (See the description above for the difference between zone initialize stress-xx and zone initialize stress xx and for the next five keywords)."
+      }
+    },
+    {
+      "name": "stress-xy",
+      "syntax": {
+        "7.0": "xy <f>",
+        "9.0": "stress-xy <f> [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "xy-component of stress",
+        "9.0": "xy -component of stress."
+      }
+    },
+    {
+      "name": "stress-xz",
+      "syntax": {
+        "7.0": "xz <f>",
+        "9.0": "stress-xz <f> 3D Only [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "xz-component of stress",
+        "9.0": "xz -component of stress."
+      }
+    },
+    {
+      "name": "stress-yy",
+      "syntax": {
+        "7.0": "yy <f>",
+        "9.0": "stress-yy <f> [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "yy-component of stress",
+        "9.0": "yy -component of stress."
+      }
+    },
+    {
+      "name": "stress-yz",
+      "syntax": {
+        "7.0": "yz <f>",
+        "9.0": "stress-yz <f> 3D Only [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "yz-component of stress",
+        "9.0": "yz -component of stress."
+      }
+    },
+    {
+      "name": "stress-zz",
+      "syntax": {
+        "7.0": "zz <f>",
+        "9.0": "stress-zz <f> [zoneinitializeblock]"
+      },
+      "description": {
+        "7.0": "zz-component of stress",
+        "9.0": "zz -component of stress."
+      }
+    },
+    {
+      "name": "stress-principal",
+      "syntax": {
+        "7.0": "stress-principal [keyword ...]",
+        "9.0": "stress-principal [{direction-intermediate <v> [zoneinitializeblock] | direction-maximum <v> [zoneinitializeblock] | direction-minimum <v> [zoneinitializeblock] | intermediate <f> [zoneinitializeblock] | maximum <f> [zoneinitializeblock] | minimum <f> [zoneinitializeblock] | dip-maximum <f> 3D Only | dip-direction-maximum <f> 3D Only | dip-intermediate <f> 3D Only | dip-direction-intermediate <f> 3D Only | dip-minimum <f> 3D Only | dip-direction-minimum <f> 3D Only} ...]"
+      },
+      "description": {
+        "7.0": "Principal stress states, specified by value and by direction using the available keywords. Note that at least two directions must be specified, and magnitudes not specified are assumed to be zero. Note that the [zoneinitializeblock] is available after each of the following keywords, allowing them to be varied in space independently. This command should be used after assigning a constitutive model. Options: direction-intermediate <v>: Direction of intermediate principal stress.; direction-maximum <v>: Direction of maximum principal stress.; direction-minimum <v>: Direction of minimum principal stress.; intermediate <f>: Intermediate principal stress magnitude.; maximum <f>: Maximum (most postitive) principal stress.; minimum <f>: Minimum (most negative) principal stress.",
+        "9.0": "Principal stress states, specified by value and by direction using the available keywords. Note that at least two directions must be specified, and magnitudes not specified are assumed to be zero. Note that the [zoneinitializeblock] is available after each of the following keywords, allowing them to be varied in space independently. This command should be used after assigning a constitutive model. Options: direction-intermediate <v>[zoneinitializeblock]: Direction of intermediate principal stress.; direction-maximum <v>[zoneinitializeblock]: Direction of maximum principal stress.; direction-minimum <v>[zoneinitializeblock]: Direction of minimum principal stress.; intermediate <f>[zoneinitializeblock]: Intermediate principal stress magnitude.; maximum <f>[zoneinitializeblock]: Maximum (most postitive) principal stress.; minimum <f>[zoneinitializeblock]: Minimum (most negative) principal stress.; dip-maximum <f>3D Only: Set dip of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-maximum <f>3D Only: Set dip direction of maximum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-intermediate <f>3D Only: Set dip of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-intermediate <f>3D Only: Set dip direction of intermediate principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-minimum <f>3D Only: Set dip of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal components.; dip-direction-minimum <f>3D Only: Set dip direction of minimum principal stress. Dip and dip-direction can be given instead of the vector orientation. Orientations only need to be specified for two principal directions. initialize zone principal stresses, specified by magnitudes (maximum/intermediate/minimum) and by direction (direction-maximum/direction-intermediate/direction-minimum). At least two principal directions must be specified. Requires a non-null constitutive model assigned beforehand."
+      }
+    },
+    {
+      "name": "stress-principal-direction-intermediate",
+      "syntax": "direction-intermediate <v> [zoneinitializeblock]",
+      "description": "Direction of intermediate principal stress.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-principal-direction-maximum",
+      "syntax": "direction-maximum <v> [zoneinitializeblock]",
+      "description": "Direction of maximum principal stress.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-principal-direction-minimum",
+      "syntax": "direction-minimum <v> [zoneinitializeblock]",
+      "description": "Direction of minimum principal stress.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-principal-intermediate",
+      "syntax": "intermediate <f> [zoneinitializeblock]",
+      "description": "Intermediate principal stress magnitude.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-principal-maximum",
+      "syntax": "maximum <f> [zoneinitializeblock]",
+      "description": "Maximum (most postitive) principal stress.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "stress-principal-minimum",
+      "syntax": "minimum <f> [zoneinitializeblock]",
+      "description": "Minimum (most negative) principal stress.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "add",
+      "syntax": "add",
+      "description": "Add the specified value to the existing value."
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient <v> [origin <v>]",
+      "description": {
+        "7.0": "Apply a gradient to the scalar-value provided.",
+        "9.0": "Apply a gradient to the scalar-value provided. Note the origin keyword is optional, however, the default value (0,0,0) is used if the origin keyword is not included in the command — which may not produce the intended result."
+      }
+    },
+    {
+      "name": "multiply",
+      "syntax": "multiply",
+      "description": "Multiply the existing value by the specified value."
+    },
+    {
+      "name": "vary",
+      "syntax": "vary <v>",
+      "description": "Apply a linear variation to the scalar-value provided."
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.initialize.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

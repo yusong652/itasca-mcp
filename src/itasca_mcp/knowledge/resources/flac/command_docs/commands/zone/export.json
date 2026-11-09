@@ -4,42 +4,35 @@
     "export",
     "zone"
   ],
-  "description": "Export a grid to a file.",
+  "description": {
+    "7.0": "Exports a grid to a file. A path can be part of the supplied file name s. The grid file is an ASCII-format file (or binary-format file if binary is assigned) description of the FLAC3D geometry (zones, gridpoints, zone groups, and face groups). The binary-format file size will be smaller than the ASCII-format file size, and it takes less loading time if being imported by FLAC3D later. The ASCII-format grid file specification can be found with the zone import command description. If no file extension is given, an extension of “f3grid” is used. The zone and face group information can be exported.",
+    "9.0": "Export a grid to a file."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone export",
-      "syntax": "zone export <s> keyword [range]",
-      "description": "Exports a grid to a file. A path can be part of the supplied file name s. The grid file is an ASCII-format file (or binary-format file if binary is assigned) description of the FLAC3D geometry (zones, gridpoints, zone groups, and face groups). The binary-format file size will be smaller than the ASCII-format file size, and it takes less loading time if being imported by FLAC3D later. The ASCII-format grid file specification can be found with the zone import command description. If no file extension is given, an extension of “f3grid” is used. The zone and face group information can be exported.",
-      "keywords": [
-        {
-          "name": "binary",
-          "syntax": "binary",
-          "description": "exported grid file will be in binary-format instead of ASCII-format."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.export.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone export",
+  "syntax": {
+    "7.0": "zone export <s> keyword [range]",
+    "9.0": "zone export <s> [keyword] [range]"
+  },
+  "keywords": [
+    {
+      "name": "binary",
+      "syntax": "binary",
+      "description": {
+        "7.0": "exported grid file will be in binary-format instead of ASCII-format.",
+        "9.0": "Set exported grid file to binary-format instead of ASCII-format."
       }
-    },
-    "9.0": {
-      "command": "zone export",
-      "syntax": "zone export <s> [keyword] [range]",
-      "keywords": [
-        {
-          "name": "binary",
-          "syntax": "binary",
-          "description": "Set exported grid file to binary-format instead of ASCII-format."
-        }
-      ]
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.export.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

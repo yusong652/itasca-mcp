@@ -14,818 +14,413 @@
     "available": false,
     "workaround": "Use itasca.command('rblock attribute ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock attribute",
-      "syntax": "rblock attribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "damp",
-          "syntax": "damp <f>",
-          "description": "Rigid block local damping coefficient where f > 0. By default, f = 0."
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "Rigid block density where f > 0. By default f = 0."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v>",
-          "description": "Accumulated rigid block displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f>",
-          "description": "The x -component of the accumulated rigid block displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f>",
-          "description": "The y -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f>",
-          "description": "The z -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v>",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the x -axis followed by rotation about the y’ -axis followed by rotation about the z’‘ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f>",
-          "description": "The x -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f>",
-          "description": "The y -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f>",
-          "description": "The z -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY",
-          "description": "Current rigid block orientation in degrees. Setting it assigns an absolute angle. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "force-applied",
-          "syntax": "force-applied <v>",
-          "description": "Force vector applied to rigid blocks."
-        },
-        {
-          "name": "force-applied-x",
-          "syntax": "force-applied-x <f>",
-          "description": "The x -component of the applied force."
-        },
-        {
-          "name": "force-applied-y",
-          "syntax": "force-applied-y <f>",
-          "description": "The y -component of the applied force."
-        },
-        {
-          "name": "force-applied-z",
-          "syntax": "force-applied-z <f>",
-          "description": "The z -component of the applied force."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact <v>",
-          "description": "Sum of the contact force accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x <f>",
-          "description": "The x -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y <f>",
-          "description": "The y -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z <f>",
-          "description": "The z -component of the contact force."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "moi-11",
-          "syntax": "moi-11 <f>",
-          "description": "11 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-12",
-          "syntax": "moi-12 <f>",
-          "description": "12 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-13",
-          "syntax": "moi-13 <f>",
-          "description": "13 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-22",
-          "syntax": "moi-22 <f>",
-          "description": "22 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-23",
-          "syntax": "moi-23 <f>",
-          "description": "23 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-33",
-          "syntax": "moi-33 <f>",
-          "description": "33 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-principal",
-          "syntax": "moi-principal <fprin11> <fprin22> <fprin33>",
-          "description": "Real principal moments of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi",
-          "syntax": "moi <f> 2D ONLY",
-          "description": "Real moment of inertia. Use this keyword in 2D: the moi-11 to moi-33 and moi-principal keywords are 3D only. When modified, rblock.moi.real takes the value, rblock.moi keeps its value, and the real moment of inertia goes into a fixed state so that it will not be automatically updated when scaling, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moment-applied",
-          "syntax": "moment-applied <fx> <fy> <fz>",
-          "description": "Moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-x",
-          "syntax": "moment-applied-x <f>",
-          "description": "The x -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-y",
-          "syntax": "moment-applied-y <f>",
-          "description": "The y -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-z",
-          "syntax": "moment-applied-z <f>",
-          "description": "The z -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact <fx> <fy> <fz>",
-          "description": "Sum of the contact moments accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x <f>",
-          "description": "The x -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y <f>",
-          "description": "The y -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z <f>",
-          "description": "The z -component of the contact moment."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Location of rigid block centroid."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The x -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The y -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The z -component of the location of rigid block centroids."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fspinx> <fspiny> <fspinz>",
-          "description": "Rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f>",
-          "description": "The x -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f>",
-          "description": "The y -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f>",
-          "description": "The z -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Rigid block translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f>",
-          "description": "The x -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f>",
-          "description": "The y -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f>",
-          "description": "The z -component of the rigid block velocity."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <f>",
-          "description": "Rigid block volume. When modified, only the rigid block mass and real mass are modified and the other rigid block attributes based on volume are not changed. The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "rounding",
-          "syntax": "rounding",
-          "description": ""
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock attribute",
+  "syntax": "rblock attribute keyword ... [range]",
+  "keywords": [
+    {
+      "name": "damp",
+      "syntax": "damp <f>",
+      "description": "Rigid block local damping coefficient where f > 0. By default, f = 0."
     },
-    "7.0": {
-      "command": "rblock attribute",
-      "syntax": "rblock attribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "damp",
-          "syntax": "damp <f>",
-          "description": "Rigid block local damping coefficient where f > 0. By default, f = 0."
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "Rigid block density where f > 0. By default f = 0."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v>",
-          "description": "Accumulated rigid block displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f>",
-          "description": "The \\(x\\) -component of the accumulated rigid block displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f>",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f>",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v>",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y’ -axis followed by rotation about the z’‘ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f>",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f>",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f>",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY",
-          "description": "Current rigid block orientation in degrees. Setting it assigns an absolute angle. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "force-applied",
-          "syntax": "force-applied <v>",
-          "description": "Force vector applied to rigid blocks."
-        },
-        {
-          "name": "force-applied-x",
-          "syntax": "force-applied-x <f>",
-          "description": "The \\(x\\) -component of the applied force."
-        },
-        {
-          "name": "force-applied-y",
-          "syntax": "force-applied-y <f>",
-          "description": "The \\(y\\) -component of the applied force."
-        },
-        {
-          "name": "force-applied-z",
-          "syntax": "force-applied-z <f>",
-          "description": "The \\(z\\) -component of the applied force."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact <v>",
-          "description": "Sum of the contact force accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x <f>",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y <f>",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z <f>",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "moi-11",
-          "syntax": "moi-11 <f>",
-          "description": "11 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-12",
-          "syntax": "moi-12 <f>",
-          "description": "12 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-13",
-          "syntax": "moi-13 <f>",
-          "description": "13 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-22",
-          "syntax": "moi-22 <f>",
-          "description": "22 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-23",
-          "syntax": "moi-23 <f>",
-          "description": "23 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-33",
-          "syntax": "moi-33 <f>",
-          "description": "33 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-principal",
-          "syntax": "moi-principal <fprin11> <fprin22> <fprin33>",
-          "description": "Real principal moments of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi",
-          "syntax": "moi <f> 2D ONLY",
-          "description": "Real moment of inertia. Use this keyword in 2D: the moi-11 to moi-33 and moi-principal keywords are 3D only. When modified, rblock.moi.real takes the value, rblock.moi keeps its value, and the real moment of inertia goes into a fixed state so that it will not be automatically updated when scaling, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moment-applied",
-          "syntax": "moment-applied <fx> <fy> <fz>",
-          "description": "Moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-x",
-          "syntax": "moment-applied-x <f>",
-          "description": "The \\(x\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-y",
-          "syntax": "moment-applied-y <f>",
-          "description": "The \\(y\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-z",
-          "syntax": "moment-applied-z <f>",
-          "description": "The \\(z\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact <fx> <fy> <fz>",
-          "description": "Sum of the contact moments accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x <f>",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y <f>",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z <f>",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Location of rigid block centroid."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The \\(z\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fspinx> <fspiny> <fspinz>",
-          "description": "Rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f>",
-          "description": "The \\(x\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f>",
-          "description": "The \\(y\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f>",
-          "description": "The \\(z\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Rigid block translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f>",
-          "description": "The \\(x\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f>",
-          "description": "The \\(y\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f>",
-          "description": "The \\(z\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <f>",
-          "description": "Rigid block volume. When modified, only the rigid block mass and real mass are modified and the other rigid block attributes based on volume are not changed. The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient fx fy fz (post-value modifier)",
-          "description": "Apply a linear gradient in each of the axes directions starting at the origin."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target",
-          "description": ""
-        },
-        {
-          "name": "rounding",
-          "syntax": "rounding",
-          "description": ""
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
-      ]
+    {
+      "name": "density",
+      "syntax": "density <f>",
+      "description": "Rigid block density where f > 0. By default f = 0."
     },
-    "9.0": {
-      "command": "rblock attribute",
-      "syntax": "rblock attribute keyword ... [range]",
-      "keywords": [
-        {
-          "name": "damp",
-          "syntax": "damp <f>",
-          "description": "Rigid block local damping coefficient where f > 0. By default, f = 0."
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "Rigid block density where f > 0. By default f = 0."
-        },
-        {
-          "name": "displacement",
-          "syntax": "displacement <v>",
-          "description": "Accumulated rigid block displacement vector as a result of cycling."
-        },
-        {
-          "name": "displacement-x",
-          "syntax": "displacement-x <f>",
-          "description": "The \\(x\\) -component of the accumulated rigid block displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-y",
-          "syntax": "displacement-y <f>",
-          "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "displacement-z",
-          "syntax": "displacement-z <f>",
-          "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
-        },
-        {
-          "name": "euler",
-          "syntax": "euler <v>",
-          "description": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y’ -axis followed by rotation about the z’’ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized."
-        },
-        {
-          "name": "euler-x",
-          "syntax": "euler-x <f>",
-          "description": "The \\(x\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-y",
-          "syntax": "euler-y <f>",
-          "description": "The \\(y\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "euler-z",
-          "syntax": "euler-z <f>",
-          "description": "The \\(z\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
-        },
-        {
-          "name": "rotation",
-          "syntax": "rotation <f> 2D ONLY",
-          "description": "Current rigid block orientation in degrees. Setting it assigns an absolute angle. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
-        },
-        {
-          "name": "force-applied",
-          "syntax": "force-applied <v>",
-          "description": "Force vector applied to rigid blocks."
-        },
-        {
-          "name": "force-applied-x",
-          "syntax": "force-applied-x <f>",
-          "description": "The \\(x\\) -component of the applied force."
-        },
-        {
-          "name": "force-applied-y",
-          "syntax": "force-applied-y <f>",
-          "description": "The \\(y\\) -component of the applied force."
-        },
-        {
-          "name": "force-applied-z",
-          "syntax": "force-applied-z <f>",
-          "description": "The \\(z\\) -component of the applied force."
-        },
-        {
-          "name": "force-contact",
-          "syntax": "force-contact <v>",
-          "description": "Sum of the contact force accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "force-contact-x",
-          "syntax": "force-contact-x <f>",
-          "description": "The \\(x\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-y",
-          "syntax": "force-contact-y <f>",
-          "description": "The \\(y\\) -component of the contact force."
-        },
-        {
-          "name": "force-contact-z",
-          "syntax": "force-contact-z <f>",
-          "description": "The \\(z\\) -component of the contact force."
-        },
-        {
-          "name": "fragment",
-          "syntax": "fragment <i>",
-          "description": "Fragment ID (see “ Fragment ”)."
-        },
-        {
-          "name": "moi-11",
-          "syntax": "moi-11 <f>",
-          "description": "11 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-12",
-          "syntax": "moi-12 <f>",
-          "description": "12 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-13",
-          "syntax": "moi-13 <f>",
-          "description": "13 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-22",
-          "syntax": "moi-22 <f>",
-          "description": "22 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-23",
-          "syntax": "moi-23 <f>",
-          "description": "23 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-33",
-          "syntax": "moi-33 <f>",
-          "description": "33 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi-principal",
-          "syntax": "moi-principal <fprin11> <fprin22> <fprin33>",
-          "description": "Real principal moments of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moi",
-          "syntax": "moi <f> 2D ONLY",
-          "description": "Real moment of inertia. Use this keyword in 2D: the moi-11 to moi-33 and moi-principal keywords are 3D only. When modified, rblock.moi.real takes the value, rblock.moi keeps its value, and the real moment of inertia goes into a fixed state so that it will not be automatically updated when scaling, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "moment-applied",
-          "syntax": "moment-applied <fx> <fy> <fz>",
-          "description": "Moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-x",
-          "syntax": "moment-applied-x <f>",
-          "description": "The \\(x\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-y",
-          "syntax": "moment-applied-y <f>",
-          "description": "The \\(y\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-applied-z",
-          "syntax": "moment-applied-z <f>",
-          "description": "The \\(z\\) -component of the moment applied to rigid blocks."
-        },
-        {
-          "name": "moment-contact",
-          "syntax": "moment-contact <fx> <fy> <fz>",
-          "description": "Sum of the contact moments accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
-        },
-        {
-          "name": "moment-contact-x",
-          "syntax": "moment-contact-x <f>",
-          "description": "The \\(x\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-y",
-          "syntax": "moment-contact-y <f>",
-          "description": "The \\(y\\) -component of the contact moment."
-        },
-        {
-          "name": "moment-contact-z",
-          "syntax": "moment-contact-z <f>",
-          "description": "The \\(z\\) -component of the contact moment."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Location of rigid block centroid."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The \\(z\\) -component of the location of rigid block centroids."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fspinx> <fspiny> <fspinz>",
-          "description": "Rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-x",
-          "syntax": "spin-x <f>",
-          "description": "The \\(x\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-y",
-          "syntax": "spin-y <f>",
-          "description": "The \\(y\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "spin-z",
-          "syntax": "spin-z <f>",
-          "description": "The \\(z\\) -component of the rigid block angular velocity in radians per second."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <v>",
-          "description": "Rigid block translational velocity vector."
-        },
-        {
-          "name": "velocity-x",
-          "syntax": "velocity-x <f>",
-          "description": "The \\(x\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-y",
-          "syntax": "velocity-y <f>",
-          "description": "The \\(y\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "velocity-z",
-          "syntax": "velocity-z <f>",
-          "description": "The \\(z\\) -component of the rigid block velocity."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <f>",
-          "description": "Rigid block volume. When modified, only the rigid block mass and real mass are modified and the other rigid block attributes based on volume are not changed. The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the rblock.moi.fix intrinsic)."
-        },
-        {
-          "name": "gradient",
-          "syntax": "gradient fx fy fz (post-value modifier)",
-          "description": "Apply a linear gradient in each of the axes directions starting at the origin."
-        },
-        {
-          "name": "axis-angle",
-          "syntax": "axis-angle",
-          "description": ""
-        },
-        {
-          "name": "ratio-target",
-          "syntax": "ratio-target",
-          "description": ""
-        },
-        {
-          "name": "rounding",
-          "syntax": "rounding",
-          "description": ""
-        }
-      ],
-      "examples": [],
-      "notes": [
-        "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7."
-      ]
+    {
+      "name": "displacement",
+      "syntax": "displacement <v>",
+      "description": "Accumulated rigid block displacement vector as a result of cycling."
+    },
+    {
+      "name": "displacement-x",
+      "syntax": "displacement-x <f>",
+      "description": {
+        "6.0": "The x -component of the accumulated rigid block displacement as a result of cycling.",
+        "7.0": "The \\(x\\) -component of the accumulated rigid block displacement as a result of cycling.",
+        "9.0": "The \\(x\\) -component of the accumulated rigid block displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-y",
+      "syntax": "displacement-y <f>",
+      "description": {
+        "6.0": "The y -component of accumulated displacement as a result of cycling.",
+        "7.0": "The \\(y\\) -component of accumulated displacement as a result of cycling.",
+        "9.0": "The \\(y\\) -component of accumulated displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "displacement-z",
+      "syntax": "displacement-z <f>",
+      "description": {
+        "6.0": "The z -component of accumulated displacement as a result of cycling.",
+        "7.0": "The \\(z\\) -component of accumulated displacement as a result of cycling.",
+        "9.0": "The \\(z\\) -component of accumulated displacement as a result of cycling."
+      }
+    },
+    {
+      "name": "euler",
+      "syntax": "euler <v>",
+      "description": {
+        "6.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the x -axis followed by rotation about the y’ -axis followed by rotation about the z’‘ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized.",
+        "7.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y’ -axis followed by rotation about the z’‘ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized.",
+        "9.0": "Current orientation of Euler angles following the X,Y,Z convention (e.g., rotation about the \\(x\\) -axis followed by rotation about the y’ -axis followed by rotation about the z’’ -axis) in degrees. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command). When active, the current rigid block orientation can be visualized."
+      }
+    },
+    {
+      "name": "euler-x",
+      "syntax": "euler-x <f>",
+      "description": {
+        "6.0": "The x -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "7.0": "The \\(x\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "9.0": "The \\(x\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "euler-y",
+      "syntax": "euler-y <f>",
+      "description": {
+        "6.0": "The y -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "7.0": "The \\(y\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "9.0": "The \\(y\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "euler-z",
+      "syntax": "euler-z <f>",
+      "description": {
+        "6.0": "The z -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "7.0": "The \\(z\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details.",
+        "9.0": "The \\(z\\) -euler angle (in degrees) of the current rigid block orientation. See the euler keyword for further details."
+      }
+    },
+    {
+      "name": "rotation",
+      "syntax": "rotation <f> 2D ONLY",
+      "description": "Current rigid block orientation in degrees. Setting it assigns an absolute angle. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
+    },
+    {
+      "name": "force-applied",
+      "syntax": "force-applied <v>",
+      "description": "Force vector applied to rigid blocks."
+    },
+    {
+      "name": "force-applied-x",
+      "syntax": "force-applied-x <f>",
+      "description": {
+        "6.0": "The x -component of the applied force.",
+        "7.0": "The \\(x\\) -component of the applied force.",
+        "9.0": "The \\(x\\) -component of the applied force."
+      }
+    },
+    {
+      "name": "force-applied-y",
+      "syntax": "force-applied-y <f>",
+      "description": {
+        "6.0": "The y -component of the applied force.",
+        "7.0": "The \\(y\\) -component of the applied force.",
+        "9.0": "The \\(y\\) -component of the applied force."
+      }
+    },
+    {
+      "name": "force-applied-z",
+      "syntax": "force-applied-z <f>",
+      "description": {
+        "6.0": "The z -component of the applied force.",
+        "7.0": "The \\(z\\) -component of the applied force.",
+        "9.0": "The \\(z\\) -component of the applied force."
+      }
+    },
+    {
+      "name": "force-contact",
+      "syntax": "force-contact <v>",
+      "description": "Sum of the contact force accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
+    },
+    {
+      "name": "force-contact-x",
+      "syntax": "force-contact-x <f>",
+      "description": {
+        "6.0": "The x -component of the contact force.",
+        "7.0": "The \\(x\\) -component of the contact force.",
+        "9.0": "The \\(x\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "force-contact-y",
+      "syntax": "force-contact-y <f>",
+      "description": {
+        "6.0": "The y -component of the contact force.",
+        "7.0": "The \\(y\\) -component of the contact force.",
+        "9.0": "The \\(y\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "force-contact-z",
+      "syntax": "force-contact-z <f>",
+      "description": {
+        "6.0": "The z -component of the contact force.",
+        "7.0": "The \\(z\\) -component of the contact force.",
+        "9.0": "The \\(z\\) -component of the contact force."
+      }
+    },
+    {
+      "name": "fragment",
+      "syntax": "fragment <i>",
+      "description": "Fragment ID (see “ Fragment ”)."
+    },
+    {
+      "name": "moi-11",
+      "syntax": "moi-11 <f>",
+      "description": "11 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-12",
+      "syntax": "moi-12 <f>",
+      "description": "12 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-13",
+      "syntax": "moi-13 <f>",
+      "description": "13 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-22",
+      "syntax": "moi-22 <f>",
+      "description": "22 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-23",
+      "syntax": "moi-23 <f>",
+      "description": "23 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-33",
+      "syntax": "moi-33 <f>",
+      "description": "33 component of the rigid block real moment of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi-principal",
+      "syntax": "moi-principal <fprin11> <fprin22> <fprin33>",
+      "description": "Real principal moments of inertia. When modified, only the rigid block principal moments of inertia are modified and the other rigid block attributes are not changed. The specification of the rigid block principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moi",
+      "syntax": "moi <f> 2D ONLY",
+      "description": "Real moment of inertia. Use this keyword in 2D: the moi-11 to moi-33 and moi-principal keywords are 3D only. When modified, rblock.moi.real takes the value, rblock.moi keeps its value, and the real moment of inertia goes into a fixed state so that it will not be automatically updated when scaling, changing the volume, or changing the density. The fix state can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "moment-applied",
+      "syntax": "moment-applied <fx> <fy> <fz>",
+      "description": "Moment applied to rigid blocks."
+    },
+    {
+      "name": "moment-applied-x",
+      "syntax": "moment-applied-x <f>",
+      "description": {
+        "6.0": "The x -component of the moment applied to rigid blocks.",
+        "7.0": "The \\(x\\) -component of the moment applied to rigid blocks.",
+        "9.0": "The \\(x\\) -component of the moment applied to rigid blocks."
+      }
+    },
+    {
+      "name": "moment-applied-y",
+      "syntax": "moment-applied-y <f>",
+      "description": {
+        "6.0": "The y -component of the moment applied to rigid blocks.",
+        "7.0": "The \\(y\\) -component of the moment applied to rigid blocks.",
+        "9.0": "The \\(y\\) -component of the moment applied to rigid blocks."
+      }
+    },
+    {
+      "name": "moment-applied-z",
+      "syntax": "moment-applied-z <f>",
+      "description": {
+        "6.0": "The z -component of the moment applied to rigid blocks.",
+        "7.0": "The \\(z\\) -component of the moment applied to rigid blocks.",
+        "9.0": "The \\(z\\) -component of the moment applied to rigid blocks."
+      }
+    },
+    {
+      "name": "moment-contact",
+      "syntax": "moment-contact <fx> <fy> <fz>",
+      "description": "Sum of the contact moments accumulated to the rigid blocks during the previous force-displacement update. This value will be modified during the next force-displacement update."
+    },
+    {
+      "name": "moment-contact-x",
+      "syntax": "moment-contact-x <f>",
+      "description": {
+        "6.0": "The x -component of the contact moment.",
+        "7.0": "The \\(x\\) -component of the contact moment.",
+        "9.0": "The \\(x\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "moment-contact-y",
+      "syntax": "moment-contact-y <f>",
+      "description": {
+        "6.0": "The y -component of the contact moment.",
+        "7.0": "The \\(y\\) -component of the contact moment.",
+        "9.0": "The \\(y\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "moment-contact-z",
+      "syntax": "moment-contact-z <f>",
+      "description": {
+        "6.0": "The z -component of the contact moment.",
+        "7.0": "The \\(z\\) -component of the contact moment.",
+        "9.0": "The \\(z\\) -component of the contact moment."
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Location of rigid block centroid."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <f>",
+      "description": {
+        "6.0": "The x -component of the location of rigid block centroids.",
+        "7.0": "The \\(x\\) -component of the location of rigid block centroids.",
+        "9.0": "The \\(x\\) -component of the location of rigid block centroids."
+      }
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <f>",
+      "description": {
+        "6.0": "The y -component of the location of rigid block centroids.",
+        "7.0": "The \\(y\\) -component of the location of rigid block centroids.",
+        "9.0": "The \\(y\\) -component of the location of rigid block centroids."
+      }
+    },
+    {
+      "name": "position-z",
+      "syntax": "position-z <f>",
+      "description": {
+        "6.0": "The z -component of the location of rigid block centroids.",
+        "7.0": "The \\(z\\) -component of the location of rigid block centroids.",
+        "9.0": "The \\(z\\) -component of the location of rigid block centroids."
+      }
+    },
+    {
+      "name": "spin",
+      "syntax": "spin <fspinx> <fspiny> <fspinz>",
+      "description": "Rigid block angular velocity in radians per second."
+    },
+    {
+      "name": "spin-x",
+      "syntax": "spin-x <f>",
+      "description": {
+        "6.0": "The x -component of the rigid block angular velocity in radians per second.",
+        "7.0": "The \\(x\\) -component of the rigid block angular velocity in radians per second.",
+        "9.0": "The \\(x\\) -component of the rigid block angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "spin-y",
+      "syntax": "spin-y <f>",
+      "description": {
+        "6.0": "The y -component of the rigid block angular velocity in radians per second.",
+        "7.0": "The \\(y\\) -component of the rigid block angular velocity in radians per second.",
+        "9.0": "The \\(y\\) -component of the rigid block angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "spin-z",
+      "syntax": "spin-z <f>",
+      "description": {
+        "6.0": "The z -component of the rigid block angular velocity in radians per second.",
+        "7.0": "The \\(z\\) -component of the rigid block angular velocity in radians per second.",
+        "9.0": "The \\(z\\) -component of the rigid block angular velocity in radians per second."
+      }
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <v>",
+      "description": "Rigid block translational velocity vector."
+    },
+    {
+      "name": "velocity-x",
+      "syntax": "velocity-x <f>",
+      "description": {
+        "6.0": "The x -component of the rigid block velocity.",
+        "7.0": "The \\(x\\) -component of the rigid block velocity.",
+        "9.0": "The \\(x\\) -component of the rigid block velocity."
+      }
+    },
+    {
+      "name": "velocity-y",
+      "syntax": "velocity-y <f>",
+      "description": {
+        "6.0": "The y -component of the rigid block velocity.",
+        "7.0": "The \\(y\\) -component of the rigid block velocity.",
+        "9.0": "The \\(y\\) -component of the rigid block velocity."
+      }
+    },
+    {
+      "name": "velocity-z",
+      "syntax": "velocity-z <f>",
+      "description": {
+        "6.0": "The z -component of the rigid block velocity.",
+        "7.0": "The \\(z\\) -component of the rigid block velocity.",
+        "9.0": "The \\(z\\) -component of the rigid block velocity."
+      }
+    },
+    {
+      "name": "volume",
+      "syntax": "volume <f>",
+      "description": "Rigid block volume. When modified, only the rigid block mass and real mass are modified and the other rigid block attributes based on volume are not changed. The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the rblock.moi.fix intrinsic)."
+    },
+    {
+      "name": "gradient",
+      "syntax": "gradient fx fy fz (post-value modifier)",
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "axis-angle",
+      "syntax": "axis-angle",
+      "description": ""
+    },
+    {
+      "name": "ratio-target",
+      "syntax": "ratio-target",
+      "description": "",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "rounding",
+      "syntax": "rounding",
+      "description": ""
     }
+  ],
+  "examples": [],
+  "notes": {
+    "7.0": [
+      "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
+    ],
+    "9.0": [
+      "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7."
+    ]
   }
 }

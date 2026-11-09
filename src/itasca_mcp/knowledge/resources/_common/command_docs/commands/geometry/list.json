@@ -8,102 +8,89 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "geometry list",
-      "syntax": "geometry list keyword [range]",
-      "keywords": [
-        {
-          "name": "information",
-          "syntax": "information",
-          "description": "List of all information."
-        },
-        {
-          "name": "nodes",
-          "syntax": "nodes",
-          "description": "List of node information."
-        },
-        {
-          "name": "edges",
-          "syntax": "edges",
-          "description": "List of edge information."
-        },
-        {
-          "name": "polygons",
-          "syntax": "polygons",
-          "description": "List of polygon information."
-        },
-        {
-          "name": "blocks",
-          "syntax": "blocks",
-          "description": "List of block information."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "geometry list",
+  "syntax": {
+    "6.0": "geometry list keyword [range]",
+    "7.0": "geometry list keyword ... [range]",
+    "9.0": "geometry list keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "information",
+      "syntax": "information",
+      "description": {
+        "6.0": "List of all information.",
+        "7.0": "List of all information about the specified or current geometry set.",
+        "9.0": "List of all information about the specified or current geometry set."
+      }
     },
-    "7.0": {
-      "command": "geometry list",
-      "syntax": "geometry list keyword ... [range]",
-      "keywords": [
-        {
-          "name": "edges",
-          "syntax": "edges {extra <i> | group [slot <s>] | information | polygons}",
-          "description": "List of edge information for the specified or current geometry set. Options: extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the edges.; polygons: List polygon information of the associated edges."
-        },
-        {
-          "name": "information",
-          "syntax": "information",
-          "description": "List of all information about the specified or current geometry set."
-        },
-        {
-          "name": "nodes",
-          "syntax": "nodes {edges | extra <i> | group [slot <s>] | information}",
-          "description": "List of node information for the specified or current geometry set. Options: edges: List edge information of the nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes."
-        },
-        {
-          "name": "polygons",
-          "syntax": "polygons {edgesindex | extra <i> | group [slot <s>] | information | nodes}",
-          "description": "List of polygon information for the specified or current geometry set. Options: edgesindex: List edge information of the associated nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes.; nodes: List groups and extras for the nodes."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "List point, edge, and polygon count for the geometry set s ."
-        }
-      ],
-      "examples": []
+    {
+      "name": "nodes",
+      "syntax": {
+        "6.0": "nodes",
+        "7.0": "nodes {edges | extra <i> | group [slot <s>] | information}",
+        "9.0": "nodes {edges | extra <i> | group [slot <s>] | information}"
+      },
+      "description": {
+        "6.0": "List of node information.",
+        "7.0": "List of node information for the specified or current geometry set. Options: edges: List edge information of the nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes.",
+        "9.0": "List of node information for the specified or current geometry set. Options: edges: List edge information of the nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes."
+      }
     },
-    "9.0": {
-      "command": "geometry list",
-      "syntax": "geometry list keyword ... [range]",
-      "keywords": [
-        {
-          "name": "edges",
-          "syntax": "edges {extra <i> | group [slot <s>] | information | polygons}",
-          "description": "List of edge information for the specified or current geometry set. Options: extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the edges.; polygons: List polygon information of the associated edges."
-        },
-        {
-          "name": "information",
-          "syntax": "information",
-          "description": "List of all information about the specified or current geometry set."
-        },
-        {
-          "name": "nodes",
-          "syntax": "nodes {edges | extra <i> | group [slot <s>] | information}",
-          "description": "List of node information for the specified or current geometry set. Options: edges: List edge information of the nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes."
-        },
-        {
-          "name": "polygons",
-          "syntax": "polygons {edgesindex | extra <i> | group [slot <s>] | information | nodes}",
-          "description": "List of polygon information for the specified or current geometry set. Options: edgesindex: List edge information of the associated nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes.; nodes: List groups and extras for the nodes."
-        },
-        {
-          "name": "set",
-          "syntax": "set <s>",
-          "description": "List point, edge, and polygon count for the geometry set s ."
-        }
-      ],
-      "examples": []
+    {
+      "name": "edges",
+      "syntax": {
+        "6.0": "edges",
+        "7.0": "edges {extra <i> | group [slot <s>] | information | polygons}",
+        "9.0": "edges {extra <i> | group [slot <s>] | information | polygons}"
+      },
+      "description": {
+        "6.0": "List of edge information.",
+        "7.0": "List of edge information for the specified or current geometry set. Options: extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the edges.; polygons: List polygon information of the associated edges.",
+        "9.0": "List of edge information for the specified or current geometry set. Options: extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the edges.; polygons: List polygon information of the associated edges."
+      }
+    },
+    {
+      "name": "polygons",
+      "syntax": {
+        "6.0": "polygons",
+        "7.0": "polygons {edgesindex | extra <i> | group [slot <s>] | information | nodes}",
+        "9.0": "polygons {edgesindex | extra <i> | group [slot <s>] | information | nodes}"
+      },
+      "description": {
+        "6.0": "List of polygon information.",
+        "7.0": "List of polygon information for the specified or current geometry set. Options: edgesindex: List edge information of the associated nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes.; nodes: List groups and extras for the nodes.",
+        "9.0": "List of polygon information for the specified or current geometry set. Options: edgesindex: List edge information of the associated nodes.; extra <i>: List the extra variable at index i .; group [slot <s>]: List group information. An optional slot can be specified.; information: List groups and extras for the nodes.; nodes: List groups and extras for the nodes."
+      }
+    },
+    {
+      "name": "set",
+      "syntax": "set <s>",
+      "description": "List point, edge, and polygon count for the geometry set s .",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "blocks",
+      "syntax": "blocks",
+      "description": "List of block information.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

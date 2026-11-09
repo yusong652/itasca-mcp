@@ -8,177 +8,74 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "fracture create",
-      "syntax": "fracture create [keyword]",
-      "keywords": [
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Add the fracture to the DFN with name s ."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "Dip angle of the fracture in degrees, where f is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f = 0."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f is in the range [0,360]. By default, f is 0.0."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance <i>",
-          "description": "Specify the fracture dominance where i is greater than 1. If not specified, then the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Assign the group name s to the fracture and optionally set the slot to slot ."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Fracture intersections with the newly created fracture are calculated and added to the intersection set with name s ."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the fracture center. The fracture position must fall within the model domain unless the skip-errors keyword is specified. By default, the position is the origin."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Size of the fracture. By default, this is 1. The size is the {fracture length in 2D; disk diameter in 3D}."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the command will return a warning instead of an error if the fracture creation fails. When this keyword is given, the fracture position is not required to fall within the model domain."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fracture create",
+  "syntax": {
+    "6.0": "fracture create [keyword]",
+    "7.0": "fracture create keyword ...",
+    "9.0": "fracture create keyword ..."
+  },
+  "keywords": [
+    {
+      "name": "dfn",
+      "syntax": "dfn <s>",
+      "description": "Add the fracture to the DFN with name s ."
     },
-    "7.0": {
-      "command": "fracture create",
-      "syntax": "fracture create keyword ...",
-      "keywords": [
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Add the fracture to the DFN with name s ."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "Dip angle of the fracture in degrees, where f is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f = 0."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f>",
-          "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f is in the range [0,360]. By default, f is 0.0."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance <i>",
-          "description": "Specify the fracture dominance where i is greater than 1. If not specified, then the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Assign the group name s to the fracture and optionally set the slot to slot ."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Fracture intersections with the newly created fracture are calculated and added to the intersection set with name s ."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the fracture center. The fracture position must fall within the model domain unless the skip-errors keyword is specified. By default, the position is the origin."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Size of the fracture. By default, this is 1. The size is the {fracture length in 2D; disk diameter in 3D}."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the command will return a warning instead of an error if the fracture creation fails. When this keyword is given, the fracture position is not required to fall within the model domain."
-        }
-      ],
-      "examples": []
+    {
+      "name": "dfn-dominance",
+      "syntax": "dfn-dominance <i>",
+      "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
     },
-    "9.0": {
-      "command": "fracture create",
-      "syntax": "fracture create keyword ...",
-      "keywords": [
-        {
-          "name": "dfn",
-          "syntax": "dfn <s>",
-          "description": "Add the fracture to the DFN with name s ."
-        },
-        {
-          "name": "dfn-dominance",
-          "syntax": "dfn-dominance <i>",
-          "description": "If a new DFN is created, then its dominance is set to i , where i is greater than 1. The dominance is used during contact model assignment, when a contact intersects multiple fractures from different DFNs. The fractures from the DFN with the lowest DFN dominance will be further scrutinized by their individual dominance values to assign the appropriate contact model properties. If not specified, then the next available dominance is used. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "dip",
-          "syntax": "dip <f>",
-          "description": "Dip angle of the fracture in degrees, where f is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f = 0."
-        },
-        {
-          "name": "dip-direction",
-          "syntax": "dip-direction <f> 3D only",
-          "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f is in the range [0,360]. By default, f is 0.0."
-        },
-        {
-          "name": "dominance",
-          "syntax": "dominance <i>",
-          "description": "Specify the fracture dominance where i is greater than 1. If not specified, then the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>]",
-          "description": "Assign the group name s to the fracture and optionally set the slot to slot ."
-        },
-        {
-          "name": "intersection-set",
-          "syntax": "intersection-set <s>",
-          "description": "Fracture intersections with the newly created fracture are calculated and added to the intersection set with name s ."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Position of the fracture center. The fracture position must fall within the model domain unless the skip-errors keyword is specified. By default, the position is the origin."
-        },
-        {
-          "name": "size",
-          "syntax": "size <f>",
-          "description": "Size of the fracture. By default, this is 1. The size is the {fracture length in 2D; disk diameter in 3D}."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Indicate that the command will return a warning instead of an error if the fracture creation fails. When this keyword is given, the fracture position is not required to fall within the model domain."
-        }
-      ],
-      "examples": []
+    {
+      "name": "dip",
+      "syntax": "dip <f>",
+      "description": "Dip angle of the fracture in degrees, where f is in the range {[0,180] in 2D; [0,90] in 3D}. In 2D, dip is the clockwise angle measured from the positive \\(x\\) -axis. In 3D, dip is the angle from the dip direction projected on the \\(xy\\) -plane to the fracture surface measured in the negative \\(z\\) -direction. By default, f = 0."
+    },
+    {
+      "name": "dip-direction",
+      "syntax": {
+        "6.0": "dip-direction <f>",
+        "7.0": "dip-direction <f>",
+        "9.0": "dip-direction <f> 3D only"
+      },
+      "description": "Dip direction of the fracture in degrees, as measured in a clockwise fashion from the positive \\(y\\) -axis where f is in the range [0,360]. By default, f is 0.0."
+    },
+    {
+      "name": "dominance",
+      "syntax": "dominance <i>",
+      "description": "Specify the fracture dominance where i is greater than 1. If not specified, then the next available fracture dominance value is used. Should a contact intersect numerous fractures from a single DFN, then the fracture with the lowest dominance is used to assign the appropriate contact model and properties. See the fracture contact-model command for further details."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>]",
+      "description": "Assign the group name s to the fracture and optionally set the slot to slot ."
+    },
+    {
+      "name": "intersection-set",
+      "syntax": "intersection-set <s>",
+      "description": "Fracture intersections with the newly created fracture are calculated and added to the intersection set with name s ."
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Position of the fracture center. The fracture position must fall within the model domain unless the skip-errors keyword is specified. By default, the position is the origin."
+    },
+    {
+      "name": "size",
+      "syntax": "size <f>",
+      "description": "Size of the fracture. By default, this is 1. The size is the {fracture length in 2D; disk diameter in 3D}."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "Indicate that the command will return a warning instead of an error if the fracture creation fails. When this keyword is given, the fracture position is not required to fall within the model domain."
     }
-  }
+  ],
+  "examples": []
 }

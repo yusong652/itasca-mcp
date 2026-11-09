@@ -9,48 +9,48 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure hybrid apply",
-      "syntax": "structure hybrid apply keyword [range]",
-      "description": "Create or modify hybrid bolt apply conditions. The following keywords and options are available:",
-      "keywords": [
-        {
-          "name": "tension",
-          "syntax": "tension keyword",
-          "description": "assign a specific axial tension value in the hybrid bolt element that will be maintained during cycling. Incomplete sentence follows: This is intended as a way to pre-tension hybrid bolts, but applying the pre-tension force as a tension to the end element(s), that are generally ungrouted. [DR: why is this flagged?] Note that this setting will override the normal force-displacement law for the element as long as it is active. Removing the condition will not remove the force, but from then on, the element forces will evolve naturally."
-        },
-        {
-          "name": "tension-active",
-          "syntax": "active <b>",
-          "description": "make the tensile apply condition active or inactive. If active, the last specified value of tension is used, which is 0.0 by default."
-        },
-        {
-          "name": "tension-value",
-          "syntax": "value <f>",
-          "description": "set the axial tensile force applied to the element f. This makes the condition active automatically."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/hybrid/commands/cmd_structure.hybrid.apply.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure hybrid apply",
+  "syntax": "structure hybrid apply keyword [range]",
+  "keywords": [
+    {
+      "name": "tension",
+      "syntax": {
+        "7.0": "tension keyword",
+        "9.0": "tension {active <b> | value <f>}"
+      },
+      "description": {
+        "7.0": "assign a specific axial tension value in the hybrid bolt element that will be maintained during cycling. Incomplete sentence follows: This is intended as a way to pre-tension hybrid bolts, but applying the pre-tension force as a tension to the end element(s), that are generally ungrouted. [DR: why is this flagged?] Note that this setting will override the normal force-displacement law for the element as long as it is active. Removing the condition will not remove the force, but from then on, the element forces will evolve naturally.",
+        "9.0": "assign a specific axial tension value in the hybrid bolt element that will be maintained during cycling. This is intended as a way to pre-tension hybrid bolts by applying the pre-tension force to the (generally ungrouted) end element(s). This setting will override the normal force-displacement law for the element as long as it is active. Removing the condition will not remove the force, but from then on, the element forces will evolve naturally. Two sub-keywords are available: active <b> makes the tensile apply condition active or inactive (if active, the last specified value of tension is used, default 0.0); value <f> sets the axial tensile force applied to the element, which makes the condition active automatically."
       }
     },
-    "9.0": {
-      "command": "structure hybrid apply",
-      "syntax": "structure hybrid apply keyword [range]",
-      "keywords": [
-        {
-          "name": "tension",
-          "syntax": "tension {active <b> | value <f>}",
-          "description": "assign a specific axial tension value in the hybrid bolt element that will be maintained during cycling. This is intended as a way to pre-tension hybrid bolts by applying the pre-tension force to the (generally ungrouted) end element(s). This setting will override the normal force-displacement law for the element as long as it is active. Removing the condition will not remove the force, but from then on, the element forces will evolve naturally. Two sub-keywords are available: active <b> makes the tensile apply condition active or inactive (if active, the last specified value of tension is used, default 0.0); value <f> sets the axial tensile force applied to the element, which makes the condition active automatically."
-        }
-      ]
+    {
+      "name": "tension-active",
+      "syntax": "active <b>",
+      "description": "make the tensile apply condition active or inactive. If active, the last specified value of tension is used, which is 0.0 by default.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "name": "tension-value",
+      "syntax": "value <f>",
+      "description": "set the axial tensile force applied to the element f. This makes the condition active automatically.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/hybrid/commands/cmd_structure.hybrid.apply.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

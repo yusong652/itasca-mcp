@@ -4,115 +4,102 @@
     "mechanical",
     "zone"
   ],
-  "description": "Set parameters for a static mechanical analysis that are specific to zones. The following keywords apply.",
+  "description": {
+    "7.0": "Sets parameters for a static mechanical analysis, that are specific to zones. The following keywords apply:",
+    "9.0": "Set parameters for a static mechanical analysis that are specific to zones. The following keywords apply."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone mechanical",
-      "syntax": "zone mechanical keyword",
-      "description": "Sets parameters for a static mechanical analysis, that are specific to zones. The following keywords apply:",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>"
-        },
-        {
-          "name": "damping",
-          "syntax": "damping {combined [<f>] | local [<f>] [alternate]} [range]",
-          "description": "Select the damping type for the static, mechanical process (the default damping is local). Options: combined [<f>]: combined local damping (default is 0.8).; local [<f>][alternate]: local damping (default is 0.8). If the alternate keyword is specified, an experimental alternate implementation of local damping is used that produces less sensitivity to small changes in the model."
-        },
-        {
-          "name": "damping-combined",
-          "syntax": "combined <f>",
-          "description": "combined local damping (default is 0.8)."
-        },
-        {
-          "name": "damping-local",
-          "syntax": "local <f> [alternate]",
-          "description": "local damping (default is 0.8). If the alternate keyword is specified, an experimental alternate implementation of local damping is used that produces less sensitivity to small changes in the model."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy {active <b> | clear [range]}",
-          "description": "allows elastic strain energy and dissipated plastic energy to be calculated (see Energy Calculation in FLAC3D). Options: active <b>: Turns the calculations off / on in the stress-strain loop; clear [range]: will set the four zone energy values in every zone back to zero. The zone mechanical active command does not clear these values. This allows you to stop accumulating plastic work over any interval you wish, and resume accumulating at any time from where it left off."
-        },
-        {
-          "name": "energy-active",
-          "syntax": "active <b>",
-          "description": "Turns the calculations off/on in the stress-strain loop"
-        },
-        {
-          "name": "energy-clear",
-          "syntax": "clear [range]"
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "shows a summary of current zone mechanical settings in the console."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.mechanical.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone mechanical",
+  "syntax": "zone mechanical keyword",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": {
+        "9.0": "Turn mechanical-module computations on or off. Active by default."
       }
     },
-    "9.0": {
-      "command": "zone mechanical",
-      "syntax": "zone mechanical keyword",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Turn mechanical-module computations on or off. Active by default."
-        },
-        {
-          "name": "damping",
-          "syntax": "damping keyword [range]",
-          "description": "Set the mechanical damping scheme for zones in the range. Sub-keywords: combined, local."
-        },
-        {
-          "name": "damping-combined",
-          "syntax": "combined <f>",
-          "description": "Apply combined damping with fraction f to zones in the range."
-        },
-        {
-          "name": "damping-local",
-          "syntax": "local <f> [alternate]",
-          "description": "Apply local damping with fraction f to zones in the range. The alternate keyword switches to an alternative mass-proportional formulation."
-        },
-        {
-          "name": "energy",
-          "syntax": "energy keyword",
-          "description": "Configure or reset the mechanical-energy accounting. Sub-keywords: active, clear."
-        },
-        {
-          "name": "energy-active",
-          "syntax": "active <b>",
-          "description": "Turn the mechanical-energy accounting on or off. When on, FLAC3D accumulates kinetic, strain, boundary-work, and dissipated energies per zone and globally."
-        },
-        {
-          "name": "energy-clear",
-          "syntax": "clear [range]",
-          "description": "Reset the accumulated mechanical-energy counters to zero for zones in the range (or globally if no range supplied)."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List current mechanical-module settings (active state, damping summary, energy state, safety factor)."
-        },
-        {
-          "name": "safety-factor",
-          "syntax": "safety-factor <f>",
-          "description": "Set the safety factor applied to the mechanical critical timestep. Smaller values give a more conservative (smaller) actual timestep."
-        }
-      ]
+    {
+      "name": "damping",
+      "syntax": {
+        "7.0": "damping {combined [<f>] | local [<f>] [alternate]} [range]",
+        "9.0": "damping keyword [range]"
+      },
+      "description": {
+        "7.0": "Select the damping type for the static, mechanical process (the default damping is local). Options: combined [<f>]: combined local damping (default is 0.8).; local [<f>][alternate]: local damping (default is 0.8). If the alternate keyword is specified, an experimental alternate implementation of local damping is used that produces less sensitivity to small changes in the model.",
+        "9.0": "Set the mechanical damping scheme for zones in the range. Sub-keywords: combined, local."
+      }
+    },
+    {
+      "name": "damping-combined",
+      "syntax": "combined <f>",
+      "description": {
+        "7.0": "combined local damping (default is 0.8).",
+        "9.0": "Apply combined damping with fraction f to zones in the range."
+      }
+    },
+    {
+      "name": "damping-local",
+      "syntax": "local <f> [alternate]",
+      "description": {
+        "7.0": "local damping (default is 0.8). If the alternate keyword is specified, an experimental alternate implementation of local damping is used that produces less sensitivity to small changes in the model.",
+        "9.0": "Apply local damping with fraction f to zones in the range. The alternate keyword switches to an alternative mass-proportional formulation."
+      }
+    },
+    {
+      "name": "energy",
+      "syntax": {
+        "7.0": "energy {active <b> | clear [range]}",
+        "9.0": "energy keyword"
+      },
+      "description": {
+        "7.0": "allows elastic strain energy and dissipated plastic energy to be calculated (see Energy Calculation in FLAC3D). Options: active <b>: Turns the calculations off / on in the stress-strain loop; clear [range]: will set the four zone energy values in every zone back to zero. The zone mechanical active command does not clear these values. This allows you to stop accumulating plastic work over any interval you wish, and resume accumulating at any time from where it left off.",
+        "9.0": "Configure or reset the mechanical-energy accounting. Sub-keywords: active, clear."
+      }
+    },
+    {
+      "name": "energy-active",
+      "syntax": "active <b>",
+      "description": {
+        "7.0": "Turns the calculations off/on in the stress-strain loop",
+        "9.0": "Turn the mechanical-energy accounting on or off. When on, FLAC3D accumulates kinetic, strain, boundary-work, and dissipated energies per zone and globally."
+      }
+    },
+    {
+      "name": "energy-clear",
+      "syntax": "clear [range]",
+      "description": {
+        "9.0": "Reset the accumulated mechanical-energy counters to zero for zones in the range (or globally if no range supplied)."
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": {
+        "7.0": "shows a summary of current zone mechanical settings in the console.",
+        "9.0": "List current mechanical-module settings (active state, damping summary, energy state, safety factor)."
+      }
+    },
+    {
+      "name": "safety-factor",
+      "syntax": "safety-factor <f>",
+      "description": "Set the safety factor applied to the mechanical critical timestep. Smaller values give a more conservative (smaller) actual timestep.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.mechanical.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

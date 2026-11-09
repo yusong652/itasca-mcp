@@ -5,166 +5,148 @@
     "apply",
     "structure"
   ],
-  "description": "Set generalized point loads for all nodes in the range. Generalized point loads consist of an applied force and an applied moment. Pressure loading can be applied to shell surfaces using the commands structure shell apply , structure geogrid apply , or structure liner apply . Distributed loads can be applied to beam and pile surfaces using the command structure beam apply or structure pile apply . The following keywords are available to define generalized point loads.",
+  "description": {
+    "7.0": "Set generalized point loads for all nodes in the range. Generalized point loads consist of an applied force and an applied moment. Pressure loading can be applied to shell surfaces using the commands structure shell apply, structure geogrid apply, or structure liner apply. Distributed loads can be applied to beam and pile surfaces using the command structure beam apply or structure pile apply. The following keywords are available to define generalized point loads.",
+    "9.0": "Apply concentrated conditions (force, edge force, moment) at structural nodes. Keyword shapes live-verified against FLAC3D 9.7: first-token enumeration is force / force-edge / moment / remove / system (+ range); add|multiply are position-2 modifiers after the value."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure node apply",
-      "syntax": "structure node apply keyword [range]",
-      "description": "Set generalized point loads for all nodes in the range. Generalized point loads consist of an applied force and an applied moment. Pressure loading can be applied to shell surfaces using the commands structure shell apply, structure geogrid apply, or structure liner apply. Distributed loads can be applied to beam and pile surfaces using the command structure beam apply or structure pile apply. The following keywords are available to define generalized point loads.",
-      "keywords": [
-        {
-          "name": "force",
-          "syntax": "force <v> [keyword]",
-          "description": "applied force vector (in terms of system defined by the system keyword). You can use one of the following keywords to modify how v is applied to the node: Options: add; multiply"
-        },
-        {
-          "name": "force-add",
-          "syntax": "add",
-          "description": "the vector v is added to the existing applied force vector at that node"
-        },
-        {
-          "name": "force-multiply",
-          "syntax": "multiply",
-          "description": "the vector v is multiplied to the existing applied force vector at that node in a component by component multiplication"
-        },
-        {
-          "name": "force-edge",
-          "syntax": "force-edge <v> <add>",
-          "description": "by default, these forces will overwrite the previous applied forces at the node; however, the add keyword can be given to add them to those currently present. Note that if this changes the system they were applied under, the previous forces will not be corrected for the system change."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment <v> [keyword]",
-          "description": "applied moment vector (in terms of system defined by the system keyword). The following keywords can be used to modify how v is applied to the node: Options: add; multiply"
-        },
-        {
-          "name": "moment-add",
-          "syntax": "add",
-          "description": "the vector v is added to the existing applied moment vector at that node"
-        },
-        {
-          "name": "moment-multiply",
-          "syntax": "multiply",
-          "description": "the vector v is multiplied to the existing applied moment vector at that node in a component by component multiplication"
-        },
-        {
-          "name": "remove",
-          "syntax": "remove {force | moment}",
-          "description": "an applied condition remains in effect until it is removed with this command. The following keywords are available to choose which applied condition is removed: Options: force: removes any applied force condition on the node; moment: removes any applied moment condition on the node"
-        },
-        {
-          "name": "remove-force",
-          "syntax": "force",
-          "description": "removes any applied force condition on the node"
-        },
-        {
-          "name": "remove-moment",
-          "syntax": "moment",
-          "description": "removes any applied moment condition on the node"
-        },
-        {
-          "name": "system",
-          "syntax": "system keyword",
-          "description": "set the coordinate system in which the force and moment vectors are expressed. The default system is global. If the system is set to local, then in large-strain mode, the force and moment vectors will remain aligned with the local system as it rotates."
-        },
-        {
-          "name": "system-local",
-          "syntax": "local"
-        },
-        {
-          "name": "system-global",
-          "syntax": "global"
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.apply.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure node apply",
+  "syntax": "structure node apply keyword [range]",
+  "keywords": [
+    {
+      "name": "force",
+      "syntax": {
+        "7.0": "force <v> [keyword]",
+        "9.0": "force <v> [add | multiply]"
+      },
+      "description": {
+        "7.0": "applied force vector (in terms of system defined by the system keyword). You can use one of the following keywords to modify how v is applied to the node: Options: add; multiply",
+        "9.0": "Apply a force vector v to nodes in the range. Optional sub-keywords add or multiply modify how the applied force combines with any existing applied force."
       }
     },
-    "9.0": {
-      "command": "structure node apply",
-      "syntax": "structure node apply keyword [range]",
-      "keywords": [
-        {
-          "name": "force",
-          "syntax": "force <v> [add | multiply]",
-          "description": "Apply a force vector v to nodes in the range. Optional sub-keywords add or multiply modify how the applied force combines with any existing applied force."
-        },
-        {
-          "name": "force-add",
-          "syntax": "add",
-          "description": "Add the new force vector to the existing applied force on each node (instead of replacing)."
-        },
-        {
-          "name": "force-multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing applied force on each node by the supplied force vector component-wise."
-        },
-        {
-          "name": "force-edge",
-          "syntax": "force-edge <v> [add | multiply]",
-          "description": "Apply a force-per-unit-length vector v along the edge between two nodes. Same add/multiply modifiers as `force`."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment <v> [add | multiply]",
-          "description": "Apply a moment vector v to nodes in the range. Optional add/multiply modifiers as for `force`."
-        },
-        {
-          "name": "moment-add",
-          "syntax": "add",
-          "description": "Add the new moment vector to the existing applied moment."
-        },
-        {
-          "name": "moment-multiply",
-          "syntax": "multiply",
-          "description": "Multiply the existing applied moment by the supplied vector component-wise."
-        },
-        {
-          "name": "remove",
-          "syntax": "remove keyword",
-          "description": "Remove an existing applied condition from nodes in the range. Sub-keywords (live-enumerated, FLAC3D 9.7): force, force-edge, moment. TRAP: a bare 'remove' (or one followed by an invalid token) EXECUTES immediately with the default (force) before any error is raised — observed 'Force removed from 13 nodes' on a bogus trailing token."
-        },
-        {
-          "name": "remove-force",
-          "syntax": "force",
-          "description": "Remove the applied force from nodes in the range."
-        },
-        {
-          "name": "remove-moment",
-          "syntax": "moment",
-          "description": "Remove the applied moment from nodes in the range."
-        },
-        {
-          "name": "system",
-          "syntax": "system keyword",
-          "description": "Set the coordinate system in which the applied force/moment is interpreted. Sub-keywords (live-enumerated, FLAC3D 9.7): global, local. TRAP: a bare 'system' (or one followed by an invalid token) executes and assigns the default before erroring — observed 'System assigned to 13 nodes'."
-        },
-        {
-          "name": "system-local",
-          "syntax": "local",
-          "description": "Applied force/moment is interpreted in the node-local coordinate system."
-        },
-        {
-          "name": "system-global",
-          "syntax": "global",
-          "description": "Applied force/moment is interpreted in the global coordinate system."
-        },
-        {
-          "name": "range",
-          "syntax": "range ...",
-          "description": "Range block selecting which nodes the apply condition is applied to."
-        }
-      ],
-      "description": "Apply concentrated conditions (force, edge force, moment) at structural nodes. Keyword shapes live-verified against FLAC3D 9.7: first-token enumeration is force / force-edge / moment / remove / system (+ range); add|multiply are position-2 modifiers after the value."
+    {
+      "name": "force-add",
+      "syntax": "add",
+      "description": {
+        "7.0": "the vector v is added to the existing applied force vector at that node",
+        "9.0": "Add the new force vector to the existing applied force on each node (instead of replacing)."
+      }
+    },
+    {
+      "name": "force-multiply",
+      "syntax": "multiply",
+      "description": {
+        "7.0": "the vector v is multiplied to the existing applied force vector at that node in a component by component multiplication",
+        "9.0": "Multiply the existing applied force on each node by the supplied force vector component-wise."
+      }
+    },
+    {
+      "name": "force-edge",
+      "syntax": {
+        "7.0": "force-edge <v> <add>",
+        "9.0": "force-edge <v> [add | multiply]"
+      },
+      "description": {
+        "7.0": "by default, these forces will overwrite the previous applied forces at the node; however, the add keyword can be given to add them to those currently present. Note that if this changes the system they were applied under, the previous forces will not be corrected for the system change.",
+        "9.0": "Apply a force-per-unit-length vector v along the edge between two nodes. Same add/multiply modifiers as `force`."
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": {
+        "7.0": "moment <v> [keyword]",
+        "9.0": "moment <v> [add | multiply]"
+      },
+      "description": {
+        "7.0": "applied moment vector (in terms of system defined by the system keyword). The following keywords can be used to modify how v is applied to the node: Options: add; multiply",
+        "9.0": "Apply a moment vector v to nodes in the range. Optional add/multiply modifiers as for `force`."
+      }
+    },
+    {
+      "name": "moment-add",
+      "syntax": "add",
+      "description": {
+        "7.0": "the vector v is added to the existing applied moment vector at that node",
+        "9.0": "Add the new moment vector to the existing applied moment."
+      }
+    },
+    {
+      "name": "moment-multiply",
+      "syntax": "multiply",
+      "description": {
+        "7.0": "the vector v is multiplied to the existing applied moment vector at that node in a component by component multiplication",
+        "9.0": "Multiply the existing applied moment by the supplied vector component-wise."
+      }
+    },
+    {
+      "name": "remove",
+      "syntax": {
+        "7.0": "remove {force | moment}",
+        "9.0": "remove keyword"
+      },
+      "description": {
+        "7.0": "an applied condition remains in effect until it is removed with this command. The following keywords are available to choose which applied condition is removed: Options: force: removes any applied force condition on the node; moment: removes any applied moment condition on the node",
+        "9.0": "Remove an existing applied condition from nodes in the range. Sub-keywords (live-enumerated, FLAC3D 9.7): force, force-edge, moment. TRAP: a bare 'remove' (or one followed by an invalid token) EXECUTES immediately with the default (force) before any error is raised — observed 'Force removed from 13 nodes' on a bogus trailing token."
+      }
+    },
+    {
+      "name": "remove-force",
+      "syntax": "force",
+      "description": {
+        "7.0": "removes any applied force condition on the node",
+        "9.0": "Remove the applied force from nodes in the range."
+      }
+    },
+    {
+      "name": "remove-moment",
+      "syntax": "moment",
+      "description": {
+        "7.0": "removes any applied moment condition on the node",
+        "9.0": "Remove the applied moment from nodes in the range."
+      }
+    },
+    {
+      "name": "system",
+      "syntax": "system keyword",
+      "description": {
+        "7.0": "set the coordinate system in which the force and moment vectors are expressed. The default system is global. If the system is set to local, then in large-strain mode, the force and moment vectors will remain aligned with the local system as it rotates.",
+        "9.0": "Set the coordinate system in which the applied force/moment is interpreted. Sub-keywords (live-enumerated, FLAC3D 9.7): global, local. TRAP: a bare 'system' (or one followed by an invalid token) executes and assigns the default before erroring — observed 'System assigned to 13 nodes'."
+      }
+    },
+    {
+      "name": "system-local",
+      "syntax": "local",
+      "description": {
+        "9.0": "Applied force/moment is interpreted in the node-local coordinate system."
+      }
+    },
+    {
+      "name": "system-global",
+      "syntax": "global",
+      "description": {
+        "9.0": "Applied force/moment is interpreted in the global coordinate system."
+      }
+    },
+    {
+      "name": "range",
+      "syntax": "range ...",
+      "description": "Range block selecting which nodes the apply condition is applied to.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/nodes/commands/cmd_structure.node.apply.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

@@ -44,122 +44,55 @@
       "python": "for c in it.contact.list(): c.activate(True)"
     }
   },
-  "notes": [
-    "Activate flag is OFF by default - contacts follow model-determined activity logic",
-    "Setting activate to ON: contact always active until deleted by contact detection",
-    "Setting activate to OFF: contact activity determined by contact model (default behavior)",
-    "When activate is ON, inhibit flag is automatically set to false",
-    "Activity state is set to true regardless of contact resolution strategy for ball-facet or pebble-facet contacts",
-    "More efficient than Python iteration for bulk activation changes",
-    "Activation does not prevent contact deletion by the contact detection system",
-    "Affects EXISTING contacts, not future contact creation",
-    "Related commands: contact inhibit, contact model, contact cmat add, model clean",
-    "Priority: inhibit overrides activate; the contact model only controls activity when both flags are off. Setting activate on automatically clears the inhibit flag.",
-    "For ball-facet and pebble-facet contacts, activate on sets the activity state directly, regardless of the contact resolution strategy.",
-    "An activated contact can still be deleted by the contact detection system once the pieces move beyond the detection distance."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact activate",
-      "syntax": "contact activate <b> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact activate on",
-          "description": "Activate all contacts - they remain active until deleted by contact detection system. Use case: Ensure all contacts stay active regardless of contact model logic."
-        },
-        {
-          "command": "contact activate off",
-          "description": "Deactivate all contacts - activity determined by contact model. Use case: Return to default behavior where contact model controls activity."
-        },
-        {
-          "command": "contact activate true range group 'specimen'",
-          "description": "Activate contacts in 'specimen' group only. Use case: Selective activation of specific contact subset."
-        },
-        {
-          "command": "contact activate false range contact type 'ball-facet'",
-          "description": "Deactivate ball-facet contacts, let model determine activity. Use case: Allow contact model to control ball-facet contact activity."
-        },
-        {
-          "command": "contact activate on mechanical range contact",
-          "description": "Explicitly activate all mechanical contacts. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact activate true range model null",
-          "description": "Activate contacts with null model (forces them to stay in system). Use case: Keep null contacts in system even though they transmit no forces."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact activate",
+  "syntax": {
+    "6.0": "contact [<sprocess>] activate <bval> [range]",
+    "7.0": "contact activate <b> [keyword] [range]",
+    "9.0": "contact activate <b> [keyword] [range]"
+  },
+  "keywords": [],
+  "examples": [
+    {
+      "command": "contact activate on",
+      "description": "Activate all contacts - they remain active until deleted by contact detection system. Use case: Ensure all contacts stay active regardless of contact model logic."
     },
-    "6.0": {
-      "command": "contact activate",
-      "syntax": "contact [<sprocess>] activate <bval> [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact activate on",
-          "description": "Activate all contacts - they remain active until deleted by contact detection system. Use case: Ensure all contacts stay active regardless of contact model logic."
-        },
-        {
-          "command": "contact activate off",
-          "description": "Deactivate all contacts - activity determined by contact model. Use case: Return to default behavior where contact model controls activity."
-        },
-        {
-          "command": "contact activate true range group 'specimen'",
-          "description": "Activate contacts in 'specimen' group only. Use case: Selective activation of specific contact subset."
-        },
-        {
-          "command": "contact activate false range contact type 'ball-facet'",
-          "description": "Deactivate ball-facet contacts, let model determine activity. Use case: Allow contact model to control ball-facet contact activity."
-        },
-        {
-          "command": "contact activate on mechanical range contact",
-          "description": "Explicitly activate all mechanical contacts. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact activate true range model null",
-          "description": "Activate contacts with null model (forces them to stay in system). Use case: Keep null contacts in system even though they transmit no forces."
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact activate off",
+      "description": "Deactivate all contacts - activity determined by contact model. Use case: Return to default behavior where contact model controls activity."
     },
-    "9.0": {
-      "command": "contact activate",
-      "syntax": "contact activate <b> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact activate on",
-          "description": "Activate all contacts - they remain active until deleted by contact detection system. Use case: Ensure all contacts stay active regardless of contact model logic."
-        },
-        {
-          "command": "contact activate off",
-          "description": "Deactivate all contacts - activity determined by contact model. Use case: Return to default behavior where contact model controls activity."
-        },
-        {
-          "command": "contact activate true range group 'specimen'",
-          "description": "Activate contacts in 'specimen' group only. Use case: Selective activation of specific contact subset."
-        },
-        {
-          "command": "contact activate false range contact type 'ball-facet'",
-          "description": "Deactivate ball-facet contacts, let model determine activity. Use case: Allow contact model to control ball-facet contact activity."
-        },
-        {
-          "command": "contact activate on mechanical range contact",
-          "description": "Explicitly activate all mechanical contacts. Use case: When working with multiple contact processes."
-        },
-        {
-          "command": "contact activate true range model null",
-          "description": "Activate contacts with null model (forces them to stay in system). Use case: Keep null contacts in system even though they transmit no forces."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact activate true range group 'specimen'",
+      "description": "Activate contacts in 'specimen' group only. Use case: Selective activation of specific contact subset."
+    },
+    {
+      "command": "contact activate false range contact type 'ball-facet'",
+      "description": "Deactivate ball-facet contacts, let model determine activity. Use case: Allow contact model to control ball-facet contact activity."
+    },
+    {
+      "command": "contact activate on mechanical range contact",
+      "description": "Explicitly activate all mechanical contacts. Use case: When working with multiple contact processes."
+    },
+    {
+      "command": "contact activate true range model null",
+      "description": "Activate contacts with null model (forces them to stay in system). Use case: Keep null contacts in system even though they transmit no forces."
     }
-  }
+  ]
 }

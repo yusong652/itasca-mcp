@@ -9,233 +9,111 @@
     "available": true,
     "workaround": "Use Wall object getter methods: wall.pos(), wall.vel(), wall.spin(), wall.disp(), wall.cutoff(), wall.extra(i), wall.group(slot), etc. Access walls via itasca.wall.list(). For contacts: wall.contacts(). For properties: iterate through wall.facets() and use facet.prop(name)"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall list",
-      "syntax": "wall list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "contact",
-          "syntax": "contact [all]",
-          "description": "List the contacts with a wall. The facet ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [facet]",
-          "description": "List the extra variables at index i . If the facet keyword is given, then the facet extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [facet]",
-          "description": "List the group names at slot s . If the facet keyword is given, then the facet group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List facet properties. If no s is given, then the available properties are listed for each wall (i.e., the list of properties over all facets in the wall). If s is specified, then the value of that property is listed for each facet. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls, such as mass and velocity."
-        },
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List wall attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each wall. Wall facet attributes, such as facet velocity, also may be present. Attributes are characteristics of walls, such as velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall list",
-          "description": "List basic info for all walls (ID, name, facet count, contacts, position)"
-        },
-        {
-          "command": "wall list attribute position",
-          "description": "List position attribute for all walls"
-        },
-        {
-          "command": "wall list attribute velocity",
-          "description": "List velocity attribute for all walls"
-        },
-        {
-          "command": "wall list attribute displacement",
-          "description": "List accumulated displacement for all walls"
-        },
-        {
-          "command": "wall list property",
-          "description": "List available properties for each wall (all properties over all facets)"
-        },
-        {
-          "command": "wall list property 'kn'",
-          "description": "List 'kn' (normal stiffness) property value for each facet"
-        },
-        {
-          "command": "wall list extra 1",
-          "description": "List extra variable at index 1 for all walls"
-        },
-        {
-          "command": "wall list contact all range id 1 10",
-          "description": "List all contacts (active and inactive) for walls with IDs 1-10"
-        },
-        {
-          "command": "wall list group 'Default' facet",
-          "description": "List facet group names in 'Default' slot for all walls"
-        },
-        {
-          "command": "wall list attribute spin-z range name 'drum'",
-          "description": "List z-component of angular velocity for walls named 'drum' (3D)"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "wall list",
-      "syntax": "wall list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List wall attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each wall. Wall facet attributes, such as facet velocity, also may be present. Attributes are characteristics of walls, such as velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        },
-        {
-          "name": "contacts",
-          "syntax": "contacts [all]",
-          "description": "List the contacts with a wall. The facet ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [facet]",
-          "description": "List the extra variables at index i . If the facet keyword is given, then the facet extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [facet]",
-          "description": "List the group names at slot s . If the facet keyword is given, then the facet group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List facet properties. If no s is given, then the available properties are listed for each wall (i.e., the list of properties over all facets in the wall). If s is specified, then the value of that property is listed for each facet. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls, such as mass and velocity."
-        },
-        {
-          "name": "result",
-          "syntax": "result",
-          "description": "List the wall model results that have been tabulated. See the wall results command for more details."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall list",
-          "description": "List basic info for all walls (ID, name, facet count, contacts, position)"
-        },
-        {
-          "command": "wall list attribute position",
-          "description": "List position attribute for all walls"
-        },
-        {
-          "command": "wall list attribute velocity",
-          "description": "List velocity attribute for all walls"
-        },
-        {
-          "command": "wall list attribute displacement",
-          "description": "List accumulated displacement for all walls"
-        },
-        {
-          "command": "wall list property",
-          "description": "List available properties for each wall (all properties over all facets)"
-        },
-        {
-          "command": "wall list property 'kn'",
-          "description": "List 'kn' (normal stiffness) property value for each facet"
-        },
-        {
-          "command": "wall list extra 1",
-          "description": "List extra variable at index 1 for all walls"
-        },
-        {
-          "command": "wall list contact all range id 1 10",
-          "description": "List all contacts (active and inactive) for walls with IDs 1-10"
-        },
-        {
-          "command": "wall list group 'Default' facet",
-          "description": "List facet group names in 'Default' slot for all walls"
-        },
-        {
-          "command": "wall list attribute spin-z range name 'drum'",
-          "description": "List z-component of angular velocity for walls named 'drum' (3D)"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "wall list",
-      "syntax": "wall list [keyword] [range]",
-      "keywords": [
-        {
-          "name": "contact",
-          "syntax": "contact [all]",
-          "description": "List the contacts with a wall. The facet ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts."
-        },
-        {
-          "name": "extra",
-          "syntax": "extra <i> [facet]",
-          "description": "List the extra variables at index i . If the facet keyword is given, then the facet extra variables at index i are listed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [facet]",
-          "description": "List the group names at slot s . If the facet keyword is given, then the facet group variables at slot s are listed."
-        },
-        {
-          "name": "property",
-          "syntax": "property [<s>]",
-          "description": "List facet properties. If no s is given, then the available properties are listed for each wall (i.e., the list of properties over all facets in the wall). If s is specified, then the value of that property is listed for each facet. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls, such as mass and velocity."
-        },
-        {
-          "name": "attribute",
-          "syntax": "attribute [keyword]",
-          "description": "List wall attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each wall. Wall facet attributes, such as facet velocity, also may be present. Attributes are characteristics of walls, such as velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall list",
-          "description": "List basic info for all walls (ID, name, facet count, contacts, position)"
-        },
-        {
-          "command": "wall list attribute position",
-          "description": "List position attribute for all walls"
-        },
-        {
-          "command": "wall list attribute velocity",
-          "description": "List velocity attribute for all walls"
-        },
-        {
-          "command": "wall list attribute displacement",
-          "description": "List accumulated displacement for all walls"
-        },
-        {
-          "command": "wall list property",
-          "description": "List available properties for each wall (all properties over all facets)"
-        },
-        {
-          "command": "wall list property 'kn'",
-          "description": "List 'kn' (normal stiffness) property value for each facet"
-        },
-        {
-          "command": "wall list extra 1",
-          "description": "List extra variable at index 1 for all walls"
-        },
-        {
-          "command": "wall list contact all range id 1 10",
-          "description": "List all contacts (active and inactive) for walls with IDs 1-10"
-        },
-        {
-          "command": "wall list group 'Default' facet",
-          "description": "List facet group names in 'Default' slot for all walls"
-        },
-        {
-          "command": "wall list attribute spin-z range name 'drum'",
-          "description": "List z-component of angular velocity for walls named 'drum' (3D)"
-        }
-      ]
-    }
-  },
   "notes": [
     "Listable attributes: cutoff-angle, displacement, displacement-x, displacement-y, displacement-z (3D), euler (3D), euler-x (3D), euler-y (3D), euler-z (3D), fragment, position, position-x, position-y, position-z, rotation-center, rotation-center-x, rotation-center-y, rotation-center-z (3D), spin, spin-x (3D), spin-y (3D), spin-z (3D), velocity, velocity-x, velocity-y, velocity-z (3D), velocity-conveyor, velocity-conveyor-x, velocity-conveyor-y, velocity-conveyor-z (3D)"
+  ],
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall list",
+  "syntax": "wall list [keyword] [range]",
+  "keywords": [
+    {
+      "name": "contact",
+      "syntax": "contact [all]",
+      "description": "List the contacts with a wall. The facet ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "attribute",
+      "syntax": "attribute [keyword]",
+      "description": "List wall attributes. If no keyword is given, then the available attributes are listed. If a keyword is specified, then the value of that attribute is listed for each wall. Wall facet attributes, such as facet velocity, also may be present. Attributes are characteristics of walls, such as velocity. These are distinct from properties that represent surface conditions and are used in contact models to delineate interactions."
+    },
+    {
+      "name": "contacts",
+      "syntax": "contacts [all]",
+      "description": "List the contacts with a wall. The facet ID, contact ID, ID of the other contacting piece, contact type, activity state, inhibited state, and contact model are listed. By default, only active contacts are listed. Use the all keyword to list active and inactive contacts.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    },
+    {
+      "name": "extra",
+      "syntax": "extra <i> [facet]",
+      "description": "List the extra variables at index i . If the facet keyword is given, then the facet extra variables at index i are listed."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [facet]",
+      "description": "List the group names at slot s . If the facet keyword is given, then the facet group variables at slot s are listed."
+    },
+    {
+      "name": "property",
+      "syntax": "property [<s>]",
+      "description": "List facet properties. If no s is given, then the available properties are listed for each wall (i.e., the list of properties over all facets in the wall). If s is specified, then the value of that property is listed for each facet. Properties represent surface conditions and are used in contact models to delineate interactions. These are distinct from attributes that are characteristics of balls, such as mass and velocity."
+    },
+    {
+      "name": "result",
+      "syntax": "result",
+      "description": "List the wall model results that have been tabulated. See the wall results command for more details.",
+      "availability": {
+        "versions": [
+          "6.0"
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall list",
+      "description": "List basic info for all walls (ID, name, facet count, contacts, position)"
+    },
+    {
+      "command": "wall list attribute position",
+      "description": "List position attribute for all walls"
+    },
+    {
+      "command": "wall list attribute velocity",
+      "description": "List velocity attribute for all walls"
+    },
+    {
+      "command": "wall list attribute displacement",
+      "description": "List accumulated displacement for all walls"
+    },
+    {
+      "command": "wall list property",
+      "description": "List available properties for each wall (all properties over all facets)"
+    },
+    {
+      "command": "wall list property 'kn'",
+      "description": "List 'kn' (normal stiffness) property value for each facet"
+    },
+    {
+      "command": "wall list extra 1",
+      "description": "List extra variable at index 1 for all walls"
+    },
+    {
+      "command": "wall list contact all range id 1 10",
+      "description": "List all contacts (active and inactive) for walls with IDs 1-10"
+    },
+    {
+      "command": "wall list group 'Default' facet",
+      "description": "List facet group names in 'Default' slot for all walls"
+    },
+    {
+      "command": "wall list attribute spin-z range name 'drum'",
+      "description": "List z-component of angular velocity for walls named 'drum' (3D)"
+    }
   ]
 }

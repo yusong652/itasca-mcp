@@ -10,126 +10,59 @@
     "available": false,
     "workaround": "itasca.command('wall resolution ...') - Python SDK does not provide wall resolution settings. This is a global contact resolution strategy"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall resolution",
-      "syntax": "wall resolution keyword",
-      "keywords": [
-        {
-          "name": "full",
-          "syntax": "full [proximity <b>]",
-          "description": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result by default. If the additional Proximity keyword is given and b is set to false , then proximity contacts are not created."
-        },
-        {
-          "name": "none",
-          "syntax": "none",
-          "description": "No contact resolution is undertaken. This is the most computationally efficient method for contact resolution but may result in many more active contacts, reducing overall performance. Additionally unexpected responses may occur for wall geometries that are intended to be smooth."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "The contact resolution procedure for contacts with facets is reduced (the default setting). The reduced contact resolution does not check for sliver penetration conditions nor is contact-state information propagated. The associative logic is applied to determine the contact activity state, though. This state is more computationally efficient than the full state."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall resolution full",
-          "description": "Set full resolution mode - proximity contacts created, contact-state propagation for planar/convex wall sides"
-        },
-        {
-          "command": "wall resolution full proximity false",
-          "description": "Set full resolution mode but disable proximity contact creation"
-        },
-        {
-          "command": "wall resolution reduced",
-          "description": "Set reduced resolution mode (default) - intermediate state, no proximity contacts"
-        },
-        {
-          "command": "wall resolution none",
-          "description": "Turn off all contact resolution - all contacts with wall facets are active"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "wall resolution",
-      "syntax": "wall resolution keyword",
-      "keywords": [
-        {
-          "name": "full",
-          "syntax": "full",
-          "description": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result."
-        },
-        {
-          "name": "none",
-          "syntax": "none",
-          "description": "No contact resolution is undertaken. This is the most computationally efficient method for contact resolution but may result in many more active contacts, reducing overall performance. Additionally unexpected responses may occur for wall geometries that are intended to be smooth."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "The contact resolution procedure for contacts with facets is reduced (the default setting). The reduced contact resolution does not check for sliver penetration conditions nor is contact-state information propagated. The associative logic is applied to determine the contact activity state, though. This state is more computationally efficient than the full state."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall resolution full",
-          "description": "Set full resolution mode - proximity contacts created, contact-state propagation for planar/convex wall sides"
-        },
-        {
-          "command": "wall resolution full proximity false",
-          "description": "Set full resolution mode but disable proximity contact creation"
-        },
-        {
-          "command": "wall resolution reduced",
-          "description": "Set reduced resolution mode (default) - intermediate state, no proximity contacts"
-        },
-        {
-          "command": "wall resolution none",
-          "description": "Turn off all contact resolution - all contacts with wall facets are active"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "wall resolution",
-      "syntax": "wall resolution keyword",
-      "keywords": [
-        {
-          "name": "full",
-          "syntax": "full [proximity <b>]",
-          "description": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result by default. If the additional Proximity keyword is given and b is set to false , then proximity contacts are not created."
-        },
-        {
-          "name": "none",
-          "syntax": "none",
-          "description": "No contact resolution is undertaken. This is the most computationally efficient method for contact resolution but may result in many more active contacts, reducing overall performance. Additionally unexpected responses may occur for wall geometries that are intended to be smooth."
-        },
-        {
-          "name": "reduced",
-          "syntax": "reduced",
-          "description": "The contact resolution procedure for contacts with facets is reduced (the default setting). The reduced contact resolution does not check for sliver penetration conditions nor is contact-state information propagated. The associative logic is applied to determine the contact activity state, though. This state is more computationally efficient than the full state."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall resolution full",
-          "description": "Set full resolution mode - proximity contacts created, contact-state propagation for planar/convex wall sides"
-        },
-        {
-          "command": "wall resolution full proximity false",
-          "description": "Set full resolution mode but disable proximity contact creation"
-        },
-        {
-          "command": "wall resolution reduced",
-          "description": "Set reduced resolution mode (default) - intermediate state, no proximity contacts"
-        },
-        {
-          "command": "wall resolution none",
-          "description": "Turn off all contact resolution - all contacts with wall facets are active"
-        }
-      ]
-    }
-  },
   "notes": [
     "full: sliver penetration handled, cutoff-angle active, proximity contacts and state propagation, slow but accurate. reduced: none of those, medium cost. none: fastest, but may create many contacts."
+  ],
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall resolution",
+  "syntax": "wall resolution keyword",
+  "keywords": [
+    {
+      "name": "full",
+      "syntax": {
+        "6.0": "full",
+        "7.0": "full [proximity <b>]",
+        "9.0": "full [proximity <b>]"
+      },
+      "description": {
+        "6.0": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result.",
+        "7.0": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result by default. If the additional Proximity keyword is given and b is set to false , then proximity contacts are not created.",
+        "9.0": "The contact resolution procedure for contacts with facets is at its full state. This means that in addition to the associative checks for contact activity, the sliver penetration conditions are checked, and the cutoff angle becomes active for contact-state information propagation for convex and concave facet intersections. Proximity contacts may result by default. If the additional Proximity keyword is given and b is set to false , then proximity contacts are not created."
+      }
+    },
+    {
+      "name": "none",
+      "syntax": "none",
+      "description": "No contact resolution is undertaken. This is the most computationally efficient method for contact resolution but may result in many more active contacts, reducing overall performance. Additionally unexpected responses may occur for wall geometries that are intended to be smooth."
+    },
+    {
+      "name": "reduced",
+      "syntax": "reduced",
+      "description": "The contact resolution procedure for contacts with facets is reduced (the default setting). The reduced contact resolution does not check for sliver penetration conditions nor is contact-state information propagated. The associative logic is applied to determine the contact activity state, though. This state is more computationally efficient than the full state."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall resolution full",
+      "description": "Set full resolution mode - proximity contacts created, contact-state propagation for planar/convex wall sides"
+    },
+    {
+      "command": "wall resolution full proximity false",
+      "description": "Set full resolution mode but disable proximity contact creation"
+    },
+    {
+      "command": "wall resolution reduced",
+      "description": "Set reduced resolution mode (default) - intermediate state, no proximity contacts"
+    },
+    {
+      "command": "wall resolution none",
+      "description": "Turn off all contact resolution - all contacts with wall facets are active"
+    }
   ]
 }

@@ -9,228 +9,99 @@
     "available": true,
     "workaround": "itasca.ball.create(radius, centroid, id=None) - creates single ball with specified parameters"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball create",
-      "syntax": "ball create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "The group slot slot is set to s for the newly created ball. If the slot keyword is not specified, then the group name is assigned to the slot with name Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Ball ID. If not specified, then the next available ID is used. An error is raised if a ball with the specified ID already exists in the system."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Ball position that is the origin by default."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Ball radius. If not specified, the ball is created with a radius equal to 1/40th of the minimum domain extent. A value larger-than or equal to 1/4th of the minimum domain extent is not allowed."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The \\(z\\) -component of the position that is 0 by default."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball create radius 0.5 position (1.0,2.0,3.0)",
-          "description": "Create ball at position (1,2,3) with radius 0.5"
-        },
-        {
-          "command": "ball create radius 1.0 position-x 5.0 position-y 5.0 id 100",
-          "description": "Create ball with ID 100 at position (5,5,0) with radius 1.0"
-        },
-        {
-          "command": "ball create radius 0.8 position (0,0,0) group 'mygroup'",
-          "description": "Create ball at origin in group 'mygroup'"
-        },
-        {
-          "command": "ball create position (2,3,4)",
-          "description": "Create ball at (2,3,4) with default radius (1/40th of domain extent)"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "ballcreate1.png",
-            "doc_path": "_images/ballcreate1.png"
-          },
-          {
-            "name": "ballcreate2.png",
-            "doc_path": "_images/ballcreate2.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball create",
+  "syntax": "ball create keyword ...",
+  "keywords": [
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>] ...",
+      "description": "The group slot slot is set to s for the newly created ball. If the slot keyword is not specified, then the group name is assigned to the slot with name Default ."
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Ball ID. If not specified, then the next available ID is used. An error is raised if a ball with the specified ID already exists in the system."
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Ball position that is the origin by default."
+    },
+    {
+      "name": "radius",
+      "syntax": "radius <f>",
+      "description": "Ball radius. If not specified, the ball is created with a radius equal to 1/40th of the minimum domain extent. A value larger-than or equal to 1/4th of the minimum domain extent is not allowed."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <f>",
+      "description": {
+        "6.0": "The x -component of the position that is 0 by default.",
+        "7.0": "The \\(x\\) -component of the position that is 0 by default.",
+        "9.0": "The \\(x\\) -component of the position that is 0 by default."
       }
     },
-    "6.0": {
-      "command": "ball create",
-      "syntax": "ball create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "The group slot slot is set to s for the newly created ball. If the slot keyword is not specified, then the group name is assigned to the slot with name Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Ball ID. If not specified, then the next available ID is used. An error is raised if a ball with the specified ID already exists in the system."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Ball position that is the origin by default."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Ball radius. If not specified, the ball is created with a radius equal to 1/40th of the minimum domain extent. A value larger-than or equal to 1/4th of the minimum domain extent is not allowed."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The x -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The y -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The z -component of the position that is 0 by default."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball create radius 0.5 position (1.0,2.0,3.0)",
-          "description": "Create ball at position (1,2,3) with radius 0.5"
-        },
-        {
-          "command": "ball create radius 1.0 position-x 5.0 position-y 5.0 id 100",
-          "description": "Create ball with ID 100 at position (5,5,0) with radius 1.0"
-        },
-        {
-          "command": "ball create radius 0.8 position (0,0,0) group 'mygroup'",
-          "description": "Create ball at origin in group 'mygroup'"
-        },
-        {
-          "command": "ball create position (2,3,4)",
-          "description": "Create ball at (2,3,4) with default radius (1/40th of domain extent)"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "ballcreate1.png",
-            "doc_path": "_images/ballcreate1.png"
-          },
-          {
-            "name": "ballcreate2.png",
-            "doc_path": "_images/ballcreate2.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
+    {
+      "name": "position-y",
+      "syntax": "position-y <f>",
+      "description": {
+        "6.0": "The y -component of the position that is 0 by default.",
+        "7.0": "The \\(y\\) -component of the position that is 0 by default.",
+        "9.0": "The \\(y\\) -component of the position that is 0 by default."
       }
     },
-    "9.0": {
-      "command": "ball create",
-      "syntax": "ball create keyword ...",
-      "keywords": [
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "The group slot slot is set to s for the newly created ball. If the slot keyword is not specified, then the group name is assigned to the slot with name Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Ball ID. If not specified, then the next available ID is used. An error is raised if a ball with the specified ID already exists in the system."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Ball position that is the origin by default."
-        },
-        {
-          "name": "radius",
-          "syntax": "radius <f>",
-          "description": "Ball radius. If not specified, the ball is created with a radius equal to 1/40th of the minimum domain extent. A value larger-than or equal to 1/4th of the minimum domain extent is not allowed."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the position that is 0 by default."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> 3D ONLY",
-          "description": "The \\(z\\) -component of the position that is 0 by default."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball create radius 0.5 position (1.0,2.0,3.0)",
-          "description": "Create ball at position (1,2,3) with radius 0.5"
-        },
-        {
-          "command": "ball create radius 1.0 position-x 5.0 position-y 5.0 id 100",
-          "description": "Create ball with ID 100 at position (5,5,0) with radius 1.0"
-        },
-        {
-          "command": "ball create radius 0.8 position (0,0,0) group 'mygroup'",
-          "description": "Create ball at origin in group 'mygroup'"
-        },
-        {
-          "command": "ball create position (2,3,4)",
-          "description": "Create ball at (2,3,4) with default radius (1/40th of domain extent)"
-        }
-      ],
-      "figure_reference": {
-        "figures": [
-          {
-            "name": "ballcreate1.png",
-            "doc_path": "_images/ballcreate1.png"
-          },
-          {
-            "name": "ballcreate2.png",
-            "doc_path": "_images/ballcreate2.png"
-          }
-        ],
-        "notes": [
-          "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
-        ]
+    {
+      "name": "position-z",
+      "syntax": {
+        "6.0": "position-z <f>",
+        "7.0": "position-z <f>",
+        "9.0": "position-z <f> 3D ONLY"
+      },
+      "description": {
+        "6.0": "The z -component of the position that is 0 by default.",
+        "7.0": "The \\(z\\) -component of the position that is 0 by default.",
+        "9.0": "The \\(z\\) -component of the position that is 0 by default."
       }
     }
+  ],
+  "examples": [
+    {
+      "command": "ball create radius 0.5 position (1.0,2.0,3.0)",
+      "description": "Create ball at position (1,2,3) with radius 0.5"
+    },
+    {
+      "command": "ball create radius 1.0 position-x 5.0 position-y 5.0 id 100",
+      "description": "Create ball with ID 100 at position (5,5,0) with radius 1.0"
+    },
+    {
+      "command": "ball create radius 0.8 position (0,0,0) group 'mygroup'",
+      "description": "Create ball at origin in group 'mygroup'"
+    },
+    {
+      "command": "ball create position (2,3,4)",
+      "description": "Create ball at (2,3,4) with default radius (1/40th of domain extent)"
+    }
+  ],
+  "figure_reference": {
+    "figures": [
+      {
+        "name": "ballcreate1.png",
+        "doc_path": "_images/ballcreate1.png"
+      },
+      {
+        "name": "ballcreate2.png",
+        "doc_path": "_images/ballcreate2.png"
+      }
+    ],
+    "notes": [
+      "This command embeds reference figures that are not captured in this text corpus. Figures are PNGs under <doc-root>/_images/ (doc-root sits beside the engine install, e.g. C:/Program Files/Itasca/<product>/exe64/doc); read them directly."
+    ]
   }
 }

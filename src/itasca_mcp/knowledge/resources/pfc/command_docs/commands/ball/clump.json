@@ -10,187 +10,112 @@
     "available": false,
     "workaround": "itasca.command('ball clump ...') - Python SDK cannot convert balls to clump pebbles"
   },
-  "versions": {
-    "7.0": {
-      "command": "ball clump",
-      "syntax": "ball clump keyword [range]",
-      "keywords": [
-        {
-          "name": "add-pebble",
-          "syntax": "add-pebble",
-          "description": "Add balls within range to an existing clump. The id keyword must be given to specify to which clump the ball is to be added."
-        },
-        {
-          "name": "create",
-          "syntax": "create",
-          "description": "Create a clump from the balls within range."
-        },
-        {
-          "name": "calculate",
-          "syntax": "calculate <f>",
-          "description": "This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration the “final” volume is extrapolated, and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated volumes are within the desired tolerance. By default, the percentage difference f = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump."
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "Clump density with default value 1.0."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [pebble] ...",
-          "description": "The group name at slot slot is set to s for the newly created clump. The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump. If slot is not specified, then the group name at slot Default is set to s ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Clump ID. If not specified, then the next available ID is used."
-        },
-        {
-          "name": "inertia",
-          "syntax": "inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23>",
-          "description": "Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume, and this keyword cannot be specified with the calculate keyword."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f>",
-          "description": "The \\(z\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <f>",
-          "description": "Set the {volume per unit thickness in 2D; volume in 3D} to f . One must also specify the inertia tensor, and this keyword cannot be given with the calculate keyword. Please be aware that this parameter doesn’t affect the geometry of the clump; as a result, the apparent geometric volume of the clump remains unchanged. This is the volume (from which the mass is computed) that is used to solve the law of motion for the clump."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball clump create range id 1 10 calculate",
-          "description": "Create clump from balls 1-10, automatically calculate properties from pebble distribution"
-        },
-        {
-          "command": "ball clump create range group 'ballgroup' density 2500 calculate 0.001",
-          "description": "Create clump from ball group with density 2500, high precision calculation (0.1% tolerance)"
-        },
-        {
-          "command": "ball clump add-pebble id 5 range id 20",
-          "description": "Add ball 20 as pebble to existing clump 5"
-        },
-        {
-          "command": "ball clump create range box -5 5 position (0,0,0) density 1000 calculate",
-          "description": "Create clump from balls in box region with specified density"
-        }
-      ],
-      "notes": [
-        "The calculate/density/group/id/inertia/position*/volume keywords belong to the 'create' sub-grammar (live 7.00: 'ball clump create' demands volume+inertia or calculate)."
-      ]
-    },
-    "6.0": {
-      "available": false
-    },
-    "9.0": {
-      "command": "ball clump",
-      "syntax": "ball clump keyword [range]",
-      "keywords": [
-        {
-          "name": "add-pebble",
-          "syntax": "add-pebble [ballclumpmodblock]",
-          "description": "Add balls within range to an existing clump. The id keyword must be given to specify to which clump the ball is to be added."
-        },
-        {
-          "name": "create",
-          "syntax": "create [ballclumpmodblock]",
-          "description": "Create a clump from the balls within range."
-        },
-        {
-          "name": "calculate",
-          "syntax": "calculate <f>",
-          "description": "This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration the “final” volume is extrapolated, and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated volumes are within the desired tolerance. By default, the percentage difference f = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump."
-        },
-        {
-          "name": "density",
-          "syntax": "density <f>",
-          "description": "Clump density with default value 1.0."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [pebble] ...",
-          "description": "The group name at slot slot is set to s for the newly created clump. The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump. If slot is not specified, then the group name at slot Default is set to s ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <i>",
-          "description": "Clump ID. If not specified, then the next available ID is used."
-        },
-        {
-          "name": "inertia",
-          "syntax": "inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> only 1 component in 2D",
-          "description": "Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume, and this keyword cannot be specified with the calculate keyword."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-x",
-          "syntax": "position-x <f>",
-          "description": "The \\(x\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-y",
-          "syntax": "position-y <f>",
-          "description": "The \\(y\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "position-z",
-          "syntax": "position-z <f> 3D ONLY",
-          "description": "The \\(z\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <f>",
-          "description": "Set the {volume per unit thickness in 2D; volume in 3D} to f . One must also specify the inertia tensor, and this keyword cannot be given with the calculate keyword. Please be aware that this parameter doesn’t affect the geometry of the clump; as a result, the apparent geometric volume of the clump remains unchanged. This is the volume (from which the mass is computed) that is used to solve the law of motion for the clump."
-        }
-      ],
-      "examples": [
-        {
-          "command": "ball clump create range id 1 10 calculate",
-          "description": "Create clump from balls 1-10, automatically calculate properties from pebble distribution"
-        },
-        {
-          "command": "ball clump create range group 'ballgroup' density 2500 calculate 0.001",
-          "description": "Create clump from ball group with density 2500, high precision calculation (0.1% tolerance)"
-        },
-        {
-          "command": "ball clump add-pebble id 5 range id 20",
-          "description": "Add ball 20 as pebble to existing clump 5"
-        },
-        {
-          "command": "ball clump create range box -5 5 position (0,0,0) density 1000 calculate",
-          "description": "Create clump from balls in box region with specified density"
-        }
-      ],
-      "notes": [
-        "The calculate/density/group/id/inertia/position*/volume keywords belong to the 'create' sub-grammar (live 9.7 create demands volume+inertia or calculate)."
-      ]
-    }
+  "notes": {
+    "7.0": [
+      "The calculate/density/group/id/inertia/position*/volume keywords belong to the 'create' sub-grammar (live 7.00: 'ball clump create' demands volume+inertia or calculate)."
+    ],
+    "9.0": [
+      "The calculate/density/group/id/inertia/position*/volume keywords belong to the 'create' sub-grammar (live 9.7 create demands volume+inertia or calculate)."
+    ]
   },
-  "notes": [
-    "'[ballclumpmodblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (calculate, density, group, id, inertia, position, position-x, position-y, position-z, volume).",
-    "Modifiers: calculate <f>: Calculate clump position, volume, and inertia from pebble distribution (tolerance default 0.01, min 0.00005). Cannot use with position/inertia/volume keywords.; density <f>: Clump density (default 1.0); group <s> slot <slot> pebble: Assign group name to clump (or pebbles if 'pebble' keyword used); id <i>: Clump ID (required for add-pebble, auto-assigned for create if not specified); inertia <e11> <e22> <e33> <e12> <e13> <e23> (3D): Set clump inertia tensor. Must also specify volume. Cannot use with calculate.; position <v> or position-x/y/z <f>: Clump centroid position (default origin). Cannot use with calculate.; volume <f>: Set clump volume for mass calculation. Must also specify inertia. Cannot use with calculate."
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "ball clump",
+  "syntax": "ball clump keyword [range]",
+  "keywords": [
+    {
+      "name": "add-pebble",
+      "syntax": {
+        "7.0": "add-pebble",
+        "9.0": "add-pebble [ballclumpmodblock]"
+      },
+      "description": "Add balls within range to an existing clump. The id keyword must be given to specify to which clump the ball is to be added."
+    },
+    {
+      "name": "create",
+      "syntax": {
+        "7.0": "create",
+        "9.0": "create [ballclumpmodblock]"
+      },
+      "description": "Create a clump from the balls within range."
+    },
+    {
+      "name": "calculate",
+      "syntax": "calculate <f>",
+      "description": "This keyword specifies that the clump position, volume, and inertia tensor will be calculated from the pebble distribution assuming constant density. The space containing the clump is recursively subdivided into boxes that are {squares in 2D; cubes in 3D}. The {areas in 2D; volumes in 3D} and inertia tensors of all boxes that fall completely within any pebbles are accumulated. The parallel axis theorem is used to accumulate the inertia tensors. For each iteration the “final” volume is extrapolated, and the iterations cease when either 1) the total number of cells to be subdivided reaches 1e6 or 2) the extrapolated and estimated volumes are within the desired tolerance. By default, the percentage difference f = 0.01. The minimum value allowed is 0.00005 and the user should be aware that setting the percentage to such a small value may require some computational effort to calculate these attributes. The clump centroid calculated is assigned to the clump."
+    },
+    {
+      "name": "density",
+      "syntax": "density <f>",
+      "description": "Clump density with default value 1.0."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>] [pebble] ...",
+      "description": "The group name at slot slot is set to s for the newly created clump. The optional pebble keyword specifies that the group is assigned to the pebbles and not to the clump. If slot is not specified, then the group name at slot Default is set to s ."
+    },
+    {
+      "name": "id",
+      "syntax": "id <i>",
+      "description": "Clump ID. If not specified, then the next available ID is used."
+    },
+    {
+      "name": "inertia",
+      "syntax": {
+        "7.0": "inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23>",
+        "9.0": "inertia <fe11> <fe22> <fe33> <fe12> <fe13> <fe23> only 1 component in 2D"
+      },
+      "description": "Set the inertia “tensor” of the clump in its current configuration. This value of the inertia tensor, {a float in 2D corresponding to the polar moment of inertia; a 2nd order tensor in 3D}. In 3D, 6 parameters must be specified in the order e11,e22,e33,e12,e13,e23 using the row/column convention. One must also specify the volume, and this keyword cannot be specified with the calculate keyword."
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "Clump position that is the origin by default. This is the position of the clump centroid. This keyword cannot be given with the calculate keyword."
+    },
+    {
+      "name": "position-x",
+      "syntax": "position-x <f>",
+      "description": "The \\(x\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
+    },
+    {
+      "name": "position-y",
+      "syntax": "position-y <f>",
+      "description": "The \\(y\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
+    },
+    {
+      "name": "position-z",
+      "syntax": {
+        "7.0": "position-z <f>",
+        "9.0": "position-z <f> 3D ONLY"
+      },
+      "description": "The \\(z\\) -component of the clump centroid position that is 0 by default. This keyword cannot be given with the calculate keyword."
+    },
+    {
+      "name": "volume",
+      "syntax": "volume <f>",
+      "description": "Set the {volume per unit thickness in 2D; volume in 3D} to f . One must also specify the inertia tensor, and this keyword cannot be given with the calculate keyword. Please be aware that this parameter doesn’t affect the geometry of the clump; as a result, the apparent geometric volume of the clump remains unchanged. This is the volume (from which the mass is computed) that is used to solve the law of motion for the clump."
+    }
+  ],
+  "examples": [
+    {
+      "command": "ball clump create range id 1 10 calculate",
+      "description": "Create clump from balls 1-10, automatically calculate properties from pebble distribution"
+    },
+    {
+      "command": "ball clump create range group 'ballgroup' density 2500 calculate 0.001",
+      "description": "Create clump from ball group with density 2500, high precision calculation (0.1% tolerance)"
+    },
+    {
+      "command": "ball clump add-pebble id 5 range id 20",
+      "description": "Add ball 20 as pebble to existing clump 5"
+    },
+    {
+      "command": "ball clump create range box -5 5 position (0,0,0) density 1000 calculate",
+      "description": "Create clump from balls in box region with specified density"
+    }
   ]
 }

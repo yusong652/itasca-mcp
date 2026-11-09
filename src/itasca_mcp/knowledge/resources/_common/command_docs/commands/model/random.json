@@ -24,99 +24,40 @@
     "available": false,
     "workaround": "itasca.command('model random 12345') - Python SDK does not provide direct random seed control"
   },
-  "versions": {
-    "7.0": {
-      "command": "model random",
-      "syntax": "model random <i>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model random 10000",
-          "description": "Set random seed to default value (10,000)"
-        },
-        {
-          "command": "model random 12345",
-          "description": "Set random seed to custom value for reproducibility"
-        },
-        {
-          "command": "model new\nmodel random 10000\nball generate number 1000 radius 0.5",
-          "description": "Reset model, set seed, generate balls - will produce identical positions each run"
-        },
-        {
-          "command": "model random 54321\nmodel deterministic on\nball generate number 500 radius gaussian mean 0.5 deviation 0.1",
-          "description": "Set seed and deterministic mode for fully reproducible generation"
-        },
-        {
-          "command": "; Run 1\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run1.sav'\n\n; Run 2 (identical to Run 1)\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run2.sav'",
-          "description": "Two runs with same seed produce identical ball distributions"
-        },
-        {
-          "command": "model random 20000\nfish define gen_random_props\n  loop local i (1, ball.num)\n    local bp = ball.find(i)\n    ball.dens(bp) = math.random.uniform * 1000 + 1500\n  endloop\nend\ngen_random_props",
-          "description": "Set seed before using FISH random functions for reproducibility"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model random",
+  "syntax": "model random <i>",
+  "keywords": [],
+  "examples": [
+    {
+      "command": "model random 10000",
+      "description": "Set random seed to default value (10,000)"
     },
-    "6.0": {
-      "command": "model random",
-      "syntax": "model random <i>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model random 10000",
-          "description": "Set random seed to default value (10,000)"
-        },
-        {
-          "command": "model random 12345",
-          "description": "Set random seed to custom value for reproducibility"
-        },
-        {
-          "command": "model new\nmodel random 10000\nball generate number 1000 radius 0.5",
-          "description": "Reset model, set seed, generate balls - will produce identical positions each run"
-        },
-        {
-          "command": "model random 54321\nmodel deterministic on\nball generate number 500 radius gaussian mean 0.5 deviation 0.1",
-          "description": "Set seed and deterministic mode for fully reproducible generation"
-        },
-        {
-          "command": "; Run 1\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run1.sav'\n\n; Run 2 (identical to Run 1)\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run2.sav'",
-          "description": "Two runs with same seed produce identical ball distributions"
-        },
-        {
-          "command": "model random 20000\nfish define gen_random_props\n  loop local i (1, ball.num)\n    local bp = ball.find(i)\n    ball.dens(bp) = math.random.uniform * 1000 + 1500\n  endloop\nend\ngen_random_props",
-          "description": "Set seed before using FISH random functions for reproducibility"
-        }
-      ]
+    {
+      "command": "model random 12345",
+      "description": "Set random seed to custom value for reproducibility"
     },
-    "9.0": {
-      "command": "model random",
-      "syntax": "model random <i>",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "model random 10000",
-          "description": "Set random seed to default value (10,000)"
-        },
-        {
-          "command": "model random 12345",
-          "description": "Set random seed to custom value for reproducibility"
-        },
-        {
-          "command": "model new\nmodel random 10000\nball generate number 1000 radius 0.5",
-          "description": "Reset model, set seed, generate balls - will produce identical positions each run"
-        },
-        {
-          "command": "model random 54321\nmodel deterministic on\nball generate number 500 radius gaussian mean 0.5 deviation 0.1",
-          "description": "Set seed and deterministic mode for fully reproducible generation"
-        },
-        {
-          "command": "; Run 1\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run1.sav'\n\n; Run 2 (identical to Run 1)\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run2.sav'",
-          "description": "Two runs with same seed produce identical ball distributions"
-        },
-        {
-          "command": "model random 20000\nfish define gen_random_props\n  loop local i (1, ball.num)\n    local bp = ball.find(i)\n    ball.dens(bp) = math.random.uniform * 1000 + 1500\n  endloop\nend\ngen_random_props",
-          "description": "Set seed before using FISH random functions for reproducibility"
-        }
-      ]
+    {
+      "command": "model new\nmodel random 10000\nball generate number 1000 radius 0.5",
+      "description": "Reset model, set seed, generate balls - will produce identical positions each run"
+    },
+    {
+      "command": "model random 54321\nmodel deterministic on\nball generate number 500 radius gaussian mean 0.5 deviation 0.1",
+      "description": "Set seed and deterministic mode for fully reproducible generation"
+    },
+    {
+      "command": "; Run 1\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run1.sav'\n\n; Run 2 (identical to Run 1)\nmodel new\nmodel random 99999\nball generate number 1000 radius 0.5 box -10 10\nmodel save 'run2.sav'",
+      "description": "Two runs with same seed produce identical ball distributions"
+    },
+    {
+      "command": "model random 20000\nfish define gen_random_props\n  loop local i (1, ball.num)\n    local bp = ball.find(i)\n    ball.dens(bp) = math.random.uniform * 1000 + 1500\n  endloop\nend\ngen_random_props",
+      "description": "Set seed before using FISH random functions for reproducibility"
     }
-  }
+  ]
 }

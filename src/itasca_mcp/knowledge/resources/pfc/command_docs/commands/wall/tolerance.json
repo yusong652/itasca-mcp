@@ -9,164 +9,6 @@
     "available": false,
     "workaround": "itasca.command('wall tolerance ...') - Python SDK does not provide contact detection tolerance settings. This is a low-level algorithmic control"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall tolerance",
-      "syntax": "wall tolerance keyword ...",
-      "keywords": [
-        {
-          "name": "automatic",
-          "syntax": "automatic <b>",
-          "description": "Change the automatic tolerance computation mode ( on by default). If wall facets have velocity, those facets may be controlling the timestep due to the requirement of frequent remapping in the cellspace to ensure contacts are detected appropriately. In many situations few facets may be moving. Instead, the wall facet controlling the timestep is determined when b = true and the velocity contact-detection tolerance set so that the timestep is not reduced from the last stable timestep."
-        },
-        {
-          "name": "constant",
-          "syntax": "constant <f> [range]",
-          "description": "Assign the constant contact-detection tolerance. This is assigned on a per-facet basis."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <f>",
-          "description": "Assign the extent contact-detection tolerance. This is a global setting for all facets."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <f>",
-          "description": "Assign the velocity contact-detection tolerance. This is a global setting for all facets."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall tolerance automatic true",
-          "description": "Enable automatic tolerance computation (default, prevents timestep reduction)"
-        },
-        {
-          "command": "wall tolerance automatic false",
-          "description": "Disable automatic tolerance computation"
-        },
-        {
-          "command": "wall tolerance extent 1e-5",
-          "description": "Set global extent tolerance to 1e-5 (10x default)"
-        },
-        {
-          "command": "wall tolerance velocity 0.1",
-          "description": "Set global velocity tolerance to 0.1 for fast-moving walls"
-        },
-        {
-          "command": "wall tolerance constant 0.01 range name 'platen'",
-          "description": "Set constant tolerance to 0.01 for facets in wall named 'platen'"
-        },
-        {
-          "command": "wall tolerance constant 0.005 range id 1 10",
-          "description": "Set per-facet constant tolerance for walls with IDs 1-10"
-        }
-      ]
-    },
-    "6.0": {
-      "command": "wall tolerance",
-      "syntax": "wall tolerance keyword ...",
-      "keywords": [
-        {
-          "name": "constant",
-          "syntax": "constant <f> [range]",
-          "description": "Assign the constant contact-detection tolerance. This is assigned on a per-facet basis."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <f>",
-          "description": "Assign the extent contact-detection tolerance. This is a global setting for all facets."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <f>",
-          "description": "Assign the velocity contact-detection tolerance. This is a global setting for all facets."
-        },
-        {
-          "name": "automatic",
-          "syntax": "automatic <b>",
-          "description": "Change the automatic tolerance computation mode ( on by default). If wall facets have velocity, those facets may be controlling the timestep due to the requirement of frequent remapping in the cellspace to ensure contacts are detected appropriately. In many situations few facets may be moving. Instead, the wall facet controlling the timestep is determined when b = true and the velocity contact-detection tolerance set so that the timestep is not reduced from the last stable timestep."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall tolerance automatic true",
-          "description": "Enable automatic tolerance computation (default, prevents timestep reduction)"
-        },
-        {
-          "command": "wall tolerance automatic false",
-          "description": "Disable automatic tolerance computation"
-        },
-        {
-          "command": "wall tolerance extent 1e-5",
-          "description": "Set global extent tolerance to 1e-5 (10x default)"
-        },
-        {
-          "command": "wall tolerance velocity 0.1",
-          "description": "Set global velocity tolerance to 0.1 for fast-moving walls"
-        },
-        {
-          "command": "wall tolerance constant 0.01 range name 'platen'",
-          "description": "Set constant tolerance to 0.01 for facets in wall named 'platen'"
-        },
-        {
-          "command": "wall tolerance constant 0.005 range id 1 10",
-          "description": "Set per-facet constant tolerance for walls with IDs 1-10"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "wall tolerance",
-      "syntax": "wall tolerance keyword ...",
-      "keywords": [
-        {
-          "name": "automatic",
-          "syntax": "automatic <b>",
-          "description": "Change the automatic tolerance computation mode ( on by default). If wall facets have velocity, those facets may be controlling the timestep due to the requirement of frequent remapping in the cellspace to ensure contacts are detected appropriately. In many situations few facets may be moving. Instead, the wall facet controlling the timestep is determined when b = true and the velocity contact-detection tolerance set so that the timestep is not reduced from the last stable timestep."
-        },
-        {
-          "name": "constant",
-          "syntax": "constant <f> [range]",
-          "description": "Assign the constant contact-detection tolerance. This is assigned on a per-facet basis."
-        },
-        {
-          "name": "extent",
-          "syntax": "extent <f>",
-          "description": "Assign the extent contact-detection tolerance. This is a global setting for all facets."
-        },
-        {
-          "name": "velocity",
-          "syntax": "velocity <f>",
-          "description": "Assign the velocity contact-detection tolerance. This is a global setting for all facets."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall tolerance automatic true",
-          "description": "Enable automatic tolerance computation (default, prevents timestep reduction)"
-        },
-        {
-          "command": "wall tolerance automatic false",
-          "description": "Disable automatic tolerance computation"
-        },
-        {
-          "command": "wall tolerance extent 1e-5",
-          "description": "Set global extent tolerance to 1e-5 (10x default)"
-        },
-        {
-          "command": "wall tolerance velocity 0.1",
-          "description": "Set global velocity tolerance to 0.1 for fast-moving walls"
-        },
-        {
-          "command": "wall tolerance constant 0.01 range name 'platen'",
-          "description": "Set constant tolerance to 0.01 for facets in wall named 'platen'"
-        },
-        {
-          "command": "wall tolerance constant 0.005 range id 1 10",
-          "description": "Set per-facet constant tolerance for walls with IDs 1-10"
-        }
-      ]
-    }
-  },
   "notes": [
     "Must call 'model clean' after model restore before modifying extent tolerances",
     "Facet remapped when cumulative translation exceeds tolerance sum",
@@ -175,5 +17,62 @@
     "Automatic mode prevents timestep reduction when few facets are moving",
     "Constant tolerance is per-facet, extent and velocity are global",
     "Facet extent = min_extent + 2*(max_interaction_dist + tol_constant + max_extent_length*tol_extent + max_velocity*tol_velocity); the constant tolerance is per-facet, the extent and velocity tolerances are global."
+  ],
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall tolerance",
+  "syntax": "wall tolerance keyword ...",
+  "keywords": [
+    {
+      "name": "constant",
+      "syntax": "constant <f> [range]",
+      "description": "Assign the constant contact-detection tolerance. This is assigned on a per-facet basis."
+    },
+    {
+      "name": "extent",
+      "syntax": "extent <f>",
+      "description": "Assign the extent contact-detection tolerance. This is a global setting for all facets."
+    },
+    {
+      "name": "velocity",
+      "syntax": "velocity <f>",
+      "description": "Assign the velocity contact-detection tolerance. This is a global setting for all facets."
+    },
+    {
+      "name": "automatic",
+      "syntax": "automatic <b>",
+      "description": "Change the automatic tolerance computation mode ( on by default). If wall facets have velocity, those facets may be controlling the timestep due to the requirement of frequent remapping in the cellspace to ensure contacts are detected appropriately. In many situations few facets may be moving. Instead, the wall facet controlling the timestep is determined when b = true and the velocity contact-detection tolerance set so that the timestep is not reduced from the last stable timestep."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall tolerance automatic true",
+      "description": "Enable automatic tolerance computation (default, prevents timestep reduction)"
+    },
+    {
+      "command": "wall tolerance automatic false",
+      "description": "Disable automatic tolerance computation"
+    },
+    {
+      "command": "wall tolerance extent 1e-5",
+      "description": "Set global extent tolerance to 1e-5 (10x default)"
+    },
+    {
+      "command": "wall tolerance velocity 0.1",
+      "description": "Set global velocity tolerance to 0.1 for fast-moving walls"
+    },
+    {
+      "command": "wall tolerance constant 0.01 range name 'platen'",
+      "description": "Set constant tolerance to 0.01 for facets in wall named 'platen'"
+    },
+    {
+      "command": "wall tolerance constant 0.005 range id 1 10",
+      "description": "Set per-facet constant tolerance for walls with IDs 1-10"
+    }
   ]
 }

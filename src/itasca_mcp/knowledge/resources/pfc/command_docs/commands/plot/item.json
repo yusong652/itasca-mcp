@@ -39,139 +39,88 @@
     "available": false,
     "workaround": "itasca.command('plot item create <type>') - no direct Python SDK method"
   },
-  "versions": {
-    "7.0": {
-      "command": "plot item",
-      "syntax": "plot [<s>] item keyword",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create keyword ...",
-          "description": "adds a new plot item to the list associated with the plot. An alphabetical list of keywords, matched to the items available from the Build Plot dialog , is shown below. Note that additional plot items can be added by plug-ins to the system at any time."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <i>",
-          "description": "destroys the i th plot item in the list associated with the current plot. Note that this will renumber the plots following that in the list."
-        },
-        {
-          "name": "modify",
-          "syntax": "modify <i> keyword ...",
-          "description": "allows modification of the existing plot item at the i th position in the list associated with the current plot."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot item create ball",
-          "description": "Add balls to the current plot"
-        },
-        {
-          "command": "plot item create contact active on color-by vector-attribute 'force' color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
-          "description": "Force-chain item: contacts colored and thickness-scaled by force magnitude (verified PFC2D 7.00)"
-        },
-        {
-          "command": "plot item create fracture color-by text-attribute 'group' Any",
-          "description": "Draw DFN fractures colored by their group (assign per-DFN groups first with 'fracture group <name> range fish <fn>' or at crack creation time); the slot argument after 'group' is required - a slot name string or Any"
-        },
-        {
-          "command": "plot item create fracture range group 'tension_cracks'",
-          "description": "A fracture item restricted to one crack family via group range ('range dfn <name>' does NOT select by DFN membership - the dfn range element is distance-based)"
-        },
-        {
-          "command": "plot 'myplot' item create chart-history history 'ratio'",
-          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
-        },
-        {
-          "command": "plot 'myplot' item create chart-history history 'stress' vs 'strain'",
-          "description": "Cross-plot one history against another (x-y) instead of the default 'vs step'"
-        },
-        {
-          "command": "plot item delete 1",
-          "description": "Delete the first plot item (following items are renumbered)"
-        },
-        {
-          "command": "plot item modify 2 legend active off",
-          "description": "Modify the second plot item"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "plot item",
+  "syntax": "plot [<s>] item keyword",
+  "keywords": [
+    {
+      "name": "create",
+      "syntax": "create keyword ...",
+      "description": "adds a new plot item to the list associated with the plot. An alphabetical list of keywords, matched to the items available from the Build Plot dialog , is shown below. Note that additional plot items can be added by plug-ins to the system at any time."
     },
-    "6.0": {
-      "command": "plot item",
-      "syntax": "plot [<s>] item keyword",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create keyword ...",
-          "description": "adds a new plot item to the list associated with the plot. An alphabetical list of keywords, matched to the items available from the Build Plot dialog , is shown below. Note that additional plot items can be added by plug-ins to the system at any time."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <i>",
-          "description": "destroys the i th plot item in the list associated with the current plot. Note that this will renumber the plots following that in the list."
-        },
-        {
-          "name": "modify",
-          "syntax": "modify <i> keyword ...",
-          "description": "allows modification of the existing plot item at the i th position in the list associated with the current plot."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot item create ball",
-          "description": "Add balls to the current plot"
-        },
-        {
-          "command": "plot item create contact active on color-by vector-attribute 'force' color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
-          "description": "Force-chain item: contacts colored and thickness-scaled by force magnitude"
-        },
-        {
-          "command": "plot 'myplot' item create chart-history history 'ratio'",
-          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
-        },
-        {
-          "command": "plot item delete 1",
-          "description": "Delete the first plot item (following items are renumbered)"
-        }
-      ]
+    {
+      "name": "delete",
+      "syntax": "delete <i>",
+      "description": "destroys the i th plot item in the list associated with the current plot. Note that this will renumber the plots following that in the list."
     },
-    "9.0": {
-      "command": "plot item",
-      "syntax": "plot [<s>] item keyword",
-      "keywords": [
-        {
-          "name": "create",
-          "syntax": "create keyword ...",
-          "description": "adds a new plot item to the list associated with the plot. An alphabetical list of keywords, matched to the items available from the Build Plot dialog , is shown below. Note that additional plot items can be added by plug-ins to the system at any time."
-        },
-        {
-          "name": "delete",
-          "syntax": "delete <i>",
-          "description": "destroys the i th plot item in the list associated with the current plot. Note that this will renumber the plots following that in the list."
-        },
-        {
-          "name": "modify",
-          "syntax": "modify <i> keyword ...",
-          "description": "allows modification of the existing plot item at the i th position in the list associated with the current plot."
-        }
-      ],
-      "examples": [
-        {
-          "command": "plot item create ball",
-          "description": "Add balls to the current plot"
-        },
-        {
-          "command": "plot item create contact active on color-by vector-attribute 'force' color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
-          "description": "Force-chain item: contacts colored and thickness-scaled by force magnitude"
-        },
-        {
-          "command": "plot 'myplot' item create chart-history history 'ratio'",
-          "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
-        },
-        {
-          "command": "plot item delete 1",
-          "description": "Delete the first plot item (following items are renumbered)"
-        }
-      ]
+    {
+      "name": "modify",
+      "syntax": "modify <i> keyword ...",
+      "description": "allows modification of the existing plot item at the i th position in the list associated with the current plot."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "plot item create ball",
+      "description": "Add balls to the current plot"
+    },
+    {
+      "command": "plot item create contact active on color-by vector-attribute 'force' color-options scaled ramp rainbow minimum automatic maximum automatic scale-by-force on legend active on",
+      "description": {
+        "6.0": "Force-chain item: contacts colored and thickness-scaled by force magnitude",
+        "7.0": "Force-chain item: contacts colored and thickness-scaled by force magnitude (verified PFC2D 7.00)",
+        "9.0": "Force-chain item: contacts colored and thickness-scaled by force magnitude"
+      }
+    },
+    {
+      "command": "plot item create fracture color-by text-attribute 'group' Any",
+      "description": "Draw DFN fractures colored by their group (assign per-DFN groups first with 'fracture group <name> range fish <fn>' or at crack creation time); the slot argument after 'group' is required - a slot name string or Any",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "command": "plot item create fracture range group 'tension_cracks'",
+      "description": "A fracture item restricted to one crack family via group range ('range dfn <name>' does NOT select by DFN membership - the dfn range element is distance-based)",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "command": "plot 'myplot' item create chart-history history 'ratio'",
+      "description": "Chart the history named 'ratio' (the Name column from 'history list', NOT its numeric ID). A chart-history with no 'history <name>', or a name/ID no history has, draws an empty chart with no error"
+    },
+    {
+      "command": "plot 'myplot' item create chart-history history 'stress' vs 'strain'",
+      "description": "Cross-plot one history against another (x-y) instead of the default 'vs step'",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    },
+    {
+      "command": "plot item delete 1",
+      "description": "Delete the first plot item (following items are renumbered)"
+    },
+    {
+      "command": "plot item modify 2 legend active off",
+      "description": "Modify the second plot item",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
+    }
+  ]
 }

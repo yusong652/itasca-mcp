@@ -8,286 +8,187 @@
     "available": false,
     "workaround": ""
   },
-  "versions": {
-    "6.0": {
-      "command": "model factor-of-safety",
-      "syntax": "model factor-of-safety [keyword] ...",
-      "keywords": [
-        {
-          "name": "associated",
-          "syntax": "associated",
-          "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
-        },
-        {
-          "name": "bracket",
-          "syntax": "bracket <f1> <f2>",
-          "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
-        },
-        {
-          "name": "characteristic-steps",
-          "syntax": "characteristic-steps <i>",
-          "description": "Set the characteristic response steps. If not specified, i is tested using the existing perturbation method."
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence <f>",
-          "description": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
-        },
-        {
-          "name": "interface",
-          "syntax": "interface {include <s> | exclude <s>}",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display the last factor of safety result."
-        },
-        {
-          "name": "perturbation",
-          "syntax": "perturbation <f>",
-          "description": "Set the stress perturbation factor. This is used in determining the characteristic response steps, by perturbing the model from its current (assumed) equilibrium state by adjusting the stress field and not allowing failure. The default factor is 2.0 ."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium. If this is not explicitly set, the program uses the current value used by the previous model solve command. The default is 1e-5 ."
-        },
-        {
-          "name": "ratio-average",
-          "syntax": "ratio-average <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "ratio-maximum",
-          "syntax": "ratio-maximum <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <f>",
-          "description": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap betwen the to known stable and unstable factors is less than this value, the factor of safety calculation will end."
-        },
-        {
-          "name": "step-limit",
-          "syntax": "step-limit <i>",
-          "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 200,000 ."
-        },
-        {
-          "name": "zone",
-          "syntax": "zone {include <s> | exclude <s>}",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "model factor-of-safety",
+  "syntax": {
+    "6.0": "model factor-of-safety [keyword] ...",
+    "7.0": "model factor-of-safety [keyword ...]",
+    "9.0": "model factor-of-safety [keyword ...]"
+  },
+  "keywords": [
+    {
+      "name": "associated",
+      "syntax": "associated",
+      "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
     },
-    "7.0": {
-      "command": "model factor-of-safety",
-      "syntax": "model factor-of-safety [keyword ...]",
-      "keywords": [
-        {
-          "name": "associated",
-          "syntax": "associated",
-          "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
-        },
-        {
-          "name": "block-zone",
-          "syntax": "block-zone {include <s> | exclude <s>}",
-          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "bracket",
-          "syntax": "bracket <f1> <f2>",
-          "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
-        },
-        {
-          "name": "bracket-limit",
-          "syntax": "bracket-limit <f>",
-          "description": "Set the maximum mount the target factor of safety can change during factor of safety bracketing. For example, if the current factor of safety limits were 1 for stable and 2 was just calculated as unstable the next factor of safety trial would be at 1.5 . But if the bracket-limit had been set to 0.05 the next trial factor of safety would be 1.95 – in the same direction as 1.5 but a maximum of 0.05 away from the last value. This keyword is useful if the goal is to generate factor of safety contours, as it guarantees a maximum spread between values taken during bracketing."
-        },
-        {
-          "name": "characteristic-steps",
-          "syntax": "characteristic-steps <i>",
-          "description": "Set the characteristic response steps. If not specified, i is tested using the existing perturbation method."
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence <f>",
-          "description": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
-        },
-        {
-          "name": "interface",
-          "syntax": "interface {include <s> | exclude <s>}",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "joint",
-          "syntax": "joint {include <s> | exclude <s>}",
-          "description": "Specify which joint properties to change during analysis. The user may include or exclude specific joint properties from the list. By default the list of properties being included is scohesion and sfriction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display the last factor of safety result."
-        },
-        {
-          "name": "perturbation",
-          "syntax": "perturbation <f>",
-          "description": "Set the stress perturbation factor. This is used in determining the characteristic response steps, by perturbing the model from its current (assumed) equilibrium state by adjusting the stress field and not allowing failure. The default factor is 2.0 ."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium. If this is not explicitly set, the program uses the current value used by the previous model solve command. The default is 1e-5 ."
-        },
-        {
-          "name": "ratio-average",
-          "syntax": "ratio-average <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "ratio-maximum",
-          "syntax": "ratio-maximum <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in ref-equilibrium-."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <f>",
-          "description": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap betwen the to known stable and unstable factors is less than this value, the factor of safety calculation will end."
-        },
-        {
-          "name": "step-limit",
-          "syntax": "step-limit <i>",
-          "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 ."
-        },
-        {
-          "name": "zone",
-          "syntax": "zone {include <s> | exclude <s>}",
-          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        }
-      ]
+    {
+      "name": "block-zone",
+      "syntax": {
+        "7.0": "block-zone {include <s> | exclude <s>}",
+        "9.0": "block-zone {include <s> | exclude <s>} 3DEC"
+      },
+      "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "9.0": {
-      "command": "model factor-of-safety",
-      "syntax": "model factor-of-safety [keyword ...]",
-      "keywords": [
-        {
-          "name": "associated",
-          "syntax": "associated",
-          "description": "Apply associated flow rule. The dilation angle is set equal to the friction angle, as modified by the factor of safety procedure. (By default, the nonassociated flow applies.) Note that even in a nonassociated flow rule, the dilation is not allowed to become greater than the friction."
-        },
-        {
-          "name": "block-zone",
-          "syntax": "block-zone {include <s> | exclude <s>} 3DEC",
-          "description": "Specify which 3DEC zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction (the last two referring to ubiquitous joint strength properties). Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "bracket",
-          "syntax": "bracket <f1> <f2>",
-          "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
-        },
-        {
-          "name": "bracket-limit",
-          "syntax": "bracket-limit <f>",
-          "description": "Set the maximum mount the target factor of safety can change during factor of safety bracketing. For example, if the current factor of safety limits were 1 for stable and 2 was just calculated as unstable the next factor of safety trial would be at 1.5 . But if the bracket-limit had been set to 0.05 the next trial factor of safety would be 1.95 – in the same direction as 1.5 but a maximum of 0.05 away from the last value. This keyword is useful if the goal is to generate factor of safety contours, as it guarantees a maximum spread between values taken during bracketing."
-        },
-        {
-          "name": "characteristic-steps",
-          "syntax": "characteristic-steps <i>",
-          "description": "Set the characteristic response steps. If not specified, i is tested using the existing perturbation method."
-        },
-        {
-          "name": "convergence",
-          "syntax": "convergence <f>",
-          "description": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation). The default value is 0."
-        },
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
-        },
-        {
-          "name": "interface",
-          "syntax": "interface FLAC {include <s> | exclude <s>}",
-          "description": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. All interfaces properties are excluded by default. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "joint",
-          "syntax": "joint {include <s> | exclude <s>}",
-          "description": "Specify which joint properties to change during analysis. This refers for zone joints in FLAC2D and FLAC3D or joints in 3DEC . The user may include or exclude specific joint properties from the list. By default, in 3DEC the list of properties being included is cohesion and friction . By default, in FLAC2D and FLAC3D all zone joint properties are excluded . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "Display the last factor of safety result."
-        },
-        {
-          "name": "perturbation",
-          "syntax": "perturbation <f>",
-          "description": "Set the stress perturbation factor. This is used in determining the characteristic response steps, by perturbing the model from its current (assumed) equilibrium state by adjusting the stress field and not allowing failure. The default factor is 2.0 ."
-        },
-        {
-          "name": "ratio",
-          "syntax": "ratio <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium. If this is not explicitly set, the program uses the current value used by the previous model solve command. The default is 1e-5 ."
-        },
-        {
-          "name": "ratio-average",
-          "syntax": "ratio-average <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
-        },
-        {
-          "name": "ratio-local",
-          "syntax": "ratio-local <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
-        },
-        {
-          "name": "ratio-maximum",
-          "syntax": "ratio-maximum <f>",
-          "description": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
-        },
-        {
-          "name": "resolution",
-          "syntax": "resolution <f>",
-          "description": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap between the known stable and unstable factors is less than this value, the factor of safety calculation will end."
-        },
-        {
-          "name": "step-limit",
-          "syntax": "step-limit <i>",
-          "description": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 ."
-        },
-        {
-          "name": "zone",
-          "syntax": "zone {include <s> | exclude <s>} FLAC3D",
-          "description": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        },
-        {
-          "name": "zone-joint",
-          "syntax": "zone-joint {include <s> | exclude <s>} FLAC",
-          "description": "Specify which zone-joint properties to change during analysis. The user may include or exclude specific interface properties from the list. All zone-joint properties are excluded by default. To include or exclude more than one property, repeat the keyword, e.g. model factor-of-safety zone-joint include 'friction' include 'cohesion' Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
-        }
-      ],
-      "examples": []
+    {
+      "name": "bracket",
+      "syntax": "bracket <f1> <f2>",
+      "description": "Set two starting bracket values. Factor of safety calculation stops with a warning message issued if it turns out that the factor of safety falls outside of the specified brackets. If f1 = f2 , FLAC3D tests one value for stability."
+    },
+    {
+      "name": "bracket-limit",
+      "syntax": "bracket-limit <f>",
+      "description": "Set the maximum mount the target factor of safety can change during factor of safety bracketing. For example, if the current factor of safety limits were 1 for stable and 2 was just calculated as unstable the next factor of safety trial would be at 1.5 . But if the bracket-limit had been set to 0.05 the next trial factor of safety would be 1.95 – in the same direction as 1.5 but a maximum of 0.05 away from the last value. This keyword is useful if the goal is to generate factor of safety contours, as it guarantees a maximum spread between values taken during bracketing.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "characteristic-steps",
+      "syntax": "characteristic-steps <i>",
+      "description": "Set the characteristic response steps. If not specified, i is tested using the existing perturbation method."
+    },
+    {
+      "name": "convergence",
+      "syntax": "convergence <f>",
+      "description": {
+        "6.0": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in ref-equilibrium-.",
+        "7.0": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in ref-equilibrium-.",
+        "9.0": "Specifies the convergence value used to determine equilibrium. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation). The default value is 0."
+      }
+    },
+    {
+      "name": "filename",
+      "syntax": "filename <s>",
+      "description": "Sets the file name prefix used to identify save files created during the factor of safety calculation. Three files will be created during the process. For example, if the prefix given was test , then the filenames test-Init.f3sav , test-Stable.f3sav , and test-Unstable.f3sav will be created. These files represent the initial state, the last stable state, and the last unstable state, respectively."
+    },
+    {
+      "name": "interface",
+      "syntax": {
+        "6.0": "interface {include <s> | exclude <s>}",
+        "7.0": "interface {include <s> | exclude <s>}",
+        "9.0": "interface FLAC {include <s> | exclude <s>}"
+      },
+      "description": {
+        "6.0": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+        "7.0": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+        "9.0": "Specify which interface properties to change during analysis. The user may include or exclude specific interface properties from the list. All interfaces properties are excluded by default. Note that factor of safety calculations in large strain mode are not supported if interfaces are present. Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+      }
+    },
+    {
+      "name": "joint",
+      "syntax": "joint {include <s> | exclude <s>}",
+      "description": {
+        "7.0": "Specify which joint properties to change during analysis. The user may include or exclude specific joint properties from the list. By default the list of properties being included is scohesion and sfriction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+        "9.0": "Specify which joint properties to change during analysis. This refers for zone joints in FLAC2D and FLAC3D or joints in 3DEC . The user may include or exclude specific joint properties from the list. By default, in 3DEC the list of properties being included is cohesion and friction . By default, in FLAC2D and FLAC3D all zone joint properties are excluded . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "Display the last factor of safety result."
+    },
+    {
+      "name": "perturbation",
+      "syntax": "perturbation <f>",
+      "description": "Set the stress perturbation factor. This is used in determining the characteristic response steps, by perturbing the model from its current (assumed) equilibrium state by adjusting the stress field and not allowing failure. The default factor is 2.0 ."
+    },
+    {
+      "name": "ratio",
+      "syntax": "ratio <f>",
+      "description": "Specify the unbalanced force ratio used to determine equilibrium. If this is not explicitly set, the program uses the current value used by the previous model solve command. The default is 1e-5 ."
+    },
+    {
+      "name": "ratio-average",
+      "syntax": "ratio-average <f>",
+      "description": {
+        "6.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "7.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "9.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the average ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
+      }
+    },
+    {
+      "name": "ratio-local",
+      "syntax": "ratio-local <f>",
+      "description": {
+        "6.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "7.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "9.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the local ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
+      }
+    },
+    {
+      "name": "ratio-maximum",
+      "syntax": "ratio-maximum <f>",
+      "description": {
+        "6.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "7.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in ref-equilibrium-.",
+        "9.0": "Specify the unbalanced force ratio used to determine equilibrium, and that the maximum ratio be used. See the discussion of ratio options in Convergence Criteria (in FLAC3D documentation)."
+      }
+    },
+    {
+      "name": "resolution",
+      "syntax": "resolution <f>",
+      "description": {
+        "6.0": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap betwen the to known stable and unstable factors is less than this value, the factor of safety calculation will end.",
+        "7.0": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap betwen the to known stable and unstable factors is less than this value, the factor of safety calculation will end.",
+        "9.0": "Set the resolution in comparing two bracketing (stable and unstable) factors. The default is .005 × the mean value. Once the gap between the known stable and unstable factors is less than this value, the factor of safety calculation will end."
+      }
+    },
+    {
+      "name": "step-limit",
+      "syntax": "step-limit <i>",
+      "description": {
+        "6.0": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 200,000 .",
+        "7.0": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 .",
+        "9.0": "Set a limit on the number of characteristic steps allowed. If the characteristic steps would be above this limit the check is halted and this value is used. The default value is 50,000 ."
+      }
+    },
+    {
+      "name": "zone",
+      "syntax": {
+        "6.0": "zone {include <s> | exclude <s>}",
+        "7.0": "zone {include <s> | exclude <s>}",
+        "9.0": "zone {include <s> | exclude <s>} FLAC3D"
+      },
+      "description": {
+        "6.0": "Specify which interface properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+        "7.0": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+        "9.0": "Specify which zone properties to change during analysis. The user may include or exclude specific zone properties from the list. By default the list of properties being included is friction , cohesion , joint-cohesion , and joint-friction . Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed."
+      }
+    },
+    {
+      "name": "zone-joint",
+      "syntax": "zone-joint {include <s> | exclude <s>} FLAC",
+      "description": "Specify which zone-joint properties to change during analysis. The user may include or exclude specific interface properties from the list. All zone-joint properties are excluded by default. To include or exclude more than one property, repeat the keyword, e.g. model factor-of-safety zone-joint include 'friction' include 'cohesion' Options: include <s>: Properties matching s are included. Their values are adjusted in the constitutive model as the target factor of safety is changed.; exclude <s>: Properties matching s are excluded. Their values will stay the same in the constitutive model as the target factor of safety is changed.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
+  ],
+  "examples": {
+    "6.0": [],
+    "9.0": []
   }
 }

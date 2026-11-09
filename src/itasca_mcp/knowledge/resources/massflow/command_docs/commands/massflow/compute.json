@@ -8,29 +8,30 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "massflow compute",
-      "syntax": "massflow compute [keyword]",
-      "keywords": [
-        {
-          "name": "days",
-          "syntax": "days <i>",
-          "description": "Specify the number of days for this compute step. This is the number of days in addition to what has already been run (not the total number of days)."
-        },
-        {
-          "name": "periods",
-          "syntax": "periods <i>",
-          "description": "Specify the number of periods for this compute step. This is the number of periods in addition to what has already been run (not the total number of periods)."
-        }
-      ],
-      "examples": []
-    }
-  },
   "notes": [
     "Both keywords are increments, not totals: they add to what has already been run. With neither keyword the command runs the `compute-days` / `compute-period` budget set by `massflow initialize`.",
     "Verified on a model resting at day 20 / period 3: `compute days 5` -> day 25, again -> day 30, then `compute periods 1` -> day 37 (the tutorial's periods are 7 days). Both keywords advance from wherever the model is.",
     "Bare `massflow compute` runs the `compute-days` / `compute-period` budget as an increment too, not as a target: from day 20 with `compute-days 20` it reached day 40, and after `massflow initialize compute-days 3` a further `compute` reached day 43.",
     "Markers are created lazily while computing — the marker count grows with the day count (1117 at day 20, 1450 at day 30 on the tutorial model)."
-  ]
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow compute",
+  "syntax": "massflow compute [keyword]",
+  "keywords": [
+    {
+      "name": "days",
+      "syntax": "days <i>",
+      "description": "Specify the number of days for this compute step. This is the number of days in addition to what has already been run (not the total number of days)."
+    },
+    {
+      "name": "periods",
+      "syntax": "periods <i>",
+      "description": "Specify the number of periods for this compute step. This is the number of periods in addition to what has already been run (not the total number of periods)."
+    }
+  ],
+  "examples": []
 }

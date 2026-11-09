@@ -10,192 +10,71 @@
     "available": false,
     "workaround": "itasca.command('wall import ...') - Python SDK does not provide wall import functionality"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall import",
-      "syntax": "wall import keyword ... [range]",
-      "keywords": [
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Name of the file from which to import. A temporary geometry set is created with the name s and the wall is imported from the geometry set. If an error occurs during the process, the geometry set remains for further scrutiny."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [facet] ...",
-          "description": "Set name s to the group name at slot slot to the created wall or its constituent facets. If the slot keyword is not given, then the group name is set in Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, the wall ID is set to the next available ID."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall. If not specified, then the wall name is set to file name or the geometry set name."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Optional keyword indicating that the import will continue in spite of the detection of non-manifold conditions or points falling outside the model domain. The offending facets are ignored."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s> {clean | keepid | seed <i>}",
-          "description": "Options: clean: Delete the geometry set after wall importation if the operation is successful. If given with the nothrow keyword, the geometry set will be deleted regardless of whether or not all facets are imported.; keepid: Specify that the facet IDs will be set to the IDs of the geometry {edges in 2D; polygons in 3D}.; seed <i>: ID of the geometry {edge in 2D; polygon in 3D} with which to start the stitching process. This keyword can be used with the nothrow keyword to import from geometry sets where multiple meshes are present that are disjoint."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall import filename 'gear.stl' skip-errors id 100",
-          "description": "Import wall from STL file, skip errors, assign ID 100"
-        },
-        {
-          "command": "wall import filename 'container.stl' name 'vessel' group 'boundaries'",
-          "description": "Import wall from STL file, name it 'vessel', assign to group 'boundaries'"
-        },
-        {
-          "command": "wall import from-geometry 'myset' clean",
-          "description": "Import wall from geometry set 'myset', delete set after successful import"
-        },
-        {
-          "command": "wall import from-geometry 'complex' seed 10 keepid",
-          "description": "Import from geometry set starting at polygon ID 10, preserve facet IDs"
-        },
-        {
-          "command": "wall import filename 'hopper.dxf' id 50 group 'equipment' facet",
-          "description": "Import from DXF file, assign ID 50, assign group to facets"
-        },
-        {
-          "command": "wall import from-geometry 'temp_geo' skip-errors clean",
-          "description": "Import from geometry set, skip errors, clean up geometry set regardless"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall import",
+  "syntax": "wall import keyword ... [range]",
+  "keywords": [
+    {
+      "name": "filename",
+      "syntax": "filename <s>",
+      "description": "Name of the file from which to import. A temporary geometry set is created with the name s and the wall is imported from the geometry set. If an error occurs during the process, the geometry set remains for further scrutiny."
     },
-    "6.0": {
-      "command": "wall import",
-      "syntax": "wall import keyword ... [range]",
-      "keywords": [
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Name of the file from which to import. A temporary geometry set is created with the name s and the wall is imported from the geometry set. If an error occurs during the process, the geometry set remains for further scrutiny."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [facet] ...",
-          "description": "Set name s to the group name at slot slot to the created wall or its constituent facets. If the slot keyword is not given, then the group name is set in Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, the wall ID is set to the next available ID."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall. If not specified, then the wall name is set to file name or the geometry set name."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Optional keyword indicating that the import will continue in spite of the detection of non-manifold conditions or points falling outside the model domain. The offending facets are ignored."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s> {clean | keepid | seed <i>}",
-          "description": "Options: clean: Delete the geometry set after wall importation if the operation is successful. If given with the nothrow keyword, the geometry set will be deleted regardless of whether or not all facets are imported.; keepid: Specify that the facet IDs will be set to the IDs of the geometry {edges in 2D; polygons in 3D}.; seed <i>: ID of the geometry {edge in 2D; polygon in 3D} with which to start the stitching process. This keyword can be used with the nothrow keyword to import from geometry sets where multiple meshes are present that are disjoint."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall import filename 'gear.stl' skip-errors id 100",
-          "description": "Import wall from STL file, skip errors, assign ID 100"
-        },
-        {
-          "command": "wall import filename 'container.stl' name 'vessel' group 'boundaries'",
-          "description": "Import wall from STL file, name it 'vessel', assign to group 'boundaries'"
-        },
-        {
-          "command": "wall import from-geometry 'myset' clean",
-          "description": "Import wall from geometry set 'myset', delete set after successful import"
-        },
-        {
-          "command": "wall import from-geometry 'complex' seed 10 keepid",
-          "description": "Import from geometry set starting at polygon ID 10, preserve facet IDs"
-        },
-        {
-          "command": "wall import filename 'hopper.dxf' id 50 group 'equipment' facet",
-          "description": "Import from DXF file, assign ID 50, assign group to facets"
-        },
-        {
-          "command": "wall import from-geometry 'temp_geo' skip-errors clean",
-          "description": "Import from geometry set, skip errors, clean up geometry set regardless"
-        }
-      ]
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>] [facet] ...",
+      "description": "Set name s to the group name at slot slot to the created wall or its constituent facets. If the slot keyword is not given, then the group name is set in Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
     },
-    "9.0": {
-      "command": "wall import",
-      "syntax": "wall import keyword ... [range]",
-      "keywords": [
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Name of the file from which to import. A temporary geometry set is created with the name s and the wall is imported from the geometry set. If an error occurs during the process, the geometry set remains for further scrutiny."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] [facet] ...",
-          "description": "Set name s to the group name at slot slot to the created wall or its constituent facets. If the slot keyword is not given, then the group name is set in Default . The optional facet keyword specifies that the group is assigned to the facets and not to the wall."
-        },
-        {
-          "name": "id",
-          "syntax": "id <id>",
-          "description": "Wall ID. If not specified, the wall ID is set to the next available ID."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Name of the wall. If not specified, then the wall name is set to file name or the geometry set name."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "Optional keyword indicating that the import will continue in spite of the detection of non-manifold conditions or points falling outside the model domain. The offending facets are ignored."
-        },
-        {
-          "name": "from-geometry",
-          "syntax": "from-geometry <s> {clean | keepid | seed <i>}",
-          "description": "Options: clean: Delete the geometry set after wall importation if the operation is successful. If given with the nothrow keyword, the geometry set will be deleted regardless of whether or not all facets are imported.; keepid: Specify that the facet IDs will be set to the IDs of the geometry {edges in 2D; polygons in 3D}.; seed <i>: ID of the geometry {edge in 2D; polygon in 3D} with which to start the stitching process. This keyword can be used with the nothrow keyword to import from geometry sets where multiple meshes are present that are disjoint."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall import filename 'gear.stl' skip-errors id 100",
-          "description": "Import wall from STL file, skip errors, assign ID 100"
-        },
-        {
-          "command": "wall import filename 'container.stl' name 'vessel' group 'boundaries'",
-          "description": "Import wall from STL file, name it 'vessel', assign to group 'boundaries'"
-        },
-        {
-          "command": "wall import from-geometry 'myset' clean",
-          "description": "Import wall from geometry set 'myset', delete set after successful import"
-        },
-        {
-          "command": "wall import from-geometry 'complex' seed 10 keepid",
-          "description": "Import from geometry set starting at polygon ID 10, preserve facet IDs"
-        },
-        {
-          "command": "wall import filename 'hopper.dxf' id 50 group 'equipment' facet",
-          "description": "Import from DXF file, assign ID 50, assign group to facets"
-        },
-        {
-          "command": "wall import from-geometry 'temp_geo' skip-errors clean",
-          "description": "Import from geometry set, skip errors, clean up geometry set regardless"
-        }
-      ]
+    {
+      "name": "id",
+      "syntax": "id <id>",
+      "description": "Wall ID. If not specified, the wall ID is set to the next available ID."
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": "Name of the wall. If not specified, then the wall name is set to file name or the geometry set name."
+    },
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "Optional keyword indicating that the import will continue in spite of the detection of non-manifold conditions or points falling outside the model domain. The offending facets are ignored."
+    },
+    {
+      "name": "from-geometry",
+      "syntax": "from-geometry <s> {clean | keepid | seed <i>}",
+      "description": "Options: clean: Delete the geometry set after wall importation if the operation is successful. If given with the nothrow keyword, the geometry set will be deleted regardless of whether or not all facets are imported.; keepid: Specify that the facet IDs will be set to the IDs of the geometry {edges in 2D; polygons in 3D}.; seed <i>: ID of the geometry {edge in 2D; polygon in 3D} with which to start the stitching process. This keyword can be used with the nothrow keyword to import from geometry sets where multiple meshes are present that are disjoint."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "wall import filename 'gear.stl' skip-errors id 100",
+      "description": "Import wall from STL file, skip errors, assign ID 100"
+    },
+    {
+      "command": "wall import filename 'container.stl' name 'vessel' group 'boundaries'",
+      "description": "Import wall from STL file, name it 'vessel', assign to group 'boundaries'"
+    },
+    {
+      "command": "wall import from-geometry 'myset' clean",
+      "description": "Import wall from geometry set 'myset', delete set after successful import"
+    },
+    {
+      "command": "wall import from-geometry 'complex' seed 10 keepid",
+      "description": "Import from geometry set starting at polygon ID 10, preserve facet IDs"
+    },
+    {
+      "command": "wall import filename 'hopper.dxf' id 50 group 'equipment' facet",
+      "description": "Import from DXF file, assign ID 50, assign group to facets"
+    },
+    {
+      "command": "wall import from-geometry 'temp_geo' skip-errors clean",
+      "description": "Import from geometry set, skip errors, clean up geometry set regardless"
+    }
+  ]
 }

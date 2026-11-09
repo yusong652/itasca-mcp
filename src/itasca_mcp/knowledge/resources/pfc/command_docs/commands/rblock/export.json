@@ -10,72 +10,55 @@
     "available": false,
     "workaround": "Use itasca.command('rblock export ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock export",
-      "syntax": "rblock export keyword [range]",
-      "keywords": [
-        {
-          "name": "to-3dec5",
-          "syntax": "to-3dec5",
-          "description": ""
-        },
-        {
-          "name": "to-3dec7",
-          "syntax": "to-3dec7",
-          "description": ""
-        },
-        {
-          "name": "to-geometry",
-          "syntax": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}]} ...",
-          "description": "Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}]: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock export",
+  "syntax": "rblock export keyword [range]",
+  "keywords": [
+    {
+      "name": "to-3dec5",
+      "syntax": {
+        "6.0": "to-3dec5",
+        "7.0": "to-3dec5 <s> 3D ONLY",
+        "9.0": "to-3dec5 <s> 3D ONLY"
+      },
+      "description": {
+        "6.0": "",
+        "7.0": "Export the rigid blocks to a 3DEC 5 data file with name s.",
+        "9.0": "Export the rigid blocks to a 3DEC 5 data file with name s."
+      }
     },
-    "7.0": {
-      "command": "rblock export",
-      "syntax": "rblock export keyword [range]",
-      "keywords": [
-        {
-          "name": "to-geometry",
-          "syntax": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}]} ...",
-          "description": "Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}]: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1."
-        },
-        {
-          "name": "to-3dec5",
-          "syntax": "to-3dec5 <s> 3D ONLY",
-          "description": "Export the rigid blocks to a 3DEC 5 data file with name s."
-        },
-        {
-          "name": "to-3dec7",
-          "syntax": "to-3dec7 <s> 3D ONLY",
-          "description": "Export the rigid blocks to a 3DEC 7 data file with name s."
-        }
-      ],
-      "examples": []
+    {
+      "name": "to-3dec7",
+      "syntax": {
+        "6.0": "to-3dec7",
+        "7.0": "to-3dec7 <s> 3D ONLY",
+        "9.0": "to-3dec7 <s> 3D ONLY"
+      },
+      "description": {
+        "6.0": "",
+        "7.0": "Export the rigid blocks to a 3DEC 7 data file with name s.",
+        "9.0": "Export the rigid blocks to a 3DEC 7 data file with name s."
+      }
     },
-    "9.0": {
-      "command": "rblock export",
-      "syntax": "rblock export keyword [range]",
-      "keywords": [
-        {
-          "name": "to-geometry",
-          "syntax": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}] 3D ONLY} ...",
-          "description": "Export the rigid block core geometry. The geometry set base name is set to s . If the split keyword is specified, then each rigid block is exported into a dedicated geometry set with a name corresponding to the base name to which rigid block ID is appended (e.g. ‘myset1’ for a base name myset and the rigid block with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all rigid blocks are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is rblocks . Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}] 3D ONLY: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1."
-        },
-        {
-          "name": "to-3dec5",
-          "syntax": "to-3dec5 <s> 3D ONLY",
-          "description": "Export the rigid blocks to a 3DEC 5 data file with name s."
-        },
-        {
-          "name": "to-3dec7",
-          "syntax": "to-3dec7 <s> 3D ONLY",
-          "description": "Export the rigid blocks to a 3DEC 7 data file with name s."
-        }
-      ],
-      "examples": []
+    {
+      "name": "to-geometry",
+      "syntax": {
+        "6.0": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}]} ...",
+        "7.0": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}]} ...",
+        "9.0": "to-geometry [<s>] {slot <s> | split | to-3dec5 <s> [{constitutive <i> | group <s> [slot <i>] | material <i> | region <i>}] 3D ONLY} ..."
+      },
+      "description": {
+        "6.0": "Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}]: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1.",
+        "7.0": "Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}]: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1.",
+        "9.0": "Export the rigid block core geometry. The geometry set base name is set to s . If the split keyword is specified, then each rigid block is exported into a dedicated geometry set with a name corresponding to the base name to which rigid block ID is appended (e.g. ‘myset1’ for a base name myset and the rigid block with ID 1). Note that in this case, existing sets with the same name are overridden. Otherwise all rigid blocks are exported into one unique geometry set with name s , and existing geometry objects in this set are not deleted. The default geometry set base name is rblocks . Options: slot <s>: If specified then the polygons of each rigid block are assigned the group name corresponding to the rigid block ID in slot s . This can be used to easily identify single rigid blocks without splitting each one into a different geometry set.; split: If specified, the split keyword results in each rigid block being exported into a dedicated geometry set. By default, all the rigid blocks are exported into one unique geometry set (see above).; to-3dec5 <s>[{constitutive <i> | group <s>[slot <i>] | material <i> | region <i>}] 3D ONLY: Export rigid blocks to 3DEC 5.2 (or older) using the polyhedron face command. Options: constitutive <i>: Specify the constitutive model with default 1.; group <s>[slot <i>]: The exported rigid blocks are given group s (with default Default ) in slot i (with default 1 ).; material <i>: Specify the material model number with default 1.; region <i>: Specify the region with default 1."
+      }
     }
-  }
+  ],
+  "examples": []
 }

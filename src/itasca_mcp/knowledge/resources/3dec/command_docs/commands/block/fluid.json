@@ -27,170 +27,132 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "block fluid",
-      "syntax": "block fluid keyword ... [range]",
-      "keywords": [
-        {
-          "name": "active",
-          "syntax": "active <b>",
-          "description": "Turn on or off fluid calculations for 3DEC only. This can be used if 3DEC is coupled to another program. In general, it is preferable to use model fluid active ."
-        },
-        {
-          "name": "crack-flow",
-          "syntax": "crack-flow <b>",
-          "description": "Ensure that flow only occurs within portions of flow planes where the associated sub-contacts have failed. When crack flow is off , flow will occur in all planes. The default is off ."
-        },
-        {
-          "name": "datum",
-          "syntax": "datum <f>",
-          "description": "Specify the \\(z\\) value used in hydraulic head plots."
-        },
-        {
-          "name": "fast-flow",
-          "syntax": "fast-flow {active <b> | relaxation <f>} ...",
-          "description": "Specify settings for fast flow calculation. Options: active <b>: Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .); relaxation <f>: Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
-        },
-        {
-          "name": "gas",
-          "syntax": "gas {active <b> | alpha <f> | bulk-minimum <f> | constant <f> | density-minimum <f>} ...",
-          "description": "Specify settings for gas flow calculation. Options: active <b>: Turn controls for gas-flow logic on / off .; alpha <f>: Define “a” factor for gas flow.; bulk-minimum <f>: Specify the minimum bulk modulus for gas flow.; constant <f>: Specify the gas constant for gas flow.; density-minimum <f>: Specify the minimum density for gas flow."
-        },
-        {
-          "name": "jointflow-substep",
-          "syntax": "jointflow-substep <i>",
-          "description": "Set the maximum number of joint fluid steps between matrix flow calculations (default = 10). When mechanical calculations are active, jointflow-substep = 1."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List fluid information."
-        },
-        {
-          "name": "matrix-flow",
-          "syntax": "matrix-flow <b>",
-          "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
-        },
-        {
-          "name": "property",
-          "syntax": "property {bulk <f> | bulk-joint <f> | bulk-matrix <f> | cohesion <f> | density <f> | f-factor <f> | heat-transfer-coefficient <f> | specific-heat <f> | thermal-conductivity <f> | viscosity <f>} ...",
-          "description": "Specify fluid properties used for fluid flow calculations. Options: bulk <f>: Set the bulk modulus of the fluid in the joints and the matrix.; bulk-joint <f>: Set the bulk modulus of the fluid in the joints.; bulk-matrix <f>: Set the bulk modulus of the fluid in the matrix.; cohesion <f>: Set the cohesion of the fluid for non-Newtonian flow.; density <f>: Set the density of the fluid.; f-factor <f>: Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1.; heat-transfer-coefficient <f>: Set fluid heat-transfer coefficient.; specific-heat <f>: Set fluid-specific heat.; thermal-conductivity <f>: Set fluid-thermal conductivity.; viscosity <f>: Set the fluid viscosity."
-        },
-        {
-          "name": "proppant",
-          "syntax": "proppant {active <b> | settling <b> | concentration-limit-volume <f> | concentration-limit-mass <f> | density <f> | grain-size <f> | grain-size-factor <f> | list | modulus <f> | permeability <f> [table <s>] | permeability-factor <f>} ...",
-          "description": "Set properties and configure proppant calculations. Options: active <b>: Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state.; settling <b>: Turn on / off off proppant settling calculations (default = off ).; concentration-limit-volume <f>: Set the concentration limit of proppant (0-1) above which it takes load.; concentration-limit-mass <f>: Set the mass concentration limit of proppant above which it takes load (mass / volume); density <f>: Set the density of the fluid.; grain-size <f>: Set the grain size (diameter) of proppant particles.; grain-size-factor <f>: Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability.; list: List information about proppant.; modulus <f>: Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit).; permeability <f>[table <s>]: Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load.; permeability-factor <f>: Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
-        },
-        {
-          "name": "sync-mech",
-          "syntax": "sync-mech <b>",
-          "description": "Set \\(b\\) to \\(on\\) to keep mechanical and fluid time in sync. The smallest timestep of fluid and mechanical will be used. Fluid and mechanical substeps are automatically set to 1 if \\(b\\) is \\(on\\) . The default is \\(off\\) ."
-        },
-        {
-          "name": "tension",
-          "syntax": "tension <f>",
-          "description": "Specify the minimum fluid pressure that can be supported. The default is 0. To allow negative pore pressures to develop, specify a negative number."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep <f>",
-          "description": "Specify a desired timestep for fluid flow calculations (joint flow only). The fluid bulk modulus of each flowknot is adjusted to produce the desired timestep. WARNING: setting a value that is too high will produce volumes with low bulk modulus that will adversely affect the results. The total number of knots and the total volume of knots affected is printed to the screen when the command is executed. IT is up to the user to ensure that the volume affected is not overly large."
-        },
-        {
-          "name": "timestep-update",
-          "syntax": "timestep-update <i>",
-          "description": "Specify the interval at which fluid timestep is recalculated. By default, \\(i\\) = 1, so that the timesep is recalculated every fluid step."
-        },
-        {
-          "name": "allow-largestrain",
-          "syntax": "allow-largestrain",
-          "description": "Allow joint fluid flow with large strain. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        },
-        {
-          "name": "bh-heal-ini",
-          "syntax": "bh-heal-ini",
-          "description": "Borehole heal initialization control. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        },
-        {
-          "name": "timestep-multiplier",
-          "syntax": "timestep-multiplier <f>",
-          "description": "Fluid timestep multiplier. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "block fluid",
+  "syntax": "block fluid keyword ... [range]",
+  "keywords": [
+    {
+      "name": "active",
+      "syntax": "active <b>",
+      "description": "Turn on or off fluid calculations for 3DEC only. This can be used if 3DEC is coupled to another program. In general, it is preferable to use model fluid active .",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     },
-    "7.0": {
-      "command": "block fluid",
-      "syntax": "block fluid keyword ... [range]",
-      "keywords": [
-        {
-          "name": "crack-flow",
-          "syntax": "crack-flow <b>",
-          "description": "Ensure that flow only occurs within portions of flow planes where the associated sub-contacts have failed. When crack flow is off , flow will occur in all planes. The default is off ."
-        },
-        {
-          "name": "datum",
-          "syntax": "datum <f>",
-          "description": "Specify the \\(z\\) value used in hydraulic head plots."
-        },
-        {
-          "name": "fast-flow",
-          "syntax": "fast-flow {active <b> | relaxation <f>} ...",
-          "description": "Specify settings for fast flow calculation. Options: active <b>: Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .); relaxation <f>: Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
-        },
-        {
-          "name": "gas",
-          "syntax": "gas {active <b> | alpha <f> | bulk-minimum <f> | constant <f> | density-minimum <f>} ...",
-          "description": "Specify settings for gas flow calculation. Options: active <b>: Turn controls for gas-flow logic on / off .; alpha <f>: Define “a” factor for gas flow.; bulk-minimum <f>: Specify the minimum bulk modulus for gas flow.; constant <f>: Specify the gas constant for gas flow.; density-minimum <f>: Specify the minimum density for gas flow."
-        },
-        {
-          "name": "jointflow-substep",
-          "syntax": "jointflow-substep <i>",
-          "description": "Set the maximum number of joint fluid steps between matrix flow calculations (default = 10). When mechanical calculations are active, jointflow-substep = 1."
-        },
-        {
-          "name": "list",
-          "syntax": "list",
-          "description": "List fluid information."
-        },
-        {
-          "name": "matrix-flow",
-          "syntax": "matrix-flow <b>",
-          "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
-        },
-        {
-          "name": "property",
-          "syntax": "property {bulk <f> | bulk-joint <f> | bulk-matrix <f> | cohesion <f> | density <f> | f-factor <f> | heat-transfer-coefficient <f> | specific-heat <f> | thermal-conductivity <f> | viscosity <f>} ...",
-          "description": "Specify fluid properties used for fluid flow calculations. Options: bulk <f>: Set the bulk modulus of the fluid in the joints and the matrix.; bulk-joint <f>: Set the bulk modulus of the fluid in the joints.; bulk-matrix <f>: Set the bulk modulus of the fluid in the matrix.; cohesion <f>: Set the cohesion of the fluid for non-Newtonian flow.; density <f>: Set the density of the fluid.; f-factor <f>: Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1.; heat-transfer-coefficient <f>: Set fluid heat-transfer coefficient.; specific-heat <f>: Set fluid-specific heat.; thermal-conductivity <f>: Set fluid-thermal conductivity.; viscosity <f>: Set the fluid viscosity."
-        },
-        {
-          "name": "proppant",
-          "syntax": "proppant {active <b> | settling <b> | concentration-limit-volume <f> | concentration-limit-mass <f> | density <f> | grain-size <f> | grain-size-factor <f> | list | modulus <f> | permeability <f> [table <s>] | permeability-factor <f>} ...",
-          "description": "Set properties and configure proppant calculations. Options: active <b>: Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state.; settling <b>: Turn on / off off proppant settling calculations (default = off ).; concentration-limit-volume <f>: Set the concentration limit of proppant (0-1) above which it takes load.; concentration-limit-mass <f>: Set the mass concentration limit of proppant above which it takes load (mass / volume); density <f>: Set the density of the fluid.; grain-size <f>: Set the grain size (diameter) of proppant particles.; grain-size-factor <f>: Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability.; list: List information about proppant.; modulus <f>: Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit).; permeability <f>[table <s>]: Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load.; permeability-factor <f>: Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
-        },
-        {
-          "name": "sync-mech",
-          "syntax": "sync-mech <b>",
-          "description": "Set \\(b\\) to \\(on\\) to keep mechanical and fluid time in sync. The smallest timestep of fluid and mechanical will be used. Fluid and mechanical substeps are autoamtically set to 1 if \\(b\\) is \\(on\\) . The default is \\(off\\) ."
-        },
-        {
-          "name": "timestep",
-          "syntax": "timestep <f>",
-          "description": ""
-        },
-        {
-          "name": "timestep-update",
-          "syntax": "timestep-update <in>",
-          "description": "Specify the interval at which fluid timestep is recalculated. By default, \\(n\\) = 1, so that the timesep is recalculated every fluid step."
-        },
-        {
-          "name": "bh-heal-ini",
-          "syntax": "bh-heal-ini",
-          "description": "Borehole heal initialization control. (Listed by 3DEC 9.7.47; not on the manual page.)"
-        }
-      ],
-      "examples": []
+    {
+      "name": "crack-flow",
+      "syntax": "crack-flow <b>",
+      "description": "Ensure that flow only occurs within portions of flow planes where the associated sub-contacts have failed. When crack flow is off , flow will occur in all planes. The default is off ."
+    },
+    {
+      "name": "datum",
+      "syntax": "datum <f>",
+      "description": "Specify the \\(z\\) value used in hydraulic head plots."
+    },
+    {
+      "name": "fast-flow",
+      "syntax": "fast-flow {active <b> | relaxation <f>} ...",
+      "description": "Specify settings for fast flow calculation. Options: active <b>: Turns fast flow calculations for incompressible fluid flow on / off . (The default is off for compressible fluid-flow.) Do not set fast flow on for fluid flow-only calculations. (Default is off .) (Also see the next three keywords: relaxation , unbalanced-average , and unbalanced-maximum .); relaxation <f>: Set the relaxation parameter used in fast flow calculations. relaxation < 1 should provide a stable solution. The default is 0.1."
+    },
+    {
+      "name": "gas",
+      "syntax": "gas {active <b> | alpha <f> | bulk-minimum <f> | constant <f> | density-minimum <f>} ...",
+      "description": "Specify settings for gas flow calculation. Options: active <b>: Turn controls for gas-flow logic on / off .; alpha <f>: Define “a” factor for gas flow.; bulk-minimum <f>: Specify the minimum bulk modulus for gas flow.; constant <f>: Specify the gas constant for gas flow.; density-minimum <f>: Specify the minimum density for gas flow."
+    },
+    {
+      "name": "jointflow-substep",
+      "syntax": "jointflow-substep <i>",
+      "description": "Set the maximum number of joint fluid steps between matrix flow calculations (default = 10). When mechanical calculations are active, jointflow-substep = 1."
+    },
+    {
+      "name": "list",
+      "syntax": "list",
+      "description": "List fluid information."
+    },
+    {
+      "name": "matrix-flow",
+      "syntax": "matrix-flow <b>",
+      "description": "Turn on or off the matrix flow calculations. If matrix flow is off , the mechanical effect of the fluid bulk modulus in the block zones is still included, which reduces the mechanical timestep (only if configure fluid is on )."
+    },
+    {
+      "name": "property",
+      "syntax": "property {bulk <f> | bulk-joint <f> | bulk-matrix <f> | cohesion <f> | density <f> | f-factor <f> | heat-transfer-coefficient <f> | specific-heat <f> | thermal-conductivity <f> | viscosity <f>} ...",
+      "description": "Specify fluid properties used for fluid flow calculations. Options: bulk <f>: Set the bulk modulus of the fluid in the joints and the matrix.; bulk-joint <f>: Set the bulk modulus of the fluid in the joints.; bulk-matrix <f>: Set the bulk modulus of the fluid in the matrix.; cohesion <f>: Set the cohesion of the fluid for non-Newtonian flow.; density <f>: Set the density of the fluid.; f-factor <f>: Set the factor to be multiplied by mechanical aperture to obtain hydraulic aperture. Default is 1.; heat-transfer-coefficient <f>: Set fluid heat-transfer coefficient.; specific-heat <f>: Set fluid-specific heat.; thermal-conductivity <f>: Set fluid-thermal conductivity.; viscosity <f>: Set the fluid viscosity."
+    },
+    {
+      "name": "proppant",
+      "syntax": "proppant {active <b> | settling <b> | concentration-limit-volume <f> | concentration-limit-mass <f> | density <f> | grain-size <f> | grain-size-factor <f> | list | modulus <f> | permeability <f> [table <s>] | permeability-factor <f>} ...",
+      "description": "Set properties and configure proppant calculations. Options: active <b>: Set proppant calculation on / off . Uses current volume fraction and joint aperture to initialize proppant state.; settling <b>: Turn on / off off proppant settling calculations (default = off ).; concentration-limit-volume <f>: Set the concentration limit of proppant (0-1) above which it takes load.; concentration-limit-mass <f>: Set the mass concentration limit of proppant above which it takes load (mass / volume); density <f>: Set the density of the fluid.; grain-size <f>: Set the grain size (diameter) of proppant particles.; grain-size-factor <f>: Set the (grain size dependent) joint aperture allowance for proppant transport. If aperture is less than this factor times the proppant grain size, the proppant stays in place. The default value is 1. The permeability of the associated flow zone is set to block fluid proppant permeability-factor times the inherent permeability.; list: List information about proppant.; modulus <f>: Set the bulk modulus of the proppant pack when it takes load (volume fraction is higher than limit).; permeability <f>[table <s>]: Set the permeability of proppant pack (intrinsic permeability divided by fluid viscosity) when it takes load.; permeability-factor <f>: Calculate the permeability of the flow zone when one or more vertices has an aperture less than the block fluid proppant grain-size multiplied by block fluid proppant grain-size-factor . The value is multiplied by the inherent permeability to yield the ‘blocked’ permeability. Default is 0."
+    },
+    {
+      "name": "sync-mech",
+      "syntax": "sync-mech <b>",
+      "description": {
+        "7.0": "Set \\(b\\) to \\(on\\) to keep mechanical and fluid time in sync. The smallest timestep of fluid and mechanical will be used. Fluid and mechanical substeps are autoamtically set to 1 if \\(b\\) is \\(on\\) . The default is \\(off\\) .",
+        "9.0": "Set \\(b\\) to \\(on\\) to keep mechanical and fluid time in sync. The smallest timestep of fluid and mechanical will be used. Fluid and mechanical substeps are automatically set to 1 if \\(b\\) is \\(on\\) . The default is \\(off\\) ."
+      }
+    },
+    {
+      "name": "tension",
+      "syntax": "tension <f>",
+      "description": "Specify the minimum fluid pressure that can be supported. The default is 0. To allow negative pore pressures to develop, specify a negative number.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "timestep",
+      "syntax": "timestep <f>",
+      "description": {
+        "7.0": "",
+        "9.0": "Specify a desired timestep for fluid flow calculations (joint flow only). The fluid bulk modulus of each flowknot is adjusted to produce the desired timestep. WARNING: setting a value that is too high will produce volumes with low bulk modulus that will adversely affect the results. The total number of knots and the total volume of knots affected is printed to the screen when the command is executed. IT is up to the user to ensure that the volume affected is not overly large."
+      }
+    },
+    {
+      "name": "timestep-update",
+      "syntax": {
+        "7.0": "timestep-update <in>",
+        "9.0": "timestep-update <i>"
+      },
+      "description": {
+        "7.0": "Specify the interval at which fluid timestep is recalculated. By default, \\(n\\) = 1, so that the timesep is recalculated every fluid step.",
+        "9.0": "Specify the interval at which fluid timestep is recalculated. By default, \\(i\\) = 1, so that the timesep is recalculated every fluid step."
+      }
+    },
+    {
+      "name": "allow-largestrain",
+      "syntax": "allow-largestrain",
+      "description": "Allow joint fluid flow with large strain. (Listed by 3DEC 9.7.47; not on the manual page.)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "bh-heal-ini",
+      "syntax": "bh-heal-ini",
+      "description": "Borehole heal initialization control. (Listed by 3DEC 9.7.47; not on the manual page.)"
+    },
+    {
+      "name": "timestep-multiplier",
+      "syntax": "timestep-multiplier <f>",
+      "description": "Fluid timestep multiplier. (Listed by 3DEC 9.7.47; not on the manual page.)",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
     }
-  }
+  ],
+  "examples": []
 }

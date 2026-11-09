@@ -11,40 +11,37 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "block dynamic",
-      "syntax": "block dynamic keyword [range]",
-      "keywords": [
-        {
-          "name": "eigen",
-          "syntax": "eigen keyword",
-          "description": "Calculate natural frequencies and modes of vibration for an elastic system. Live sub-keywords (engine-enumerated): delete, list, modes, setmode. The previous corpus first-slot entries 'setmode' and 'list' are eigen sub-keywords, rejected by live 3DEC 9.7.47 at the first slot."
-        },
-        {
-          "name": "free-field",
-          "syntax": "free-field keyword",
-          "description": "Configure dynamic free-field boundaries. Live sub-keywords (engine-enumerated): apply, delete, link, list."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "block dynamic",
+  "syntax": "block dynamic keyword [range]",
+  "keywords": [
+    {
+      "name": "eigen",
+      "syntax": {
+        "7.0": "eigen [{delete | list | modes <i> [keyword] | setmode}]",
+        "9.0": "eigen keyword"
+      },
+      "description": {
+        "7.0": "Calculate natural frequencies and modes of vibration for an elastic system. See further description below. Options: delete: Delete eigenvalue data.; list: List eigenmode frequencies (this assumes they have already been calculated).; modes <i>[keyword]: Calculates the first i eigenmode values (1 to 10). The 10 frequency modes are listed below.; setmode: Copy the calculated modes to gridpoint extra variables for plotting. WARNING gridpoint extra variables from 1 to \\(n\\) will be overwritten with vectors (where \\(n\\) is the number of modes in the analysis).",
+        "9.0": "Calculate natural frequencies and modes of vibration for an elastic system. Live sub-keywords (engine-enumerated): delete, list, modes, setmode. The previous corpus first-slot entries 'setmode' and 'list' are eigen sub-keywords, rejected by live 3DEC 9.7.47 at the first slot."
+      }
     },
-    "7.0": {
-      "command": "block dynamic",
-      "syntax": "block dynamic keyword [range]",
-      "keywords": [
-        {
-          "name": "eigen",
-          "syntax": "eigen [{delete | list | modes <i> [keyword] | setmode}]",
-          "description": "Calculate natural frequencies and modes of vibration for an elastic system. See further description below. Options: delete: Delete eigenvalue data.; list: List eigenmode frequencies (this assumes they have already been calculated).; modes <i>[keyword]: Calculates the first i eigenmode values (1 to 10). The 10 frequency modes are listed below.; setmode: Copy the calculated modes to gridpoint extra variables for plotting. WARNING gridpoint extra variables from 1 to \\(n\\) will be overwritten with vectors (where \\(n\\) is the number of modes in the analysis)."
-        },
-        {
-          "name": "free-field",
-          "syntax": "free-field [{apply [{gap <f> | thickness <f> | tolerance <f> | x1 <fx1> | x2 <fx2> | y1 <fy1> | y2 <fy2>} ...] | delete | link <b> | list}]",
-          "description": "Operate on a dynamic free field. See below for discussion. Options: apply [{gap <f> | thickness <f> | tolerance <f> | x1 <fx1> | x2 <fx2> | y1 <fy1> | y2 <fy2>} ...]: Create the zone free field blocks. The material properties and constitutive model are set to those in model side blocks. The blocks in each free field mesh are joined. The free field mesh stresses are obtained from the model side zones. Balancing forces are applied to free field gridpoints to maintain static equilibrium. No boundary conditions are applied to the free field gridpoints. On all of the model side gridpoints, the following occur: Options: gap <f>: Set a viewing gap between the free field and the main model (default = 5% of model length).; thickness <f>: Set the thickness of free field blocks (default = 5% of model length).; tolerance <f>: Tolerance to find gridpoints on model boundaries to apply free field conditions (default = ATOL).; x1 <fx1>: Location of minimum x boundary (default = min. \\(x\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; x2 <fx2>: Location of maximum x boundary (default = max. \\(x\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; y1 <fy1>: Location of minimum y boundary (default = min. \\(y\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; y2 <fy2>: Location of maximum y boundary (default = max. \\(y\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; delete: Delete all free field meshes.; link <b>: Connect/reconnect ( on ; default) the free field to the main model. Set off to disconnect.; list: List dynamic free-field data."
-        }
-      ],
-      "examples": []
+    {
+      "name": "free-field",
+      "syntax": {
+        "7.0": "free-field [{apply [{gap <f> | thickness <f> | tolerance <f> | x1 <fx1> | x2 <fx2> | y1 <fy1> | y2 <fy2>} ...] | delete | link <b> | list}]",
+        "9.0": "free-field keyword"
+      },
+      "description": {
+        "7.0": "Operate on a dynamic free field. See below for discussion. Options: apply [{gap <f> | thickness <f> | tolerance <f> | x1 <fx1> | x2 <fx2> | y1 <fy1> | y2 <fy2>} ...]: Create the zone free field blocks. The material properties and constitutive model are set to those in model side blocks. The blocks in each free field mesh are joined. The free field mesh stresses are obtained from the model side zones. Balancing forces are applied to free field gridpoints to maintain static equilibrium. No boundary conditions are applied to the free field gridpoints. On all of the model side gridpoints, the following occur: Options: gap <f>: Set a viewing gap between the free field and the main model (default = 5% of model length).; thickness <f>: Set the thickness of free field blocks (default = 5% of model length).; tolerance <f>: Tolerance to find gridpoints on model boundaries to apply free field conditions (default = ATOL).; x1 <fx1>: Location of minimum x boundary (default = min. \\(x\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; x2 <fx2>: Location of maximum x boundary (default = max. \\(x\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; y1 <fy1>: Location of minimum y boundary (default = min. \\(y\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; y2 <fy2>: Location of maximum y boundary (default = max. \\(y\\) -coordinate). If a coordinate is given that does not align with a set of faces, then no free-field boundary will be created.; delete: Delete all free field meshes.; link <b>: Connect/reconnect ( on ; default) the free field to the main model. Set off to disconnect.; list: List dynamic free-field data.",
+        "9.0": "Configure dynamic free-field boundaries. Live sub-keywords (engine-enumerated): apply, delete, link, list."
+      }
     }
-  }
+  ],
+  "examples": []
 }

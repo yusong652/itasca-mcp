@@ -9,120 +9,59 @@
     "available": true,
     "workaround": "Wall.set_prop(name, value) to set property for all facets in a wall, or Facet.set_prop(name, value) for individual facets - requires iteration: for w in itasca.wall.list(): w.set_prop('kn', 1e7) or for f in itasca.wall.facet.list(): f.set_prop('kn', 1e7)"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall property",
-      "syntax": "wall property <s> <a> [<s1> <a1> ...] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "wall property 'fric' 0.8",
-          "description": "Set friction coefficient to 0.8 for all wall facets (used with inheritance to set contact friction)"
-        },
-        {
-          "command": "wall property 'kn' 1e7",
-          "description": "Set normal stiffness to 1e7 for all wall facets (linear contact model)"
-        },
-        {
-          "command": "wall property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness for all wall facets"
-        },
-        {
-          "command": "wall property 'fric' [wallFriction]",
-          "description": "Set friction using FISH variable wallFriction for all wall facets"
-        },
-        {
-          "command": "wall property 'pb_kn' 1e9 'pb_coh' 1e6 range name 'container'",
-          "description": "Set parallel bond properties for walls named 'container'"
-        },
-        {
-          "command": "wall property 'hz_kn' 5e8 range id 1 10",
-          "description": "Set Hertz normal stiffness for walls with IDs 1-10"
-        },
-        {
-          "command": "wall property 'fj_kn' 1e8 'fj_coh' 5e5 range group 'boundary'",
-          "description": "Set flat joint properties for walls in group 'boundary'"
-        }
-      ],
-      "notes": [
-        "Property names are free String tokens (surface-property names)."
-      ]
-    },
-    "6.0": {
-      "command": "wall property",
-      "syntax": "wall property <s> a[<s1> a1...] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "wall property 'fric' 0.8",
-          "description": "Set friction coefficient to 0.8 for all wall facets (used with inheritance to set contact friction)"
-        },
-        {
-          "command": "wall property 'kn' 1e7",
-          "description": "Set normal stiffness to 1e7 for all wall facets (linear contact model)"
-        },
-        {
-          "command": "wall property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness for all wall facets"
-        },
-        {
-          "command": "wall property 'fric' [wallFriction]",
-          "description": "Set friction using FISH variable wallFriction for all wall facets"
-        },
-        {
-          "command": "wall property 'pb_kn' 1e9 'pb_coh' 1e6 range name 'container'",
-          "description": "Set parallel bond properties for walls named 'container'"
-        },
-        {
-          "command": "wall property 'hz_kn' 5e8 range id 1 10",
-          "description": "Set Hertz normal stiffness for walls with IDs 1-10"
-        },
-        {
-          "command": "wall property 'fj_kn' 1e8 'fj_coh' 5e5 range group 'boundary'",
-          "description": "Set flat joint properties for walls in group 'boundary'"
-        }
-      ]
-    },
-    "9.0": {
-      "command": "wall property",
-      "syntax": "wall property <s> <a> [<s1> <a1> ...] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "wall property 'fric' 0.8",
-          "description": "Set friction coefficient to 0.8 for all wall facets (used with inheritance to set contact friction)"
-        },
-        {
-          "command": "wall property 'kn' 1e7",
-          "description": "Set normal stiffness to 1e7 for all wall facets (linear contact model)"
-        },
-        {
-          "command": "wall property 'kn' 1e8 'ks' 5e7",
-          "description": "Set normal and shear stiffness for all wall facets"
-        },
-        {
-          "command": "wall property 'fric' [wallFriction]",
-          "description": "Set friction using FISH variable wallFriction for all wall facets"
-        },
-        {
-          "command": "wall property 'pb_kn' 1e9 'pb_coh' 1e6 range name 'container'",
-          "description": "Set parallel bond properties for walls named 'container'"
-        },
-        {
-          "command": "wall property 'hz_kn' 5e8 range id 1 10",
-          "description": "Set Hertz normal stiffness for walls with IDs 1-10"
-        },
-        {
-          "command": "wall property 'fj_kn' 1e8 'fj_coh' 5e5 range group 'boundary'",
-          "description": "Set flat joint properties for walls in group 'boundary'"
-        }
-      ],
-      "notes": [
-        "Property names are free String tokens (surface-property names)."
-      ]
-    }
+  "notes": {
+    "6.0": [
+      "Common properties per model: Linear: kn (normal stiffness), ks (shear stiffness), fric (friction coefficient); Hertz: hz_kn (Hertz normal stiffness), fric (friction coefficient); Linear Contact Bond: lb_kn, lb_ks, lb_coh (cohesion), lb_ten (tensile strength), fric; Linear Parallel Bond: pb_kn, pb_ks, pb_coh, pb_ten, pb_fa (friction angle), fric; Flat Joint: fj_kn, fj_ks, fj_coh, fj_ten, fj_fa, fric; Smooth Joint: sj_kn, sj_ks, sj_coh, sj_ten, sj_fa, fric"
+    ],
+    "7.0": [
+      "Property names are free String tokens (surface-property names)."
+    ],
+    "9.0": [
+      "Property names are free String tokens (surface-property names)."
+    ]
   },
-  "notes": [
-    "Common properties per model: Linear: kn (normal stiffness), ks (shear stiffness), fric (friction coefficient); Hertz: hz_kn (Hertz normal stiffness), fric (friction coefficient); Linear Contact Bond: lb_kn, lb_ks, lb_coh (cohesion), lb_ten (tensile strength), fric; Linear Parallel Bond: pb_kn, pb_ks, pb_coh, pb_ten, pb_fa (friction angle), fric; Flat Joint: fj_kn, fj_ks, fj_coh, fj_ten, fj_fa, fric; Smooth Joint: sj_kn, sj_ks, sj_coh, sj_ten, sj_fa, fric"
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall property",
+  "syntax": {
+    "6.0": "wall property <s> a[<s1> a1...] [range]",
+    "7.0": "wall property <s> <a> [<s1> <a1> ...] [range]",
+    "9.0": "wall property <s> <a> [<s1> <a1> ...] [range]"
+  },
+  "keywords": [],
+  "examples": [
+    {
+      "command": "wall property 'fric' 0.8",
+      "description": "Set friction coefficient to 0.8 for all wall facets (used with inheritance to set contact friction)"
+    },
+    {
+      "command": "wall property 'kn' 1e7",
+      "description": "Set normal stiffness to 1e7 for all wall facets (linear contact model)"
+    },
+    {
+      "command": "wall property 'kn' 1e8 'ks' 5e7",
+      "description": "Set normal and shear stiffness for all wall facets"
+    },
+    {
+      "command": "wall property 'fric' [wallFriction]",
+      "description": "Set friction using FISH variable wallFriction for all wall facets"
+    },
+    {
+      "command": "wall property 'pb_kn' 1e9 'pb_coh' 1e6 range name 'container'",
+      "description": "Set parallel bond properties for walls named 'container'"
+    },
+    {
+      "command": "wall property 'hz_kn' 5e8 range id 1 10",
+      "description": "Set Hertz normal stiffness for walls with IDs 1-10"
+    },
+    {
+      "command": "wall property 'fj_kn' 1e8 'fj_coh' 5e5 range group 'boundary'",
+      "description": "Set flat joint properties for walls in group 'boundary'"
+    }
   ]
 }

@@ -34,133 +34,59 @@
       "python": "for c in it.contact.list():\\n    if c.in_group('boundary'):\\n        c.set_inhibit(True)"
     }
   },
-  "notes": [
-    "Inhibit flag forces contact to be INACTIVE (no force computation)",
-    "Inhibit has HIGHEST PRIORITY - overrides activate flag",
-    "Inhibited contacts remain in system (not deleted)",
-    "Use uninhibit (inhibit off) to restore normal activity",
-    "More efficient than Python iteration for bulk inhibiting",
-    "Reversible operation - can uninhibit anytime",
-    "Contact still exists and can be queried, just inactive",
-    "Useful for temporary contact disabling without deletion",
-    "Inhibit does not prevent contact deletion by detection system",
-    "Related commands: contact activate, contact persist, contact delete, contact model, contact fix",
-    "Inhibit has the highest priority: an inhibited contact stays inactive regardless of the activate flag. contact activate on clears the inhibit flag."
-  ],
-  "versions": {
-    "7.0": {
-      "command": "contact inhibit",
-      "syntax": "contact inhibit <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact inhibit on range position-x 1.1 1.9",
-          "description": "Inhibit contacts in x-position range 1.1 to 1.9 (from official example). Use case: Disable contacts in specific spatial region."
-        },
-        {
-          "command": "contact inhibit range contact gap 0 100",
-          "description": "Inhibit contacts with gap between 0 and 100 (from official example). Use case: Disable contacts based on gap criterion."
-        },
-        {
-          "command": "contact inhibit true range group 'disabled'",
-          "description": "Inhibit all contacts in 'disabled' group. Use case: Temporarily disable specific contact subset."
-        },
-        {
-          "command": "contact inhibit false range contact",
-          "description": "Uninhibit all contacts, restore normal activity determination. Use case: Re-enable all previously inhibited contacts."
-        },
-        {
-          "command": "contact inhibit on range contact type 'ball-facet'",
-          "description": "Inhibit all ball-wall contacts. Use case: Temporarily disable boundary forces."
-        },
-        {
-          "command": "contact inhibit true range model linearpbond contact bonded",
-          "description": "Inhibit bonded contacts with linearpbond model. Use case: Temporarily disable bond forces without breaking bonds."
-        },
-        {
-          "command": "contact inhibit off range position-z 5.0 6.0",
-          "description": "Uninhibit contacts in specific z-range. Use case: Re-enable contacts in region after temporary disabling."
-        }
-      ],
-      "notes": [
-        "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+  "notes": {
+    "6.0": [
+      "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "7.0": [
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
+    ],
+    "9.0": [
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
+    ]
+  },
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "contact inhibit",
+  "syntax": {
+    "6.0": "contact [<sprocess>] inhibit <bval> [range]",
+    "7.0": "contact inhibit <bval> [keyword] [range]",
+    "9.0": "contact inhibit <bval> [keyword] [range]"
+  },
+  "keywords": [],
+  "examples": [
+    {
+      "command": "contact inhibit on range position-x 1.1 1.9",
+      "description": "Inhibit contacts in x-position range 1.1 to 1.9 (from official example). Use case: Disable contacts in specific spatial region."
     },
-    "6.0": {
-      "command": "contact inhibit",
-      "syntax": "contact [<sprocess>] inhibit <bval> [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact inhibit on range position-x 1.1 1.9",
-          "description": "Inhibit contacts in x-position range 1.1 to 1.9 (from official example). Use case: Disable contacts in specific spatial region."
-        },
-        {
-          "command": "contact inhibit range contact gap 0 100",
-          "description": "Inhibit contacts with gap between 0 and 100 (from official example). Use case: Disable contacts based on gap criterion."
-        },
-        {
-          "command": "contact inhibit true range group 'disabled'",
-          "description": "Inhibit all contacts in 'disabled' group. Use case: Temporarily disable specific contact subset."
-        },
-        {
-          "command": "contact inhibit false range contact",
-          "description": "Uninhibit all contacts, restore normal activity determination. Use case: Re-enable all previously inhibited contacts."
-        },
-        {
-          "command": "contact inhibit on range contact type 'ball-facet'",
-          "description": "Inhibit all ball-wall contacts. Use case: Temporarily disable boundary forces."
-        },
-        {
-          "command": "contact inhibit true range model linearpbond contact bonded",
-          "description": "Inhibit bonded contacts with linearpbond model. Use case: Temporarily disable bond forces without breaking bonds."
-        },
-        {
-          "command": "contact inhibit off range position-z 5.0 6.0",
-          "description": "Uninhibit contacts in specific z-range. Use case: Re-enable contacts in region after temporary disabling."
-        }
-      ],
-      "notes": [
-        "Live 6.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact inhibit range contact gap 0 100",
+      "description": "Inhibit contacts with gap between 0 and 100 (from official example). Use case: Disable contacts based on gap criterion."
     },
-    "9.0": {
-      "command": "contact inhibit",
-      "syntax": "contact inhibit <bval> [keyword] [range]",
-      "keywords": [],
-      "examples": [
-        {
-          "command": "contact inhibit on range position-x 1.1 1.9",
-          "description": "Inhibit contacts in x-position range 1.1 to 1.9 (from official example). Use case: Disable contacts in specific spatial region."
-        },
-        {
-          "command": "contact inhibit range contact gap 0 100",
-          "description": "Inhibit contacts with gap between 0 and 100 (from official example). Use case: Disable contacts based on gap criterion."
-        },
-        {
-          "command": "contact inhibit true range group 'disabled'",
-          "description": "Inhibit all contacts in 'disabled' group. Use case: Temporarily disable specific contact subset."
-        },
-        {
-          "command": "contact inhibit false range contact",
-          "description": "Uninhibit all contacts, restore normal activity determination. Use case: Re-enable all previously inhibited contacts."
-        },
-        {
-          "command": "contact inhibit on range contact type 'ball-facet'",
-          "description": "Inhibit all ball-wall contacts. Use case: Temporarily disable boundary forces."
-        },
-        {
-          "command": "contact inhibit true range model linearpbond contact bonded",
-          "description": "Inhibit bonded contacts with linearpbond model. Use case: Temporarily disable bond forces without breaking bonds."
-        },
-        {
-          "command": "contact inhibit off range position-z 5.0 6.0",
-          "description": "Uninhibit contacts in specific z-range. Use case: Re-enable contacts in region after temporary disabling."
-        }
-      ],
-      "notes": [
-        "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself."
-      ]
+    {
+      "command": "contact inhibit true range group 'disabled'",
+      "description": "Inhibit all contacts in 'disabled' group. Use case: Temporarily disable specific contact subset."
+    },
+    {
+      "command": "contact inhibit false range contact",
+      "description": "Uninhibit all contacts, restore normal activity determination. Use case: Re-enable all previously inhibited contacts."
+    },
+    {
+      "command": "contact inhibit on range contact type 'ball-facet'",
+      "description": "Inhibit all ball-wall contacts. Use case: Temporarily disable boundary forces."
+    },
+    {
+      "command": "contact inhibit true range model linearpbond contact bonded",
+      "description": "Inhibit bonded contacts with linearpbond model. Use case: Temporarily disable bond forces without breaking bonds."
+    },
+    {
+      "command": "contact inhibit off range position-z 5.0 6.0",
+      "description": "Uninhibit contacts in specific z-range. Use case: Re-enable contacts in region after temporary disabling."
     }
-  }
+  ]
 }

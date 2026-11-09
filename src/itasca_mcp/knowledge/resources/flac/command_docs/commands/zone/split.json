@@ -4,52 +4,40 @@
     "split",
     "zone"
   ],
-  "description": "Split zones in the range into multiple hexahedral or quadrilateral zones.",
+  "description": {
+    "7.0": "Splits zones in the range into multiple hexahedral zones.",
+    "9.0": "Split zones in the range into multiple hexahedral or quadrilateral zones."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone split",
-      "syntax": "zone split [keyword] [range]",
-      "description": "Splits zones in the range into multiple hexahedral zones.",
-      "keywords": [
-        {
-          "name": "exclude-quadrilateral",
-          "syntax": "exclude-quadrilateral",
-          "description": "Any quadrilateral faces will be excluded from splitting, causing wedge zones to be split into three hexahedral zones, and hexahedral zones to be skipped, tetrahedral zones still to e split into four hexahedral zones."
-        },
-        {
-          "name": "merge",
-          "syntax": "merge <b>",
-          "description": "If set to off, new gridpoints created will not be automatically merged with existing gridpoints. The default is on."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.split.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone split",
+  "syntax": "zone split [keyword] [range]",
+  "keywords": [
+    {
+      "name": "exclude-quadrilateral",
+      "syntax": "exclude-quadrilateral",
+      "description": {
+        "7.0": "Any quadrilateral faces will be excluded from splitting, causing wedge zones to be split into three hexahedral zones, and hexahedral zones to be skipped, tetrahedral zones still to e split into four hexahedral zones.",
+        "9.0": "In FLAC3D , any quadrilateral face will be excluded from splitting, causing wedge zones to be split into three hexahedral zones, and hexahedral zones to be skipped. Tetrahedral zones will still be split into four hexahedral zones. In FLAC2D , any quadrilateral zone will be excluded from splitting. Triangular zones will still be split into three quadrilateral zones."
       }
     },
-    "9.0": {
-      "command": "zone split",
-      "syntax": "zone split [keyword] [range]",
-      "keywords": [
-        {
-          "name": "exclude-quadrilateral",
-          "syntax": "exclude-quadrilateral",
-          "description": "In FLAC3D , any quadrilateral face will be excluded from splitting, causing wedge zones to be split into three hexahedral zones, and hexahedral zones to be skipped. Tetrahedral zones will still be split into four hexahedral zones. In FLAC2D , any quadrilateral zone will be excluded from splitting. Triangular zones will still be split into three quadrilateral zones."
-        },
-        {
-          "name": "merge",
-          "syntax": "merge <b>",
-          "description": "If set to off , new gridpoints created will not be automatically merged with existing gridpoints. The default is on ."
-        }
-      ]
+    {
+      "name": "merge",
+      "syntax": "merge <b>",
+      "description": {
+        "7.0": "If set to off, new gridpoints created will not be automatically merged with existing gridpoints. The default is on.",
+        "9.0": "If set to off , new gridpoints created will not be automatically merged with existing gridpoints. The default is on ."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/cmd_zone.split.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

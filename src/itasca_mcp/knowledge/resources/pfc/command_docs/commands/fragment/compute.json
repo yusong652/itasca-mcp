@@ -33,131 +33,73 @@
       "python": "itasca.command('fragment compute')\n# Then query: frag_id = ball.fragment()"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "fragment compute",
-      "syntax": "fragment compute [keyword]",
-      "keywords": [
-        {
-          "name": "group-isolated",
-          "syntax": "group-isolated <s> [slot <slot>]",
-          "description": "Assign the group name s to slot slot only for isolated fragments."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "Assign the fragment names to groups in slot s ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment register\nfragment compute",
-          "description": "Register fragment tracking, then compute fragments once. Use case: Get snapshot of current fragment state."
-        },
-        {
-          "command": "fragment compute group-slot 'frag'",
-          "description": "Compute fragments and store IDs in 'frag' group slot. Use case: Enable range-based operations on specific fragments."
-        },
-        {
-          "command": "fragment compute group-isolated 'isolated' slot 'status'",
-          "description": "Compute fragments, mark isolated bodies with group 'isolated' in slot 'status'. Use case: Identify and track isolated particles separately."
-        },
-        {
-          "command": "fragment compute group-slot 'frag' group-isolated 'lone' slot 'isolation'",
-          "description": "Store fragment IDs in 'frag' slot and mark isolated bodies in 'isolation' slot. Use case: Complete fragment classification with isolation tracking."
-        },
-        {
-          "command": "contact delete range model null\nfragment compute\nfragment list",
-          "description": "Delete null contacts, recompute fragments, list results. Use case: Update fragments after manual contact modifications."
-        },
-        {
-          "command": "model solve\nfragment compute group-slot 'f'\nball property density 2500 range group-slot 'f' 1",
-          "description": "Solve to equilibrium, compute fragments, apply property to fragment 1. Use case: Fragment-based property assignment."
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "fragment compute",
+  "syntax": {
+    "6.0": "fragment compute [group-slot <s>]",
+    "7.0": "fragment compute [keyword]",
+    "9.0": "fragment compute [keyword]"
+  },
+  "keywords": [
+    {
+      "name": "group-isolated",
+      "syntax": "group-isolated <s> [slot <slot>]",
+      "description": "Assign the group name s to slot slot only for isolated fragments.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
-    "6.0": {
-      "command": "fragment compute",
-      "syntax": "fragment compute [group-slot <s>]",
-      "keywords": [
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "Assign the fragment IDs to groups in slot s for all fragments",
-          "notes": [
-            "Parameter s (string/slot, required): Group slot name where fragment IDs will be stored"
-          ],
-          "optional": true
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment register\nfragment compute",
-          "description": "Register fragment tracking, then compute fragments once. Use case: Get snapshot of current fragment state."
-        },
-        {
-          "command": "fragment compute group-slot 'frag'",
-          "description": "Compute fragments and store IDs in 'frag' group slot. Use case: Enable range-based operations on specific fragments."
-        },
-        {
-          "command": "fragment compute group-isolated 'isolated' slot 'status'",
-          "description": "Compute fragments, mark isolated bodies with group 'isolated' in slot 'status'. Use case: Identify and track isolated particles separately."
-        },
-        {
-          "command": "fragment compute group-slot 'frag' group-isolated 'lone' slot 'isolation'",
-          "description": "Store fragment IDs in 'frag' slot and mark isolated bodies in 'isolation' slot. Use case: Complete fragment classification with isolation tracking."
-        },
-        {
-          "command": "contact delete range model null\nfragment compute\nfragment list",
-          "description": "Delete null contacts, recompute fragments, list results. Use case: Update fragments after manual contact modifications."
-        },
-        {
-          "command": "model solve\nfragment compute group-slot 'f'\nball property density 2500 range group-slot 'f' 1",
-          "description": "Solve to equilibrium, compute fragments, apply property to fragment 1. Use case: Fragment-based property assignment."
-        }
-      ]
-    },
-    "9.0": {
-      "command": "fragment compute",
-      "syntax": "fragment compute [keyword]",
-      "keywords": [
-        {
-          "name": "group-isolated",
-          "syntax": "group-isolated <s> [slot <slot>]",
-          "description": "Assign the group name s to slot slot only for isolated fragments."
-        },
-        {
-          "name": "group-slot",
-          "syntax": "group-slot <s>",
-          "description": "Assign the fragment names to groups in slot s ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "fragment register\nfragment compute",
-          "description": "Register fragment tracking, then compute fragments once. Use case: Get snapshot of current fragment state."
-        },
-        {
-          "command": "fragment compute group-slot 'frag'",
-          "description": "Compute fragments and store IDs in 'frag' group slot. Use case: Enable range-based operations on specific fragments."
-        },
-        {
-          "command": "fragment compute group-isolated 'isolated' slot 'status'",
-          "description": "Compute fragments, mark isolated bodies with group 'isolated' in slot 'status'. Use case: Identify and track isolated particles separately."
-        },
-        {
-          "command": "fragment compute group-slot 'frag' group-isolated 'lone' slot 'isolation'",
-          "description": "Store fragment IDs in 'frag' slot and mark isolated bodies in 'isolation' slot. Use case: Complete fragment classification with isolation tracking."
-        },
-        {
-          "command": "contact delete range model null\nfragment compute\nfragment list",
-          "description": "Delete null contacts, recompute fragments, list results. Use case: Update fragments after manual contact modifications."
-        },
-        {
-          "command": "model solve\nfragment compute group-slot 'f'\nball property density 2500 range group-slot 'f' 1",
-          "description": "Solve to equilibrium, compute fragments, apply property to fragment 1. Use case: Fragment-based property assignment."
-        }
-      ]
+    {
+      "name": "group-slot",
+      "syntax": "group-slot <s>",
+      "description": {
+        "6.0": "Assign the fragment IDs to groups in slot s for all fragments",
+        "7.0": "Assign the fragment names to groups in slot s .",
+        "9.0": "Assign the fragment names to groups in slot s ."
+      },
+      "notes": {
+        "6.0": [
+          "Parameter s (string/slot, required): Group slot name where fragment IDs will be stored"
+        ]
+      },
+      "optional": {
+        "6.0": true
+      }
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "fragment register\nfragment compute",
+      "description": "Register fragment tracking, then compute fragments once. Use case: Get snapshot of current fragment state."
+    },
+    {
+      "command": "fragment compute group-slot 'frag'",
+      "description": "Compute fragments and store IDs in 'frag' group slot. Use case: Enable range-based operations on specific fragments."
+    },
+    {
+      "command": "fragment compute group-isolated 'isolated' slot 'status'",
+      "description": "Compute fragments, mark isolated bodies with group 'isolated' in slot 'status'. Use case: Identify and track isolated particles separately."
+    },
+    {
+      "command": "fragment compute group-slot 'frag' group-isolated 'lone' slot 'isolation'",
+      "description": "Store fragment IDs in 'frag' slot and mark isolated bodies in 'isolation' slot. Use case: Complete fragment classification with isolation tracking."
+    },
+    {
+      "command": "contact delete range model null\nfragment compute\nfragment list",
+      "description": "Delete null contacts, recompute fragments, list results. Use case: Update fragments after manual contact modifications."
+    },
+    {
+      "command": "model solve\nfragment compute group-slot 'f'\nball property density 2500 range group-slot 'f' 1",
+      "description": "Solve to equilibrium, compute fragments, apply property to fragment 1. Use case: Fragment-based property assignment."
+    }
+  ]
 }

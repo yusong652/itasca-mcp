@@ -17,123 +17,56 @@
     "available": false,
     "workaround": "itasca.command('clump scale ...') - Python SDK does not provide direct clump scaling method"
   },
-  "versions": {
-    "7.0": {
-      "command": "clump scale",
-      "syntax": "clump scale keyword ... [range]",
-      "keywords": [
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Scale the clump to have volume of an equivalent {disk with unit thickness in 2D; sphere in 3D} with a specified diameter."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <s> <fval>",
-          "description": "Use the FISH function s to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <fvol>",
-          "description": "Scale the clump to have volume fvol ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump scale volume [svol]",
-          "description": "Scale all clumps to target volume (FISH variable svol)"
-        },
-        {
-          "command": "clump scale diameter 0.4",
-          "description": "Scale all clumps to equivalent sphere diameter 0.4"
-        },
-        {
-          "command": "clump scale volume 1.5 range id 1 100",
-          "description": "Scale clumps 1-100 to volume 1.5"
-        },
-        {
-          "command": "clump scale diameter 2.0 range group 'aggregate'",
-          "description": "Scale clumps in 'aggregate' group to equivalent sphere diameter 2.0"
-        }
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "clump scale",
+  "syntax": "clump scale keyword ... [range]",
+  "keywords": [
+    {
+      "name": "diameter",
+      "syntax": "diameter <fdiam>",
+      "description": "Scale the clump to have volume of an equivalent {disk with unit thickness in 2D; sphere in 3D} with a specified diameter."
     },
-    "6.0": {
-      "command": "clump scale",
-      "syntax": "clump scale keyword ... [range]",
-      "keywords": [
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Scale the clump to have volume of an equivalent {disk with unit thickness in 2D; sphere in 3D} with a specified diameter."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <sfish> <fval>",
-          "description": "Use the FISH function with name sfish to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <fvol>",
-          "description": "Scale the clump to have volume fvol ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump scale volume [svol]",
-          "description": "Scale all clumps to target volume (FISH variable svol)"
-        },
-        {
-          "command": "clump scale diameter 0.4",
-          "description": "Scale all clumps to equivalent sphere diameter 0.4"
-        },
-        {
-          "command": "clump scale volume 1.5 range id 1 100",
-          "description": "Scale clumps 1-100 to volume 1.5"
-        },
-        {
-          "command": "clump scale diameter 2.0 range group 'aggregate'",
-          "description": "Scale clumps in 'aggregate' group to equivalent sphere diameter 2.0"
-        }
-      ]
+    {
+      "name": "fish-size",
+      "syntax": {
+        "6.0": "fish-size <sfish> <fval>",
+        "7.0": "fish-size <s> <fval>",
+        "9.0": "fish-size <s> <fval>"
+      },
+      "description": {
+        "6.0": "Use the FISH function with name sfish to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size.",
+        "7.0": "Use the FISH function s to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size.",
+        "9.0": "Use the FISH function s to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
+      }
     },
-    "9.0": {
-      "command": "clump scale",
-      "syntax": "clump scale keyword ... [range]",
-      "keywords": [
-        {
-          "name": "diameter",
-          "syntax": "diameter <fdiam>",
-          "description": "Scale the clump to have volume of an equivalent {disk with unit thickness in 2D; sphere in 3D} with a specified diameter."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <s> <fval>",
-          "description": "Use the FISH function s to scale the “size” of the clump to fval . The FISH function must take a single argument that is a clump pointer and return a floating point value corresponding to a linear measure of the clump size."
-        },
-        {
-          "name": "volume",
-          "syntax": "volume <fvol>",
-          "description": "Scale the clump to have volume fvol ."
-        }
-      ],
-      "examples": [
-        {
-          "command": "clump scale volume [svol]",
-          "description": "Scale all clumps to target volume (FISH variable svol)"
-        },
-        {
-          "command": "clump scale diameter 0.4",
-          "description": "Scale all clumps to equivalent sphere diameter 0.4"
-        },
-        {
-          "command": "clump scale volume 1.5 range id 1 100",
-          "description": "Scale clumps 1-100 to volume 1.5"
-        },
-        {
-          "command": "clump scale diameter 2.0 range group 'aggregate'",
-          "description": "Scale clumps in 'aggregate' group to equivalent sphere diameter 2.0"
-        }
-      ]
+    {
+      "name": "volume",
+      "syntax": "volume <fvol>",
+      "description": "Scale the clump to have volume fvol ."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "clump scale volume [svol]",
+      "description": "Scale all clumps to target volume (FISH variable svol)"
+    },
+    {
+      "command": "clump scale diameter 0.4",
+      "description": "Scale all clumps to equivalent sphere diameter 0.4"
+    },
+    {
+      "command": "clump scale volume 1.5 range id 1 100",
+      "description": "Scale clumps 1-100 to volume 1.5"
+    },
+    {
+      "command": "clump scale diameter 2.0 range group 'aggregate'",
+      "description": "Scale clumps in 'aggregate' group to equivalent sphere diameter 2.0"
+    }
+  ]
 }

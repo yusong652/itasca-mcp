@@ -5,52 +5,40 @@
     "group",
     "zone"
   ],
-  "description": "Add group name s to the interfaces in the range. Use of the group logic is described in Groups . This command may take the form zone interface \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
+  "description": {
+    "7.0": "Add group name s to the interfaces in the range. Use of the group logic is described in Groups. This command may take the form zone interface \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
+    "9.0": "Add group name s to the interfaces in the range. Use of the group logic is described in Groups . This command may take the form zone interface \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "zone interface group",
-      "syntax": "zone interface <s> group <s> [keyword] [range]",
-      "description": "Add group name s to the interfaces in the range. Use of the group logic is described in Groups. This command may take the form zone interface \"slotname = groupname\" — quotation marks required, spaces at equals sign ignored — where slotname is the slot assignment and groupname is the group name.",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the interfaces. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s. The default slot name is Default."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneinterface/cmd_zone.interface.group.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "zone interface group",
+  "syntax": {
+    "7.0": "zone interface <s> group <s> [keyword] [range]",
+    "9.0": "zone interface [<s>] group <s> [keyword] [range]"
+  },
+  "keywords": [
+    {
+      "name": "remove",
+      "syntax": "remove",
+      "description": "Remove s from the interfaces. If a slot is not specified, the group name is removed from all slots it is found in."
     },
-    "9.0": {
-      "command": "zone interface group",
-      "syntax": "zone interface [<s>] group <s> [keyword] [range]",
-      "keywords": [
-        {
-          "name": "remove",
-          "syntax": "remove",
-          "description": "Remove s from the interfaces. If a slot is not specified, the group name is removed from all slots it is found in."
-        },
-        {
-          "name": "slot",
-          "syntax": "slot <s>",
-          "description": "Assign the group to the slot named s . The default slot name is Default ."
-        }
-      ]
+    {
+      "name": "slot",
+      "syntax": "slot <s>",
+      "description": {
+        "7.0": "Assign the group to the slot named s. The default slot name is Default.",
+        "9.0": "Assign the group to the slot named s . The default slot name is Default ."
+      }
     }
-  }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/flac3d/zone/doc/manual/zone_manual/zone_commands/zoneinterface/cmd_zone.interface.group.html); syntax from official FLAC3D 7.0 detailed command page."
+  ]
 }

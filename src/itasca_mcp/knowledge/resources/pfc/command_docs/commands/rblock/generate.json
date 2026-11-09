@@ -10,252 +10,103 @@
     "available": false,
     "workaround": "Use itasca.command('rblock generate ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock generate",
-      "syntax": "rblock generate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "azimuth",
-          "syntax": "azimuth <fazlow> <fazhi>",
-          "description": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "Rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fdens>",
-          "description": "The rigid block density that is 1 by default."
-        },
-        {
-          "name": "elevation",
-          "syntax": "elevation <fellow> <felhi>",
-          "description": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the y -axis in degrees."
-        },
-        {
-          "name": "fish-distribution",
-          "syntax": "fish-distribution <fdist> <a1> ... <an>",
-          "description": "The rigid block sizes are drawn from the distribution represented by the FISH function fdist . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <fsize>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name fsize . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "gauss",
-          "syntax": "gauss [<fcutoff>]",
-          "description": "Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fsizelow + fsizehi )/2 and standard deviation ( fsizehi - fsizelow )/2. The optional fcutoff (default 0.1), multiplied by fsizelow , constitutes the minimum size allowed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <idlow> [<idhi>]",
-          "description": "The ID of the first rigid block generated is set to idlow that, by default, is the next available ID. idhi , if specified, is used to calculate the number of rigid blocks to generate. rigid block IDs are chosen sequentially."
-        },
-        {
-          "name": "number",
-          "syntax": "number <inum>",
-          "description": "Specify the number of rigid blocks to be generated."
-        },
-        {
-          "name": "size",
-          "syntax": "size <fsizelow> [<fsizehi>]",
-          "description": "Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword."
-        },
-        {
-          "name": "templates",
-          "syntax": "templates <inum> <stname> [<f>] ...",
-          "description": "Specify the number inum of rigid block template pairs to be entered followed by the pairs. The pairs are composed of the rigid block template name and the relative proportion of the rigid block template to be used during generation. The relative proportions are divided by the sum of the proportions to yield a percentage. If no percentages are specified, then rigid block templates are drawn equally from those given. If no templates are specified, then they are randomly selected from all rigid block templates."
-        },
-        {
-          "name": "tilt",
-          "syntax": "tilt <ftiltlow> <ftilthi>",
-          "description": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees."
-        },
-        {
-          "name": "tries",
-          "syntax": "tries <itries>",
-          "description": "Number of tries to fill the specified region with the number of rigid blocks. By default, itries = 20,000."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock generate",
+  "syntax": "rblock generate keyword ... [range]",
+  "keywords": [
+    {
+      "name": "azimuth",
+      "syntax": "azimuth <fazlow> <fazhi>",
+      "description": {
+        "6.0": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; z -axis in 3D} in degrees.",
+        "7.0": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees.",
+        "9.0": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees."
+      }
     },
-    "7.0": {
-      "command": "rblock generate",
-      "syntax": "rblock generate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "azimuth",
-          "syntax": "azimuth <fazlow> <fazhi>",
-          "description": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "Rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fdens>",
-          "description": "The rigid block density that is 1 by default."
-        },
-        {
-          "name": "elevation",
-          "syntax": "elevation <fellow> <felhi>",
-          "description": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the \\(y\\) -axis in degrees."
-        },
-        {
-          "name": "fish-distribution",
-          "syntax": "fish-distribution <fdist> <a1> ... <an>",
-          "description": "The rigid block sizes are drawn from the distribution represented by the FISH function fdist . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <fsize>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name fsize . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "gauss",
-          "syntax": "gauss [<fcutoff>]",
-          "description": "Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fsizelow + fsizehi )/2 and standard deviation ( fsizehi - fsizelow )/2. The optional fcutoff (default 0.1), multiplied by fsizelow , constitutes the minimum size allowed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <idlow> [<idhi>]",
-          "description": "The ID of the first rigid block generated is set to idlow that, by default, is the next available ID. idhi , if specified, is used to calculate the number of rigid blocks to generate. rigid block IDs are chosen sequentially."
-        },
-        {
-          "name": "number",
-          "syntax": "number <inum>",
-          "description": "Specify the number of rigid blocks to be generated."
-        },
-        {
-          "name": "size",
-          "syntax": "size <fsizelow> [<fsizehi>]",
-          "description": "Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword."
-        },
-        {
-          "name": "templates",
-          "syntax": "templates <inum> <stname> [<f>] ...",
-          "description": "Specify the number inum of rigid block template pairs to be entered followed by the pairs. The pairs are composed of the rigid block template name and the relative proportion of the rigid block template to be used during generation. The relative proportions are divided by the sum of the proportions to yield a percentage. If no percentages are specified, then rigid block templates are drawn equally from those given. If no templates are specified, then they are randomly selected from all rigid block templates."
-        },
-        {
-          "name": "tilt",
-          "syntax": "tilt <ftiltlow> <ftilthi>",
-          "description": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees."
-        },
-        {
-          "name": "tries",
-          "syntax": "tries <itries>",
-          "description": "Number of tries to fill the specified region with the number of rigid blocks. By default, itries = 20,000."
-        }
-      ],
-      "examples": []
+    {
+      "name": "box",
+      "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
+      "description": "Rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
     },
-    "9.0": {
-      "command": "rblock generate",
-      "syntax": "rblock generate keyword ... [range]",
-      "keywords": [
-        {
-          "name": "azimuth",
-          "syntax": "azimuth <fazlow> <fazhi>",
-          "description": "Range of azimuths to rotate the rigid block template randomly about. An azimuthal rotation is a right-hand rotation about the {out of plane direction in 2D; \\(z\\) -axis in 3D} in degrees."
-        },
-        {
-          "name": "box",
-          "syntax": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax>",
-          "description": "Rigid blocks will fully fall within this box, such that they will not overlap the box faces or edges. By default, the box is the model domain."
-        },
-        {
-          "name": "diameter",
-          "syntax": "diameter",
-          "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
-        },
-        {
-          "name": "density",
-          "syntax": "density <fdens>",
-          "description": "The rigid block density that is 1 by default."
-        },
-        {
-          "name": "elevation",
-          "syntax": "elevation <fellow> <felhi>",
-          "description": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the \\(y\\) -axis in degrees."
-        },
-        {
-          "name": "fish-distribution",
-          "syntax": "fish-distribution <fdist> <a1> ... <an>",
-          "description": "The rigid block sizes are drawn from the distribution represented by the FISH function fdist . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords."
-        },
-        {
-          "name": "fish-size",
-          "syntax": "fish-size <fsize>",
-          "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name fsize . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
-        },
-        {
-          "name": "gauss",
-          "syntax": "gauss [<fcutoff>]",
-          "description": "Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fsizelow + fsizehi )/2 and standard deviation ( fsizehi - fsizelow )/2. The optional fcutoff (default 0.1), multiplied by fsizelow , constitutes the minimum size allowed."
-        },
-        {
-          "name": "group",
-          "syntax": "group <s> [slot <slot>] ...",
-          "description": "Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default ."
-        },
-        {
-          "name": "id",
-          "syntax": "id <idlow> [<idhi>]",
-          "description": "The ID of the first rigid block generated is set to idlow that, by default, is the next available ID. idhi , if specified, is used to calculate the number of rigid blocks to generate. rigid block IDs are chosen sequentially."
-        },
-        {
-          "name": "number",
-          "syntax": "number <inum>",
-          "description": "Specify the number of rigid blocks to be generated."
-        },
-        {
-          "name": "size",
-          "syntax": "size <fsizelow> [<fsizehi>]",
-          "description": "Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword."
-        },
-        {
-          "name": "templates",
-          "syntax": "templates <inum> <stname> [<f>] ...",
-          "description": "Specify the number inum of rigid block template pairs to be entered followed by the pairs. The pairs are composed of the rigid block template name and the relative proportion of the rigid block template to be used during generation. The relative proportions are divided by the sum of the proportions to yield a percentage. If no percentages are specified, then rigid block templates are drawn equally from those given. If no templates are specified, then they are randomly selected from all rigid block templates."
-        },
-        {
-          "name": "tilt",
-          "syntax": "tilt <ftiltlow> <ftilthi>",
-          "description": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees."
-        },
-        {
-          "name": "tries",
-          "syntax": "tries <itries>",
-          "description": "Number of tries to fill the specified region with the number of rigid blocks. By default, itries = 20,000."
-        }
-      ],
-      "examples": []
+    {
+      "name": "diameter",
+      "syntax": "diameter",
+      "description": "Specify that the linear size used to scale the rigid blocks is the volume equivalent diameter of a {disk in 2D; sphere in 3D}."
+    },
+    {
+      "name": "density",
+      "syntax": "density <fdens>",
+      "description": "The rigid block density that is 1 by default."
+    },
+    {
+      "name": "elevation",
+      "syntax": "elevation <fellow> <felhi>",
+      "description": {
+        "6.0": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the y -axis in degrees.",
+        "7.0": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the \\(y\\) -axis in degrees.",
+        "9.0": "Range of elevations to rotate the rigid block template randomly about. An elevating rotation is a right-hand rotation about the \\(y\\) -axis in degrees."
+      }
+    },
+    {
+      "name": "fish-distribution",
+      "syntax": "fish-distribution <fdist> <a1> ... <an>",
+      "description": "The rigid block sizes are drawn from the distribution represented by the FISH function fdist . Function arguments can be specified as though no function arguments are required. The FISH function must return a floating point value that is the rigid block size. A FISH distribution cannot be specified with the gauss or size keywords."
+    },
+    {
+      "name": "fish-size",
+      "syntax": "fish-size <fsize>",
+      "description": "The size used to scale the rigid blocks while generating can be specified by the FISH function with name fsize . The return value of the FISH function should be a linear measure of the rigid block size and the function should take one argument that is a rigid block pointer."
+    },
+    {
+      "name": "gauss",
+      "syntax": "gauss [<fcutoff>]",
+      "description": "Specify that the rigid block sizes are chosen from a Gaussian distribution with mean value ( fsizelow + fsizehi )/2 and standard deviation ( fsizehi - fsizelow )/2. The optional fcutoff (default 0.1), multiplied by fsizelow , constitutes the minimum size allowed."
+    },
+    {
+      "name": "group",
+      "syntax": "group <s> [slot <slot>] ...",
+      "description": "Specify that generated rigid blocks are given group name s at slot slot . If the slot keyword is not specified, then the group name is assigned to the slot Default ."
+    },
+    {
+      "name": "id",
+      "syntax": "id <idlow> [<idhi>]",
+      "description": "The ID of the first rigid block generated is set to idlow that, by default, is the next available ID. idhi , if specified, is used to calculate the number of rigid blocks to generate. rigid block IDs are chosen sequentially."
+    },
+    {
+      "name": "number",
+      "syntax": "number <inum>",
+      "description": "Specify the number of rigid blocks to be generated."
+    },
+    {
+      "name": "size",
+      "syntax": "size <fsizelow> [<fsizehi>]",
+      "description": "Specify the size range to be used during generation. If fsizehi is not specified, then fsizehi = fsizelow . By default, fsizehi = fsizelow = 1.0. Cannot be given with the fish-distribution keyword."
+    },
+    {
+      "name": "templates",
+      "syntax": "templates <inum> <stname> [<f>] ...",
+      "description": "Specify the number inum of rigid block template pairs to be entered followed by the pairs. The pairs are composed of the rigid block template name and the relative proportion of the rigid block template to be used during generation. The relative proportions are divided by the sum of the proportions to yield a percentage. If no percentages are specified, then rigid block templates are drawn equally from those given. If no templates are specified, then they are randomly selected from all rigid block templates."
+    },
+    {
+      "name": "tilt",
+      "syntax": "tilt <ftiltlow> <ftilthi>",
+      "description": {
+        "6.0": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the x -axis in degrees.",
+        "7.0": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees.",
+        "9.0": "Range of tilts to rotate the rigid block template randomly about. A tilting rotation is a right-hand rotation about the \\(x\\) -axis in degrees."
+      }
+    },
+    {
+      "name": "tries",
+      "syntax": "tries <itries>",
+      "description": "Number of tries to fill the specified region with the number of rigid blocks. By default, itries = 20,000."
     }
-  }
+  ],
+  "examples": []
 }

@@ -10,92 +10,53 @@
     "available": true,
     "workaround": "Facet.set_conveyor(vec) or Facet.set_conveyor_x/y/z(float) - requires manual calculation of tangential velocities and iteration: for w in itasca.wall.list(): for f in w.facets(): v_tangent = omega_cross_r; f.set_conveyor(v_tangent). For automatic calculation, use itasca.command('wall velocity-conveyor ...')"
   },
-  "versions": {
-    "7.0": {
-      "command": "wall conveyor",
-      "syntax": "wall conveyor keyword ... [range...]",
-      "keywords": [
-        {
-          "name": "point",
-          "syntax": "point <vpos>",
-          "description": "The point about which the calculation of the tangential velocity at the facet centroid is calculated."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fspinx> <fspiny> <fspinz>",
-          "description": "The angular velocity in radians per second."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall velocity-conveyor point (0,0,0) spin 0 0 1.0",
-          "description": "Set conveyor velocity for rotation around z-axis at origin with 1.0 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (0,0,5) spin 0 0 0.5 range name 'drum'",
-          "description": "Simulate rotating drum around z-axis at height 5 with 0.5 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (0,0,0) spin 1 0 0 range id 1",
-          "description": "Rotate wall ID 1 around x-axis at 1 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (2,3,0) spin 2.0 range group 'mixer'",
-          "description": "Set conveyor for walls in group 'mixer' rotating at 2.0 rad/s (2D)"
-        }
-      ],
-      "notes": [
-        "7.0 spelling is 'wall conveyor' (live enum; 'wall velocity-conveyor' is rejected on 7.00)."
-      ]
-    },
-    "6.0": {
-      "available": false
-    },
-    "9.0": {
-      "command": "wall conveyor",
-      "syntax": "wall conveyor keyword ... [range...]",
-      "keywords": [
-        {
-          "name": "point",
-          "syntax": "point <vpos>",
-          "description": "The point about which the calculation of the tangential velocity at the facet centroid is calculated."
-        },
-        {
-          "name": "spin",
-          "syntax": "spin <fspinx> <fspiny> <fspinz> (y and z components 3D ONLY)",
-          "description": "The angular velocity in radians per second."
-        }
-      ],
-      "examples": [
-        {
-          "command": "wall velocity-conveyor point (0,0,0) spin 0 0 1.0",
-          "description": "Set conveyor velocity for rotation around z-axis at origin with 1.0 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (0,0,5) spin 0 0 0.5 range name 'drum'",
-          "description": "Simulate rotating drum around z-axis at height 5 with 0.5 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (0,0,0) spin 1 0 0 range id 1",
-          "description": "Rotate wall ID 1 around x-axis at 1 rad/s (3D)"
-        },
-        {
-          "command": "wall velocity-conveyor point (2,3,0) spin 2.0 range group 'mixer'",
-          "description": "Set conveyor for walls in group 'mixer' rotating at 2.0 rad/s (2D)"
-        }
-      ],
-      "notes": [
-        "Live 9.7 spelling is 'wall conveyor' ('wall velocity-conveyor' is rejected by the wall subcommand enum)."
-      ]
-    }
+  "notes": {
+    "7.0": [
+      "7.0 spelling is 'wall conveyor' (live enum; 'wall velocity-conveyor' is rejected on 7.00)."
+    ],
+    "9.0": [
+      "Live 9.7 spelling is 'wall conveyor' ('wall velocity-conveyor' is rejected by the wall subcommand enum)."
+    ]
   },
-  "notes": [
-    "Wall geometry does NOT actually rotate - only conveyor velocities are set",
-    "Conveyor velocity is fictitious velocity added to wall velocity for relative velocity calculation",
-    "Tangential velocity projected onto facet plane if not parallel to facet face",
-    "Cannot be active when vertex velocities are active (mutually exclusive)",
-    "Ideal for axis-symmetric rotating walls (drums, cylinders, cones)",
-    "Use 'wall attribute velocity-conveyor' for explicit direct setting",
-    "The wall geometry never rotates; facet conveyor velocities (omega x r, projected onto the facet plane) are added to the wall velocity in relative-velocity calculations."
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "wall conveyor",
+  "syntax": "wall conveyor keyword ... [range...]",
+  "keywords": [
+    {
+      "name": "point",
+      "syntax": "point <vpos>",
+      "description": "The point about which the calculation of the tangential velocity at the facet centroid is calculated."
+    },
+    {
+      "name": "spin",
+      "syntax": {
+        "7.0": "spin <fspinx> <fspiny> <fspinz>",
+        "9.0": "spin <fspinx> <fspiny> <fspinz> (y and z components 3D ONLY)"
+      },
+      "description": "The angular velocity in radians per second."
+    }
+  ],
+  "examples": [
+    {
+      "command": "wall velocity-conveyor point (0,0,0) spin 0 0 1.0",
+      "description": "Set conveyor velocity for rotation around z-axis at origin with 1.0 rad/s (3D)"
+    },
+    {
+      "command": "wall velocity-conveyor point (0,0,5) spin 0 0 0.5 range name 'drum'",
+      "description": "Simulate rotating drum around z-axis at height 5 with 0.5 rad/s (3D)"
+    },
+    {
+      "command": "wall velocity-conveyor point (0,0,0) spin 1 0 0 range id 1",
+      "description": "Rotate wall ID 1 around x-axis at 1 rad/s (3D)"
+    },
+    {
+      "command": "wall velocity-conveyor point (2,3,0) spin 2.0 range group 'mixer'",
+      "description": "Set conveyor for walls in group 'mixer' rotating at 2.0 rad/s (2D)"
+    }
   ]
 }

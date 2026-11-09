@@ -30,446 +30,395 @@
     "coupling-yield-shear",
     "coupling-yield-normal"
   ],
-  "description": "Sample liner responses. Quantities that can be recorded include coupling-displacement, coupling-displacement-shear, coupling-stress, coupling-stress-shear, coupling-yield, force, moment, resultant-mx, resultant-my, resultant-mxy, resultant-nx, resultant-ny, resultant-nxy, resultant-qx, resultant-qy, stress, component-id, depth-factor, node, side, surface, ipstress, integration-point.",
+  "description": {
+    "7.0": "Sample liner responses. The nodes of an element will be ordered counterclockwise with respect to the outside of the zone faces upon which the liner was created.",
+    "9.0": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
+  },
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "7.0": {
-      "command": "structure liner history",
-      "syntax": "structure liner history keyword",
-      "description": "Sample liner responses. The nodes of an element will be ordered counterclockwise with respect to the outside of the zone faces upon which the liner was created.",
-      "keywords": [
-        {
-          "name": "coupling-displacement-normal",
-          "syntax": "coupling-displacement-normal [linerhistoryblock]",
-          "description": "displacement in the normal coupling spring at a node of the element. Sign convention for a normal spring is +/-, indicating separation/overlap. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-displacement-shear",
-          "syntax": "coupling-displacement-shear [linerhistoryblock]",
-          "description": "displacement in the shear coupling spring at a node of the element. Shear springs store displacement magnitude, and this is always positive. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-stress-normal",
-          "syntax": "coupling-stress-normal [linerhistoryblock]",
-          "description": "stress in the normal coupling spring at a node of the element. The sign convention for normal spring is +/-, indicating separation/overlap. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-stress-shear",
-          "syntax": "coupling-stress-shear [linerhistoryblock]",
-          "description": "stress in the shear coupling spring at a node of the element. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-yield",
-          "syntax": "coupling-yield [linerhistoryblock]",
-          "description": "yield state in the coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords."
-        },
-        {
-          "name": "force",
-          "syntax": "force [linerhistoryblock]",
-          "description": "force magnitude, global system. This option uses the node keyword."
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [linerhistoryblock]",
-          "description": "nodal force (\\(x\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [linerhistoryblock]",
-          "description": "nodal force (\\(y\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [linerhistoryblock]",
-          "description": "nodal force (\\(z\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [linerhistoryblock]",
-          "description": "moment magnitude, global system. This option uses the node keyword."
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [linerhistoryblock]",
-          "description": "nodal moment (\\(x\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [linerhistoryblock]",
-          "description": "nodal moment (\\(y\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [linerhistoryblock]",
-          "description": "nodal moment (\\(z\\)-component, global system). This option uses the node keyword."
-        },
-        {
-          "name": "resultant-mx",
-          "syntax": "resultant-mx [linerhistoryblock]",
-          "description": "stress resultant \\(M_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-my",
-          "syntax": "resultant-my [linerhistoryblock]",
-          "description": "stress resultant \\(M_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-mxy",
-          "syntax": "resultant-mxy [linerhistoryblock]",
-          "description": "stress resultant \\(M_{xy}\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-nx",
-          "syntax": "resultant-nx [linerhistoryblock]",
-          "description": "stress resultant \\(N_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-ny",
-          "syntax": "resultant-ny [linerhistoryblock]",
-          "description": "stress resultant \\(N_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-nxy",
-          "syntax": "resultant-nxy [linerhistoryblock]",
-          "description": "stress resultant \\(N_{xy}\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qx",
-          "syntax": "resultant-qx [linerhistoryblock]",
-          "description": "stress resultant \\(Q_x\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qy",
-          "syntax": "resultant-qy [linerhistoryblock]",
-          "description": "stress resultant \\(Q_y\\) in the element surface system. This option uses the surface-x keyword."
-        },
-        {
-          "name": "stress-intermediate",
-          "syntax": "stress-intermediate [linerhistoryblock]",
-          "description": "principal intermediate stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-intermediate'; 'principal-intermediate' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-maximum",
-          "syntax": "stress-maximum [linerhistoryblock]",
-          "description": "principal maximum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-maximum'; 'principal-maximum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-minimum",
-          "syntax": "stress-minimum [linerhistoryblock]",
-          "description": "principal minimum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-minimum'; 'principal-minimum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [linerhistoryblock]",
-          "description": "stress \\(xx\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [linerhistoryblock]",
-          "description": "stress \\(xy\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [linerhistoryblock]",
-          "description": "stress \\(xz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [linerhistoryblock]",
-          "description": "stress \\(yy\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [linerhistoryblock]",
-          "description": "stress \\(yz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [linerhistoryblock]",
-          "description": "stress \\(zz\\)-component, global system. This option uses the depth-factor keyword."
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <i>",
-          "description": "the element is selected by its individual component ID number"
-        },
-        {
-          "name": "depth-factor",
-          "syntax": "depth-factor <f>",
-          "description": "the depth factor used to determine element stresses. Only available if noted."
-        },
-        {
-          "name": "node",
-          "syntax": "node <i>",
-          "description": "the node location to use when retrieving values from the element. Must be from 1 to 3. Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the element with a centroid closest to v is selected"
-        },
-        {
-          "name": "side",
-          "syntax": "side <i>",
-          "description": "specifies the side of an embedded liner from which to retrieve coupling values. By default, this is side 1."
-        },
-        {
-          "name": "surface-x",
-          "syntax": "surface-x <v>",
-          "description": "the local \\(x\\)-direction used to determine the local surface coordinate system. Only available if noted."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13)."
-        }
-      ],
-      "legacy_documentation": {
-        "availability_verified": true,
-        "source": "official FLAC3D 7.0 contents command index",
-        "source_urls": [
-          "https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.history.html"
-        ],
-        "syntax_basis": "official FLAC3D 7.0 detailed command page",
-        "target_version": "7.0"
-      }
-    },
-    "9.0": {
-      "command": "structure liner history",
-      "syntax": "structure liner history keyword",
-      "keywords": [
-        {
-          "name": "coupling-displacement-normal",
-          "syntax": "coupling-displacement-normal [linerhistoryblock]",
-          "description": "displacement in the normal coupling spring at a node of the element. Normal displacement positive/negative implies separation/overlap only if the liner is on the outer surface and liner element normals point away from the body to which the liner is attached. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-displacement-shear",
-          "syntax": "coupling-displacement-shear [linerhistoryblock]",
-          "description": "displacement in the shear coupling spring at a node of the element Shear displacement is always positive. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-stress-normal",
-          "syntax": "coupling-stress-normal [linerhistoryblock]",
-          "description": "stress in the normal coupling spring at a node of the element. Normal stress positive/negative implies tension/compression only if the liner is on the outer surface and liner element normals point away from the body to which the liner is attached. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-stress-shear",
-          "syntax": "coupling-stress-shear [linerhistoryblock]",
-          "description": "stress in the shear coupling spring at a node of the element. Shear stress is always positive. This option uses the node and side keywords."
-        },
-        {
-          "name": "coupling-yield",
-          "syntax": "coupling-yield [linerhistoryblock]",
-          "description": "yield state in the shear coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords."
-        },
-        {
-          "name": "force",
-          "syntax": "force [linerhistoryblock]",
-          "description": "nodal force magnitude. Uses the node keyword."
-        },
-        {
-          "name": "force-x",
-          "syntax": "force-x [linerhistoryblock]",
-          "description": "nodal force ( \\(x\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "force-y",
-          "syntax": "force-y [linerhistoryblock]",
-          "description": "nodal force ( \\(y\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "force-z",
-          "syntax": "force-z [linerhistoryblock]",
-          "description": "nodal force ( \\(z\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "ipstress-xx",
-          "syntax": "ipstress-xx [linerhistoryblock]",
-          "description": "stress ( \\(xx\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "ipstress-yy",
-          "syntax": "ipstress-yy [linerhistoryblock]",
-          "description": "stress ( \\(yy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "ipstress-xy",
-          "syntax": "ipstress-xy [linerhistoryblock]",
-          "description": "stress ( \\(xy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword."
-        },
-        {
-          "name": "moment",
-          "syntax": "moment [linerhistoryblock]",
-          "description": "nodal moment magnitude. Uses the node keyword."
-        },
-        {
-          "name": "moment-x",
-          "syntax": "moment-x [linerhistoryblock]",
-          "description": "nodal moment ( \\(x\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "moment-y",
-          "syntax": "moment-y [linerhistoryblock]",
-          "description": "nodal moment ( \\(y\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "moment-z",
-          "syntax": "moment-z [linerhistoryblock]",
-          "description": "nodal moment ( \\(z\\) -component, global system). Uses the node keyword."
-        },
-        {
-          "name": "resultant-mx",
-          "syntax": "resultant-mx [linerhistoryblock]",
-          "description": "stress resultant \\(M_x\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-my",
-          "syntax": "resultant-my [linerhistoryblock]",
-          "description": "stress resultant \\(M_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-mxy",
-          "syntax": "resultant-mxy [linerhistoryblock]",
-          "description": "stress resultant \\(M_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-nx",
-          "syntax": "resultant-nx [linerhistoryblock]",
-          "description": "stress resultant \\(N_x\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-ny",
-          "syntax": "resultant-ny [linerhistoryblock]",
-          "description": "stress resultant \\(N_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-nxy",
-          "syntax": "resultant-nxy [linerhistoryblock]",
-          "description": "stress resultant \\(N_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "resultant-qx",
-          "syntax": "resultant-qx [linerhistoryblock]",
-          "description": "stress resultant \\(Q_x\\) (surface system) at element centroid. Uses the surface-x keyword."
-        },
-        {
-          "name": "resultant-qy",
-          "syntax": "resultant-qy [linerhistoryblock]",
-          "description": "stress resultant \\(Q_y\\) (surface system) at element centroid. May use the surface-x keyword."
-        },
-        {
-          "name": "stress-intermediate",
-          "syntax": "stress-intermediate [linerhistoryblock]",
-          "description": "principal intermediate stress \\((\\sigma_2)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-maximum",
-          "syntax": "stress-maximum [linerhistoryblock]",
-          "description": "principal maximum stress \\((\\sigma_1)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-minimum",
-          "syntax": "stress-minimum [linerhistoryblock]",
-          "description": "principal minimum stress \\((\\sigma_3)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xx",
-          "syntax": "stress-xx [linerhistoryblock]",
-          "description": "stress ( \\(xx\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xy",
-          "syntax": "stress-xy [linerhistoryblock]",
-          "description": "stress ( \\(xy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-xz",
-          "syntax": "stress-xz [linerhistoryblock]",
-          "description": "stress ( \\(xz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-yy",
-          "syntax": "stress-yy [linerhistoryblock]",
-          "description": "stress ( \\(yy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-yz",
-          "syntax": "stress-yz [linerhistoryblock]",
-          "description": "stress ( \\(yz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "stress-zz",
-          "syntax": "stress-zz [linerhistoryblock]",
-          "description": "stress ( \\(zz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
-        },
-        {
-          "name": "name",
-          "syntax": "name <s>",
-          "description": "assign a name s to the history record (used to reference the history elsewhere)"
-        },
-        {
-          "name": "component-id",
-          "syntax": "component-id <ind>",
-          "description": "the element with component ID ind is selected."
-        },
-        {
-          "name": "depth-factor",
-          "syntax": "depth-factor <f>",
-          "description": "the depth factor at which elastic element stresses are computed (see the structure liner recover stress command). If this keyword is not specified, then the depth factor is set to +1. Only available if noted."
-        },
-        {
-          "name": "integration-point",
-          "syntax": "integration-point <ind>",
-          "description": "the integration point at which stresses are sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration'; the layout figure is on the official Structural Elements formulation pages (the original hyperlink target, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted."
-        },
-        {
-          "name": "node",
-          "syntax": "node <ind>",
-          "description": "the node location to use when retrieving values from the element. Must be from 1 to 3 . If this keyword is not specified, then the node location is set to 1 . Only available if noted."
-        },
-        {
-          "name": "position",
-          "syntax": "position <v>",
-          "description": "the element with a centroid closest to v is selected"
-        },
-        {
-          "name": "side",
-          "syntax": "side <ind>",
-          "description": "the side of an embedded liner. Must be 1 or 2 , with default value of 1 ."
-        },
-        {
-          "name": "surface-x",
-          "syntax": "surface-x <v>",
-          "description": "the surface-x vector whose projection onto the element plane defines the x-direction of the surface coordinate system (see the structure liner recover surface command). If this keyword is specified, then the surface coordinate system of the three nodes used by the element will be modified."
-        },
-        {
-          "name": "coupling-yield-shear",
-          "syntax": "coupling-yield-shear 2D ONLY [linerhistoryblock]",
-          "description": "yield state in the shear coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        },
-        {
-          "name": "coupling-yield-normal",
-          "syntax": "coupling-yield-normal 2D ONLY [linerhistoryblock]",
-          "description": "yield state in the normal coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords.",
-          "availability": {
-            "engines": [
-              "flac"
-            ]
-          }
-        }
-      ],
-      "description": "ELEMENT SPEC REQUIRED: after the quantity keyword, the target must be identified with 'component-id <i>' or 'position <v>' — otherwise the engine rejects with 'Must specify an element, by component-id or position.' Verified live against FLAC3D 9.7 (beam and shell families; both forms created histories)."
-    }
-  },
   "notes": [
     "'[linerhistoryblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (component-id, depth-factor, node, position, side, surface-x, name)."
+  ],
+  "availability": {
+    "versions": [
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "structure liner history",
+  "syntax": "structure liner history keyword",
+  "keywords": [
+    {
+      "name": "coupling-displacement-normal",
+      "syntax": "coupling-displacement-normal [linerhistoryblock]",
+      "description": {
+        "7.0": "displacement in the normal coupling spring at a node of the element. Sign convention for a normal spring is +/-, indicating separation/overlap. This option uses the node and side keywords.",
+        "9.0": "displacement in the normal coupling spring at a node of the element. Normal displacement positive/negative implies separation/overlap only if the liner is on the outer surface and liner element normals point away from the body to which the liner is attached. This option uses the node and side keywords."
+      }
+    },
+    {
+      "name": "coupling-displacement-shear",
+      "syntax": "coupling-displacement-shear [linerhistoryblock]",
+      "description": {
+        "7.0": "displacement in the shear coupling spring at a node of the element. Shear springs store displacement magnitude, and this is always positive. This option uses the node and side keywords.",
+        "9.0": "displacement in the shear coupling spring at a node of the element Shear displacement is always positive. This option uses the node and side keywords."
+      }
+    },
+    {
+      "name": "coupling-stress-normal",
+      "syntax": "coupling-stress-normal [linerhistoryblock]",
+      "description": {
+        "7.0": "stress in the normal coupling spring at a node of the element. The sign convention for normal spring is +/-, indicating separation/overlap. This option uses the node and side keywords.",
+        "9.0": "stress in the normal coupling spring at a node of the element. Normal stress positive/negative implies tension/compression only if the liner is on the outer surface and liner element normals point away from the body to which the liner is attached. This option uses the node and side keywords."
+      }
+    },
+    {
+      "name": "coupling-stress-shear",
+      "syntax": "coupling-stress-shear [linerhistoryblock]",
+      "description": {
+        "7.0": "stress in the shear coupling spring at a node of the element. This option uses the node and side keywords.",
+        "9.0": "stress in the shear coupling spring at a node of the element. Shear stress is always positive. This option uses the node and side keywords."
+      }
+    },
+    {
+      "name": "coupling-yield",
+      "syntax": "coupling-yield [linerhistoryblock]",
+      "description": {
+        "7.0": "yield state in the coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords.",
+        "9.0": "yield state in the shear coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords."
+      }
+    },
+    {
+      "name": "force",
+      "syntax": "force [linerhistoryblock]",
+      "description": {
+        "7.0": "force magnitude, global system. This option uses the node keyword.",
+        "9.0": "nodal force magnitude. Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-x",
+      "syntax": "force-x [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(x\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(x\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-y",
+      "syntax": "force-y [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(y\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(y\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "force-z",
+      "syntax": "force-z [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal force (\\(z\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal force ( \\(z\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "ipstress-xx",
+      "syntax": "ipstress-xx [linerhistoryblock]",
+      "description": "stress ( \\(xx\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "ipstress-yy",
+      "syntax": "ipstress-yy [linerhistoryblock]",
+      "description": "stress ( \\(yy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "ipstress-xy",
+      "syntax": "ipstress-xy [linerhistoryblock]",
+      "description": "stress ( \\(xy\\) -component, surface coordinate system) for an element with a plastic material model. Uses the integration-point keyword and may also use the surface-x keyword.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "moment",
+      "syntax": "moment [linerhistoryblock]",
+      "description": {
+        "7.0": "moment magnitude, global system. This option uses the node keyword.",
+        "9.0": "nodal moment magnitude. Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-x",
+      "syntax": "moment-x [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(x\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(x\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-y",
+      "syntax": "moment-y [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(y\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(y\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "moment-z",
+      "syntax": "moment-z [linerhistoryblock]",
+      "description": {
+        "7.0": "nodal moment (\\(z\\)-component, global system). This option uses the node keyword.",
+        "9.0": "nodal moment ( \\(z\\) -component, global system). Uses the node keyword."
+      }
+    },
+    {
+      "name": "resultant-mx",
+      "syntax": "resultant-mx [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_x\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-my",
+      "syntax": "resultant-my [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-mxy",
+      "syntax": "resultant-mxy [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(M_{xy}\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(M_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-nx",
+      "syntax": "resultant-nx [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_x\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-ny",
+      "syntax": "resultant-ny [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-nxy",
+      "syntax": "resultant-nxy [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(N_{xy}\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(N_{xy}\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-qx",
+      "syntax": "resultant-qx [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(Q_x\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(Q_x\\) (surface system) at element centroid. Uses the surface-x keyword."
+      }
+    },
+    {
+      "name": "resultant-qy",
+      "syntax": "resultant-qy [linerhistoryblock]",
+      "description": {
+        "7.0": "stress resultant \\(Q_y\\) in the element surface system. This option uses the surface-x keyword.",
+        "9.0": "stress resultant \\(Q_y\\) (surface system) at element centroid. May use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-intermediate",
+      "syntax": "stress-intermediate [linerhistoryblock]",
+      "description": {
+        "7.0": "principal intermediate stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-intermediate'; 'principal-intermediate' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal intermediate stress \\((\\sigma_2)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-maximum",
+      "syntax": "stress-maximum [linerhistoryblock]",
+      "description": {
+        "7.0": "principal maximum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-maximum'; 'principal-maximum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal maximum stress \\((\\sigma_1)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-minimum",
+      "syntax": "stress-minimum [linerhistoryblock]",
+      "description": {
+        "7.0": "principal minimum stress, global system. This option uses the depth-factor keyword. CORRECTED: 7.0 uses 'stress-minimum'; 'principal-minimum' is the 9.x-era name and is rejected by the live 7.0 engine. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "principal minimum stress \\((\\sigma_3)\\) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xx",
+      "syntax": "stress-xx [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xx\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xx\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xy",
+      "syntax": "stress-xy [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xy\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-xz",
+      "syntax": "stress-xz [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(xz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(xz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-yy",
+      "syntax": "stress-yy [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(yy\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(yy\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-yz",
+      "syntax": "stress-yz [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(yz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(yz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "stress-zz",
+      "syntax": "stress-zz [linerhistoryblock]",
+      "description": {
+        "7.0": "stress \\(zz\\)-component, global system. This option uses the depth-factor keyword.",
+        "9.0": "stress ( \\(zz\\) -component, global system) at element centroid for an element with an elastic material model. Uses the depth-factor keyword, and may also use the surface-x keyword."
+      }
+    },
+    {
+      "name": "component-id",
+      "syntax": {
+        "7.0": "component-id <i>",
+        "9.0": "component-id <ind>"
+      },
+      "description": {
+        "7.0": "the element is selected by its individual component ID number",
+        "9.0": "the element with component ID ind is selected."
+      }
+    },
+    {
+      "name": "depth-factor",
+      "syntax": "depth-factor <f>",
+      "description": {
+        "7.0": "the depth factor used to determine element stresses. Only available if noted.",
+        "9.0": "the depth factor at which elastic element stresses are computed (see the structure liner recover stress command). If this keyword is not specified, then the depth factor is set to +1. Only available if noted."
+      }
+    },
+    {
+      "name": "integration-point",
+      "syntax": "integration-point <ind>",
+      "description": "the integration point at which stresses are sampled. Integration-point locations follow the plastic-integration layout configured with 'structure <type> cmodel plastic-integration'; the layout figure is on the official Structural Elements formulation pages (the original hyperlink target, lost in extraction). If this keyword is not specified, then the integration point index is set to 1 . Only available if noted.",
+      "availability": {
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "node",
+      "syntax": {
+        "7.0": "node <i>",
+        "9.0": "node <ind>"
+      },
+      "description": {
+        "7.0": "the node location to use when retrieving values from the element. Must be from 1 to 3. Only available if noted.",
+        "9.0": "the node location to use when retrieving values from the element. Must be from 1 to 3 . If this keyword is not specified, then the node location is set to 1 . Only available if noted."
+      }
+    },
+    {
+      "name": "position",
+      "syntax": "position <v>",
+      "description": "the element with a centroid closest to v is selected"
+    },
+    {
+      "name": "side",
+      "syntax": {
+        "7.0": "side <i>",
+        "9.0": "side <ind>"
+      },
+      "description": {
+        "7.0": "specifies the side of an embedded liner from which to retrieve coupling values. By default, this is side 1.",
+        "9.0": "the side of an embedded liner. Must be 1 or 2 , with default value of 1 ."
+      }
+    },
+    {
+      "name": "surface-x",
+      "syntax": "surface-x <v>",
+      "description": {
+        "7.0": "the local \\(x\\)-direction used to determine the local surface coordinate system. Only available if noted.",
+        "9.0": "the surface-x vector whose projection onto the element plane defines the x-direction of the surface coordinate system (see the structure liner recover surface command). If this keyword is specified, then the surface coordinate system of the three nodes used by the element will be modified."
+      }
+    },
+    {
+      "name": "coupling-yield-shear",
+      "syntax": "coupling-yield-shear 2D ONLY [linerhistoryblock]",
+      "description": "yield state in the shear coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "coupling-yield-normal",
+      "syntax": "coupling-yield-normal 2D ONLY [linerhistoryblock]",
+      "description": "yield state in the normal coupling spring at a node of the element. Value {0, 1, 2} denotes never yielded, now yielding, or yielded in the past, respectively. This option uses the node and side keywords.",
+      "availability": {
+        "engines": [
+          "flac"
+        ],
+        "versions": [
+          "9.0"
+        ]
+      }
+    },
+    {
+      "name": "name",
+      "syntax": "name <s>",
+      "description": {
+        "7.0": "Missing from the crawled 7.0 docs. Verified live against FLAC3D 7.0 (first-token enumeration, 2026-08-13).",
+        "9.0": "assign a name s to the history record (used to reference the history elsewhere)"
+      }
+    }
+  ],
+  "verification": [
+    "7.0: availability verified against official FLAC3D 7.0 contents command index (https://docs.itascacg.com/flac3d700/common/sel/doc/manual/sel_manual/liners/commands/cmd_structure.liner.history.html); syntax from official FLAC3D 7.0 detailed command page."
   ]
 }

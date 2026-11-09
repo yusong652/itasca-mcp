@@ -8,99 +8,100 @@
   "python_sdk_alternative": {
     "available": false
   },
-  "versions": {
-    "9.0": {
-      "command": "massflow initialize",
-      "syntax": "massflow initialize keyword",
-      "keywords": [
-        {
-          "name": "base-fragment-size",
-          "syntax": "base-fragment-size <f>",
-          "description": "Set Base Fragment Size. The default value is 0.05."
-        },
-        {
-          "name": "compute-days",
-          "syntax": "compute-days <i>",
-          "description": "Set number of days the massflow compute command is going to solve. Alternatively, compute-period can be set."
-        },
-        {
-          "name": "compute-period",
-          "syntax": "compute-period <i>",
-          "description": "Set number of periods the massflow compute command is going to solve. Alternatively, compute-days can be set."
-        },
-        {
-          "name": "filename",
-          "syntax": "filename <s>",
-          "description": "Set the filename prefix for generated save files. If not given, it will default to “massflow”."
-        },
-        {
-          "name": "imz-update",
-          "syntax": "imz-update <i>",
-          "description": "Set the frequency of updating the IMZ geometries. By default, the IMZs are updated every two days."
-        },
-        {
-          "name": "layer-thickness",
-          "syntax": "layer-thickness <f>",
-          "description": "Set slice thickness of the Isolated Movement Zone (IMZ). This is a multiplier relative to the Mine Block size. The default value is 0.5, meaning the slice thickness is half the Mine Block size."
-        },
-        {
-          "name": "markerfraglimit-lower",
-          "syntax": "markerfraglimit-lower <f>",
-          "description": "Lower limit on marker fragment size."
-        },
-        {
-          "name": "markerfraglimit-upper",
-          "syntax": "markerfraglimit-upper <f>",
-          "description": "Upper limit on marker fragment size."
-        },
-        {
-          "name": "massbalance-lower",
-          "syntax": "massbalance-lower <f>",
-          "description": "Set the lower limit for massbalance correction factor. Default is 0.1."
-        },
-        {
-          "name": "massbalance-upper",
-          "syntax": "massbalance-upper <f>",
-          "description": "Set the upper limit for massbalance correction factor. Default is 2."
-        },
-        {
-          "name": "percent-empty",
-          "syntax": "percent-empty <f>",
-          "description": "Set fraction of Mine Block volume that must be empty before adding air. The default value is 0.75."
-        },
-        {
-          "name": "rill-days",
-          "syntax": "rill-days <i>",
-          "description": "Set how often, in days, rilling calculations are performed. Default is 1."
-        },
-        {
-          "name": "save-days",
-          "syntax": "save-days <i>",
-          "description": "Set how often, in days, save files will be created. Alternatively, save-period can be set."
-        },
-        {
-          "name": "save-period",
-          "syntax": "save-period <i>",
-          "description": "Set how often, in periods, save files will be created. Alternatively, save-days can be set."
-        },
-        {
-          "name": "tensile-ucs-ratio",
-          "syntax": "tensile-ucs-ratio <f>",
-          "description": "Set ratio of tensile strength to unconfined compressive strength. The default value is 0.1."
-        },
-        {
-          "name": "timing",
-          "syntax": "timing <b>",
-          "description": "Report solution timing while computing."
-        }
-      ],
-      "examples": []
-    }
-  },
   "notes": [
     "Keyword set verified against the live 9.7.47 binary (`massflow initialize ?` enumerates 16 keywords).",
     "`markerfraglimit-lower` / `markerfraglimit-upper` / `timing` have no page in the manual; they are readable and writable from FISH as massflow.markerfraglimit.lower / .upper.",
     "`filename <s>` is the save-file PREFIX, not a filename: with `filename 'zzsave' save-days 5` a 15-day run wrote `zzsave_Day5.sav`, `zzsave_Day10.sav` and `zzsave_Day15.sav` into the working directory.",
     "`compute-days` / `compute-period` set the budget that a bare `massflow compute` spends; they can be re-set between compute steps."
-  ]
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow initialize",
+  "syntax": "massflow initialize keyword",
+  "keywords": [
+    {
+      "name": "base-fragment-size",
+      "syntax": "base-fragment-size <f>",
+      "description": "Set Base Fragment Size. The default value is 0.05."
+    },
+    {
+      "name": "compute-days",
+      "syntax": "compute-days <i>",
+      "description": "Set number of days the massflow compute command is going to solve. Alternatively, compute-period can be set."
+    },
+    {
+      "name": "compute-period",
+      "syntax": "compute-period <i>",
+      "description": "Set number of periods the massflow compute command is going to solve. Alternatively, compute-days can be set."
+    },
+    {
+      "name": "filename",
+      "syntax": "filename <s>",
+      "description": "Set the filename prefix for generated save files. If not given, it will default to “massflow”."
+    },
+    {
+      "name": "imz-update",
+      "syntax": "imz-update <i>",
+      "description": "Set the frequency of updating the IMZ geometries. By default, the IMZs are updated every two days."
+    },
+    {
+      "name": "layer-thickness",
+      "syntax": "layer-thickness <f>",
+      "description": "Set slice thickness of the Isolated Movement Zone (IMZ). This is a multiplier relative to the Mine Block size. The default value is 0.5, meaning the slice thickness is half the Mine Block size."
+    },
+    {
+      "name": "markerfraglimit-lower",
+      "syntax": "markerfraglimit-lower <f>",
+      "description": "Lower limit on marker fragment size."
+    },
+    {
+      "name": "markerfraglimit-upper",
+      "syntax": "markerfraglimit-upper <f>",
+      "description": "Upper limit on marker fragment size."
+    },
+    {
+      "name": "massbalance-lower",
+      "syntax": "massbalance-lower <f>",
+      "description": "Set the lower limit for massbalance correction factor. Default is 0.1."
+    },
+    {
+      "name": "massbalance-upper",
+      "syntax": "massbalance-upper <f>",
+      "description": "Set the upper limit for massbalance correction factor. Default is 2."
+    },
+    {
+      "name": "percent-empty",
+      "syntax": "percent-empty <f>",
+      "description": "Set fraction of Mine Block volume that must be empty before adding air. The default value is 0.75."
+    },
+    {
+      "name": "rill-days",
+      "syntax": "rill-days <i>",
+      "description": "Set how often, in days, rilling calculations are performed. Default is 1."
+    },
+    {
+      "name": "save-days",
+      "syntax": "save-days <i>",
+      "description": "Set how often, in days, save files will be created. Alternatively, save-period can be set."
+    },
+    {
+      "name": "save-period",
+      "syntax": "save-period <i>",
+      "description": "Set how often, in periods, save files will be created. Alternatively, save-days can be set."
+    },
+    {
+      "name": "tensile-ucs-ratio",
+      "syntax": "tensile-ucs-ratio <f>",
+      "description": "Set ratio of tensile strength to unconfined compressive strength. The default value is 0.1."
+    },
+    {
+      "name": "timing",
+      "syntax": "timing <b>",
+      "description": "Report solution timing while computing."
+    }
+  ],
+  "examples": []
 }

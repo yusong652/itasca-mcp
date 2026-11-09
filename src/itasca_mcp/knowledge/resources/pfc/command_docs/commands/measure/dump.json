@@ -6,19 +6,17 @@
     "distribution"
   ],
   "description": "Dump the cumulative size distribution data from a measurement region. The size distribution must have been configured using the bins keyword in measure create or measure modify. Data can be exported to a PFC table for further analysis or plotting.",
-  "notes": [
-    "Exports cumulative size distribution data calculated from measurement region",
-    "Requires bins keyword to have been specified in measure create or measure modify",
-    "id parameter is REQUIRED - must specify which measurement to dump",
-    "table keyword creates or overwrites PFC table with data",
-    "file keyword is NOT YET AVAILABLE - use table instead",
-    "Table contains bin boundaries and cumulative volume percentages",
-    "Data suitable for plotting particle size distribution curves",
-    "Must call model clean before dump to ensure data is calculated",
-    "Table format: bin edge vs. cumulative volume percentage",
-    "Related commands: measure create, measure list, measure modify, model clean, table export",
-    "Requires bins on the measurement. The file keyword is not implemented - dump to a table and use table export. An existing table is overwritten silently."
-  ],
+  "notes": {
+    "6.0": [
+      "Live 6.00 verified: 'measure dump id <i>' then file|table."
+    ],
+    "7.0": [
+      "Live 7.00 verified: 'measure dump id <i>' then file|table."
+    ],
+    "9.0": [
+      "Live 9.7 verified: 'measure dump id <i>' then file|table."
+    ]
+  },
   "python_sdk_alternative": {
     "available": true,
     "notes": [
@@ -32,129 +30,47 @@
       "python": "# Python SDK can access measurement data\n# Consult PFC documentation for exact methods"
     }
   },
-  "versions": {
-    "7.0": {
-      "command": "measure dump",
-      "syntax": "measure dump id <i> keyword",
-      "keywords": [
-        {
-          "name": "file",
-          "syntax": "file <s>",
-          "description": "Dump information into a file with name s . Warning This feature is not available yet."
-        },
-        {
-          "name": "table",
-          "syntax": "table <itab>",
-          "description": "Dump the information into table with ID itab . The table will be created or overwritten (if it already exists)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create id 1 bins 100 0.0 0.50 radius 4.0\nmeasure dump id 1 table 1",
-          "description": "Create measurement with 100 bins, dump size distribution to table 1. Use case: Example from documentation - basic size distribution export."
-        },
-        {
-          "command": "measure create id 2 bins 50 0.1 1.0 radius 5.0\nmodel clean\nmeasure dump id 2 table 2",
-          "description": "Create measurement, calculate, then dump to table 2. Use case: Complete workflow with calculation step."
-        },
-        {
-          "command": "measure dump id 1 table 10",
-          "description": "Dump existing measurement 1 to table 10. Use case: Export previously created measurement data."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0\nmodel clean\nmeasure dump id 1 table 1\ntable 1 export 'size_dist.txt'",
-          "description": "Create, calculate, dump to table, then export table to text file. Use case: Complete data export to external file."
-        },
-        {
-          "command": "measure modify id 1 bins 200 0.0 1.0\nmodel clean\nmeasure dump id 1 table 1",
-          "description": "Modify bins for finer resolution, recalculate, re-dump. Use case: Refine and re-export size distribution."
-        }
-      ],
-      "notes": [
-        "Live 7.00 verified: 'measure dump id <i>' then file|table."
-      ]
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "measure dump",
+  "syntax": "measure dump id <i> keyword",
+  "keywords": [
+    {
+      "name": "file",
+      "syntax": "file <s>",
+      "description": "Dump information into a file with name s . Warning This feature is not available yet."
     },
-    "6.0": {
-      "command": "measure dump",
-      "syntax": "measure dump id <i> keyword",
-      "keywords": [
-        {
-          "name": "file",
-          "syntax": "file <s>",
-          "description": "Dump information into a file with name s . Warning This feature is not available yet."
-        },
-        {
-          "name": "table",
-          "syntax": "table <itab>",
-          "description": "Dump the information into table with ID itab . The table will be created or overwritten (if it already exists)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create id 1 bins 100 0.0 0.50 radius 4.0\nmeasure dump id 1 table 1",
-          "description": "Create measurement with 100 bins, dump size distribution to table 1. Use case: Example from documentation - basic size distribution export."
-        },
-        {
-          "command": "measure create id 2 bins 50 0.1 1.0 radius 5.0\nmodel clean\nmeasure dump id 2 table 2",
-          "description": "Create measurement, calculate, then dump to table 2. Use case: Complete workflow with calculation step."
-        },
-        {
-          "command": "measure dump id 1 table 10",
-          "description": "Dump existing measurement 1 to table 10. Use case: Export previously created measurement data."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0\nmodel clean\nmeasure dump id 1 table 1\ntable 1 export 'size_dist.txt'",
-          "description": "Create, calculate, dump to table, then export table to text file. Use case: Complete data export to external file."
-        },
-        {
-          "command": "measure modify id 1 bins 200 0.0 1.0\nmodel clean\nmeasure dump id 1 table 1",
-          "description": "Modify bins for finer resolution, recalculate, re-dump. Use case: Refine and re-export size distribution."
-        }
-      ],
-      "notes": [
-        "Live 6.00 verified: 'measure dump id <i>' then file|table."
-      ]
-    },
-    "9.0": {
-      "command": "measure dump",
-      "syntax": "measure dump id <i> keyword",
-      "keywords": [
-        {
-          "name": "file",
-          "syntax": "file <s>",
-          "description": "Dump information into a file with name s . Warning This feature is not available yet."
-        },
-        {
-          "name": "table",
-          "syntax": "table <itab>",
-          "description": "Dump the information into table with ID itab . The table will be created or overwritten (if it already exists)."
-        }
-      ],
-      "examples": [
-        {
-          "command": "measure create id 1 bins 100 0.0 0.50 radius 4.0\nmeasure dump id 1 table 1",
-          "description": "Create measurement with 100 bins, dump size distribution to table 1. Use case: Example from documentation - basic size distribution export."
-        },
-        {
-          "command": "measure create id 2 bins 50 0.1 1.0 radius 5.0\nmodel clean\nmeasure dump id 2 table 2",
-          "description": "Create measurement, calculate, then dump to table 2. Use case: Complete workflow with calculation step."
-        },
-        {
-          "command": "measure dump id 1 table 10",
-          "description": "Dump existing measurement 1 to table 10. Use case: Export previously created measurement data."
-        },
-        {
-          "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0\nmodel clean\nmeasure dump id 1 table 1\ntable 1 export 'size_dist.txt'",
-          "description": "Create, calculate, dump to table, then export table to text file. Use case: Complete data export to external file."
-        },
-        {
-          "command": "measure modify id 1 bins 200 0.0 1.0\nmodel clean\nmeasure dump id 1 table 1",
-          "description": "Modify bins for finer resolution, recalculate, re-dump. Use case: Refine and re-export size distribution."
-        }
-      ],
-      "notes": [
-        "Live 9.7 verified: 'measure dump id <i>' then file|table."
-      ]
+    {
+      "name": "table",
+      "syntax": "table <itab>",
+      "description": "Dump the information into table with ID itab . The table will be created or overwritten (if it already exists)."
     }
-  }
+  ],
+  "examples": [
+    {
+      "command": "measure create id 1 bins 100 0.0 0.50 radius 4.0\nmeasure dump id 1 table 1",
+      "description": "Create measurement with 100 bins, dump size distribution to table 1. Use case: Example from documentation - basic size distribution export."
+    },
+    {
+      "command": "measure create id 2 bins 50 0.1 1.0 radius 5.0\nmodel clean\nmeasure dump id 2 table 2",
+      "description": "Create measurement, calculate, then dump to table 2. Use case: Complete workflow with calculation step."
+    },
+    {
+      "command": "measure dump id 1 table 10",
+      "description": "Dump existing measurement 1 to table 10. Use case: Export previously created measurement data."
+    },
+    {
+      "command": "measure create id 1 bins 100 0.0 0.5 radius 4.0\nmodel clean\nmeasure dump id 1 table 1\ntable 1 export 'size_dist.txt'",
+      "description": "Create, calculate, dump to table, then export table to text file. Use case: Complete data export to external file."
+    },
+    {
+      "command": "measure modify id 1 bins 200 0.0 1.0\nmodel clean\nmeasure dump id 1 table 1",
+      "description": "Modify bins for finer resolution, recalculate, re-dump. Use case: Refine and re-export size distribution."
+    }
+  ]
 }

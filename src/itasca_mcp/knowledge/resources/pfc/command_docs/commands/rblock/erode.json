@@ -10,72 +10,43 @@
     "available": false,
     "workaround": "Use itasca.command('rblock erode ...') via command interface"
   },
-  "versions": {
-    "6.0": {
-      "command": "rblock erode",
-      "syntax": "rblock erode [keyword] <f> [range]",
-      "keywords": [
-        {
-          "name": "minimum-distance",
-          "syntax": "minimum-distance",
-          "description": "The degree of rounding is computed as the product of f and the minimum distance from a facet to the rigid block centroid. This can be more effective than using the relative option for very thin rigid blocks."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "If the specified rounding distance is too great, erosion cannot occur as a negative volume rigid block would be created (i.e., a facet would be translated past the centroid). This keyword specifies that a warning is issued instead of an error."
-        }
-      ],
-      "examples": []
+  "availability": {
+    "versions": [
+      "6.0",
+      "7.0",
+      "9.0"
+    ]
+  },
+  "command": "rblock erode",
+  "syntax": {
+    "6.0": "rblock erode [keyword] <f> [range]",
+    "7.0": "rblock erode keyword ... [range]",
+    "9.0": "rblock erode keyword ... [range]"
+  },
+  "keywords": [
+    {
+      "name": "minimum-distance",
+      "syntax": {
+        "6.0": "minimum-distance",
+        "7.0": "minimum-distance <f>",
+        "9.0": "minimum-distance <f>"
+      },
+      "description": "The degree of rounding is computed as the product of f and the minimum distance from a facet to the rigid block centroid. This can be more effective than using the relative option for very thin rigid blocks."
     },
-    "7.0": {
-      "command": "rblock erode",
-      "syntax": "rblock erode keyword ... [range]",
-      "keywords": [
-        {
-          "name": "minimum-distance",
-          "syntax": "minimum-distance <f>",
-          "description": "The degree of rounding is computed as the product of f and the minimum distance from a facet to the rigid block centroid. This can be more effective than using the relative option for very thin rigid blocks."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "If the specified rounding distance is too great, erosion cannot occur as a negative volume rigid block would be created (i.e., a facet would be translated past the centroid). This keyword specifies that a warning is issued instead of an error."
-        }
-      ],
-      "examples": []
+    {
+      "name": "relative",
+      "syntax": {
+        "6.0": "relative",
+        "7.0": "relative <f>",
+        "9.0": "relative <f>"
+      },
+      "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
     },
-    "9.0": {
-      "command": "rblock erode",
-      "syntax": "rblock erode keyword ... [range]",
-      "keywords": [
-        {
-          "name": "minimum-distance",
-          "syntax": "minimum-distance <f>",
-          "description": "The degree of rounding is computed as the product of f and the minimum distance from a facet to the rigid block centroid. This can be more effective than using the relative option for very thin rigid blocks."
-        },
-        {
-          "name": "relative",
-          "syntax": "relative <f>",
-          "description": "The degree of rounding is computed as the product of f and the radius of a {circle in 2D; sphere in 3D} with the same size as the rigid block."
-        },
-        {
-          "name": "skip-errors",
-          "syntax": "skip-errors",
-          "description": "If the specified rounding distance is too great, erosion cannot occur as a negative volume rigid block would be created (i.e., a facet would be translated past the centroid). This keyword specifies that a warning is issued instead of an error."
-        }
-      ],
-      "examples": []
+    {
+      "name": "skip-errors",
+      "syntax": "skip-errors",
+      "description": "If the specified rounding distance is too great, erosion cannot occur as a negative volume rigid block would be created (i.e., a facet would be translated past the centroid). This keyword specifies that a warning is issued instead of an error."
     }
-  }
+  ],
+  "examples": []
 }
