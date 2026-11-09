@@ -6,43 +6,6 @@
     "pebble"
   ],
   "description": "Create a single clump from the balls within range or add a ball to an existing clump. The balls are transformed to clump pebbles and are removed from the container of balls.",
-  "modifiers": [
-    {
-      "name": "calculate",
-      "syntax": "calculate <f>",
-      "description": "Calculate clump position, volume, and inertia from pebble distribution (tolerance default 0.01, min 0.00005). Cannot use with position/inertia/volume keywords."
-    },
-    {
-      "name": "density",
-      "syntax": "density <f>",
-      "description": "Clump density (default 1.0)"
-    },
-    {
-      "name": "group",
-      "syntax": "group <s> slot <slot> pebble",
-      "description": "Assign group name to clump (or pebbles if 'pebble' keyword used)"
-    },
-    {
-      "name": "id",
-      "syntax": "id <i>",
-      "description": "Clump ID (required for add-pebble, auto-assigned for create if not specified)"
-    },
-    {
-      "name": "inertia",
-      "syntax": "inertia <e11> <e22> <e33> <e12> <e13> <e23> (3D)",
-      "description": "Set clump inertia tensor. Must also specify volume. Cannot use with calculate."
-    },
-    {
-      "name": "position",
-      "syntax": "position <v> or position-x/y/z <f>",
-      "description": "Clump centroid position (default origin). Cannot use with calculate."
-    },
-    {
-      "name": "volume",
-      "syntax": "volume <f>",
-      "description": "Set clump volume for mass calculation. Must also specify inertia. Cannot use with calculate."
-    }
-  ],
   "python_sdk_alternative": {
     "available": false,
     "workaround": "itasca.command('ball clump ...') - Python SDK cannot convert balls to clump pebbles"
@@ -227,6 +190,7 @@
     }
   },
   "notes": [
-    "'[ballclumpmodblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (calculate, density, group, id, inertia, position, position-x, position-y, position-z, volume)."
+    "'[ballclumpmodblock]' at the end of a keyword's syntax is not a literal token: it marks where this command's shared modifier keywords may follow (calculate, density, group, id, inertia, position, position-x, position-y, position-z, volume).",
+    "Modifiers: calculate <f>: Calculate clump position, volume, and inertia from pebble distribution (tolerance default 0.01, min 0.00005). Cannot use with position/inertia/volume keywords.; density <f>: Clump density (default 1.0); group <s> slot <slot> pebble: Assign group name to clump (or pebbles if 'pebble' keyword used); id <i>: Clump ID (required for add-pebble, auto-assigned for create if not specified); inertia <e11> <e22> <e33> <e12> <e13> <e23> (3D): Set clump inertia tensor. Must also specify volume. Cannot use with calculate.; position <v> or position-x/y/z <f>: Clump centroid position (default origin). Cannot use with calculate.; volume <f>: Set clump volume for mass calculation. Must also specify inertia. Cannot use with calculate."
   ]
 }

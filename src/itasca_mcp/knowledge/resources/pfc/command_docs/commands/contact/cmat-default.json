@@ -9,23 +9,6 @@
     "available": false,
     "workaround": "itasca.command('contact cmat default ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "model_properties_reference": {
-    "path": "../model-properties/index.json",
-    "description": "For detailed property information for each contact model, see the model-properties reference documentation",
-    "quick_links": {
-      "linear": "../model-properties/linear.json",
-      "linearpbond": "../model-properties/linearpbond.json",
-      "linearcbond": "../model-properties/linearcbond.json",
-      "hertz": "../model-properties/hertz.json",
-      "rrlinear": "../model-properties/rrlinear.json"
-    }
-  },
-  "related_commands": [
-    "contact cmat add",
-    "contact cmat apply",
-    "contact cmat remove",
-    "contact model assign"
-  ],
   "notes": [
     "If 'type' keyword is NOT specified, ALL default slots are modified",
     "If 'type' keyword IS specified, only that contact type's default slot is modified",
@@ -34,38 +17,10 @@
     "Multiple properties can be set in a single command",
     "The 'method' keyword registers methods that execute automatically at contact creation",
     "Common method 'deformability' calculates stiffnesses from elastic modulus and stiffness ratio",
-    "Use 'mechanical' (default) or 'thermal' to specify contact type"
+    "Use 'mechanical' (default) or 'thermal' to specify contact type",
+    "Related commands: contact cmat add, contact cmat apply, contact cmat remove, contact model assign",
+    "Without the type keyword every default slot changes; with type only that contact type. The default entry is the fallback; add creates rules that are checked before it."
   ],
-  "common_use_cases": [
-    {
-      "use_case": "Set global default for all contact types",
-      "command": "contact cmat default model linear property kn 1e8 ks 5e7 fric 0.5"
-    },
-    {
-      "use_case": "Set different defaults per contact type",
-      "command": "contact cmat default type ball-ball model hertz property hz_shear 2e9\ncontact cmat default type ball-facet model linear property kn 1e8"
-    },
-    {
-      "use_case": "Use deformability method for automatic stiffness calculation",
-      "command": "contact cmat default model linear method deformability emod 5e9 kratio 1.5"
-    },
-    {
-      "use_case": "Set bonded material default with parallel bonds",
-      "command": "contact cmat default model linearpbond property pb_kn 1e9 pb_ks 5e8 pb_ten 1e6 pb_coh 5e5"
-    }
-  ],
-  "typical_workflow": [
-    "1. Define default contact behavior for all types: contact cmat default model linear ...",
-    "2. Or set per-type defaults: contact cmat default type ball-ball model ...",
-    "3. Add specific CMAT entries for special cases: contact cmat add ...",
-    "4. Create contacts - they automatically get assigned according to CMAT rules",
-    "5. If needed, apply CMAT to existing contacts: contact cmat apply"
-  ],
-  "important_distinctions": {
-    "default_vs_add": "The 'default' command sets the fallback behavior when no specific CMAT entry matches. The 'add' command creates specific rules that are checked first.",
-    "with_type_vs_without_type": "Without 'type' keyword, ALL default slots are modified. With 'type', only that specific contact type is affected.",
-    "method_vs_property": "Methods are procedures that can calculate multiple properties (e.g., 'deformability' calculates kn/ks from emod/kratio). Properties are direct value assignments."
-  },
   "versions": {
     "7.0": {
       "command": "contact cmat default",

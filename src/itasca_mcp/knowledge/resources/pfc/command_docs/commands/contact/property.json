@@ -7,25 +7,6 @@
     "damping"
   ],
   "description": "Assign contact properties to existing contacts. All contacts with a contact model that recognizes the specified property are affected. This command modifies properties of existing contacts directly, unlike CMAT commands which define rules for future contact creation. Property inheritance may also be modified with the optional 'inheritance' keyword. By default, only mechanical contacts are considered.",
-  "applicable_contact_models": [
-    "linear",
-    "linearpbond",
-    "linearcbond",
-    "hertz",
-    "rrlinear",
-    "arrlinear",
-    "lineardipole",
-    "burger",
-    "spring network",
-    "Johnson-Kendall-Roberts",
-    "Edinburgh-Elasto-Plastic-Adhesive",
-    "hysteretic",
-    "smoothjoint",
-    "flatjoint",
-    "fish",
-    "bilinear",
-    "softbond"
-  ],
   "python_sdk_alternative": {
     "available": true,
     "methods": [
@@ -46,24 +27,6 @@
       "Use range specification in command interface to avoid iterating in Python"
     ]
   },
-  "model_properties_reference": {
-    "path": "model-properties/index.json",
-    "description": "For comprehensive property information for each contact model, see the model-properties reference documentation",
-    "quick_links": {
-      "linear": "model-properties/linear.json",
-      "linearcbond": "model-properties/linearcbond.json",
-      "linearpbond": "model-properties/linearpbond.json",
-      "hertz": "model-properties/hertz.json",
-      "rrlinear": "model-properties/rrlinear.json"
-    },
-    "note": "Property documentation includes types, ranges, defaults, inheritance info, and usage notes"
-  },
-  "related_commands": [
-    "contact cmat add",
-    "contact cmat default",
-    "contact cmat apply",
-    "contact model assign"
-  ],
   "notes": [
     "Affects EXISTING contacts, not future contact creation (unlike CMAT commands)",
     "Only contacts whose model recognizes the property are affected",
@@ -73,184 +36,9 @@
     "Use range specification to target specific contacts",
     "Inheritance keyword only works with inheritable properties",
     "Changes take effect immediately - no need to apply",
-    "More efficient than Python iteration for bulk updates"
-  ],
-  "property_vs_cmat": {
-    "contact_property": {
-      "target": "EXISTING contacts",
-      "timing": "After contacts are created",
-      "scope": "Modifies current state",
-      "use_case": "Adjust properties during simulation or after calibration",
-      "example": "contact property pb_ten 2e5 range group 'soil'"
-    },
-    "contact_cmat": {
-      "target": "FUTURE contacts (rules)",
-      "timing": "Before contacts are created",
-      "scope": "Defines creation rules",
-      "use_case": "Set default behavior for contact creation",
-      "example": "contact cmat add model linearpbond property pb_ten 2e5 range group 'soil'"
-    },
-    "both_needed": "Use CMAT to configure initial contact behavior, then use 'contact property' to adjust properties during simulation or after calibration"
-  },
-  "common_use_cases": [
-    {
-      "use_case": "Update bond strengths after calibration",
-      "workflow": [
-        "1. Run initial simulation with default bond properties",
-        "2. Calibrate against experimental data",
-        "3. Use 'contact property' to update strengths: contact property pb_ten 2e5 pb_coh 3e5",
-        "4. Continue simulation with calibrated values"
-      ]
-    },
-    {
-      "use_case": "Add damping to existing simulation",
-      "workflow": [
-        "1. Simulation running with no damping",
-        "2. Add damping for quasi-static behavior: contact property dp_nratio 0.7 dp_mode 1",
-        "3. Damping immediately affects all contacts"
-      ]
-    },
-    {
-      "use_case": "Modify specific contact group",
-      "workflow": [
-        "1. Identify target contacts: contact list range group 'foundation'",
-        "2. Update properties: contact property kn 5e8 ks 2e8 range group 'foundation'",
-        "3. Other contacts remain unchanged"
-      ]
-    },
-    {
-      "use_case": "Reset forces (troubleshooting)",
-      "workflow": [
-        "1. Simulation has accumulated residual forces",
-        "2. Reset linear forces: contact property lin_force 0 0 0",
-        "3. Or reset parallel bond forces: contact property pb_force 0 0 0 pb_moment 0 0 0"
-      ]
-    },
-    {
-      "use_case": "Change material properties (Hertz model)",
-      "workflow": [
-        "1. Initial simulation with estimated properties",
-        "2. Update based on material testing: contact property hz_shear 2.5e9 hz_poiss 0.28",
-        "3. Properties updated for all Hertz contacts"
-      ]
-    }
-  ],
-  "property_inheritance": {
-    "concept": "Some properties can inherit values from the contacting pieces (balls, walls). When inheritance is enabled, the property value is calculated from the piece properties rather than being set directly.",
-    "inheritable_properties": [
-      "kn (normal stiffness)",
-      "ks (shear stiffness)",
-      "fric (friction coefficient)",
-      "hz_shear (shear modulus)",
-      "hz_poiss (Poisson's ratio)",
-      "rr_fric (rolling friction)"
-    ],
-    "non_inheritable_properties": [
-      "rgap (reference gap)",
-      "lin_mode (normal-force update mode)",
-      "dp_nratio (damping ratio)",
-      "pb_ten (bond tensile strength)",
-      "pb_coh (bond cohesion)"
-    ],
-    "usage": "contact property kn 1e8 inheritance true",
-    "notes": [
-      "Only works with properties that support inheritance",
-      "Inheritance rules depend on contact model (e.g., minimum, average, harmonic mean)",
-      "See model-properties documentation for which properties are inheritable"
-    ]
-  },
-  "typical_workflow": [
-    "1. Check current property values using contact list or Python",
-    "2. Identify contacts to modify (use range if needed)",
-    "3. Execute 'contact property' with new values",
-    "4. Verify changes (optional): list properties or query specific contacts",
-    "5. Continue simulation - changes take effect immediately"
-  ],
-  "performance_considerations": {
-    "command_interface": "Very fast - bulk update in C++ core",
-    "python_iteration": "Slower - Python loop overhead",
-    "recommendation": "Use command interface for bulk updates, Python for selective/conditional updates",
-    "example_comparison": [
-      {
-        "approach": "Command",
-        "code": "itasca.command('contact property kn 1e8')",
-        "speed": "Fast - single operation"
-      },
-      {
-        "approach": "Python loop",
-        "code": "for c in it.contact.list(): c.set_prop('kn', 1e8)",
-        "speed": "Slower - iteration overhead"
-      }
-    ]
-  },
-  "range_specifications": {
-    "description": "Range limits which contacts are affected by the property command",
-    "common_ranges": {
-      "contact": "All contacts",
-      "group <name>": "Contacts in specified group",
-      "type <type>": "Contacts of specific type (ball-ball, ball-facet, etc.)",
-      "model <model>": "Contacts with specific contact model",
-      "id <id1> <id2>": "Specific contact between two objects"
-    },
-    "examples": [
-      "contact property kn 1e8 range group 'soil'",
-      "contact property fric 0.5 range contact type 'ball-ball'",
-      "contact property pb_ten 2e5 range model linearpbond"
-    ]
-  },
-  "troubleshooting": [
-    {
-      "issue": "Property not changing",
-      "solutions": [
-        "Check if contact model recognizes the property (e.g., can't set 'pb_kn' on linear model)",
-        "Verify range specification targets correct contacts",
-        "Check if property is read-only (some properties cannot be set directly)"
-      ]
-    },
-    {
-      "issue": "Some contacts not affected",
-      "solutions": [
-        "Property is model-specific - contacts with different models won't be affected",
-        "Use range specification if you need to target specific contacts",
-        "Use 'contact list' to verify contact models"
-      ]
-    },
-    {
-      "issue": "Inheritance not working",
-      "solutions": [
-        "Property may not support inheritance - check model-properties documentation",
-        "Inheritance keyword syntax: 'property <name> <value> inheritance <true/false>'",
-        "Only inheritable properties respond to inheritance keyword"
-      ]
-    },
-    {
-      "issue": "Want to update properties for contacts to be created",
-      "solutions": [
-        "Use 'contact cmat' commands instead - 'contact property' only affects existing contacts",
-        "Or use 'contact property' after contacts are created"
-      ]
-    }
-  ],
-  "warnings": [
-    {
-      "type": "model_compatibility",
-      "message": "Setting properties not recognized by a contact's model has no effect",
-      "example": "Setting 'pb_kn' on contacts with linear model does nothing"
-    },
-    {
-      "type": "immediate_effect",
-      "message": "Property changes take effect immediately - may cause sudden force changes",
-      "mitigation": "Consider ramping property changes gradually for stability"
-    },
-    {
-      "type": "read_only_properties",
-      "message": "Some properties are calculated automatically and cannot be set directly",
-      "examples": [
-        "pb_sigma (normal stress)",
-        "pb_tau (shear stress)",
-        "hz_slip (slip state)"
-      ]
-    }
+    "More efficient than Python iteration for bulk updates",
+    "Related commands: contact cmat add, contact cmat default, contact cmat apply, contact model assign",
+    "Inheritable from piece properties: kn, ks, fric, hz_shear, hz_poiss, rr_fric. Not inheritable: rgap, lin_mode, dp_nratio, pb_ten, pb_coh."
   ],
   "versions": {
     "7.0": {

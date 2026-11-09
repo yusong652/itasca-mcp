@@ -9,12 +9,6 @@
     "available": false,
     "workaround": "itasca.command('contact cmat apply ...') - Python SDK does not provide direct CMAT API, must use command interface"
   },
-  "related_commands": [
-    "contact cmat add",
-    "contact cmat default",
-    "contact property",
-    "contact method"
-  ],
   "notes": [
     "WARNING: This command completely replaces the contact model - all previous model data is LOST",
     "For non-destructive property updates, use 'contact property' or 'contact method' instead",
@@ -22,48 +16,8 @@
     "If no CMAT entry matches a contact, the default CMAT entry is used",
     "Mechanical contacts are targeted by default; use 'thermal' keyword for thermal contacts",
     "Commonly used after modifying CMAT entries to update existing contacts",
-    "Range specification is optional - omit to apply to all contacts"
-  ],
-  "common_use_cases": [
-    {
-      "use_case": "Update all contacts after modifying CMAT",
-      "command": "contact cmat add model linearpbond property pb_kn 1e9 range contact\ncontact cmat apply",
-      "description": "First add/modify CMAT entry, then apply to all existing contacts"
-    },
-    {
-      "use_case": "Change model for specific group",
-      "command": "contact cmat add model hertz property hz_shear 2e9 range group 'special'\ncontact cmat apply range group 'special'",
-      "description": "Apply new CMAT rule only to contacts in 'special' group"
-    },
-    {
-      "use_case": "Reset contacts to CMAT defaults",
-      "command": "contact cmat apply range contact",
-      "description": "Reapply CMAT to all contacts (useful after manual property changes)"
-    },
-    {
-      "use_case": "Apply thermal contact properties",
-      "command": "contact cmat add thermal property th_kn 100 range group 'hot'\ncontact cmat apply thermal range group 'hot'",
-      "description": "Configure and apply thermal properties to specific contact group"
-    }
-  ],
-  "warnings": [
-    {
-      "type": "data_loss",
-      "message": "All information stored in previous contact models will be LOST",
-      "mitigation": "Use 'contact property' for non-destructive updates, or save important contact data before applying CMAT"
-    },
-    {
-      "type": "performance",
-      "message": "Applying CMAT to many contacts can be time-consuming",
-      "mitigation": "Use range specification to limit scope when possible"
-    }
-  ],
-  "typical_workflow": [
-    "1. Define CMAT entries with 'contact cmat add' for different contact scenarios",
-    "2. Create contacts (automatically assigned via CMAT at creation)",
-    "3. Optionally modify CMAT entries as simulation needs change",
-    "4. Use 'contact cmat apply' to update existing contacts with new CMAT rules",
-    "5. For incremental changes, prefer 'contact property' to avoid data loss"
+    "Range specification is optional - omit to apply to all contacts",
+    "Related commands: contact cmat add, contact cmat default, contact property, contact method"
   ],
   "versions": {
     "7.0": {

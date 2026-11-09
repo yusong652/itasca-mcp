@@ -6,47 +6,6 @@
     "drum"
   ],
   "description": "Assign a rotational conveyor velocity to facets. This command handles the general case of rotation of an axis-symmetric wall (e.g., cylindrical drum) about its axis of symmetry. The wall does not actually rotate but the facet conveyor velocities are set so that the wall's apparent behavior is rotation. In cases where the tangential velocity calculated at the centroid of a facet is not parallel to the facet face, the conveyor velocity is set to the projection of the tangential velocity onto the plane of the facet. Use the wall attribute command to explicitly set the conveyor velocity directly.",
-  "mechanism": {
-    "description": "Simulates rotating wall without actual geometry rotation",
-    "how_it_works": [
-      "Wall geometry remains stationary",
-      "Facet conveyor velocities calculated based on rotation",
-      "Tangential velocity = ω × r (angular velocity × distance from rotation point)",
-      "If tangential velocity not parallel to facet face, projected onto facet plane",
-      "Apparent behavior: wall appears to rotate when contacting balls/pebbles"
-    ],
-    "advantages": [
-      "No geometry update needed (more efficient)",
-      "Maintains wall shape and contact detection",
-      "Simulates rotation effect on particle motion"
-    ]
-  },
-  "important_notes": [
-    "Wall geometry does NOT actually rotate - only conveyor velocities are set",
-    "Conveyor velocity is fictitious velocity added to wall velocity for relative velocity calculation",
-    "Tangential velocity projected onto facet plane if not parallel to facet face",
-    "Cannot be active when vertex velocities are active (mutually exclusive)",
-    "Ideal for axis-symmetric rotating walls (drums, cylinders, cones)",
-    "Use 'wall attribute velocity-conveyor' for explicit direct setting"
-  ],
-  "use_cases": [
-    {
-      "use_case": "Rotating drum",
-      "description": "Simulate rotating cylindrical drum without geometry rotation"
-    },
-    {
-      "use_case": "Mixer/blender",
-      "description": "Create mixing effect in ribbon blender or similar equipment"
-    },
-    {
-      "use_case": "Conveyor belt",
-      "description": "Simulate moving surface on flat or curved wall"
-    },
-    {
-      "use_case": "Rotating cone",
-      "description": "Simulate rotating conical hopper or funnel"
-    }
-  ],
   "python_sdk_alternative": {
     "available": true,
     "workaround": "Facet.set_conveyor(vec) or Facet.set_conveyor_x/y/z(float) - requires manual calculation of tangential velocities and iteration: for w in itasca.wall.list(): for f in w.facets(): v_tangent = omega_cross_r; f.set_conveyor(v_tangent). For automatic calculation, use itasca.command('wall velocity-conveyor ...')"
@@ -129,5 +88,14 @@
         "Live 9.7 spelling is 'wall conveyor' ('wall velocity-conveyor' is rejected by the wall subcommand enum)."
       ]
     }
-  }
+  },
+  "notes": [
+    "Wall geometry does NOT actually rotate - only conveyor velocities are set",
+    "Conveyor velocity is fictitious velocity added to wall velocity for relative velocity calculation",
+    "Tangential velocity projected onto facet plane if not parallel to facet face",
+    "Cannot be active when vertex velocities are active (mutually exclusive)",
+    "Ideal for axis-symmetric rotating walls (drums, cylinders, cones)",
+    "Use 'wall attribute velocity-conveyor' for explicit direct setting",
+    "The wall geometry never rotates; facet conveyor velocities (omega x r, projected onto the facet plane) are added to the wall velocity in relative-velocity calculations."
+  ]
 }

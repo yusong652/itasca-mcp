@@ -28,7 +28,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Primary elastic property. Controls normal force-displacement relationship. Can be set directly or calculated via 'deformability' method using emod/kratio. Inheritance uses series formula: 1/kn = 1/kn(1) + 1/kn(2)."
+          "notes": [
+            "Primary elastic property. Controls normal force-displacement relationship. Can be set directly or calculated via 'deformability' method using emod/kratio. Inheritance uses series formula: 1/kn = 1/kn(1) + 1/kn(2)."
+          ]
         },
         {
           "keyword": "ks",
@@ -39,7 +41,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Primary elastic property. Controls shear force-displacement relationship. Can be set directly or calculated via 'deformability' method using emod/kratio. Inheritance uses series formula: 1/ks = 1/ks(1) + 1/ks(2)."
+          "notes": [
+            "Primary elastic property. Controls shear force-displacement relationship. Can be set directly or calculated via 'deformability' method using emod/kratio. Inheritance uses series formula: 1/ks = 1/ks(1) + 1/ks(2)."
+          ]
         },
         {
           "keyword": "fric",
@@ -50,7 +54,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": true,
-          "notes": "Coulomb friction coefficient. Shear force limited to fric × |normal force|. Value of 0.0 means frictionless contact. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          "notes": [
+            "Coulomb friction coefficient. Shear force limited to fric × |normal force|. Value of 0.0 means frictionless contact. Inheritance uses minimum: fric = min(fric(1), fric(2))."
+          ]
         },
         {
           "keyword": "rgap",
@@ -61,7 +67,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Reference surface gap. Used to define initial contact configuration. Typically 0.0 for initially touching contacts."
+          "notes": [
+            "Reference surface gap. Used to define initial contact configuration. Typically 0.0 for initially touching contacts."
+          ]
         },
         {
           "keyword": "lin_mode",
@@ -72,7 +80,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls how normal force is updated during contact.",
+          "notes": [
+            "Controls how normal force is updated during contact."
+          ],
           "values": [
             {
               "value": 0,
@@ -93,7 +103,9 @@
           "default": "0.0",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'deformability' method to calculate kn and ks. Not a direct property - set via method argument. Represents effective elastic modulus of the contact."
+          "notes": [
+            "Used with 'deformability' method to calculate kn and ks. Not a direct property - set via method argument. Represents effective elastic modulus of the contact."
+          ]
         },
         {
           "keyword": "kratio",
@@ -104,7 +116,9 @@
           "default": "0.0*",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Used with 'deformability' method to calculate kn and ks. Defined as κ* ≡ k_n / k_s. By convention, κ* = 0.0 if either normal or shear stiffness is 0."
+          "notes": [
+            "Used with 'deformability' method to calculate kn and ks. Defined as κ* ≡ k_n / k_s. By convention, κ* = 0.0 if either normal or shear stiffness is 0."
+          ]
         },
         {
           "keyword": "lin_slip",
@@ -115,7 +129,9 @@
           "default": "false",
           "modifiable": false,
           "inheritable": "N/A",
-          "notes": "Read-only state indicator. True when contact is slipping (shear force at friction limit), false when not slipping.",
+          "notes": [
+            "Read-only state indicator. True when contact is slipping (shear force at friction limit), false when not slipping."
+          ],
           "values": [
             {
               "value": true,
@@ -136,7 +152,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Force vector in contact plane coordinates: (-F_n^l, F_ss^l, F_st^l). In 2D models: F_ss^l ≡ 0. Negative normal component indicates compression.",
+          "notes": [
+            "Force vector in contact plane coordinates: (-F_n^l, F_ss^l, F_st^l). In 2D models: F_ss^l ≡ 0. Negative normal component indicates compression."
+          ],
           "components": {
             "2D": "(-F_n^l, F_st^l)",
             "3D": "(-F_n^l, F_ss^l, F_st^l)"
@@ -151,7 +169,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "User-defined contact area. Used for stress calculations or custom contact behavior. Does not affect default force calculations."
+          "notes": [
+            "User-defined contact area. Used for stress calculations or custom contact behavior. Does not affect default force calculations."
+          ]
         }
       ]
     },
@@ -168,7 +188,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Normal direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Typical values: 0.5-0.8 for quasi-static simulations."
+          "notes": [
+            "Normal direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Typical values: 0.5-0.8 for quasi-static simulations."
+          ]
         },
         {
           "keyword": "dp_sratio",
@@ -179,7 +201,9 @@
           "default": "0.0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Shear direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Typical values: 0.5-0.8 for quasi-static simulations."
+          "notes": [
+            "Shear direction damping as fraction of critical damping. 0.0 = no damping, 1.0 = critical damping. Typical values: 0.5-0.8 for quasi-static simulations."
+          ]
         },
         {
           "keyword": "dp_mode",
@@ -190,7 +214,9 @@
           "default": "0",
           "modifiable": true,
           "inheritable": false,
-          "notes": "Controls when dashpot forces are active (tension vs compression, slipping vs not slipping).",
+          "notes": [
+            "Controls when dashpot forces are active (tension vs compression, slipping vs not slipping)."
+          ],
           "values": [
             {
               "value": 0,
@@ -219,7 +245,9 @@
           "default": "0",
           "modifiable": false,
           "inheritable": false,
-          "notes": "Read-only dashpot force vector in contact plane coordinates: (-F_n^d, F_ss^d, F_st^d). In 2D models: F_ss^d ≡ 0. Automatically calculated based on dp_nratio, dp_sratio, and dp_mode.",
+          "notes": [
+            "Read-only dashpot force vector in contact plane coordinates: (-F_n^d, F_ss^d, F_st^d). In 2D models: F_ss^d ≡ 0. Automatically calculated based on dp_nratio, dp_sratio, and dp_mode."
+          ],
           "components": {
             "2D": "(-F_n^d, F_st^d)",
             "3D": "(-F_n^d, F_ss^d, F_st^d)"

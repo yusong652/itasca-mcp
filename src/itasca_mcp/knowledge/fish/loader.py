@@ -147,13 +147,13 @@ class FishLoader:
         return out
 
     @staticmethod
-    def namespace_notes(namespace: str, *, software: str) -> dict[str, list[str]]:
-        """Curated usage notes a namespace file carries (grouped by topic); empty when none."""
+    def namespace_notes(namespace: str, *, software: str) -> list[str]:
+        """Curated usage notes a namespace file carries; empty when none."""
         meta = FishLoader.load_index(software=software).get("namespaces", {}).get(namespace)
         if not meta:
-            return {}
+            return []
         notes = FishLoader._load_file(meta["file"]).get("notes")
-        return dict(notes) if isinstance(notes, dict) else {}
+        return list(notes) if isinstance(notes, list) else []
 
     @staticmethod
     def suggest(name: str, *, software: str, limit: int = 8) -> list[str]:

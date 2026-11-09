@@ -6,39 +6,6 @@
     "control"
   ],
   "description": "The wall servo provides the ability to control the translational velocity of select walls using a servo-mechanism in order to apply or maintain a desired force. The servo-mechanism uses a proportional controller with adaptive gain. IMPORTANT: Only the component of the velocity in the direction of the target servo force is adjusted by the servo control. The orthogonal velocity is not altered. The target load is expressed as a force instead of a stress because PFC cannot assess which region of a wall is effectively applying load on the particles.",
-  "servo_mechanism": {
-    "description": "Proportional controller with adaptive gain",
-    "velocity_adjustment": "v = v_s * n̂ + v_⊥, where v_s is adjusted in direction of target force n̂",
-    "control_equation": "v_s(new) = v_s(old) + G * (F_target - F_reaction)",
-    "gain_equation": "G = α * Δt / K_eff, where α=gain-factor (default 0.8), Δt=timestep, K_eff=sum of contact stiffnesses",
-    "stability": "Gain automatically evaluated to ensure stability based on contact stiffnesses"
-  },
-  "important_notes": [
-    "Only velocity component in direction of target force is adjusted - orthogonal velocity unchanged",
-    "Target load is force (not stress) - PFC cannot assess effective load region",
-    "Can activate/deactivate at any time during modeling",
-    "Reset wall velocity to zero with 'wall attribute velocity' when deactivating if wall should stop",
-    "Gain automatically evaluated for stability based on contact stiffnesses",
-    "Can superimpose orthogonal velocity while servo is active"
-  ],
-  "use_cases": [
-    {
-      "use_case": "Triaxial test",
-      "description": "Apply and maintain confining pressure on specimen walls"
-    },
-    {
-      "use_case": "Direct shear test",
-      "description": "Maintain normal force while applying shear displacement"
-    },
-    {
-      "use_case": "Compression test",
-      "description": "Apply constant force or stress on loading platen"
-    },
-    {
-      "use_case": "Isotropic loading",
-      "description": "Apply equal force on all boundary walls"
-    }
-  ],
   "python_sdk_alternative": {
     "available": true,
     "workaround": "Wall.servo_set_active(bool), Wall.servo_set_force(vec), Wall.servo_set_gainfactor(float), Wall.servo_set_gainupdate(int), Wall.servo_set_vmax(float) - requires iteration: for w in itasca.wall.list(): w.servo_set_active(True)"
@@ -260,5 +227,14 @@
         }
       ]
     }
-  }
+  },
+  "notes": [
+    "Only velocity component in direction of target force is adjusted - orthogonal velocity unchanged",
+    "Target load is force (not stress) - PFC cannot assess effective load region",
+    "Can activate/deactivate at any time during modeling",
+    "Reset wall velocity to zero with 'wall attribute velocity' when deactivating if wall should stop",
+    "Gain automatically evaluated for stability based on contact stiffnesses",
+    "Can superimpose orthogonal velocity while servo is active",
+    "Servo mechanism: v_s(new) = v_s(old) + G(F_target - F_reaction) with G = a*dt/K_eff (a = gain-factor, default 0.8; K_eff = sum of contact stiffnesses); only the velocity component along the target force direction is adjusted."
+  ]
 }

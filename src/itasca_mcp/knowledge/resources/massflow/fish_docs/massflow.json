@@ -3281,39 +3281,27 @@
       "description": "Write data to the given file or list. Returns true on success."
     }
   ],
-  "notes": {
-    "draw-period": [
-      "This whole family is undocumented: there is no `fish_massflow.drawperiod.*` page in the 9.7 manual. The signatures come from live enumeration and only `num` has been confirmed against a known model (59 imported periods -> 59).",
-      "Semantics of the per-period accessors are NOT established. On a model with 7-day periods computed to day 20, `massflow.drawperiod.find(1)` returned day.start 1 and day.end 1, and `drawpoints()` returned an empty list — neither matches the imported schedule, so do not read these as 'period 1 spans days 1-7'.",
-      "`massflow.drawperiod.drawrate` carries a `= flt` assignment form in its signature, but assigning to it on that model neither changed the value it returns nor raised. Treat it as unverified.",
-      "Use `massflow.period`, `massflow.period.days(i)` and the drawpoint mass intrinsics for schedule accounting that has been checked."
-    ],
-    "drawpoint": [
-      "`massflow.drawpoint.radius(dp, i)` and `height(dp, i)` index the IMZ slices listed by `massflow.drawpoint.slices(dp)`.",
-      "`mass.requested` works by day; `mass.actual`, `mass.actual.cum` and `mass.actual.period` report what was really drawn.",
-      "`mass.requested` is the scheduled daily tonnage — the period mass divided by the period length. On the tutorial model (2000 per 7-day period) it reads 285.714 for every day of the period.",
-      "`mass.actual` is quantised to whole markers, so a day either extracts a marker's worth or nothing: days 1-3 of DP1 read 325, 0, 0 while `mass.actual.cum` holds at 325. Over period 1 the requested 2000 came out as 1625 = 5 x 325.",
-      "`massflow.mass.DpDay(1,1)` returned 0 on that same model while `massflow.drawpoint.mass.actual(dp,1)` returned 325 — the two do not agree, so prefer the drawpoint accessors for per-day mass."
-    ],
-    "extracted-marker": [
-      "Iterate with `loop foreach local m massflow.extractedmarker.list`.",
-      "`massflow.extractedmarker.mineblock` gives the block the material came from, which is what origin/destination reporting keys on."
-    ],
-    "marker": [
-      "`massflow.marker.type` returns an integer: -2 unbulked for IMZ growth, -1 unbulked for collapse, 0 unbulked for rilling, 1 partially bulked, 2 fully bulked, 3 air.",
-      "`massflow.marker.active.tolerance` is a global setting, readable and writable, not a per-marker value.",
-      "An intrinsic whose signature ends in `:= <type>` can be assigned to, not just read.",
-      "`massflow.marker.moved-day` and `massflow.marker.moved-cycle` cannot be written in a FISH expression: the parser reads the hyphen as subtraction and fails with `massflow.marker.moved is not recognized as a library function`. They are listed by `fish list intrinsics` all the same.",
-      "On the tutorial model at day 20 every active marker was also type 2 (fully bulked): 458 of 1117 by both counts."
-    ],
-    "mineblock": [
-      "`massflow.mineblock.state` returns an integer. The manual lists -1 solid, 1 caved, 2 mobilized active, 3 mobilized inactive, 4 air, 5 extracted — but block 1 of the tutorial model reads back **0**, which the manual does not list, and the vendor's own unittests.dat asserts that same 0.",
-      "Pairs like `frag.primary.a` / `frag.primary.a.dyn` are the imported value and its user-writable override; when they differ, the dynamic one is used.",
-      "Iterate with `loop foreach local mb massflow.mineblock.list` rather than assuming contiguous IDs."
-    ],
-    "model": [
-      "`massflow.markerfraglimit.lower/upper` and `massflow.massbalance.lower/upper` are the FISH side of the `massflow initialize markerfraglimit-*` and `massbalance-*` keywords; both are readable and writable.",
-      "`massflow.mass.DpDay` is spelled in mixed case by the binary. FISH is case-insensitive, so the manual's `massflow.mass.dpday` resolves to it."
-    ]
-  }
+  "notes": [
+    "draw-period: This whole family is undocumented: there is no `fish_massflow.drawperiod.*` page in the 9.7 manual. The signatures come from live enumeration and only `num` has been confirmed against a known model (59 imported periods -> 59).",
+    "draw-period: Semantics of the per-period accessors are NOT established. On a model with 7-day periods computed to day 20, `massflow.drawperiod.find(1)` returned day.start 1 and day.end 1, and `drawpoints()` returned an empty list — neither matches the imported schedule, so do not read these as 'period 1 spans days 1-7'.",
+    "draw-period: `massflow.drawperiod.drawrate` carries a `= flt` assignment form in its signature, but assigning to it on that model neither changed the value it returns nor raised. Treat it as unverified.",
+    "draw-period: Use `massflow.period`, `massflow.period.days(i)` and the drawpoint mass intrinsics for schedule accounting that has been checked.",
+    "drawpoint: `massflow.drawpoint.radius(dp, i)` and `height(dp, i)` index the IMZ slices listed by `massflow.drawpoint.slices(dp)`.",
+    "drawpoint: `mass.requested` works by day; `mass.actual`, `mass.actual.cum` and `mass.actual.period` report what was really drawn.",
+    "drawpoint: `mass.requested` is the scheduled daily tonnage — the period mass divided by the period length. On the tutorial model (2000 per 7-day period) it reads 285.714 for every day of the period.",
+    "drawpoint: `mass.actual` is quantised to whole markers, so a day either extracts a marker's worth or nothing: days 1-3 of DP1 read 325, 0, 0 while `mass.actual.cum` holds at 325. Over period 1 the requested 2000 came out as 1625 = 5 x 325.",
+    "drawpoint: `massflow.mass.DpDay(1,1)` returned 0 on that same model while `massflow.drawpoint.mass.actual(dp,1)` returned 325 — the two do not agree, so prefer the drawpoint accessors for per-day mass.",
+    "extracted-marker: Iterate with `loop foreach local m massflow.extractedmarker.list`.",
+    "extracted-marker: `massflow.extractedmarker.mineblock` gives the block the material came from, which is what origin/destination reporting keys on.",
+    "marker: `massflow.marker.type` returns an integer: -2 unbulked for IMZ growth, -1 unbulked for collapse, 0 unbulked for rilling, 1 partially bulked, 2 fully bulked, 3 air.",
+    "marker: `massflow.marker.active.tolerance` is a global setting, readable and writable, not a per-marker value.",
+    "marker: An intrinsic whose signature ends in `:= <type>` can be assigned to, not just read.",
+    "marker: `massflow.marker.moved-day` and `massflow.marker.moved-cycle` cannot be written in a FISH expression: the parser reads the hyphen as subtraction and fails with `massflow.marker.moved is not recognized as a library function`. They are listed by `fish list intrinsics` all the same.",
+    "marker: On the tutorial model at day 20 every active marker was also type 2 (fully bulked): 458 of 1117 by both counts.",
+    "mineblock: `massflow.mineblock.state` returns an integer. The manual lists -1 solid, 1 caved, 2 mobilized active, 3 mobilized inactive, 4 air, 5 extracted — but block 1 of the tutorial model reads back **0**, which the manual does not list, and the vendor's own unittests.dat asserts that same 0.",
+    "mineblock: Pairs like `frag.primary.a` / `frag.primary.a.dyn` are the imported value and its user-writable override; when they differ, the dynamic one is used.",
+    "mineblock: Iterate with `loop foreach local mb massflow.mineblock.list` rather than assuming contiguous IDs.",
+    "model: `massflow.markerfraglimit.lower/upper` and `massflow.massbalance.lower/upper` are the FISH side of the `massflow initialize markerfraglimit-*` and `massbalance-*` keywords; both are readable and writable.",
+    "model: `massflow.mass.DpDay` is spelled in mixed case by the binary. FISH is case-insensitive, so the manual's `massflow.mass.dpday` resolves to it."
+  ]
 }

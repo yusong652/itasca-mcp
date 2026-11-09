@@ -71,11 +71,12 @@ def test_no_documentation_page_is_blanked() -> None:
 
 
 def test_trimmed_command_page_keeps_its_parts_reachable() -> None:
-    page = commands.browse("pfc", "measure create", "9.0")["data"]
+    # After the notes fold, the only command pages still over budget omit search_keywords.
+    page = commands.browse("pfc", "model solve", "9.0")["data"]
     omitted = page["summary"]["omitted_sections"]
-    assert omitted and "measure create <name>" in page["summary"]["hint"]
+    assert omitted and "model solve <name>" in page["summary"]["hint"]
 
-    section = commands.browse("pfc", f"measure create {omitted[0]}", "9.0")["data"]["entries"][0]
+    section = commands.browse("pfc", f"model solve {omitted[0]}", "9.0")["data"]["entries"][0]
     assert section["section"] == omitted[0] and section["content"]
     keyword = commands.browse("pfc", "measure create position", "9.0")["data"]["entries"][0]["keyword"]
     assert keyword["name"] == "position" and keyword["description"]

@@ -55,11 +55,12 @@
     ]
   },
   "dimension_differences": {
-    "note": "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both.",
     "plane": {
       "mpoint2d": "x-y",
-      "note": "MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention.",
-      "verified": "state -- 'mpoint fix ?' and 'mpoint node fix ?' on MPoint2D 9.7 list x and y only"
+      "verified": "state -- 'mpoint fix ?' and 'mpoint node fix ?' on MPoint2D 9.7 list x and y only",
+      "notes": [
+        "MPoint2D models the x-y plane: 'model domain extent' takes two pairs, and per-axis keywords are velocity-x / velocity-y with no z variant. This is not FLAC2D's x-z convention."
+      ]
     },
     "verified": {
       "grade": "state",
@@ -75,7 +76,10 @@
         "Probing with '?' is NOT side-effect free. 'mpoint generate ?' generated 144 material points and then printed the keyword list. Any command that can run with no arguments will run before it answers. Probe on a model you are willing to lose.",
         "An entry in an enumeration is not a usable feature: MPoint2D lists 'cavehoek' among its constitutive models but offers no way to configure for it."
       ]
-    }
+    },
+    "notes": [
+      "Per-axis keywords lose their z variant on MPoint2D, which works in the x-y plane: 'mpoint fix' offers velocity-x / velocity-y only, and 'mpoint node fix' likewise. The 'mpoint initialize' field list is identical in both."
+    ]
   },
   "measured": {
     "experiment": "Every point given velocity-x 0.01, then the x<0 half restrained and the model cycled 20 steps. Mean x-displacement of the restrained half vs the free half.",

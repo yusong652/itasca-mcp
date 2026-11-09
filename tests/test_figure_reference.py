@@ -56,20 +56,20 @@ class TestBuildFlag:
         assert flag is not None
         assert flag["figures"] == _FIGS
         assert "text_incomplete" not in flag
-        assert flag["note"] == ffd.NOTE_NEUTRAL
+        assert flag["notes"] == [ffd.NOTE_NEUTRAL]
 
     def test_deferrals_only_has_no_figures(self):
         flag = ffd._build_flag(None, ["Refer to the figures above."])
         assert flag is not None
         assert "figures" not in flag
         assert flag["text_incomplete"] is True
-        assert flag["note"] == ffd.NOTE_INCOMPLETE
+        assert flag["notes"] == [ffd.NOTE_INCOMPLETE]
 
     def test_both_signals_use_incomplete_note(self):
         flag = ffd._build_flag(_FIGS, ["Refer to the figures above."])
         assert flag["figures"] == _FIGS
         assert flag["text_incomplete"] is True
-        assert flag["note"] == ffd.NOTE_INCOMPLETE
+        assert flag["notes"] == [ffd.NOTE_INCOMPLETE]
 
     def test_neither_is_none(self):
         assert ffd._build_flag(None, []) is None
@@ -118,7 +118,7 @@ class TestApply:
                 "9.0": {
                     "command": "model solve",
                     "keywords": [],
-                    "figure_reference": {"figures": _FIGS, "note": "old"},
+                    "figure_reference": {"figures": _FIGS, "notes": ["old"]},
                 }
             }
         }

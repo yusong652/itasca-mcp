@@ -5,66 +5,6 @@
     "surface"
   ],
   "description": "Assign facet surface properties used in contact models. Properties are surface conditions (e.g., stiffness, friction) that are distinct from wall attributes (position, velocity). Property names depend on the active contact model. Contact models prioritize checking object surface properties during contact resolution. See Contact Models documentation for available properties per model. Note: Be aware of the distinction between attributes and properties! The tutorial example 'Attributes and Properties' discusses this issue in detail.",
-  "common_properties": [
-    {
-      "model": "Linear",
-      "properties": [
-        "kn (normal stiffness)",
-        "ks (shear stiffness)",
-        "fric (friction coefficient)"
-      ]
-    },
-    {
-      "model": "Hertz",
-      "properties": [
-        "hz_kn (Hertz normal stiffness)",
-        "fric (friction coefficient)"
-      ]
-    },
-    {
-      "model": "Linear Contact Bond",
-      "properties": [
-        "lb_kn",
-        "lb_ks",
-        "lb_coh (cohesion)",
-        "lb_ten (tensile strength)",
-        "fric"
-      ]
-    },
-    {
-      "model": "Linear Parallel Bond",
-      "properties": [
-        "pb_kn",
-        "pb_ks",
-        "pb_coh",
-        "pb_ten",
-        "pb_fa (friction angle)",
-        "fric"
-      ]
-    },
-    {
-      "model": "Flat Joint",
-      "properties": [
-        "fj_kn",
-        "fj_ks",
-        "fj_coh",
-        "fj_ten",
-        "fj_fa",
-        "fric"
-      ]
-    },
-    {
-      "model": "Smooth Joint",
-      "properties": [
-        "sj_kn",
-        "sj_ks",
-        "sj_coh",
-        "sj_ten",
-        "sj_fa",
-        "fric"
-      ]
-    }
-  ],
   "python_sdk_alternative": {
     "available": true,
     "workaround": "Wall.set_prop(name, value) to set property for all facets in a wall, or Facet.set_prop(name, value) for individual facets - requires iteration: for w in itasca.wall.list(): w.set_prop('kn', 1e7) or for f in itasca.wall.facet.list(): f.set_prop('kn', 1e7)"
@@ -181,5 +121,8 @@
         "Property names are free String tokens (surface-property names)."
       ]
     }
-  }
+  },
+  "notes": [
+    "Common properties per model: Linear: kn (normal stiffness), ks (shear stiffness), fric (friction coefficient); Hertz: hz_kn (Hertz normal stiffness), fric (friction coefficient); Linear Contact Bond: lb_kn, lb_ks, lb_coh (cohesion), lb_ten (tensile strength), fric; Linear Parallel Bond: pb_kn, pb_ks, pb_coh, pb_ten, pb_fa (friction angle), fric; Flat Joint: fj_kn, fj_ks, fj_coh, fj_ten, fj_fa, fric; Smooth Joint: sj_kn, sj_ks, sj_coh, sj_ten, sj_fa, fric"
+  ]
 }

@@ -186,7 +186,7 @@ class PythonAPIFormatter:
 
         shown_name = display_name or object_name
         description = object_doc.get("description", "")
-        note = object_doc.get("note", "")
+        note = "; ".join(object_doc.get("notes", []))
         method_groups = object_doc.get("method_groups", {})
         methods = object_doc.get("methods", [])
 
