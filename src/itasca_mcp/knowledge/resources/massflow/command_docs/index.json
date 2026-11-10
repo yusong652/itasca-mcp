@@ -339,11 +339,27 @@
           "python_available": false
         },
         {
+          "name": "rill-report",
+          "file": "massflow/command_docs/commands/massflow/rill-report.json",
+          "short_description": "Write the free-surface rilling history to a CSV file",
+          "syntax": "massflow rill-report [<s>]",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
           "name": "secondary-fragmentation",
           "file": "massflow/command_docs/commands/massflow/secondary-fragmentation.json",
           "short_description": "Toggle secondary fragmentation",
           "syntax": "massflow secondary-fragmentation [keyword]",
           "python_available": false
+        },
+        {
+          "name": "seed",
+          "file": "massflow/command_docs/commands/massflow/seed.json",
+          "short_description": "Set the random seed used by all MassFlow random decisions",
+          "syntax": "massflow seed <i>",
+          "python_available": false,
+          "python_alternative": ""
         }
       ]
     },
@@ -1145,6 +1161,54 @@
         }
       ]
     },
+    "group": {
+      "full_name": "Group Commands",
+      "description": "Groups occupy named slots and act as range filters in subsequent commands.",
+      "command_prefix": "group",
+      "related_categories": [
+        "massflow"
+      ],
+      "notes": [
+        "Group membership is set by the object commands ('massflow drawpoint group', 'massflow marker group', 'massflow mine-block group'); the top-level 'group' commands manage the global name registry",
+        "'group slot' assigns/renames a slot (group categories that don't conflict — e.g., material slot, region slot)",
+        "'group list' enumerates known group names across slots (loggable output)",
+        "Use 'range group <name>' in any range-accepting command to filter by group"
+      ],
+      "commands": [
+        {
+          "name": "create",
+          "file": "_common/command_docs/commands/group/create.json",
+          "short_description": "Create a group",
+          "syntax": "group create <s>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "list",
+          "file": "_common/command_docs/commands/group/list.json",
+          "short_description": "Display the global list of group names and slot names that have been created",
+          "syntax": "group list",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "rename",
+          "file": "_common/command_docs/commands/group/rename.json",
+          "short_description": "Rename a group",
+          "syntax": "group rename <sold> <snew>",
+          "python_available": false,
+          "python_alternative": ""
+        },
+        {
+          "name": "slot",
+          "file": "_common/command_docs/commands/group/slot.json",
+          "short_description": "Create a slot",
+          "syntax": "group slot keyword",
+          "python_available": false,
+          "python_alternative": ""
+        }
+      ]
+    },
     "history": {
       "full_name": "History Commands",
       "description": "Commands for managing model histories: time-series recordings of scalar quantities sampled during cycling. Used for monitoring convergence, plotting trends, and exporting tabular data.",
@@ -1261,6 +1325,14 @@
           "syntax": "model cluster keyword ...",
           "python_available": false,
           "python_alternative": "itasca.command('model cluster assign-groups on')"
+        },
+        {
+          "name": "configure",
+          "file": "massflow/command_docs/commands/model/configure.json",
+          "short_description": "Configure an additional calculation mode (MassFlow's nine live options)",
+          "syntax": "model configure keyword ...",
+          "python_available": false,
+          "python_alternative": ""
         },
         {
           "name": "creep",

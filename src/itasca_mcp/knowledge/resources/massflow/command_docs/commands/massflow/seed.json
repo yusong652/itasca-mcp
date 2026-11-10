@@ -1,0 +1,29 @@
+{
+  "category": "massflow",
+  "search_keywords": [
+    "massflow",
+    "seed",
+    "random"
+  ],
+  "description": "Set the random seed used by MassFlow. All random decisions made by MassFlow (marker placement within a block, primary fragment size and tensile strength sampled when a marker is created, the shear-fragmentation percentile, fines-migration percolation distance, void-diffusion collapse direction, air-gap jitter and the column visiting order used by free-surface rilling) are derived from this single integer. The default is 10000, restored by 'model new'; if i is omitted or 0 the default is used. Two runs of the same data file with the same seed produce identical results, independent of the thread count, of restarting the program, and of save/restore (the seed and the MassFlow random stream are archived in the save file).",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "notes": [
+    "'model random' does NOT affect MassFlow when coupled with FLAC3D: the kernel random generator shared by FLAC3D and FISH advances on every draw made anywhere in the program, so MassFlow keeps its own seed, set only by this command. Use 'model random' for FLAC3D features and 'massflow seed' for MassFlow.",
+    "May be given anywhere before 'massflow compute', including after a 'model restore' to continue a run with a new realization. The seed in effect is printed at the start of every 'massflow compute'.",
+    "New with 9.8: absent from the 9.7-era corpus sweep; present in the 9.8.54 manual and build."
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (syntax grade): 'massflow seed 123' and the bare form were both accepted; the command prints no confirmation line and no FISH readback of the seed exists."
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow seed",
+  "syntax": "massflow seed <i>",
+  "keywords": [],
+  "examples": []
+}

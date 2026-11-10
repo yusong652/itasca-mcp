@@ -1,0 +1,32 @@
+{
+  "category": "massflow",
+  "search_keywords": [
+    "massflow",
+    "rill-report",
+    "rilling",
+    "rill"
+  ],
+  "description": "Write the free-surface rilling history of the current run to the comma-delimited file s (default rillReport.csv). One row per solve day on which rilling moved at least one marker, with columns Day (solve day), RillSwaps (solid/air marker exchanges performed by the rilling logic that day) and RillColumns (distinct block columns whose air gap received material that day). Days without rilling are not listed.",
+  "python_sdk_alternative": {
+    "available": false
+  },
+  "notes": [
+    "The history is accumulated during 'massflow compute', cleared by 'model new', and archived in the save file (survives model save / model restore).",
+    "A per-day summary can also be printed to the console while solving with 'massflow initialize rill-log on'.",
+    "Which individual markers were moved by rilling, and when, is in the RillCount and LastRillDay columns of the marker report ('massflow marker report-export').",
+    "With no rilling recorded the file is still written; the echo reports '(0 rilling days, 0 swaps total)'.",
+    "New with 9.8: absent from the 9.7-era corpus sweep; present in the 9.8.54 manual and build."
+  ],
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (state grade): bare form wrote rillReport.csv and \"massflow rill-report 'probe_rill.csv'\" wrote the named file; both echoed '(0 rilling days, 0 swaps total)' on an empty run."
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "massflow rill-report",
+  "syntax": "massflow rill-report [<s>]",
+  "keywords": [],
+  "examples": []
+}

@@ -3,15 +3,17 @@
   "search_keywords": [
     "massflow",
     "drawpoint",
-    "list"
+    "list",
+    "group",
+    "info"
   ],
   "description": "List information about drawpoints.",
   "python_sdk_alternative": {
     "available": false
   },
   "notes": [
-    "The abbreviation accepted by the engine is `information`, not `info`.",
-    "`group` is a sibling command (`massflow drawpoint group`), not a keyword of `list`."
+    "9.7 accepted only the `information` spelling and had no `group` list keyword; 9.8.54 accepts `info`, `information` (same table) and `group`.",
+    "`group` the list keyword prints the Slot:Groupname table; the sibling command 'massflow drawpoint group' is what assigns groups."
   ],
   "availability": {
     "versions": [
@@ -27,10 +29,23 @@
       "description": "List extra-variable information from slot i (1 to 128)."
     },
     {
+      "name": "group",
+      "syntax": "group",
+      "description": "List drawpoint group names (ID and Slot:Groupname table)."
+    },
+    {
+      "name": "info",
+      "syntax": "info",
+      "description": "List the per-object information table. The 9.8 manual's documented spelling; `information` is also accepted."
+    },
+    {
       "name": "information",
       "syntax": "information",
       "description": "List the per-object information table."
     }
   ],
-  "examples": []
+  "examples": [],
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (state grade): 'massflow drawpoint list info|information|group' each printed its own table header (Draw-Point information / Draw-Point Groups) on an empty model; bogus tokens are reported as unused AFTER the bare list has run."
+  ]
 }

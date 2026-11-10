@@ -3,15 +3,22 @@
   "search_keywords": [
     "massflow",
     "marker",
-    "report-export"
+    "report-export",
+    "text",
+    "vtk",
+    "both"
   ],
   "description": "Export marker report for current day to filename s . If s is not given, a default file name of \\(markers_Day000.txt\\) where 000 is replaced by the current day.",
   "python_sdk_alternative": {
     "available": false
   },
   "notes": [
-    "The filename is optional. Without it the report is written to `massflow_Day<N>.txt`, where N is the current flow day.",
-    "File format: see reference topic 'file-formats marker-report'."
+    "Default filenames are massflow_Day<N>.txt / massflow_Day<N>.vtk, where N is the current flow day. The manual's stated default (markers_Day000) is wrong.",
+    "The filename must be a quoted string and is written verbatim - no extension is appended ('report-export vtk 'probe3'' wrote the file probe3).",
+    "The format keyword must come BEFORE the filename: after a filename it is reported as an unused extra parameter and the text report is written anyway.",
+    "An unquoted token is not taken as a filename (unused extra parameter; the default-name report is still written).",
+    "File format: see reference topic 'file-formats marker-report'.",
+    "The format keywords are new with 9.8; the 9.7-era page had none."
   ],
   "availability": {
     "versions": [
@@ -19,7 +26,26 @@
     ]
   },
   "command": "massflow marker report-export",
-  "syntax": "massflow marker report-export [<s>]",
-  "keywords": [],
-  "examples": []
+  "syntax": "massflow marker report-export [text | vtk | both] [<s>]",
+  "keywords": [
+    {
+      "name": "text",
+      "syntax": "text",
+      "description": "Write the text (.txt) marker report. The default when no format keyword is given."
+    },
+    {
+      "name": "vtk",
+      "syntax": "vtk",
+      "description": "Write the VTK (.vtk) marker report (needs a VTK-aware viewer)."
+    },
+    {
+      "name": "both",
+      "syntax": "both",
+      "description": "Write both the .txt and the .vtk report for the same day."
+    }
+  ],
+  "examples": [],
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (state grade): text -> 'Marker report saved to file massflow_Day0.txt'; vtk -> 'VTK marker report saved to massflow_Day0.vtk'; both -> both lines; quoted filename written verbatim before and after a format keyword."
+  ]
 }
