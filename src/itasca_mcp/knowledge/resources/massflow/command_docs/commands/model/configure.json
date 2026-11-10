@@ -1,0 +1,112 @@
+{
+  "category": "model",
+  "search_keywords": [
+    "configure",
+    "settings",
+    "cluster",
+    "creep",
+    "dynamic",
+    "fluid-explicit",
+    "fluid-flow",
+    "fluid-implicit",
+    "imass",
+    "mechanical",
+    "thermal"
+  ],
+  "description": "Configure an additional calculation mode. MassFlow's live option list is cluster, creep, dynamic, fluid-explicit, fluid-flow, fluid-implicit, imass, mechanical, thermal. Must be given before 'model solve' / 'model cycle' invokes that mode.",
+  "notes": [
+    "The option list is engine-specific. MassFlow's nine options were enumerated from the live 9.8.54 engine; there is no array, cfd, energy, feblock, highorder, hotetra, matrixflow or axisymmetry here (unlike FLAC3D/PFC/MPoint).",
+    "The three fluid modes are mutually exclusive per model: after one is configured the other two are rejected with 'fluid has already been configured in a different mode'. 'model new' resets the choice.",
+    "'fluid-flow' resolves to the implicit scheme ('Process fluid configured in mode fluid-flow fluid-implicit.').",
+    "Once configured, a mode stays active for the model."
+  ],
+  "python_sdk_alternative": {
+    "available": false,
+    "workaround": "itasca.command('model configure dynamic') - no direct SDK method"
+  },
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (state grade): all nine options executed individually on fresh models; each printed its confirmation line (fluid-flow and fluid-implicit on separate fresh models; fluid-flow/-implicit/-explicit exclusivity confirmed by the rejection message)."
+  ],
+  "availability": {
+    "versions": [
+      "9.0"
+    ]
+  },
+  "command": "model configure",
+  "syntax": "model configure keyword ...",
+  "keywords": [
+    {
+      "name": "cluster",
+      "syntax": "cluster",
+      "description": "Cluster (distributed) computing.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Configured for use with cluster (distributed) computing.'"
+      ]
+    },
+    {
+      "name": "creep",
+      "syntax": "creep",
+      "description": "Creep (time-dependent) material analysis.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process creep configured.'"
+      ]
+    },
+    {
+      "name": "dynamic",
+      "syntax": "dynamic",
+      "description": "Fully dynamic analysis.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process dynamic configured.'"
+      ]
+    },
+    {
+      "name": "fluid-explicit",
+      "syntax": "fluid-explicit",
+      "description": "Fluid-flow analysis, explicit solution scheme.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process fluid configured in mode fluid-explicit -fluid.'"
+      ]
+    },
+    {
+      "name": "fluid-flow",
+      "syntax": "fluid-flow",
+      "description": "Fluid-flow analysis. Resolves to the implicit scheme by default.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process fluid configured in mode fluid-flow fluid-implicit.'"
+      ]
+    },
+    {
+      "name": "fluid-implicit",
+      "syntax": "fluid-implicit",
+      "description": "Fluid-flow analysis, implicit solution scheme.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process fluid configured in mode fluid-flow fluid-implicit.'"
+      ]
+    },
+    {
+      "name": "imass",
+      "syntax": "imass",
+      "description": "The IMASS constitutive-model framework.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Configured for use with the IMASS constitutive model.'"
+      ]
+    },
+    {
+      "name": "mechanical",
+      "syntax": "mechanical",
+      "description": "Mechanical analysis (the default process).",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process mechanical configured.'"
+      ]
+    },
+    {
+      "name": "thermal",
+      "syntax": "thermal",
+      "description": "Thermal analysis.",
+      "verification": [
+        "state -- MassFlow 9.8.54 reported: 'Process thermal configured.'"
+      ]
+    }
+  ],
+  "examples": []
+}

@@ -1210,10 +1210,17 @@ def test_massflow_command_families_are_isolated() -> None:
 
 
 def test_massflow_borrows_common_kernel_verbatim() -> None:
+    # model configure is massflow-own (engine-specific option list, live-enumerated 9.8.54)
+    own = {"model": {"configure"}}
     massflow = CommandLoader.load_index(software="massflow")["categories"]
     for fam in ("data", "fish", "geometry", "history", "model", "plot", "table"):
         cmds = massflow[fam]["commands"]
-        assert cmds and all(str(c["file"]).startswith("_common/") for c in cmds)
+        assert cmds
+        for c in cmds:
+            if c["name"] in own.get(fam, set()):
+                assert str(c["file"]).startswith("massflow/")
+            else:
+                assert str(c["file"]).startswith("_common/")
 
 
 def test_massflow_compute_resolves_with_keywords() -> None:
@@ -1246,11 +1253,12 @@ MASSFLOW_LIVE_ONLY_COMMANDS = {
 
 
 def test_massflow_command_coverage_matches_live_binary() -> None:
-    """The binary carries 47 `massflow` leaves; 30 have HTML pages, 17 do not."""
+    """47 leaves from the 9.7 sweep plus the 9.8 additions rill-report and seed."""
     cmds = CommandLoader.load_index(software="massflow")["categories"]["massflow"]["commands"]
     names = {c["name"] for c in cmds}
-    assert len(names) == 47
+    assert len(names) == 49
     assert names >= MASSFLOW_LIVE_ONLY_COMMANDS
+    assert {"rill-report", "seed"} <= names
 
 
 @pytest.mark.asyncio
@@ -1272,13 +1280,13 @@ def test_massflow_live_only_commands_disclose_missing_docs() -> None:
         assert any("no page in the 9.7 doc tree" in n for n in doc.get("notes", [])), name
 
 
-def test_massflow_list_keyword_is_information_not_info() -> None:
-    """`info` is the doc's abbreviation; the engine only accepts `information`."""
+def test_massflow_list_keywords_info_information_group() -> None:
+    """9.7 took only `information`; 9.8.54 takes `info`, `information` and `group` (live)."""
     for family in ("drawpoint-list", "marker-list", "mine-block-list"):
         doc = CommandLoader.load_command_doc("massflow", family, "9.0", software="massflow")
         assert doc is not None
         kw = {k["name"] for k in doc.get("keywords", [])}
-        assert kw == {"extra", "information"}, family
+        assert kw == {"extra", "group", "info", "information"}, family
 
 
 def test_massflow_toggles_take_on_off_keywords() -> None:

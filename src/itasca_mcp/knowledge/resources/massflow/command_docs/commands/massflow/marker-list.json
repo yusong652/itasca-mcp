@@ -3,15 +3,17 @@
   "search_keywords": [
     "massflow",
     "marker",
-    "list"
+    "list",
+    "group",
+    "info"
   ],
   "description": "List information about markers.",
   "python_sdk_alternative": {
     "available": false
   },
   "notes": [
-    "The abbreviation accepted by the engine is `information`, not `info`.",
-    "`group` is a sibling command (`massflow marker group`), not a keyword of `list`.",
+    "9.7 accepted only the `information` spelling and had no `group` list keyword; 9.8.54 accepts `info`, `information` (same table) and `group`.",
+    "`group` the list keyword prints the Slot:Groupname table; the sibling command 'massflow marker group' is what assigns groups.",
     "MassFlow adds marker-specific range elements: `range marker-type <i>` (-2 to 3) and the flag `range active`."
   ],
   "availability": {
@@ -28,10 +30,23 @@
       "description": "List extra-variable information from slot i (1 to 128)."
     },
     {
+      "name": "group",
+      "syntax": "group",
+      "description": "List marker group names (ID and Slot:Groupname table)."
+    },
+    {
+      "name": "info",
+      "syntax": "info",
+      "description": "List the per-object information table. The 9.8 manual's documented spelling; `information` is also accepted."
+    },
+    {
       "name": "information",
       "syntax": "information",
       "description": "List the per-object information table."
     }
   ],
-  "examples": []
+  "examples": [],
+  "verification": [
+    "Live-verified 2026-11-10 on MassFlow 9.8.54 (GUI bridge) (state grade): 'massflow marker list info|information|group' each printed its own table header (Marker information / Marker Groups) on an empty model; bogus tokens are reported as unused AFTER the bare list has run."
+  ]
 }
