@@ -102,59 +102,69 @@
           "keyword": "exponent",
           "symbol": "m",
           "description": "exponent of pressure dependence defining elasticity, m. The default value is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-inner",
           "description": "flag to activate the inner cap hardening. The default value is off.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "hardening-inner",
           "symbol": "H_i",
           "description": "plastic hardening modulus value for the hardening of inner cap, H_i. This value is meaningful only when flag-inner = :lbool:`on`. The default value is 5.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "index-elasticity",
           "description": "index of elasticity refers to the elasticity case used by the NorSand model, with a default value of 0. If choosing to set it to 1 or 2, a positive value for void-reference must be input.",
-          "type": "FLT"
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "index-softening",
           "symbol": "T_S",
           "description": "index of considering an additional softening term of T_S. The default is 0. The allowable range is 0 \\le S \\le 1. A larger S value will lead to faster softening (larger softening rate) of a loose sand during an undrained shearing loading. Please be aware that the additional term T_S is still in debate, it should be cautious to use S>0. It is not recommended to use S>0 for any case of drained loading.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "over-consolidation-ratio",
           "symbol": "OCR",
           "description": "over consolidation ratio, OCR. The default is 1.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "hardening-y",
           "symbol": "H_y",
           "description": "another hardening modulus parameter, H_y, so that the real plastic hardening modulus is following H=H_0 - H_y\\psi. The default value is zero.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "pressure-reference",
           "symbol": "p_{atm}",
           "description": "reference pressure (usually the standard atmospheric pressure), p_{atm}. The default value is 100.0 if in kPa. This parameter should always be referred to the standard atmospheric pressure and it does not need extra calibration. Its value should be input in a unit of stress/pressure consistent with the other parameters used in the simulation.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "poisson",
           "symbol": "\\nu",
           "description": "Poisson’s ratio, \\nu. The default value is 0.2.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "void-reference",
           "symbol": "e_{ref}",
           "description": "Reference void ratio for elasticity, e_{ref}. It is required if void-reference = 1 or 2.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "stress-xx-initial",
@@ -208,59 +218,69 @@
           "keyword": "angle-psr",
           "symbol": "\\alpha",
           "description": "Current included angle between direction of major principal stress and z-coordinate frame of reference, \\alpha.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "bulk",
           "symbol": "K",
           "description": "current elastic bulk modulus, K.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
           "symbol": "G",
           "description": "current elastic shear modulus, G.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "ratio-image",
           "symbol": "M_{i,tc}",
           "description": "current stress ratio for image state at the TC condition, M_{i,tc}.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "stress-image",
           "symbol": "p_i",
           "description": "current image stress, p_i.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "stress-image-maximum",
           "symbol": "p_{i,max}",
           "description": "current allowable maximum image stress, p_{i,max}.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "state-parameter",
           "symbol": "\\psi",
           "description": "current state parameter, \\psi.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "state-parameter-image",
           "symbol": "\\psi_i",
           "description": "current state parameter for image stress, \\psi_i.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "void",
           "symbol": "e",
           "description": "current void ratio, e.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "stress-initial",
-          "description": "Initial stress state (symmetric tensor; accepts a 3-vector of principal values; settable). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Initial stress state (symmetric tensor; accepts a 3-vector of principal values; settable). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR"
         }
       ]
     }

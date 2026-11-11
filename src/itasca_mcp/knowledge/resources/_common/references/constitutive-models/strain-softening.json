@@ -81,45 +81,59 @@
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "description": "name of the table relating cohesion to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "description": "name of the table relating dilation angle to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-friction",
           "description": "name of the table relating friction angle to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "description": "name of the table relating tension limit to plastic tensile strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "strain-shear-plastic",
           "description": "accumulated plastic shear strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-tension-plastic",
           "description": "accumulated plastic tensile strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "length-calibration",
-          "description": "Calibration length for softening regularization (also present on softening-ubiquitous). Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Calibration length for softening regularization (also present on softening-ubiquitous). Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "plastic-strain",
-          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         }
       ]
     }

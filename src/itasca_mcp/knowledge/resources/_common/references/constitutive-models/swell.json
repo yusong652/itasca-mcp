@@ -102,18 +102,19 @@
           "keyword": "dip",
           "description": "dip angle [degrees] of the local swelling plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "dip-direction",
           "description": "dip direction [degrees] of the local swelling plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "angle",
           "description": "angle [degrees] of the local swelling plane, taken counterclockwise from the x-axis",
-          "type": "FLT"
+          "type": "FLT",
+          "dimension": "2D"
         },
         {
           "keyword": "friction",
@@ -124,7 +125,7 @@
         {
           "keyword": "normal",
           "description": "normal direction of the local swelling plane, (2D or 3D vector)",
-          "type": "FLT"
+          "type": "VEC"
         },
         {
           "keyword": "normal-x",
@@ -177,34 +178,42 @@
         {
           "keyword": "flag-swell",
           "description": "flag of swelling function, (1 - logarithmic; 2 - linear). The default is 1.",
-          "type": "BOOL"
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag-effective",
           "description": "If true, the swelling effect is based on effective compressive stress in the principal swelling direction; otherwise, it is based on the total compressive stress in the principal swelling direction. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "number-start",
           "symbol": "N_s",
           "description": "number of steps over which swelling strains are introduced, N_s. The default is 1.",
-          "type": "FLT"
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "count-swelling",
           "description": "count of step number after swelling starts, must be reset to zero to start a new swelling episode CORRECTED: the previously documented name 'count-swell' is rejected by FLAC3D 9.7; 'count-swelling' is the canonical keyword. Read-only (state variable): setting it is rejected with 'is read-only'. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
-          "type": "FLT",
+          "type": "INT",
           "readonly": true
         },
         {
           "keyword": "stress-local-vertical",
           "description": "local total stress vertical stress when swelling starts; must be reset to zero when soil swelling properties are changed",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "stress-swelling-xx",

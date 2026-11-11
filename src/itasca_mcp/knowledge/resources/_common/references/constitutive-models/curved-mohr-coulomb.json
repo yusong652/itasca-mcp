@@ -19,87 +19,122 @@
       "properties": [
         {
           "keyword": "bulk",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "elastic bulk modulus, K",
+          "type": "FLT"
         },
         {
           "keyword": "cohesion",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "current equivalent cohesion, c",
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "constant-a",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "constant-a, a. Required only when index-strength is 0 or 1.",
+          "type": "FLT"
         },
         {
           "keyword": "constant-b",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "constant-b, b. Required only when index-strength is 0 or 1.",
+          "type": "FLT"
         },
         {
           "keyword": "constant-s",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "constant-s, s. Required only when index-strength is 0 or 1.",
+          "type": "FLT"
         },
         {
           "keyword": "dilation",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "dilation angle, \\psi. Required when index-dilation = 1, with the default 0.0. It is read-only when index-dilation = 0.",
+          "type": "FLT",
+          "optional": true,
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 rejects a write to it (read-only), although the manual does not mark it so."
+          ]
         },
         {
           "keyword": "dilation-factor",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "dilation factor (default = 0.2), this is required when index-dilation is 0 (default) and the current dilation angle will be the current equivalent friction angle multiplied by this value. The current equivalent friction angle is calculated and related to the current tangle line of the curved strength.",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "exponent",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "The exponent n. Required only when index-elasticity is 1. the default is 0.",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-brittle",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "If true (or on or yes), the tension limit is set to 0 in the event of tensile failure. The default is false.",
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "friction",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "current equivalent friction angle, \\phi",
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "index-dilation",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "index of dilation, the default is 0. if set to 0, the dilation will be a factor (assigned by dilation-factor) of the current friction angle; if set to 1, the dilation will be the value input by dilation.",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "index-elasticity",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "index of elasticity, the default is 0. if set to 0, the elastic modulus are assumed constants; if set to 1, the elastic modulus are stress-dependent.",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "index-strength",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "index of strength, the default is 0. if set to 0, the curved strength is defined by the power formulation of \\tau vs. \\bar{\\sigma}_n; if set to 1, the curved strength is defined by the Hoek-Brown formulation of \\bar{\\sigma}_1 vs. \\bar{\\sigma}_3; if set to 2, the curved strength is defined by a table with pairs of (\\tau, \\bar{\\sigma}_n); if set to 3, the curved strength is defined by a table with pairs of (\\bar{\\sigma}_1, \\bar{\\sigma}_3).",
+          "type": "INT"
         },
         {
           "keyword": "poisson",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "Poisson’s ratio, \\nu",
+          "type": "FLT"
         },
         {
           "keyword": "pressure-effective",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "Effective mean pressure, p. Required to be assigned the first time this model is initialized when index-strength is 1. it will be updated during calculation.",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "pressure-reference",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "reference pressure, p_{ref}. Required only when index-strength is 0 or 1, or index-elasticity is 1.",
+          "type": "FLT"
         },
         {
           "keyword": "shear",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "elastic shear modulus, G",
+          "type": "FLT"
         },
         {
           "keyword": "table-strength",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "name of the table relating to piece-wised curved strength. Required only when index-strength is 2 or 3.",
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "tension",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "tension, {\\sigma}^t. The default is 0.0. See FAQs for more explanations.",
+          "type": "FLT"
         },
         {
           "keyword": "young",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "Young’s modulus, E",
+          "type": "FLT"
         },
         {
           "keyword": "young-reference",
-          "description": "Name verified live (FLAC3D 9.7 props()); description not yet curated."
+          "description": "Reference Young’s modulus, E_{ref}. Required only when index-elasticity is 1.",
+          "type": "FLT"
         }
       ]
     }

@@ -100,37 +100,43 @@
         {
           "keyword": "calc_stren_global",
           "description": "Global rock mass strength [Pa]. See Equation (5).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_stren_tension",
           "symbol": "s \\sigma_{ci}/m_b",
           "description": "Tensile strength [Pa]. This value equals to s \\sigma_{ci}/m_b.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_stren_ucsrm",
           "symbol": "s^a\\sigma_{ci}",
           "description": "Uniaxial compressive strength [Pa]. This value equals to s^a\\sigma_{ci}.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_stren_mb",
           "symbol": "m_b",
           "description": "Initial value of Hoek-Brown parameter m_b. See Equation (2).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_stren_s",
           "symbol": "s",
           "description": "Initial value of Hoek-Brown parameter s. See Equation (3).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_stren_a",
           "symbol": "a",
           "description": "Initial value of Hoek-Brown parameter a. See Equation (4).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "in_mod_minyoungrm",
@@ -146,54 +152,63 @@
         {
           "keyword": "calc_mod_youngrm",
           "description": "Initial value of rock mass Young’s modulus [Pa]. See Equation (5).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_mod_poisson",
           "description": "Poisson’s ratio estimated for the rock mass. See Equation (6). This usually is automatically calculated based on GSI by default. If this parameter is specified before initialization of calculated properties by IMASS, then IMASS will not automatically calculate this parameter. Note that if it has been (or the user input) a positive non-zero value, the Poisson ratio will not recalculated by Equation (6). To make it recalculated by Equation (6), just input a zero value.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_mod_young",
           "description": "Current Young’s modulus of the rock mass [Pa].",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "flag_weak_barton",
           "description": "Flag, the default is on. Set this to off to disable Barton & Kjaernsli (1981) shear strength criteria (two residual envelopes) to be used for post-peak behavior and use the single residual method instead.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag_weak_tencut",
           "description": "Flag, the default is on. Set this to off to disable the tension cutoff option. A material is deemed to be tension weakened if it exceeds its tensile strength in at least one of the zone’s tet overlays. If a material is tension weakened (property emer_weak_istenweak is calculated by IMASS as the ratio of total volume of tet overlays failed in tension to the overall zone volume) and if flag_weak_tencut = on, material tensile strength will be set to zero.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "in_weak_multecrit",
           "description": "A multiplier for critical plastic shear strain for the matrix material. This property must be assigned by the user. Critical strain (Equation 13) is initially calculated based on input properties as (12.5 - 0.125 * GSI + 1.0e-5) / (100.0 * calc_weak_zsize) and then multiplied directly by in_weak_multecrit; the resulting product is stored in variable calc_weak_ecrit. Material can be made to have a more brittle response by setting in_weak_mult_ecrit to a value less than 1.0 (and greater than 0.0) or more ductile by setting in_weak_multecrit to a value > 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_weak_chmbr",
           "symbol": "m_{br}",
           "description": "Residual value of Hoek-Brown parameter m_{br} when only one residual strength curve is used (flag_weak_barton = off). The default is 4.33.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_weak_char",
           "symbol": "a_r",
           "description": "Residual value of Hoek-Brown parameter a_r when only one residual strength curve is used (flag_weak_barton = off). The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_weak_phib",
           "symbol": "\\phi_b",
           "description": "Basic friction angle for the rock blocks in Barton & Kjaernsli (1981) shear strength criteria [degrees], \\phi_b, see Equation (8). The default is 30.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_weak_sloss",
-          "description": "Input sloss value to initialize some damage in the rock mass and start from a residual state [dimensionless]. Five rules apply to using this property:",
+          "description": "Input sloss value to initialize some damage in the rock mass and start from a residual state [dimensionless]. Five rules apply to using this property: The in_weak_sloss should be between -1.0 to 1.0. If the zone current sloss (emer_weak_sloss) is between 0.0 and 1.0, then in_weak_sloss = 0 won’t be effective because the zone behavior is controlled by accumulated plastic shear strain. If the zone current sloss (emer_weak_sloss) is between -1.0 and 0.0, then an in_weak_sloss > 0 won’t be effective because the strength properties of a zone that is past the post-peak envelope cannot move back to the space between peak and post-peak envelopes. If in_weak_sloss is reset to its current value, IMASS won’t notice the change. The in_weak_sloss property cannot be used in combination with in_bulking_targetvsi.",
           "type": "FLT"
         },
         {
@@ -204,84 +219,99 @@
         {
           "keyword": "calc_weak_ecrit",
           "description": "Critical strain for the matrix material [m/m] used for material softening calculations. Critical strain is initially calculated based on input properties as Equation (14) and then multiplied directly by in_weak_multecrit; the resulting product is stored in calc_weak_ecrit.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_weak_zsize",
           "symbol": "Z",
           "description": "Zone size represented by the cube root of zone volume [m], Z. This is used to calculate the critical strain, see Equation (14). Note that this is a read-only variable.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_weak_esplastic",
           "symbol": "\\gamma^p",
           "description": "Current accumulated plastic shear strain, \\gamma^p.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_weak_etplastic",
           "description": "Current accumulated plastic tensile strain.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_weak_istenweak",
           "description": "emer_weak_istenweak = 0 initially, but changes to maximum value of 1.0 as material yields in tension. It is calculated as the ratio of total volume of tet overlays in a zone that are yielded in tension to the overall volume of the zone.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_weak_sloss",
           "symbol": "S_L",
           "description": "Strength loss indicator (S_L) which varies between +1 and -1 (-1 \\le S_L \\le 1). A material which has not yielded has S_L = 1. This value linearly reduces to 0 as a function of \\gamma^p. When \\gamma^p = \\gamma_{crit}, S_L = 0. S_L linearly varies between 0 and -1 as a function of VSI_c. When VSI_c = 2/3, S_L = -1, therefore if VSI_{max} < 2/3 is specified S_L can only decrease to a value equal to -1.5 VSI_c but not -1.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_stren_mcfric",
           "description": "Current value of friction [degrees]. Calculated for each tet individually in overlays, this reported value is the average value of tet overlays for the zone.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_stren_mccoh",
           "description": "Current value of cohesion [Pa]. Calculated for each tet individually in overlays, this reported value is the average value of tet overlays for the zone.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_stren_tension",
           "description": "Current value of tension cutoff [Pa]. Calculated for each tet individually in overlays, this reported value is the average value of tet overlays for the zone.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "flag_bulking_denadj",
           "description": "Flag, the default is off. When this flag is on, IMASS will adjust zone density based on current value of VSI.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag_bulking_modsoft",
           "description": "Flag, the default is on. Set this to off to disable modulus softening. The fragment aspect ratio for modulus softening calculation is set to 0.6.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "in_bulking_den",
           "symbol": "kg/m^3",
           "description": "Initial material density [kg/m^3]. This can be obtained internally from the zone density, which can be set with the command of zone initialize density. The zone’s density may be altered by IMASS (if flag_bulking_denadj = on).",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_bulking_dil",
           "symbol": "VSI_{max}",
           "description": "Initial dilation angle [degrees], the default is 10. If inputting a positive value (option 1), this positive constant dilation angle will be used. If inputting a negative value (option 2), the built-in evolving dilation angle will be used (shown in Figure 10). With either dilation option, the dilation angle is set to zero when a user-defined maximum bulking factor (VSI_{max}) is reached. This prevents zones from expanding to unrealistic levels during shearing.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_bulking_targetvsi",
           "symbol": "VSI_{tgt}",
-          "description": "Target bulking factor or VSI (Volumetric Strain Increment), VSI_{tgt}. When in_bulking_targetvsi is specified as a positive value for a zone, the plastic shear strain is set to calc_weak_ecrit for that zone, and it is placed past the post-peak envelope in principal stress space. The VSI for the purpose of strength envelope calculation is assumed to be zero on the post-peak envelope and equal to in_bulking_maxtotvsi on the ultimate strength envelope; therefore, the relative position of the zone between the two residuals is determined based on the specified in_bulking_targetvsi. Setting property in_bulking_targetvsi to a positive value is useful to force a material to start at an accumulated strain level. emer_bulking_totvsi = in_bulking_targetvsi at the beginning of the cycle at which the in_bulking_targetvsi value is specified. A set of rules applies to using this property:",
-          "type": "FLT"
+          "description": "Target bulking factor or VSI (Volumetric Strain Increment), VSI_{tgt}. When in_bulking_targetvsi is specified as a positive value for a zone, the plastic shear strain is set to calc_weak_ecrit for that zone, and it is placed past the post-peak envelope in principal stress space. The VSI for the purpose of strength envelope calculation is assumed to be zero on the post-peak envelope and equal to in_bulking_maxtotvsi on the ultimate strength envelope; therefore, the relative position of the zone between the two residuals is determined based on the specified in_bulking_targetvsi. Setting property in_bulking_targetvsi to a positive value is useful to force a material to start at an accumulated strain level. emer_bulking_totvsi = in_bulking_targetvsi at the beginning of the cycle at which the in_bulking_targetvsi value is specified. A set of rules applies to using this property: in_bulking_targetvsi cannot be larger than in_bulking_maxtotvsi. If the zone current sloss (emer_weak_sloss) is between 0.0 and 1.0, then in_bulking_targetvsi = 0 won’t be effective because the zone behavior is controlled by accumulated plastic shear strain. If in_bulking_targetvsi is reset to its current value, IMASS won’t notice the change. in_bulking_targetvsi cannot be used in combination with in_weak_sloss.",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "in_bulking_maxtotvsi",
           "symbol": "VSI_{max}",
           "description": "Maximum bulking factor, VSI_{max}. The default is 2/3. After zone’s VSI reaches this limit, the dilation is shut off and density adjustment is terminated. in_bulking_maxtotvsi also controls the extent of strength weakening for the ultimate strength envelope. It can change anywhere between post-peak envelope (in_bulking_maxtotvsi = 0) and a strength envelope corresponding to 40% of rock mass porosity (in_bulking_maxtotvsi = 2/3), which is the default ultimate strength envelope in IMASS.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "emer_bulking_mcdil",
@@ -292,68 +322,81 @@
           "keyword": "emer_bulking_den",
           "symbol": "kg/m^3",
           "description": "Current zone density [kg/m^3]. The zone’s density may be altered by IMASS, and current zone density is available in properties density and emer_bulking_den. See the in_bulking_den property for additional information.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_bulking_totvsi",
           "symbol": "VSI_c",
           "description": "Current total VSI value, VSI_c, used in modulus calculations, density adjustment, dilation model, dilation shut off, and updating the strength envelope between post-peak and ultimate strength. emer_bulking_totvsi = [VSI from zone] + [amount of VSI that is automatically calculated by IMASS from in_bulking_targetvsi if specified].",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "flag_sfail_failtrack",
           "description": "Flag, the default is on. Set this to off to disable failure stress tracking. IMASS records trend and plunge of the principal stress direction. Trend = angle in degrees measured clockwise from North (toward the East axis). Plunge = angle in degrees, measured positive downward from the horizontal which is at 0 degrees. In FLAC3D and 3DEC model space, positive y-axis points North, positive x-axis points East, positive z-axis points up. Note FLAC3D and 3DEC use the convention of negative stresses being compressive and tensile stresses being positive. IMASS records and reports the following values for the first subzone (tet) that reaches the specified yielding limit for any given zone.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "emer_sfail_pmax",
           "description": "Maximum, most positive principal stress [Pa].",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_plungepmax",
           "description": "Plunge [degrees] of maximum principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_trendpmax",
           "description": "Trend [degrees] of maximum principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_pmid",
           "description": "Intermediate principal stress [Pa].",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_plungepmid",
           "description": "Plunge [degrees] of intermediate principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_trendpmid",
           "description": "Trend [degrees] of intermediate principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_pmin",
           "description": "Minimum, most negative principal stress [Pa].",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_plungepmin",
           "description": "Plunge [degrees] of minimum principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "emer_sfail_trendpmin",
           "description": "Trend [degrees] of minimum principal stress.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "flag_uj_usejoints",
           "description": "Flag, the default is off. Set this to on if to set ubiquitous joints (ubiquitous joint properties must also be set for this case). Note all joint properties are initially zero. For weakness plane orientation, specify properties in_uj_jdip, in_uj_jddirection or properties in_uj_jnx, in_uj_jny, in_uj_jnz (these components of the normal to the weakness plane are not required to be a unit vector, IMASS normalizes them internally).",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "in_uj_jcoh",
@@ -411,12 +454,14 @@
         {
           "keyword": "emer_uj_esplastic",
           "description": "Accumulated plastic shear strain in the joint.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "version",
           "description": "IMASS is actively used and enhanced through experience and research at Itasca. This read-only property is used by the development team to keep track of changes made to IMASS over time.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "calc_plastic_strain",
@@ -432,7 +477,9 @@
         },
         {
           "keyword": "in_uj_jpstren",
-          "description": "Ubiquitous-joint parallel strength input. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Ubiquitous-joint parallel strength input. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT",
+          "optional": true
         }
       ]
     }

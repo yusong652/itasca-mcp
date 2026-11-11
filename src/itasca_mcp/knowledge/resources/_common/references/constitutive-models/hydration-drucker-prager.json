@@ -23,7 +23,10 @@
     "tension",
     "tension-reference",
     "young",
-    "young-reference"
+    "young-reference",
+    "compression-uniaxial",
+    "tension-drucker",
+    "tension-uniaxial"
   ],
   "description": "The mechanical aspects of hydration in FLAC3D are handled by a modified Drucker-Prager constitutive model where elastic and strength properties depend on the hydration grade, \\(\\alpha\\) (Hinze 1987). [ * ] Due to a dormant phase, the evolution of strength and stiffness starts with some delay. This is taken into account by the minimum degree of hydration, \\(\\alpha_0\\) . This value marks the transition between the suspension and solid-state behavior. Beyond \\(\\alpha_0\\) , strength and stiffness do not always depend linearly on hydration grade. Thus, a relationship is introduced, based on the ide",
   "property_groups": [
@@ -50,10 +53,14 @@
           "type": "FLT"
         },
         {
-          "keyword": "compression",
+          "keyword": "compression-uniaxial",
           "symbol": "σ_c",
-          "description": "compressive strength limit, σ_c",
-          "type": "FLT"
+          "description": "current uniaxial compressive strength, σ_c",
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "9.8 spelling (live FLAC3D and MPoint3D 9.8, and the 9.8 manual). MPoint3D 9.7 listed this property as 'compression', which 9.8 rejects."
+          ]
         },
         {
           "keyword": "constant-a",
@@ -64,7 +71,7 @@
         {
           "keyword": "constant-c",
           "symbol": "c",
-          "description": "material parameter, c",
+          "description": "material parameter, c, setting the ratio of the uniaxial compressive to tensile strength; at complete hydration σ_c/σ_t = 0.85/c. Must be positive whenever a reference tensile strength f_{cte} is given. The default is 0.1.",
           "type": "FLT"
         },
         {
@@ -95,7 +102,8 @@
           "keyword": "poisson",
           "symbol": "ν",
           "description": "Poisson’s ratio, ν",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
@@ -110,10 +118,13 @@
           "type": "FLT"
         },
         {
-          "keyword": "tension",
+          "keyword": "tension-drucker",
           "symbol": "σ^t",
-          "description": "tension cut-off, σ^t",
-          "type": "FLT"
+          "description": "tensile strength, σ^t",
+          "type": "FLT",
+          "notes": [
+            "9.8 spelling (live FLAC3D and MPoint3D 9.8, and the 9.8 manual). MPoint3D 9.7 listed this property as 'tension', which 9.8 rejects."
+          ]
         },
         {
           "keyword": "tension-reference",
@@ -125,13 +136,24 @@
           "keyword": "young",
           "symbol": "E",
           "description": "Young’s modulus, E",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "young-reference",
           "symbol": "α",
           "description": "reference Young’s modulus for α = 1, E_{cte}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
+        },
+        {
+          "keyword": "tension-uniaxial",
+          "description": "current uniaxial tensile strength, σ_t",
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Present on live FLAC3D and MPoint3D 9.8; not in the property set MPoint3D 9.7 listed."
+          ]
         }
       ]
     }

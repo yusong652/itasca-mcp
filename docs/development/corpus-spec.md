@@ -238,6 +238,15 @@ description, search_keywords, availability, notes, verification, source`.
 
 1. **model** (constitutive-models, contact-models, joint-models):
    `model, property_groups, usage?, examples?, callback_events?`
+   Constitutive-model properties (reconciled 2026-11-11 against the 9.8
+   manual and live FLAC3D 9.8 `props()`/`set_prop` on all 43 models):
+   `{keyword, symbol?, description, type, dimension?, optional?, readonly?,
+   notes?}`. `type` is what the engine returns (FLT/INT/BOOL/STR/VEC/TENSOR);
+   `readonly` is the manual's (r) flag or a live write refusal; `optional` is
+   the manual's (a) "advanced" flag (the property has a default); a
+   manual-vs-engine disagreement goes in the property's `notes`. Contact-model
+   properties keep their own table columns (`range, default, modifiable,
+   inheritable`).
    (+ columnar-basalt's structured `index_expansion`, load-bearing for the
    live property-count accounting). (`parent` deleted in section D.)
 2. **range-element**: `syntax, category, category_name, parameters?,

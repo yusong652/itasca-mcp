@@ -120,176 +120,212 @@
           "keyword": "alpha",
           "symbol": "\\alpha",
           "description": "dimensionless cap yielding surface parameter, \\alpha. The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "beta",
           "symbol": "\\beta",
           "description": "dimensionless calibration factor, \\beta. The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "dilation-mobilized",
           "symbol": "\\psi_m",
           "description": "current mobilized dilation angle, \\psi_m. It is read-only, except for table-dilation ǂ 0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "exponent",
           "symbol": "m",
           "description": "exponent for the pressure-dependent elastic moduli, m. The default is 0.5, and the upper limit is 0.99.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "failure-ratio",
           "symbol": "R_f",
           "description": "failure ratio, R_f. The default is 0.9.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag-cap",
-          "description": "= 0 (default), no cap. The elastic moduli are functions of the mean effective stress, and pressure_initial should be specified.",
-          "type": "BOOL"
+          "description": "= 0 (default), no cap. The elastic moduli are functions of the mean effective stress, and pressure_initial should be specified. = 1, with cap. The elastic moduli are functions of the cap pressure and pressure_cap should be specified via a command or a FISH function, or calculated internally otherwise, see information on pressure_cap.",
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag-dilation",
-          "description": "= 0 (default), the built-in Rowe dilation rule is used.",
-          "type": "BOOL"
+          "description": "= 0 (default), the built-in Rowe dilation rule is used. = 1, \\psi_m ≡ \\psi_f. = 2, \\phi_{cv} should be specified and \\psi_m is calculated from this equation.",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "flag-shear",
-          "description": "= 0 (default), the built-in shear hardening law is used.",
-          "type": "BOOL"
+          "description": "= 0 (default), the built-in shear hardening law is used. = 1, \\phi_m ≡ \\phi_f.",
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "friction-0",
           "symbol": "\\phi_0",
           "description": "initial mobilized friction angle, \\phi_0 associated with zero plastic shear strain. By default, \\phi_0 = \\phi_m if \\epsilon_{ps} is initialized to 0.0; otherwise, \\phi_0 = 0.0 if not specified.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "friction-critical",
           "symbol": "\\phi_{cv}",
           "description": "constant \\phi_{cv}. The default value is calculated by this equation. Required for specification only if flag-dilation = 2.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "over-consolidation-ratio",
           "symbol": "OCR",
           "description": "over-consolidation ratio, OCR. The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "multiplier",
           "symbol": "R",
           "description": "multiplier on current plastic cap modulus to give elastic bulk and shear moduli, R. The default is 5.0 with cap and 0.0 without cap.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "shear-maximum",
           "symbol": "G^e_{max}",
           "description": "maximum (upper-bound limit) of the elastic shear modulus, G^e_{max}. The default internally calculated value is 10 \\times G^e_{ini}, where G^e_{ini} is the initial G^e when the model is first time set up.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "shear-minimum",
           "symbol": "G^e_{min}",
           "description": "minimum (lower-bound limit) of the elastic shear modulus, G^e_{min}. The default internally calculated value is 0.1 \\times G^e_{ini}, where G^e_{ini} is the initial G^e when the model is first time set up.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "strain-shear-plastic",
           "symbol": "\\gamma^p",
           "description": "accumulated plastic shear strain, \\gamma^p. By default, it is initialized internally.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "strain-tensile-plastic",
           "symbol": "e^{pt}",
           "description": "accumulated plastic shear strain, e^{pt}. The default initial value is 0.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "notes": [
+            "Live FLAC3D 9.8 reports this property as 'strain-tension-plastic'; live MPoint3D 9.8 accepts either spelling; MPoint3D 9.7 accepted only this one, so this spelling works on both."
+          ]
         },
         {
           "keyword": "strain-volumetric-plastic",
           "symbol": "e^p",
           "description": "accumulated plastic volumetric strain, e^p. By default, it is initialized internally.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "table-pressure-cap",
           "description": "name of the table relating cap pressure to plastic volume strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "description": "name of the table relating cohesion to plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "description": "name of the table relating mobilized dilation angle to plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-friction",
           "description": "name of the table relating mobilized friction angle to plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "description": "name of the table relating tensile strength to plastic tensile strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "void-initial",
           "symbol": "\\hat{e}_{ini}",
           "description": "initial void ratio, \\hat{e}_{ini}. The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "void-maximum",
           "symbol": "\\hat{e}_{max}",
           "description": "allowable maximum void ratio, \\hat{e}_{max}. The default is 999.0, a virtual value to bypass the dilatancy cut-off.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "bulk",
           "description": "current elastic bulk modulus",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "pressure-effective",
           "symbol": "p",
           "description": "mean effective stress, p",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
           "description": "current elastic shear modulus",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "stress-deviatoric",
           "symbol": "q",
           "description": "deviatoric stress, q",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "void",
           "symbol": "\\hat{e}",
           "description": "current void ratio, \\hat{e}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "young",
           "symbol": "E",
           "description": "current elastic Young’s modulus, E",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         }
       ]
     }
