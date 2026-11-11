@@ -385,15 +385,24 @@
       "description": "Rigid block volume. When modified, only the rigid block mass and real mass are modified and the other rigid block attributes based on volume are not changed. The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a rigid block, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the rblock.moi.fix intrinsic)."
     },
     {
+      "name": "add",
+      "syntax": "add (pre-value modifier)",
+      "description": "Add the value that follows to the existing value: '<attribute> add <value>'."
+    },
+    {
+      "name": "multiply",
+      "syntax": "multiply (pre-value modifier)",
+      "description": "Multiply the existing value by the value that follows: '<attribute> multiply <value>'."
+    },
+    {
+      "name": "replace",
+      "syntax": "replace (pre-value modifier)",
+      "description": "Replace the existing value with the value that follows (the default): '<attribute> replace <value>'."
+    },
+    {
       "name": "gradient",
       "syntax": "gradient fx fy fz (post-value modifier)",
-      "description": "Apply a linear gradient in each of the axes directions starting at the origin.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin."
     },
     {
       "name": "axis-angle",
@@ -419,16 +428,17 @@
   ],
   "examples": [],
   "notes": {
+    "6.0": [
+      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute.",
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
+    ],
     "7.0": [
-      "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00.",
-      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute."
+      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute.",
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ],
     "9.0": [
-      "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7.",
-      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute."
-    ],
-    "6.0": [
-      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute."
+      "The manual documents rblock initialize as a synonym of this command, but it is rejected on every live build (6.00/7.00/9.8, 2D & 3D): the rblock keyword enumeration has no initialize entry. Use rblock attribute.",
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ]
   },
   "verification": [

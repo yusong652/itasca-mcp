@@ -15,14 +15,14 @@
   },
   "notes": {
     "6.0": [
-      "Modifiers: add <f>: Add f to the existing value; gradient <v>: Apply a linear gradient in each of the axes directions starting at the origin; gradient-x <f>: Apply a linear gradient in the x-direction starting at the origin; gradient-y <f>: Apply a linear gradient in the y-direction starting at the origin; gradient-z <f>: Apply a linear gradient in the z-direction starting at the origin (3D ONLY); multiply <f>: Multiply the existing value by f; replace <f>: Replace the existing value with f"
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ],
     "7.0": [
-      "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ],
     "9.0": [
-      "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7.",
-      "'[wlmodblock]' at the end of a keyword's syntax is not a literal token: it marks where a post-value modifier may follow the value. The only one accepted live is 'gradient' (see the gradient keyword)."
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned.",
+      "'[wlmodblock]' at the end of a keyword's syntax is not a literal token: it marks the modifier slot described above."
     ]
   },
   "availability": {
@@ -414,15 +414,24 @@
       }
     },
     {
+      "name": "add",
+      "syntax": "add (pre-value modifier)",
+      "description": "Add the value that follows to the existing value: '<attribute> add <value>'."
+    },
+    {
+      "name": "multiply",
+      "syntax": "multiply (pre-value modifier)",
+      "description": "Multiply the existing value by the value that follows: '<attribute> multiply <value>'."
+    },
+    {
+      "name": "replace",
+      "syntax": "replace (pre-value modifier)",
+      "description": "Replace the existing value with the value that follows (the default): '<attribute> replace <value>'."
+    },
+    {
       "name": "gradient",
       "syntax": "gradient fx fy fz (post-value modifier)",
-      "description": "Apply a linear gradient in each of the axes directions starting at the origin.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin."
     },
     {
       "name": "axis-angle",
