@@ -66,7 +66,7 @@
     }
   ],
   "notes": [
-    "The 7.0/9.0 manuals attach a post-value modifier block (add, gradient, gradient-x/y/z, multiply, replace) to every attribute; live, only plain 'gradient <v>' is accepted - add, multiply, replace and the gradient-x/y/z spellings are rejected on 6.00, 7.00 and 9.8 (2D and 3D). The 6.0 manual does not document the block, but 6.00 accepts 'gradient' all the same."
+    "The 7.0/9.0 manuals attach a modifier block (add, gradient, gradient-x/y/z, multiply, replace) to every attribute. Read back live on 9.8 with 'ball thermal attribute temperature': 'add', 'multiply' and 'replace' go BEFORE the value ('temperature add 5'); 'gradient <v>' goes AFTER it. A trailing add/multiply/replace and the gradient-x/y/z spellings are rejected on 6.00, 7.00 and 9.8 (2D and 3D), after the plain value has been assigned. The 6.0 manual does not document the block, but 6.00 accepts 'gradient' all the same."
   ],
   "verification": [
     "Live-verified 2026-11-09 on PFC2D and PFC3D 6.00, 7.00 and 9.8 consoles (state grade): expansion, power-applied, specific-heat, temperature and temperature-increment each set and read back exactly via clump.thermal.* FISH intrinsics on all six consoles; gradient read back as base value plus gradient dot position (the clump at x=3 reads 13.0 after 'temperature 10 gradient (1,1)')."

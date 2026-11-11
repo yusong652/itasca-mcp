@@ -15,14 +15,14 @@
       "Modification of clump geometry will fail if the resulting clump would not fall entirely within the model domain",
       "Be aware of the distinction between attributes and properties! See tutorial 'Attributes and Properties' for details",
       "Specifying moment of inertia or volume via command line sets them to fixed state (not auto-updated when scaling/changing density)",
-      "Modifiers: add <f>: Add value to existing attribute; multiply <f>: Multiply existing attribute by value; replace <f>: Replace existing attribute with value (default); gradient <v>: Apply linear gradient in each axis direction starting at origin; gradient-x <f>: Apply linear gradient in specific direction starting at origin"
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ],
     "7.0": [
-      "'gradient' is a live post-value modifier on 7.00; add/multiply/replace and the gradient-x/y/z spellings are rejected on 7.00."
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned."
     ],
     "9.0": [
-      "'gradient' is a live post-value modifier on 9.7; add/multiply/replace and the gradient-x/y/z spellings are rejected on both 7.00 and 9.7.",
-      "'[clmodblock]' at the end of a keyword's syntax is not a literal token: it marks where a post-value modifier may follow the value. The only one accepted live is 'gradient' (see the gradient keyword)."
+      "Modifiers, read back live on 6.00, 7.00 and 9.8: 'add', 'multiply' and 'replace' go BEFORE the value ('velocity-x add 1.0', 'density multiply 2'); 'gradient <v>' goes AFTER a scalar value ('velocity-x 1.0 gradient 0 0 1' stores value + gradient . position) and is rejected after a vector value. A trailing add/multiply/replace and the gradient-x/y/z spellings fail, after the plain value has already been assigned.",
+      "'[clmodblock]' at the end of a keyword's syntax is not a literal token: it marks the modifier slot described above."
     ]
   },
   "python_sdk_alternative": {
@@ -469,15 +469,24 @@
       "description": "Clump volume. When modified, only the clump mass and real mass are modified and the other clump attributes based on volume are not changed (e.g., moment of inertia, pebble sizes). The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
+      "name": "add",
+      "syntax": "add (pre-value modifier)",
+      "description": "Add the value that follows to the existing value: '<attribute> add <value>'."
+    },
+    {
+      "name": "multiply",
+      "syntax": "multiply (pre-value modifier)",
+      "description": "Multiply the existing value by the value that follows: '<attribute> multiply <value>'."
+    },
+    {
+      "name": "replace",
+      "syntax": "replace (pre-value modifier)",
+      "description": "Replace the existing value with the value that follows (the default): '<attribute> replace <value>'."
+    },
+    {
       "name": "gradient",
       "syntax": "gradient fx fy fz (post-value modifier)",
-      "description": "Apply a linear gradient in each of the axes directions starting at the origin.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
+      "description": "Apply a linear gradient in each of the axes directions starting at the origin."
     },
     {
       "name": "axis-angle",
