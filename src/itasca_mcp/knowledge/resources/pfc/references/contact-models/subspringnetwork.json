@@ -163,7 +163,10 @@
           "type": "FLT",
           "range": "(0.0, +∞)",
           "modifiable": false,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "Not modifiable per the manual, but live 7.00 and 9.8 accept set_prop on it."
+          ]
         },
         {
           "keyword": "sn_cntconv",
@@ -173,7 +176,12 @@
           "range": "[0, +∞)",
           "default": "-1",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "availability": {
+            "versions": [
+              "9.0"
+            ]
+          }
         },
         {
           "keyword": "sn_coh",
@@ -222,7 +230,12 @@
           "range": "[0.0, +∞)",
           "default": "1000",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "availability": {
+            "versions": [
+              "9.0"
+            ]
+          }
         },
         {
           "keyword": "sn_convlim",
@@ -232,7 +245,12 @@
           "range": "{false, true}",
           "default": "false",
           "modifiable": false,
-          "inheritable": false
+          "inheritable": false,
+          "availability": {
+            "versions": [
+              "9.0"
+            ]
+          }
         },
         {
           "keyword": "sn_dil",
@@ -252,7 +270,10 @@
           "range": "[0.0, +∞)",
           "default": "infinity",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "A freshly created contact reports 0.0 on live 7.00 and 9.8, not the documented infinity."
+          ]
         },
         {
           "keyword": "sn_fa",
@@ -288,7 +309,7 @@
           "keyword": "sn_heal",
           "symbol": "-",
           "description": "Healing mode",
-          "type": "INT",
+          "type": "BOOL",
           "range": "{0, 1}",
           "default": "0",
           "modifiable": true,
@@ -322,7 +343,10 @@
           "range": "[0, 1]",
           "default": "1",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "Live default is 1 on 9.8 and 0 on 7.00."
+          ]
         },
         {
           "keyword": "sn_pois",
@@ -358,11 +382,15 @@
           "keyword": "sn_sdisp",
           "symbol": "-",
           "description": "Accumulated shear displacement magnitude in units distance",
-          "type": "VEC2",
+          "type": "FLT",
           "range": "ℝ²",
           "default": "0",
           "modifiable": false,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "Live 7.00 and 9.8 return a float here (the manual table says VEC2; springnetwork's sn_sdisp is a vec2).",
+            "Not modifiable per the manual, but live 7.00 and 9.8 accept set_prop on it."
+          ]
         },
         {
           "keyword": "sn_slip",
@@ -400,7 +428,12 @@
           "description": "Bond state string. The returned value is the accumulated state of each subcontact if sn_index is 0, or the corresponding subcontact state otherwise",
           "type": "STR",
           "modifiable": false,
-          "inheritable": false
+          "inheritable": false,
+          "availability": {
+            "versions": [
+              "9.0"
+            ]
+          }
         },
         {
           "keyword": "sn_tabpos",
