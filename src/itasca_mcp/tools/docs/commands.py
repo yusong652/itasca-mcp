@@ -86,6 +86,14 @@ _COMMAND_CORE_FIELDS = (
 _COMMAND_IDENTITY_FIELDS = ("command", "category", "syntax", "description", "keywords")
 
 
+def _compact_keyword(keyword: dict[str, Any]) -> dict[str, Any]:
+    """Name, syntax and the 2D/3D restriction: what still tells a keyword apart on a trimmed page."""
+    compact = {"name": keyword.get("name"), "syntax": keyword.get("syntax")}
+    if keyword.get("dimension"):
+        compact["dimension"] = keyword["dimension"]
+    return compact
+
+
 def _keyword_name(keyword: dict[str, Any]) -> str:
     """Path form of a keyword: 'kwd:bond_break' is addressed as 'bond_break'."""
     return str(keyword.get("name", "")).lower().removeprefix("kwd:")
@@ -403,7 +411,7 @@ def _browse_command(category: str, command_name: str, version: str, software: st
             compact_field(
                 doc,
                 "keywords",
-                lambda keywords: [{"name": k.get("name"), "syntax": k.get("syntax")} for k in keywords],
+                lambda keywords: [_compact_keyword(k) for k in keywords],
             ),
             omit_largest(doc, keep=_COMMAND_IDENTITY_FIELDS),
         ),

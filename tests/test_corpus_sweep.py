@@ -11,6 +11,7 @@ script that corrupts one file out of 2,300 is caught by name.
 """
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -340,6 +341,21 @@ _BANNED_SECTION_KEYS = {"plot_items", "condition_families", "common_keywords"}
 _KEYWORD_ENTRY_BANNED = {"keyword", "engines", "examples", "available_parameters", "required", "parameters"}
 
 
+_DIMENSION_MARKER = re.compile(r"[23]D[ -]only", re.IGNORECASE)
+
+
+def _keyword_level_dimension_marker(syntax: str) -> bool:
+    """A 2D/3D ONLY marker outside every {...}/[...] group restricts the keyword itself.
+
+    Inside a group it restricts one sub-option and has no field to move to.
+    """
+    for match in _DIMENSION_MARKER.finditer(syntax):
+        before = syntax[: match.start()]
+        if before.count("{") + before.count("[") <= before.count("}") + before.count("]"):
+            return True
+    return False
+
+
 def _keyword_entry_problems(entries: Any, rel: str, jp: str) -> list[str]:
     problems: list[str] = []
     for i, entry in enumerate(entries):
@@ -351,6 +367,10 @@ def _keyword_entry_problems(entries: Any, rel: str, jp: str) -> list[str]:
             problems.append(f"{rel} @{jp}[{i}]: keyword entry without a name")
         for banned in _KEYWORD_ENTRY_BANNED & set(entry):
             problems.append(f"{rel} @{jp}[{i}]: keyword entry field {banned!r}")
+        syntax = entry.get("syntax")
+        for text in syntax.values() if isinstance(syntax, dict) else [syntax]:
+            if isinstance(text, str) and _keyword_level_dimension_marker(text):
+                problems.append(f"{rel} @{jp}[{i}]: inline 2D/3D ONLY marker in syntax; use the dimension field")
     return problems
 
 

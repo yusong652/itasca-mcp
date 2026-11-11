@@ -28,8 +28,9 @@
       "syntax": {
         "6.0": "circle {position <v2> | radius <frad> | resolution <fres>} ...",
         "7.0": "circle {position <v> | radius <f> | resolution <f>} ...",
-        "9.0": "circle {position <v> | radius <f> | resolution <f>} ... 2D only"
+        "9.0": "circle {position <v> | radius <f> | resolution <f>} ..."
       },
+      "dimension": "2D",
       "description": {
         "6.0": "Generate a circle in 2D. Options: position <v2>: Position of the center of the disk that is the origin, by default.; radius <frad>: Radius of the disk that is 1.0, by default.; resolution <fres>: Resolution of the disk edges. The number of disk edges is set so that the edge is smaller than fres * frad . By default, fres = 0.1.",
         "7.0": "Generate a circle in 2D. Options: position <v>: Center of the circle.; radius <f>: Radius of the circle.; resolution <f>: Resolution of the edges of the circle. By default, f = 0.1.",
@@ -38,11 +39,8 @@
     },
     {
       "name": "cone",
-      "syntax": {
-        "6.0": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ...",
-        "7.0": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ...",
-        "9.0": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ... 3D only"
-      },
+      "syntax": "cone {axis <v3> | base <v3> | cap <bbottom> [<btop>] | height <fheight> | radius <fradbot> [<fradtop>] | resolution <fres>} ...",
+      "dimension": "3D",
       "description": "Generate a cone in 3D. Either a cone or a conic frustum (i.e., cone with the tip cut off, such as a funnel if the caps are absent) can be generated. Options: axis <v3>: Direction of the symmetry axis of the cone pointing from the base position that points in the positive z-direction, by default.; base <v3>: Position of the base of the cone (i.e., the center of the bottom end) that is the origin, by default.; cap <bbottom>[<btop>]: Indicate the inclusion status of the end caps. If one Boolean is specified, then this state is given to both end caps. If two Booleans are specified, then the first one applies to the bottom cap and the second to the top cap. By default, the bottom cap is created. No top cap is created unless fradtop is specified and is nonzero.; height <fheight>: Height of the cone. This is the distance from the base position to the point or, if a frustum, to the center of the top end. By default, fheight = 1.; radius <fradbot>[<fradtop>]: Radius of the cone. By default, fradbot = 1.0 and fradtop = 0.0, meaning that a cone is created. If fradtop > 0.0, then a conic frustum (i.e., cone with the tip cut off) is created. In this case, fradbot is the bottom radius at the base location, and fradtop is the radius of the top of the frustum at a distance fheight from the base location along the symmetry axis.; resolution <fres>: Resolution of the edges of the cone ends. The number of end edges is set so that the edge is smaller than fres * fradbot . If a frustum is to be generated with fradtop > 0, then the end edge lengths are less than fres * min( fradbot , fradtop ). By default, fres = 0.1."
     },
     {

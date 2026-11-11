@@ -55,8 +55,9 @@
       "syntax": {
         "6.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> [one-wall] [expand <fe>]",
         "7.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> [one-wall] [expand <fe>]",
-        "9.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> [one-wall] [expand <fe>] `z`-components are 3D ONLY"
+        "9.0": "box <fxmin> <fxmax> <fymin> <fymax> <fzmin> <fzmax> [one-wall] [expand <fe>] `z`-components are"
       },
+      "dimension": "3D",
       "description": {
         "6.0": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name ({Bottom, Right, Top, Left} in 2D; {Bottom, Top, Left, Right, Front, Back} in 3D). With the name keyword the ID is NOT appended (name 'fred' gives fredTop); without it the ID is appended (boxWallTop12). Verified on PFC 6.0/7.0/9.0/9.7. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. The optional expand keyword expands each side by a factor fe (accepted by PFC 6.0 although its manual omits it).",
         "7.0": "Generate a closed box. If the name keyword has not been specified, then s = boxWall . By default, each side of the box is a separate wall. In this case, the wall name is concatenated with the wall side name ({Bottom, Right, Top, Left} in 2D; {Bottom, Top, Left, Right, Front, Back} in 3D). With the name keyword the ID is NOT appended (name 'fred' gives fredTop); without it the ID is appended (boxWallTop12). Verified on PFC 6.0/7.0/9.0/9.7. A unique ID, starting with id , is assigned to each wall. Use the one-wall keyword to specify that all box sides belong to a single wall. If fxmin and fxmax are specified alone, then the box is a cube with equal sides. Use the optional expand keyword to expand each side of the box by a factor fe .",
@@ -100,11 +101,8 @@
     },
     {
       "name": "polygon",
-      "syntax": {
-        "6.0": "polygon <vpos> ... [make-planar] [triangulate]",
-        "7.0": "polygon <vpos> ... [make-planar] [triangulate]",
-        "9.0": "polygon <vpos> ... [make-planar] [triangulate] 3D ONLY"
-      },
+      "syntax": "polygon <vpos> ... [make-planar] [triangulate]",
+      "dimension": "3D",
       "description": "Generate a planar, polygonal wall in 3D. If the name keyword has not been specified, then s = polygonWall . There are two modes of operation: the default mode which is guaranteed to work for convex polygons and the triangulation mode, specified with the optional triangulate keyword, that works for both convex and concave polygons. In both modes, the makeplanar keyword is used to snap the vertices to the plane with point equal to the average location of vertices (called the center). The plane normal is defined by the cross product of two vectors, namely the vector difference between the center and vertex 1 and the vector difference between the center and vertex 2. In the default mode, the vertices of the wall can be input in any order and the command is guaranteed to work for sets of vertices defining convex polygons. The algorithm proceeds by ordering the points in clockwise order about the center. The first facet is created from the [1,2,num] vertex where num is the total number of vertices. The next facet is made from the [2,num,3] vertices, and the following from the [num,3,num-1] vertices, and so on. In triangulation mode, the vertices must be input in an ordered fashion around the perimeter of the polygon. The sweep line algorithm is used to triangulate the polygon."
     },
     {

@@ -122,6 +122,13 @@ dissolved; the parked FLAC3D-only property sets on liner/beam-pile became
   attributes, models, property_groups, python functions/methods/modules),
   present only when the thing is restricted to one build dimension.
   Omitted = both. The sweep pins the value set at every level.
+- Command keywords carry the tag too (2026-11-11,
+  `scripts/corpus/migrate_keyword_dimension.py`, 453 keywords in 100 files):
+  the manuals' "(3D ONLY)" / "2D ONLY" after a keyword's syntax is `dimension`
+  on the entry, not syntax text — the 6.0/7.0 parsers had dropped it, so only
+  the 9.0 view knew. A marker inside a `{...}` / `[...]` group restricts one
+  sub-option and stays inline; "(y and z components 3D ONLY)" is an entry
+  note. The sweep rejects a keyword-level marker in syntax.
 - Dimension prose goes in plain `notes` (decided during the fold: section C
   made notes the only free-prose field, so the draft's separate
   `dimension_notes` was dropped); live 2D-vs-3D probe records go to
