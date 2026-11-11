@@ -71,13 +71,15 @@
           "keyword": "kn-current",
           "description": "Current joint normal stiffness (read only per the official page).",
           "type": "FLT",
-          "symbol": "k_n"
+          "symbol": "k_n",
+          "readonly": true
         },
         {
           "keyword": "ks-current",
           "description": "Current joint shear stiffness (read only per the official page).",
           "type": "FLT",
-          "symbol": "k_s"
+          "symbol": "k_s",
+          "readonly": true
         },
         {
           "keyword": "kn-maximum",
@@ -107,32 +109,38 @@
         {
           "keyword": "al",
           "description": "Loading parameter (read only per the official page).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "sdisp",
           "description": "Shear displacement magnitude at start of last discharge (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "sdisp-peak",
           "description": "Shear displacement magnitude at maximum shear stress (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "sdisp-residual",
           "description": "Shear displacement magnitude at start of residual shear stress (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "sstress-maximum",
           "description": "Bounding shear stress (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "sstress-peak",
           "description": "Peak shear stress (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "tol",
@@ -142,7 +150,8 @@
         {
           "keyword": "ussisref",
           "description": "Shear displacement magnitude of reference (read only).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         }
       ]
     }
@@ -150,7 +159,8 @@
   "source": "https://docs.itascacg.com/itasca900/3dec/docproject/source/theory/cyjoint/cyjoint.html",
   "usage": "block contact jmodel assign cyjm ; block contact property <prop> <value> [range jmodel 'cyjm']",
   "verification": [
-    "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted). CAUTION: properties marked read-only on the official page are nonetheless writable via 'block contact property' on the live engine (no read-only guard, unlike FLAC zone cmodels). 3DEC 7.00 Release 161: model assigns and the property set error-enumerates IDENTICAL to the 9.7 set (live-verified 2026-08-21)."
+    "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted). CAUTION: properties marked read-only on the official page are nonetheless writable via 'block contact property' on the live engine (no read-only guard, unlike FLAC zone cmodels). 3DEC 7.00 Release 161: model assigns and the property set error-enumerates IDENTICAL to the 9.7 set (live-verified 2026-08-21).",
+    "Live 3DEC 9.8: the property set error-enumerates identical to this file, and every property accepts 'block contact property', including those the manual marks read-only (readonly here follows the manual)."
   ],
   "availability": {
     "versions": [
