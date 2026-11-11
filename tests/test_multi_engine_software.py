@@ -895,10 +895,10 @@ def test_mpoint_live_property_tables_account_for_every_documented_property() -> 
 
 
 def test_common_constitutive_property_spellings_match_the_engine() -> None:
-    """double-yield and cap-yield genuinely disagree; neither is a typo to normalise.
+    """The property names are the ones the live 9.8 engines report, not the manual's mix.
 
     The official pages print both 'strain-tensile-plastic' and 'strain-tension-plastic'
-    in different blocks, so only a live probe settles which one each model accepts.
+    in different blocks; live FLAC3D 9.8 reports the tension spelling for every model.
     """
 
     def keywords(model: str) -> set[str]:
@@ -906,11 +906,9 @@ def test_common_constitutive_property_spellings_match_the_engine() -> None:
         assert doc is not None
         return {p["keyword"] for g in doc["property_groups"] for p in g.get("properties", [])}
 
-    assert "strain-tension-plastic" in keywords("double-yield")
-    assert "strain-tensile-plastic" not in keywords("double-yield")
-    for model in ("cap-yield", "cap-yield-simplified"):
-        assert "strain-tensile-plastic" in keywords(model)
-        assert "strain-tension-plastic" not in keywords(model)
+    for model in ("double-yield", "cap-yield", "cap-yield-simplified", "finn", "softening-ubiquitous"):
+        assert "strain-tension-plastic" in keywords(model)
+        assert "strain-tensile-plastic" not in keywords(model)
     # columnar-basalt's joint keywords follow double-yield, and '-i' is a placeholder
     # the engine expands to 1..4 rather than a literal keyword.
     basalt = ReferenceLoader.load_item_doc("constitutive-models", "columnar-basalt", software="mpoint")
