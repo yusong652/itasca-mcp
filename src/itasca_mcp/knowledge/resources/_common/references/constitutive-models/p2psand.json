@@ -58,168 +58,198 @@
           "keyword": "factor-cyclic",
           "symbol": "K_{c}",
           "description": "factor of cycling to adjust the rate of cyclic mobility and liquefaction, K_{c}. The default value is internally initialized as K_{c} = 3.8 - 7.2D^0_r + 3.0(D^0_r)^2. If not using the default values, calibration of this parameter should be the last to match the target CRRs. This parameters can be assigned with any of the four methods, the priori level is increasing (4>3>2>1): (1) using the default value without an explicit input; (2) Input a scalar value K_{c}; (3) Input a non-zero vector value through (a_0, a_1, a_2), then K_{c} will be initialized by a quadratic function K_{c} = a_0 + a_1 D^0_r + a_2 (D^0_r)^2; (4) Input as a table-type parameter (see table-factor-cyclic) so that K_{c} will be initialized based on the curve of K_{c} vs D^0_r. K_{c} is with a lower-bound value 0.007 for all cases.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "factor-cyclic-a0",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "factor-cyclic-a1",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "factor-cyclic-a2",
           "symbol": "K_{c}",
           "description": "alternative values to determine K_{c} so that K_{c} = a_0 + a_1 D^0_r + a_2 (D^0_r)^2. The default is zero for all of a_0, a_1 and a_2.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "pressure-reference",
           "symbol": "p_{atm}",
           "description": "reference pressure (usually the standard atmospheric pressure), p_{atm}. The default value is 100.0 if in kPa. This parameter should always be referred to the standard atmospheric pressure and it does not need extra calibration. Its value should be input in a unit of stress/pressure consistent with the other parameters used in the simulation.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "coefficient-bounding",
           "symbol": "n^b",
           "description": "coefficient-bounding, n^b. The default value is n^b = 0.16 - \\phi_{cs}/400.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "coefficient-dilatancy",
           "symbol": "n^d",
           "description": "coefficient-dilatancy, n^d. The default value is n^d = 6 n^b with a typical range of (4 \\sim 7) n^b.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "critical-state-1",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "critical-state-2",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "critical-state-3",
           "symbol": "Q=10",
           "description": "critical state parameters. The default values are 10, 1 and 0, respectively, which corresponds to Q=10 and R=1 using the 2-parameter critical state equation. If the third parameter is input a non-zero value, the critical-state is alternatively defined by the 3-parameter equation that the critical-state parameters are for D_{rc0}, \\lambda_r, and \\xi (typically \\xi=0.7), respectively.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "dilatancy-ratio-minimum",
           "symbol": "K^d_{LB}",
           "description": "minimum dilatancy ratio, K^d_{LB}, at low pressures. The default value is 0.7.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "elasticity-1",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "elasticity-2",
           "symbol": "g_0",
           "description": "parameters to define the elasticity, g_0 and C_{Dr} when elasticity-r is zero by the relation of G_r = g_0(D_r + D_{r0}). If elasticity-r is input a positive value, g_0 and C_{Dr} will not be used.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "elasticity-r",
           "symbol": "G_r",
           "description": "parameters to define the elasticity, G_r. If elasticity-r is input a positive value, g_0 and C_{Dr} will not be used. The default value is 0.0, and for this case, g_0 and C_{Dr} will be used to define the elasticity.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "exponent",
           "symbol": "n",
           "description": "parameters to define the elasticity, n. The default value is 0.5.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "fabric-maximum",
           "symbol": "z_{max}",
           "description": "maximum fabric magnitude, z_{max}. The default value is z_{max} = \\max{(21 D_r^{3.85}, 15)}. This parameter can be alternatively input as a table-type parameter so that z_{max} will be initialized based on the curve of z_{max} vs D_r.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "factor-cut",
           "symbol": "f_{cut}",
           "description": "cut-off factor, f_{cut}. The default is 0.05. The current effective pressure used for calculation of elastic modulus will not be less than f_{cut} p_{ref}. To avoid overly small elastic modulus and numerical instability, an increasing f_{cut} can be set. f_{cut} = 0.01 to 0.1 is typical for practical models.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "friction-critical",
           "symbol": "\\phi_{cs}",
           "description": "friction angle at critical state, \\phi_{cs}. The default value is 33 (in degrees). This parameter is usually in a range of 30 to 37 with a typical value around 33 for sands. This is one of key parameters because other parameters may be estimated as a function of \\phi_{cs}.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "factor-degradation",
           "symbol": "k_d",
           "description": "factor of elasticity degradation, k_d. The default value is k_d = 0.46 - 0.35D_r. This parameter can be alternatively input as a table-type parameter so that k_d will be initialized based on the curve of k_d vs D_r.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "poisson",
           "symbol": "\\nu",
           "description": "poisson’s ratio, \\nu. The default is v = 0.1+0.3v_{\\phi}, in which 0 \\leq v_{\\phi} = 0.05(\\phi_{cs}-25) \\leq 1. This parameter is used to calculate the elastic bulk modulus once the elastic shear modulus is estimated.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "rate-fabric",
           "symbol": "c_z",
           "description": "rate of fabric, c_z. The default value is c_z=G_r.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "rate-plastic-shear",
           "symbol": "h_0",
           "description": "plastic shear rate, h_0. The default value is 1.7.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "rate-plastic-volume",
           "symbol": "A_{d0}",
           "description": "plastic volumetric rate, A_{d0}. The default value is estimated internally.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "ratio-reverse",
           "description": "minimum change of the back-stress ratio to be considered a reverse path. The default value is 0.02.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "ratio-strength",
           "symbol": "c",
           "description": "strength ratio of the extension to compression triaxial strengths, c. The default value is (3-\\sin{\\phi_{cs}})/(3+\\sin{\\phi_{cs}}).",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "table-factor-cyclic",
           "symbol": "K_{c}",
           "description": "name of the table relating K_{c} to initial relative density D^0_r.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-factor-degradation",
           "symbol": "k_{d}",
           "description": "name of the table relating k_{d} to initial relative density D^0_r.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-fabric-maximum",
           "symbol": "z_{max}",
           "description": "name of the table relating z_{max} to initial relative density D^0_r.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "void-maximum",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "void-minimum",
           "symbol": "e_{max}",
           "description": "maximum void ratio, e_{max}, and, minimum void ratio, e_{min}. The default values are e_{max} = 1.0 and e_{min} = 0.6 if neither is assigned; if only one of them is assigned, the other one will be calculated by the relation e_{max}/e_{min}=1.62 by default. These two are auxiliary parameters for calculation of the current void ratio upon the change of the volumetric strain. Refinements for these two parameters are less significant in practice as their effect is small compared with other parameters.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "N-1-60",
@@ -261,77 +291,105 @@
           "keyword": "stress-yz-initial",
           "symbol": "\\sigma^0_{yz}",
           "description": "initial yz component of the effective stress, \\sigma^0_{yz}.",
-          "type": "FLT"
+          "type": "FLT",
+          "dimension": "3D"
         },
         {
           "keyword": "stress-xz-initial",
           "symbol": "\\sigma^0_{xz}",
           "description": "initial xz component of the effective stress, \\sigma^0_{xz}.",
-          "type": "FLT"
+          "type": "FLT",
+          "dimension": "3D"
         },
         {
           "keyword": "bulk",
           "symbol": "K",
           "description": "current elastic bulk modulus, K",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "shear",
           "symbol": "G",
           "description": "current elastic shear modulus, G",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "relative-density",
           "symbol": "D_r",
           "description": "current relative density, D_r",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "void",
           "symbol": "e",
           "description": "current void ratio, e",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "cycles",
-          "description": "Cycle counter state. Present in props(); not in the corpus source docs. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Cycle counter state. Present in props(); not in the corpus source docs. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-xx",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-xy",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-xz",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-yy",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-yz",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "fabric-zz",
-          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Fabric tensor component. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "flag-initialization",
-          "description": "Initialization flag. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Initialization flag. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "BOOL"
         },
         {
           "keyword": "index-bolton",
-          "description": "Bolton relative dilatancy index. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Bolton relative dilatancy index. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT"
         },
         {
           "keyword": "stress-initial",
-          "description": "Initial stress state (symmetric tensor; accepts a 3-vector of principal values). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Initial stress state (symmetric tensor; accepts a 3-vector of principal values). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR"
         }
       ]
     }

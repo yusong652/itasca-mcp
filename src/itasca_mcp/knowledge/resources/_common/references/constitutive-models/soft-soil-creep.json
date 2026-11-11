@@ -92,25 +92,29 @@
           "keyword": "coefficient-normally-consolidation",
           "symbol": "K_{nc}",
           "description": "normal consolidation coefficient, K_{nc}. It is not allowed to be less than \\nu / (1-\\nu), a range 0.5 to 0.7 is common. The default is K_{nc} = 1 - \\sin \\phi.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "cohesion",
           "symbol": "c",
           "description": "effective cohesion, c. The default value is 0. Remember that this model is mainly for normally consolidated or slightly over-consolidated soft soils, so c should be zero or a small value, and a large value may be not realistic.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "dilation",
           "symbol": "\\psi",
           "description": "dilation angle, \\psi. The default value is 0 [in degrees]. The zero dilation angle is the standard setting in the SS model.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "over-consolidation-ratio",
           "symbol": "OCR",
           "description": "over consolidation ratio, OCR. The default is 1.0, which corresponds to the normally consolidated soils. The input OCR will be used to determine the initial cap pressure so that p_{c}^0=OCR \\times p_{eq}^0. OCR will be updated during calculation.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "pressure-cut",
@@ -122,73 +126,85 @@
           "keyword": "ratio-radius",
           "symbol": "M",
           "description": "parameter, M, if not assigned a positive value, it will be calculated internally.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "tension",
           "symbol": "\\sigma^t",
           "description": "tensile strength, \\sigma^t. The default value is 0, which is for most cases.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "time-reference",
           "symbol": "\\tau",
           "description": "reference time, \\tau. The default value is 1.0, which should be compatible to the time unit used in the model. This parameter provides time scale. For example, if the time unit used in the model is day, denotes the soil takes an increment of 1 day to reach the normally consolidated state. The Typical value of 1 (if the time unit is in day) is compatible to the standard incremental oedometer tests which run with 1 (day) increments.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "void-initial",
           "symbol": "e_{ini}",
           "description": "initial void ratio, e_{ini}. The default is 1.0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "bulk",
           "symbol": "K",
           "description": "current elastic bulk modulus, K",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "pressure-preconsolidation",
           "symbol": "p_c",
           "description": "current cap (apparent pre-consolidation) pressure, p_c CORRECTED: the previously documented name 'pressure-cap' is rejected by FLAC3D 9.7; 'pressure-preconsolidation' is the canonical keyword. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "pressure-effective",
           "symbol": "p",
           "description": "current effective pressure, p",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "pressure-equivalent",
           "symbol": "p_{eq}",
           "description": "current equivalent pressure, p_{eq}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
           "symbol": "G",
           "description": "current elastic shear modulus, G",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-volumetric-creep",
           "symbol": "\\epsilon_v^p",
           "description": "accumulated plastic volumetric strain, \\epsilon_v^p CORRECTED: the previously documented name 'strain-volume-plastic' is rejected by FLAC3D 9.7; 'strain-volumetric-creep' is the canonical keyword. Name verified via props() key; settability not probed. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "stress-deviatoric-equivalent",
           "symbol": "\\tilde{q}",
           "description": "current equivalent deviatoric stress, \\tilde{q}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "void",
           "symbol": "e",
           "description": "current void ratio, e",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         }
       ]
     }

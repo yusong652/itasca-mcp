@@ -91,25 +91,41 @@
           "keyword": "current-a",
           "symbol": "a_c",
           "description": "current value of a_c",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 rejects a write to it (read-only), although the manual does not mark it so."
+          ]
         },
         {
           "keyword": "current-mb",
           "symbol": "m_{b,c}",
           "description": "current value of m_{b,c}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 rejects a write to it (read-only), although the manual does not mark it so."
+          ]
         },
         {
           "keyword": "current-s",
           "symbol": "s_c",
           "description": "current value of s_c",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 rejects a write to it (read-only), although the manual does not mark it so."
+          ]
         },
         {
           "keyword": "current-sci",
           "symbol": "\\sigma_{ci,c}",
           "description": "current value of \\sigma_{ci,c}",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 rejects a write to it (read-only), although the manual does not mark it so."
+          ]
         },
         {
           "keyword": "disturbance",
@@ -149,90 +165,119 @@
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "length-calibration",
           "description": "calibration length to calibrate model properties to account for zone size, default value is 0.0, which means that it does not perform length calibration to account for zone size.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-dilation",
-          "description": "= 0 (default flag) to input a constant dilation angle specified by constant-dilation",
-          "type": "BOOL"
+          "description": "= 0 (default flag) to input a constant dilation angle specified by constant-dilation = -1 to specify associated plastic flow, \\psi_c = \\phi_c = k where k is a fraction of friction angle, \\phi_c, so that \\psi_c = k \\times \\phi_c",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-evolution",
-          "description": "= 0 (default flag) for evolution parameter set to plastic strain in direction of least compressive principal stress",
-          "type": "BOOL"
+          "description": "= 0 (default flag) for evolution parameter set to plastic strain in direction of least compressive principal stress = 1 for evolution parameter set to plastic shear strain, only accumulated when shear yielding occurs",
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag-fos",
-          "description": "= 0 (default flag) for model factor-of-safety solution controlled by shear strength",
-          "type": "BOOL"
+          "description": "= 0 (default flag) for model factor-of-safety solution controlled by shear strength = 1 for model factor-of-safety solution controlled by unconfined compressive strength",
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "strain-plastic",
           "description": "plastic strain in direction of least compressive principal stress (if flag-evolution = 0), or plastic shear strain (if flag-evolution = 1)",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "table-a",
           "symbol": "a",
           "description": "name of the table relating a to the evolution parameter.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-mb",
           "symbol": "m_b",
           "description": "name of the table relating m_b to the evolution parameter.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-multiplier",
           "symbol": "\\sigma_3",
           "description": "name of the table relating a multiplier to \\sigma_3.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-s",
           "symbol": "s",
           "description": "name of the table relating s to the evolution parameter.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-sci",
           "symbol": "\\sigma_{ci}",
           "description": "name of the table relating \\sigma_{ci} to the evolution parameter.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "symbol": "\\sigma^t",
           "description": "name of the table relating \\sigma^t to plastic tensile strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "cohesion",
           "symbol": "c_c",
           "description": "current value of cohesion, c_c",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "dilation",
           "symbol": "\\psi_c",
           "description": "current value of dilation angle, \\psi_c, in any cases, this value never greater than the current friction angle.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "friction",
           "symbol": "\\phi_c",
           "description": "current value of friction angle, \\phi_c",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "plastic-strain",
-          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         }
       ]
     }

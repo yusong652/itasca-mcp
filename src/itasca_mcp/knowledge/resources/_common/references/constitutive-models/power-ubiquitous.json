@@ -91,18 +91,19 @@
           "keyword": "dip",
           "description": "dip angle [degrees] of weakness plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "dip-direction",
           "description": "dip direction [degrees] of weakness plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "angle",
           "description": "angle [degrees] of weakness plane, taken counterclockwise from the x-axis",
-          "type": "FLT"
+          "type": "FLT",
+          "dimension": "2D"
         },
         {
           "keyword": "joint-cohesion",
@@ -131,7 +132,7 @@
         {
           "keyword": "normal",
           "description": "normal direction of the weakness plane, (2D or 3D vector)",
-          "type": "FLT"
+          "type": "VEC"
         },
         {
           "keyword": "normal-x",
@@ -190,15 +191,19 @@
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "joint-parallel-strength",
-          "description": "Joint strength parallel to the weak plane. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Joint strength parallel to the weak plane. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "plastic-strain",
-          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR"
         }
       ]
     }

@@ -85,71 +85,96 @@
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "description": "name of the table relating cohesion to plastic shear strain. The default is a null string.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "description": "name of the table relating dilation angle to plastic shear strain. The default is a null string.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-friction",
           "description": "name of the table relating friction angle to plastic shear strain. The default is a null string.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-pressure-cap",
           "description": "name of the table relating cap pressure to plastic volume strain. The default is a null string.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "description": "name of the table relating tensile limit to plastic tensile strain. The default is a null string.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "bulk",
           "symbol": "K",
           "description": "current elastic bulk modulus, K",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "poisson",
           "symbol": "\\nu",
           "description": "current Poisson’s ratio, \\nu",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
           "symbol": "G",
           "description": "current elastic shear modulus, G",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "strain-shear-plastic",
           "description": "accumulated plastic shear strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-tension-plastic",
           "description": "accumulated plastic tensile strain  Verified on live MPoint3D 9.7: the engine accepts 'strain-tension-plastic' and rejects 'strain-tensile-plastic'. The official model page spells it both ways in different blocks; this is the spelling the engine's own keyword table uses. cap-yield and cap-yield-simplified genuinely do use 'tensile'.",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-volumetric-plastic",
           "description": "accumulated plastic volumetric strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "young",
           "symbol": "E",
           "description": "current elastic Young’s modulus, E",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         }
       ]
     }

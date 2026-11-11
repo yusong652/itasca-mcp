@@ -79,7 +79,7 @@
         },
         {
           "keyword": "flag-switch",
-          "description": "= 0 for Martin et al. formula, and",
+          "description": "= 0 for Martin et al. formula, and = 1 for Byrne formula",
           "type": "BOOL"
         },
         {
@@ -120,48 +120,59 @@
         {
           "keyword": "flag-brittle",
           "description": "if true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "description": "name of the table relating cohesion to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "description": "name of the table relating dilation angle to plastic shear strain",
-          "type": "FLT"
+          "type": "STR"
         },
         {
           "keyword": "table-friction",
           "description": "name of the table relating friction angle to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "description": "name of the table relating tension limit to plastic tensile strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "number-count",
           "description": "number of shear strain reversals (half cycles) detected",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-shear-plastic",
           "description": "accumulated plastic shear strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-tensile-plastic",
           "description": "accumulated plastic tensile strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 reports this property as 'strain-tension-plastic'; live MPoint3D 9.8 accepts either spelling; MPoint3D 9.7 accepted only this one, so this spelling works on both."
+          ]
         },
         {
           "keyword": "strain-volumetric-irrecoverable",
           "symbol": "\\epsilon_{vd}",
           "description": "accumulated irrecoverable volume strain, \\epsilon_{vd}, which is positive in compression, an interval variable used in Martin et al and Byrne formula",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         }
       ]
     }

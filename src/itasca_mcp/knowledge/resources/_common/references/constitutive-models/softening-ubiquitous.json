@@ -95,18 +95,19 @@
           "keyword": "dip",
           "description": "dip angle [degrees] of weakness plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "dip-direction",
           "description": "dip direction [degrees] of weakness plane",
           "type": "FLT",
-          "dim": "3D"
+          "dimension": "3D"
         },
         {
           "keyword": "angle",
           "description": "angle [degrees] of weakness plane, taken counterclockwise from the x-axis",
-          "type": "FLT"
+          "type": "FLT",
+          "dimension": "2D"
         },
         {
           "keyword": "friction",
@@ -189,7 +190,7 @@
         {
           "keyword": "normal",
           "description": "normal direction of the weakness plane, (2D or 3D vector)",
-          "type": "FLT"
+          "type": "VEC"
         },
         {
           "keyword": "normal-x",
@@ -211,132 +212,169 @@
         },
         {
           "keyword": "flag-bilinear",
-          "description": "= 0 (default) for matrix linear model ;",
-          "type": "BOOL"
+          "description": "= 0 (default) for matrix linear model ; = 1 for matrix bilinear model.",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "flag-bilinear-joint",
-          "description": "= 0 (default) for joint linear model ;",
-          "type": "BOOL"
+          "description": "= 0 (default) for joint linear model ; = 1 for joint bilinear model ; < 0 joint effect will be skipped, so that the model is degenerated into a bilinear Mohr-Coulomb model.",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "symbol": "c",
           "description": "name of the table relating matrix cohesion c = c_1 to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-cohesion-2",
           "symbol": "c_2",
           "description": "name of the table relating matrix cohesion c_2 to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "symbol": "\\psi",
           "description": "name of the table relating matrix dilation angle \\psi = \\psi_{1} to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation-2",
           "symbol": "\\psi_{2}",
           "description": "name of the table relating matrix dilation \\psi_{2} to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-friction",
           "symbol": "\\psi",
           "description": "name of the table relating matrix friction \\psi = \\psi_{1} angle to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-friction-2",
           "symbol": "\\psi_{2}",
           "description": "name of the table relating matrix friction angle \\psi_{2} to matrix plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-cohesion",
           "symbol": "c_j",
           "description": "name of the table relating joint cohesion c_j = c_{j1} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-cohesion-2",
           "symbol": "c_{j2}",
           "description": "name of the table relating joint cohesion c_{j2} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-dilation",
           "symbol": "\\psi_j",
           "description": "name of the table relating joint dilation \\psi_j = \\psi_{j1} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-dilation-2",
           "symbol": "\\psi_{j2}",
           "description": "name of the table relating joint dilation \\psi_{j2} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-friction",
           "symbol": "\\phi_j",
           "description": "name of the table relating joint friction angle \\phi_j = \\phi_{j1} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-friction-2",
           "symbol": "\\phi_{j2}",
           "description": "name of the table relating joint friction angle \\phi_{j2} to joint plastic shear strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-joint-tension",
           "symbol": "\\sigma^t_j",
           "description": "name of the table relating joint tension limit \\sigma^t_j to joint plastic tensile strain.",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "strain-shear-plastic",
           "description": "accumulated plastic shear strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-shear-plastic-joint",
           "description": "accumulated joint plastic shear strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "strain-tensile-plastic",
           "description": "accumulated plastic tensile strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 reports this property as 'strain-tension-plastic'; live MPoint3D 9.8 accepts either spelling; MPoint3D 9.7 accepted only this one, so this spelling works on both."
+          ]
         },
         {
           "keyword": "strain-tensile-plastic-joint",
           "description": "accumulated joint plastic tensile strain",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true,
+          "notes": [
+            "Live FLAC3D 9.8 reports this property as 'strain-tension-plastic-joint'; live MPoint3D 9.8 accepts either spelling; MPoint3D 9.7 accepted only this one, so this spelling works on both."
+          ]
         },
         {
           "keyword": "joint-parallel-strength",
-          "description": "Joint strength parallel to the weak plane. Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Joint strength parallel to the weak plane. Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "length-calibration",
-          "description": "Calibration length for softening regularization. Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Calibration length for softening regularization. Settable. Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "plastic-strain",
-          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Accumulated plastic strain (symmetric tensor). Settable via 'zone property plastic-strain <f>' (a scalar sets an isotropic tensor). Not listed in the corpus source docs; present in props(). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "TENSOR",
+          "readonly": true,
+          "notes": [
+            "Read-only per the manual, but live FLAC3D 9.8 accepts a write to it."
+          ]
         },
         {
           "keyword": "table-tension",
-          "description": "Table of tension limit vs plastic strain (matrix). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13)."
+          "description": "Table of tension limit vs plastic strain (matrix). Verified against FLAC3D 9.7 (z.props() readback + command probe, 2026-08-13).",
+          "type": "STR",
+          "optional": true
         }
       ]
     }

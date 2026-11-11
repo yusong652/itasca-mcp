@@ -113,94 +113,112 @@
           "keyword": "dilation-mobilized",
           "symbol": "\\psi_m",
           "description": "current mobilized dilation angle, \\psi_m. It is read-only, except for table-dilation ǂ 0.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "flag-brittle",
           "description": "If true, the tension limit is set to 0 in the event of tensile failure. The default is false.",
-          "type": "BOOL"
+          "type": "BOOL",
+          "optional": true
         },
         {
           "keyword": "flag-dilation",
           "symbol": "\\psi_m",
-          "description": "= 0 for mobilized dilation angle, \\psi_m, equal to input value, dilation or a function of plastic shear strain if table is input with table-dilation",
-          "type": "BOOL"
+          "description": "= 0 for mobilized dilation angle, \\psi_m, equal to input value, dilation or a function of plastic shear strain if table is input with table-dilation = 1 (default) for mobilized dilation angle, \\psi_m, characterized by Rowe’s stress-dilatancy theory = 2 for mobilized dilation angle, \\psi_m = 0 if \\phi_m < \\phi_{cv}, and \\psi_m = \\psi_f, if \\phi_m \\ge \\phi_{cv}",
+          "type": "INT",
+          "optional": true
         },
         {
           "keyword": "exponent-bulk",
           "symbol": "m",
           "description": "bulk modulus exponent, m. The default is 0.5.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "exponent-shear",
           "symbol": "n",
           "description": "shear modulus exponent, n. The default is 0.5.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "friction-0",
           "symbol": "\\phi_0",
           "description": "initial mobilized fiction angle, \\phi_0 associated with zero plastic shear strain. By default, \\phi_0 = \\phi_m if strain-shear-plastic is initialized to 0; otherwise, \\phi_0 = 0 if not specified.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "friction-critical",
           "symbol": "\\phi_{cv}",
           "description": "constant used in dilation law (flag-dilation = 1 or 2), \\phi_{cv}",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "strain-shear-plastic",
           "symbol": "\\epsilon^{ps}",
           "description": "accumulated plastic shear strain, \\epsilon^{ps}. By default, it is initialized internally.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "strain-tensile-plastic",
           "symbol": "\\epsilon^{pt}",
           "description": "accumulated plastic tensile strain, \\epsilon^{pt}. The default initial value is 0.",
-          "type": "FLT"
+          "type": "FLT",
+          "notes": [
+            "Live FLAC3D 9.8 reports this property as 'strain-tension-plastic'; live MPoint3D 9.8 accepts either spelling; MPoint3D 9.7 accepted only this one, so this spelling works on both."
+          ]
         },
         {
           "keyword": "failure-ratio",
           "symbol": "R_f",
           "description": "failure ratio, R_f. The default is 0.9.",
-          "type": "FLT"
+          "type": "FLT",
+          "optional": true
         },
         {
           "keyword": "table-cohesion",
           "symbol": "c",
           "description": "name of the table relating cohesion, c, to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-dilation",
           "description": "name of the table relating mobilized dilation angle to plastic shear strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "table-tension",
           "description": "name of the table relating mobilized tensile strength to plastic tensile strain",
-          "type": "FLT"
+          "type": "STR",
+          "optional": true
         },
         {
           "keyword": "bulk",
           "symbol": "K^e",
           "description": "current elastic bulk modulus, K^e",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "shear",
           "symbol": "G^e",
           "description": "current elastic shear modulus, G^e",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "young",
           "symbol": "E",
           "description": "current elastic Young’s modulus, E",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         }
       ]
     }
