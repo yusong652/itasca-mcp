@@ -8,13 +8,13 @@
   "description": "Modify clump attributes. This is a synonym for the clump attribute command. See clump attribute for complete list of available keywords, modifiers, and detailed documentation.",
   "notes": {
     "6.0": [
-      "Keyword set live-enumerated on PFC3D 6.00 (first slot); descriptions pending official prose."
+      "Keyword set live-enumerated on PFC3D 6.00 (first slot); syntax and descriptions are those of the same keywords of 'clump attribute'."
     ],
     "7.0": [
-      "Keyword set live-enumerated on PFC3D 7.00 (first slot); descriptions pending official prose."
+      "Keyword set live-enumerated on PFC3D 7.00 (first slot); syntax and descriptions are those of the same keywords of 'clump attribute'."
     ],
     "9.0": [
-      "Keyword set live-enumerated on PFC3D 9.7 (first slot); descriptions pending official prose."
+      "Keyword set live-enumerated on PFC3D 9.7 (first slot); syntax and descriptions are those of the same keywords of 'clump attribute'."
     ]
   },
   "python_sdk_alternative": {
@@ -38,33 +38,57 @@
     },
     {
       "name": "damp",
-      "syntax": "damp",
-      "description": ""
+      "syntax": {
+        "6.0": "damp <f>",
+        "7.0": "damp <f>",
+        "9.0": "damp <f> [clmodblock]"
+      },
+      "description": "Clump local damping coefficient where f > 0. By default, f = 0."
     },
     {
       "name": "density",
-      "syntax": "density",
-      "description": ""
+      "syntax": {
+        "6.0": "density <f>",
+        "7.0": "density <f>",
+        "9.0": "density <f> [clmodblock]"
+      },
+      "description": "Clump density where f > 0. By default f = 0."
     },
     {
       "name": "displacement",
-      "syntax": "displacement",
-      "description": ""
+      "syntax": {
+        "6.0": "displacement <v>",
+        "7.0": "displacement <v>",
+        "9.0": "displacement <v> [clmodblock]"
+      },
+      "description": "Accumulated clump displacement vector as a result of cycling."
     },
     {
       "name": "displacement-x",
-      "syntax": "displacement-x",
-      "description": ""
+      "syntax": {
+        "6.0": "displacement-x <f>",
+        "7.0": "displacement-x <f>",
+        "9.0": "displacement-x <f> [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the accumulated clump displacement as a result of cycling."
     },
     {
       "name": "displacement-y",
-      "syntax": "displacement-y",
-      "description": ""
+      "syntax": {
+        "6.0": "displacement-y <f>",
+        "7.0": "displacement-y <f>",
+        "9.0": "displacement-y <f> [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of accumulated displacement as a result of cycling."
     },
     {
       "name": "displacement-z",
-      "syntax": "displacement-z",
-      "description": ""
+      "syntax": {
+        "6.0": "displacement-z <f>",
+        "7.0": "displacement-z <f>",
+        "9.0": "displacement-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
     },
     {
       "name": "euler",
@@ -73,18 +97,30 @@
     },
     {
       "name": "euler-x",
-      "syntax": "euler-x",
-      "description": ""
+      "syntax": {
+        "6.0": "euler-x <f>",
+        "7.0": "euler-x <f>",
+        "9.0": "euler-x <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
       "name": "euler-y",
-      "syntax": "euler-y",
-      "description": ""
+      "syntax": {
+        "6.0": "euler-y <f>",
+        "7.0": "euler-y <f>",
+        "9.0": "euler-y <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
       "name": "euler-z",
-      "syntax": "euler-z",
-      "description": ""
+      "syntax": {
+        "6.0": "euler-z <f>",
+        "7.0": "euler-z <f>",
+        "9.0": "euler-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
       "name": "rotation",
@@ -93,8 +129,12 @@
     },
     {
       "name": "force-applied",
-      "syntax": "force-applied",
-      "description": ""
+      "syntax": {
+        "6.0": "force-applied <v>",
+        "7.0": "force-applied <v>",
+        "9.0": "force-applied <v> [clmodblock]"
+      },
+      "description": "Force vector applied to clumps."
     },
     {
       "name": "force-applied-x",
@@ -113,63 +153,107 @@
     },
     {
       "name": "force-contact",
-      "syntax": "force-contact",
-      "description": ""
+      "syntax": {
+        "6.0": "force-contact <v>",
+        "7.0": "force-contact <v>",
+        "9.0": "force-contact <v> [clmodblock]"
+      },
+      "description": "Sum of the contact force accumulated to the clumps during the previous force-displacement update. This value will be modified during the next force-displacement update."
     },
     {
       "name": "force-contact-x",
-      "syntax": "force-contact-x",
-      "description": ""
+      "syntax": {
+        "6.0": "force-contact-x <f>",
+        "7.0": "force-contact-x <f>",
+        "9.0": "force-contact-x <f> [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the contact force."
     },
     {
       "name": "force-contact-y",
-      "syntax": "force-contact-y",
-      "description": ""
+      "syntax": {
+        "6.0": "force-contact-y <f>",
+        "7.0": "force-contact-y <f>",
+        "9.0": "force-contact-y <f> [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the contact force."
     },
     {
       "name": "force-contact-z",
-      "syntax": "force-contact-z",
-      "description": ""
+      "syntax": {
+        "6.0": "force-contact-z <f>",
+        "7.0": "force-contact-z <f>",
+        "9.0": "force-contact-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the contact force."
     },
     {
       "name": "fragment",
-      "syntax": "fragment",
-      "description": ""
+      "syntax": "fragment <i>",
+      "description": "Fragment ID (see “ Fragment ”)."
     },
     {
       "name": "moi-11",
-      "syntax": "moi-11",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-11 <f>",
+        "7.0": "moi-11 <f>",
+        "9.0": "moi-11 <f> [clmodblock]"
+      },
+      "description": "11 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-12",
-      "syntax": "moi-12",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-12 <f>",
+        "7.0": "moi-12 <f>",
+        "9.0": "moi-12 <f> [clmodblock]"
+      },
+      "description": "12 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-13",
-      "syntax": "moi-13",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-13 <f>",
+        "7.0": "moi-13 <f>",
+        "9.0": "moi-13 <f> [clmodblock]"
+      },
+      "description": "13 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-22",
-      "syntax": "moi-22",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-22 <f>",
+        "7.0": "moi-22 <f>",
+        "9.0": "moi-22 <f> [clmodblock]"
+      },
+      "description": "22 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-23",
-      "syntax": "moi-23",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-23 <f>",
+        "7.0": "moi-23 <f>",
+        "9.0": "moi-23 <f> [clmodblock]"
+      },
+      "description": "23 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-33",
-      "syntax": "moi-33",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-33 <f>",
+        "7.0": "moi-33 <f>",
+        "9.0": "moi-33 <f> [clmodblock]"
+      },
+      "description": "33 component of the clump real moment of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi-principal",
-      "syntax": "moi-principal",
-      "description": ""
+      "syntax": {
+        "6.0": "moi-principal <fprin11> <fprin22> <fprin33>",
+        "7.0": "moi-principal <fprin11> <fprin22> <fprin33>",
+        "9.0": "moi-principal <fprin11> <fprin22> <fprin33> 3D ONLY [clmodblock]"
+      },
+      "description": "Real principal moments of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi",
@@ -178,63 +262,111 @@
     },
     {
       "name": "moment-applied",
-      "syntax": "moment-applied",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-applied <fx> <fy> <fz>",
+        "7.0": "moment-applied <fx> <fy> <fz>",
+        "9.0": "moment-applied <fx> <fy> <fz> (y and z components 3D ONLY) [clmodblock]"
+      },
+      "description": "Moment applied to clumps."
     },
     {
       "name": "moment-applied-x",
-      "syntax": "moment-applied-x",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-applied-x <f>",
+        "7.0": "moment-applied-x <f>",
+        "9.0": "moment-applied-x <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the moment applied to clumps."
     },
     {
       "name": "moment-applied-y",
-      "syntax": "moment-applied-y",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-applied-y <f>",
+        "7.0": "moment-applied-y <f>",
+        "9.0": "moment-applied-y <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the moment applied to clumps."
     },
     {
       "name": "moment-applied-z",
-      "syntax": "moment-applied-z",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-applied-z <f>",
+        "7.0": "moment-applied-z <f>",
+        "9.0": "moment-applied-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the moment applied to clumps."
     },
     {
       "name": "moment-contact",
-      "syntax": "moment-contact",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-contact <fx> <fy> <fz>",
+        "7.0": "moment-contact <fx> <fy> <fz>",
+        "9.0": "moment-contact <fx> <fy> <fz> (y and z components 3D ONLY) [clmodblock]"
+      },
+      "description": "Sum of the contact moments accumulated to the clumps during the previous force-displacement update. This value will be modified during the next force-displacement update."
     },
     {
       "name": "moment-contact-x",
-      "syntax": "moment-contact-x",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-contact-x <f>",
+        "7.0": "moment-contact-x <f>",
+        "9.0": "moment-contact-x <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the contact moment."
     },
     {
       "name": "moment-contact-y",
-      "syntax": "moment-contact-y",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-contact-y <f>",
+        "7.0": "moment-contact-y <f>",
+        "9.0": "moment-contact-y <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the contact moment."
     },
     {
       "name": "moment-contact-z",
-      "syntax": "moment-contact-z",
-      "description": ""
+      "syntax": {
+        "6.0": "moment-contact-z <f>",
+        "7.0": "moment-contact-z <f>",
+        "9.0": "moment-contact-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the contact moment."
     },
     {
       "name": "position",
-      "syntax": "position",
-      "description": ""
+      "syntax": {
+        "6.0": "position <v>",
+        "7.0": "position <v>",
+        "9.0": "position <v> [clmodblock]"
+      },
+      "description": "Location of clump centroid."
     },
     {
       "name": "position-x",
-      "syntax": "position-x",
-      "description": ""
+      "syntax": {
+        "6.0": "position-x <f>",
+        "7.0": "position-x <f>",
+        "9.0": "position-x <f> [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the location of clump centroids."
     },
     {
       "name": "position-y",
-      "syntax": "position-y",
-      "description": ""
+      "syntax": {
+        "6.0": "position-y <f>",
+        "7.0": "position-y <f>",
+        "9.0": "position-y <f> [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the location of clump centroids."
     },
     {
       "name": "position-z",
-      "syntax": "position-z",
-      "description": ""
+      "syntax": {
+        "6.0": "position-z <f>",
+        "7.0": "position-z <f>",
+        "9.0": "position-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the location of clump centroids."
     },
     {
       "name": "ratio-target",
@@ -248,48 +380,84 @@
     },
     {
       "name": "spin",
-      "syntax": "spin",
-      "description": ""
+      "syntax": {
+        "6.0": "spin <fspinx> <fspiny> <fspinz>",
+        "7.0": "spin <fspinx> <fspiny> <fspinz>",
+        "9.0": "spin <fspinx> <fspiny> <fspinz> (y and z components 3D ONLY) [clmodblock]"
+      },
+      "description": "Clump angular velocity in radians per second."
     },
     {
       "name": "spin-x",
-      "syntax": "spin-x",
-      "description": ""
+      "syntax": {
+        "6.0": "spin-x <f>",
+        "7.0": "spin-x <f>",
+        "9.0": "spin-x <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
     },
     {
       "name": "spin-y",
-      "syntax": "spin-y",
-      "description": ""
+      "syntax": {
+        "6.0": "spin-y <f>",
+        "7.0": "spin-y <f>",
+        "9.0": "spin-y <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
     },
     {
       "name": "spin-z",
-      "syntax": "spin-z",
-      "description": ""
+      "syntax": {
+        "6.0": "spin-z <f>",
+        "7.0": "spin-z <f>",
+        "9.0": "spin-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
     },
     {
       "name": "velocity",
-      "syntax": "velocity",
-      "description": ""
+      "syntax": {
+        "6.0": "velocity <v>",
+        "7.0": "velocity <v>",
+        "9.0": "velocity <v> [clmodblock]"
+      },
+      "description": "Clump translational velocity vector."
     },
     {
       "name": "velocity-x",
-      "syntax": "velocity-x",
-      "description": ""
+      "syntax": {
+        "6.0": "velocity-x <f>",
+        "7.0": "velocity-x <f>",
+        "9.0": "velocity-x <f> [clmodblock]"
+      },
+      "description": "The \\(x\\) -component of the clump velocity."
     },
     {
       "name": "velocity-y",
-      "syntax": "velocity-y",
-      "description": ""
+      "syntax": {
+        "6.0": "velocity-y <f>",
+        "7.0": "velocity-y <f>",
+        "9.0": "velocity-y <f> [clmodblock]"
+      },
+      "description": "The \\(y\\) -component of the clump velocity."
     },
     {
       "name": "velocity-z",
-      "syntax": "velocity-z",
-      "description": ""
+      "syntax": {
+        "6.0": "velocity-z <f>",
+        "7.0": "velocity-z <f>",
+        "9.0": "velocity-z <f> 3D ONLY [clmodblock]"
+      },
+      "description": "The \\(z\\) -component of the clump velocity."
     },
     {
       "name": "volume",
-      "syntax": "volume",
-      "description": ""
+      "syntax": {
+        "6.0": "volume <f>",
+        "7.0": "volume <f>",
+        "9.0": "volume <f> [clmodblock]"
+      },
+      "description": "Clump volume. When modified, only the clump mass and real mass are modified and the other clump attributes based on volume are not changed (e.g., moment of inertia, pebble sizes). The specification of the volume via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fixity state of the inertia can be modified in FISH (see the clump.moi.fix intrinsic)."
     }
   ],
   "examples": [
