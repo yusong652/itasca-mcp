@@ -45,6 +45,61 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.4] - 2026-11-11
+
+### Changed
+
+- **A keyword's 2D/3D restriction is a field, not text.** Command keywords
+  that exist in only one build carry `dimension: "2D"` or `"3D"`; the
+  "(3D ONLY)" marker no longer sits inside the syntax string. The 6.0 and
+  7.0 views, which had lost the marker, now report the restriction too.
+- Command pages give one body per command, with the versions each keyword
+  exists in on the keyword itself, instead of a block per version.
+  Reference pages share one field layout per page type across engines.
+
+### Removed
+
+- `selection` from `_context.gui` (itasca-mcp-bridge 0.6.10). The editor
+  gives no way to say which lines are selected, so the selected text alone
+  could not be placed reliably. `unsaved`, the data files you are still
+  editing, stays.
+
+### Fixed
+
+- Registering a data file in the GUI project could crash the FLAC3D 9.8
+  GUI and empty the project file after many plots had been created and
+  deleted (itasca-mcp-bridge 0.6.11, #227).
+- Every FISH intrinsic can be browsed by its path, and a namespace counts
+  its children for the version asked.
+- When a command stops at an interactive prompt in the engine console
+  (`model title` with no argument), the timeout message now says to answer
+  the prompt there, which frees the bridge without a restart.
+- Search hits on reference items no longer run the description, title and
+  use into one sentence.
+
+### Documentation
+
+- **Contact and constitutive model properties are checked against the
+  engines.** Every property of the PFC contact models (PFC3D 6.00, 7.00 and
+  9.8), the 43 shared constitutive models (FLAC3D 9.8) and the 3DEC joint
+  models (3DEC 9.8) was read from a live engine and written back. Types,
+  ranges, defaults and read-only flags now follow the manual and that run;
+  where the two disagree the property says so. The PFC `mohr` contact model
+  is listed for 7.0 with its `mc-` property names, and `beam` and `hill` are
+  described from Itasca's UDM user guides.
+- **PFC attribute modifiers.** `add`, `multiply` and `replace` work on every
+  version when written before the value (`ball attribute velocity-x add
+  1.0`); the pages said they were rejected. `gradient` follows a scalar
+  value. History pages state which modifiers and selectors each version
+  accepts.
+- FISH intrinsics are listed per 2D and 3D build.
+- New command pages: the PFC thermal, CFD and coupling families (about 70
+  pages), the 9.8 kernel model commands, the shared plot management, trace,
+  structure and group commands, and the keywords the manuals list that were
+  missing for PFC, FLAC, 3DEC, MPoint and MassFlow.
+- Index summaries are whole sentences instead of fixed-length cuts, and
+  about 220 empty descriptions are filled from the manuals.
+
 ## [0.11.3] - 2026-11-03
 
 ### Added
