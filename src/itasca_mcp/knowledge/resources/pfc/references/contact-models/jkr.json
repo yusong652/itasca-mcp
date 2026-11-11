@@ -20,58 +20,49 @@
           "symbol": "F^d",
           "description": "Dashpot force. Expressed in the contact plane coordinate system",
           "type": "VEC",
-          "range": "",
-          "default": "",
-          "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "range": "ℝ³",
+          "default": "0",
+          "modifiable": false,
+          "inheritable": false
         },
         {
           "keyword": "dp_mode",
           "symbol": "M_d",
           "description": "Dashpot mode",
           "type": "INT",
-          "range": "",
+          "range": "{0, 1}",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "dp_nratio",
           "symbol": "β_n",
           "description": "Normal critical damping ratio",
           "type": "FLT",
-          "range": "",
+          "range": "[0.0, 1.0]",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "dp_sratio",
           "symbol": "β_s",
           "description": "Shear critical damping ratio",
           "type": "FLT",
-          "range": "",
+          "range": "[0.0, 1.0]",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "active_mode",
           "type": "INT",
           "default": "0",
-          "description": "Live-enumerated on PFC3D 9.7 via BallBallContact.props(). Adhesion activation mode (live-only; not on the official page)."
+          "description": "Live-enumerated on PFC3D 9.7 via BallBallContact.props(). Adhesion activation mode (live-only; not on the official page).",
+          "range": "{0, 1}",
+          "modifiable": true,
+          "inheritable": false
         }
       ]
     },
@@ -87,36 +78,27 @@
           "range": "[0.0, +∞)",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": true
         },
         {
           "keyword": "rr_moment",
           "symbol": "M^r",
           "description": "Rolling resistance moment",
           "type": "VEC",
-          "range": "",
+          "range": "ℝ³",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "rr_slip",
           "symbol": "s_r",
           "description": "Rolling slip state",
           "type": "BOOL",
-          "range": "",
-          "default": "",
-          "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "range": "{false, true}",
+          "default": "false",
+          "modifiable": false,
+          "inheritable": false
         }
       ]
     },
@@ -132,10 +114,7 @@
           "range": "[0.0, +∞)",
           "default": "0",
           "modifiable": true,
-          "inheritable": true,
-          "notes": [
-            ""
-          ]
+          "inheritable": true
         }
       ]
     },
@@ -148,130 +127,99 @@
           "symbol": "a_0",
           "description": "Equilibrium contact patch radius",
           "type": "FLT",
-          "range": "",
-          "default": "",
-          "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "range": "[0.0, +∞)",
+          "default": "0.0",
+          "modifiable": false,
+          "inheritable": false
         },
         {
           "keyword": "adh_exp",
           "symbol": "M_a",
           "description": "NOT in the live 9.7 jkr property set (it is an eepa keyword) - kept from the official page. Active mode",
           "type": "FLT",
-          "range": "",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "jkr_force",
           "symbol": "F^JKR",
           "description": "JKR force",
           "type": "VEC",
-          "range": "",
+          "range": "ℝ³",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "jkr_poiss",
           "symbol": "ν",
           "description": "Poisson’s ratio",
           "type": "FLT",
-          "range": "",
+          "range": "[0.0, 0.5]",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": true
         },
         {
           "keyword": "jkr_shear",
           "symbol": "G",
           "description": "Shear modulus in units of stress",
           "type": "FLT",
-          "range": "",
+          "range": "(0.0, +∞)",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": true
         },
         {
           "keyword": "jkr_slip",
           "symbol": "s",
           "description": "Sliding slip state",
           "type": "BOOL",
-          "range": "",
-          "default": "",
-          "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "range": "{false, true}",
+          "default": "false",
+          "modifiable": false,
+          "inheritable": false
         },
         {
           "keyword": "pull_off_f",
           "symbol": "F_po",
           "description": "Pull-off force",
           "type": "FLT",
-          "range": "",
-          "default": "",
-          "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "range": "(-∞, 0.0]",
+          "default": "0.0",
+          "modifiable": false,
+          "inheritable": false
         },
         {
           "keyword": "ks_fac",
           "symbol": "k_sf",
           "description": "Shear stiffness scaling factor",
           "type": "FLT",
-          "range": "",
+          "range": "(0.0, +∞)",
           "default": "1",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "tear_off_d",
           "symbol": "δ_po",
           "description": "Tear-off distance",
           "type": "FLT",
-          "range": "",
-          "default": "",
+          "range": "(0.0, 1.0)",
+          "default": "0.5",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         },
         {
           "keyword": "surf_adh",
           "symbol": "γ",
           "description": "Surface adhesion energy",
           "type": "FLT",
-          "range": "",
+          "range": "[0.0, +∞)",
           "default": "0",
           "modifiable": true,
-          "inheritable": false,
-          "notes": [
-            ""
-          ]
+          "inheritable": false
         }
       ]
     }
