@@ -24,6 +24,21 @@ def _text(value: Any) -> str:
     return ""
 
 
+def _sentences(*parts: Any) -> str:
+    """Join text fragments (strings or lists of them) as sentences.
+
+    Corpus fields often lack a final period ('...and cut planes' + 'Visualize clumps...'),
+    so a plain space join runs them into one sentence in the search hit.
+    """
+    pieces: list[str] = []
+    for part in parts:
+        for piece in part if isinstance(part, list) else [part]:
+            text = _text(piece).strip()
+            if text:
+                pieces.append(text if text[-1] in ".!?:;" else text + ".")
+    return " ".join(pieces)
+
+
 def _property_docs(
     category: str, item: str, item_doc: dict[str, Any], base_keywords: list[str]
 ) -> list[SearchDocument]:
@@ -41,7 +56,7 @@ def _property_docs(
             if not keyword:
                 continue
             path = f"{category} {item} {keyword}"
-            description = " ".join(part for part in (_text(prop.get("description")), _text(prop.get("notes"))) if part)
+            description = _sentences(prop.get("description"), prop.get("notes"))
             metadata: dict[str, Any] = {"category": category, "item": item, "property": keyword}
             if prop.get("availability"):
                 metadata["availability"] = prop["availability"]
@@ -82,15 +97,7 @@ class ReferenceDocumentAdapter:
                     own = _text(
                         (ReferenceLoader.load_item_doc(category, name, software=software) or {}).get("description")
                     )
-                description = " ".join(
-                    part
-                    for part in (
-                        own,
-                        _text(item.get("full_name")),
-                        _text(item.get("common_use")),
-                    )
-                    if part
-                )
+                description = _sentences(own, item.get("full_name"), item.get("common_use"))
                 item_doc = ReferenceLoader.load_item_doc(category, name, software=software) or {}
                 base_keywords = list(dict.fromkeys(_words(category) + _words(name) + _words(item.get("full_name"))))
                 documents.append(
