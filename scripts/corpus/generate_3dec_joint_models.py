@@ -31,6 +31,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from repair_index_summaries import leading_sentences
+
 DOC = Path("C:/Program Files/Itasca/ItascaSoftware900/exe64/doc/3dec/docproject/source/theory")
 SRC_BASE = "https://docs.itascacg.com/itasca900/3dec/docproject/source/theory"
 OUT = Path("C:/Dev/Han/itasca-mcp/src/itasca_mcp/knowledge/resources/3dec/references")
@@ -62,7 +64,17 @@ MODELS: dict[str, dict[str, Any]] = {
     "mohr": {"full_name": "Mohr-Coulomb Joint Model", "page": "mohrcoulomb/mohrcoulomb"},
     "bilinear-mohr": {"full_name": "Bilinear Mohr-Coulomb Joint Model", "page": "bilinear/bilinearmc"},
     "softening-mohr": {"full_name": "Softening-Healing Mohr-Coulomb Joint Model", "page": "softhealmc/softhealmc"},
-    "cyjm": {"full_name": "Continuously Yielding Joint Model", "page": "cyjoint/cyjoint"},
+    "cyjm": {
+        "full_name": "Continuously Yielding Joint Model",
+        "page": "cyjoint/cyjoint",
+        # the page opens with a "Background" heading, which the intro scraper would return
+        "description": (
+            "The continuously yielding joint model, proposed by Cundall and Hart (1984), is intended to "
+            "simulate, in a simple fashion, the internal mechanism of progressive damage of joints under "
+            "shear. The model also provides continuous hysteretic damping for dynamic simulations by using a "
+            "“bounding surface” concept similar to that proposed by Dafalias and Herrmann (1982) for soils."
+        ),
+    },
     "nonlinear": {"full_name": "Nonlinear Joint Model", "page": "nonlinear/nonlinear"},
     "power": {
         "full_name": "Power-Law Creeping Joint Model",
@@ -231,7 +243,7 @@ def main() -> None:
                 "name": keyword,
                 "file": f"{keyword}.json",
                 "full_name": spec["full_name"],
-                "description": description[:160],
+                "description": leading_sentences(description),
                 "property_count": len(props),
             }
         )
