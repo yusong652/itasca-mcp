@@ -272,6 +272,7 @@ ENTRY_END = re.compile(r'<dt class="sig sig-object|</section>')
 ADMONITION = re.compile(r'<div class="[^"]*admonition[^"]*">.*?</div>', re.S)
 FIRST_PARA = re.compile(r"<(p|dt)>(.*?)</\1>", re.S)
 MAX_DESCRIPTION = 240
+RETURNS_ITEM = re.compile(r'Returns<span class="colon">:</span></dt>\s*<dd[^>]*><p>(.*?)</p>', re.S)
 
 
 @cache
@@ -297,6 +298,13 @@ def manual_description(doc_root: Path, doc: str) -> str | None:
         return None
     plain = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).replace("\\(", "").replace("\\)", "")
     plain = " ".join(plain.split())
+    if plain.endswith("-component of"):  # the manual's sentence stops there; its Returns line finishes it
+        returns = RETURNS_ITEM.search(text[dd : end.start() if end else len(text)])
+        if returns:
+            tail = html.unescape(re.sub(r"<[^>]+>", "", returns.group(1))).replace("\\(", "").replace("\\)", "")
+            tail = " ".join(tail.split()).split("-component of ", 1)
+            if len(tail) == 2:
+                plain = f"{plain} {tail[1].rstrip('.')}."
     if len(plain) > MAX_DESCRIPTION:  # keep the first sentence of a long paragraph
         plain = plain.split(". ")[0].rstrip(".") + "."
     if len(plain) > MAX_DESCRIPTION:  # a first sentence that is itself too long

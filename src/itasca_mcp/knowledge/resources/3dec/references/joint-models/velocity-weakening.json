@@ -65,7 +65,8 @@
         {
           "keyword": "friction-current",
           "description": "Current friction angle in degrees (read only per the official theory page; the live engine accepts writes).",
-          "type": "FLT"
+          "type": "FLT",
+          "readonly": true
         },
         {
           "keyword": "dilation",
@@ -92,7 +93,7 @@
         {
           "keyword": "slip-plastic",
           "description": "Plastic shear displacement (3D VECTOR - the live engine expects a 3-component value; state variable).",
-          "type": "VEC3"
+          "type": "VEC"
         },
         {
           "keyword": "slip-velocity",
@@ -110,7 +111,8 @@
   ],
   "source": "Official 9.7 theory page 'Velocity Weakening Joint Model In 3DEC' + live 3DEC 9.7.47 enumeration",
   "verification": [
-    "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted). NOT in 3DEC 7.00: 'block contact jmodel assign velocity-weakening' is rejected; the model-name error enumeration lists only the seven 7.0 jmodels (elastic, mohr, bilinear-mohr, softening-mohr, cyjm, nonlinear, power)."
+    "Live-verified 2026-08-14 on 3DEC 9.7.47: property set enumerated via the wrong-property-name error after 'block contact jmodel assign' (exact match with this file unless noted). NOT in 3DEC 7.00: 'block contact jmodel assign velocity-weakening' is rejected; the model-name error enumeration lists only the seven 7.0 jmodels (elastic, mohr, bilinear-mohr, softening-mohr, cyjm, nonlinear, power).",
+    "Live 3DEC 9.8: the property set error-enumerates identical to this file, and every property accepts 'block contact property', including those the manual marks read-only (readonly here follows the manual)."
   ],
   "availability": {
     "versions": [
