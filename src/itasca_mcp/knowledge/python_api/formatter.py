@@ -429,7 +429,8 @@ class PythonAPIFormatter:
         if api_doc.get("returns"):
             ret = api_doc["returns"]
             lines.append("## Returns")
-            lines.append(f"**`{ret['type']}`**: {ret['description']}")
+            description = ret.get("description")
+            lines.append(f"**`{ret['type']}`**: {description}" if description else f"**`{ret['type']}`**")
             lines.append("")
 
         # Examples

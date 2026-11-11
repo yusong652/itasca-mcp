@@ -6,7 +6,7 @@
     "contact",
     "model"
   ],
-  "description": "Built-in PFC contact model with a bilinear (two-branch) normal force-displacement response. Full 33-keyword property set below was live-enumerated on PFC3D 9.7; descriptions pending curation from the official page.",
+  "description": "Built-in PFC contact model with a bilinear (two-branch) normal force-displacement response. The 33-keyword property set was enumerated on live PFC3D.",
   "property_groups": [
     {
       "name": "Linear Base Group",
@@ -14,69 +14,146 @@
       "properties": [
         {
           "keyword": "dp_force",
+          "symbol": "F^d",
+          "description": "Dashpot force (contact plane coordinate system) [force]",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "modifiable": false,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "dp_mode",
+          "symbol": "M_d",
+          "description": "Dashpot mode [-]",
           "type": "INT",
+          "range": "{0, 1, 2, 3}",
           "default": "0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "dp_nratio",
+          "symbol": "β_n",
+          "description": "Normal critical damping ratio [-]",
           "type": "FLT",
+          "range": "[0.0, 1.0]",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "dp_sratio",
+          "symbol": "β_s",
+          "description": "Shear critical damping ratio [-]",
           "type": "FLT",
+          "range": "[0.0, 1.0]",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "emod",
+          "symbol": "E*",
+          "description": "Effective modulus [force/area]",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false,
+          "inheritable": "N/A",
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "fric",
+          "symbol": "μ",
+          "description": "Friction coefficient [-]",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": true,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "kn",
+          "symbol": "k_n",
+          "description": "Normal stiffness [force/length]",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": true,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "kratio",
+          "symbol": "κ*",
+          "description": "Normal-to-shear stiffness ratio [-]",
           "type": "FLT",
+          "range": "[0.0, +∞)*",
           "default": "0.0",
-          "description": ""
+          "modifiable": false,
+          "inheritable": "N/A",
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "ks",
+          "symbol": "k_s",
+          "description": "Shear stiffness [force/length]",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": true,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "rgap",
+          "symbol": "g_r",
+          "description": "Reference gap [length]",
           "type": "FLT",
+          "range": "ℝ",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         },
         {
           "keyword": "user_area",
+          "symbol": "A",
+          "description": "Constant area [length*length]",
           "type": "FLT",
+          "range": "(0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true,
+          "inheritable": false,
+          "notes": [
+            "Description, range and flags are those of the linear model's property of the same name; this model has no manual page."
+          ]
         }
       ]
     },
@@ -88,141 +165,164 @@
           "keyword": "bi_area",
           "type": "FLT",
           "default": "1.1309733552923256",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_bmul",
           "type": "FLT",
           "default": "1.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_coh",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_comfac",
           "type": "FLT",
           "default": "1.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_fa",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_force",
           "type": "VEC",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_mcf",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_mode",
           "type": "INT",
           "default": "0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_moment",
           "type": "VEC",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_radius",
           "type": "FLT",
           "default": "0.6",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_rmul",
           "type": "FLT",
           "default": "1.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_shear",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_sigma",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_slip",
           "type": "BOOL",
           "default": "False",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_slipb",
           "type": "BOOL",
           "default": "False",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_slipt",
           "type": "BOOL",
           "default": "False",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_state",
           "type": "INT",
           "default": "0",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_tau",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": false
         },
         {
           "keyword": "bi_ten",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_tenfac",
           "type": "FLT",
           "default": "1.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_tenlim",
           "type": "FLT",
           "default": "0.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         },
         {
           "keyword": "bi_tmul",
           "type": "FLT",
           "default": "1.0",
-          "description": ""
+          "description": "",
+          "modifiable": true
         }
       ]
     }
   ],
   "notes": [
-    "Refer to the PFC 7.0 manual for the bilinear property set."
+    "The manual page for this model is an empty stub in every 9.x release (installed and online), so the bi_* properties have no official description; the linear-base properties carry the linear model's descriptions.",
+    "modifiable is measured: whether live PFC3D 9.8 accepts set_prop on a fresh ball-ball contact."
   ],
-  "source": "PFC 7.0 documentation",
+  "source": "live PFC3D enumeration (the manual page is an empty stub)",
   "availability": {
     "versions": [
       "7.0",
