@@ -342,6 +342,9 @@ _KEYWORD_ENTRY_BANNED = {"keyword", "engines", "examples", "available_parameters
 
 
 _DIMENSION_MARKER = re.compile(r"\b[23]D[ -]only\b", re.IGNORECASE)
+# What is left of "(`z`-components are 3D ONLY)" once the marker alone is stripped:
+# the manual's sub-option restriction read as a keyword-level one.
+_ORPHANED_MARKER_PROSE = re.compile(r"\bcomponents? (are|is)\s*$", re.IGNORECASE)
 
 
 def _keyword_level_dimension_marker(syntax: str) -> bool:
@@ -371,6 +374,8 @@ def _keyword_entry_problems(entries: Any, rel: str, jp: str) -> list[str]:
         for text in syntax.values() if isinstance(syntax, dict) else [syntax]:
             if isinstance(text, str) and _keyword_level_dimension_marker(text):
                 problems.append(f"{rel} @{jp}[{i}]: inline 2D/3D ONLY marker in syntax; use the dimension field")
+            if isinstance(text, str) and _ORPHANED_MARKER_PROSE.search(text):
+                problems.append(f"{rel} @{jp}[{i}]: syntax ends in the prose of a stripped component marker")
     return problems
 
 
