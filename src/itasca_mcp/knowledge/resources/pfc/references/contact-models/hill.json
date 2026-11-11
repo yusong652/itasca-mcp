@@ -10,92 +10,131 @@
   "property_groups": [
     {
       "name": "Hill Group",
-      "description": "Names, Python types and defaults are those PFC3D 9.7 reports for a freshly created contact (BallBallContact.props()).",
+      "description": "Parameters and state variables per the user guide; names, types and defaults are those live PFC3D reports for a freshly created contact.",
       "properties": [
         {
           "keyword": "damp_con",
+          "symbol": "α_h",
+          "description": "Damping constant",
           "type": "FLT",
+          "range": "[0.0, 1.0]",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "fric_coef",
+          "symbol": "μ",
+          "description": "Friction coefficient",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "mois_force",
+          "symbol": "F^m",
+          "description": "Moisture force; a positive value is tension, i.e. suction (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "mois_state",
+          "symbol": "M",
+          "description": "Moisture state: 0 = dry, 1 = dry and ruptured, 2 = wet. Set through the make_wet and make_dry methods (state variable)",
           "type": "INT",
+          "range": "{0, 1, 2}",
           "default": "0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "ndamp_coef",
+          "symbol": "η̃_n",
+          "description": "Normal damping coefficient [kg·m^(-1/4)·s^(-1)], derived from damp_con (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "nstiff_coef",
+          "symbol": "k̃_n",
+          "description": "Normal stiffness coefficient [N·m^(-3/2)], derived from the bodies' moduli and radii (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "overlap",
+          "symbol": "δ_o",
+          "description": "Contact overlap; a positive value is overlap (state variable)",
           "type": "FLT",
+          "range": "ℝ",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "pois_ratio",
+          "symbol": "ν_b",
+          "description": "Poisson's ratio of the body. A surface property of the ball or clump, not set on the contact",
           "type": "FLT",
+          "range": "(-1.0, 0.5]",
           "default": "-1.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "sdamp_coef",
+          "symbol": "η̃_s",
+          "description": "Shear damping coefficient [kg·m^(-1/4)·s^(-1)], derived from damp_con (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "sstiff_coef",
+          "symbol": "k̃_s",
+          "description": "Shear stiffness coefficient [N·m^(-3/2)], derived from the bodies' moduli and radii (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "suction",
+          "symbol": "ψ",
+          "description": "Suction",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "surf_force",
+          "symbol": "F^s",
+          "description": "Surface-interaction force (-F_n^s, F_ss, F_st); a positive F_n^s is tension (state variable)",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3((0,0,0))",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "young_mod",
+          "symbol": "E_b",
+          "description": "Young's modulus of the body. A surface property of the ball or clump, not set on the contact",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "-1.0",
-          "description": ""
+          "modifiable": false
         }
       ]
     }
   ],
   "notes": [
-    "Official-page prose not yet merged; property metadata comes from live enumeration.",
-    "Property set live-verified identical on PFC3D 6.00, 7.00 and 9.7. The intermittent 'model clean' surface-property error occurs on all three versions; the contact is still created and props() reads back fine."
+    "Property set live-verified identical on PFC3D 6.00, 7.00 and 9.7. The intermittent 'model clean' surface-property error occurs on all three versions; the contact is still created and props() reads back fine.",
+    "Methods (user guide): 'make_wet gap <f>' adds moisture if the contact gap is at most the moisture gap (mois_state becomes 2); 'make_dry' removes it (mois_state becomes 0). The moisture force updates on the next cycle."
   ],
-  "source": "live PFC3D 6.00/7.00/9.7 enumeration"
+  "source": "Itasca UDM library: Potyondy (2019), Hill Contact Model [version 4], ICG7795-L (https://itasca-software.s3.amazonaws.com/udm-library/HillContactModelAug29_2019.pdf); property set live-enumerated on PFC3D 6.00/7.00/9.7"
 }

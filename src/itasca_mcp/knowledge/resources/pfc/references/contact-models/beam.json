@@ -6,120 +6,170 @@
     "contact model",
     "pfc"
   ],
-  "description": "Structural beam contact model (bm_* keyword family): connects two bodies with an elastic beam of given section/length, carrying force and moment. Available on 6.0/7.0/9.x; property set live-enumerated, semantics pending curation from the official page.",
+  "description": "Structural beam contact model (bm_* keyword family): connects two bodies with an elastic beam of given section/length, carrying force and moment. Available on 6.0/7.0/9.x. A string of balls joined by this model (a P-beam) behaves as a prismatic, bisymmetrical beam of isotropic linear elastic material. The model has no methods.",
   "property_groups": [
     {
       "name": "Beam Group",
-      "description": "Names, Python types and defaults are those PFC3D 9.7 reports for a freshly created contact (BallBallContact.props()).",
+      "description": "Parameters and state variables per the user guide; names, types and defaults are those live PFC3D reports for a freshly created contact.",
       "properties": [
         {
           "keyword": "bm_A",
+          "symbol": "A",
+          "description": "Cross-sectional area (used when bm_bhGiven = 0)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_E",
+          "symbol": "E",
+          "description": "Young's modulus",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_Estr",
+          "symbol": "E_k",
+          "description": "Beam strain energy (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_Iy",
+          "symbol": "I_y",
+          "description": "Moment of inertia about the beam y-axis (used when bm_bhGiven = 0)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_Iz",
+          "symbol": "I_z",
+          "description": "Moment of inertia about the beam z-axis (used when bm_bhGiven = 0)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_J",
+          "symbol": "J",
+          "description": "Polar moment of inertia (used when bm_bhGiven = 0)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_L",
+          "symbol": "L",
+          "description": "Beam length (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "1.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_Yaxis",
+          "symbol": "ŷ_b",
+          "description": "Beam coordinate system, y-axis (state variable)",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_Ydir",
+          "symbol": "Y",
+          "description": "Vector whose projection onto the contact plane defines the beam y-axis",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3(( 0.000000e+00, 1.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_b",
+          "symbol": "b",
+          "description": "Cross-sectional width, aligned with the beam y-axis (used when bm_bhGiven = 1)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_bhGiven",
+          "symbol": "C_p",
+          "description": "Cross-sectional properties code: 0 = specify bm_A, bm_J, bm_Iy and bm_Iz directly; 1 = specify bm_b and bm_h",
           "type": "INT",
+          "range": "{0, 1}",
           "default": "0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_force",
+          "symbol": "F",
+          "description": "Beam force (state variable)",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_h",
+          "symbol": "h",
+          "description": "Cross-sectional height, aligned with the beam z-axis (used when bm_bhGiven = 1)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         },
         {
           "keyword": "bm_kn",
+          "symbol": "k_n",
+          "description": "Normal stiffness [stress/disp.] (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_ks",
+          "symbol": "k_s",
+          "description": "Shear stiffness [stress/disp.] (state variable)",
           "type": "FLT",
+          "range": "[0.0, +∞)",
           "default": "0.0",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_moment",
+          "symbol": "M",
+          "description": "Beam moment (state variable)",
           "type": "VEC",
+          "range": "ℝ³",
           "default": "vec3(( 0.000000e+00, 0.000000e+00, 0.000000e+00 ))",
-          "description": ""
+          "modifiable": false
         },
         {
           "keyword": "bm_nu",
+          "symbol": "ν",
+          "description": "Poisson's ratio",
           "type": "FLT",
+          "range": "(-1.0, 0.5]",
           "default": "0.0",
-          "description": ""
+          "modifiable": true
         }
       ]
     }
   ],
   "notes": [
-    "Official-page prose not yet merged; property metadata comes from live enumeration.",
     "Property set live-verified identical on PFC3D 6.00, 7.00 and 9.7 (CamelCase spellings bm_A/bm_E/bm_Estr/bm_Iy/bm_Iz/bm_J/bm_Yaxis/bm_Ydir/bm_bhGiven verbatim)."
   ],
-  "source": "live PFC3D 6.00/7.00/9.7 enumeration"
+  "source": "Itasca UDM library: Potyondy (2019), Beam Contact Model [version 1], Technical Memorandum 2-3558-01:17TM07 (https://itasca-software.s3.amazonaws.com/udm-library/BeamContactModel.pdf); property set live-enumerated on PFC3D 6.00/7.00/9.7"
 }
