@@ -341,7 +341,7 @@ _BANNED_SECTION_KEYS = {"plot_items", "condition_families", "common_keywords"}
 _KEYWORD_ENTRY_BANNED = {"keyword", "engines", "examples", "available_parameters", "required", "parameters"}
 
 
-_DIMENSION_MARKER = re.compile(r"[23]D[ -]only", re.IGNORECASE)
+_DIMENSION_MARKER = re.compile(r"\b[23]D[ -]only\b", re.IGNORECASE)
 
 
 def _keyword_level_dimension_marker(syntax: str) -> bool:
