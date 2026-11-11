@@ -59,12 +59,12 @@
     {
       "name": "area",
       "syntax": "area",
-      "description": ""
+      "description": "Set the user_area property to the contact's current area. Models: arrlinear, flatjoint, linear, linearcbond, lineardipole, linearpbond, mohr, rrlinear, softbond, springnetwork, subspringnetwork."
     },
     {
       "name": "assign-stiffness",
-      "syntax": "assign-stiffness",
-      "description": "",
+      "syntax": "assign-stiffness kn <f> kratio <f>",
+      "description": "Assign the stiffness without Poisson correction: kn is the normal stiffness, kratio the normal-to-shear stiffness ratio. Models: springnetwork, subspringnetwork.",
       "availability": {
         "versions": [
           "7.0",
@@ -74,18 +74,18 @@
     },
     {
       "name": "bond",
-      "syntax": "bond",
-      "description": ""
+      "syntax": "bond [gap <f> [<f>]]",
+      "description": "Bond the contact if its gap lies in the gap interval. flatjoint bonds one element ('element <i>') or all elements; smoothjoint bonds the joint; softbond also takes 'soft <f>' (softening parameter) and 'cut <f>' (softening threshold parameter). Models: flatjoint, linearcbond, linearpbond, smoothjoint, softbond, springnetwork, subspringnetwork."
     },
     {
       "name": "cb_strength",
-      "syntax": "cb_strength",
-      "description": ""
+      "syntax": "cb_strength tensile <f> shear <f>",
+      "description": "Set the contact-bond tensile and shear strength [stress]. Model: linearcbond."
     },
     {
       "name": "compute-stiffness",
-      "syntax": "compute-stiffness",
-      "description": "",
+      "syntax": "compute-stiffness emod <f> poisson <f>",
+      "description": "Compute the stiffnesses with Poisson correction from Young's modulus and Poisson's ratio. Models: springnetwork, subspringnetwork.",
       "availability": {
         "versions": [
           "7.0",
@@ -95,28 +95,28 @@
     },
     {
       "name": "deformability",
-      "syntax": "deformability",
-      "description": ""
+      "syntax": "deformability emod <f> kratio <f>",
+      "description": "Set the deformability: emod is the effective modulus, kratio the normal-to-shear stiffness ratio. By convention kratio 0.0 sets the shear stiffness to zero without changing the normal stiffness. Models: arrlinear, flatjoint, linear, linearcbond, lineardipole, linearpbond, rrlinear, softbond."
     },
     {
       "name": "initialize",
-      "syntax": "initialize",
-      "description": ""
+      "syntax": "initialize force <v> moment <v>",
+      "description": "Initialize the forces and moment from the total local force and total local moment. Model: flatjoint."
     },
     {
       "name": "make_dry",
       "syntax": "make_dry",
-      "description": ""
+      "description": "Remove moisture: the moisture state becomes dry (mois_state 0). The moisture force updates on the next cycle. Model: hill."
     },
     {
       "name": "make_wet",
-      "syntax": "make_wet",
-      "description": ""
+      "syntax": "make_wet gap <f>",
+      "description": "Add moisture if the contact gap is at most the moisture gap given: the moisture state becomes wet (mois_state 2). The moisture force updates on the next cycle. Model: hill."
     },
     {
       "name": "pb_deformability",
-      "syntax": "pb_deformability",
-      "description": ""
+      "syntax": "pb_deformability emod <f> kratio <f>",
+      "description": "Set the parallel-bond deformability: emod is the bond effective modulus, kratio the bond normal-to-shear stiffness ratio. Model: linearpbond."
     },
     {
       "name": "reset-disp",
@@ -132,7 +132,7 @@
     {
       "name": "sj_setforce",
       "syntax": "sj_setforce",
-      "description": ""
+      "description": "Set the joint force. Model: smoothjoint."
     },
     {
       "name": "stress-threshold",
@@ -146,8 +146,8 @@
     },
     {
       "name": "unbond",
-      "syntax": "unbond",
-      "description": ""
+      "syntax": "unbond [gap <f> [<f>]]",
+      "description": "Unbond the contact if its gap lies in the gap interval. flatjoint unbonds one element ('element <i>') or all elements; smoothjoint unbonds the joint. Models: flatjoint, linearcbond, linearpbond, smoothjoint, softbond, springnetwork, subspringnetwork."
     },
     {
       "name": "update_geometry",
