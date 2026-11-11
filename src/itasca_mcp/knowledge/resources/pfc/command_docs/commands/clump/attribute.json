@@ -89,8 +89,9 @@
       "syntax": {
         "6.0": "displacement-z <f>",
         "7.0": "displacement-z <f>",
-        "9.0": "displacement-z <f> 3D ONLY [clmodblock]"
+        "9.0": "displacement-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of accumulated displacement as a result of cycling."
     },
     {
@@ -98,8 +99,9 @@
       "syntax": {
         "6.0": "euler-x <f>",
         "7.0": "euler-x <f>",
-        "9.0": "euler-x <f> 3D ONLY [clmodblock]"
+        "9.0": "euler-x <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(x\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
@@ -107,8 +109,9 @@
       "syntax": {
         "6.0": "euler-y <f>",
         "7.0": "euler-y <f>",
-        "9.0": "euler-y <f> 3D ONLY [clmodblock]"
+        "9.0": "euler-y <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(y\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
@@ -116,17 +119,19 @@
       "syntax": {
         "6.0": "euler-z <f>",
         "7.0": "euler-z <f>",
-        "9.0": "euler-z <f> 3D ONLY [clmodblock]"
+        "9.0": "euler-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -euler angle (in degrees) of the current clump orientation. See the euler keyword for further details."
     },
     {
       "name": "rotation",
       "syntax": {
-        "6.0": "rotation <f> 2D ONLY",
-        "7.0": "rotation <f> 2D ONLY",
-        "9.0": "rotation <f> 2D ONLY [clmodblock]"
+        "6.0": "rotation <f>",
+        "7.0": "rotation <f>",
+        "9.0": "rotation <f> [clmodblock]"
       },
+      "dimension": "2D",
       "description": "Current clump orientation in degrees. Setting it assigns an absolute angle and does not move the pebbles. The orientation is updated only when orientation tracking has been enabled (see model orientation-tracking command)."
     },
     {
@@ -170,8 +175,9 @@
       "syntax": {
         "6.0": "force-contact-z <f>",
         "7.0": "force-contact-z <f>",
-        "9.0": "force-contact-z <f> 3D ONLY [clmodblock]"
+        "9.0": "force-contact-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the contact force."
     },
     {
@@ -238,17 +244,19 @@
       "syntax": {
         "6.0": "moi-principal <fprin11> <fprin22> <fprin33>",
         "7.0": "moi-principal <fprin11> <fprin22> <fprin33>",
-        "9.0": "moi-principal <fprin11> <fprin22> <fprin33> 3D ONLY [clmodblock]"
+        "9.0": "moi-principal <fprin11> <fprin22> <fprin33> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "Real principal moments of inertia. When modified, only the clump principal moments of inertia are modified and the other clump attributes are not changed (e.g., volume, pebble sizes). The specification of the clump principal moments of inertia via the command line or via FISH results in the principal moments of inertia being in a fixed state so that they will not be automatically updated when scaling a clump, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
       "name": "moi",
       "syntax": {
-        "6.0": "moi <f> 2D ONLY",
-        "7.0": "moi <f> 2D ONLY",
-        "9.0": "moi <f> 2D ONLY [clmodblock]"
+        "6.0": "moi <f>",
+        "7.0": "moi <f>",
+        "9.0": "moi <f> [clmodblock]"
       },
+      "dimension": "2D",
       "description": "Real moment of inertia. Use this keyword in 2D: the moi-11 to moi-33 and moi-principal keywords are 3D only. When modified, clump.moi.real takes the value, clump.moi keeps its value, and the real moment of inertia goes into a fixed state so that it will not be automatically updated when scaling, changing the volume, or changing the density. The fix state can be modified in FISH (see the clump.moi.fix intrinsic)."
     },
     {
@@ -256,17 +264,21 @@
       "syntax": {
         "6.0": "moment-applied <fx> <fy> <fz>",
         "7.0": "moment-applied <fx> <fy> <fz>",
-        "9.0": "moment-applied <fx> <fy> <fz> (y and z components 3D ONLY) [clmodblock]"
+        "9.0": "moment-applied <fx> <fy> <fz> [clmodblock]"
       },
-      "description": "Moment applied to clumps."
+      "description": "Moment applied to clumps.",
+      "notes": [
+        "The y and z components are 3D only."
+      ]
     },
     {
       "name": "moment-applied-x",
       "syntax": {
         "6.0": "moment-applied-x <f>",
         "7.0": "moment-applied-x <f>",
-        "9.0": "moment-applied-x <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-applied-x <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(x\\) -component of the moment applied to clumps."
     },
     {
@@ -274,8 +286,9 @@
       "syntax": {
         "6.0": "moment-applied-y <f>",
         "7.0": "moment-applied-y <f>",
-        "9.0": "moment-applied-y <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-applied-y <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(y\\) -component of the moment applied to clumps."
     },
     {
@@ -283,8 +296,9 @@
       "syntax": {
         "6.0": "moment-applied-z <f>",
         "7.0": "moment-applied-z <f>",
-        "9.0": "moment-applied-z <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-applied-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the moment applied to clumps."
     },
     {
@@ -292,17 +306,21 @@
       "syntax": {
         "6.0": "moment-contact <fx> <fy> <fz>",
         "7.0": "moment-contact <fx> <fy> <fz>",
-        "9.0": "moment-contact <fx> <fy> <fz> (y and z components 3D ONLY) [clmodblock]"
+        "9.0": "moment-contact <fx> <fy> <fz> [clmodblock]"
       },
-      "description": "Sum of the contact moments accumulated to the clumps during the previous force-displacement update. This value will be modified during the next force-displacement update."
+      "description": "Sum of the contact moments accumulated to the clumps during the previous force-displacement update. This value will be modified during the next force-displacement update.",
+      "notes": [
+        "The y and z components are 3D only."
+      ]
     },
     {
       "name": "moment-contact-x",
       "syntax": {
         "6.0": "moment-contact-x <f>",
         "7.0": "moment-contact-x <f>",
-        "9.0": "moment-contact-x <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-contact-x <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(x\\) -component of the contact moment."
     },
     {
@@ -310,8 +328,9 @@
       "syntax": {
         "6.0": "moment-contact-y <f>",
         "7.0": "moment-contact-y <f>",
-        "9.0": "moment-contact-y <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-contact-y <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(y\\) -component of the contact moment."
     },
     {
@@ -319,8 +338,9 @@
       "syntax": {
         "6.0": "moment-contact-z <f>",
         "7.0": "moment-contact-z <f>",
-        "9.0": "moment-contact-z <f> 3D ONLY [clmodblock]"
+        "9.0": "moment-contact-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the contact moment."
     },
     {
@@ -355,8 +375,9 @@
       "syntax": {
         "6.0": "position-z <f>",
         "7.0": "position-z <f>",
-        "9.0": "position-z <f> 3D ONLY [clmodblock]"
+        "9.0": "position-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the location of clump centroids."
     },
     {
@@ -364,17 +385,21 @@
       "syntax": {
         "6.0": "spin <fspinx> <fspiny> <fspinz>",
         "7.0": "spin <fspinx> <fspiny> <fspinz>",
-        "9.0": "spin <fspinx> <fspiny> <fspinz> (y and z components 3D ONLY) [clmodblock]"
+        "9.0": "spin <fspinx> <fspiny> <fspinz> [clmodblock]"
       },
-      "description": "Clump angular velocity in radians per second."
+      "description": "Clump angular velocity in radians per second.",
+      "notes": [
+        "The y and z components are 3D only."
+      ]
     },
     {
       "name": "spin-x",
       "syntax": {
         "6.0": "spin-x <f>",
         "7.0": "spin-x <f>",
-        "9.0": "spin-x <f> 3D ONLY [clmodblock]"
+        "9.0": "spin-x <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(x\\) -component of the clump angular velocity in radians per second."
     },
     {
@@ -382,8 +407,9 @@
       "syntax": {
         "6.0": "spin-y <f>",
         "7.0": "spin-y <f>",
-        "9.0": "spin-y <f> 3D ONLY [clmodblock]"
+        "9.0": "spin-y <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(y\\) -component of the clump angular velocity in radians per second."
     },
     {
@@ -391,8 +417,9 @@
       "syntax": {
         "6.0": "spin-z <f>",
         "7.0": "spin-z <f>",
-        "9.0": "spin-z <f> 3D ONLY [clmodblock]"
+        "9.0": "spin-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the clump angular velocity in radians per second."
     },
     {
@@ -427,8 +454,9 @@
       "syntax": {
         "6.0": "velocity-z <f>",
         "7.0": "velocity-z <f>",
-        "9.0": "velocity-z <f> 3D ONLY [clmodblock]"
+        "9.0": "velocity-z <f> [clmodblock]"
       },
+      "dimension": "3D",
       "description": "The \\(z\\) -component of the clump velocity."
     },
     {
