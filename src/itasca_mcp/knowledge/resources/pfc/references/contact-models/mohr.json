@@ -24,8 +24,8 @@
         },
         {
           "keyword": "tensile-pore-pressure",
-          "type": "FLT",
-          "default": "0.0",
+          "type": "BOOL",
+          "default": "true",
           "description": "Live-enumerated on PFC3D 9.7 via BallBallContact.props(). Tensile pore-pressure term (live-only; not on the official page)."
         }
       ]
@@ -125,7 +125,10 @@
           "range": "[0.0, +∞)",
           "default": "0",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "A freshly created contact reports -45.0 on live 7.00 (as mc-dilation-residual) and 9.8, not the documented default."
+          ]
         },
         {
           "keyword": "dilation-zero",
@@ -135,7 +138,10 @@
           "range": "[0.0, +∞)",
           "default": "infinity",
           "modifiable": true,
-          "inheritable": false
+          "inheritable": false,
+          "notes": [
+            "A freshly created contact reports 0.0 on live 7.00 (as mc-dilation-zero) and 9.8, not the documented infinity."
+          ]
         },
         {
           "keyword": "disp-normal",
@@ -201,7 +207,7 @@
           "keyword": "healing",
           "symbol": "-",
           "description": "Healing",
-          "type": "INT",
+          "type": "BOOL",
           "range": "{0, 1}",
           "default": "0",
           "modifiable": true,
