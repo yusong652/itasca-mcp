@@ -45,6 +45,21 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.5] - 2026-11-11
+
+### Fixed
+
+- Eight command keywords were tagged `dimension: "3D"` in 0.11.4 although
+  only their z components are 3D: the `box` of `ball generate`,
+  `ball distribute`, `clump generate`, `clump distribute` and
+  `wall generate`, `ball tractions periodicity`, and `fracture generate`'s
+  `generation-box` and `tolerance-box`. A 2D agent read them as
+  unavailable, and the 9.0 syntax ended in a stray "`z`-components are".
+  They now carry no dimension, and a note says the z components are 3D only.
+- Running `itasca_execute_code` while a task cycles no longer returns each
+  command behind a "Logging started" banner, and the task log no longer
+  gains banners and log-file echoes from it (itasca-mcp-bridge 0.6.12).
+
 ## [0.11.4] - 2026-11-11
 
 ### Changed
