@@ -86,12 +86,24 @@
         "6.0": "Limit based on the maximum convergence value of all gridpoints and zones in the model (note that currently PFC balls do not support this keyword). The convergence value for a gridpoint or node is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0.",
         "7.0": "Limit based on the maximum convergence value of all gridpoints, zones, balls, clumps, or rigid blocks. The convergence value is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0.",
         "9.0": "Limit based on the maximum convergence value of all gridpoints, zones, structural nodes, balls, clumps, or rigid blocks. The convergence value is defined as the ratio of the current mechanical force ratio to the target force ratio of the gridpoint. See the zone gridpoint initialize ratio-target and structure node initialize ratio-target commands. A convergence value of 1.0 is therefore considered “converged”, but it is possible to restrict or relax that by using a value greater or less than 1.0."
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
       }
     },
     {
       "name": "creep",
       "syntax": "creep {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
-      "description": "Specify a solve limit for the creep process specifically. Options: cycles <i>: Limit of the number of cycles to take with creep active during this solve operation.; cycles-total <i>: Total number of cycles taken with creep active since model creation.; cycles-total-zone <i>: Total number of cycles taken with creep active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated creep time in the zone module."
+      "description": "Specify a solve limit for the creep process specifically. Options: cycles <i>: Limit of the number of cycles to take with creep active during this solve operation.; cycles-total <i>: Total number of cycles taken with creep active since model creation.; cycles-total-zone <i>: Total number of cycles taken with creep active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated creep time in the zone module.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
     {
       "name": "cycles",
@@ -124,7 +136,13 @@
     {
       "name": "dynamic",
       "syntax": "dynamic {cycles <i> | cycles-total <i> | cycles-total-zone <i> | time <f> | time-total <f> | time-total-zone <f>}",
-      "description": "Specify a solve limit for the dynamic process specifically. Options: cycles <i>: Limit of the number of cycles to take with dynamic active during this solve operation.; cycles-total <i>: Total number of cycles taken with dynamic active since model creation.; cycles-total-zone <i>: Total number of cycles taken with dynamic active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module."
+      "description": "Specify a solve limit for the dynamic process specifically. Options: cycles <i>: Limit of the number of cycles to take with dynamic active during this solve operation.; cycles-total <i>: Total number of cycles taken with dynamic active since model creation.; cycles-total-zone <i>: Total number of cycles taken with dynamic active in the zone module.; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
     {
       "name": "elastic",
@@ -156,7 +174,16 @@
         "6.0": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module.",
         "7.0": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>: Total accumulated dynamic time in the zone module.",
         "9.0": "Specifies a solve limit for the fluid process specifically. Options: cycles <i>: Limit of the number of cycles to take with fluid-flow active during this solve operation.; cycles-total <i>: Total number of cycles taken with fluid-flow active since model creation.; cycles-total-zone <i>valid only if FLAC zones exist: Total number of cycles taken with fluid-flow active in the zone module.; ratio-flow <f>FLAC3D only: Specifies a limiting convergence ratio as defined by the fluid-flow logic. See section xxx of the fluid discussion — CS on 3/7/17 still don’t know where this should go; time <f>: Limit of the time accumulated while this process is active during this solve operation.; time-total <f>: Limit of the time accumulated while this process is active since model creation.; time-total-zone <f>valid only if FLAC zones exist: Total accumulated dynamic time in the zone module."
-      }
+      },
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "PFC2D 7.00 rejects it; PFC3D 7.00 accepts it."
+      ]
     },
     {
       "name": "mechanical",
@@ -183,7 +210,13 @@
     {
       "name": "ratio",
       "syntax": "ratio <f>",
-      "description": "Limit based on the convergence ratio returned by all active modules."
+      "description": "Limit based on the convergence ratio returned by all active modules.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      }
     },
     {
       "name": "ratio-average",
@@ -262,7 +295,16 @@
     {
       "name": "time-total-zone",
       "syntax": "time-total-zone <f>",
-      "description": "Cycle until the total age of any active process in a zone module meets or exceeds f . This is distinct from the time keyword."
+      "description": "Cycle until the total age of any active process in a zone module meets or exceeds f . This is distinct from the time keyword.",
+      "availability": {
+        "versions": [
+          "7.0",
+          "9.0"
+        ]
+      },
+      "notes": [
+        "PFC2D 7.00 rejects it; PFC3D 7.00 accepts it."
+      ]
     },
     {
       "name": "unbalanced-average",
@@ -270,10 +312,12 @@
       "description": "Cycle until the average unbalanced quantity, defined by the active processes, is less than or equal to f . For the mechanical process, unbalanced refers to the average unbalanced force (i.e., the unbalanced force is what remains after all forces are applied to a model object).",
       "availability": {
         "versions": [
-          "6.0",
           "7.0"
         ]
-      }
+      },
+      "notes": [
+        "PFC2D 7.00 rejects it; PFC3D 7.00 accepts it."
+      ]
     },
     {
       "name": "unbalanced-average",
@@ -307,6 +351,7 @@
           "3dec"
         ],
         "versions": [
+          "6.0",
           "7.0"
         ]
       }
@@ -330,14 +375,11 @@
     {
       "name": "cfd",
       "syntax": "cfd keyword",
+      "dimension": "3D",
       "description": "Specifies a solve limit for the cfd process specifically. The process must be active, otherwise the engine reports 'Process cfd is not active'.",
       "availability": {
         "engines": [
           "pfc"
-        ],
-        "versions": [
-          "7.0",
-          "9.0"
         ]
       }
     },

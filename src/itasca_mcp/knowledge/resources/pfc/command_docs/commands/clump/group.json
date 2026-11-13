@@ -4,16 +4,19 @@
     "group",
     "assign"
   ],
-  "description": "Specify clump or pebble group names. Groups are used to organize clumps and apply commands to specific subsets. By default, the group name is assigned to the slot 'Default'. The optional pebble keyword can be given before the optional range to specify that the group name will be applied to pebbles. In this case, the range is applied to pebbles and not to clumps. IMPORTANT: The 'add' and 'remove' keywords apply to ALL clumps/pebbles (or a previously active range), they cannot be combined with a 'range' keyword in the same command.",
+  "description": "Specify clump or pebble group names. Groups are used to organize clumps and apply commands to specific subsets. By default, the group name is assigned to the slot 'Default'. The optional pebble keyword can be given before the optional range to specify that the group name will be applied to pebbles. In this case, the range is applied to pebbles and not to clumps. IMPORTANT: The 'remove' keyword applies to ALL clumps/pebbles (or a previously active range); it cannot be combined with a 'range' keyword in the same command.",
   "notes": {
     "6.0": [
-      "Live 6.00: the first slot is the group name (String); modifiers follow the name."
+      "Live 6.00: the first slot is the group name (String); modifiers follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "7.0": [
-      "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 7.00: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "9.0": [
-      "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 9.7: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ]
   },
   "python_sdk_alternative": {
@@ -30,17 +33,6 @@
   "command": "clump group",
   "syntax": "clump group <s> keyword ... [pebble] [range]",
   "keywords": [
-    {
-      "name": "add",
-      "syntax": "add",
-      "description": "Assign s to the next available slot.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
-    },
     {
       "name": "remove",
       "syntax": "remove",
@@ -84,10 +76,6 @@
     {
       "command": "clump group 'active' range position-z 0 10",
       "description": "Assign clumps in z-range 0-10 to group 'active' in default slot"
-    },
-    {
-      "command": "clump group 'active' add",
-      "description": "Assign ALL clumps to group 'active' in next available slot"
     },
     {
       "command": "clump group 'pebble_group' pebble range id 1 50",
