@@ -45,6 +45,50 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.6] - 2026-11-13
+
+### Changed
+
+- Execution tool responses no longer repeat a `description` inside
+  `_context.user_console` and `_context.gui` on every call. What each field
+  means is stated once, in the server instructions.
+
+### Fixed
+
+- PFC command keywords were checked against live PFC2D and PFC3D 6.00, 7.00
+  and 9.8, both ways: keywords offered where the engine rejects them, and
+  keywords the engine takes that the docs left out.
+  - 76 keywords exist only in 3D but were offered to 2D: clump and rblock
+    `moi-*`, `euler*`, `axis-angle*` and z components, rblock `moment-*`
+    and `spin-*`, and the history `axis-angle-*` of ball, clump, rblock and
+    wall. They are now marked 3D.
+  - The `add` keyword is gone from the PFC group commands (ball, clump,
+    rblock, wall, contact, and their thermal and CFD variants). Every build
+    rejects it, and on the mechanical ones the group has already gone to
+    slot Default by then.
+  - `model solve` on PFC 6.0 lists only what 6.00 accepts: `age` is added;
+    `ratio`, `convergence`, `creep`, `dynamic`, `fluid`, `time-total-zone`
+    and `unbalanced-average` are removed. `cfd` is marked 3D.
+    `time-total-zone`, and a top-level `cycles-total-zone` now listed, need
+    `model configure thermal`, and PFC2D 7.00 rejects them.
+  - `clump history force-unbalanced-x` is rejected by every build, and the
+    `force-unbalanced-` that the engine lists in its place records the
+    magnitude. The note says so and points to a FISH history of
+    `clump.force.unbal.x` for the x component.
+  - `model factor-of-safety` no longer offers its zone and joint keywords
+    to PFC. `history list` spells `label` on 6.0 and `labels` from 7.0.
+    `geometry edge create` uses `by-nodes` and `by-positions`.
+    `geometry assign-groups` offers `zone` and `structure` from 7.0 only.
+- `geometry assign-groups` lists the PFC object types it accepts: ball,
+  clump, pebble, wall, facet, their thermal variants, `rblockthermal`, and
+  in 3D `ballfluid` and `clumpccfd` (`wallfluid` from 9.8). `rblock` is
+  read as `rblockthermal`, so mechanical rigid blocks cannot be grouped
+  this way.
+- PFC 6.0 now offers `fracture results`, `geometry results`,
+  `model range list` and `program list fish`.
+- `clump thermal history` and `clump cfd history` warn that the
+  `position` selector crashes the engine when no clump exists.
+
 ## [0.11.5] - 2026-11-11
 
 ### Fixed
