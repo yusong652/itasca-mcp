@@ -4,7 +4,7 @@
     "group",
     "assign"
   ],
-  "description": "Assign group names to contacts for organization and range-based selection. Groups are a fundamental organizational tool in PFC, allowing contacts to be categorized, selected, and manipulated based on group membership. Contacts can belong to multiple groups via different slots. By default, the group name is assigned to the 'Default' slot. Use 'slot' keyword to specify a particular slot. By default, only mechanical contacts are considered. IMPORTANT: The 'add' and 'remove' keywords apply to ALL contacts (or a previously active range), they cannot be combined with a 'range' keyword in the same command.",
+  "description": "Assign group names to contacts for organization and range-based selection. Groups are a fundamental organizational tool in PFC, allowing contacts to be categorized, selected, and manipulated based on group membership. Contacts can belong to multiple groups via different slots. By default, the group name is assigned to the 'Default' slot. Use 'slot' keyword to specify a particular slot. By default, only mechanical contacts are considered. IMPORTANT: The 'remove' keyword applies to ALL contacts (or a previously active range); it cannot be combined with a 'range' keyword in the same command.",
   "python_sdk_alternative": {
     "available": true,
     "methods": [
@@ -66,13 +66,16 @@
   },
   "notes": {
     "6.0": [
-      "Live 6.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 6.00: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "7.0": [
-      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. 'add', 'remove' and 'slot' follow the group name."
+      "Live 7.0 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>'); it is not a keyword of the subcommand itself. 'remove' and 'slot' follow the group name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "9.0": [
-      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. 'add', 'remove' and 'slot' follow the group name."
+      "Live 9.7 grammar: the optional process selector precedes the subcommand ('contact mechanical <sub>' / 'contact thermal <sub>' / 'contact fluid <sub>' - fluid is 9.x-new); it is not a keyword of the subcommand itself. 'remove' and 'slot' follow the group name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ]
   },
   "availability": {
@@ -89,11 +92,6 @@
     "9.0": "contact group <s> keyword ... [range]"
   },
   "keywords": [
-    {
-      "name": "add",
-      "syntax": "add",
-      "description": "Assign s to the next available slot."
-    },
     {
       "name": "remove",
       "syntax": "remove",
@@ -133,10 +131,6 @@
     {
       "command": "contact group 'bonded' range model linearpbond contact bonded",
       "description": "Assign 'bonded' group to bonded contacts in default slot. Use case: Identify bonded contacts for analysis."
-    },
-    {
-      "command": "contact group 'bonded' add",
-      "description": "Assign ALL contacts to 'bonded' group in next available slot. Use case: Multiple group membership without overwriting existing groups."
     },
     {
       "command": "contact group 'temporary' remove range contact",

@@ -4,7 +4,7 @@
     "group",
     "assign"
   ],
-  "description": "Specify ball group names. Groups are used to organize balls and apply commands to specific subsets. By default, the group name is assigned to the slot 'Default'. IMPORTANT: The 'add' and 'remove' keywords apply to ALL balls (or a previously active range), they cannot be combined with a 'range' keyword in the same command.",
+  "description": "Specify ball group names. Groups are used to organize balls and apply commands to specific subsets. By default, the group name is assigned to the slot 'Default'. IMPORTANT: The 'remove' keyword applies to ALL balls (or a previously active range); it cannot be combined with a 'range' keyword in the same command.",
   "python_sdk_alternative": {
     "available": true,
     "workaround": "Ball.set_group(group_name, slot=None) - requires iteration: for b in itasca.ball.list(): b.set_group('name')"
@@ -19,17 +19,6 @@
   "command": "ball group",
   "syntax": "ball group <s> [keyword ...] [range]",
   "keywords": [
-    {
-      "name": "add",
-      "syntax": "add",
-      "description": "Assign s to the next available slot.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
-    },
     {
       "name": "remove",
       "syntax": "remove",
@@ -71,10 +60,6 @@
       "description": "Assign balls with IDs 1-100 to group 'active' in default slot"
     },
     {
-      "command": "ball group 'active' add",
-      "description": "Assign ALL balls to group 'active' in next available slot"
-    },
-    {
       "command": "ball group 'old_group' remove",
       "description": "Remove group 'old_group' from all balls in all slots"
     },
@@ -85,13 +70,16 @@
   ],
   "notes": {
     "6.0": [
-      "Live 6.00: the first slot is the group name (String); modifiers follow the name."
+      "Live 6.00: the first slot is the group name (String); modifiers follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "7.0": [
-      "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 7.00: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "9.0": [
-      "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 9.7: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ]
   }
 }

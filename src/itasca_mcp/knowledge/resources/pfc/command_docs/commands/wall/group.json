@@ -4,7 +4,7 @@
     "group",
     "assign"
   ],
-  "description": "Specify wall or facet group names. Use of the group logic is described in Groups documentation. By default, s is assigned to the group slot 'Default'. The optional 'facet' keyword can be given before the optional range to specify that the group name will be applied to facets. In this case, the range is applied to facets and not to walls. IMPORTANT: The 'add', 'remove', and 'slot' keywords apply to ALL walls/facets (or a previously active range), they cannot be combined with a 'range' keyword in the same command.",
+  "description": "Specify wall or facet group names. Use of the group logic is described in Groups documentation. By default, s is assigned to the group slot 'Default'. The optional 'facet' keyword can be given before the optional range to specify that the group name will be applied to facets. In this case, the range is applied to facets and not to walls. IMPORTANT: The 'remove' and 'slot' keywords apply to ALL walls/facets (or a previously active range), they cannot be combined with a 'range' keyword in the same command.",
   "python_sdk_alternative": {
     "available": true,
     "workaround": "Wall.set_group(group_name, slot) or Facet.set_group(group_name, slot) for setting; Wall.group_remove(group_name, slot) or Facet.group_remove(group_name, slot) for removing - requires iteration over wall/facet range"
@@ -19,17 +19,6 @@
   "command": "wall group",
   "syntax": "wall group <s> keyword ... [facet] [range]",
   "keywords": [
-    {
-      "name": "add",
-      "syntax": "add",
-      "description": "Assign s to the next available slot.",
-      "availability": {
-        "versions": [
-          "7.0",
-          "9.0"
-        ]
-      }
-    },
     {
       "name": "remove",
       "syntax": "remove",
@@ -89,13 +78,16 @@
   ],
   "notes": {
     "6.0": [
-      "Live 6.00: the first slot is the group name (String); modifiers follow the name."
+      "Live 6.00: the first slot is the group name (String); modifiers follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "7.0": [
-      "Live 7.00: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 7.00: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ],
     "9.0": [
-      "Live 9.7: the first slot is the group name (String); 'add', 'remove' and 'slot' follow the name."
+      "Live 9.7: the first slot is the group name (String); 'remove' and 'slot' follow the name.",
+      "The manuals list an 'add' keyword (assign s to the next available slot). The engine rejects it with 'Unused extra parameter' on 6.00, 7.00 and 9.8, after it has already assigned s to slot Default. Use 'slot <s2>' to pick another slot."
     ]
   }
 }
