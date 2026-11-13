@@ -34,9 +34,19 @@ mcp = FastMCP(
         "searches by keywords, across all trees unless a source is given. Version "
         "defaults to 9.0; pass 6.0/7.0 for older PFC, FLAC or 3DEC installs.\n\n"
         "Execution tool responses may carry _context: what happened in the engine "
-        "GUI since the previous call (user_console: what the user typed; gui: plots "
-        "and data files opened or switched to, by the user or your own code). It is "
-        "not part of the tool's result; read it to follow what the user is doing."
+        "GUI since the previous call. It is not part of the tool's result; read it "
+        "to follow what the user is doing.\n"
+        "_context.user_console lists what the USER typed: 'python' = IPython pane, "
+        "'command' = command prompt; 'queued' = not run yet (engine busy), its "
+        "output follows later as 'ran'.\n"
+        "_context.gui lists plots and data files opened or switched to, by the user "
+        "or your own code ('active' = the one in front), and plot items added, "
+        "removed or changed. 'executed' = the USER ran that data file from its "
+        "editor ('master' = the project's master files); 'saved' = the USER saved "
+        "it, 'diff' being their changes since you last saw the file. To see one, "
+        "read the file or export the plot as an image. 'unsaved' = data files the "
+        "USER is editing right now, with changes not yet on disk: tell them before "
+        "writing one."
     ),
 )
 

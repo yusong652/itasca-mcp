@@ -13,6 +13,10 @@ Two pieces live here:
 
 Context is best-effort: a bridge that cannot be reached, or has nothing
 new, leaves the tool's own result untouched.
+
+The payload carries only the event data; what the ``user_console``,
+``gui`` and ``unsaved`` fields mean is said once, in the server
+instructions (``server.py``), not repeated in every response.
 """
 
 import functools
@@ -23,26 +27,6 @@ from typing import Any
 from itasca_mcp.bridge.client import get_bridge_client
 
 logger = logging.getLogger("itasca-mcp.context")
-
-USER_CONSOLE_DESCRIPTION = (
-    "Typed by the USER in the Itasca GUI since the last call: 'python' = IPython "
-    "pane, 'command' = command prompt. 'queued' = not run yet (engine busy); its "
-    "output follows as 'ran'."
-)
-
-GUI_DESCRIPTION = (
-    "Plots and data files opened or switched to in the Itasca GUI since the last "
-    "call, by the user or by your own code ('active' = the one in front), and plot "
-    "items added, removed or changed. 'executed' = the USER ran that data file from "
-    "its editor ('master' = the project's master files); 'saved' = the USER saved it, "
-    "'diff' being their changes since you last saw the file. To see one, read the "
-    "file or export the plot as an image."
-)
-
-# Appended when the bridge reports the editors' state along with the entries.
-GUI_STATE_DESCRIPTION = (
-    "'unsaved' = data files the USER is editing right now, with changes not yet on disk: tell them before writing one."
-)
 
 # Console entries are what the person typed; GUI entries are what changed in
 # the product's windows, whoever changed it.
@@ -67,10 +51,7 @@ async def fetch_bridge_context() -> dict[str, Any] | None:
         gui = _coalesce_gui([_format_gui_entry(e) for e in entries if e.get("source") in _GUI_SOURCES])
         state = data.get("state") or {}
         if console:
-            context["user_console"] = {
-                "description": USER_CONSOLE_DESCRIPTION,
-                "entries": console,
-            }
+            context["user_console"] = {"entries": console}
         if gui or state:
             context["gui"] = _gui_context(gui, state)
     except Exception as exc:
@@ -103,12 +84,11 @@ def with_context(
 
 def _gui_context(entries: list[dict[str, Any]], state: dict[str, Any]) -> dict[str, Any]:
     """The ``gui`` block: what changed since the last call, and the editors' state now."""
-    gui: dict[str, Any] = {"description": GUI_DESCRIPTION}
+    gui: dict[str, Any] = {}
     if entries:
         gui["entries"] = entries
     unsaved = state.get("unsaved")
     if unsaved:
-        gui["description"] = GUI_DESCRIPTION + " " + GUI_STATE_DESCRIPTION
         gui["unsaved"] = unsaved
     return gui
 
