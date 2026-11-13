@@ -14,7 +14,6 @@ from itasca_mcp.contracts import build_error, build_ok
 
 FAKE_CONTEXT = {
     "user_console": {
-        "description": "test",
         "entries": [{"source": "command", "input": "fish list"}],
     }
 }
@@ -123,7 +122,8 @@ async def test_fetch_formats_entries_for_the_agent():
 
     assert context is not None
     console = context["user_console"]
-    assert "USER" in console["description"]
+    # the field semantics live in the server instructions, not in every payload
+    assert "description" not in console
     assert console["entries"] == [
         {"source": "python", "input": "x = 6 * 7\nx", "result": 42},
         {
@@ -200,7 +200,7 @@ async def test_fetch_splits_gui_entries_into_gui():
     assert context is not None
     assert context["user_console"]["entries"] == [{"source": "command", "input": "ball list"}]
     gui = context["gui"]
-    assert "plot" in gui["description"] and "export" in gui["description"]
+    assert "description" not in gui
     assert gui["entries"] == [
         {"event": "open", "kind": "plot", "name": "Plot01", "active": True, "items": ["Ball", "Legend"]},
         {"plot": "Plot01", "added": ["Wall"], "items": ["Ball", "Wall", "Legend"]},
@@ -253,20 +253,15 @@ async def test_fetch_passes_a_saved_files_path_and_diff_through():
             "truncated": True,
         },
     ]
-    assert "unsaved" not in context["gui"]["description"]
+    assert "unsaved" not in context["gui"]
 
 
-async def test_fetch_carries_the_editors_state_with_its_own_description():
+async def test_fetch_carries_the_editors_state():
     state = {"unsaved": ["script"]}
     with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([], state)):
         context = await fetch_bridge_context()
 
-    assert context == {
-        "gui": {
-            "description": ctx_module.GUI_DESCRIPTION + " " + ctx_module.GUI_STATE_DESCRIPTION,
-            "unsaved": ["script"],
-        }
-    }
+    assert context == {"gui": {"unsaved": ["script"]}}
 
 
 async def test_an_empty_state_adds_nothing():
@@ -292,7 +287,6 @@ async def test_fetch_with_only_gui_entries_has_no_user_console():
 
     assert context == {
         "gui": {
-            "description": ctx_module.GUI_DESCRIPTION,
             "entries": [{"event": "active", "kind": "data_file", "name": "script"}],
         }
     }
