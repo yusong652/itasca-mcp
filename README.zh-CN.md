@@ -41,7 +41,7 @@
 
 ### 前置条件
 
-- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 9.0 及以上版本；也支持 PFC 6.0 / 7.0、FLAC 7.0 与 3DEC 7.0。
+- 已安装一个 **ITASCA 引擎** —— PFC、FLAC、3DEC、MPoint 或 MassFlow。推荐 Subscription 版本（9.0 及以上）；也支持 PFC 6.0 / 7.0、FLAC 7.0 与 3DEC 7.0。
 - 已安装 **[uv](https://docs.astral.sh/uv/getting-started/installation/)**（用于 `uvx`）
 - 一个 **AI 智能体** —— Claude Code、Codex CLI、Gemini CLI 或其他任意 MCP 客户端
 
@@ -84,10 +84,10 @@ gemini mcp add itasca-mcp uvx itasca-mcp
 }
 ```
 
-**2. 把 bridge 安装到引擎自带的 Python 里。** 在终端中，用引擎安装目录下自带的解释器运行 pip（9.0 是 `exe64/python310`，6.0/7.0 是 `exe64/python36`）。以默认安装位置为例：
+**2. 把 bridge 安装到引擎自带的 Python 里。** 在终端中，用引擎安装目录下自带的解释器运行 pip（Subscription 版本是 `exe64/python310`，6.0/7.0 是 `exe64/python36`）。以默认安装位置为例：
 
 ```powershell
-# 9.0
+# Subscription（最新版）
 & "C:\Program Files\Itasca\Itasca Software Subscription\exe64\python310\python.exe" -m pip install --user -U itasca-mcp-bridge
 
 # 7.0（以 FLAC3D 为例）

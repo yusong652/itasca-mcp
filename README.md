@@ -41,7 +41,7 @@
 
 ### Prerequisites
 
-- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. 9.0+ recommended; PFC 6.0 / 7.0, FLAC 7.0, and 3DEC 7.0 are also supported.
+- **An ITASCA engine installed** — PFC, FLAC, 3DEC, MPoint, or MassFlow. The Subscription release (9.0+) is recommended; PFC 6.0 / 7.0, FLAC 7.0, and 3DEC 7.0 are also supported.
 - **[uv](https://docs.astral.sh/uv/getting-started/installation/)** installed (for `uvx`)
 - **An AI agent** — Claude Code, Codex CLI, Gemini CLI, or any MCP-capable client
 
@@ -84,10 +84,10 @@ Or fill in the MCP config file manually:
 }
 ```
 
-**2. Install the bridge into the engine's Python.** In a terminal, run pip with the interpreter bundled in the engine's install directory (`exe64/python310` for 9.0, `exe64/python36` for 6.0/7.0). With the default install locations:
+**2. Install the bridge into the engine's Python.** In a terminal, run pip with the interpreter bundled in the engine's install directory (`exe64/python310` for the Subscription release, `exe64/python36` for 6.0/7.0). With the default install locations:
 
 ```powershell
-# 9.0
+# Subscription (latest)
 & "C:\Program Files\Itasca\Itasca Software Subscription\exe64\python310\python.exe" -m pip install --user -U itasca-mcp-bridge
 
 # 7.0 (FLAC3D shown)
