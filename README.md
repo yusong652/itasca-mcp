@@ -84,14 +84,24 @@ Or fill in the MCP config file manually:
 }
 ```
 
-**2. Start the bridge from inside the ITASCA engine:**
+**2. Install the bridge into the engine's Python.** In a terminal, run pip with the interpreter bundled in the engine's install directory (`exe64/python310` for 9.0, `exe64/python36` for 6.0/7.0). With the default install locations:
 
-Download [`addon.py`](addon.py), then use either of these two flows inside the engine GUI (PFC, FLAC, 3DEC, ...):
+```powershell
+# 9.0
+& "C:\Program Files\Itasca\Itasca Software Subscription\exe64\python310\python.exe" -m pip install --user -U itasca-mcp-bridge
 
-- Copy the file contents into the engine's IPython console and run them
-- Or download the file and execute it in the engine GUI
+# 7.0 (FLAC3D shown)
+& "C:\Program Files\Itasca\FLAC3D700\exe64\python36\python.exe" -m pip install --user -U itasca-mcp-bridge
+```
 
-<img src="https://raw.githubusercontent.com/yusong652/itasca-mcp/assets/addon.gif" alt="addon.py demo" width="60%">
+**3. Start the bridge** in the engine's IPython console (PFC, FLAC, 3DEC, ...):
+
+```python
+import itasca_mcp_bridge
+itasca_mcp_bridge.start()
+```
+
+If pip cannot reach PyPI, paste the contents of [`addon.py`](addon.py) into the engine's IPython console instead: it installs the bridge (with a mirror fallback) and starts it in one go.
 
 ### Verify
 
@@ -114,8 +124,7 @@ itasca_mcp_bridge.start()
 - **Documentation agents can navigate** - agents browse the engine command tree to discover capabilities and boundaries, reducing hallucinated commands, with plot item reference docs supplementing the official documentation
 - **Live REPL alongside running tasks** - execute code while a simulation is running: check model state and intermediate results without stopping the task; also useful for quick iteration before writing a full script
 - **Task lifecycle management** - submit long-running simulations, monitor progress, interrupt running tasks, and browse task history
-- **Sees what you do in the GUI** - cells you run in the engine's IPython pane, commands you enter at its prompt, the plots and data files you open, close or switch to, the items you add to a plot, the data files you execute from the editor, and the edits you save to a data file (as a diff) all reach the agent on its next call, and on each call it sees the data files you are still editing, so you can work in the GUI and with the agent at the same time
-- **Works inside your project** - the scripts and data files the agent runs appear in the Project pane's Data Files, and a file it changes while you have it open in the editor is reloaded right away
+- **Human-agent interaction in the GUI** - the agent follows what you do in the engine GUI (the code and commands you run, the plots and data files you open or edit), and the files it runs or changes show up in your Project pane and editor, so you and the agent work on the same model at the same time
 - **Agent-started bridge** - an AI agent can start the bridge itself through the engine's `console.exe`
 - **Multi-client compatible** - works with Claude Code, Codex CLI, Gemini CLI, GitHub Copilot CLI, OpenCode, toyoura-nagisa, and other MCP clients
 

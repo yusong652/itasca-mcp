@@ -84,14 +84,24 @@ gemini mcp add itasca-mcp uvx itasca-mcp
 }
 ```
 
-**2. 在 ITASCA 引擎中启动 bridge：**
+**2. 把 bridge 安装到引擎自带的 Python 里。** 在终端中，用引擎安装目录下自带的解释器运行 pip（9.0 是 `exe64/python310`，6.0/7.0 是 `exe64/python36`）。以默认安装位置为例：
 
-下载 [`addon.py`](addon.py)，然后在引擎 GUI（PFC、FLAC、3DEC……）中任选一种方式执行：
+```powershell
+# 9.0
+& "C:\Program Files\Itasca\Itasca Software Subscription\exe64\python310\python.exe" -m pip install --user -U itasca-mcp-bridge
 
-- 把这个文件的内容复制到引擎的 IPython 控制台里运行
-- 或者先把这个文件下载到本地，再在引擎 GUI 里执行它
+# 7.0（以 FLAC3D 为例）
+& "C:\Program Files\Itasca\FLAC3D700\exe64\python36\python.exe" -m pip install --user -U itasca-mcp-bridge
+```
 
-<img src="https://raw.githubusercontent.com/yusong652/itasca-mcp/assets/addon.gif" alt="addon.py 演示" width="60%">
+**3. 启动 bridge**：在引擎（PFC、FLAC、3DEC……）的 IPython 控制台里运行：
+
+```python
+import itasca_mcp_bridge
+itasca_mcp_bridge.start()
+```
+
+如果 pip 连不上 PyPI，可以改为把 [`addon.py`](addon.py) 的内容粘贴到引擎的 IPython 控制台里运行：它会安装 bridge（带镜像源回退）并直接启动。
 
 ### 验证
 
@@ -114,7 +124,7 @@ itasca_mcp_bridge.start()
 - **智能体可自主浏览的文档** — 智能体沿着引擎命令树自主发现能力与边界，减少幻觉命令；并在官方文档基础上补充了 plot items 参考文档
 - **任务运行时 REPL 依然可用** — 仿真运行中也能执行代码，随时查看模型状态和中间结果，无需停止任务；也适合在写完整脚本前快速迭代
 - **任务全生命周期管理** — 提交长时仿真、监控进度、中止运行中的任务、浏览历史任务
-- **看得见你在 GUI 里做了什么** — 你在引擎 IPython 面板里运行的代码、在命令行敲的命令，你打开、关闭或切换的 plot 与 dat 脚本文件，你往 plot 里添加的条目，以及你在编辑器里执行的 dat 脚本文件，都会在智能体下一次调用时送达它，GUI 操作和智能体协作可以同时进行
+- **GUI 人机交互** — 智能体跟得上你在引擎 GUI 里的操作（你运行的代码与命令、打开或编辑的 plot 与 dat 脚本文件），它运行或修改的文件也会出现在你的 Project 面板和编辑器里，你和智能体可以同时在同一个模型上工作
 - **智能体自主启动 bridge** — AI 智能体可以通过引擎的 `console.exe` 自行启动 bridge
 - **多客户端兼容** — 支持 Claude Code、Codex CLI、Gemini CLI、GitHub Copilot CLI、OpenCode、toyoura-nagisa 等 MCP 客户端
 
