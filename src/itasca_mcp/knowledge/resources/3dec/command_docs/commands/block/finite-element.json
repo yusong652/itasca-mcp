@@ -15,23 +15,44 @@
     ]
   },
   "command": "block finite-element",
-  "syntax": "block finite-element keyword [range]",
+  "syntax": {
+    "7.0": "block finite-element keyword [range]",
+    "9.0": "block finite-element"
+  },
   "keywords": [
     {
       "name": "create",
       "syntax": "create <fx> <fy> <fz>",
-      "description": "Generates an FE mesh inside an 8-vertex brick block. fx , fy , and fz are desired element sizes in the \\(x\\) -, \\(y\\) - and \\(z\\) -directions. The number of elements along each of the element axes is calculated using the value for the nearest coordinate direction."
+      "description": "Generates an FE mesh inside an 8-vertex brick block. fx , fy , and fz are desired element sizes in the \\(x\\) -, \\(y\\) - and \\(z\\) -directions. The number of elements along each of the element axes is calculated using the value for the nearest coordinate direction.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
     },
     {
       "name": "import",
       "syntax": "import {filename <s> | num-nodes} ...",
-      "description": "Import an FE mesh. Options: filename <s>: Import an FE mesh from the file named s .; num-nodes"
+      "description": "Import an FE mesh. Options: filename <s>: Import an FE mesh from the file named s .; num-nodes",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
     },
     {
       "name": "list",
       "syntax": "list {extra | group | link}",
-      "description": "List information about finite element blocks. Options: extra: List extra variable information stored with blocks.; group: List FE block groups.; link: List finite element link information."
+      "description": "List information about finite element blocks. Options: extra: List extra variable information stored with blocks.; group: List FE block groups.; link: List finite element link information.",
+      "availability": {
+        "versions": [
+          "7.0"
+        ]
+      }
     }
   ],
-  "examples": []
+  "examples": [],
+  "notes": [
+    "3DEC 9.8 rejects create, import and list ('Unused extra parameter'), also after model configure feblock; there the command takes no argument."
+  ]
 }
