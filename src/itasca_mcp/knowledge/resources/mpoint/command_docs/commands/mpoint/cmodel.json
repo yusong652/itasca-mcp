@@ -40,7 +40,12 @@
     "wipp",
     "wipp-drucker",
     "wipp-salt",
-    "hydration-drucker-prager"
+    "hydration-drucker-prager",
+    "cavehoek",
+    "clay-and-sand",
+    "curved-mohr-coulomb",
+    "jones-wilkins-lee",
+    "munson-dawson"
   ],
   "description": "Assign, load, or get information on an mpoint constitutive model. Models that can be assigned include null, anisotropic, elastic, orthotropic, columnar-basalt, concrete, cap-yield, cap-yield-simplified, double-yield, drucker-prager, hoek-brown, hoek-brown-pac, modified-cam-clay, mohr-coulomb, mohr-coulomb-tension, norsand, plastic-hardening, soft-soil, softening-ubiquitous, strain-softening, swell, ubiquitous-joint, ubiquitous-anisotropic, von-mises, finn, p2psand, imass, burgers, burgers-mohr, maxwell, and more. This command associates a constitutive model with specified mpoint. It also allows querying of properties and states of constitutive models, and dynamic loading of user-defined mechanical models as DLLs.",
   "python_sdk_alternative": {
@@ -77,11 +82,13 @@
     {
       "name": "kwd:orthotropic",
       "syntax": "orthotropic",
+      "dimension": "3D",
       "description": "Assign the orthotropic elastic model (see the Orthotropic model description)."
     },
     {
       "name": "kwd:columnar-basalt",
       "syntax": "columnar-basalt",
+      "dimension": "3D",
       "description": "Assign the columnar-basalt elasto-plasticity model, known also as COMBA model (see the Columnar-Basalt model description)."
     },
     {
@@ -132,6 +139,7 @@
     {
       "name": "kwd:mohr-coulomb-tension",
       "syntax": "mohr-coulomb-tension",
+      "dimension": "3D",
       "description": "Assign the Mohr-Coulomb elasto-plasticity model with tensile strain crack tracking, known also as the MohrT model (see the Mohr-Coulomb-Tension model description)."
     },
     {
@@ -192,7 +200,29 @@
     {
       "name": "kwd:imass",
       "syntax": "imass",
+      "dimension": "3D",
       "description": "Assign the IMASS model (only available for the imass option; see the IMASS model description)."
+    },
+    {
+      "name": "kwd:cavehoek",
+      "syntax": "cavehoek",
+      "dimension": "3D",
+      "description": "Assign the CaveHoek model (only available for the imass option; see the CaveHoek model reference). MPoint2D parses the keyword but has no imass option to configure, so it cannot be assigned there."
+    },
+    {
+      "name": "kwd:clay-and-sand",
+      "syntax": "clay-and-sand",
+      "description": "Assign the Clay and Sand model, known also as CASM (see the Clay and Sand model reference)."
+    },
+    {
+      "name": "kwd:curved-mohr-coulomb",
+      "syntax": "curved-mohr-coulomb",
+      "description": "Assign the Mohr-Coulomb model with a curved strength envelope (see the Curved Mohr-Coulomb model reference)."
+    },
+    {
+      "name": "kwd:jones-wilkins-lee",
+      "syntax": "jones-wilkins-lee",
+      "description": "Assign the Jones-Wilkins-Lee equation-of-state model, known also as JWL (see the Jones-Wilkins-Lee model reference)."
     },
     {
       "name": "kwd:burgers",
@@ -245,6 +275,11 @@
       "description": "Assign the viscoplastic model modified from the WIPP model, and includes volumetric and deviatoric compaction behavior for salt-like materials (only available for the creep option; see the WIPP-Salt model description)."
     },
     {
+      "name": "kwd:munson-dawson",
+      "syntax": "munson-dawson",
+      "description": "Assign the Munson-Dawson creep model for rock salt (see the Munson-Dawson model reference)."
+    },
+    {
       "name": "kwd:hydration-drucker-prager",
       "syntax": "hydration-drucker-prager",
       "description": "Assign the modified Drucker-Prager for hydration (only available for the thermal option; see see the Hydration-Drucker-Prager model description)."
@@ -260,5 +295,8 @@
       "description": "Not yet implemented"
     }
   ],
-  "examples": []
+  "examples": [],
+  "notes": [
+    "cavehoek, clay-and-sand, curved-mohr-coulomb, jones-wilkins-lee and munson-dawson are not on the manual page; MPoint 9.8 accepts them, and their properties are in the constitutive-models reference."
+  ]
 }
