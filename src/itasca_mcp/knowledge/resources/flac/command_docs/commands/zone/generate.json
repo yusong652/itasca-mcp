@@ -23,6 +23,7 @@
     {
       "name": "from-building-blocks",
       "syntax": "from-building-blocks [set <s>]",
+      "dimension": "3D",
       "description": {
         "7.0": "Generate zones from the current building-blocks set. See the building-blocks command. If the optional keyword set is used, then will generate zones from the set with name s instead of the current set.",
         "9.0": "Generate zones from the current building-blocks model. Optional set s selects a named building-blocks set. (3D only.)"
@@ -107,6 +108,7 @@
     {
       "name": "domain",
       "syntax": "domain",
+      "dimension": "3D",
       "description": "Generate zones covering the domain. Present in the engine's keyword enumeration but missing from the crawled docs. Verified against FLAC3D 9.7 (first-token enumeration, 2026-08-13).",
       "availability": {
         "versions": [
@@ -117,6 +119,7 @@
     {
       "name": "from-geometry",
       "syntax": "from-geometry [keyword ...]",
+      "dimension": "3D",
       "description": {
         "7.0": "Generate zones by identifying closed volumes in a geometric set, and creating zones that fill the volume. The comand operates in three steps: first, original surfaces (faces) are triangulated to create initial coarse mesh; second, the initial mesh is remeshed with triangular or mixed (quad-dominant mode) elements using user specified parameters; lastly, volume mesher is called to fill the volumes with tetrahedral or mixed (hex-dominant mode) zones. By deaults, hex-dominant mode is used (quad-dominant for surface meshes). Note that input surfaces should be planar for proper triangulation. Options: set <s>: Specify the geometry set used to define the surface to which zones are being extruded. By default the current geometric set will be used.; minimum-edge <f>: Specify the minimum surface element size f > 0 along the edges. The actual size will be close to this value, but the result is not guaranteed to be exact.; maximum-edge <f>: Specify the maximum surface element size f > 0 along the edges. The actual size will be close to this value, but the result is not guaranteed to be exact.; size-surface <f>: Specify desired elements size on surface meshes. The elements size tends (according to the Gradation-Surface parameter) toward this value (if > 0) as they get away from the edges. This parameter can be used to make surface elements finer or coarser. The default value of 0 means that the size will be determined automaticaly based on the element sizes along the edges.; gradation-surface <f>: Specify gradation f > 0 of the element sizes along the edges (gradation from Minimum-Edge to Maximum-Edge) and inside the surface meshes (when Size-Surface is specified). A value close to 0 leads to a more progressive variation. The default value is 0.5.; size-volume <f>: Specify desired zone size inside the closed volumes. The zones size tends toward this value as they get away from the bounding surfaces (surface meshes). The default value of 0 means that the size will be determined automaticaly based on the size of surface elements.; gradation-volume <f>: Specify gradation f > 0 of the zone sizes from the surface elements sizes to the size defined by Size-Volume parameter inside the closed volumes. A value close to 0 leads to a more progressive variation. The default value is 0.5.; cut-angle <f>: Specify cut angle for delimiting initial surfaces patches (groups of connected triangles in the initial triangulated mesh) used for surface remeshing. An angle between two adjacent triangles greater than this value will draw a limit between two patches. A small value tends to give numerous small patches and the final mesh will be close to the initial mesh but may be of poor quality. A bigger value tends to give fewer bigger patches which are better for remeshing but the final mesh may be more distant from the initial mesh (increased geometric error). The default value is 20° and a value of 45° should be considered as the maximum.; tetrahedron: If specified, only tetrahedral zones will be generated.; bring-to-building-blocks: If specified, then the result of the volume discretization will also be sent to a building-blocks set.; grid-file <s>: If specified, then the result of the volume discretization will be sent to output file s (no zones generated). Grid-File keyword has no effect if Bring-To-Building-Blocks is present.",
         "9.0": "Generate zones by tetrahedral meshing of a closed geometry set. Sub-keywords control the meshing: set, minimum-edge, maximum-edge, size-surface, gradation-surface, size-volume, gradation-volume, cut-angle, tetrahedron, bring-to-building-blocks, grid-file."
@@ -125,6 +128,7 @@
     {
       "name": "from-geometry-set",
       "syntax": "set <s>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify the geometry set used to define the surface to which zones are being extruded. By default the current geometric set will be used.",
         "9.0": "Name of the geometry set to mesh."
@@ -133,6 +137,7 @@
     {
       "name": "from-geometry-minimum-edge",
       "syntax": "minimum-edge <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify the minimum surface element size f > 0 along the edges. The actual size will be close to this value, but the result is not guaranteed to be exact.",
         "9.0": "Minimum allowed edge length in the generated mesh."
@@ -141,6 +146,7 @@
     {
       "name": "from-geometry-maximum-edge",
       "syntax": "maximum-edge <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify the maximum surface element size f > 0 along the edges. The actual size will be close to this value, but the result is not guaranteed to be exact.",
         "9.0": "Maximum allowed edge length."
@@ -149,6 +155,7 @@
     {
       "name": "from-geometry-size-surface",
       "syntax": "size-surface <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify desired elements size on surface meshes. The elements size tends (according to the Gradation-Surface parameter) toward this value (if > 0) as they get away from the edges. This parameter can be used to make surface elements finer or coarser. The default value of 0 means that the size will be determined automaticaly based on the element sizes along the edges.",
         "9.0": "Target element size on the closed surface."
@@ -157,6 +164,7 @@
     {
       "name": "from-geometry-gradation-surface",
       "syntax": "gradation-surface <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify gradation f > 0 of the element sizes along the edges (gradation from Minimum-Edge to Maximum-Edge) and inside the surface meshes (when Size-Surface is specified). A value close to 0 leads to a more progressive variation. The default value is 0.5.",
         "9.0": "Surface gradation factor (controls element size growth along the surface)."
@@ -165,6 +173,7 @@
     {
       "name": "from-geometry-size-volume",
       "syntax": "size-volume <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify desired zone size inside the closed volumes. The zones size tends toward this value as they get away from the bounding surfaces (surface meshes). The default value of 0 means that the size will be determined automaticaly based on the size of surface elements.",
         "9.0": "Target element size in the interior volume."
@@ -173,6 +182,7 @@
     {
       "name": "from-geometry-gradation-volume",
       "syntax": "gradation-volume <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify gradation f > 0 of the zone sizes from the surface elements sizes to the size defined by Size-Volume parameter inside the closed volumes. A value close to 0 leads to a more progressive variation. The default value is 0.5.",
         "9.0": "Volume gradation factor (controls element size growth into the interior)."
@@ -181,6 +191,7 @@
     {
       "name": "from-geometry-cut-angle",
       "syntax": "cut-angle <f>",
+      "dimension": "3D",
       "description": {
         "7.0": "Specify cut angle for delimiting initial surfaces patches (groups of connected triangles in the initial triangulated mesh) used for surface remeshing. An angle between two adjacent triangles greater than this value will draw a limit between two patches. A small value tends to give numerous small patches and the final mesh will be close to the initial mesh but may be of poor quality. A bigger value tends to give fewer bigger patches which are better for remeshing but the final mesh may be more distant from the initial mesh (increased geometric error). The default value is 20° and a value of 45° should be considered as the maximum.",
         "9.0": "Feature-edge detection angle, in degrees."
@@ -189,6 +200,7 @@
     {
       "name": "from-geometry-tetrahedron",
       "syntax": "tetrahedron",
+      "dimension": "3D",
       "description": {
         "7.0": "If specified, only tetrahedral zones will be generated.",
         "9.0": "Force pure tetrahedral output (no zone merging into pentahedra/hexahedra)."
@@ -197,6 +209,7 @@
     {
       "name": "from-geometry-bring-to-building-blocks",
       "syntax": "bring-to-building-blocks",
+      "dimension": "3D",
       "description": {
         "7.0": "If specified, then the result of the volume discretization will also be sent to a building-blocks set.",
         "9.0": "Also create matching building blocks from the generated geometry."
@@ -205,6 +218,7 @@
     {
       "name": "from-geometry-grid-file",
       "syntax": "grid-file <s>",
+      "dimension": "3D",
       "description": {
         "7.0": "If specified, then the result of the volume discretization will be sent to output file s (no zones generated). Grid-File keyword has no effect if Bring-To-Building-Blocks is present.",
         "9.0": "Write the generated mesh to the named grid-file in addition to creating zones."
