@@ -4,8 +4,8 @@ Two pieces live here:
 
 * ``fetch_bridge_context`` pulls the runtime signals the bridge keeps for
   the client (what the person typed into the product's consoles, which
-  plots and data files they have open, and which they are editing right
-  now) and returns them as one dict.
+  plots and data files they have open, which they are editing right now,
+  and the dialogs that came up) and returns them as one dict.
 * ``with_context`` is applied at the tool boundary. It awaits the tool's
   envelope, success or error alike, and attaches ``_context`` in one
   place, so the contract layer stays pure and both branches get the same
@@ -132,7 +132,7 @@ def _format_gui_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "kind": data.get("kind", ""),
         "name": entry.get("input", ""),
     }
-    for key in ("active", "previous", "items", "master", "path", "diff", "saves", "truncated"):
+    for key in ("active", "previous", "items", "master", "path", "diff", "saves", "truncated", "text", "buttons"):
         if data.get(key):
             formatted[key] = data[key]
     return formatted
