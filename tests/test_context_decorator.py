@@ -256,6 +256,38 @@ async def test_fetch_passes_a_saved_files_path_and_diff_through():
     assert "unsaved" not in context["gui"]
 
 
+async def test_fetch_passes_a_dialogs_text_and_buttons_through():
+    entries = [
+        {
+            "id": 1,
+            "source": "view",
+            "input": "PFC3D 6.00",
+            "output": "",
+            "result": None,
+            "success": True,
+            "timestamp": 1.0,
+            "data": {
+                "kind": "dialog",
+                "event": "open",
+                "text": "Save changes to the current project and model?",
+                "buttons": ["Save As...", "Discard", "Cancel"],
+            },
+        },
+    ]
+    with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning(entries)):
+        context = await fetch_bridge_context()
+
+    assert context["gui"]["entries"] == [
+        {
+            "event": "open",
+            "kind": "dialog",
+            "name": "PFC3D 6.00",
+            "text": "Save changes to the current project and model?",
+            "buttons": ["Save As...", "Discard", "Cancel"],
+        },
+    ]
+
+
 async def test_fetch_carries_the_editors_state():
     state = {"unsaved": ["script"]}
     with patch.object(ctx_module, "get_bridge_client", return_value=_client_returning([], state)):

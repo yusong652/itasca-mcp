@@ -46,7 +46,9 @@ mcp = FastMCP(
         "it, 'diff' being their changes since you last saw the file. To see one, "
         "read the file or export the plot as an image. 'unsaved' = data files the "
         "USER is editing right now, with changes not yet on disk: tell them before "
-        "writing one."
+        "writing one. kind 'dialog' = a modal dialog came up in the GUI ('open') or "
+        "went away ('closed'); while one is open the engine may be waiting on the "
+        "USER, who has to answer it."
     ),
 )
 
