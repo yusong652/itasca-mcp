@@ -124,7 +124,7 @@ itasca_mcp_bridge.start()
 - **Documentation agents can navigate** - agents browse the engine command tree to discover capabilities and boundaries, reducing hallucinated commands, with plot item reference docs supplementing the official documentation
 - **Live REPL alongside running tasks** - execute code while a simulation is running: check model state and intermediate results without stopping the task; also useful for quick iteration before writing a full script
 - **Task lifecycle management** - submit long-running simulations, monitor progress, interrupt running tasks, and browse task history
-- **Human-agent interaction in the GUI** - the agent follows what you do in the engine GUI (the code and commands you run, the plots and data files you open or edit), and the files it runs or changes show up in your Project pane and editor, so you and the agent work on the same model at the same time
+- **Human-agent interaction in the GUI** - the agent follows what you do in the engine GUI (the code and commands you run, the plots and data files you open or edit, the dialogs that come up), and the files it runs or changes show up in your Project pane and editor, so you and the agent work on the same model at the same time
 - **Agent-started bridge** - an AI agent can start the bridge itself through the engine's `console.exe`
 - **Multi-client compatible** - works with Claude Code, Codex CLI, Gemini CLI, GitHub Copilot CLI, OpenCode, toyoura-nagisa, and other MCP clients
 
