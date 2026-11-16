@@ -45,6 +45,56 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.7] - 2026-11-16
+
+### Added
+
+- A modal dialog in the engine GUI now shows up in `_context.gui` as an
+  entry of kind `dialog`: one when it opens, with its title, and for a
+  message box its text and buttons, and one when it closes. An agent can
+  tell that an error box, Options or a save prompt is on screen and that
+  the user has to answer it. Report only: nothing is clicked. Needs
+  `itasca-mcp-bridge` 0.6.14, which `start()` picks up on its own.
+  Verified live on PFC 6.00, 7.00 and 9.8.
+
+### Fixed
+
+- Command and keyword availability was checked against the live 9.8
+  builds of FLAC, 3DEC, MPoint and MassFlow, as it was for PFC in 0.11.6.
+  - FLAC: 133 commands and 83 keywords are marked for the one dimension
+    that accepts them (3D for building-blocks, structure shell, geogrid
+    and hybrid, zone slice; 2D for `zone create2d`, `zone remesh`,
+    `model remeshing`). `zone consolidation`, `zone history
+    saturation-apparent` and the four keywords of `zone gridpoint
+    force-reaction` are removed: no 9.8 build takes them.
+    `zone face apply-remove stress-tangential` is now `stress-shear`.
+  - 3DEC: `block finite-element` `create`, `import` and `list`,
+    `block list wall`, and `multiply` in the block zone and contact
+    `property-distribution` commands are 7.0 only. `structure cable
+    history` and `structure hybrid history` have no `end` modifier, on
+    FLAC as well.
+  - MPoint: `mpoint cmodel assign` lists `cavehoek`, `clay-and-sand`,
+    `curved-mohr-coulomb`, `jones-wilkins-lee` and `munson-dawson`, and
+    marks `orthotropic`, `columnar-basalt`, `mohr-coulomb-tension`,
+    `imass` and `cavehoek` as 3D.
+  - MassFlow: `model history` `damping` and `energy`,
+    `geometry assign-groups structure` and `fracture set-property` are no
+    longer offered.
+  - `model factor-of-safety` offers each engine only its own keywords:
+    `zone` and `interface` on FLAC, `block-zone` and `joint` on 3DEC,
+    `mpoint` on MPoint, none of them on MassFlow.
+  - `fracture intersections delete` takes the set name directly. The
+    `intersection-set` keyword of the manuals is rejected by every engine,
+    and the rejected form deletes all sets before the error.
+- On the 9.x GUI, running a task with a plot in front no longer leaves
+  the plot's tile empty (a lavender pane) until the product is restarted.
+  Fixed in `itasca-mcp-bridge` 0.6.13.
+
+### Documentation
+
+- The README's manual setup leads with `pip install`, and calls the
+  current ITASCA release Subscription.
+
 ## [0.11.6] - 2026-11-13
 
 ### Changed
