@@ -23,9 +23,10 @@ def register(mcp: FastMCP) -> None:
     ) -> dict[str, Any]:
         """Submit a Python script file for asynchronous execution in the Itasca engine.
 
-        Returns a task_id immediately; the script runs in the background.
-        Companion tools manage the lifecycle:
-        - itasca_check_task_status: poll output, progress, and final status
+        Returns a task_id immediately; the script runs in the background
+        whether or not it is checked, and its output stays readable after
+        it ends. Companion tools manage the lifecycle:
+        - itasca_check_task_status: read output, progress, and final status
         - itasca_interrupt_task: cancel a running task
         - itasca_list_tasks: browse task history
         For synchronous, inline execution, use itasca_execute_code instead.
