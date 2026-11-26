@@ -45,6 +45,57 @@ section exists.
 
 ## [Unreleased]
 
+## [0.11.8] - 2026-11-26
+
+### Added
+
+- `itasca_mcp_bridge.start(view_tracking=False)` starts the bridge without
+  following the plots, data files and dialogs of the engine GUI. It is the
+  supported way to rule the tracker out when the product window crashes
+  while the bridge runs. Tool responses then carry no plot, data-file or
+  dialog events in `_context.gui`; execution is unaffected, and the
+  default is unchanged. Needs `itasca-mcp-bridge` 0.6.16, which `start()`
+  picks up on its own.
+
+### Changed
+
+- Two descriptions were reworded after reports of agents checking a
+  running task every second or so, one model turn per check. Limits and
+  defaults are unchanged.
+  - `itasca_execute_task` says the script runs in the background whether
+    or not it is checked and that its output stays readable after it
+    ends, and no longer introduces `itasca_check_task_status` as the tool
+    to "poll" with.
+  - `wait_seconds` of `itasca_check_task_status` is described as a short
+    pause before reporting, at most 20 s, that ends sooner if the task
+    changes state. It used to read "Long-poll: return when the task
+    changes state", which suggested it could sit out a task.
+
+### Fixed
+
+- A task whose engine process closed, crashed or was killed mid-run is
+  reported as `failed` after the restart, with the error "The bridge
+  stopped before this task finished" and the output it had written by the
+  last check. It used to come back as `pending` and stay there, so an
+  agent could wait on it indefinitely. Fixed in `itasca-mcp-bridge`
+  0.6.17. Verified live on a PFC3D 9 console.
+- On the 9.x GUI, the first script an agent runs in a freshly started
+  product no longer leaves the window unusable (the plot gone, the middle
+  pane on "[select content]", plots and data files not opening from the
+  Project pane). Fixed in `itasca-mcp-bridge` 0.6.15. Verified live on
+  PFC 9.8.54.
+- The first call after the product is restarted no longer reports the
+  window of the previous run in `_context.gui`: the save prompt of the
+  closed window as a dialog still open, plots and files as open in a
+  process that is gone. Fixed in `itasca-mcp-bridge` 0.6.15.
+
+### Documentation
+
+- The README has a Citation section pointing to the paper that describes
+  itasca-mcp (arXiv 2611.33926).
+- The Chinese README states 7 tools, as the English one has since the
+  documentation tools were merged.
+
 ## [0.11.7] - 2026-11-16
 
 ### Added
