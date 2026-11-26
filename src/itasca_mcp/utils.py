@@ -242,7 +242,9 @@ WaitSeconds = Annotated[
         default=MIN_WAIT_SECONDS,
         ge=MIN_WAIT_SECONDS,
         le=MAX_WAIT_SECONDS,
-        description="Long-poll: return when the task changes state or after this many seconds.",
+        description=(
+            f"A short pause before reporting, at most {MAX_WAIT_SECONDS} s; ends sooner if the task changes state."
+        ),
     ),
 ]
 
