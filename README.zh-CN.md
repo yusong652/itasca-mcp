@@ -21,9 +21,9 @@
 
 ![itasca-mcp demo](https://raw.githubusercontent.com/yusong652/itasca-mcp/assets/itasca-mcp.gif)
 
-## 工具（10）
+## 工具（7）
 
-**5 个文档工具** — 浏览和搜索所选引擎的命令、Python API 及参考文档。无需 bridge。
+**2 个文档工具** — 按路径浏览、按关键词搜索所选引擎的命令、Python API、FISH 内置函数及参考文档。无需 bridge。
 
 **5 个执行工具** — 交互式 REPL、任务提交、进度监控、中断和历史浏览。需要 bridge。
 
@@ -144,6 +144,24 @@ itasca_mcp_bridge.start()
 
 欢迎提交 PR 和 Issue！[贡献指南](CONTRIBUTING.zh-CN.md)说明改动该落在哪里以及文档语料的组织方式，
 [开发者指南](docs/development/source-install.zh-CN.md)说明如何从源码安装。
+
+## 引用
+
+如果你在研究中使用了 itasca-mcp，请引用介绍它的论文：
+
+> Han, Y., Uzuoka, R., Ueda, K. (2026). Connecting AI Agents to Live Discrete Element Simulations via the Model Context Protocol. [arXiv:2611.33926](https://arxiv.org/abs/2611.33926).
+
+```bibtex
+@misc{han2026demmcp,
+  title         = {Connecting {AI} Agents to Live Discrete Element Simulations via the {Model Context Protocol}},
+  author        = {Han, Yusong and Uzuoka, Ryosuke and Ueda, Kyohei},
+  year          = {2026},
+  eprint        = {2611.33926},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CE},
+  url           = {https://arxiv.org/abs/2611.33926}
+}
+```
 
 ## 许可证
 
